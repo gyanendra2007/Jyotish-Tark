@@ -19,59 +19,79 @@
 <body class="bg-gradient-to-br from-yellow-50 to-pink-100 min-h-screen">
 
   <!-- Header -->
-  <header class="bg-white shadow-md p-4 flex justify-between items-center max-w-6xl mx-auto rounded-b-lg">
-    <div class="flex items-center space-x-2">
-      <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
-      <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
+  <header class="bg-white shadow-md p-4 max-w-6xl mx-auto rounded-b-lg">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
+        <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
+      </div>
+      <div class="md:hidden">
+        <button id="menuToggle" class="text-purple-700 focus:outline-none text-xl">☰</button>
+      </div>
+      <nav id="navbar" class="hidden md:flex space-x-4">
+        <a href="index.html" class="text-purple-700 font-semibold underline">Home</a>
+        <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
+        <a href="numerology.html" class="text-purple-700 hover:underline">Numerology</a>
+        <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
+      </nav>
     </div>
-    <nav class="space-x-4">
-      <a href="index.html" class="text-purple-700 font-semibold underline">Home</a>
-      <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
-      <a href="numerology.html" class="text-purple-700 hover:underline">Numerology</a>
-      <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
+    <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-2">
+      <a href="index.html" class="text-purple-700 font-semibold">Home</a>
+      <a href="kundali-form.html" class="text-purple-700">Kundali</a>
+      <a href="numerology.html" class="text-purple-700">Numerology</a>
+      <a href="rashifal.html" class="text-purple-700">Rashifal</a>
     </nav>
   </header>
 
   <!-- Hero Section -->
-  <section class="text-center py-16 px-4 max-w-4xl mx-auto">
-    <h1 class="text-4xl md:text-5xl font-bold text-purple-800">Welcome to Jyotish Tark 🔮</h1>
-    <p class="mt-4 text-lg text-gray-700">Trusted Astrology & Numerology Guidance — powered by ancient wisdom and personal connection.</p>
-    <div class="mt-8 space-x-4">
-      <a href="kundali-form.html" class="bg-purple-700 text-white px-6 py-2 rounded hover:bg-purple-800">Get Your Kundali</a>
-      <a href="numerology.html" class="border border-purple-700 text-purple-700 px-6 py-2 rounded hover:bg-purple-100">Know Your Number</a>
+  <section class="text-center py-12 px-4 max-w-4xl mx-auto">
+    <h1 class="text-3xl md:text-5xl font-bold text-purple-800">Welcome to Jyotish Tark 🔮</h1>
+    <p class="mt-4 text-base md:text-lg text-gray-700">Trusted Astrology & Numerology Guidance — powered by ancient wisdom and personal connection.</p>
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="kundali-form.html" class="bg-purple-700 text-white px-6 py-2 rounded hover:bg-purple-800 w-full sm:w-auto">Get Your Kundali</a>
+      <a href="numerology.html" class="border border-purple-700 text-purple-700 px-6 py-2 rounded hover:bg-purple-100 w-full sm:w-auto">Know Your Number</a>
     </div>
   </section>
 
   <!-- Services Section -->
-  <section class="bg-white py-12 px-6 rounded-t-3xl shadow-inner max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center text-purple-700 mb-10">🔔 What We Offer</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+  <section class="bg-white py-10 px-4 rounded-t-3xl shadow-inner max-w-6xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-semibold text-center text-purple-700 mb-8">🔔 What We Offer</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
       <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-xl font-bold text-purple-800">Kundali Making</h3>
+        <h3 class="text-lg md:text-xl font-bold text-purple-800">Kundali Making</h3>
         <p class="mt-2 text-gray-600">Fill a simple form and receive hand-prepared Kundali by a professional astrologer.</p>
       </div>
       <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-xl font-bold text-purple-800">Numerology</h3>
+        <h3 class="text-lg md:text-xl font-bold text-purple-800">Numerology</h3>
         <p class="mt-2 text-gray-600">Discover your lucky numbers and personality traits using your birth date.</p>
       </div>
       <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-xl font-bold text-purple-800">Monthly Rashifal</h3>
+        <h3 class="text-lg md:text-xl font-bold text-purple-800">Monthly Rashifal</h3>
         <p class="mt-2 text-gray-600">Check what's coming in April 2025 for your zodiac sign and get guided advice.</p>
       </div>
     </div>
   </section>
 
   <!-- Trust Section -->
-  <section class="text-center py-16 px-4 max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold text-purple-800">Why Choose Jyotish Tark?</h2>
-    <p class="mt-4 text-gray-700 max-w-xl mx-auto">We believe in personal connection, not automated results. Every Kundali is read and made by hand, with love, care, and deep Jyotish knowledge. Thousands have already trusted us — now it's your turn.</p>
+  <section class="text-center py-12 px-4 max-w-4xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-bold text-purple-800">Why Choose Jyotish Tark?</h2>
+    <p class="mt-4 text-gray-700 max-w-xl mx-auto text-base md:text-lg">We believe in personal connection, not automated results. Every Kundali is read and made by hand, with love, care, and deep Jyotish knowledge. Thousands have already trusted us — now it's your turn.</p>
   </section>
 
   <!-- Footer -->
   <footer class="bg-gray-100 text-center text-sm text-gray-600 py-4">
-    📞 Contact: jyotishtark@gmail.com | 8318513814 | 📍 Based in India <br>
+    📞 Contact: jyotishtark@gmail.com | 📍 Based in India <br>
     © 2025 Jyotish Tark. All rights reserved.
   </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('hidden');
+    });
+  </script>
 
 </body>
 </html>
