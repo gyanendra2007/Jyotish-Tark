@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Numerology - Jyotish Tark</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -11,70 +11,92 @@
     body {
       font-family: 'Inter', sans-serif;
     }
-    h1, h2 {
+    h1, h2, h3 {
       font-family: 'Playfair Display', serif;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-100 to-purple-50 min-h-screen py-8 px-4">
+<body class="bg-gradient-to-br from-pink-50 to-yellow-100 min-h-screen">
 
-  <header class="bg-white shadow-md p-4 flex justify-between items-center rounded mb-8 max-w-4xl mx-auto">
-    <div class="flex items-center space-x-2">
-      <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
-      <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 max-w-6xl mx-auto rounded-b-lg">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
+        <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
+      </div>
+      <div class="md:hidden">
+        <button id="menuToggle" class="text-purple-700 focus:outline-none text-xl">☰</button>
+      </div>
+      <nav id="navbar" class="hidden md:flex space-x-4">
+        <a href="index.html" class="text-purple-700 hover:underline">Home</a>
+        <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
+        <a href="numerology.html" class="text-purple-700 font-semibold underline">Numerology</a>
+        <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
+      </nav>
     </div>
-    <nav class="space-x-4">
-      <a href="index.html" class="text-purple-700 hover:underline">Home</a>
-      <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali Form</a>
-      <a href="numerology.html" class="text-purple-700 hover:underline font-semibold">Numerology</a>
-      <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
+    <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-2">
+      <a href="index.html" class="text-purple-700">Home</a>
+      <a href="kundali-form.html" class="text-purple-700">Kundali</a>
+      <a href="numerology.html" class="text-purple-700 font-semibold">Numerology</a>
+      <a href="rashifal.html" class="text-purple-700">Rashifal</a>
     </nav>
   </header>
 
-  <main class="max-w-xl mx-auto bg-white p-6 shadow-xl rounded-xl text-center">
-    <h1 class="text-3xl text-purple-700 font-semibold mb-4">🔢 Discover Your Numerology</h1>
-    <p class="mb-6 text-gray-700">Enter your name and birth date to reveal your Life Path Number and a glimpse into your soul.</p>
+  <!-- Numerology Section -->
+  <section class="text-center py-12 px-4 max-w-2xl mx-auto">
+    <h1 class="text-3xl md:text-4xl font-bold text-purple-800">Numerology Insights 🔢</h1>
+    <p class="mt-4 text-gray-700 text-base md:text-lg">Enter your date of birth to know your numerology number and a brief personality trait.</p>
 
-    <form onsubmit="event.preventDefault(); calculateNumerology();" class="space-y-4">
-      <input type="text" id="name" placeholder="Your Full Name" required class="w-full p-2 border rounded">
-      <input type="date" id="dob" required class="w-full p-2 border rounded">
-      <button type="submit" class="w-full bg-purple-700 text-white py-2 rounded hover:bg-purple-800">Reveal My Number</button>
+    <form class="mt-6 space-y-4" onsubmit="calculateNumber(event)">
+      <input type="date" id="dob" required class="w-full border rounded p-2" />
+      <button type="submit" class="w-full bg-purple-700 text-white py-2 rounded hover:bg-purple-800">Show My Number</button>
     </form>
 
-    <div id="result" class="mt-6 text-lg text-gray-800 font-medium"></div>
-  </main>
+    <div id="result" class="mt-8 text-lg text-purple-700 font-semibold"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-center text-sm text-gray-600 py-4">
+    📞 Contact: jyotishtark@gmail.com | 📍 Based in India <br>
+    © 2025 Jyotish Tark. All rights reserved.
+  </footer>
 
   <script>
-    function calculateNumerology() {
-      const dob = document.getElementById("dob").value;
-      const name = document.getElementById("name").value.trim();
-      if (!dob || !name) return;
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
 
-      const numbers = dob.replace(/[^0-9]/g, '').split('').map(Number);
-      let lifePath = numbers.reduce((a, b) => a + b, 0);
-      while (lifePath > 9 && ![11, 22, 33].includes(lifePath)) {
-        lifePath = lifePath.toString().split('').map(Number).reduce((a, b) => a + b);
+    menuToggle?.addEventListener('click', () => {
+      mobileNav.classList.toggle('hidden');
+    });
+
+    function calculateNumber(event) {
+      event.preventDefault();
+      const dob = document.getElementById("dob").value;
+      if (!dob) return;
+
+      const digits = dob.replace(/[^0-9]/g, "").split("").map(Number);
+      let sum = digits.reduce((a, b) => a + b, 0);
+      while (sum > 9 && sum !== 11 && sum !== 22) {
+        sum = sum.toString().split('').reduce((a, b) => a + Number(b), 0);
       }
 
-      const messages = {
-        1: "You're a born leader with immense confidence and drive.",
-        2: "You're a peacekeeper, full of compassion and harmony.",
-        3: "You're a creative soul with the gift of expression.",
-        4: "You're a builder, stable and grounded with strong discipline.",
-        5: "You're adventurous and freedom-loving with a zest for life.",
-        6: "You're a nurturer, family-oriented and full of love.",
-        7: "You're a seeker of truth and deep wisdom.",
-        8: "You're ambitious, strong, and destined for success.",
-        9: "You're a humanitarian, wise and compassionate.",
-        11: "You're a master of intuition and spiritual insight.",
-        22: "You're a master builder with the power to manifest big dreams.",
-        33: "You're a master teacher — selfless, loving, and enlightened."
+      const meanings = {
+        1: "Leader, ambitious, independent.",
+        2: "Cooperative, sensitive, diplomatic.",
+        3: "Creative, joyful, expressive.",
+        4: "Practical, disciplined, loyal.",
+        5: "Adventurous, freedom-loving, energetic.",
+        6: "Responsible, nurturing, caring.",
+        7: "Spiritual, thoughtful, introspective.",
+        8: "Powerful, ambitious, successful.",
+        9: "Compassionate, wise, humanitarian.",
+        11: "Visionary, intuitive, inspirational.",
+        22: "Master builder, visionary leader."
       };
 
-      document.getElementById("result").innerHTML = `
-        <div class="text-purple-600 text-2xl mb-2">Your Life Path Number is: <strong>${lifePath}</strong></div>
-        <p>${messages[lifePath] || "You are unique and extraordinary!"}</p>
-      `;
+      const result = document.getElementById("result");
+      result.innerHTML = `Your Numerology Number is <span class="text-2xl">${sum}</span><br>${meanings[sum] || "Mystical and unique!"}`;
     }
   </script>
 
