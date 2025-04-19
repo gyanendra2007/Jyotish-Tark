@@ -2,96 +2,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jyotish Tark - Trusted Astrology</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jyotish Tark - Trusted Astrology & Numerology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .service-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-bottom-color: #7e22ce;
+            box-shadow: 0 10px 25px -5px rgba(126, 34, 206, 0.2);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #7e22ce, #9333ea);
+            color: white;
+            border-radius: 50%;
+            font-size: 24px;
+        }
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7e22ce, #9333ea);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-yellow-50 to-pink-100 min-h-screen">
+<body class="min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-white shadow-md p-4 max-w-6xl mx-auto rounded-b-lg">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
-        <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
-      </div>
-      <div class="md:hidden">
-        <button id="menuToggle" class="text-purple-700 focus:outline-none text-xl">☰</button>
-      </div>
-      <nav id="navbar" class="hidden md:flex space-x-4">
-        <a href="index.html" class="text-purple-700 font-semibold underline">Home</a>
-        <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
-        <a href="numerology.html" class="text-purple-700 hover:underline">Numerology</a>
-        <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
-      </nav>
-    </div>
-    <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-2">
-      <a href="index.html" class="text-purple-700 font-semibold">Home</a>
-      <a href="kundali-form.html" class="text-purple-700">Kundali</a>
-      <a href="numerology.html" class="text-purple-700">Numerology</a>
-      <a href="rashifal.html" class="text-purple-700">Rashifal</a>
-    </nav>
-  </header>
+    <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
+                <span class="text-2xl md:text-3xl font-bold text-purple-700">Jyotish Tark</span>
+            </div>
+            <div class="md:hidden">
+                <button id="menuToggle" class="text-purple-700 focus:outline-none text-2xl">☰</button>
+            </div>
+            <nav id="navbar" class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-purple-700 font-semibold text-lg underline">Home</a>
+                <a href="kundali-form.html" class="text-purple-700 hover:underline text-lg">Kundali</a>
+                <a href="numerology.html" class="text-purple-700 hover:underline text-lg">Numerology</a>
+                <a href="rashifal.html" class="text-purple-700 hover:underline text-lg">Rashifal</a>
+            </nav>
+        </div>
+        <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-3 py-3">
+            <a href="index.html" class="text-purple-700 font-semibold text-lg px-4 py-2 bg-purple-50 rounded">Home</a>
+            <a href="kundali-form.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Kundali</a>
+            <a href="numerology.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Numerology</a>
+            <a href="rashifal.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Rashifal</a>
+        </nav>
+    </header>
 
-  <!-- Hero Section -->
-  <section class="text-center py-12 px-4 max-w-4xl mx-auto">
-    <h1 class="text-3xl md:text-5xl font-bold text-purple-800">Welcome to Jyotish Tark 🔮</h1>
-    <p class="mt-4 text-base md:text-lg text-gray-700">Trusted Astrology & Numerology Guidance — powered by ancient wisdom and personal connection.</p>
-    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="kundali-form.html" class="bg-purple-700 text-white px-6 py-2 rounded hover:bg-purple-800 w-full sm:w-auto">Get Your Kundali</a>
-      <a href="numerology.html" class="border border-purple-700 text-purple-700 px-6 py-2 rounded hover:bg-purple-100 w-full sm:w-auto">Know Your Number</a>
-    </div>
-  </section>
+    <section class="glass-card rounded-2xl shadow-xl max-w-5xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-purple-800 mb-6">
+            <span class="block">Unlock Your Cosmic Blueprint</span>
+            <span class="text-3xl md:text-4xl text-purple-600">With Jyotish Tark</span>
+        </h1>
+        <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+            Discover ancient Vedic wisdom tailored for your modern life. Get personalized astrology and numerology guidance from trusted experts.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="kundali-form.html" class="bg-purple-700 hover:bg-purple-800 text-white font-medium py-3 px-8 rounded-lg text-lg flex items-center transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                </svg>
+                Get Your Kundali
+            </a>
+            <a href="numerology.html" class="border-2 border-purple-700 text-purple-700 hover:bg-purple-50 font-medium py-3 px-8 rounded-lg text-lg flex items-center transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 18a10 10 0 110-20 10 10 0 010 20z" />
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4zm0 4a6 6 0 100-12 6 6 0 000 12z" />
+                </svg>
+                Numerology Report
+            </a>
+        </div>
+    </section>
 
-  <!-- Services Section -->
-  <section class="bg-white py-10 px-4 rounded-t-3xl shadow-inner max-w-6xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-semibold text-center text-purple-700 mb-8">🔔 What We Offer</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
-      <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-lg md:text-xl font-bold text-purple-800">Kundali Making</h3>
-        <p class="mt-2 text-gray-600">Fill a simple form and receive hand-prepared Kundali by a professional astrologer.</p>
-      </div>
-      <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-lg md:text-xl font-bold text-purple-800">Numerology</h3>
-        <p class="mt-2 text-gray-600">Discover your lucky numbers and personality traits using your birth date.</p>
-      </div>
-      <div class="p-6 bg-purple-50 rounded shadow">
-        <h3 class="text-lg md:text-xl font-bold text-purple-800">Monthly Rashifal</h3>
-        <p class="mt-2 text-gray-600">Check what's coming in April 2025 for your zodiac sign and get guided advice.</p>
-      </div>
-    </div>
-  </section>
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card rounded-2xl shadow-lg p-8 md:p-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-purple-800 mb-12 text-center">
+                <span class="block">Our Divine Services</span>
+                <span class="text-xl md:text-2xl text-purple-600 mt-2">Tailored to Your Cosmic Needs</span>
+            </h2>
 
-  <!-- Trust Section -->
-  <section class="text-center py-12 px-4 max-w-4xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-bold text-purple-800">Why Choose Jyotish Tark?</h2>
-    <p class="mt-4 text-gray-700 max-w-xl mx-auto text-base md:text-lg">We believe in personal connection, not automated results. Every Kundali is read and made by hand, with love, care, and deep Jyotish knowledge. Thousands have already trusted us — now it's your turn.</p>
-  </section>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="service-card bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon">🌌</div>
+                    <h3 class="text-xl font-bold text-purple-800 mb-3 text-center">Vedic Kundali Analysis</h3>
+                    <p class="text-gray-600 mb-4">
+                        Comprehensive birth chart analysis prepared by expert astrologers, revealing your life's potential, challenges, and opportunities.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Planetary positions at birth
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Dasha periods forecast
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Career & relationship guidance
+                        </li>
+                    </ul>
+                    <a href="kundali-form.html" class="block text-center bg-purple-100 hover:bg-purple-200 text-purple-700 font-medium py-2 px-4 rounded-lg transition-all">
+                        Get Yours Now
+                    </a>
+                </div>
 
-  <!-- Footer -->
-  <footer class="bg-gray-100 text-center text-sm text-gray-600 py-4">
-    📞 Contact: jyotishtark@gmail.com | 📍 Based in India <br>
-    © 2025 Jyotish Tark. All rights reserved.
-  </footer>
+                <div class="service-card bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon">🔢</div>
+                    <h3 class="text-xl font-bold text-purple-800 mb-3 text-center">Numerology Report</h3>
+                    <p class="text-gray-600 mb-4">
+                        Discover the hidden meanings in your name and birth date that influence your personality, talents, and life path.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Life Path Number analysis
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Destiny Number insights
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Lucky numbers & dates
+                        </li>
+                    </ul>
+                    <a href="numerology.html" class="block text-center bg-purple-100 hover:bg-purple-200 text-purple-700 font-medium py-2 px-4 rounded-lg transition-all">
+                        Calculate Now
+                    </a>
+                </div>
 
-  <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
+                <div class="service-card bg-white p-6 rounded-xl shadow-md">
+                    <div class="feature-icon">✨</div>
+                    <h3 class="text-xl font-bold text-purple-800 mb-3 text-center">Monthly Rashifal</h3>
+                    <p class="text-gray-600 mb-4">
+                        Personalized monthly horoscopes based on your exact birth details, not just sunsigns. Get precise planetary guidance.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600 mb-6">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Career & finance forecast
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Relationship guidance
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            Remedies & auspicious timings
+                        </li>
+                    </ul>
+                    <a href="rashifal.html" class="block text-center bg-purple-100 hover:bg-purple-200 text-purple-700 font-medium py-2 px-4 rounded-lg transition-all">
+                        Check Horoscope
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    menuToggle.addEventListener('click', () => {
-      mobileNav.classList.toggle('hidden');
-    });
-  </script>
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card rounded-2xl shadow-lg p-8 md:p-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-purple-800 mb-12 text-center">
+                Cosmic Connections We've Made
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="testimonial-avatar mr-4">RK</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Rajesh Kumar</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "The Kundali analysis was incredibly accurate! It helped me understand why certain patterns kept repeating in my life and gave me practical remedies. My career has improved significantly since following the guidance."
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="testimonial-avatar mr-4">PM</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Priya Malhotra</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "The numerology report was eye-opening! I never realized how much my life path number explained my personality and choices. The monthly rashifal predictions have been scarily accurate too!"
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="testimonial-avatar mr-4">AS</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Amit Sharma</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "Jyotish Tark's remedies transformed my life. The marriage prediction was spot on, and the suggested rituals helped remove obstacles. Highly recommend their personalized approach."
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="testimonial-avatar mr-4">NG</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Neha Gupta</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "As a skeptic, I was amazed by the accuracy of my career prediction. The astrologer pinpointed challenges I was facing and suggested perfect solutions. Will definitely come back!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card rounded-2xl shadow-lg p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-purple-800 mb-6">
+                        Our Jyotish Legacy
+                    </h2>
+                    <p class="text-gray-700 mb-4">
+                        Founded in 2010, Jyotish Tark brings together a team of expert astrologers with decades of combined experience in Vedic astrology, numerology, and palmistry.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        We combine ancient wisdom with modern interpretation to provide guidance that's both spiritually profound and practically applicable to your daily life.
+                    </p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span>2000+ satisfied clients worldwide</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span>5-star rated astrological services</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Personalized guidance (no automated reports)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-purple-50 p-6 rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=1000" alt="Astrologer consulting client" class="rounded-lg shadow-md w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div class="glass-card rounded-2xl shadow-lg p-8 md:p-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-purple-800 mb-6">
+                Ready to Discover Your Cosmic Path?
+            </h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+                Thousands have found clarity and direction through our astrological guidance. Your journey starts here.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="kundali-form.html" class="bg-purple-700 hover:bg-purple-800 text-white font-medium py-3 px-8 rounded-lg text-lg transition-all">
+                    Get Your Kundali
+                </a>
+                <a href="contact.html" class="border-2 border-purple-700 text-purple-700 hover:bg-purple-50 font-medium py-3 px-8 rounded-lg text-lg transition-all">
+                    Consult Our Astrologer
+                </a>
+            </div>
+        </div>
+    </section>
+
+        <footer class="glass-card text-center py-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-purple-600 hover:text-purple-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-purple-600 hover:text-purple-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-purple-600 hover:text-purple-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-purple-700 mb-2">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">Home</a></li>
+                        <li><a href="kundali-form.html" class="hover:text-purple-600">Kundali</a></li>
+                        <li><a href="numerology.html" class="hover:text-purple-600">Numerology</a></li>
+                        <li><a href="rashifal.html" class="hover:text-purple-600">Rashifal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-purple-700 mb-2">Services</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="kundali-form.html" class="hover:text-purple-600">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="hover:text-purple-600">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="hover:text-purple-600">Monthly Horoscope</a></li>
+                        <li><a href="contact.html" class="hover:text-purple-600">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-purple-700 mb-2">Information</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="about.html" class="hover:text-purple-600">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-purple-600">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-purple-600">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-purple-600">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-purple-700 mb-2">Contact</h4>
+                    <p class="text-gray-600 mb-2">📞 Email: jyotishtark@email.com</p>
+                    <p class="text-gray-600">📍 Lucknow, India</p>
+                </div>
+            </div>
+            <p class="text-gray-500 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        menuToggle.addEventListener('click', () => {
+            mobileNav.classList.toggle('hidden');
+        });
+    </script>
 
 </body>
 </html>
