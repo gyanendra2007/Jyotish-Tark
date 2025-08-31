@@ -1,479 +1,1113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Numerology - Jyotish Tark</title>
-  <meta name="description" content="जानें आपका अंक क्या कहता है। Numerology के माध्यम से अपने जीवन, करियर और रिश्तों का गहन विश्लेषण करें।">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-    }
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .number-circle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #7e22ce, #9333ea);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: bold;
-      margin: 0 auto;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Numerology - Jyotish Tark</title>
+    <meta name="description" content="जानें आपका अंक क्या कहता है। Numerology के माध्यम से अपने जीवन, करियर और रिश्तों का गहन विश्लेषण करें।">
+    <meta name="keywords" content="numerology, अंक ज्योतिष, life path number, numerology calculator, jyotish tark numerology">
+    <meta name="author" content="Jyotish Tark">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .number-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .number-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .number-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body class="min-h-screen">
-  <!-- Header -->
-  <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
-        <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
-      </div>
-      <div class="md:hidden">
-        <button id="menuToggle" class="text-purple-700 focus:outline-none text-xl">☰</button>
-      </div>
-      <nav id="navbar" class="hidden md:flex space-x-4">
-        <a href="index.html" class="text-purple-700 hover:underline">Home</a>
-        <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
-        <a href="numerology.html" class="text-purple-700 font-semibold underline">Numerology</a>
-        <a href="rashifal.html" class="text-purple-700 hover:underline">Rashifal</a>
-      </nav>
-    </div>
-    <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-2">
-      <a href="index.html" class="text-purple-700">Home</a>
-      <a href="kundali-form.html" class="text-purple-700">Kundali</a>
-      <a href="numerology.html" class="text-purple-700 font-semibold">Numerology</a>
-      <a href="rashifal.html" class="text-purple-700">Rashifal</a>
-    </nav>
-  </header>
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
 
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <div class="h-12 w-12 rounded-full overflow-hidden">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="about.html" class="nav-link text-white hover:text-amber-300 transition">About</a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+            <a href="about.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-info-circle astrological-symbol"></i>About</a>
+            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+        </nav>
+    </header>
+
     <!-- Hero Section -->
-    <section class="glass-card rounded-xl shadow-lg p-8 mb-12 text-center">
-      <h1 class="text-3xl md:text-5xl font-bold text-purple-800 mb-4">Discover Your Life Path Number ✨</h1>
-      <p class="text-lg text-gray-700 mb-6">Unlock the hidden meanings in your birth date and gain insights about your personality, strengths, and life purpose.</p>
-      <div class="flex justify-center">
-        <a href="#calculator" class="bg-purple-700 hover:bg-purple-800 text-white font-medium py-3 px-6 rounded-lg transition-all">
-          Calculate Your Number Now
-        </a>
-      </div>
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                <span class="block">Discover Your Life Path Number</span>
+                <span class="text-2xl md:text-3xl text-amber-300">Unlock Your Cosmic Blueprint</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Numerology reveals the hidden meanings in your birth date and name, offering profound insights about your personality, strengths, and life purpose.
+            </p>
+            <a href="#calculator" class="primary-button">
+                <i class="fas fa-calculator mr-2"></i>
+                Calculate Your Number
+            </a>
+        </div>
     </section>
 
     <!-- Numerology Calculator -->
-    <section id="calculator" class="glass-card rounded-xl shadow-lg p-8 mb-12">
-      <h2 class="text-2xl md:text-3xl font-bold text-purple-800 mb-6 text-center">Numerology Calculator</h2>
-      
-      <form class="max-w-md mx-auto space-y-6" onsubmit="calculateNumber(event)">
-        <div>
-          <label for="dob" class="block text-gray-700 font-medium mb-2">Enter Your Birth Date</label>
-          <input type="date" id="dob" required 
-                 class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-        </div>
-        
-        <div>
-          <label for="name" class="block text-gray-700 font-medium mb-2">Your Name (Optional)</label>
-          <input type="text" id="name" placeholder="For personalized insights"
-                 class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-        </div>
-        
-        <button type="submit" 
-                class="w-full bg-purple-700 hover:bg-purple-800 text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
-          </svg>
-          Reveal My Numerology
-        </button>
-      </form>
+    <section id="calculator" class="max-w-4xl mx-auto px-4 py-16">
+        <div class="glass-card p-8 rounded-2xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                    Numerology Calculator
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Enter your birth details to discover your Life Path Number and its profound significance.
+                </p>
+            </div>
+            
+            <form class="max-w-md mx-auto space-y-6" onsubmit="calculateNumber(event)">
+                <div>
+                    <label for="dob" class="block text-gray-300 font-medium mb-2">Enter Your Birth Date</label>
+                    <input type="date" id="dob" required 
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <div>
+                    <label for="name" class="block text-gray-300 font-medium mb-2">Your Full Name (Optional)</label>
+                    <input type="text" id="name" placeholder="For personalized insights"
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                </div>
+                
+                <button type="submit" class="primary-button w-full justify-center">
+                    <i class="fas fa-magic mr-2"></i>
+                    Reveal My Numerology
+                </button>
+            </form>
 
-      <div id="result" class="mt-10 hidden">
-        <div class="bg-purple-50 rounded-xl p-6">
-          <div id="numberDisplay" class="number-circle mb-4"></div>
-          <h3 id="numberTitle" class="text-xl font-bold text-purple-800 text-center mb-2"></h3>
-          <p id="numberMeaning" class="text-gray-700 text-center mb-4"></p>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h4 class="font-bold text-purple-700 mb-2">Strengths</h4>
-              <p id="strengths" class="text-sm text-gray-600"></p>
+            <div id="result" class="mt-12 hidden">
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="text-center mb-6">
+                        <div id="numberDisplay" class="number-circle mb-4"></div>
+                        <h3 id="numberTitle" class="text-2xl font-bold text-white mb-2"></h3>
+                        <p id="numberMeaning" class="text-gray-300 text-center mb-6"></p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                                <i class="fas fa-star mr-2"></i> Strengths
+                            </h4>
+                            <p id="strengths" class="text-sm text-gray-300"></p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-2"></i> Challenges
+                            </h4>
+                            <p id="challenges" class="text-sm text-gray-300"></p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                                <i class="fas fa-bullseye mr-2"></i> Life Purpose
+                            </h4>
+                            <p id="purpose" class="text-sm text-gray-300"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                                <i class="fas fa-heart mr-2"></i> Relationships
+                            </h4>
+                            <p id="relationships" class="text-sm text-gray-300"></p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                                <i class="fas fa-briefcase mr-2"></i> Career
+                            </h4>
+                            <p id="career" class="text-sm text-gray-300"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="personalizedMessage" class="bg-purple-900 bg-opacity-30 p-6 rounded-lg mt-6 hidden">
+                        <h4 class="font-bold text-amber-300 mb-3 flex items-center">
+                            <i class="fas fa-user-astronaut mr-2"></i> Personal Message for <span id="userName" class="ml-1"></span>
+                        </h4>
+                        <p class="text-gray-300"></p>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <button onclick="window.print()" class="primary-button mr-4">
+                            <i class="fas fa-print mr-2"></i> Print Report
+                        </button>
+                        <button onclick="shareResults()" class="primary-button">
+                            <i class="fas fa-share-alt mr-2"></i> Share Results
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h4 class="font-bold text-purple-700 mb-2">Challenges</h4>
-              <p id="challenges" class="text-sm text-gray-600"></p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow">
-              <h4 class="font-bold text-purple-700 mb-2">Life Purpose</h4>
-              <p id="purpose" class="text-sm text-gray-600"></p>
-            </div>
-          </div>
-          
-          <div id="personalizedMessage" class="mt-6 p-4 bg-white rounded-lg shadow hidden">
-            <h4 class="font-bold text-purple-700 mb-2">Personal Message for <span id="userName"></span></h4>
-            <p class="text-sm text-gray-600"></p>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- About Numerology -->
-    <section class="glass-card rounded-xl shadow-lg p-8 mb-12">
-      <h2 class="text-2xl md:text-3xl font-bold text-purple-800 mb-6">The Power of Numbers</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h3 class="text-xl font-bold text-purple-700 mb-3">What is Numerology?</h3>
-          <p class="text-gray-700 mb-4">
-            Numerology is the mystical study of numbers and their influence on human life. It reveals that your birth date 
-            and name contain vibrational patterns that shape your personality, talents, and life path.
-          </p>
-          <p class="text-gray-700">
-            By calculating your Life Path Number (derived from your birth date), you can gain profound insights into your 
-            innate strengths, challenges, and soul's purpose in this lifetime.
-          </p>
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card p-8 rounded-2xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                    The Power of Numbers
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Discover how numerology can reveal your life's purpose and hidden potentials
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-question-circle text-amber-300 mr-3"></i> What is Numerology?
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                        Numerology is an ancient metaphysical science that studies the mystical relationship between numbers and life events. 
+                        It's based on the idea that the universe is a system that can be broken down into its basic elements - numbers.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        By analyzing the numbers derived from your birth date and name, numerology reveals your innate talents, personality traits, 
+                        challenges, and ultimate life purpose. It's like a cosmic blueprint that guides you toward self-discovery and fulfillment.
+                    </p>
+                    <p class="text-gray-300">
+                        The most important number in your numerology chart is your <span class="text-amber-300 font-medium">Life Path Number</span>, 
+                        which is calculated from your complete birth date. This number represents the path you'll walk in this lifetime and reveals 
+                        your natural abilities and challenges.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-calculator text-amber-300 mr-3"></i> How It Works
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-4 text-gray-300">
+                        <li class="pb-2"><span class="font-medium text-amber-300">Write down your complete birth date</span> (DD/MM/YYYY format)</li>
+                        <li class="pb-2"><span class="font-medium text-amber-300">Add all the digits together</span> (day + month + year)</li>
+                        <li class="pb-2"><span class="font-medium text-amber-300">Reduce to a single digit</span> by adding the digits of the sum together</li>
+                        <li class="pb-2"><span class="font-medium text-amber-300">Exception for Master Numbers</span> - If you get 11, 22, or 33, these are not reduced further as they carry special vibrations</li>
+                        <li class="pb-2"><span class="font-medium text-amber-300">Discover your unique Life Path Number meaning</span> and how it influences your life journey</li>
+                    </ol>
+                    
+                    <div class="mt-6 p-5 bg-purple-900 bg-opacity-30 rounded-lg">
+                        <h4 class="font-bold text-amber-300 mb-2">Example Calculation</h4>
+                        <p class="text-gray-300 mb-1">Birth Date: 15/04/1990</p>
+                        <p class="text-gray-300 text-sm">Day: 1+5 = 6 | Month: 0+4 = 4 | Year: 1+9+9+0 = 19 → 1+9 = 10 → 1+0 = 1</p>
+                        <p class="text-gray-300 text-sm mt-2">Total: 6 + 4 + 1 = 11 (Master Number - not reduced further)</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <h3 class="text-xl font-bold text-purple-700 mb-3">How It Works</h3>
-          <ol class="list-decimal list-inside space-y-2 text-gray-700">
-            <li>Write down your complete birth date (DD/MM/YYYY)</li>
-            <li>Add all the digits together</li>
-            <li>Reduce to a single digit (except Master Numbers 11 & 22)</li>
-            <li>Discover your unique Life Path Number meaning</li>
-          </ol>
-          <div class="mt-4 p-4 bg-purple-50 rounded-lg">
-            <p class="text-purple-700 font-medium">Example: Birth Date - 15/04/1990</p>
-            <p class="text-sm text-gray-600">1+5 + 0+4 + 1+9+9+0 = 29 → 2+9 = 11 (Master Number)</p>
-          </div>
+    </section>
+        <!-- Life Path Numbers Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Life Path Number Meanings
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Each Life Path Number carries unique vibrations and characteristics that shape your personality and destiny.
+            </p>
         </div>
-      </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Number 1 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">1</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Leader</h3>
+                <p class="text-gray-300 text-center">
+                    Independent, ambitious, and determined. You're a natural born leader with strong willpower.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(1)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 2 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">2</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Diplomat</h3>
+                <p class="text-gray-300 text-center">
+                    Cooperative, intuitive, and supportive. You excel at creating harmony and partnerships.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(2)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 3 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">3</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Creative</h3>
+                <p class="text-gray-300 text-center">
+                    Expressive, optimistic, and joyful. You bring creativity and inspiration to the world.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(3)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 4 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">4</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Builder</h3>
+                <p class="text-gray-300 text-center">
+                    Practical, disciplined, and reliable. You excel at creating solid foundations.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(4)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 5 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">5</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Freedom Seeker</h3>
+                <p class="text-gray-300 text-center">
+                    Adventurous, adaptable, and progressive. You thrive on change and new experiences.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(5)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 6 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">6</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Nurturer</h3>
+                <p class="text-gray-300 text-center">
+                    Responsible, caring, and compassionate. You excel at creating harmony and serving others.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(6)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 7 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">7</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Seeker</h3>
+                <p class="text-gray-300 text-center">
+                    Analytical, intuitive, and spiritual. You're driven by a need to understand life's mysteries.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(7)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 8 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">8</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Achiever</h3>
+                <p class="text-gray-300 text-center">
+                    Ambitious, authoritative, and efficient. You excel at manifesting abundance and success.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(8)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number 9 -->
+            <div class="number-card p-6 rounded-2xl">
+                <div class="number-circle">9</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">The Humanitarian</h3>
+                <p class="text-gray-300 text-center">
+                    Compassionate, generous, and idealistic. You're here to serve humanity with wisdom.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showNumberDetails(9)" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Master Numbers -->
+            <div class="number-card p-6 rounded-2xl col-span-1 md:col-span-3">
+                <div class="flex justify-center gap-6 mb-4">
+                    <div class="number-circle" style="background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);">11</div>
+                    <div class="number-circle" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">22</div>
+                    <div class="number-circle" style="background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);">33</div>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center">Master Numbers</h3>
+                <p class="text-gray-300 text-center">
+                    These numbers carry higher spiritual vibrations and greater potential, but also greater challenges.
+                </p>
+                <div class="mt-4 text-center">
+                    <button onclick="showMasterNumbers()" class="text-amber-300 hover:text-amber-200 font-medium">
+                        Discover Master Numbers <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- All Numbers Overview -->
-    <section class="glass-card rounded-xl shadow-lg p-8">
-      <h2 class="text-2xl md:text-3xl font-bold text-purple-800 mb-8 text-center">Life Path Numbers Overview</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Number 1 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">1</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Leader</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Independent, ambitious, and innovative. You're here to initiate and lead with confidence.
-          </p>
-        </div>
-        
-        <!-- Number 2 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">2</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Peacemaker</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Cooperative, intuitive, and diplomatic. You bring harmony and balance to relationships.
-          </p>
-        </div>
-        
-        <!-- Number 3 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">3</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Creative</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Expressive, joyful, and communicative. You inspire others through creativity and optimism.
-          </p>
-        </div>
-        
-        <!-- Number 4 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">4</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Builder</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Practical, disciplined, and reliable. You create stable foundations through hard work.
-          </p>
-        </div>
-        
-        <!-- Number 5 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">5</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Freedom Seeker</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Adventurous, adaptable, and progressive. You thrive on change and new experiences.
-          </p>
-        </div>
-        
-        <!-- Number 6 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">6</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Nurturer</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Responsible, compassionate, and protective. You find fulfillment in caring for others.
-          </p>
-        </div>
-        
-        <!-- Number 7 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">7</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Seeker</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Analytical, spiritual, and introspective. You're on a quest for wisdom and truth.
-          </p>
-        </div>
-        
-        <!-- Number 8 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">8</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Achiever</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Ambitious, authoritative, and goal-oriented. You master the material world through leadership.
-          </p>
-        </div>
-        
-        <!-- Number 9 -->
-        <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <div class="number-circle mx-auto mb-3">9</div>
-          <h3 class="font-bold text-purple-700 text-center mb-2">The Humanitarian</h3>
-          <p class="text-sm text-gray-600 text-center">
-            Compassionate, artistic, and wise. You're here to serve humanity with your universal love.
-          </p>
-        </div>
-        
-        <!-- Master Numbers -->
-        <div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          <!-- Number 11 -->
-          <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div class="number-circle mx-auto mb-3">11</div>
-            <h3 class="font-bold text-purple-700 text-center mb-2">The Intuitive</h3>
-            <p class="text-sm text-gray-600 text-center">
-              Highly spiritual, inspirational, and visionary. You're a lightworker with profound insights.
+    <!-- Testimonials Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Numerology Success Stories
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Discover how numerology has helped others find clarity and direction in their lives.
             </p>
-          </div>
-          
-          <!-- Number 22 -->
-          <div class="bg-white p-5 rounded-lg shadow hover:shadow-lg transition-shadow">
-            <div class="number-circle mx-auto mb-3">22</div>
-            <h3 class="font-bold text-purple-700 text-center mb-2">The Master Builder</h3>
-            <p class="text-sm text-gray-600 text-center">
-              Practical visionary with exceptional capabilities. You turn dreams into reality on a large scale.
-            </p>
-          </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="glass-card text-center py-8 mt-12">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-center space-x-6 mb-6">
-            <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                </svg>
-            </a>
-            <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-            </a>
-            <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.615 3.184c-3.604-.145-5.573-.227-7.615-.227s-4.011.082-7.615.227C1.305 5.088.068 8.309.068 12s1.237 6.912 3.932 8.816c3.604.145 5.573.227 7.615.227s4.011-.082 7.615-.227C22.695 18.912 23.932 15.691 23.932 12s-1.237-6.912-3.932-8.816zM9.607 17.045v-10.09l6.803 5.008-6.803 5.082z" />
-                </svg>
-            </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="testimonial-avatar mr-4">AS</div>
+                    <div>
+                        <h4 class="font-bold text-white">Amit Sharma</h4>
+                        <div class="flex star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "The numerology report was incredibly accurate! It helped me understand why I was struggling in certain areas of my life and gave me practical guidance. My career has improved significantly since following the advice."
+                </p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="testimonial-avatar mr-4">PM</div>
+                    <div>
+                        <h4 class="font-bold text-white">Priya Malhotra</h4>
+                        <div class="flex star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "I was amazed by how accurately my Life Path Number described my personality. The insights about my relationships were spot on. This report has helped me make better decisions in both my personal and professional life."
+                </p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="testimonial-avatar mr-4">RK</div>
+                    <div>
+                        <h4 class="font-bold text-white">Rajesh Kumar</h4>
+                        <div class="flex star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "The personalized numerology reading helped me understand my true calling. I've always felt pulled in different directions, but now I have clarity about my life purpose. Thank you for this transformative experience!"
+                </p>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-center mb-4">
+                    <div class="testimonial-avatar mr-4">NG</div>
+                    <div>
+                        <h4 class="font-bold text-white">Neha Gupta</h4>
+                        <div class="flex star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 italic">
+                    "I was skeptical at first, but the accuracy of the numerology report blew me away. It described my strengths and challenges perfectly. The career guidance has been invaluable in helping me make important decisions."
+                </p>
+            </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Quick Links</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="index.html" class="hover:text-purple-600">Home</a></li>
-                    <li><a href="kundali-form.html" class="hover:text-purple-600">Kundali</a></li>
-                    <li><a href="numerology.html" class="hover:text-purple-600">Numerology</a></li>
-                    <li><a href="rashifal.html" class="hover:text-purple-600">Rashifal</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Services</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="kundali-form.html" class="hover:text-purple-600">Get Your Kundali</a></li>
-                    <li><a href="numerology.html" class="hover:text-purple-600">Numerology Report</a></li>
-                    <li><a href="rashifal.html" class="hover:text-purple-600">Monthly Horoscope</a></li>
-                    <li><a href="contact.html" class="hover:text-purple-600">Consult Astrologer</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Information</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="about.html" class="hover:text-purple-600">About Us</a></li>
-                    <li><a href="contact.html" class="hover:text-purple-600">Contact Us</a></li>
-                    <li><a href="privacy-policy.html" class="hover:text-purple-600">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html" class="hover:text-purple-600">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Contact</h4>
-                <p class="text-gray-600 mb-2">📞 Email: jyotishtark@gmail.com</p>
-                <p class="text-gray-600 mb-2">📞 8318513814</p>
-                <p class="text-gray-600 mb-2">📞 Whatsapp: 8318513814</p>
-                <p class="text-gray-600">📍 Lucknow, India</p>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    Ready to Discover Your Life Path?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                    Unlock the secrets of your birth date and name to understand your true purpose and potential.
+                </p>
+                <a href="#calculator" class="primary-button">
+                    <i class="fas fa-calculator mr-2"></i>
+                    Calculate Your Number Now
+                </a>
             </div>
         </div>
-        <p class="text-gray-500 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="max-w-6xl mx-auto px-4 py-16 glass-card backdrop-blur-md rounded-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">Numerology FAQs</h2>
+        <div class="space-y-8">
+
+            <!-- 1 -->
+            <div>
+                <h3 class="font-semibold text-lg text-amber-300">Q: What is a Life Path Number?</h3>
+                <p class="mt-2 text-gray-300">A: Your Life Path Number is the most important number in your numerology chart. It's calculated from your birth date and reveals your natural talents, challenges, and the path you're meant to walk in this lifetime.</p>
+            </div>
+
+            <!-- 2 -->
+            <div>
+                <h3 class="font-semibold text-lg text-amber-300">Q: How accurate is numerology?</h3>
+                <p class="mt-2 text-gray-300">A: Numerology has been practiced for thousands of years across many cultures. While not a exact science, many people find remarkable accuracy in how their numbers describe their personality and life experiences.</p>
+            </div>
+
+            <!-- 3 -->
+            <div>
+                <h3 class="font-semibold text-lg text-amber-300">Q: What are Master Numbers?</h3>
+                <p class="mt-2 text-gray-300">A: Master Numbers (11, 22, and 33) are not reduced to a single digit as they carry higher spiritual vibrations and greater potential, but also greater challenges and responsibilities.</p>
+            </div>
+
+            <!-- 4 -->
+            <div>
+                <h3 class="font-semibold text-lg text-amber-300">Q: Can numerology predict my future?</h3>
+                <p class="mt-2 text-gray-300">A: Numerology doesn't predict specific events but reveals your innate tendencies, strengths, and challenges. It provides guidance on how to navigate your life path more effectively.</p>
+            </div>
+
+            <!-- 5 -->
+            <div>
+                <h3 class="font-semibold text-lg text-amber-300">Q: How does name numerology work?</h3>
+                <p class="mt-2 text-gray-300">A: Name numerology calculates the numerical value of the letters in your name to reveal your Expression Number (personality others see) and Soul Urge Number (your inner desires and motivations).</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Number Details Modal -->
+    <div id="numberModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="glass-card p-8 rounded-2xl max-w-2xl mx-4 max-h-screen overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-2xl hover:text-amber-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalContent" class="text-white">
+                <!-- Content will be inserted by JavaScript -->
+            </div>
+        </div>
     </div>
-</footer>
 
-  <script>
-    // Mobile Menu Toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('mobileNav').classList.toggle('hidden');
+        });
 
-    menuToggle?.addEventListener('click', () => {
-      mobileNav.classList.toggle('hidden');
-    });
-
-    // Numerology Calculator
-    function calculateNumber(event) {
-      event.preventDefault();
-      const dob = document.getElementById("dob").value;
-      const name = document.getElementById("name").value;
-      
-      if (!dob) return;
-
-      // Calculate Life Path Number
-      const digits = dob.replace(/[^0-9]/g, "").split("").map(Number);
-      let sum = digits.reduce((a, b) => a + b, 0);
-      while (sum > 9 && sum !== 11 && sum !== 22) {
-        sum = sum.toString().split('').reduce((a, b) => a + Number(b), 0);
-      }
-
-      // Numerology Meanings Database
-      const numerologyData = {
-        1: {
-          title: "The Leader",
-          meaning: "You are independent, ambitious, and innovative. Your path involves developing confidence and individuality.",
-          strengths: "Leadership, creativity, determination, independence, originality",
-          challenges: "Impatience, arrogance, being overly aggressive or domineering",
-          purpose: "To learn independence and develop confidence in your abilities while inspiring others through your originality"
-        },
-        2: {
-          title: "The Peacemaker",
-          meaning: "You are cooperative, intuitive, and diplomatic. Your path involves developing patience and emotional awareness.",
-          strengths: "Cooperation, diplomacy, sensitivity, patience, attention to detail",
-          challenges: "Over-sensitivity, shyness, indecisiveness, lacking self-confidence",
-          purpose: "To bring harmony and balance to situations and relationships through your diplomatic nature"
-        },
-        3: {
-          title: "The Creative",
-          meaning: "You are expressive, joyful, and communicative. Your path involves developing self-expression and optimism.",
-          strengths: "Creativity, self-expression, communication, inspiration, joyfulness",
-          challenges: "Scattered energy, exaggeration, moodiness, superficiality",
-          purpose: "To inspire the world through creative self-expression and joyful communication"
-        },
-        4: {
-          title: "The Builder",
-          meaning: "You are practical, disciplined, and reliable. Your path involves developing stability and order.",
-          strengths: "Stability, discipline, organization, patience, practicality",
-          challenges: "Rigidity, stubbornness, being overly cautious or too serious",
-          purpose: "To establish solid foundations through hard work and attention to detail"
-        },
-        5: {
-          title: "The Freedom Seeker",
-          meaning: "You are adventurous, adaptable, and progressive. Your path involves developing freedom and change.",
-          strengths: "Adaptability, freedom, progress, curiosity, versatility",
-          challenges: "Restlessness, inconsistency, impulsiveness, overindulgence",
-          purpose: "To experience life fully and embrace change while teaching others about freedom"
-        },
-        6: {
-          title: "The Nurturer",
-          meaning: "You are responsible, compassionate, and protective. Your path involves developing love and service.",
-          strengths: "Responsibility, compassion, nurturing, protection, service",
-          challenges: "Self-righteousness, stubbornness, meddling, being overly protective",
-          purpose: "To serve others through love, nurturing, and a strong sense of responsibility"
-        },
-        7: {
-          title: "The Seeker",
-          meaning: "You are analytical, spiritual, and introspective. Your path involves developing wisdom and intuition.",
-          strengths: "Analysis, intuition, wisdom, spirituality, contemplation",
-          challenges: "Skepticism, aloofness, secretiveness, being overly critical",
-          purpose: "To seek truth and wisdom through analysis, intuition, and spiritual awareness"
-        },
-        8: {
-          title: "The Achiever",
-          meaning: "You are ambitious, authoritative, and goal-oriented. Your path involves developing power and abundance.",
-          strengths: "Ambition, organization, practicality, leadership, achievement",
-          challenges: "Workaholism, materialism, impatience, being overly domineering",
-          purpose: "To learn how to balance the material and spiritual worlds while achieving success"
-        },
-        9: {
-          title: "The Humanitarian",
-          meaning: "You are compassionate, artistic, and wise. Your path involves developing universal love and compassion.",
-          strengths: "Compassion, generosity, creativity, wisdom, universality",
-          challenges: "Emotionalism, moodiness, being overly sensitive or self-sacrificing",
-          purpose: "To serve humanity through compassion, artistic expression, and universal perspective"
-        },
-        11: {
-          title: "The Intuitive",
-          meaning: "You are highly spiritual, inspirational, and visionary. Your path involves developing intuition and enlightenment.",
-          strengths: "Inspiration, intuition, enlightenment, idealism, vision",
-          challenges: "Nervous energy, being overly sensitive, feeling misunderstood",
-          purpose: "To inspire humanity through spiritual awareness and intuitive insights"
-        },
-        22: {
-          title: "The Master Builder",
-          meaning: "You are a practical visionary with exceptional capabilities. Your path involves developing large-scale projects.",
-          strengths: "Mastery, vision, practicality, leadership, large-scale thinking",
-          challenges: "Overwhelm, extreme pressure, feeling burdened by responsibilities",
-          purpose: "To turn dreams into reality on a large scale through practical mastery"
+        // Numerology calculation function
+        function calculateNumber(event) {
+            event.preventDefault();
+            
+            const dob = document.getElementById('dob').value;
+            const name = document.getElementById('name').value;
+            
+            if (!dob) {
+                alert('Please enter your birth date');
+                return;
+            }
+            
+            // Parse date
+            const dateParts = dob.split('-');
+            const day = parseInt(dateParts[2]);
+            const month = parseInt(dateParts[1]);
+            const year = parseInt(dateParts[0]);
+            
+            // Calculate Life Path Number
+            let lifePathNumber = reduceToSingleDigit(day) + reduceToSingleDigit(month) + reduceToSingleDigit(year);
+            
+            // Check for master numbers before final reduction
+            if (lifePathNumber === 11 || lifePathNumber === 22 || lifePathNumber === 33) {
+                // Keep as master number
+            } else {
+                lifePathNumber = reduceToSingleDigit(lifePathNumber);
+            }
+            
+            // Display results
+            displayResults(lifePathNumber, name);
         }
-      };
-
-      // Get data for the calculated number
-      const data = numerologyData[sum] || {
-        title: "Mystical Number",
-        meaning: "Your number carries special vibrations that are unique and mystical!",
-        strengths: "Unique talents that are emerging in this lifetime",
-        challenges: "Special lessons your soul has chosen to learn",
-        purpose: "A distinctive path that you're here to walk"
-      };
-
-      // Display Results
-      document.getElementById('numberDisplay').textContent = sum;
-      document.getElementById('numberTitle').textContent = `${sum} - ${data.title}`;
-      document.getElementById('numberMeaning').textContent = data.meaning;
-      document.getElementById('strengths').textContent = data.strengths;
-      document.getElementById('challenges').textContent = data.challenges;
-      document.getElementById('purpose').textContent = data.purpose;
-
-      // Personalized message if name was provided
-      if (name) {
-        document.getElementById('userName').textContent = name;
-        const personalizedMsg = `Dear ${name}, as a Life Path ${sum}, you have special gifts to share with the world. ${data.meaning} This month, focus on ${data.strengths.split(', ')[0]} to overcome any challenges related to ${data.challenges.split(', ')[0]}.`;
-        document.querySelector('#personalizedMessage p').textContent = personalizedMsg;
-        document.getElementById('personalizedMessage').classList.remove('hidden');
-      } else {
-        document.getElementById('personalizedMessage').classList.add('hidden');
-      }
-
-      // Show result section
-      document.getElementById('result').classList.remove('hidden');
-
-      // Scroll to results
-      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Set max date to today for date picker
-    document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-  </script>
-
+        
+        function reduceToSingleDigit(number) {
+            if (number === 11 || number === 22 || number === 33) return number;
+            
+            while (number > 9) {
+                number = Math.floor(number / 10) + (number % 10);
+            }
+            return number;
+        }
+        
+        function displayResults(number, name) {
+            const numberData = getNumberData(number);
+            
+            document.getElementById('numberDisplay').textContent = number;
+            document.getElementById('numberTitle').textContent = numberData.title;
+            document.getElementById('numberMeaning').textContent = numberData.meaning;
+            document.getElementById('strengths').textContent = numberData.strengths;
+            document.getElementById('challenges').textContent = numberData.challenges;
+            document.getElementById('purpose').textContent = numberData.purpose;
+            document.getElementById('relationships').textContent = numberData.relationships;
+            document.getElementById('career').textContent = numberData.career;
+            
+            // Show personalized message if name provided
+            if (name.trim() !== '') {
+                document.getElementById('userName').textContent = name;
+                document.getElementById('personalizedMessage').classList.remove('hidden');
+                document.getElementById('personalizedMessage').querySelector('p').textContent = 
+                    `Dear ${name}, your Life Path Number ${number} suggests that ${numberData.personalMessage}`;
+            } else {
+                document.getElementById('personalizedMessage').classList.add('hidden');
+            }
+            
+            document.getElementById('result').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function getNumberData(number) {
+            const numberMeanings = {
+                1: {
+                    title: "The Leader",
+                    meaning: "You are a natural born leader with strong willpower and determination.",
+                    strengths: "Independent, creative, ambitious, determined, strong leadership skills",
+                    challenges: "Can be overly aggressive, domineering, or impatient. Learning cooperation is important.",
+                    purpose: "To learn independence and develop original ideas that can inspire others",
+                    relationships: "You need a partner who respects your independence but can also stand their ground",
+                    career: "Excellent in leadership roles, entrepreneurship, and any field requiring innovation",
+                    personalMessage: "you are meant to lead and innovate. Trust your instincts and don't be afraid to take the initiative."
+                },
+                2: {
+                    title: "The Diplomat",
+                    meaning: "You excel at creating harmony and partnerships through cooperation and intuition.",
+                    strengths: "Cooperative, intuitive, supportive, diplomatic, patient, sensitive to others",
+                    challenges: "Can be overly sensitive, indecisive, or prone to taking things personally",
+                    purpose: "To learn cooperation and create harmony in relationships and environments",
+                    relationships: "You thrive in partnerships and are a natural peacemaker who values harmony",
+                    career: "Excellent in mediation, counseling, teaching, and any role requiring teamwork",
+                    personalMessage: "your diplomatic nature helps create harmony wherever you go. Your intuition is one of your greatest assets."
+                },
+                3: {
+                    title: "The Creative",
+                    meaning: "You bring creativity, joy, and inspiration to the world through self-expression.",
+                    strengths: "Creative, expressive, optimistic, joyful, inspirational, good communication skills",
+                    challenges: "Can be scattered, superficial, or prone to exaggeration. Learning focus is important.",
+                    purpose: "To express yourself creatively and bring joy and inspiration to others",
+                    relationships: "You bring fun and excitement to relationships but need to develop emotional depth",
+                    career: "Excellent in arts, writing, entertainment, and any field requiring creative expression",
+                    personalMessage: "your creative expression brings joy to others. Don't be afraid to share your unique perspective with the world."
+                },
+                4: {
+                    title: "The Builder",
+                    meaning: "You excel at creating solid foundations through practicality, discipline, and hard work.",
+                    strengths: "Practical, disciplined, reliable, hard-working, organized, good with details",
+                    challenges: "Can be rigid, stubborn, or resistant to change. Learning flexibility is important.",
+                    purpose: "To build solid foundations and bring structure and stability to the world",
+                    relationships: "You are reliable and dependable but may need to develop more spontaneity",
+                    career: "Excellent in construction, engineering, accounting, and any field requiring precision",
+                    personalMessage: "your practical approach helps build lasting structures in life. Your reliability is valued by those around you."
+                },
+                5: {
+                    title: "The Freedom Seeker",
+                    meaning: "You thrive on change, adventure, and new experiences that expand your horizons.",
+                    strengths: "Adaptable, adventurous, progressive, curious, versatile, good communicator",
+                    challenges: "Can be restless, impulsive, or prone to overindulgence. Learning discipline is important.",
+                    purpose: "To experience freedom and embrace change while learning constructive use of freedom",
+                    relationships: "You need variety and freedom in relationships but must learn commitment",
+                    career: "Excellent in sales, marketing, travel, and any field requiring adaptability",
+                    personalMessage: "your adventurous spirit inspires others to embrace change. Channel your energy constructively to make the most of your versatility."
+                },
+                6: {
+                    title: "The Nurturer",
+                    meaning: "You excel at creating harmony and serving others through responsibility and compassion.",
+                    strengths: "Responsible, caring, compassionate, harmonious, protective, artistic",
+                    challenges: "Can be overly protective, meddling, or prone to worry. Learning boundaries is important.",
+                    purpose: "To learn unconditional love and service to family and community",
+                    relationships: "You are a natural caregiver who creates beautiful, harmonious environments",
+                    career: "Excellent in healing professions, teaching, design, and any caregiving role",
+                    personalMessage: "your nurturing nature creates safe spaces for others. Remember to also care for yourself while serving those around you."
+                },
+                7: {
+                    title: "The Seeker",
+                    meaning: "You are driven by a need to understand life's mysteries through analysis and intuition.",
+                    strengths: "Analytical, intuitive, spiritual, perceptive, introspective, wise",
+                    challenges: "Can be overly skeptical, isolated, or prone to melancholy. Learning connection is important.",
+                    purpose: "To seek truth and develop spiritual understanding through analysis and intuition",
+                    relationships: "You need intellectual connection and may prefer deep conversations to small talk",
+                    career: "Excellent in research, science, spirituality, and any field requiring analysis",
+                    personalMessage: "your quest for knowledge leads to profound insights. Balance your analytical nature with connection to others."
+                },
+                8: {
+                    title: "The Achiever",
+                    meaning: "You excel at manifesting abundance and success through authority and efficiency.",
+                    strengths: "Ambitious, authoritative, efficient, organized, good with money, powerful",
+                    challenges: "Can be overly materialistic, work-obsessed, or prone to power struggles. Learning balance is important.",
+                    purpose: "To learn about power and abundance and use it wisely for the benefit of all",
+                    relationships: "You are attracted to success and may need to balance material and spiritual values",
+                    career: "Excellent in business, finance, management, and any leadership position",
+                    personalMessage: "your ability to manifest abundance is remarkable. Use your power wisely to create positive change in the world."
+                },
+                9: {
+                    title: "The Humanitarian",
+                    meaning: "You are here to serve humanity with compassion, generosity, and wisdom.",
+                    strengths: "Compassionate, generous, idealistic, creative, wise, tolerant",
+                    challenges: "Can be emotionally overwhelmed, scattered, or prone to disappointment. Learning focus is important.",
+                    purpose: "To learn compassion and serve humanity through creative expression and wisdom",
+                    relationships: "You have universal love but may struggle with personal relationships",
+                    career: "Excellent in healing, arts, philanthropy, and any service-oriented field",
+                    personalMessage: "your compassionate nature touches many lives. Remember that your own needs are also important as you serve others."
+                },
+                11: {
+                    title: "The Illuminator",
+                    meaning: "You possess heightened intuition and spiritual insight that can inspire others.",
+                    strengths: "Intuitive, inspirational, idealistic, visionary, sensitive, spiritually connected",
+                    challenges: "Can be overly nervous, shy, or prone to anxiety. Learning grounding is important.",
+                    purpose: "To bring spiritual illumination and inspiration to others through your intuition",
+                    relationships: "You need a partner who understands your sensitivity and spiritual nature",
+                    career: "Excellent in healing, teaching, arts, and any field requiring intuition",
+                    personalMessage: "your spiritual insights have the power to illuminate the path for others. Trust your intuition as your greatest guide."
+                },
+                22: {
+                    title: "The Master Builder",
+                    meaning: "You have the potential to turn grand dreams into practical reality on a large scale.",
+                    strengths: "Practical visionary, powerful, disciplined, able to manifest large projects, idealistic yet practical",
+                    challenges: "Can feel overwhelmed by your potential or become overly focused on work. Learning balance is important.",
+                    purpose: "To build structures that serve humanity on a large scale using practical idealism",
+                    relationships: "You may struggle to balance your grand visions with personal relationships",
+                    career: "Excellent in large-scale projects, architecture, planning, and global enterprises",
+                    personalMessage: "your ability to turn visions into reality is extraordinary. Trust that you have the capacity to manifest great things."
+                },
+                33: {
+                    title: "The Master Teacher",
+                    meaning: "You possess extraordinary compassion and healing abilities to serve humanity.",
+                    strengths: "Compassionate, healing, inspirational, nurturing, selfless, spiritually elevated",
+                    challenges: "Can feel burdened by others' suffering or struggle with the weight of expectations. Learning boundaries is important.",
+                    purpose: "To uplift and heal humanity through selfless service and spiritual teaching",
+                    relationships: "You naturally attract those in need of healing and must learn healthy boundaries",
+                    career: "Excellent in healing professions, teaching, ministry, and humanitarian work",
+                    personalMessage: "your capacity for compassion is a gift to the world. Remember to also nurture yourself as you care for others."
+                }
+            };
+            
+            return numberMeanings[number] || {
+                title: "Unknown Number",
+                meaning: "This number has special significance that requires personalized interpretation.",
+                strengths: "Consult with our numerologists for detailed analysis",
+                challenges: "Consult with our numerologists for detailed analysis",
+                purpose: "Consult with our numerologists for detailed analysis",
+                relationships: "Consult with our numerologists for detailed analysis",
+                career: "Consult with our numerologists for detailed analysis",
+                personalMessage: "this number carries special vibrations that our expert numerologists can help you understand."
+            };
+        }
+        
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Numerology Report',
+                    text: 'Check out my personalized numerology report from Jyotish Tark!',
+                    url: window.location.href
+                })
+                .catch(error => {
+                    console.log('Error sharing:', error);
+                });
+            } else {
+                alert('Web Share API not supported in your browser. You can copy the URL to share.');
+            }
+        }
+        
+        function showNumberDetails(number) {
+            const numberData = getNumberData(number);
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <h2 class="text-2xl font-bold text-amber-300 mb-4 text-center">Life Path Number ${number}: ${numberData.title}</h2>
+                <div class="number-circle mx-auto mb-6">${number}</div>
+                <p class="text-gray-300 mb-4">${numberData.meaning}</p>
+                
+                <h3 class="text-xl font-bold text-white mb-2 mt-6">Strengths</h3>
+                <p class="text-gray-300 mb-4">${numberData.strengths}</p>
+                
+                <h3 class="text-xl font-bold text-white mb-2">Challenges</h3>
+                <p class="text-gray-300 mb-4">${numberData.challenges}</p>
+                
+                <h3 class="text-xl font-bold text-white mb-2">Life Purpose</h3>
+                <p class="text-gray-300 mb-4">${numberData.purpose}</p>
+                
+                <h3 class="text-xl font-bold text-white mb-2">Relationships</h3>
+                <p class="text-gray-300 mb-4">${numberData.relationships}</p>
+                
+                <h3 class="text-xl font-bold text-white mb-2">Career</h3>
+                <p class="text-gray-300 mb-6">${numberData.career}</p>
+                
+                <div class="text-center">
+                    <a href="#calculator" onclick="closeModal()" class="primary-button">
+                        <i class="fas fa-calculator mr-2"></i>
+                        Calculate Your Number
+                    </a>
+                </div>
+            `;
+            
+            document.getElementById('numberModal').classList.remove('hidden');
+        }
+        
+        function showMasterNumbers() {
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <h2 class="text-2xl font-bold text-amber-300 mb-4 text-center">Master Numbers</h2>
+                <p class="text-gray-300 mb-6">Master Numbers (11, 22, and 33) carry higher spiritual vibrations and greater potential, but also greater challenges and responsibilities. They are not reduced to a single digit in numerology calculations.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                        <div class="number-circle mx-auto mb-3" style="background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);">11</div>
+                        <h3 class="font-bold text-white text-center mb-2">The Illuminator</h3>
+                        <p class="text-gray-300 text-sm text-center">Heightened intuition and spiritual insight that can inspire others.</p>
+                    </div>
+                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                        <div class="number-circle mx-auto mb-3" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">22</div>
+                        <h3 class="font-bold text-white text-center mb-2">The Master Builder</h3>
+                        <p class="text-gray-300 text-sm text-center">Ability to turn grand dreams into practical reality on a large scale.</p>
+                    </div>
+                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                        <div class="number-circle mx-auto mb-3" style="background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);">33</div>
+                        <h3 class="font-bold text-white text-center mb-2">The Master Teacher</h3>
+                        <p class="text-gray-300 text-sm text-center">Extraordinary compassion and healing abilities to serve humanity.</p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-300 mb-6">If you have a Master Number in your chart, you have taken on a life of heightened potential and responsibility. These numbers indicate that you're here to accomplish something significant that serves a higher purpose.</p>
+                
+                <div class="text-center">
+                    <a href="#calculator" onclick="closeModal()" class="primary-button">
+                        <i class="fas fa-calculator mr-2"></i>
+                        Calculate Your Number
+                    </a>
+                </div>
+            `;
+            
+            document.getElementById('numberModal').classList.remove('hidden');
+        }
+        
+        function closeModal() {
+            document.getElementById('numberModal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
