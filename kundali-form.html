@@ -1,382 +1,822 @@
 <!-- kundali-form.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jyotish Tark - Trusted Astrology & Numerology</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kundali Form - Jyotish Tark</title>
+  <meta name="description" content="Get your personalized Vedic Kundali analysis from Jyotish Tark. Fill your birth details for accurate astrological predictions.">
+  <meta name="keywords" content="kundali form, janam kundli, birth chart, vedic astrology, jyotish tark, kundali analysis">
+  <meta name="author" content="Jyotish Tark">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Jyotish Tark - Trusted astrology and numerology services. Get your personalized Kundali, monthly Rashifal, and numerology insights.">
-    <meta name="keywords" content="Kundali, Jyotish, Numerology, Rashifal, Horoscope, Vedic Astrology, jyotishtark, kundali banwana, kundli milan">
-    <meta name="author" content="Jyotish Tark">
-
-    <!-- Open Graph Meta Tags (for social media sharing) -->
-    <meta property="og:title" content="Jyotish Tark - Personalized Kundali & Astrology">
-    <meta property="og:description" content="Trusted Vedic Astrology, Kundali, Numerology & Monthly Rashifal. Hand-made Kundali service by experts.">
-    <meta property="og:image" content="https://jyotishtark.in/logo.png">
-    <meta property="og:url" content="https://jyotishtark.in">
-    <meta property="og:type" content="website">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .service-card {
-            transition: all 0.3s ease;
-            border-bottom: 4px solid transparent;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-bottom-color: #7e22ce;
-            box-shadow: 0 10px 25px -5px rgba(126, 34, 206, 0.2);
-        }
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, #7e22ce, #9333ea);
-            color: white;
-            border-radius: 50%;
-            font-size: 24px;
-        }
-        .testimonial-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #7e22ce, #9333ea);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
-        }
-    </style>
-</head>
-<body class="min-h-screen">
-    <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
-                <span class="text-2xl md:text-3xl font-bold text-purple-700">Jyotish Tark</span>
-            </div>
-            <div class="md:hidden">
-                <button id="menuToggle" class="text-purple-700 focus:outline-none text-2xl">☰</button>
-            </div>
-            <nav id="navbar" class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-purple-700 hover:underline text-lg">Home</a>
-                <a href="kundali-form.html" class="text-purple-700 font-semibold text-lg underline">Kundali</a>
-                <a href="numerology.html" class="text-purple-700 hover:underline text-lg">Numerology</a>
-                <a href="rashifal.html" class="text-purple-700 hover:underline text-lg">Rashifal</a>
-                <a href="contact.html" class="text-purple-700 hover:underline text-lg">Contact</a>
-            </nav>
-        </div>
-        <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-3 py-3">
-            <a href="index.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Home</a>
-            <a href="kundali-form.html" class="text-purple-700 font-semibold text-lg px-4 py-2 bg-purple-50 rounded">Kundali</a>
-            <a href="numerology.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Numerology</a>
-            <a href="rashifal.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Rashifal</a>
-             <a href="contact.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Contact</a>
-        </nav>
-    </header>
-
-    <main class="container mx-auto py-10 px-4">
-        <h1 class="text-3xl md:text-4xl font-bold text-purple-800 text-center mb-8">
-            Unlock Your Destiny: Fill Your Kundali Details
-        </h1>
-
-        <section class="glass-card rounded-2xl shadow-xl  max-w-3xl mx-4 md:mx-auto p-6 md:p-8">
-            <form id="kundaliForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Full Name" required>
-                    </div>
-                    <div>
-                        <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Gender <span class="text-red-500">*</span></label>
-                        <select id="gender" name="gender" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="dob" class="block text-gray-700 text-sm font-bold mb-2">Date of Birth <span class="text-red-500">*</span></label>
-                        <input type="date" id="dob" name="dob" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                    <div>
-                        <label for="tob" class="block text-gray-700 text-sm font-bold mb-2">Time of Birth <span class="text-red-500">*</span></label>
-                        <input type="time" id="tob" name="tob" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="pob" class="block text-gray-700 text-sm font-bold mb-2">Place of Birth <span class="text-red-500">*</span></label>
-                        <input type="text" id="pob" name="pob" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="City, State, Country" required>
-                    </div>
-                    <div>
-                        <label for="maritalStatus" class="block text-gray-700 text-sm font-bold mb-2">Marital Status <span class="text-red-500">*</span></label>
-                        <select id="maritalStatus" name="maritalStatus" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                            <option value="">Select Status</option>
-                            <option value="single">Single</option>
-                            <option value="married">Married</option>
-                            <option value="divorced">Divorced</option>
-                            <option value="widowed">Widowed</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="occupation" class="block text-gray-700 text-sm font-bold mb-2">Occupation</label>
-                    <input type="text" id="occupation" name="occupation" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Occupation">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email" required>
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number <span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" name="phone" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Phone Number" required>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Address</label>
-                    <textarea id="address" name="address" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-20 resize-y" placeholder="Your Full Address"></textarea>
-                </div>
-
-                <p class="text-gray-600 text-sm italic">
-                    <span class="text-red-500">*</span> Required fields
-                </p>
-
-                <button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline">
-                    Submit Details
-                </button>
-            </form>
-            <div id="submissionResponse" class="mt-6 text-center font-semibold text-lg"></div>
-        </section>
-        <section id="faq" class="max-w-6xl mx-auto px-4 py-16 mt-16 glass-card backdrop-blur-md rounded-lg">
-  <h2 class="text-3xl md:text-4xl font-bold text-purple-800 mb-8 text-center">FAQ / अक्सर पूछे जाने वाले प्रश्न</h2>
-  <div class="space-y-8">
-
-    <!-- 1 -->
-    <div>
-      <h3 class="font-semibold text-lg">Q: कुंडली सेवा की कीमत क्या है?</h3>
-      <p class="mt-1">A: हमारी कुंडली सेवा केवल ₹499 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।</p>
-      <h3 class="font-semibold text-lg mt-4">Q: How much does the Kundali service cost?</h3>
-      <p class="mt-1">A: Our personalized Kundali report is just ₹499, including full chart analysis and remedies.</p>
-    </div>
-
-    <!-- 2 -->
-    <div>
-      <h3 class="font-semibold text-lg">Q: मुझे अपनी कुंडली कितने समय में मिल जाएगी?</h3>
-      <p class="mt-1">A: भुगतान और विवरण भरने के तुरंत बाद आपकी कुंडली 24–48 घंटे में ईमेल कर दी जाएगी।</p>
-      <h3 class="font-semibold text-lg mt-4">Q: How soon will I receive my Kundali?</h3>
-      <p class="mt-1">A: Once payment and details are submitted, you’ll get your report via email within 24–48 hours.</p>
-    </div>
-
-    <!-- 3 -->
-    <div>
-      <h3 class="font-semibold text-lg">Q: क्या आप हिंदी में राशिफल भी देते हैं?</h3>
-      <p class="mt-1">A: हाँ, हम हिंदी में मासिक राशिफल प्रदान करते हैं—जैसे अप्रैल 2025 के लिए खास सलाह।</p>
-      <h3 class="font-semibold text-lg mt-4">Q: Do you provide horoscopes in Hindi?</h3>
-      <p class="mt-1">A: Yes—our monthly Rashifal is available in Hindi, e.g., April 2025 predictions.</p>
-    </div>
-
-    <!-- 4 -->
-    <div>
-      <h3 class="font-semibold text-lg">Q: अंकशास्त्र (Numerology) कैसे काम करता है?</h3>
-      <p class="mt-1">A: हम आपके जन्मतिथि से लाइफ पाथ नंबर निकालकर आपके व्यक्तित्व और भविष्य के रुझानों पर प्रकाश डालते हैं।</p>
-      <h3 class="font-semibold text-lg mt-4">Q: How does Numerology work?</h3>
-      <p class="mt-1">A: We calculate your Life Path Number from your birth date to reveal personality traits and future trends.</p>
-    </div>
-
-  </div>
-</section>
-    </main>
-
-    <footer class="glass-card text-center py-8 mt-12">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-center space-x-6 mb-6">
-            <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                </svg>
-            </a>
-            <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-            </a>
-            <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-purple-600 hover:text-purple-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.615 3.184c-3.604-.145-5.573-.227-7.615-.227s-4.011.082-7.615.227C1.305 5.088.068 8.309.068 12s1.237 6.912 3.932 8.816c3.604.145 5.573.227 7.615.227s4.011-.082 7.615-.227C22.695 18.912 23.932 15.691 23.932 12s-1.237-6.912-3.932-8.816zM9.607 17.045v-10.09l6.803 5.008-6.803 5.082z" />
-                </svg>
-            </a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Quick Links</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="index.html" class="hover:text-purple-600">Home</a></li>
-                    <li><a href="kundali-form.html" class="hover:text-purple-600">Kundali</a></li>
-                    <li><a href="numerology.html" class="hover:text-purple-600">Numerology</a></li>
-                    <li><a href="rashifal.html" class="hover:text-purple-600">Rashifal</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Services</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="kundali-form.html" class="hover:text-purple-600">Get Your Kundali</a></li>
-                    <li><a href="numerology.html" class="hover:text-purple-600">Numerology Report</a></li>
-                    <li><a href="rashifal.html" class="hover:text-purple-600">Monthly Horoscope</a></li>
-                    <li><a href="contact.html" class="hover:text-purple-600">Consult Astrologer</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Information</h4>
-                <ul class="space-y-2 text-gray-600">
-                    <li><a href="about.html" class="hover:text-purple-600">About Us</a></li>
-                    <li><a href="contact.html" class="hover:text-purple-600">Contact Us</a></li>
-                    <li><a href="privacy-policy.html" class="hover:text-purple-600">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html" class="hover:text-purple-600">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-purple-700 mb-2">Contact</h4>
-                <p class="text-gray-600 mb-2">📞 Email: jyotishtark@gmail.com</p>
-                <p class="text-gray-600 mb-2">📞 8318513814</p>
-                <p class="text-gray-600 mb-2">📞 Whatsapp: 8318513814</p>
-                <p class="text-gray-600">📍 Lucknow, India</p>
-            </div>
-        </div>
-        <p class="text-gray-500 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
-    </div>
-</footer>
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileNav = document.getElementById('mobileNav');
-        const kundaliForm = document.getElementById('kundaliForm');
-        const submissionResponse = document.getElementById('submissionResponse');
-
-        menuToggle.addEventListener('click', () => {
-            mobileNav.classList.toggle('hidden');
-        });
-
-        kundaliForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Simulate form submission and response (replace with actual backend logic)
-            submissionResponse.textContent = "Submitting your details...";
-            setTimeout(() => {
-                // Simulate success (replace with actual server response)
-                const success = true;
-                if (success) {
-                    submissionResponse.textContent = "Your Kundali details have been submitted successfully! Our experts are analyzing your information.  We will contact you soon.";
-                     kundaliForm.reset();
-                } else {
-                    submissionResponse.textContent = "Error: There was a problem submitting your details. Please try again.";
-                }
-            }, 3000); // Simulate a 3-second delay
-        });
-    </script>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "कुंडली सेवा की कीमत क्या है?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "हमारी कुंडली सेवा केवल ₹499 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How much does the Kundali service cost?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Our personalized Kundali report is just ₹499, including full chart analysis and remedies."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "मुझे अपनी कुंडली कितने समय में मिल जाएगी?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "भुगतान और विवरण भरने के तुरंत बाद आपकी कुंडली 24–48 घंटे में ईमेल कर दी जाएगी।"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How soon will I receive my Kundali?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Once payment and details are submitted, you’ll get your report via email within 24–48 hours."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "क्या आप हिंदी में राशिफल भी देते हैं?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "हाँ, हम हिंदी में मासिक राशिफल प्रदान करते हैं—जैसे अप्रैल 2025 के लिए खास सलाह।"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you provide horoscopes in Hindi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes—our monthly Rashifal is available in Hindi, e.g., April 2025 predictions."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "अंकशास्त्र (Numerology) कैसे काम करता है?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "हम आपके जन्मतिथि से लाइफ पाथ नंबर निकालकर आपके व्यक्तित्व और भविष्य के रुझानों पर प्रकाश डालते हैं।"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does Numerology work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We calculate your Life Path Number from your birth date to reveal personality traits and future trends."
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7e22ce;
+      --primary-light: #a855f7;
+      --primary-dark: #6b21a8;
+      --secondary: #f59e0b;
+      --accent: #ec4899;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+    
+    body {
+      font-family: 'Inter', 'Hind', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f3f4f6;
+      background-attachment: fixed;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    .hindi {
+      font-family: 'Hind', sans-serif;
+    }
+    
+    .cosmic-bg {
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      position: relative;
+    }
+    
+    .cosmic-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    }
+    
+    .service-card {
+      transition: all 0.3s ease;
+      border-bottom: 4px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 50%;
+      font-size: 32px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .primary-button {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .primary-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .primary-button:hover::before {
+      left: 100%;
+    }
+    
+    .primary-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .secondary-button {
+      background: transparent;
+      color: white;
+      border: 2px solid var(--secondary);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .secondary-button:hover {
+      background: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+    
+    .star-rating {
+      color: var(--secondary);
+    }
+    
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .zodiac-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .planet-1 {
+      position: absolute;
+      top: 20%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+      box-shadow: 0 0 50px #f59e0b;
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .planet-2 {
+      position: absolute;
+      bottom: 15%;
+      right: 8%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+      box-shadow: 0 0 40px #ec4899;
+      opacity: 0.7;
+      animation: float 10s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+    
+    .astrological-symbol {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    
+    .blog-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .blog-image {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image {
+      transform: scale(1.05);
+    }
+    
+    .footer-links a {
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .count-up {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    @media (max-width: 768px) {
+      .planet-1, .planet-2 {
+        display: none;
       }
     }
-  ]
-}
-</script>
+    
+    .form-input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 25px;
+      right: 25px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .whatsapp-float:hover {
+      background-color: #128C7E;
+      transform: scale(1.1);
+    }
+    
+    .sample-kundali {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .sample-kundali:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 90%;
+      max-width: 700px;
+      border-radius: 16px;
+      position: relative;
+    }
+    
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Floating Planets -->
+  <div class="planet-1"></div>
+  <div class="planet-2"></div>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20have%20a%20question%20about%20Kundali%20service" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2">
+        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center glow">
+          <i class="fas fa-star-and-crescent text-white text-xl"></i>
+        </div>
+        <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+        <a href="kundali-form.html" class="nav-link text-amber-300 transition">Kundali</a>
+        <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+        <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+        <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+        <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+      <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-2 rounded text-amber-300 bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+      <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+      <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
+        <span class="block">Get Your Personalized Kundali</span>
+        <span class="text-3xl md:text-4xl text-amber-300">Unlock Your Cosmic Blueprint</span>
+      </h1>
+      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        Discover your life's purpose, challenges, and opportunities through Vedic astrology. Fill your birth details for an accurate Kundali analysis.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Accurate Predictions</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Expert Analysis</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Personalized Guidance</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Vedic Remedies</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Info Section -->
+  <section class="max-w-4xl mx-auto px-4 py-12 text-center">
+    <div class="glass-card p-8 rounded-2xl">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">📋 Process Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="p-4">
+          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">1</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Fill Form</h3>
+          <p class="text-gray-300 text-sm">Provide your accurate birth details using the form below</p>
+        </div>
+        <div class="p-4">
+          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">2</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Receive Call</h3>
+          <p class="text-gray-300 text-sm">We'll call you to verify details and process payment (₹499)</p>
+        </div>
+        <div class="p-4">
+          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">3</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Get Report</h3>
+          <p class="text-gray-300 text-sm">Receive your detailed Kundali report within 2-3 days</p>
+        </div>
+      </div>
+      <p class="text-amber-300 font-medium">
+        <i class="fas fa-info-circle mr-2"></i>
+        After submitting the form, our team will contact you for payment confirmation. Once payment is received, our expert astrologers will prepare your personalized Kundali report.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sample Kundali Section -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">Sample Kundali Report</h2>
+    <p class="text-xl text-gray-300 text-center mb-10 max-w-3xl mx-auto">
+      See what a complete Kundali analysis looks like before ordering. Our reports include planetary positions, dasha periods, and personalized remedies.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="sample-kundali glass-card rounded-2xl overflow-hidden cursor-pointer" onclick="openModal('sampleModal')">
+        <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Sample Kundali Report" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">Basic Kundali Report</h3>
+          <p class="text-gray-300 mb-4">Includes planetary positions, basic personality analysis, and general predictions.</p>
+          <div class="text-amber-300 font-medium">Click to view sample</div>
+        </div>
+      </div>
+      
+      <div class="sample-kundali glass-card rounded-2xl overflow-hidden cursor-pointer" onclick="openModal('detailedModal')">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Detailed Kundali Report" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">Detailed Kundali Report</h3>
+          <p class="text-gray-300 mb-4">Comprehensive analysis including career, relationships, health, and personalized remedies.</p>
+          <div class="text-amber-300 font-medium">Click to view sample</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kundali Form Section -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <div class="glass-card rounded-2xl p-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">Kundali Details Form</h2>
+      <p class="text-gray-300 text-center mb-8">
+        Please provide your accurate birth details for a precise Kundali analysis. All information is kept confidential.
+      </p>
+      
+      <form id="kundaliForm" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="form-label">Full Name <span class="text-red-400">*</span></label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Your Full Name" required>
+          </div>
+          <div>
+            <label for="gender" class="form-label">Gender <span class="text-red-400">*</span></label>
+            <select id="gender" name="gender" class="form-input" required>
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="dob" class="form-label">Date of Birth <span class="text-red-400">*</span></label>
+            <input type="date" id="dob" name="dob" class="form-input" required>
+          </div>
+          <div>
+            <label for="tob" class="form-label">Time of Birth <span class="text-red-400">*</span></label>
+            <input type="time" id="tob" name="tob" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="pob" class="form-label">Place of Birth <span class="text-red-400">*</span></label>
+            <input type="text" id="pob" name="pob" class="form-input" placeholder="City, State, Country" required>
+          </div>
+          <div>
+            <label for="maritalStatus" class="form-label">Marital Status <span class="text-red-400">*</span></label>
+            <select id="maritalStatus" name="maritalStatus" class="form-input" required>
+              <option value="">Select Status</option>
+              <option value="single">Single</option>
+              <option value="married">Married</option>
+              <option value="divorced">Divorced</option>
+              <option value="widowed">Widowed</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="occupation" class="form-label">Occupation</label>
+          <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Your Profession">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="email" class="form-label">Email Address <span class="text-red-400">*</span></label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+          </div>
+          <div>
+            <label for="phone" class="form-label">Phone Number <span class="text-red-400">*</span></label>
+            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 1234567890" required>
+          </div>
+        </div>
+
+        <div>
+          <label for="questions" class="form-label">Specific Questions or Concerns</label>
+          <textarea id="questions" name="questions" class="form-input h-32" placeholder="Any specific areas you want us to focus on (career, marriage, health, etc.)"></textarea>
+        </div>
+
+        <div class="flex items-center">
+          <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
+          <label for="consent" class="ml-2 block text-sm text-gray-300">
+            I agree to the <a href="privacy-policy.html" class="text-purple-400 hover:text-purple-300">privacy policy</a> and understand that I will be contacted for payment confirmation.
+          </label>
+        </div>
+
+        <button type="submit" class="primary-button w-full">
+          <i class="fas fa-paper-plane mr-2"></i>
+          Submit Kundali Details
+        </button>
+      </form>
+      
+      <div id="submissionResponse" class="mt-6 p-4 rounded-lg text-center font-semibold text-lg hidden"></div>
+    </div>
+  </section>
+
+  <!-- Support Section -->
+  <section class="max-w-4xl mx-auto px-4 py-12 text-center">
+    <div class="cosmic-bg rounded-2xl p-8 md:p-12 relative overflow-hidden">
+      <div class="relative z-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Need Help With the Form?</h2>
+        <p class="text-xl text-purple-100 mb-8">
+          Our astrology experts are available to assist you in filling out the form correctly.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20need%20help%20filling%20the%20Kundali%20form" class="primary-button bg-green-600 hover:bg-green-700" target="_blank">
+            <i class="fab fa-whatsapp mr-2"></i>
+            Chat on WhatsApp
+          </a>
+          <a href="tel:+918318513814" class="secondary-button">
+            <i class="fas fa-phone-alt mr-2"></i>
+            Call Us Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="max-w-6xl mx-auto px-4 py-16 glass-card backdrop-blur-md rounded-2xl">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">FAQ / अक्सर पूछे जाने वाले प्रश्न</h2>
+    <div class="space-y-8">
+
+      <!-- 1 -->
+      <div>
+        <h3 class="font-semibold text-lg text-amber-300">Q: कुंडली सेवा की कीमत क्या है?</h3>
+        <p class="mt-2 text-gray-300">A: हमारी कुंडली सेवा केवल ₹499 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।</p>
+        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How much does the Kundali service cost?</h3>
+        <p class="mt-2 text-gray-300">A: Our personalized Kundali report is just ₹499, including full chart analysis and remedies.</p>
+      </div>
+
+      <!-- 2 -->
+      <div>
+        <h3 class="font-semibold text-lg text-amber-300">Q: मुझे अपनी कुंडली कितने समय में मिल जाएगी?</h3>
+        <p class="mt-2 text-gray-300">A: भुगतान और विवरण भरने के तुरंत बाद आपकी कुंडली 24–48 घंटे में ईमेल कर दी जाएगी।</p>
+        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How soon will I receive my Kundali?</h3>
+        <p class="mt-2 text-gray-300">A: Once payment and details are submitted, you'll get your report via email within 24–48 hours.</p>
+      </div>
+
+      <!-- 3 -->
+      <div>
+        <h3 class="font-semibold text-lg text-amber-300">Q: क्या आप हिंदी में राशिफल भी देते हैं?</h3>
+        <p class="mt-2 text-gray-300">A: हाँ, हम हिंदी में मासिक राशिफल प्रदान करते हैं—जैसे अप्रैल 2025 के लिए खास सलाह।</p>
+        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: Do you provide horoscopes in Hindi?</h3>
+        <p class="mt-2 text-gray-300">A: Yes—our monthly Rashifal is available in Hindi, e.g., April 2025 predictions.</p>
+      </div>
+
+      <!-- 4 -->
+      <div>
+        <h3 class="font-semibold text-lg text-amber-300">Q: अंकशास्त्र (Numerology) कैसे काम करता है?</h3>
+        <p class="mt-2 text-gray-300">A: हम आपके जन्मतिथि से लाइफ पाथ नंबर निकालकर आपके व्यक्तित्व और भविष्य के रुझानों पर प्रकाश डालते हैं।</p>
+        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How does Numerology work?</h3>
+        <p class="mt-2 text-gray-300">A: We calculate your Life Path Number from your birth date to reveal personality traits and future trends.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="glass-card text-center py-12 mt-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-center space-x-6 mb-8 text-2xl">
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="index.html" class="text-gray-300">Home</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+            <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="about.html" class="text-gray-300">About Us</a></li>
+            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Sample Kundali Modal -->
+  <div id="sampleModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('sampleModal')">&times;</span>
+      <h2 class="text-2xl font-bold text-white mb-4">Sample Kundali Report</h2>
+      <div class="border border-gray-700 rounded-lg p-4 mb-4">
+        <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sample Kundali" class="w-full h-auto rounded">
+      </div>
+      <p class="text-gray-300 mb-4">This sample shows a basic Kundali report with planetary positions and basic predictions. Your actual report will be personalized based on your birth details.</p>
+      <button onclick="closeModal('sampleModal')" class="primary-button">Close</button>
+    </div>
+  </div>
+
+  <!-- Detailed Kundali Modal -->
+  <div id="detailedModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('detailedModal')">&times;</span>
+      <h2 class="text-2xl font-bold text-white mb-4">Detailed Kundali Report</h2>
+      <div class="border border-gray-700 rounded-lg p-4 mb-4">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Detailed Kundali" class="w-full h-auto rounded">
+      </div>
+      <p class="text-gray-300 mb-4">This sample shows a comprehensive Kundali report with detailed analysis of career, relationships, health, and personalized remedies. Your actual report will include specific guidance based on your planetary positions.</p>
+      <button onclick="closeModal('detailedModal')" class="primary-button">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    });
+
+    // Modal functions
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+
+    // Form submission
+    document.getElementById('kundaliForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const responseDiv = document.getElementById('submissionResponse');
+      responseDiv.classList.remove('hidden');
+      responseDiv.innerHTML = `
+        <div class="flex items-center justify-center">
+          <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
+          <span>Submitting your details...</span>
+        </div>
+      `;
+      
+      // Simulate form submission
+      setTimeout(() => {
+        responseDiv.innerHTML = `
+          <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Your Kundali details have been submitted successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
+          </div>
+        `;
+        
+        // Reset form
+        document.getElementById('kundaliForm').reset();
+        
+        // Optionally, you can send the form data to your server here
+        // const formData = new FormData(document.getElementById('kundaliForm'));
+        // fetch('/submit-kundali', { method: 'POST', body: formData });
+        
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
-
