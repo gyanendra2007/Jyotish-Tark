@@ -360,44 +360,22 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
     
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
+    .pdf-download-btn {
+      background: linear-gradient(to right, var(--secondary), #eab308);
+      color: var(--dark);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
     }
     
-    .modal-content {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 90%;
-      max-width: 700px;
-      border-radius: 16px;
-      position: relative;
-    }
-    
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
+    .pdf-download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4);
     }
   </style>
 </head>
@@ -505,25 +483,29 @@
   <section class="max-w-6xl mx-auto px-4 py-12">
     <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">Sample Kundali Report</h2>
     <p class="text-xl text-gray-300 text-center mb-10 max-w-3xl mx-auto">
-      See what a complete Kundali analysis looks like before ordering. Our reports include planetary positions, dasha periods, and personalized remedies.
+      Download our sample Kundali reports to see what you'll receive. Our reports include planetary positions, dasha periods, and personalized remedies.
     </p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="sample-kundali glass-card rounded-2xl overflow-hidden cursor-pointer" onclick="openModal('sampleModal')">
+      <div class="sample-kundali glass-card rounded-2xl overflow-hidden">
         <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Sample Kundali Report" class="w-full h-48 object-cover">
         <div class="p-6">
           <h3 class="text-xl font-bold text-white mb-2">Basic Kundali Report</h3>
           <p class="text-gray-300 mb-4">Includes planetary positions, basic personality analysis, and general predictions.</p>
-          <div class="text-amber-300 font-medium">Click to view sample</div>
+          <a href="sample-kundali-basic.pdf" download class="pdf-download-btn inline-block">
+            <i class="fas fa-download mr-2"></i>Download Sample PDF
+          </a>
         </div>
       </div>
       
-      <div class="sample-kundali glass-card rounded-2xl overflow-hidden cursor-pointer" onclick="openModal('detailedModal')">
+      <div class="sample-kundali glass-card rounded-2xl overflow-hidden">
         <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Detailed Kundali Report" class="w-full h-48 object-cover">
         <div class="p-6">
           <h3 class="text-xl font-bold text-white mb-2">Detailed Kundali Report</h3>
           <p class="text-gray-300 mb-4">Comprehensive analysis including career, relationships, health, and personalized remedies.</p>
-          <div class="text-amber-300 font-medium">Click to view sample</div>
+          <a href="sample-kundali-detailed.pdf" download class="pdf-download-btn inline-block">
+            <i class="fas fa-download mr-2"></i>Download Sample PDF
+          </a>
         </div>
       </div>
     </div>
@@ -738,53 +720,11 @@
     </div>
   </footer>
 
-  <!-- Sample Kundali Modal -->
-  <div id="sampleModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('sampleModal')">&times;</span>
-      <h2 class="text-2xl font-bold text-white mb-4">Sample Kundali Report</h2>
-      <div class="border border-gray-700 rounded-lg p-4 mb-4">
-        <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sample Kundali" class="w-full h-auto rounded">
-      </div>
-      <p class="text-gray-300 mb-4">This sample shows a basic Kundali report with planetary positions and basic predictions. Your actual report will be personalized based on your birth details.</p>
-      <button onclick="closeModal('sampleModal')" class="primary-button">Close</button>
-    </div>
-  </div>
-
-  <!-- Detailed Kundali Modal -->
-  <div id="detailedModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('detailedModal')">&times;</span>
-      <h2 class="text-2xl font-bold text-white mb-4">Detailed Kundali Report</h2>
-      <div class="border border-gray-700 rounded-lg p-4 mb-4">
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Detailed Kundali" class="w-full h-auto rounded">
-      </div>
-      <p class="text-gray-300 mb-4">This sample shows a comprehensive Kundali report with detailed analysis of career, relationships, health, and personalized remedies. Your actual report will include specific guidance based on your planetary positions.</p>
-      <button onclick="closeModal('detailedModal')" class="primary-button">Close</button>
-    </div>
-  </div>
-
   <script>
     // Mobile menu toggle
     document.getElementById('menuToggle').addEventListener('click', function () {
       document.getElementById('mobileNav').classList.toggle('hidden');
     });
-
-    // Modal functions
-    function openModal(modalId) {
-      document.getElementById(modalId).style.display = 'block';
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-      }
-    }
 
     // Form submission
     document.getElementById('kundaliForm').addEventListener('submit', function(e) {
