@@ -1,194 +1,701 @@
 <!-- rashifal.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monthly Rashifal - Jyotish Tark</title>
   <meta name="description" content="Jyotish Tark पर पढ़ें आज का राशिफल। जानें मेष से मीन तक सभी राशियों का भविष्यफल सरल और स्पष्ट भाषा में।">
+  <meta name="keywords" content="राशिफल 2025, आज का राशिफल, मासिक राशिफल, ज्योतिष टार्क राशिफल, हिंदी राशिफल">
+  <meta name="author" content="Jyotish Tark">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-   <style>
-    body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3 { font-family: 'Playfair Display', serif; }
-    .rashi-card:hover {
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7e22ce;
+      --primary-light: #a855f7;
+      --primary-dark: #6b21a8;
+      --secondary: #f59e0b;
+      --accent: #ec4899;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+    
+    body {
+      font-family: 'Inter', 'Hind', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f3f4f6;
+      background-attachment: fixed;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    .hindi {
+      font-family: 'Hind', sans-serif;
+    }
+    
+    .cosmic-bg {
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      position: relative;
+    }
+    
+    .cosmic-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    }
+    
+    .service-card {
+      transition: all 0.3s ease;
+      border-bottom: 4px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 50%;
+      font-size: 32px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .primary-button {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .primary-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .primary-button:hover::before {
+      left: 100%;
+    }
+    
+    .primary-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .secondary-button {
+      background: transparent;
+      color: white;
+      border: 2px solid var(--secondary);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .secondary-button:hover {
+      background: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+    
+    .star-rating {
+      color: var(--secondary);
+    }
+    
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .zodiac-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .planet-1 {
+      position: absolute;
+      top: 20%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+      box-shadow: 0 0 50px #f59e0b;
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .planet-2 {
+      position: absolute;
+      bottom: 15%;
+      right: 8%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+      box-shadow: 0 0 40px #ec4899;
+      opacity: 0.7;
+      animation: float 10s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+    
+    .astrological-symbol {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    
+    .blog-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .blog-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .blog-image {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image {
+      transform: scale(1.05);
+    }
+    
+    .footer-links a {
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .count-up {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    @media (max-width: 768px) {
+      .planet-1, .planet-2 {
+        display: none;
+      }
+    }
+    
+    .rashi-card {
+      transition: all 0.3s ease;
+      border-bottom: 4px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .rashi-card:hover {
+      transform: translateY(-8px);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+      background: rgba(255, 255, 255, 0.1);
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-pink-50 to-yellow-100 min-h-screen">
+<body class="min-h-screen">
+  <!-- Floating Planets -->
+  <div class="planet-1"></div>
+  <div class="planet-2"></div>
 
-  <!-- Header with Mobile Menu -->
-  <header class="bg-white shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-10">
+  <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
     <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <img src="logo.png" alt="Jyotish Tark Logo" class="h-10 w-10 object-contain" />
-        <span class="text-xl md:text-2xl font-bold text-purple-700">Jyotish Tark</span>
-      </div>
-      <div class="md:hidden">
-        <button id="menuToggle" class="text-purple-700 focus:outline-none text-xl">☰</button>
-      </div>
-      <nav id="navbar" class="hidden md:flex space-x-4">
-        <a href="index.html" class="text-purple-700 hover:underline">Home</a>
-        <a href="kundali-form.html" class="text-purple-700 hover:underline">Kundali</a>
-        <a href="numerology.html" class="text-purple-700 hover:underline">Numerology</a>
-        <a href="rashifal.html" class="text-purple-700 font-semibold underline">Rashifal</a>
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2">
+        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center glow">
+          <i class="fas fa-star-and-crescent text-white text-xl"></i>
+        </div>
+        <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+        <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+        <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+        <a href="rashifal.html" class="nav-link text-amber-300 transition">Rashifal</a>
+        <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+        <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
       </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-    <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-2">
-      <a href="index.html" class="text-purple-700">Home</a>
-      <a href="kundali-form.html" class="text-purple-700">Kundali</a>
-      <a href="numerology.html" class="text-purple-700">Numerology</a>
-      <a href="rashifal.html" class="text-purple-700 font-semibold">Rashifal</a>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+      <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+      <a href="rashifal.html" class="block px-4 py-2 rounded text-amber-300 bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+      <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
     </nav>
   </header>
 
+  <!-- Hero Section -->
+  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
+        <span class="block">🌟 अप्रैल 2025 राशिफल 🌟</span>
+        <span class="text-3xl md:text-4xl text-amber-300">Monthly Horoscope</span>
+      </h1>
+      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        जानिए इस महीने आपकी राशि के अनुसार क्या कहते हैं ग्रह-नक्षत्र। पढ़ें स्वास्थ्य, प्रेम, करियर और धन से जुड़ी भविष्यवाणियाँ।
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">मेष</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">वृषभ</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">मिथुन</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">कर्क</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">सिंह</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">कन्या</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">तुला</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">वृश्चिक</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">धनु</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">मकर</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">कुंभ</span>
+        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">मीन</span>
+      </div>
+    </div>
+  </section>
+
   <!-- Rashifal Section -->
-  <section class="max-w-5xl mx-auto px-4 py-10">
+  <section class="max-w-7xl mx-auto px-6 py-12">
     <div class="text-center mb-12">
-      <h1 class="text-3xl md:text-4xl font-bold text-purple-800 mb-3">🌟 अप्रैल 2025 राशिफल 🌟</h1>
-      <p class="text-gray-700 max-w-2xl mx-auto">जानिए इस महीने आपकी राशि के अनुसार क्या कहते हैं ग्रह-नक्षत्र। पढ़ें स्वास्थ्य, प्रेम, करियर और धन से जुड़ी भविष्यवाणियाँ।</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+        सभी राशियों का मासिक भविष्यफल
+      </h2>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        जानें कैसा रहेगा अप्रैल 2025 का महीना आपके लिए। पढ़ें विस्तृत राशिफल और ग्रहों की चाल का प्रभाव।
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- मेष (Aries) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♈</span>
-          <h3 class="text-xl font-bold text-purple-700">मेष (Aries)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♈</span>
+          <h3 class="text-xl font-bold text-white">मेष (Aries)</h3>
         </div>
-        <p class="text-gray-600 text-sm">प्रेम और करियर में सकारात्मकता रहेगी। अप्रैल में आपका आत्मविश्वास बढ़ेगा। करियर में नए अवसर मिलेंगे। प्रेम संबंध मजबूत होंगे। स्वास्थ्य का ध्यान रखें।</p>
+        <p class="text-gray-300 text-sm">प्रेम और करियर में सकारात्मकता रहेगी। अप्रैल में आपका आत्मविश्वास बढ़ेगा। करियर में नए अवसर मिलेंगे। प्रेम संबंध मजबूत होंगे। स्वास्थ्य का ध्यान रखें।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: उत्तम</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- वृषभ (Taurus) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♉</span>
-          <h3 class="text-xl font-bold text-purple-700">वृषभ (Taurus)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♉</span>
+          <h3 class="text-xl font-bold text-white">वृषभ (Taurus)</h3>
         </div>
-        <p class="text-gray-600 text-sm">धन और स्वास्थ्य के लिए अच्छा समय। आर्थिक स्थिति मजबूत होगी, निवेश से लाभ मिलेगा। स्वास्थ्य ठीक रहेगा, पर थकान से बचें। पारिवारिक सुख में वृद्धि होगी।</p>
+        <p class="text-gray-300 text-sm">धन और स्वास्थ्य के लिए अच्छा समय। आर्थिक स्थिति मजबूत होगी, निवेश से लाभ मिलेगा। स्वास्थ्य ठीक रहेगा, पर थकान से बचें। पारिवारिक सुख में वृद्धि होगी।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: अच्छा</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: स्थिर</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: उत्तम</span>
+          </div>
+        </div>
       </div>
 
       <!-- मिथुन (Gemini) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♊</span>
-          <h3 class="text-xl font-bold text-purple-700">मिथुन (Gemini)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♊</span>
+          <h3 class="text-xl font-bold text-white">मिथुन (Gemini)</h3>
         </div>
-        <p class="text-gray-600 text-sm">संचार और रिश्तों में सुधार होगा। शिक्षा या व्यापार में सफलता मिलेगी। जीवनसाथी के साथ तालमेल बेहतर होगा। यात्रा के योग बनेंगे। सामाजिक प्रतिष्ठा बढ़ेगी।</p>
+        <p class="text-gray-300 text-sm">संचार और रिश्तों में सुधार होगा। शिक्षा या व्यापार में सफलता मिलेगी। जीवनसाथी के साथ तालमेल बेहतर होगा। यात्रा के योग बनेंगे। सामाजिक प्रतिष्ठा बढ़ेगी।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: उत्तम</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- कर्क (Cancer) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♋</span>
-          <h3 class="text-xl font-bold text-purple-700">कर्क (Cancer)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♋</span>
+          <h3 class="text-xl font-bold text-white">कर्क (Cancer)</h3>
         </div>
-        <p class="text-gray-600 text-sm">भावनात्मक संतुलन बनाए रखें। पारिवारिक मामलों में सावधानी बरतें। धन लाभ के योग हैं। स्वास्थ्य पर ध्यान दें। रचनात्मक कार्यों में सफलता मिल सकती है।</p>
+        <p class="text-gray-300 text-sm">भावनात्मक संतुलन बनाए रखें। पारिवारिक मामलों में सावधानी बरतें। धन लाभ के योग हैं। स्वास्थ्य पर ध्यान दें। रचनात्मक कार्यों में सफलता मिल सकती है।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: सामान्य</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: सतर्क</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- सिंह (Leo) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♌</span>
-          <h3 class="text-xl font-bold text-purple-700">सिंह (Leo)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♌</span>
+          <h3 class="text-xl font-bold text-white">सिंह (Leo)</h3>
         </div>
-        <p class="text-gray-600 text-sm">प्रतिष्ठा और सम्मान में वृद्धि होगी। करियर में उन्नति के योग हैं। रचनात्मक कार्यों में सफलता मिलेगी। प्रेम जीवन सुखद रहेगा। धार्मिक गतिविधियों में रुचि बढ़ेगी।</p>
+        <p class="text-gray-300 text-sm">प्रतिष्ठा और सम्मान में वृद्धि होगी। करियर में उन्नति के योग हैं। रचनात्मक कार्यों में सफलता मिलेगी। प्रेम जीवन सुखद रहेगा। धार्मिक गतिविधियों में रुचि बढ़ेगी।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: शुभ</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: उत्तम</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- कन्या (Virgo) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♍</span>
-          <h3 class="text-xl font-bold text-purple-700">कन्या (Virgo)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♍</span>
+          <h3 class="text-xl font-bold text-white">कन्या (Virgo)</h3>
         </div>
-        <p class="text-gray-600 text-sm">स्वास्थ्य और धन पर ध्यान दें। कामकाज में व्यस्तता रहेगी। छोटी बीमारियाँ हो सकती हैं। धन प्रबंधन सावधानी से करें। नौकरी में नए अवसर मिल सकते हैं।</p>
+        <p class="text-gray-300 text-sm">स्वास्थ्य और धन पर ध्यान दें। कामकाज में व्यस्तता रहेगी। छोटी बीमारियाँ हो सकती हैं। धन प्रबंधन सावधानी से करें। नौकरी में नए अवसर मिल सकते हैं।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: सामान्य</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: व्यस्त</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: सतर्क</span>
+          </div>
+        </div>
       </div>
 
       <!-- तुला (Libra) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♎</span>
-          <h3 class="text-xl font-bold text-purple-700">तुला (Libra)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♎</span>
+          <h3 class="text-xl font-bold text-white">तुला (Libra)</h3>
         </div>
-        <p class="text-gray-600 text-sm">रिश्तों और साझेदारी में सुधार होगा। वैवाहिक जीवन सुखद रहेगा। व्यापार में लाभ होगा। कानूनी मामलों में सफलता मिल सकती है। सामाजिक कार्यों में भागीदारी बढ़ेगी।</p>
+        <p class="text-gray-300 text-sm">रिश्तों और साझेदारी में सुधार होगा। वैवाहिक जीवन सुखद रहेगा। व्यापार में लाभ होगा। कानूनी मामलों में सफलता मिल सकती है। सामाजिक कार्यों में भागीदारी बढ़ेगी।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: उत्तम</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- वृश्चिक (Scorpio) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♏</span>
-          <h3 class="text-xl font-bold text-purple-700">वृश्चिक (Scorpio)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♏</span>
+          <h3 class="text-xl font-bold text-white">वृश्चिक (Scorpio)</h3>
         </div>
-        <p class="text-gray-600 text-sm">आर्थिक स्थिति मजबूत होगी। नौकरी या व्यवसाय में लाभ के योग हैं। प्रेम संबंधों में गहराई आएगी। स्वास्थ्य अच्छा रहेगा। गुप्त शत्रुओं से सावधान रहें।</p>
+        <p class="text-gray-300 text-sm">आर्थिक स्थिति मजबूत होगी। नौकरी या व्यवसाय में लाभ के योग हैं। प्रेम संबंधों में गहराई आएगी। स्वास्थ्य अच्छा रहेगा। गुप्त शत्रुओं से सावधान रहें।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: गहरा</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: लाभदायक</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: उत्तम</span>
+          </div>
+        </div>
       </div>
 
       <!-- धनु (Sagittarius) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♐</span>
-          <h3 class="text-xl font-bold text-purple-700">धनु (Sagittarius)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♐</span>
+          <h3 class="text-xl font-bold text-white">धनु (Sagittarius)</h3>
         </div>
-        <p class="text-gray-600 text-sm">यात्रा और शिक्षा के लिए शुभ समय। विदेश यात्रा के योग बन रहे हैं। ज्ञान प्राप्ति के नए रास्ते खुलेंगे। प्रेम जीवन में रोमांच रहेगा। आध्यात्मिक अनुभव प्राप्त होंगे।</p>
+        <p class="text-gray-300 text-sm">यात्रा और शिक्षा के लिए शुभ समय। विदेश यात्रा के योग बन रहे हैं। ज्ञान प्राप्ति के नए रास्ते खुलेंगे। प्रेम जीवन में रोमांच रहेगा। आध्यात्मिक अनुभव प्राप्त होंगे।</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: रोमांचक</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: यात्रा</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: स्थिर</span>
+          </div>
+        </div>
       </div>
 
       <!-- मकर (Capricorn) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♑</span>
-          <h3 class="text-xl font-bold text-purple-700">मकर (Capricorn)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♑</span>
+          <h3 class="text-xl font-bold text-white">मकर (Capricorn)</h3>
         </div>
-        <p class="text-gray-600 text-sm">करियर और सामाजिक प्रतिष्ठा बढ़ेगी। मेहनत का फल मिलेगा। पारिवारिक सहयोग मिलेगा। स्वास्थ्य का ध्यान रखें। भूमि या संपत्ति से लाभ हो सकता है।</p>
+        <p class="text-gray-300 text-sm">करियर और सामाजिक प्रतिष्ठा बढ़ेगी। मेहनत का फल मिलेगा। पारिवारिक सहयोग मिलेगा। स्वास्थ्य का ध्यान रखें। भूमि या संपत्ति से लाभ हो सकता है。</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: स्थिर</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: उन्नति</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
+          </div>
+        </div>
       </div>
 
       <!-- कुंभ (Aquarius) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♒</span>
-          <h3 class="text-xl font-bold text-purple-700">कुंभ (Aquarius)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♒</span>
+          <h3 class="text-xl font-bold text-white">कुंभ (Aquarius)</h3>
         </div>
-        <p class="text-gray-600 text-sm">आर्थिक लाभ और नए अवसर मिलेंगे। निवेश से लाभ हो सकता है। रिश्तों में मधुरता आएगी। यात्रा के योग हैं। सामाजिक कार्यों में प्रशंसा मिलेगी।</p>
+        <p class="text-gray-300 text-sm">आर्थिक लाभ और नए अवसर मिलेंगे। निवेश से लाभ हो सकता है। रिश्तों में मधुरता आएगी। यात्रा के योग हैं। सामाजिक कार्यों में प्रशंसा मिलेगी。</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: मधुर</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: अवसर</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: लाभ</span>
+          </div>
+        </div>
       </div>
 
       <!-- मीन (Pisces) -->
-      <div class="bg-white shadow-md rounded-lg p-5 transition-all duration-300 rashi-card">
-        <div class="flex items-center mb-3">
-          <span class="text-2xl mr-2">♓</span>
-          <h3 class="text-xl font-bold text-purple-700">मीन (Pisces)</h3>
+      <div class="rashi-card p-6 rounded-2xl">
+        <div class="flex items-center mb-4">
+          <span class="text-3xl mr-3">♓</span>
+          <h3 class="text-xl font-bold text-white">मीन (Pisces)</h3>
         </div>
-        <p class="text-gray-600 text-sm">आध्यात्मिक और भावनात्मक शांति मिलेगी। धार्मिक गतिविधियों में रुचि बढ़ेगी। प्रेम जीवन सुखद रहेगा। स्वास्थ्य ठीक रहेगा। कला के क्षेत्र में सफलता मिल सकती है।</p>
+        <p class="text-gray-300 text-sm">आध्यात्मिक और भावनात्मक शांति मिलेगी। धार्मिक गतिविधियों में रुचि बढ़ेगी। प्रेम जीवन सुखद रहेगा। स्वास्थ्य ठीक रहेगा। कला के क्षेत्र में सफलता मिल सकती है。</p>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <div class="flex justify-between text-xs text-gray-400">
+            <span><i class="fas fa-heart text-pink-400 mr-1"></i> प्रेम: सुखद</span>
+            <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: रचनात्मक</span>
+            <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: स्थिर</span>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="mt-12 bg-white rounded-lg shadow-md p-6 text-center">
-      <h3 class="text-xl font-bold text-purple-700 mb-3">🌺 अप्रैल 2025 विशेष सलाह</h3>
-      <p class="text-gray-600 text-sm">इस महीने गुरु और शुक्र की स्थिति अनुकूल है। शुक्र पक्ष (15 अप्रैल से) में महत्वपूर्ण कार्य शुरू करें। 8 अप्रैल को सूर्य ग्रहण के प्रभाव से बचने के लिए दान-पुण्य करें।</p>
+  <!-- Special Advice Section -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+      <div class="relative z-10 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+          🌺 अप्रैल 2025 विशेष सलाह
+        </h2>
+        <p class="text-xl text-purple-100 mb-8">
+          इस महीने गुरु और शुक्र की स्थिति अनुकूल है। शुक्र पक्ष (15 अप्रैल से) में महत्वपूर्ण कार्य शुरू करें। 8 अप्रैल को सूर्य ग्रहण के प्रभाव से बचने के लिए दान-पुण्य करें।
+        </p>
+        <div class="bg-purple-900 bg-opacity-30 p-6 rounded-xl mt-6 text-left">
+          <h3 class="text-xl font-bold text-amber-300 mb-4">⭐ महीने के शुभ दिन</h3>
+          <ul class="list-disc list-inside space-y-2 text-purple-100">
+            <li>विजयादशमी - 5 अप्रैल (नए कार्यों की शुरुआत के लिए शुभ)</li>
+            <li>एकादशी - 12 अप्रैल (व्रत और आध्यात्मिक कार्यों के लिए शुभ)</li>
+            <li>पूर्णिमा - 20 अप्रैल (दान-पुण्य और धार्मिक कार्यों के लिए शुभ)</li>
+            <li>अक्षय तृतीया - 30 अप्रैल (महत्वपूर्ण खरीदारी और निवेश के लिए शुभ)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <div class="glass-card rounded-2xl p-8 md:p-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        Want Personalized Horoscope?
+      </h2>
+      <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+        Get your detailed monthly horoscope based on your exact birth details, not just sun signs.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="kundali-form.html" class="primary-button">
+          <i class="fas fa-star-and-crescent mr-2"></i>
+          Get Your Kundali
+        </a>
+        <a href="contact.html" class="secondary-button">
+          <i class="fas fa-user-astronaut mr-2"></i>
+          Consult Our Astrologer
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-100 text-center text-sm text-gray-600 py-4">
-    <div class="max-w-4xl mx-auto px-4">
-      <p>📞 Contact: jyotishtark@gmail.com | 📍 Based in India</p>
-      <p class="mt-1">© 2025 Jyotish Tark. All rights reserved.</p>
-      <div class="mt-2 flex justify-center space-x-4">
-        <a href="#" class="text-purple-600 hover:underline">Privacy Policy</a>
-        <a href="#" class="text-purple-600 hover:underline">Terms of Service</a>
+  <footer class="glass-card text-center py-12 mt-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-center space-x-6 mb-8 text-2xl">
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-whatsapp"></i>
+        </a>
       </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="index.html" class="text-gray-300">Home</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+            <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="about.html" class="text-gray-300">About Us</a></li>
+            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Mobile Menu Script -->
   <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-
-    menuToggle?.addEventListener('click', () => {
-      mobileNav.classList.toggle('hidden');
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('mobileNav').classList.toggle('hidden');
     });
   </script>
-
 </body>
 </html>
