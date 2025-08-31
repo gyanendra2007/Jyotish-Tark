@@ -165,30 +165,46 @@
 </head>
 <body class="min-h-screen">
 
-    <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
-                <span class="text-2xl md:text-3xl font-bold text-purple-700">Jyotish Tark</span>
-            </div>
-            <div class="md:hidden">
-                <button id="menuToggle" class="text-purple-700 focus:outline-none text-2xl">☰</button>
-            </div>
-            <nav id="navbar" class="hidden md:flex space-x-6">
-                <a href="/" class="text-purple-700 font-semibold text-lg underline">Home</a>
-                <a href="kundali-form.html" class="text-purple-700 hover:underline text-lg">Kundali</a>
-                <a href="numerology.html" class="text-purple-700 hover:underline text-lg">Numerology</a>
-                <a href="rashifal.html" class="text-purple-700 hover:underline text-lg">Rashifal</a>
-                <a href="contact.html" class="text-purple-700 hover:underline text-lg">Contact</a>
-            </nav>
-        </div>
-        <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-3 py-3">
-            <a href="/" class="text-purple-700 font-semibold text-lg px-4 py-2 bg-purple-50 rounded">Home</a>
-            <a href="kundali-form.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Kundali</a>
-            <a href="numerology.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Numerology</a>
-            <a href="rashifal.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Rashifal</a>
-        </nav>
-    </header>
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50">
+  <div class="flex justify-between items-center">
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2">
+      <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
+      <span class="text-2xl md:text-3xl font-bold text-purple-700">Jyotish Tark</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-6 font-medium">
+      <a href="/" class="hover:text-purple-600 transition">Home</a>
+      <a href="kundali-form.html" class="hover:text-purple-600 transition">Kundali</a>
+      <a href="numerology.html" class="hover:text-purple-600 transition">Numerology</a>
+      <a href="rashifal.html" class="hover:text-purple-600 transition">Rashifal</a>
+      <a href="blog.html" class="hover:text-purple-600 transition">Blog</a>
+      <a href="contact.html" class="hover:text-purple-600 transition">Contact</a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button id="menuToggle" class="md:hidden text-purple-700 focus:outline-none text-3xl">☰</button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4">
+    <a href="/" class="block px-4 py-2 rounded hover:bg-purple-50">Home</a>
+    <a href="kundali-form.html" class="block px-4 py-2 rounded hover:bg-purple-50">Kundali</a>
+    <a href="numerology.html" class="block px-4 py-2 rounded hover:bg-purple-50">Numerology</a>
+    <a href="rashifal.html" class="block px-4 py-2 rounded hover:bg-purple-50">Rashifal</a>
+    <a href="blog.html" class="block px-4 py-2 rounded hover:bg-purple-50">Blog</a>
+    <a href="contact.html" class="block px-4 py-2 rounded hover:bg-purple-50">Contact</a>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu toggle
+  document.getElementById('menuToggle').addEventListener('click', function () {
+    document.getElementById('mobileNav').classList.toggle('hidden');
+  });
+</script>
+
     <section class="glass-card rounded-2xl shadow-xl max-w-5xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center">
         <h1 class="text-4xl md:text-6xl font-bold text-purple-800 mb-6">
             <span class="block">Unlock Your Cosmic Blueprint</span>
