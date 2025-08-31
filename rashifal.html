@@ -1,4 +1,5 @@
 <!-- rashifal.html -->
+<!-- rashifal.html -->
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -304,6 +305,7 @@
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
     }
     
     .rashi-card:hover {
@@ -311,6 +313,89 @@
       border-bottom-color: var(--secondary);
       box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
       background: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* New styles for expanded rashi view */
+    .expanded-rashi {
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.15) 0%, rgba(30, 41, 59, 0.2) 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .rashi-detail-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .rashi-detail-section h4 {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .rashi-detail-section h4 i {
+      margin-right: 0.5rem;
+    }
+    
+    .read-more-btn {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    
+    .read-more-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .back-to-list {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .back-to-list:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .rashi-grid {
+      transition: all 0.5s ease;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .active-rashi {
+      border: 2px solid var(--secondary);
+      transform: scale(1.02);
     }
   </style>
 </head>
@@ -394,9 +479,19 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Expanded Rashi View (initially hidden) -->
+    <div id="expandedRashiView" class="hidden expanded-rashi fade-in">
+      <button id="backToList" class="back-to-list">
+        <i class="fas fa-arrow-left mr-2"></i> सभी राशियों पर वापस जाएं
+      </button>
+      
+      <div id="expandedRashiContent"></div>
+    </div>
+
+    <!-- Rashi Grid -->
+    <div id="rashiGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- मेष (Aries) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="mesha">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♈</span>
           <h3 class="text-xl font-bold text-white">मेष (Aries)</h3>
@@ -408,11 +503,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- वृषभ (Taurus) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="vrishabha">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♉</span>
           <h3 class="text-xl font-bold text-white">वृषभ (Taurus)</h3>
@@ -424,11 +522,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: स्थिर</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: उत्तम</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- मिथुन (Gemini) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="mithuna">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♊</span>
           <h3 class="text-xl font-bold text-white">मिथुन (Gemini)</h3>
@@ -440,11 +541,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- कर्क (Cancer) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="karka">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♋</span>
           <h3 class="text-xl font-bold text-white">कर्क (Cancer)</h3>
@@ -456,11 +560,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: सतर्क</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- सिंह (Leo) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="simha">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♌</span>
           <h3 class="text-xl font-bold text-white">सिंह (Leo)</h3>
@@ -472,11 +579,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: उत्तम</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- कन्या (Virgo) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="kanya">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♍</span>
           <h3 class="text-xl font-bold text-white">कन्या (Virgo)</h3>
@@ -488,11 +598,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: व्यस्त</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: सतर्क</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- तुला (Libra) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="tula">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♎</span>
           <h3 class="text-xl font-bold text-white">तुला (Libra)</h3>
@@ -504,11 +617,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: शुभ</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- वृश्चिक (Scorpio) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="vrishchika">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♏</span>
           <h3 class="text-xl font-bold text-white">वृश्चिक (Scorpio)</h3>
@@ -520,11 +636,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: लाभदायक</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: उत्तम</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- धनु (Sagittarius) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="dhanu">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♐</span>
           <h3 class="text-xl font-bold text-white">धनु (Sagittarius)</h3>
@@ -536,11 +655,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: यात्रा</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: स्थिर</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- मकर (Capricorn) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="makara">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♑</span>
           <h3 class="text-xl font-bold text-white">मकर (Capricorn)</h3>
@@ -552,11 +674,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: उन्नति</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: अच्छा</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- कुंभ (Aquarius) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="kumbha">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♒</span>
           <h3 class="text-xl font-bold text-white">कुंभ (Aquarius)</h3>
@@ -568,11 +693,14 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: अवसर</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: लाभ</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
 
       <!-- मीन (Pisces) -->
-      <div class="rashi-card p-6 rounded-2xl">
+      <div class="rashi-card p-6 rounded-2xl" data-rashi="meena">
         <div class="flex items-center mb-4">
           <span class="text-3xl mr-3">♓</span>
           <h3 class="text-xl font-bold text-white">मीन (Pisces)</h3>
@@ -584,6 +712,9 @@
             <span><i class="fas fa-briefcase text-blue-400 mr-1"></i> करियर: रचनात्मक</span>
             <span><i class="fas fa-rupee-sign text-green-400 mr-1"></i> धन: स्थिर</span>
           </div>
+          <button class="read-more-btn mt-3">
+            <i class="fas fa-book-open mr-2"></i> विस्तृत राशिफल पढ़ें
+          </button>
         </div>
       </div>
     </div>
@@ -644,7 +775,7 @@
         <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
           <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text white hover:text-amber-300 transition">
           <i class="fab fa-youtube"></i>
         </a>
         <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
@@ -696,6 +827,221 @@
     document.getElementById('menuToggle').addEventListener('click', function () {
       document.getElementById('mobileNav').classList.toggle('hidden');
     });
+
+    // Rashi data with detailed predictions
+    const rashiData = {
+      mesha: {
+        name: "मेष (Aries)",
+        symbol: "♈",
+        summary: "प्रेम और करियर में सकारात्मकता रहेगी। अप्रैल में आपका आत्मविश्वास बढ़ेगा। करियर में नए अवसर मिलेंगे। प्रेम संबंध मजबूत होंगे। स्वास्थ्य का ध्यान रखें।",
+        details: {
+          love: "इस महीने प्रेम जीवन में सुखद अनुभव होंगे। विवाहित जातकों के लिए समय अच्छा है। प्रेम प्रस्ताव आ सकते हैं। रोमांस के लिए समय अनुकूल है।",
+          career: "करियर में उन्नति के योग बन रहे हैं। नौकरी में पदोन्नति मिल सकती है। व्यवसाय में नए अवसर मिलेंगे। सहकर्मियों के साथ संबंध मधुर रहेंगे।",
+          health: "स्वास्थ्य generally अच्छा रहेगा, लेकिन तनाव से बचें। नियमित व्यायाम करें। सिरदर्द की समस्या हो सकती है। पाचन तंत्र का ध्यान रखें।",
+          finance: "आर्थिक स्थिति मजबूत होगी। निवेश से लाभ मिलेगा। अप्रत्याशित धन लाभ के योग हैं। खर्चों पर नियंत्रण रखें।"
+        }
+      },
+      vrishabha: {
+        name: "वृषभ (Taurus)",
+        symbol: "♉",
+        summary: "धन और स्वास्थ्य के लिए अच्छा समय। आर्थिक स्थिति मजबूत होगी, निवेश से लाभ मिलेगा। स्वास्थ्य ठीक रहेगा, पर थकान से बचें। पारिवारिक सुख में वृद्धि होगी।",
+        details: {
+          love: "प्रेम संबंधों में मधुरता आएगी। जीवनसाथी के साथ समय बिताने के लिए अच्छा समय है। नए रिश्ते बनाने के योग हैं।",
+          career: "करियर में स्थिरता बनी रहेगी। मेहनत का फल मिलेगा। व्यवसाय में expansion के अवसर आ सकते हैं।",
+          health: "स्वास्थ्य generally अच्छा रहेगा लेकिन थकान से बचें। नियमित दिनचर्या का पालन करें। आँखों और गले का ध्यान रखें।",
+          finance: "आर्थिक स्थिति मजबूत होगी। निवेश से लाभ मिलेगा। पुराने निवेश का return मिल सकता है।"
+        }
+      },
+      mithuna: {
+        name: "मिथुन (Gemini)",
+        symbol: "♊",
+        summary: "संचार और रिश्तों में सुधार होगा। शिक्षा या व्यापार में सफलता मिलेगी। जीवनसाथी के साथ तालमेल बेहतर होगा। यात्रा के योग बनेंगे। सामाजिक प्रतिष्ठा बढ़ेगी।",
+        details: {
+          love: "प्रेम जीवन में सुखद बदलाव आएंगे। रिश्तों में mutual understanding बढ़ेगी। नए रोमांटिक connections बन सकते हैं।",
+          career: "करियर में growth के अवसर मिलेंगे। Business partnerships फायदेमंद रहेंगे। Creative fields में success मिलेगी।",
+          health: "स्वास्थ्य generally अच्छा रहेगा। Nervous system का ध्यान रखें। Meditation beneficial रहेगा।",
+          finance: "Financial stability बनी रहेगी। Unexpected gains के योग हैं। Investments में सावधानी बरतें।"
+        }
+      },
+      karka: {
+        name: "कर्क (Cancer)",
+        symbol: "♋",
+        summary: "भावनात्मक संतुलन बनाए रखें। पारिवारिक मामलों में सावधानी बरतें। धन लाभ के योग हैं। स्वास्थ्य पर ध्यान दें। रचनात्मक कार्यों में सफलता मिल सकती है।",
+        details: {
+          love: "Emotional connections गहरे होंगे। Family life में harmony बढ़ेगी। Old relationships revive हो सकती हैं।",
+          career: "Career में challenges आ सकते हैं लेकिन success मिलेगी। Teamwork beneficial रहेगा। New projects शुरू करने का अच्छा time है।",
+          health: "Health generally good रहेगी लेकिन stress manage करें। Digestive system का ध्यान रखें।",
+          finance: "Financial gains के योग हैं। Property matters में success मिलेगी। Savings increase होंगी।"
+        }
+      },
+      simha: {
+        name: "सिंह (Leo)",
+        symbol: "♌",
+        summary: "प्रतिष्ठा और सम्मान में वृद्धि होगी। करियर में उन्नति के योग हैं। रचनात्मक कार्यों में सफलता मिलेगी। प्रेम जीवन सुखद रहेगा। धार्मिक गतिविधियों में रुचि बढ़ेगी।",
+        details: {
+          love: "Love life में excitement रहेगी। Romantic proposals आ सकते हैं। Married life harmonious रहेगी।",
+          career: "Career growth के excellent opportunities हैं। Leadership roles मिल सकते हैं। Recognition मिलेगी।",
+          health: "Health generally good रहेगी। Heart health का ध्यान रखें। Regular exercise beneficial रहेगा।",
+          finance: "Financial status strong रहेगा। Investments profitable रहेंगे। Unexpected gains के chances हैं।"
+        }
+      },
+      kanya: {
+        name: "कन्या (Virgo)",
+        symbol: "♍",
+        summary: "स्वास्थ्य और धन पर ध्यान दें। कामकाज में व्यस्तता रहेगी। छोटी बीमारियाँ हो सकती हैं। धन प्रबंधन सावधानी से करें। नौकरी में नए अवसर मिल सकते हैं।",
+        details: {
+          love: "Love life में stability आएगी। Existing relationships stronger होंगी। Communication improve होगी।",
+          career: "Career में busy period रहेगा। New opportunities मिलेंगी। Work-life balance maintain करना important है।",
+          health: "Health पर ध्यान देने की जरूरत है। Minor ailments हो सकती हैं। Dietary habits improve करें।",
+          finance: "Financial caution required है। Unnecessary expenses avoid करें। Savings पर focus करें।"
+        }
+      },
+      tula: {
+        name: "तुला (Libra)",
+        symbol: "♎",
+        summary: "रिश्तों और साझेदारी में सुधार होगा। वैवाहिक जीवन सुखद रहेगा। व्यापार में लाभ होगा। कानूनी मामलों में सफलता मिल सकती है। सामाजिक कार्यों में भागीदारी बढ़ेगी।",
+        details: {
+          love: "Relationships में harmony बढ़ेगी। Marriage के लिए favorable time है। New connections beneficial रहेंगे।",
+          career: "Business partnerships successful रहेंगी। Legal matters में success मिलेगी। Creative projects flourish होंगे।",
+          health: "Health generally good रहेगी। Kidney health का ध्यान रखें। Yoga beneficial रहेगा।",
+          finance: "Financial gains के योग हैं। Joint ventures profitable रहेंगी। Investments returns देंगे।"
+        }
+      },
+      vrishchika: {
+        name: "वृश्चिक (Scorpio)",
+        symbol: "♏",
+        summary: "आर्थिक स्थिति मजबूत होगी। नौकरी या व्यवसाय में लाभ के योग हैं। प्रेम संबंधों में गहराई आएगी। स्वास्थ्य अच्छा रहेगा। गुप्त शत्रुओं से सावधान रहें।",
+        details: {
+          love: "Love life intense और passionate रहेगी। Emotional bonds strong होंगे। Transformative experiences आ सकते हैं।",
+          career: "Career में growth के opportunities हैं। Research fields में success मिलेगी। Hidden talents discover होंगे।",
+          health: "Health generally good रहेगी। Reproductive health का ध्यान रखें। Stress management important है।",
+          finance: "Financial status strong रहेगा। Investments profitable रहेंगे। Inheritance के योग बन रहे हैं।"
+        }
+      },
+      dhanu: {
+        name: "धनु (Sagittarius)",
+        symbol: "♐",
+        summary: "यात्रा और शिक्षा के लिए शुभ समय। विदेश यात्रा के योग बन रहे हैं। ज्ञान प्राप्ति के नए रास्ते खुलेंगे। प्रेम जीवन में रोमांच रहेगा। आध्यात्मिक अनुभव प्राप्त होंगे।",
+        details: {
+          love: "Love life adventurous रहेगी। Long-distance relationships work करेंगी। Cultural exchanges beneficial रहेंगे।",
+          career: "Career में travel opportunities आएंगी। Higher education beneficial रहेगा। Publishing fields में success मिलेगी।",
+          health: "Health generally good रहेगी। Liver health का ध्यान रखें। Outdoor activities beneficial रहेंगी।",
+          finance: "Financial gains foreign sources से आ सकते हैं। Investments in education beneficial रहेंगे।"
+        }
+      },
+      makara: {
+        name: "मकर (Capricorn)",
+        symbol: "♑",
+        summary: "करियर और सामाजिक प्रतिष्ठा बढ़ेगी। मेहनत का फल मिलेगा। पारिवारिक सहयोग मिलेगा। स्वास्थ्य का ध्यान रखें। भूमि या संपत्ति से लाभ हो सकता है।",
+        details: {
+          love: "Love life stable रहेगी। Family support मिलेगा। Traditional values important रहेंगे।",
+          career: "Career में success और recognition मिलेगी। Hard work pay off करेगा。 Leadership roles मिल सकते हैं।",
+          health: "Health generally good रहेगी। Bone और joint health का ध्यान रखें। Regular check-ups beneficial रहेंगे।",
+          finance: "Financial stability बनी रहेगी। Property investments beneficial रहेंगे। Inheritance के योग हैं।"
+        }
+      },
+      kumbha: {
+        name: "कुंभ (Aquarius)",
+        symbol: "♒",
+        summary: "आर्थिक लाभ और नए अवसर मिलेंगे। निवेश से लाभ हो सकता है। रिश्तों में मधुरता आएगी। यात्रा के योग हैं। सामाजिक कार्यों में प्रशंसा मिलेगी।",
+        details: {
+          love: "Love life unconventional रहेगी। Friendships romantic relationships में बदल सकती हैं। Group activities beneficial रहेंगी।",
+          career: "Career में innovation के opportunities आएंगे। Technology fields में success मिलेगी। Social work rewarding रहेगा।",
+          health: "Health generally good रहेगी। Circulation system का ध्यान रखें। Unusual therapies beneficial रह सकती हैं।",
+          finance: "Financial gains unexpected sources से आ सकते हैं। Technological investments beneficial रहेंगे।"
+        }
+      },
+      meena: {
+        name: "मीन (Pisces)",
+        symbol: "♓",
+        summary: "आध्यात्मिक और भावनात्मक शांति मिलेगी। धार्मिक गतिविधियों में रुचि बढ़ेगी। प्रेम जीवन सुखद रहेगा। स्वास्थ्य ठीक रहेगा। कला के क्षेत्र में सफलता मिल सकती है।",
+        details: {
+          love: "Love life compassionate और spiritual रहेगी। Emotional connections deep होंगे। Creative expressions beneficial रहेंगे।",
+          career: "Career में creative fields में success मिलेगी。 Healing professions beneficial रहेंगे। Intuition strong रहेगी।",
+          health: "Health generally good रहेगी। Feet health का ध्यान रखें। Meditation highly beneficial रहेगा।",
+          finance: "Financial gains creative projects से आ सकते हैं। Spiritual investments beneficial रहेंगे।"
+        }
+      }
+    };
+
+    // Function to show expanded rashi view
+    function showExpandedRashi(rashiId) {
+      const rashi = rashiData[rashiId];
+      if (!rashi) return;
+      
+      // Hide the grid and show expanded view
+      document.getElementById('rashiGrid').classList.add('hidden');
+      document.getElementById('expandedRashiView').classList.remove('hidden');
+      
+      // Populate expanded view content
+      const contentDiv = document.getElementById('expandedRashiContent');
+      contentDiv.innerHTML = `
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-3">${rashi.symbol}</span>
+          <h3 class="text-2xl md:text-3xl font-bold text-white">${rashi.name}</h3>
+        </div>
+        
+        <p class="text-lg text-gray-300 mb-8">${rashi.summary}</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rashi-detail-section">
+            <h4 class="text-xl"><i class="fas fa-heart text-pink-400"></i> प्रेम और रिश्ते</h4>
+            <p class="text-gray-300">${rashi.details.love}</p>
+          </div>
+          
+          <div class="rashi-detail-section">
+            <h4 class="text-xl"><i class="fas fa-briefcase text-blue-400"></i> करियर और व्यवसाय</h4>
+            <p class="text-gray-300">${rashi.details.career}</p>
+          </div>
+          
+          <div class="rashi-detail-section">
+            <h4 class="text-xl"><i class="fas fa-heartbeat text-green-400"></i> स्वास्थ्य</h4>
+            <p class="text-gray-300">${rashi.details.health}</p>
+          </div>
+          
+          <div class="rashi-detail-section">
+            <h4 class="text-xl"><i class="fas fa-rupee-sign text-yellow-400"></i> धन और वित्त</h4>
+            <p class="text-gray-300">${rashi.details.finance}</p>
+          </div>
+        </div>
+        
+        <div class="mt-8 p-4 bg-purple-900 bg-opacity-30 rounded-xl">
+          <h4 class="text-xl font-bold text-amber-300 mb-3">⭐ इस राशि के लिए विशेष सलाह</h4>
+          <p class="text-gray-300">इस महीने मंगल की स्थिति आपके पक्ष में है। किसी भी नए कार्य की शुरुआत मंगलवार को करें। लाल रंग के वस्त्र धारण करना शुभ रहेगा। मुख्य दिशा दक्षिण है।</p>
+        </div>
+      `;
+      
+      // Scroll to the expanded view
+      document.getElementById('expandedRashiView').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Function to hide expanded view and show grid
+    function hideExpandedRashi() {
+      document.getElementById('expandedRashiView').classList.add('hidden');
+      document.getElementById('rashiGrid').classList.remove('hidden');
+      
+      // Scroll back to the grid
+      document.getElementById('rashiGrid').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Add event listeners to all read more buttons
+    document.querySelectorAll('.rashi-card').forEach(card => {
+      const readMoreBtn = card.querySelector('.read-more-btn');
+      const rashiId = card.getAttribute('data-rashi');
+      
+      readMoreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showExpandedRashi(rashiId);
+      });
+      
+      // Also make the entire card clickable
+      card.addEventListener('click', () => {
+        showExpandedRashi(rashiId);
+      });
+    });
+
+    // Back to list button
+    document.getElementById('backToList').addEventListener('click', hideExpandedRashi);
   </script>
 </body>
 </html>
