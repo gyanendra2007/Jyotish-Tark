@@ -1,48 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms of Service - Jyotish Tark</title>
-  <meta name="description" content="Jyotish Tark वेबसाइट का उपयोग करने से पहले हमारी Terms of Service अवश्य पढ़ें।">
-  <meta name="description" content="Read the Terms of Service for Jyotish Tark astrology website. By using our site, you agree to our terms and conditions.">
-  <link rel="canonical" href="https://jyotishtark.in/terms-of-service.html">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service | Jyotish Tark</title>
+    <meta name="description" content="Jyotish Tark वेबसाइट का उपयोग करने से पहले हमारी Terms of Service अवश्य पढ़ें।">
+    <meta name="keywords" content="terms of service, jyotish tark terms, astrology website terms">
+    <meta name="author" content="Jyotish Tark">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .terms-content {
+            line-height: 1.8;
+        }
+        
+        .terms-content h2 {
+            color: var(--secondary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .terms-content h3 {
+            color: var(--primary-light);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .terms-content ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        .terms-content li {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        
+        .terms-content li:before {
+            content: '✦';
+            color: var(--secondary);
+            position: absolute;
+            left: -1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>Terms of Service</h1>
-    <p>Effective Date: 31 August 2025</p>
-  </header>
+<body class="min-h-screen">
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
 
-  <main>
-    <h2>Acceptance of Terms</h2>
-    <p>By accessing and using <strong>Jyotish Tark</strong> (https://jyotishtark.in), you agree to comply with these Terms of Service. If you do not agree, please discontinue using our website.</p>
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <div class="h-12 w-12 rounded-full overflow-hidden">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
 
-    <h2>Services</h2>
-    <p>We provide astrology-related content, horoscope readings, numerology, and other spiritual guidance. The information provided is for educational and entertainment purposes only.</p>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="about.html" class="nav-link text-white hover:text-amber-300 transition">About</a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+            </nav>
 
-    <h2>User Responsibilities</h2>
-    <ul>
-      <li>You agree not to misuse or attempt to disrupt our website.</li>
-      <li>You are responsible for the accuracy of details (like birth information) you provide for readings.</li>
-      <li>You agree not to copy or redistribute content without permission.</li>
-    </ul>
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
-    <h2>Disclaimer</h2>
-    <p>Astrology is a form of guidance, not a substitute for professional advice (medical, legal, financial, etc.). We do not guarantee 100% accuracy of predictions.</p>
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+            <a href="about.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-info-circle astrological-symbol"></i>About</a>
+            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+        </nav>
+    </header>
 
-    <h2>Limitation of Liability</h2>
-    <p>We are not liable for any direct or indirect damages arising from the use of our website.</p>
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                <span class="block">Terms of Service</span>
+                <span class="text-2xl md:text-3xl text-amber-300">Jyotish Tark</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Please read these terms carefully before using our astrology services and website.
+            </p>
+            <p class="text-sm text-purple-200">
+                Effective Date: 31 August 2025 | Last Updated: 31 August 2025
+            </p>
+        </div>
+    </section>
 
-    <h2>Changes to Terms</h2>
-    <p>We may update these Terms of Service from time to time. Any changes will be posted on this page with the updated date.</p>
+    <!-- Terms Content Section -->
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <div class="glass-card p-8 rounded-2xl terms-content">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                    Our Terms & Conditions
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    By accessing and using Jyotish Tark, you agree to comply with these Terms of Service.
+                </p>
+            </div>
 
-    <h2>Contact Us</h2>
-    <p>If you have questions about these Terms, please contact us at: <a href="mailto:contact@jyotishtark.in">contact@jyotishtark.in</a></p>
-  </main>
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using <strong>Jyotish Tark</strong> (https://jyotishtark.in), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please discontinue using our website immediately.</p>
 
-  <footer>
-    <p>&copy; 2025 Jyotish Tark. All rights reserved.</p>
-  </footer>
+            <h2>2. Services Offered</h2>
+            <p>Jyotish Tark provides Vedic astrology services including but not limited to:</p>
+            <ul>
+                <li>Kundali (Birth Chart) generation and analysis</li>
+                <li>Numerology reports and guidance</li>
+                <li>Daily, weekly, and monthly horoscopes (Rashifal)</li>
+                <li>Planetary transit interpretations</li>
+                <li>Personalized astrological consultations</li>
+                <li>Educational content about Vedic astrology</li>
+            </ul>
+            <p>All services are provided for informational, educational, and self-reflection purposes only.</p>
+
+            <h2>3. User Responsibilities</h2>
+            <p>As a user of Jyotish Tark, you agree to:</p>
+            <ul>
+                <li>Provide accurate and complete information when generating kundali or numerology reports</li>
+                <li>Use our services for personal purposes only</li>
+                <li>Not misuse or attempt to disrupt our website functionality</li>
+                <li>Not copy, reproduce, or redistribute our content without explicit permission</li>
+                <li>Not use our services for any illegal or unauthorized purpose</li>
+                <li>Be at least 18 years of age or have parental consent to use our services</li>
+            </ul>
+
+            <h2>4. Intellectual Property Rights</h2>
+            <p>All content on Jyotish Tark, including text, graphics, logos, images, software, and astrology reports, is the property of Jyotish Tark or its content suppliers and protected by international copyright laws. The compilation of all content on this site is the exclusive property of Jyotish Tark.</p>
+            <p>You may not modify, publish, transmit, participate in the transfer or sale of, reproduce, create derivative works from, distribute, perform, display, or in any way exploit any of the content, in whole or in part, without our prior written consent.</p>
+
+            <h2>5. Disclaimer of Warranties</h2>
+            <p>Jyotish Tark provides its services on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, as to the operation of our services or the information, content, materials, or products included on our website.</p>
+            <p>Astrology is a form of guidance and self-reflection, not a substitute for professional advice (medical, legal, financial, etc.). We do not guarantee the accuracy, completeness, or usefulness of any astrological information provided.</p>
+
+            <h2>6. Limitation of Liability</h2>
+            <p>Jyotish Tark shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages resulting from:</p>
+            <ul>
+                <li>Your use or inability to use our services</li>
+                <li>Any errors or omissions in the content</li>
+                <li>Any decisions made based on astrological information provided</li>
+                <li>Unauthorized access to or alteration of your transmissions or data</li>
+                <li>Statements or conduct of any third party on our service</li>
+            </ul>
+
+            <h2>7. Privacy Policy</h2>
+            <p>Your privacy is important to us. Our <a href="privacy-policy.html" class="text-amber-300 hover:underline">Privacy Policy</a> explains how we collect, use, and protect your personal information. By using our services, you agree to the collection and use of information in accordance with our Privacy Policy.</p>
+
+            <h2>8. User Content</h2>
+            <p>If you submit any content to Jyotish Tark (including testimonials, comments, or questions), you grant us a non-exclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media.</p>
+
+            <h2>9. Third-Party Links</h2>
+            <p>Our website may contain links to third-party websites or services that are not owned or controlled by Jyotish Tark. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that Jyotish Tark shall not be responsible or liable for any damage or loss caused by or in connection with the use of any such content, goods, or services available on or through any such websites or services.</p>
+
+            <h2>10. Changes to Terms</h2>
+            <p>We reserve the right to modify or replace these Terms of Service at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion. By continuing to access or use our service after those revisions become effective, you agree to be bound by the revised terms.</p>
+
+            <h2>11. Governing Law</h2>
+            <p>These Terms shall be governed and construed in accordance with the laws of India, without regard to its conflict of law provisions. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Lucknow, Uttar Pradesh, India.</p>
+
+            <h2>12. Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact us at:</p>
+            <p>Email: <a href="mailto:jyotishtark@gmail.com" class="text-amber-300 hover:underline">jyotishtark@gmail.com</a><br>
+            Phone: <a href="tel:+918318513814" class="text-amber-300 hover:underline">+91 8318513814</a><br>
+            Address: Lucknow, India</p>
+
+            <div class="mt-12 p-6 bg-purple-900 bg-opacity-30 rounded-lg text-center">
+                <i class="fas fa-info-circle text-amber-300 text-3xl mb-4"></i>
+                <p class="text-gray-300">By using Jyotish Tark, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('mobileNav').classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
