@@ -4,222 +4,812 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - Jyotish Tark</title>
+    <title>Contact Us - Jyotish Tark | Kundali Banane Wala Trusted Site</title>
+
     <meta name="description" content="किसी भी प्रश्न या सहयोग के लिए Jyotish Tark से संपर्क करें। ईमेल और फ़ोन द्वारा सहायता उपलब्ध।">
+    <meta name="keywords" content="contact astrologer, jyotish tark contact, kundali expert, astrology consultation">
+    <meta name="author" content="Jyotish Tark">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
         }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
         }
+        
         .service-card {
             transition: all 0.3s ease;
             border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
+        
         .service-card:hover {
-            transform: translateY(-5px);
-            border-bottom-color: #7e22ce;
-            box-shadow: 0 10px 25px -5px rgba(126, 34, 206, 0.2);
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
         }
+        
         .feature-icon {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, #7e22ce, #9333ea);
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
             border-radius: 50%;
-            font-size: 24px;
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
         }
+        
         .testimonial-avatar {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7e22ce, #9333ea);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secondary-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .star-rating {
+            color: var(--secondary);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .zodiac-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .blog-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-image {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .count-up {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .whatsapp-header {
+            background: #075E54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-body {
+            padding: 15px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 10px;
             font-size: 20px;
+            color: #25d366;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
+
+        input, textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.3);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        label {
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
-                <span class="text-2xl md:text-3xl font-bold text-purple-700">Jyotish Tark</span>
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
+
+    <!-- WhatsApp Float Button -->
+    <div class="whatsapp-float" id="whatsappButton">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
+            <div>
+                <h3 class="font-bold">Jyotish Tark</h3>
+                <p class="text-sm">Typically replies within minutes</p>
             </div>
-            <div class="md:hidden">
-                <button id="menuToggle" class="text-purple-700 focus:outline-none text-2xl">☰</button>
-            </div>
-            <nav id="navbar" class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-purple-700 hover:underline text-lg">Home</a>
-                <a href="kundali-form.html" class="text-purple-700 hover:underline text-lg">Kundali</a>
-                <a href="numerology.html" class="text-purple-700 hover:underline text-lg">Numerology</a>
-                <a href="rashifal.html" class="text-purple-700 hover:underline text-lg">Rashifal</a>
-                <a href="contact.html" class="text-purple-700 font-semibold text-lg underline">Contact</a>
-            </nav>
         </div>
-        <nav id="mobileNav" class="md:hidden hidden flex-col mt-4 space-y-3 py-3">
-            <a href="index.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Home</a>
-            <a href="kundali-form.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Kundali</a>
-            <a href="numerology.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Numerology</a>
-            <a href="rashifal.html" class="text-purple-700 text-lg px-4 py-2 hover:bg-purple-50 rounded">Rashifal</a>
-            <a href="contact.html" class="text-purple-700 font-semibold text-lg px-4 py-2 bg-purple-50 rounded">Contact</a>
+        <div class="whatsapp-body">
+            <p class="mb-4">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold">Chat with us</h4>
+                    <p class="text-sm">Ask questions about our services</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold">Call us</h4>
+                    <p class="text-sm">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold">Book consultation</h4>
+                    <p class="text-sm">Schedule a personal session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <div class="h-12 w-12 rounded-full overflow-hidden">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition font-semibold">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+            <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition bg-purple-700"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
         </nav>
     </header>
 
-    <main class="container mx-auto py-10 px-4">
-        <h1 class="text-3xl md:text-4xl font-bold text-purple-800 text-center mb-8">Contact Us</h1>
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <span class="block">Connect With Cosmic Guidance</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Jyotish Tark Experts</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Have questions about your Kundali or need personalized astrological guidance? Our expert astrologers are here to help you.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="https://wa.me/918318513814" target="_blank" class="primary-button bg-green-600 hover:bg-green-700">
+                    <i class="fab fa-whatsapp mr-2"></i>
+                    WhatsApp Chat
+                </a>
+                <a href="tel:+918318513814" class="secondary-button">
+                    <i class="fas fa-phone mr-2"></i>
+                    Call Now
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <section class="glass-card rounded-2xl shadow-xl  max-w-5xl mx-4 md:mx-auto  p-8 md:p-12 ">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class=" p-6 rounded-lg">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Get in Touch</h2>
-                <p class="text-gray-600 mb-4">
-                    We'd love to hear from you! Whether you have a question about our services, need assistance with your Kundali, or just want to say hello, feel free to reach out.
-                </p>
-                <form id="contactForm" class="space-y-4">
+    <!-- Contact Form Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Get In Touch
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Have questions about your Kundali or need personalized guidance? Reach out to our expert astrologers.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="glass-card p-8 rounded-2xl">
+                <h3 class="text-2xl font-bold text-white mb-6">Send us a Message</h3>
+                <form id="contactForm" class="space-y-6">
                     <div>
-                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                        <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name" required>
+                        <label for="name" class="block mb-2">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                     </div>
                     <div>
-                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email" required>
+                        <label for="email" class="block mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
                     </div>
                     <div>
-                        <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
-                        <textarea id="message" name="message" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-y" placeholder="Your Message" required></textarea>
+                        <label for="phone" class="block mb-2">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
                     </div>
-                    <button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline">
+                    <div>
+                        <label for="subject" class="block mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="What is this regarding?" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block mb-2">Your Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+                    </div>
+                    <button type="submit" class="primary-button w-full justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i>
                         Send Message
                     </button>
                 </form>
-                <div id="messageSent" class="mt-4 text-green-600 font-semibold hidden">
-                    Your message has been sent! We'll get back to you shortly.
+                <div id="messageSent" class="mt-4 p-4 bg-green-900 bg-opacity-30 text-green-300 rounded-lg hidden">
+                    <i class="fas fa-check-circle mr-2"></i> Your message has been sent successfully! We'll get back to you shortly.
                 </div>
-                <div id="messageError" class="mt-4 text-red-600 font-semibold hidden">
-                    Sorry, there was an error sending your message. Please try again.
+                <div id="messageError" class="mt-4 p-4 bg-red-900 bg-opacity-30 text-red-300 rounded-lg hidden">
+                    <i class="fas fa-exclamation-circle mr-2"></i> There was an error sending your message. Please try again.
                 </div>
             </div>
 
-            <div class=" p-6 rounded-lg">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Location</h2>
-                <p class="text-gray-700 mb-4">
-                    Jyotish Tark is located in the heart of Lucknow. You can visit us at the following address:
-                </p>
-                <address class="text-gray-600 not-italic">
-                    123, Vidhan Sabha Marg<br>
-                    Hazratganj, Lucknow, Uttar Pradesh 226001<br>
-                    India
-                </address>
-                <div class="mt-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Email Us</h3>
-                    <p class="text-gray-600">jyotishtark@email.com</p>
+            <!-- Contact Information -->
+            <div class="glass-card p-8 rounded-2xl">
+                <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="bg-purple-700 p-3 rounded-full mr-4">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-1">Address</h4>
+                            <p class="text-gray-300">123, Vidhan Sabha Marg<br>Hazratganj, Lucknow, Uttar Pradesh 226001<br>India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-purple-700 p-3 rounded-full mr-4">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-1">Email Us</h4>
+                            <p class="text-gray-300">jyotishtark@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-purple-700 p-3 rounded-full mr-4">
+                            <i class="fas fa-phone-alt text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-1">Call Us</h4>
+                            <p class="text-gray-300">+91-8318513814</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-green-600 p-3 rounded-full mr-4">
+                            <i class="fab fa-whatsapp text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-1">WhatsApp</h4>
+                            <p class="text-gray-300">+91-8318513814</p>
+                            <div class="mt-2 flex space-x-2">
+                                <a href="https://wa.me/918318513814" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                                    <i class="fab fa-whatsapp mr-2"></i> Message
+                                </a>
+                                <a href="https://wa.me/918318513814?phone=918318513814" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                                    <i class="fas fa-phone mr-2"></i> Call
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-purple-700 p-3 rounded-full mr-4">
+                            <i class="fas fa-clock text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-1">Business Hours</h4>
+                            <p class="text-gray-300">Monday - Saturday: 10:00 AM to 6:00 PM</p>
+                            <p class="text-gray-300">Sunday: Closed</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Call Us</h3>
-                    <p class="text-gray-600">+91-8318513814</p>
-                </div>
-                 <div class="mt-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Business Hours</h3>
-                    <p class="text-gray-600">Monday - Saturday: 10:00 AM to 6:00 PM</p>
-                    <p class="text-gray-600">Sunday: Closed</p>
+                
+                <div class="mt-8 pt-6 border-t border-gray-700">
+                    <h4 class="font-semibold text-white mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="bg-blue-700 hover:bg-blue-800 h-10 w-10 rounded-full flex items-center justify-center">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="bg-pink-600 hover:bg-pink-700 h-10 w-10 rounded-full flex items-center justify-center">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="bg-red-600 hover:bg-red-700 h-10 w-10 rounded-full flex items-center justify-center">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://wa.me/918318513814" target="_blank" class="bg-green-600 hover:bg-green-700 h-10 w-10 rounded-full flex items-center justify-center">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        </section>
-    </main>
+    </section>
 
-    <footer class="glass-card text-center py-8 mt-12">
+    <!-- FAQ Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Frequently Asked Questions
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Find answers to common questions about our astrology services and consultations.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl">
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-amber-300 mb-2">How soon can I get a consultation?</h3>
+                    <p class="text-gray-300">We typically respond within 24 hours to schedule a consultation. Emergency consultations may be available upon request.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-amber-300 mb-2">What information do I need to provide for a Kundali reading?</h3>
+                    <p class="text-gray-300">For an accurate Kundali reading, we need your exact date of birth, time of birth, and place of birth. The more precise the information, the more accurate the reading.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-amber-300 mb-2">Do you provide services in Hindi?</h3>
+                    <p class="text-gray-300">Yes, all our consultations and reports are available in both Hindi and English based on your preference.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-amber-300 mb-2">Can I get a consultation for someone else?</h3>
+                    <p class="text-gray-300">Yes, you can request a consultation for family members or friends, but you will need their birth details and preferably their consent for the reading.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="https://wa.me/918318513814?text=I%20have%20a%20question%20about%20your%20services" target="_blank" class="primary-button">
+                    <i class="fab fa-whatsapp mr-2"></i>
+                    Ask More Questions
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    Need Immediate Guidance?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                    Connect with our expert astrologers directly through WhatsApp for prompt responses to your queries.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://wa.me/918318513814" target="_blank" class="primary-button bg-green-600 hover:bg-green-700">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Chat on WhatsApp
+                    </a>
+                    <a href="tel:+918318513814" class="secondary-button">
+                        <i class="fas fa-phone mr-2"></i>
+                        Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-purple-600 hover:text-purple-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
-                    </svg>
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-facebook"></i>
                 </a>
-                <a href="#" class="text-purple-600 hover:text-purple-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="text-purple-600 hover:text-purple-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                    </svg>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
                 <div>
-                    <h4 class="font-semibold text-purple-700 mb-2">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="#" class="hover:text-purple-600">Home</a></li>
-                        <li><a href="kundali-form.html" class="hover:text-purple-600">Kundali</a></li>
-                        <li><a href="numerology.html" class="hover:text-purple-600">Numerology</a></li>
-                        <li><a href="rashifal.html" class="hover:text-purple-600">Rashifal</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-purple-700 mb-2">Services</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="kundali-form.html" class="hover:text-purple-600">Get Your Kundali</a></li>
-                        <li><a href="numerology.html" class="hover:text-purple-600">Numerology Report</a></li>
-                        <li><a href="rashifal.html" class="hover:text-purple-600">Monthly Horoscope</a></li>
-                        <li><a href="contact.html" class="hover:text-purple-600">Consult Astrologer</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-purple-700 mb-2">Information</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="about.html" class="hover:text-purple-600">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-purple-600">Contact Us</a></li>
-                        <li><a href="privacy-policy.html" class="hover:text-purple-600">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="hover:text-purple-600">Terms of Service</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-purple-700 mb-2">Contact</h4>
-                    <p class="text-gray-600 mb-2">📞 Email: jyotishtark@gmail.com</p>
-                    <p class="text-gray-600 mb-2">📞 8318513814</p>
-                    <p class="text-gray-600 mb-2">📞 Whatsapp: 8318513814</p>
-                    <p class="text-gray-600">📍 Lucknow, India</p>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
                 </div>
             </div>
-            <p class="text-gray-500 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileNav = document.getElementById('mobileNav');
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('mobileNav').classList.toggle('hidden');
+        });
+
+        // WhatsApp button functionality
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+
+        // Contact form submission
         const contactForm = document.getElementById('contactForm');
         const messageSent = document.getElementById('messageSent');
         const messageError = document.getElementById('messageError');
-
-        menuToggle.addEventListener('click', () => {
-            mobileNav.classList.toggle('hidden');
-        });
 
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -233,9 +823,19 @@
                     messageSent.classList.remove('hidden');
                     messageError.classList.add('hidden');
                     contactForm.reset(); // Clear the form
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        messageSent.classList.add('hidden');
+                    }, 5000);
                 } else {
                     messageError.classList.remove('hidden');
                     messageSent.classList.add('hidden');
+                    
+                    // Hide error message after 5 seconds
+                    setTimeout(() => {
+                        messageError.classList.add('hidden');
+                    }, 5000);
                 }
             }, 2000); // Simulate a 2-second delay
         });
