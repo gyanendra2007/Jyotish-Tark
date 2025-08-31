@@ -3,46 +3,647 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Post | Jyotish Tark</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-gray-50 text-gray-800">
+  <title>राशिफल 2025: क्या कहता है आपका भविष्य? | Jyotish Tark</title>
 
-  <!-- Header -->
-  <header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-      <a href="index.html" class="text-2xl font-bold text-purple-700">🔮 Jyotish Tark</a>
-      <nav>
-        <ul class="flex space-x-6 font-medium">
-          <li><a href="index.html" class="hover:text-purple-600">Home</a></li>
-          <li><a href="rashifal.html" class="hover:text-purple-600">Rashifal</a></li>
-          <li><a href="numerology.html" class="hover:text-purple-600">Numerology</a></li>
-          <li><a href="blog.html" class="text-purple-600">Blog</a></li>
-          <li><a href="contact.html" class="hover:text-purple-600">Contact</a></li>
-        </ul>
+  <meta name="description" content="2025 राशिफल: जानें कैसा रहेगा आपका साल? ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव">
+  <meta name="keywords" content="राशिफल 2025, 2025 भविष्यवाणी, ज्योतिष भविष्यवाणी, कुंडली 2025, ग्रह गोचर 2025, ज्योतिष टार्क ब्लॉग">
+  <meta name="author" content="Jyotish Tark">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7e22ce;
+      --primary-light: #a855f7;
+      --primary-dark: #6b21a8;
+      --secondary: #f59e0b;
+      --accent: #ec4899;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+    
+    body {
+      font-family: 'Inter', 'Hind', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f3f4f6;
+      background-attachment: fixed;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    .hindi {
+      font-family: 'Hind', sans-serif;
+    }
+    
+    .cosmic-bg {
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      position: relative;
+    }
+    
+    .cosmic-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    }
+    
+    .service-card {
+      transition: all 0.3s ease;
+      border-bottom: 4px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .blog-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .blog-image {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image {
+      transform: scale(1.05);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 50%;
+      font-size: 32px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .primary-button {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .primary-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .primary-button:hover::before {
+      left: 100%;
+    }
+    
+    .primary-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .secondary-button {
+      background: transparent;
+      color: white;
+      border: 2px solid var(--secondary);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .secondary-button:hover {
+      background: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+    
+    .star-rating {
+      color: var(--secondary);
+    }
+    
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .zodiac-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .planet-1 {
+      position: absolute;
+      top: 20%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+      box-shadow: 0 0 50px #f59e0b;
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .planet-2 {
+      position: absolute;
+      bottom: 15%;
+      right: 8%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+      box-shadow: 0 0 40px #ec4899;
+      opacity: 0.7;
+      animation: float 10s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+    
+    .astrological-symbol {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    
+    .footer-links a {
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .count-up {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    @media (max-width: 768px) {
+      .planet-1, .planet-2 {
+        display: none;
+      }
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .blog-tag {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
+    }
+
+    .pagination a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .pagination a:hover, .pagination a.active {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      transform: translateY(-3px);
+    }
+
+    .article-content {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .article-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      margin: 2.5rem 0 1.5rem 0;
+      color: var(--secondary);
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .article-content h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 70%;
+      width: 5px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 3px;
+    }
+
+    .article-content blockquote {
+      border-left: 4px solid var(--secondary);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-style: italic;
+      color: #d1d5db;
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 2rem 0;
+    }
+
+    .share-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .share-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .facebook:hover { background: #3b5998; }
+    .twitter:hover { background: #1da1f2; }
+    .whatsapp:hover { background: #25d366; }
+    .linkedin:hover { background: #0077b5; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Floating Planets -->
+  <div class="planet-1"></div>
+  <div class="planet-2"></div>
+
+  <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2">
+        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center glow">
+          <i class="fas fa-star-and-crescent text-white text-xl"></i>
+        </div>
+        <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+        <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+        <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+        <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+        <a href="blog.html" class="nav-link text-amber-300 transition">Blog</a>
+        <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
       </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+      <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+      <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="blog.html" class="block px-4 py-2 rounded text-amber-300 bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+      <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+    </nav>
   </header>
 
-  <!-- Blog Post -->
+  <!-- Blog Post Content -->
   <main class="max-w-4xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-bold text-purple-700 mb-6">राशिफल 2025: क्या कहता है आपका भविष्य?</h1>
-    <p class="text-gray-500 mb-4">Published on 31 August 2025</p>
-    <img src="images/blog1.jpg" alt="Blog Image" class="w-full h-72 object-cover rounded-xl shadow mb-8">
+    <div class="glass-card p-8 rounded-2xl">
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-gray-400 mb-6">
+        <a href="index.html" class="hover:text-amber-300">Home</a> / 
+        <a href="blog.html" class="hover:text-amber-300">Blog</a> / 
+        <span class="text-amber-300">राशिफल 2025</span>
+      </nav>
 
-    <article class="prose prose-lg max-w-none">
-      <p>2025 आपके जीवन में कई नए अवसर लेकर आएगा। इस साल आप अपने करियर और रिश्तों में प्रगति करेंगे। ज्योतिषीय दृष्टिकोण से यह साल बहुत महत्वपूर्ण है...</p>
-      <p>मेष, सिंह और धनु राशि वालों के लिए यह साल नए अवसरों का होगा जबकि कर्क और मीन राशि वालों को थोड़ी सावधानी रखनी होगी।</p>
-      <p>... (आपका पूरा ब्लॉग कंटेंट यहां आएगा) ...</p>
-    </article>
+      <!-- Article Header -->
+      <span class="blog-tag">Rashifal</span>
+      <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 mt-4">राशिफल 2025: क्या कहता है आपका भविष्य?</h1>
+      
+      <div class="blog-meta">
+        <span><i class="far fa-calendar-alt mr-1"></i> August 31, 2025</span>
+        <span><i class="far fa-clock mr-1"></i> 8 min read</span>
+        <span><i class="far fa-eye mr-1"></i> 1.2K views</span>
+      </div>
+
+      <!-- Featured Image -->
+      <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="राशिफल 2025" class="w-full h-64 object-cover rounded-xl shadow mb-8">
+
+      <!-- Share Buttons -->
+      <div class="share-buttons">
+        <span class="text-gray-400 mr-2">Share:</span>
+        <a href="#" class="share-button facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="share-button twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="share-button whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="share-button linkedin"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+
+      <!-- Article Content -->
+      <article class="article-content text-gray-300">
+        <p>2025 आपके जीवन में कई नए अवसर लेकर आएगा। इस साल आप अपने करियर और रिश्तों में प्रगति करेंगे। ज्योतिषीय दृष्टिकोण से यह साल बहुत महत्वपूर्ण है क्योंकि इस वर्ष बृहस्पति और शनि की विशेष युति होने जा रही है, जो हर राशि पर गहरा प्रभाव डालेगी।</p>
+
+        <h2>मेष राशि (Aries)</h2>
+        <p>मेष राशि वालों के लिए 2025 का साल नए enterprises और initiatives के लिए बेहद शुभ रहेगा। इस वर्ष आपके लिए career growth के अवसर आएंगे और financial stability में वृद्धि होगी। मार्च से जुलाई का समय विशेष रूप से लाभदायक रहेगा।</p>
+
+        <blockquote>
+          "मेष राशि वालों को इस वर्ष अपने स्वास्थ्य का विशेष ध्यान रखना चाहिए, विशेषकर सिर और आँखों से संबंधित समस्याओं के प्रति सजग रहें।"
+        </blockquote>
+
+        <h2>वृषभ राशि (Taurus)</h2>
+        <p>वृषभ राशि वालों के लिए 2025 स्थिरता और growth का वर्ष साबित होगा। इस वर्ष property और real estate में investment लाभदायक रहेगा। सितंबर के बाद से family life में सुख और समृद्धि आएगी।</p>
+
+        <h2>मिथुन राशि (Gemini)</h2>
+        <p>मिथुन राशि वालों के लिए यह वर्ष communication और networking के क्षेत्र में success लाएगा। students और professionals दोनों के लिए यह साल beneficial रहेगा। अप्रैल से जून का समय career में promotion के योग बना रहेगा।</p>
+
+        <h2>कर्क राशि (Cancer)</h2>
+        <p>कर्क राशि वालों के लिए 2025 emotional stability और financial growth का वर्ष रहेगा। इस वर्ष आपको अपने personal और professional life में balance बनाने पर focus करना चाहिए। नवंबर और दिसंबर में कोई big financial gain हो सकता है।</p>
+
+        <h2>सिंह राशि (Leo)</h2>
+        <p>सिंह राशि वालों के लिए 2025 leadership और recognition का वर्ष साबित होगा। इस वर्ष आपको career में promotion और social recognition मिलेगी। जुलाई से सितंबर का समय विशेष रूप से शुभ रहेगा।</p>
+
+        <h2>कन्या राशि (Virgo)</h2>
+        <p>कन्या राशि वालों के लिए 2025 learning और expansion का वर्ष रहेगा। इस वर्ष आप foreign travel或者 higher education के opportunities प्राप्त कर सकते हैं। मार्च से मई का समय spiritual growth के लिए अच्छा रहेगा।</p>
+
+        <h2>तुला राशि (Libra)</h2>
+        <p>तुला राशि वालों के लिए 2025 partnerships और relationships का वर्ष रहेगा। इस वर्ष आपको business partnerships और personal relationships में success मिलेगी। अक्टूबर से दिसंबर financial growth के लिए शुभ रहेगा।</p>
+
+        <h2>वृश्चिक राशि (Scorpio)</h2>
+        <p>वृश्चिक राशि वालों के लिए 2025 transformation और rebirth का वर्ष साबित होगा। इस वर्ष आपको old habits और patterns को छोड़ने का opportunity मिलेगा। जून से अगस्त का समय health और wellness के लिए अच्छा रहेगा।</p>
+
+        <h2>धनु राशि (Sagittarius)</h2>
+        <p>धनु राशि वालों के लिए 2025 adventure और expansion का वर्ष रहेगा। इस वर्ष आपको travel और new experiences के opportunities मिलेंगे। जनवरी से मार्च creativity और self-expression के लिए शुभ रहेगा।</p>
+
+        <h2>मकर राशि (Capricorn)</h2>
+        <p>मकर राशि वालों के लिए 2025 discipline और hard work का वर्ष साबित होगा। इस वर्ष आपको career और professional life में success मिलेगी। सितंबर से नवंबर financial stability के लिए शुभ रहेगा।</p>
+
+        <h2>कुम्भ राशि (Aquarius)</h2>
+        <p>कुम्भ राशि वालों के लिए 2025 innovation और change का वर्ष रहेगा। इस वर्ष आपको new ideas और projects के लिए support मिलेगा। अप्रैल से जून social connections और networking के लिए अच्छा रहेगा।</p>
+
+        <h2>मीन राशि (Pisces)</h2>
+        <p>मीन राशि वालों के लिए 2025 intuition और spirituality का वर्ष साबित होगा। इस वर्ष आपको spiritual growth और self-discovery के opportunities मिलेंगे। जुलाई से सितंबर creativity और arts के लिए शुभ रहेगा।</p>
+
+        <div class="bg-purple-900 bg-opacity-30 p-6 rounded-xl my-8">
+          <h3 class="text-xl font-bold text-amber-300 mb-4">⭐ 2025 की विशेष ज्योतिषीय घटनाएं</h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>बृहस्पति और शनि की महायुति - मार्च 2025</li>
+            <li>शनि की राशि परिवर्तन - जुलाई 2025</li>
+            <li>राहु-केतु की गोचर - सितंबर 2025</li>
+            <li>गुरु पुष्य नक्षत्र में - नवंबर 2025</li>
+          </ul>
+        </div>
+
+        <p>यह साल overall growth और prosperity का वर्ष रहेगा, लेकिन हर राशि को कुछ challenges का सामना भी करना पड़ सकता है। सही planning और positive attitude के साथ आप इन challenges को overcome कर सकते हैं और 2025 को अपना सबसे successful year बना सकते हैं।</p>
+      </article>
+
+      <!-- Author Bio -->
+      <div class="glass-card p-6 rounded-xl mt-12 flex items-start">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center mr-6">
+          <span class="text-white font-bold text-xl">JT</span>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Jyotish Tark</h3>
+          <p class="text-gray-400 mb-2">Vedic Astrologer & Founder</p>
+          <p class="text-gray-300">15+ years of experience in Vedic astrology, specializing in Kundali analysis, planetary transits, and life predictions. Certified from Bharatiya Vidya Bhavan, Mumbai.</p>
+        </div>
+      </div>
+
+      <!-- Related Posts -->
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold text-white mb-6">Related Articles</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <a href="blog-post.html" class="blog-card glass-card overflow-hidden flex">
+            <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
+            <div class="p-4 w-2/3">
+              <h4 class="font-semibold text-white mb-2">अंक ज्योतिष और भाग्य का रहस्य</h4>
+              <p class="text-gray-400 text-sm">March 28, 2025</p>
+            </div>
+          </a>
+          <a href="blog-post.html" class="blog-card glass-card overflow-hidden flex">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
+            <div class="p-4 w-2/3">
+              <h4 class="font-semibold text-white mb-2">कुंडली से करियर कैसे देखें?</h4>
+              <p class="text-gray-400 text-sm">March 15, 2025</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Newsletter Subscription -->
+      <div class="cosmic-bg rounded-2xl p-8 text-center mt-12">
+        <h3 class="text-2xl font-bold text-white mb-4">Get Weekly Astrology Insights</h3>
+        <p class="text-purple-100 mb-6">Subscribe to our newsletter for regular updates on planetary transits and their effects on your life</p>
+        <form class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <input type="email" placeholder="Your Email Address" class="px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto">
+          <button type="submit" class="primary-button">
+            <i class="fas fa-paper-plane mr-2"></i>
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-purple-700 text-white py-6 mt-12">
-    <div class="max-w-7xl mx-auto text-center">
-      <p>&copy; 2025 Jyotish Tark. All Rights Reserved.</p>
+<!-- Footer -->
+  <footer class="glass-card text-center py-12 mt-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-center space-x-6 mb-8 text-2xl">
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="index.html" class="text-gray-300">Home</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+            <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="about.html" class="text-gray-300">About Us</a></li>
+            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
     </div>
   </footer>
 
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
