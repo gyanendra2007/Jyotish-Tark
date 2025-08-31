@@ -5,174 +5,785 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>हमारे बारे में | About Jyotish Tark</title>
-<meta name="description" content="Jyotish Tark का उद्देश्य है ज्योतिष को सरल भाषा में सबके लिए उपलब्ध कराना। यहाँ आपको राशिफल, कुंडली और अंक ज्योतिष की जानकारी मिलती है।">
+    <meta name="description" content="Jyotish Tark का उद्देश्य है ज्योतिष को सरल भाषा में सबके लिए उपलब्ध कराना। यहाँ आपको राशिफल, कुंडली और अंक ज्योतिष की जानकारी मिलती है।">
+    <meta name="keywords" content="about jyotish tark, vedic astrology about, about our astrologers, jyotish tark team">
+    <meta name="author" content="Jyotish Tark">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1506318137712-a8a446f1e547?q=80&w=1974');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
         }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
         .glass-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+        }
+        
+        .testimonial-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+            margin: 0 auto;
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secondary-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .star-rating {
+            color: var(--secondary);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .zodiac-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .count-up {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .youtube-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        
+        .youtube-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .youtube-thumbnail {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .youtube-card:hover .youtube-thumbnail {
+            transform: scale(1.05);
+        }
+        
+        .team-social {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover .team-social {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <header class="glass-card shadow-md p-4 max-w-6xl mx-auto rounded-b-lg sticky top-0 z-50">
+<body class="min-h-screen">
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
+
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-12 w-12 object-contain" />
-                <span class="text-2xl md:text-3xl font-bold text-pink-600">Jyotish Tark</span>
-            </div>
-            <nav id="navbar" class="hidden md:flex space-x-6">
-                <a href="index.html" class="text-pink-600 hover:text-pink-800 text-lg">Home</a>
-                <a href="kundali-form.html" class="text-pink-600 hover:text-pink-800 text-lg">Kundali</a>
-                <a href="numerology.html" class="text-pink-600 hover:text-pink-800 text-lg">Numerology</a>
-                <a href="rashifal.html" class="text-pink-600 hover:text-pink-800 text-lg">Rashifal</a>
-                <a href="contact.html" class="text-pink-600 hover:text-pink-800 text-lg">Contact</a>
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <div class="h-12 w-12 rounded-full overflow-hidden">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="about.html" class="nav-link text-white hover:text-amber-300 transition">About</a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+            <a href="about.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-info-circle astrological-symbol"></i>About</a>
+            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+        </nav>
     </header>
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        <section class="glass-card rounded-2xl shadow-lg p-8 md:p-12 mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-pink-700 mb-6 text-center">About Us</h1>
-            <div class="grid md:grid-cols-2 gap-8">
+
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <span class="block">Our Cosmic Journey</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Jyotish Tark's Story</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Discover the vision, mission, and dedicated team behind Jyotish Tark - your trusted guide in Vedic astrology and numerology.
+            </p>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="glass-card p-8 rounded-2xl">
+                <div class="feature-icon">🌠</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center section-title">Our Mission</h2>
+                <p class="text-gray-300 mb-4">
+                    At Jyotish Tark, our mission is to empower individuals with the wisdom of Vedic astrology and numerology. We believe these ancient sciences provide valuable insights to help you make informed decisions and navigate life's journey with clarity.
+                </p>
+                <p class="text-gray-300">
+                    We're committed to delivering accurate, personalized, and ethical guidance through our platform. Our team combines traditional knowledge with modern interpretations to offer practical solutions.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-2xl">
+                <div class="feature-icon">🔭</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center section-title">Our Vision</h2>
+                <p class="text-gray-300 mb-4">
+                    Our vision is to become the world's most trusted source for Vedic astrology and numerology. We aim to create an accessible platform where everyone can benefit from astrological wisdom.
+                </p>
+                <p class="text-gray-300">
+                    We strive to foster a community where individuals can explore their spiritual potential, gain self-awareness, and enhance well-being through the guidance of astrology.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Channel Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Our YouTube Channel
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Join our growing community of 1680+ subscribers for daily astrological guidance and insights.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
-                    <h2 class="text-2xl font-semibold text-pink-600 mb-4">Our Mission</h2>
-                    <p class="text-gray-300 mb-4">
-                        At Jyotish Tark, our mission is to empower individuals with the wisdom of Vedic astrology and numerology. We believe that these ancient sciences can provide valuable insights into one's life, helping them make informed decisions and navigate their personal journey with greater clarity and confidence.
+                    <div class="w-24 h-24 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-6">
+                        <i class="fab fa-youtube text-white text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white text-center mb-4">Jyotish Tark YouTube</h3>
+                    <div class="flex justify-center items-center mb-6">
+                        <div class="bg-red-600 text-white px-4 py-2 rounded-full flex items-center">
+                            <i class="fas fa-users mr-2"></i>
+                            <span class="count-up" data-count="1680">0</span>+ Subscribers
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-center mb-6">
+                        Subscribe to our channel for daily astrological guidance, rashifal, numerology tips, and live sessions with our expert astrologers.
                     </p>
-                    <p class="text-gray-300 mb-4">
-                        We are committed to delivering accurate, personalized, and ethical guidance through our online platform. Our team of experienced astrologers and numerologists combines traditional knowledge with modern interpretations to offer practical solutions and support to our clients.
-                    </p>
+                    <div class="text-center">
+                        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="primary-button bg-red-600 hover:bg-red-700">
+                            <i class="fab fa-youtube mr-2"></i>
+                            Subscribe Now
+                        </a>
+                    </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-semibold text-pink-600 mb-4">Our Vision</h2>
-                    <p class="text-gray-300 mb-4">
-                        Our vision is to become a trusted and leading source for Vedic astrology and numerology services worldwide. We aim to create a user-friendly platform where people can easily access reliable astrological resources and connect with expert astrologers.
-                    </p>
-                    <p class="text-gray-300 mb-4">
-                        We strive to foster a community where individuals can explore their spiritual potential, gain self-awareness, and enhance their overall well-being through the guidance of astrology.
-                    </p>
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe src="https://www.youtube.com/embed/videoseries?list=UUvZ3fLkKVTU3azT7F1DfNXA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-64 rounded-lg"></iframe>
+                    </div>
                 </div>
             </div>
-        </section>
-        <section class="glass-card rounded-2xl shadow-lg p-8 md:p-12 mb-12">
-            <h2 class="text-2xl font-semibold text-pink-600 mb-6 text-center">Meet Our Team</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="testimonial-avatar mx-auto mb-4">
-                        <span class="text-2xl">SK</span>
+        </div>
+
+        <div class="text-center mb-12">
+            <h3 class="text-2xl font-bold text-white mb-6">Popular Videos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="youtube-card glass-card overflow-hidden">
+                    <img src="https://img.youtube.com/vi/VIDEO_ID_1/mqdefault.jpg" alt="Video 1" class="youtube-thumbnail w-full">
+                    <div class="p-4">
+                        <h4 class="font-semibold text-white mb-2">कुंडली कैसे बनवाएं?</h4>
+                        <p class="text-gray-300 text-sm">Step-by-step guide to creating your birth chart</p>
                     </div>
-                    <h3 class="font-semibold text-pink-600">Pt. Surya Kant Shastri</h3>
-                    <p class="text-gray-400 text-sm">Founder & Chief Astrologer</p>
-                    <p class="text-gray-300 mt-2 text-sm">
-                        With over 25 years of experience in Vedic astrology, Pt. Shastri is a renowned astrologer known for his accurate predictions and insightful guidance.
-                    </p>
                 </div>
-                <div class="text-center">
-                    <div class="testimonial-avatar mx-auto mb-4">
-                         <span class="text-2xl">RS</span>
+                <div class="youtube-card glass-card overflow-hidden">
+                    <img src="https://img.youtube.com/vi/VIDEO_ID_2/mqdefault.jpg" alt="Video 2" class="youtube-thumbnail w-full">
+                    <div class="p-4">
+                        <h4 class="font-semibold text-white mb-2">अप्रैल 2025 राशिफल</h4>
+                        <p class="text-gray-300 text-sm">Monthly predictions for all zodiac signs</p>
                     </div>
-                    <h3 class="font-semibold text-pink-600">Dr. Ritu Sharma</h3>
-                    <p class="text-gray-400 text-sm">Senior Numerologist</p>
-                    <p class="text-gray-300 mt-2 text-sm">
-                        Dr. Sharma is an expert numerologist with a Ph.D. in Numerology.  She provides detailed and personalized numerology reports.
-                    </p>
                 </div>
-                <div class="text-center">
-                    <div class="testimonial-avatar mx-auto mb-4">
-                        <span class="text-2xl">AA</span>
+                <div class="youtube-card glass-card overflow-hidden">
+                    <img src="https://img.youtube.com/vi/VIDEO_ID_3/mqdefault.jpg" alt="Video 3" class="youtube-thumbnail w-full">
+                    <div class="p-4">
+                        <h4 class="font-semibold text-white mb-2">अंक ज्योतिष Basics</h4>
+                        <p class="text-gray-300 text-sm">Introduction to numerology for beginners</p>
                     </div>
-                    <h3 class="font-semibold text-pink-600">Aarav Awasthi</h3>
-                    <p class="text-gray-400 text-sm">Astrology Consultant</p>
-                    <p class="text-gray-300 mt-2 text-sm">
-                        Aarav is a dedicated astrology consultant with 10 years of experience. He specializes in relationship compatibility and career guidance.
-                    </p>
                 </div>
-                
             </div>
-        </section>
-        <section class="glass-card rounded-2xl shadow-lg p-8 md:p-12">
-            <h2 class="text-2xl font-semibold text-pink-600 mb-6 text-center">Why Choose Jyotish Tark?</h2>
-            <ul class="list-disc list-inside space-y-3 text-gray-300">
-                <li><strong>Accuracy and Reliability:</strong> We provide accurate and reliable astrological and numerological predictions based on thorough analysis and expertise.</li>
-                <li><strong>Personalized Guidance:</strong> Our reports and consultations are tailored to your unique birth details, providing you with personalized insights and recommendations.</li>
-                <li><strong>Ethical Practices:</strong> We adhere to the highest ethical standards and maintain confidentiality in all our interactions with clients.</li>
-                <li><strong>User-Friendly Platform:</strong> Our website is designed to be easy to navigate, allowing you to access our services and resources conveniently.</li>
-                <li><strong>Customer Support:</strong> We offer dedicated customer support to address any queries or concerns you may have.</li>
-            </ul>
-        </section>
-    </main>
-    <footer class="glass-card text-center py-8 mt-12">
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Meet Our Expert Team
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Our team of experienced astrologers and numerologists is dedicated to providing you with accurate and insightful guidance.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Team Member 1 -->
+            <div class="team-card glass-card p-6 rounded-2xl text-center">
+                <div class="testimonial-avatar mx-auto mb-4">SK</div>
+                <h3 class="text-xl font-bold text-white mb-2">Pt. Surya Kant Shastri</h3>
+                <p class="text-amber-300 mb-4">Founder & Chief Astrologer</p>
+                <p class="text-gray-300 mb-4">
+                    With over 25 years of experience in Vedic astrology, Pt. Shastri is renowned for his accurate predictions and insightful guidance.
+                </p>
+                <div class="team-social flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-card glass-card p-6 rounded-2xl text-center">
+                <div class="testimonial-avatar mx-auto mb-4">RS</div>
+                <h3 class="text-xl font-bold text-white mb-2">Dr. Ritu Sharma</h3>
+                <p class="text-amber-300 mb-4">Senior Numerologist</p>
+                <p class="text-gray-300 mb-4">
+                    Dr. Sharma is an expert numerologist with a Ph.D. in Numerology. She provides detailed and personalized numerology reports.
+                </p>
+                <div class="team-social flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-card glass-card p-6 rounded-2xl text-center">
+                <div class="testimonial-avatar mx-auto mb-4">AA</div>
+                <h3 class="text-xl font-bold text-white mb-2">Aarav Awasthi</h3>
+                <p class="text-amber-300 mb-4">Astrology Consultant</p>
+                <p class="text-gray-300 mb-4">
+                    Aarav is a dedicated astrology consultant with 10 years of experience. He specializes in relationship compatibility and career guidance.
+                </p>
+                <div class="team-social flex justify-center space-x-4">
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-amber-300"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Why Choose Jyotish Tark?
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Discover what sets us apart in the world of Vedic astrology and numerology.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-start mb-4">
+                    <div class="feature-icon w-16 h-16 text-xl mr-4">✅</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Accuracy and Reliability</h3>
+                        <p class="text-gray-300">We provide accurate predictions based on thorough analysis and decades of expertise in Vedic astrology.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-start mb-4">
+                    <div class="feature-icon w-16 h-16 text-xl mr-4">🎯</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Personalized Guidance</h3>
+                        <p class="text-gray-300">Our reports and consultations are tailored to your unique birth details, providing personalized insights.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-start mb-4">
+                    <div class="feature-icon w-16 h-16 text-xl mr-4">🤝</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Ethical Practices</h3>
+                        <p class="text-gray-300">We adhere to the highest ethical standards and maintain complete confidentiality with all client interactions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex items-start mb-4">
+                    <div class="feature-icon w-16 h-16 text-xl mr-4">📱</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Free Resources</h3>
+                        <p class="text-gray-300">Access free daily horoscopes, articles, and YouTube content alongside our premium services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="count-up" data-count="2000">0</div>
+                <p class="text-gray-300">Happy Clients</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="count-up" data-count="98">0</div>
+                <p class="text-gray-300">Accuracy Rate</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="count-up" data-count="12">0</div>
+                <p class="text-gray-300">Expert Astrologers</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="count-up" data-count="5">0</div>
+                <p class="text-gray-300">Years Experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    Ready to Explore Your Cosmic Blueprint?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                    Join thousands who have found clarity and direction through our astrological guidance.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="kundali-form.html" class="primary-button">
+                        <i class="fas fa-star-and-crescent mr-2"></i>
+                        Get Your Kundali
+                    </a>
+                    <a href="contact.html" class="secondary-button">
+                        <i class="fas fa-user-astronaut mr-2"></i>
+                        Consult Our Astrologer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-pink-600 hover:text-pink-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                    </svg>
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-pink-600 hover:text-pink-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-pink-600 hover:text-pink-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19.615 3.184c-3.604-.145-5.573-.227-7.615-.227s-4.011.082-7.615.227C1.305 5.088.068 8.309.068 12s1.237 6.912 3.932 8.816c3.604.145 5.573.227 7.615.227s4.011-.082 7.615-.227C22.695 18.912 23.932 15.691 23.932 12s-1.237-6.912-3.932-8.816zM9.607 17.045v-10.09l6.803 5.008-6.803 5.082z" />
-                    </svg>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+                    <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
                 <div>
-                    <h4 class="font-semibold text-pink-600 mb-2">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="index.html" class="hover:text-pink-600">Home</a></li>
-                        <li><a href="kundali-form.html" class="hover:text-pink-600">Kundali</a></li>
-                        <li><a href="numerology.html" class="hover:text-pink-600">Numerology</a></li>
-                        <li><a href="rashifal.html" class="hover:text-pink-600">Rashifal</a></li>
-                         <li><a href="contact.html" class="hover:text-pink-600">Contact</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-pink-600 mb-2">Services</h4>
-                    <ul class="space-y-2 text-gray-400">
-                         <li><a href="kundali-form.html" class="hover:text-pink-600">Get Your Kundali</a></li>
-                        <li><a href="numerology.html" class="hover:text-pink-600">Numerology Report</a></li>
-                        <li><a href="rashifal.html" class="hover:text-pink-600">Monthly Horoscope</a></li>
-                        <li><a href="contact.html" class="hover:text-pink-600">Consult Astrologer</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-pink-600 mb-2">Information</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="about.html" class="hover:text-pink-600">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-pink-600">Contact Us</a></li>
-                        <li><a href="privacy-policy.html" class="hover:text-pink-600">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="hover:text-pink-600">Terms of Service</a></li>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-pink-600 mb-2">Contact</h4>
-                    <p class="text-gray-400 mb-2">📞 Email: jyotishtark@gmail.com</p>
-                    <p class="text-gray-400 mb-2">📞 8318513814</p>
-                    <p class="text-gray-400 mb-2">📞 Whatsapp: 8318513814</p>
-                    <p class="text-gray-400">📍 Lucknow, India</p>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
                 </div>
             </div>
-            <p class="text-gray-500 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('mobileNav').classList.toggle('hidden');
+        });
+
+        // Count up animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initialize count up animations when in viewport
+        function initCountUps() {
+            const countElements = document.querySelectorAll('.count-up');
+            
+            countElements.forEach(element => {
+                const target = parseInt(element.getAttribute('data-count'));
+                animateValue(element, 0, target, 2000);
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile menu
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            if (menuToggle && mobileNav) {
+                menuToggle.addEventListener('click', function() {
+                    mobileNav.classList.toggle('hidden');
+                    const icon = menuToggle.querySelector('i');
+                    
+                    if (mobileNav.classList.contains('hidden')) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    }
+                });
+            }
+            
+            // Initialize count up animations
+            initCountUps();
+            
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Add intersection observer for animations
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-fade-in');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                // Observe all service cards and team cards
+                document.querySelectorAll('.service-card, .team-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
+        });
+
+        // Add CSS for fade-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-fade-in {
+                animation: fadeIn 1s ease-out forwards;
+                opacity: 0;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .service-card, .team-card {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
