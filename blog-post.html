@@ -645,5 +645,59 @@
       document.getElementById('mobileNav').classList.toggle('hidden');
     });
   </script>
+  <script>
+  // Function to get URL parameters
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Blog post data - in a real application, this would come from a database
+  const blogPosts = {
+    1: {
+      title: "राशिफल 2025: क्या कहता है आपका भविष्य?",
+      image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      tag: "Rashifal",
+      date: "April 10, 2025",
+      readTime: "8 min read",
+      content: `...` // Your full content for post 1
+    },
+    2: {
+      title: "अंक ज्योतिष और भाग्य का रहस्य",
+      image: "https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      tag: "Numerology",
+      date: "March 28, 2025",
+      readTime: "7 min read",
+      content: `...` // Your full content for post 2
+    },
+    // Add entries for all 6 blog posts
+  };
+
+  // Load the appropriate blog post
+  document.addEventListener('DOMContentLoaded', function() {
+    const postId = getQueryParam('id');
+    const postData = blogPosts[postId];
+    
+    if (postData) {
+      // Update the page content
+      document.title = `${postData.title} | Jyotish Tark`;
+      document.querySelector('meta[name="description"]').setAttribute('content', 
+        `2025 राशिफल: जानें कैसा रहेगा आपका साल? ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
+      
+      document.querySelector('.blog-tag').textContent = postData.tag;
+      document.querySelector('h1').textContent = postData.title;
+      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
+      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
+      document.querySelector('.blog-image').src = postData.image;
+      document.querySelector('.article-content').innerHTML = postData.content;
+      
+      // Update breadcrumb
+      document.querySelector('.breadcrumb span:last-child').textContent = postData.title;
+    } else {
+      // Default to first post if no ID specified
+      window.location.href = 'blog-post.html?id=1';
+    }
+  });
+</script>
 </body>
 </html>
