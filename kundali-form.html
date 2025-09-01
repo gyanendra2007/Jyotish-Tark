@@ -720,43 +720,55 @@
     </div>
   </footer>
 
-  <script>
-    // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', function () {
-      document.getElementById('mobileNav').classList.toggle('hidden');
-    });
+  <!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS with your Public Key
+  emailjs.init({
+    publicKey: "YOUR_PUBLIC_KEY", // <-- replace with your EmailJS Public Key
+  });
 
-    // Form submission
-    document.getElementById('kundaliForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const responseDiv = document.getElementById('submissionResponse');
-      responseDiv.classList.remove('hidden');
-      responseDiv.innerHTML = `
-        <div class="flex items-center justify-center">
-          <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
-          <span>Submitting your details...</span>
-        </div>
-      `;
-      
-      // Simulate form submission
-      setTimeout(() => {
+  // Mobile menu toggle
+  document.getElementById('menuToggle').addEventListener('click', function () {
+    document.getElementById('mobileNav').classList.toggle('hidden');
+  });
+
+  // Form submission
+  document.getElementById('kundaliForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const responseDiv = document.getElementById('submissionResponse');
+    responseDiv.classList.remove('hidden');
+    responseDiv.innerHTML = `
+      <div class="flex items-center justify-center">
+        <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
+        <span>Submitting your details...</span>
+      </div>
+    `;
+
+    const SERVICE_ID = "YOUR_SERVICE_ID";   // <-- replace with EmailJS Service ID
+    const TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // <-- replace with EmailJS Template ID
+
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+      .then(() => {
         responseDiv.innerHTML = `
           <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
             <i class="fas fa-check-circle mr-2"></i>
-            <span>Your Kundali details have been submitted successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
+            <span>Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
           </div>
         `;
-        
-        // Reset form
         document.getElementById('kundaliForm').reset();
-        
-        // Optionally, you can send the form data to your server here
-        // const formData = new FormData(document.getElementById('kundaliForm'));
-        // fetch('/submit-kundali', { method: 'POST', body: formData });
-        
-      }, 2000);
-    });
-  </script>
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        responseDiv.innerHTML = `
+          <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+            <i class="fas fa-times-circle mr-2"></i>
+            <span>Oops! Something went wrong. Please try again later.</span>
+          </div>
+        `;
+      });
+  });
+</script>
 </body>
 </html>
