@@ -453,7 +453,7 @@
       <nav class="text-sm text-gray-400 mb-6">
         <a href="index.html" class="hover:text-amber-300">Home</a> / 
         <a href="blog.html" class="hover:text-amber-300">Blog</a> / 
-        <span class="text-amber-300">राशिफल 2025</span>
+        <span class="text-amber-300 breadcrumb-title">राशिफल 2025</span>
       </nav>
 
       <!-- Article Header -->
@@ -548,25 +548,25 @@
       </div>
 
       <!-- Related Posts -->
-      <div class="mt-12">
-        <h3 class="text-2xl font-bold text-white mb-6">Related Articles</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <a href="blog-post.html" class="blog-card glass-card overflow-hidden flex">
-            <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
-            <div class="p-4 w-2/3">
-              <h4 class="font-semibold text-white mb-2">अंक ज्योतिष और भाग्य का रहस्य</h4>
-              <p class="text-gray-400 text-sm">March 28, 2025</p>
-            </div>
-          </a>
-          <a href="blog-post.html" class="blog-card glass-card overflow-hidden flex">
-            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
-            <div class="p-4 w-2/3">
-              <h4 class="font-semibold text-white mb-2">कुंडली से करियर कैसे देखें?</h4>
-              <p class="text-gray-400 text-sm">March 15, 2025</p>
-            </div>
-          </a>
-        </div>
+<div class="mt-12">
+  <h3 class="text-2xl font-bold text-white mb-6">Related Articles</h3>
+  <div class="grid md:grid-cols-2 gap-6">
+    <a href="blog-post.html?id=2" class="blog-card glass-card overflow-hidden flex">
+      <img src="https://images.unsplash.com/photo-1596729228629-6ae234ba3e5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
+      <div class="p-4 w-2/3">
+        <h4 class="font-semibold text-white mb-2">अंक ज्योतिष और भाग्य का रहस्य</h4>
+        <p class="text-gray-400 text-sm">March 28, 2025</p>
       </div>
+    </a>
+    <a href="blog-post.html?id=3" class="blog-card glass-card overflow-hidden flex">
+      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Related post" class="w-1/3 object-cover">
+      <div class="p-4 w-2/3">
+        <h4 class="font-semibold text-white mb-2">कुंडली से करियर कैसे देखें?</h4>
+        <p class="text-gray-400 text-sm">March 15, 2025</p>
+      </div>
+    </a>
+  </div>
+</div>
 
       <!-- Newsletter Subscription -->
       <div class="cosmic-bg rounded-2xl p-8 text-center mt-12">
@@ -640,17 +640,13 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', function () {
-      document.getElementById('mobileNav').classList.toggle('hidden');
-    });
   // Function to get URL parameters
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
 
-  // Blog post data - in a real application, this would come from a database
+  // Blog post data - all 6 blog posts with actual content
   const blogPosts = {
     1: {
       title: "राशिफल 2025: क्या कहता है आपका भविष्य?",
@@ -891,37 +887,204 @@
         <p>ग्रहों की चाल का अध्ययन करके हम अपने जीवन में आने वाले changes को समझ सकते हैं और उनके अनुसार तैयारी कर सकते हैं। याद रखें, ग्रहों की चाल केवल tendencies create करती है, और हमारे karma और efforts final outcome determine करते हैं।</p>
       `
     },
-    // Add entries for all 6 blog posts
-  };
+    5: {
+      title: "वैदिक ज्योतिष: प्राचीन ज्ञान का आधुनिक उपयोग",
+      image: "https://images.unsplash.com/photo-1594736797933-d0401ba94653?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      tag: "Vedic Astrology",
+      date: "February 22, 2025",
+      readTime: "10 min read",
+      content: `
+        <p>वैदिक ज्योतिष, जिसे ज्योतिष शास्त्र भी कहा जाता है, भारत की एक प्राचीन विद्या है जो हज़ारों वर्षों से चली आ रही है। यह विद्या ग्रहों, नक्षत्रों और राशियों के अध्ययन पर आधारित है और मनुष्य के जीवन तथा भविष्य के बारे में जानकारी प्रदान करती है।</p>
 
+        <h2>वैदिक ज्योतिष का इतिहास</h2>
+        <p>वैदिक ज्योतिष की उत्पत्ति वेदों से हुई है, विशेष रूप से ऋग्वेद से। प्राचीन काल में, ऋषि-मुनि ग्रहों और नक्षत्रों का अध्ययन करते थे और उनके आधार पर समय की गणना करते थे। वैदिक ज्योतिष के प्रमुख ग्रंथों में वृहत्पाराशर होरा शास्त्र, वृहज्जातक और फलदीपिका शामिल हैं।</p>
+
+        <h2>वैदिक ज्योतिष के मुख्य घटक</h2>
+        
+        <h3>राशि चक्र</h3>
+        <p>वैदिक ज्योतिष में 12 राशियाँ होती हैं जो आकाश के 360 डिग्री के चक्र को 30-30 डिग्री के 12 भागों में बांटती हैं। प्रत्येक राशि का एक特定 स्वभाव और characteristics होता है।</p>
+
+        <h3>नक्षत्र</h3>
+        <p>वैदिक ज्योतिष में 27 नक्षत्र होते हैं जो चंद्रमा की कक्षा को 27 बराबर भागों में बांटते हैं। प्रत्येक नक्षत्र 13 डिग्री 20 मिनट का होता है और इसका अपना विशेष महत्व होता है।</p>
+
+        <blockquote>
+          "वैदिक ज्योतिष में ग्रहों की स्थिति, उनकी दशा और गोचर का अध्ययन करके व्यक्ति के भविष्य के बारे में जानकारी प्राप्त की जाती है।"
+        </blockquote>
+
+        <h3>ग्रह</h3>
+        <p>वैदिक ज्योतिष में 9 ग्रह माने जाते हैं - सूर्य, चंद्रमा, मंगल, बुध, गुरु, शुक्र, शनि, राहु और केतु। प्रत्येक ग्रह का एक特定 स्वभाव और प्रभाव होता है।</p>
+
+        <h3>भाव</h3>
+        <p>कुंडली में 12 भाव होते हैं जो जीवन के विभिन्न पहलुओं को दर्शाते हैं। प्रत्येक भाव का एक特定 signification होता है, जैसे पहला भाव व्यक्तित्व को, दूसरा भाव धन को, तीसरा भाव साहस को दर्शाता है, आदि।</p>
+
+        <h2>वैदिक ज्योतिष की आधुनिक उपयोगिता</h2>
+        <p>आधुनिक युग में वैदिक ज्योतिष का उपयोग विभिन्न क्षेत्रों में किया जा रहा है:</p>
+
+        <h3>व्यक्तिगत जीवन</h3>
+        <p>वैदिक ज्योतिष का उपयोग व्यक्ति के व्यक्तित्व, strengths, weaknesses, relationships और career के बारे में जानने के लिए किया जाता है।</p>
+
+        <h3>महत्वपूर्ण निर्णय</h3>
+        <p>विवाह, business शुरू करना, property खरीदना, travel, आदि महत्वपूर्ण निर्णयों के लिए शुभ मुहूर्त निकालने में वैदिक ज्योतिष का उपयोग किया जाता है।</p>
+
+        <h3>स्वास्थ्य</h3>
+        <p>कुंडली का विश्लेषण करके व्यक्ति की health problems और उनके remedies के बारे में जानकारी प्राप्त की जा सकती है।</p>
+
+        <div class="bg-purple-900 bg-opacity-30 p-6 rounded-xl my-8">
+          <h3 class="text-xl font-bold text-amber-300 mb-4">वैदिक ज्योतिष और पश्चिमी ज्योतिष में अंतर</h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>वैदिक ज्योतिष sidereal zodiac का use करती है, जबकि पश्चिमी ज्योतिष tropical zodiac का use करती है</li>
+            <li>वैदिक ज्योतिष में नक्षत्रों का महत्व अधिक है</li>
+            <li>वैदिक ज्योतिष में dasha system का use किया जाता है</li>
+            <li>वैदिक ज्योतिष में remedies और उपायों पर अधिक focus किया जाता है</li>
+            <li>वैदिक ज्योतिष में राहु और केतु को महत्वपूर्ण माना जाता है</li>
+          </ul>
+        </div>
+
+        <h2>वैदिक ज्योतिष के लाभ</h2>
+        <p>वैदिक ज्योतिष के निम्नलिखित लाभ हैं:</p>
+
+        <ul class="list-disc list-inside space-y-2 mb-6">
+          <li>Self-awareness और self-improvement में मदद करता है</li>
+          <li>जीवन की challenges के लिए तैयार रहने में मदद करता है</li>
+          <li>सही निर्णय लेने में मार्गदर्शन प्रदान करता है</li>
+          <li>कर्म और भाग्य के relationship को समझने में मदद करता है</li>
+          <li>Spiritual growth और enlightenment में मदद करता है</li>
+        </ul>
+
+        <p>वैदिक ज्योतिष एक गहन और complex विद्या है जो हमें अपने जीवन और ब्रह्मांड को better understand करने में help करती है। आधुनिक युग में, वैदिक ज्योतिष के principles को apply करके हम अपने जीवन को better balance और harmony में live कर सकते हैं।</p>
+      `
+    },
+    6: {
+      title: "कुंडली मिलान: सही जीवनसाथी चुनने की कला",
+      image: "https://images.unsplash.com/photo-1517598024396-4e6f5c416zsz?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+      tag: "Relationships",
+      date: "February 15, 2025",
+      readTime: "9 min read",
+      content: `
+        <p>हिंदू परंपरा में विवाह एक पवित्र बंधन माना जाता है जो जन्म-जन्मांतरों तक चलता है। कुंडली मिलान विवाह से पहले की जाने वाली एक महत्वपूर्ण प्रक्रिया है जिसके through यह जांचा जाता है कि क्या दो individuals की कुंडलियाँ एक दूसरे के compatible हैं। इस process को गुण मिलान भी कहा जाता है।</p>
+
+        <h2>कुंडली मिलान क्यों महत्वपूर्ण है?</h2>
+        <p>कुंडली मिलान का मुख्य उद्देश्य यह सुनिश्चित करना है कि विवाह के बाद दंपत्ति का जीवन सुखी और समृद्धिशाली रहे। कुंडली मिलान through निम्नलिखित बातों का पता लगाया जाता है:</p>
+
+        <ul class="list-disc list-inside space-y-2 mb-6">
+          <li>दोनों individuals की mental compatibility</li>
+          <li>शारीरिक compatibility और health issues</li>
+          <li>Financial stability और prosperity</li>
+          <li>Family life और children के योग</li>
+          <li>जीवन में आने वाली challenges और उनका सामना करने की ability</li>
+        </ul>
+
+        <h2>कुंडली मिलान के प्रमुख aspects</h2>
+        <p>कुंडली मिलान में निम्नलिखित aspects को check किया जाता है:</p>
+
+        <h3>1. वर्ण (Varna)</h3>
+        <p>वर्ण मिलान spiritual compatibility को दर्शाता है। इसमें 1 point दिया जाता है।</p>
+
+        <h3>2. वश्य (Vashya)</h3>
+        <p>वश्य मिलान mutual attraction और control को दर्शाता है। इसमें 2 points दिए जाते हैं।</p>
+
+        <h3>3. तारा (Tara)</h3>
+        <p>तारा मिलान destiny और luck की compatibility को दर्शाता है। इसमें 3 points दिए जाते हैं।</p>
+
+        <h3>4. योन (Yoni)</h3>
+        <p>योन मिलान sexual compatibility को दर्शाता है। इसमें 4 points दिए जाते हैं।</p>
+
+        <blockquote>
+          "ग्रह मैत्री मिलान में 5 points दिए जाते हैं और यह planetary compatibility को दर्शाता है, जो कुंडली मिलान का सबसे महत्वपूर्ण aspect माना जाता है।"
+        </blockquote>
+
+        <h3>5. ग्रह मैत्री (Graha Maitri)</h3>
+        <p>ग्रह मैत्री मिलान planetary compatibility को दर्शाता है। इसमें 5 points दिए जाते हैं।</p>
+
+        <h3>6. गण (Gana)</h3>
+        <p>गण मिलान temperament और nature की compatibility को दर्शाता है। इसमें 6 points दिए जाते हैं।</p>
+
+        <h3>7. भकूट (Bhakoot)</h3>
+        <p>भकूट मिलान family welfare और financial stability को दर्शाता है। इसमें 7 points दिए जाते हैं।</p>
+
+        <h3>8. नाड़ी (Nadi)</h3>
+        <p>नाड़ी मिलान health और progeny को दर्शाता है। इसमें 8 points दिए जाते हैं।</p>
+
+        <h2>गुण मिलान का महत्व</h2>
+        <p>कुंडली मिलान में कुल 36 points होते हैं।一般来说, 18 points से अधिक मिलने पर match को acceptable माना जाता है, लेकिन 32 points से अधिक मिलना ideal situation मानी जाती है।</p>
+
+        <div class="bg-purple-900 bg-opacity-30 p-6 rounded-xl my-8">
+          <h3 class="text-xl font-bold text-amber-300 mb-4">कुंडली मिलान में विशेष ध्यान देने योग्य बातें</h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>मंगल दोष (Mangal Dosha) की उपस्थिति</li>
+            <li>नाड़ी दोष (Nadi Dosha) की उपस्थिति</li>
+            <li>भकूट दोष (Bhakoot Dosha) की उपस्थिति</li>
+            <li>गण दोष (Gana Dosha) की उपस्थिति</li>
+            <li>चंद्र राशि की compatibility</li>
+            <li>दोनों की कुंडली में planets की mutual aspects</li>
+          </ul>
+        </div>
+
+        <h2>कुंडली मिलान में common doshas और उनके remedies</h2>
+        
+        <h3>मंगल दोष (Mangal Dosha)</h3>
+        <p>जब मंगल ग्रह 1st, 2nd, 4th, 7th, 8th, or 12th house में स्थित होता है, तो मंगल दोष बनता है। इसके remedies में मंगल related rituals, gemstones, और donations शामिल हैं।</p>
+
+        <h3>नाड़ी दोष (Nadi Dosha)</h3>
+        <p>जब दोनों partners की नाड़ी same होती है, तो नाड़ी दोष बनता है। इसके remedies में specific pujas और rituals शामिल हैं।</p>
+
+        <h3>भकूट दोष (Bhakoot Dosha)</h3>
+        <p>भकूट दोष certain moon sign combinations में बनता है। इसके remedies में planetary worship और donations शामिल हैं।</p>
+
+        <h2>आधुनिक perspective में कुंडली मिलान</h2>
+        <p>आधुनिक युग में, कुंडली मिलान को एक guidance के रूप में लेना चाहिए, न कि absolute decision maker के रूप में। कुंडली मिलान के साथ-साथ mutual understanding, respect, love, और communication भी successful marriage के लिए equally important हैं।</p>
+
+        <p>कुंडली मिलान एक valuable tool है जो couples को their relationship के strengths और weaknesses को understand करने में help कर सकता है। हालांकि, final decision always couples की mutual understanding और commitment पर depend करना चाहिए।</p>
+      `
+    }
+  };
+  // Add this to your script section
+document.addEventListener('DOMContentLoaded', function() {
+  const newsletterForm = document.querySelector('form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailInput = this.querySelector('input[type="email"]');
+      if (emailInput && emailInput.value) {
+        alert('Thank you for subscribing to our newsletter!');
+        emailInput.value = '';
+      }
+    });
+  }
+});
   // Load the appropriate blog post
   document.addEventListener('DOMContentLoaded', function() {
-    const postId = getQueryParam('id');
+    const postId = getQueryParam('id') || 1;
     const postData = blogPosts[postId];
     
     if (postData) {
       // Update the page content
       document.title = `${postData.title} | Jyotish Tark`;
       document.querySelector('meta[name="description"]').setAttribute('content', 
-        `2025 राशिफल: जानें कैसा रहेगा आपका साल? ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
+        `${postData.title} - ज्योतिष टार्क ब्लॉग से ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
       
       document.querySelector('.blog-tag').textContent = postData.tag;
       document.querySelector('h1').textContent = postData.title;
-      document.queryS// Get id from URL
-  const params = new URLSearchParams(window.location.search);
-  const blogId = params.get("id");
-
-  // Fill blog content
-  if (blogs[blogId]) {
-    document.getElementById("blog-title").innerText = blogs[blogId].title;
-    document.getElementById("blog-date").innerText = blogs[blogId].date + " • " + blogs[blogId].readTime;
-    document.getElementById("blog-tag").innerText = blogs[blogId].tag;
-    document.getElementById("blog-image").src = blogs[blogId].image;
-    document.getElementById("blog-content").innerHTML = blogs[blogId].content;
-  } else {
-    document.getElementById("blog-title").innerText = "Blog not found";
-    document.getElementById("blog-content").innerHTML = "<p>Sorry, this blog does not exist.</p>";
-  }
+      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
+      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
+      document.querySelector('.blog-image').src = postData.image;
+      document.querySelector('.article-content').innerHTML = postData.content;
+      
+      // Update breadcrumb
+      const breadcrumbSpan = document.querySelector('.breadcrumb-title');
+      if (breadcrumbSpan) {
+        breadcrumbSpan.textContent = postData.title;
+      }
+    } else {
+      // Default to first post if no ID specified or invalid
+      const firstPost = blogPosts[1];
+      document.querySelector('.blog-tag').textContent = firstPost.tag;
+      document.querySelector('h1').textContent = firstPost.title;
+      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${firstPost.date}`;
+      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${firstPost.readTime}`;
+      document.querySelector('.blog-image').src = firstPost.image;
+      document.querySelector('.article-content').innerHTML = firstPost.content;
+    }
   });
 </script>
 </body>
