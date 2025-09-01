@@ -907,17 +907,21 @@
       
       document.querySelector('.blog-tag').textContent = postData.tag;
       document.querySelector('h1').textContent = postData.title;
-      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
-      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
-      document.querySelector('.blog-image').src = postData.image;
-      document.querySelector('.article-content').innerHTML = postData.content;
-      
-      // Update breadcrumb
-      document.querySelector('.breadcrumb span:last-child').textContent = postData.title;
-    } else {
-      // Default to first post if no ID specified
-      window.location.href = 'blog-post.html?id=1';
-    }
+      document.queryS// Get id from URL
+  const params = new URLSearchParams(window.location.search);
+  const blogId = params.get("id");
+
+  // Fill blog content
+  if (blogs[blogId]) {
+    document.getElementById("blog-title").innerText = blogs[blogId].title;
+    document.getElementById("blog-date").innerText = blogs[blogId].date + " • " + blogs[blogId].readTime;
+    document.getElementById("blog-tag").innerText = blogs[blogId].tag;
+    document.getElementById("blog-image").src = blogs[blogId].image;
+    document.getElementById("blog-content").innerHTML = blogs[blogId].content;
+  } else {
+    document.getElementById("blog-title").innerText = "Blog not found";
+    document.getElementById("blog-content").innerHTML = "<p>Sorry, this blog does not exist.</p>";
+  }
   });
 </script>
 </body>
