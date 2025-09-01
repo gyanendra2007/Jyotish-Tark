@@ -770,5 +770,43 @@
       });
   });
 </script>
+<script>
+  // Form submit handler
+  document.getElementById("kundaliForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+
+    // ✅ Check if this email already submitted
+    if (localStorage.getItem("submitted_" + email)) {
+      document.getElementById("submissionResponse").innerText =
+        "⚠️ You have already submitted the form once.";
+      document.getElementById("submissionResponse").classList.remove("hidden");
+      document.getElementById("submissionResponse").classList.add("text-red-400");
+      return;
+    }
+
+    // ✅ Send via EmailJS
+    emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this, "YOUR_PUBLIC_KEY")
+      .then(() => {
+        document.getElementById("submissionResponse").innerText =
+          "✅ Thank you! Your Kundali details have been submitted.";
+        document.getElementById("submissionResponse").classList.remove("hidden");
+        document.getElementById("submissionResponse").classList.add("text-green-400");
+
+        // Save submission to prevent duplicate
+        localStorage.setItem("submitted_" + email, "true");
+
+        // Optionally disable form
+        document.getElementById("kundaliForm").reset();
+        document.querySelector("#kundaliForm button").disabled = true;
+      }, (error) => {
+        document.getElementById("submissionResponse").innerText =
+          "❌ Failed to submit. Please try again.";
+        document.getElementById("submissionResponse").classList.remove("hidden");
+        document.getElementById("submissionResponse").classList.add("text-red-400");
+      });
+  });
+</script>
 </body>
 </html>
