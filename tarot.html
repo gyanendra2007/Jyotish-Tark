@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentic Tarot Card Reading | Jyotish Tark</title>
+
+  <meta name="description" content="Get accurate tarot card readings for career, love, health, and destiny. Professional tarot guidance from Jyotish Tark.">
+  <meta name="keywords" content="tarot card reading, tarot prediction, career tarot, love tarot, health tarot, destiny reading, jyotish tark tarot">
+  <meta name="author" content="Jyotish Tark">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7e22ce;
+      --primary-light: #a855f7;
+      --primary-dark: #6b21a8;
+      --secondary: #f59e0b;
+      --accent: #ec4899;
+      --dark: #1f2937;
+      --light: #f9fafb;
+    }
+    
+    body {
+      font-family: 'Inter', 'Hind', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f3f4f6;
+      background-attachment: fixed;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    .hindi {
+      font-family: 'Hind', sans-serif;
+    }
+    
+    .cosmic-bg {
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      position: relative;
+    }
+    
+    .cosmic-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    }
+    
+    .service-card {
+      transition: all 0.3s ease;
+      border-bottom: 4px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 50%;
+      font-size: 32px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .testimonial-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    }
+    
+    .primary-button {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .primary-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .primary-button:hover::before {
+      left: 100%;
+    }
+    
+    .primary-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .secondary-button {
+      background: transparent;
+      color: white;
+      border: 2px solid var(--secondary);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .secondary-button:hover {
+      background: var(--secondary);
+      color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+    
+    .star-rating {
+      color: var(--secondary);
+    }
+    
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .zodiac-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .planet-1 {
+      position: absolute;
+      top: 20%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+      box-shadow: 0 0 50px #f59e0b;
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .planet-2 {
+      position: absolute;
+      bottom: 15%;
+      right: 8%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+      box-shadow: 0 0 40px #ec4899;
+      opacity: 0.7;
+      animation: float 10s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+    
+    .astrological-symbol {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    
+    .footer-links a {
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .count-up {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    @media (max-width: 768px) {
+      .planet-1, .planet-2 {
+        display: none;
+      }
+    }
+
+    /* Tarot Specific Styles */
+    .tarot-card {
+      width: 120px;
+      height: 200px;
+      perspective: 1000px;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+    
+    .tarot-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    
+    .tarot-card.flipped .tarot-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .tarot-front, .tarot-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .tarot-front {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      font-size: 2rem;
+    }
+    
+    .tarot-back {
+      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      color: white;
+      transform: rotateY(180deg);
+      padding: 15px;
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .tarot-back h4 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--secondary);
+    }
+    
+    .tarot-back p {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    
+    .tarot-spread {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .tarot-category {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    .reading-result {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 30px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .tarot-btn {
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 20px 0;
+    }
+    
+    .tarot-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+    }
+    
+    .tarot-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Floating Planets -->
+  <div class="planet-1"></div>
+  <div class="planet-2"></div>
+
+  <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2">
+        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center glow">
+          <i class="fas fa-star-and-crescent text-white text-xl"></i>
+        </div>
+        <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+        <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+        <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+        <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+        <a href="tarot.html" class="nav-link text-amber-300 transition">Tarot</a>
+        <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+        <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+      <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+      <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="tarot.html" class="block px-4 py-2 rounded text-amber-300 bg-purple-700 transition"><i class="fas fa-clover astrological-symbol"></i>Tarot</a>
+      <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+      <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
+        <span class="block">Tarot Card Reading</span>
+        <span class="text-3xl md:text-4xl text-amber-300">Reveal Your Destiny</span>
+      </h1>
+      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        Discover what the cards reveal about your career, love life, health, and overall destiny with our authentic tarot readings.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tarot Reading Section -->
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="glass-card p-8 rounded-2xl text-center">
+      <h2 class="text-3xl font-bold text-white mb-6">Your Personal Tarot Reading</h2>
+      <p class="text-gray-300 mb-8">Focus your energy on a specific area of your life and draw a card for guidance.</p>
+      
+      <div class="mb-8">
+        <label for="lifeArea" class="block text-amber-300 font-medium mb-3">Select Life Area:</label>
+        <select id="lifeArea" class="bg-gray-800 text-white rounded-lg p-3 border border-purple-600 focus:ring-2 focus:ring-purple-500 focus:outline-none">
+          <option value="career">Career & Finance</option>
+          <option value="love">Love & Relationships</option>
+          <option value="health">Health & Wellness</option>
+          <option value="spirituality">Spiritual Growth</option>
+          <option value="overall">Overall Destiny</option>
+        </select>
+      </div>
+      
+      <button id="drawCard" class="tarot-btn">
+        <i class="fas fa-clover mr-2"></i>Draw Tarot Card
+      </button>
+      
+      <div id="tarotResult" class="hidden">
+        <div class="tarot-spread">
+          <div>
+            <div class="tarot-category" id="selectedCategory">Career & Finance</div>
+            <div class="tarot-card" id="tarotCard">
+              <div class="tarot-inner">
+                <div class="tarot-front">
+                  <i class="fas fa-question"></i>
+                </div>
+                <div class="tarot-back">
+                  <h4 id="cardName">The Magician</h4>
+                  <p id="cardMeaning">You have all the tools you need to succeed. Take action on your ideas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="reading-result">
+          <h3 class="text-xl font-bold text-amber-300 mb-4">Your Reading</h3>
+          <p id="readingText" class="text-gray-300"></p>
+        </div>
+        
+        <button id="resetReading" class="secondary-button mt-6">
+          <i class="fas fa-redo mr-2"></i>New Reading
+        </button>
+      </div>
+    </div>
+    
+    <!-- Tarot Explanation -->
+    <div class="glass-card p-8 rounded-2xl mt-12">
+      <h2 class="text-3xl font-bold text-white mb-6 text-center">About Our Tarot Readings</h2>
+      <p class="text-gray-300 mb-4">
+        Our tarot readings are designed to provide guidance and insight into specific areas of your life. Unlike simple yes/no answers, we offer meaningful interpretations that help you understand your current situation and potential paths forward.
+      </p>
+      <p class="text-gray-300 mb-4">
+        Each card drawn is interpreted in the context of the life area you've selected, providing personalized guidance that respects your unique journey.
+      </p>
+      <div class="bg-purple-900 bg-opacity-30 p-6 rounded-xl my-6">
+        <h3 class="text-xl font-bold text-amber-300 mb-4">How It Works</h3>
+        <ol class="list-decimal list-inside space-y-2 text-gray-300">
+          <li>Select the life area you want guidance on</li>
+          <li>Click "Draw Tarot Card" to receive your reading</li>
+          <li>Focus on the message and how it applies to your situation</li>
+          <li>Use the insights to guide your decisions and reflections</li>
+        </ol>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-card text-center py-12 mt-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-center space-x-6 mb-8 text-2xl">
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="index.html" class="text-gray-300">Home</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
+            <li><a href="tarot.html" class="text-gray-300">Tarot Reading</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+          <ul class="space-y-3 footer-links">
+            <li><a href="about.html" class="text-gray-300">About Us</a></li>
+            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    });
+
+    // Tarot Card Data
+    const tarotCards = [
+      {
+        name: "The Magician",
+        meanings: {
+          career: "You have all the skills needed to advance. Take initiative on projects and showcase your abilities.",
+          love: "Communication is your magic wand. Express your feelings clearly to strengthen your relationship.",
+          health: "You have the power to improve your wellbeing. Focus on balanced nutrition and regular exercise.",
+          spirituality: "You're connecting with your inner power. Meditation will enhance your spiritual journey.",
+          overall: "You possess all the resources you need. Trust in your abilities to manifest your desires."
+        }
+      },
+      {
+        name: "The High Priestess",
+        meanings: {
+          career: "Trust your intuition about workplace dynamics. There may be hidden information worth discovering.",
+          love: "Listen to your inner voice about your relationship. Some things are not as they appear on the surface.",
+          health: "Pay attention to your body's subtle signals. Preventive care is important now.",
+          spirituality: "Your intuition is heightened. Pay attention to dreams and subtle messages from the universe.",
+          overall: "Secrets and mysteries are unfolding. Trust your intuition to guide you through uncertainty."
+        }
+      },
+      {
+        name: "The Empress",
+        meanings: {
+          career: "Creative projects will flourish. Nurture your ideas and they will grow into something beautiful.",
+          love: "A period of harmony and abundance in relationships. Fertility and growth in emotional connections.",
+          health: "Focus on nurturing your body with wholesome foods and self-care practices.",
+          spirituality: "Connect with nature to enhance your spiritual growth. Abundance is flowing to you.",
+          overall: "Abundance, creativity, and nurturing energy surround you. Embrace your feminine power."
+        }
+      },
+      {
+        name: "The Emperor",
+        meanings: {
+          career: "Take authority over your projects. Structure and discipline will lead to success.",
+          love: "Establish healthy boundaries in relationships. Stability and security are important now.",
+          health: "Create a structured routine for your health. Discipline will bring positive results.",
+          spirituality: "Establish a regular spiritual practice. Structure will enhance your connection.",
+          overall: "Authority, structure, and stability are emphasized. Take control of your life direction."
+        }
+      },
+      {
+        name: "The Hierophant",
+        meanings: {
+          career: "Seek mentorship or follow established protocols. Conventional approaches work best now.",
+          love: "Traditional values strengthen your relationship. Consider long-term commitments.",
+          health: "Follow professional medical advice. Traditional treatments may be most effective.",
+          spirituality: "Explore established spiritual traditions. Conventional wisdom has much to offer.",
+          overall: "Traditional values, education, and spiritual guidance are highlighted. Seek wisdom from mentors."
+        }
+      },
+      {
+        name: "The Lovers",
+        meanings: {
+          career: "A important decision about your career path. Choose alignment with your values.",
+          love: "A meaningful connection or important relationship choice. Follow your heart wisely.",
+          health: "Balance between different aspects of your wellbeing. Harmony leads to health.",
+          spirituality: "Alignment between your beliefs and actions brings spiritual harmony.",
+          overall: "Choices, relationships, and alignment are emphasized. Seek harmony in all decisions."
+        }
+      },
+      {
+        name: "The Chariot",
+        meanings: {
+          career: "Move forward with determination. Control opposing forces to achieve victory.",
+          love: "Take the reins in your relationship. Direct your energy toward mutual goals.",
+          health: "Willpower can overcome health challenges. Stay determined in your wellness journey.",
+          spirituality: "Your spiritual journey requires discipline and control to move forward.",
+          overall: "Willpower, control, and triumph through determination. Move forward with confidence."
+        }
+      },
+      {
+        name: "Strength",
+        meanings: {
+          career: "Inner strength will help you overcome challenges. Courage prevails over obstacles.",
+          love: "Gentle compassion strengthens your relationship. Patience and understanding are key.",
+          health: "Your body has remarkable healing capabilities. Trust in your resilience.",
+          spirituality: "Inner strength and compassion enhance your spiritual path.",
+          overall: "Courage, compassion, and inner strength. You have the power to overcome any challenge."
+        }
+      },
+      {
+        name: "The Hermit",
+        meanings: {
+          career: "Step back to gain perspective. Solitude may bring the answers you seek.",
+          love: "Time alone can bring clarity to relationship matters. Listen to your inner wisdom.",
+          health: "Quiet reflection benefits your wellbeing. Sometimes rest is the best medicine.",
+          spirituality: "Withdraw to find inner guidance. Your answers come from within.",
+          overall: "Soul-searching, introspection, and inner guidance. Withdraw to find wisdom."
+        }
+      },
+      {
+        name: "Wheel of Fortune",
+        meanings: {
+          career: "A positive turn of events is coming. Be ready to embrace new opportunities.",
+          love: "Fate is bringing positive changes to your relationship. Go with the flow.",
+          health: "Your health situation is improving. Positive cycles are beginning.",
+          spirituality: "Divine timing is at work. Trust the universe's plan for you.",
+          overall: "A turn of fate, cycles, and destiny. Positive changes are on the horizon."
+        }
+      }
+    ];
+
+    // Tarot Reading Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const drawButton = document.getElementById('drawCard');
+      const resetButton = document.getElementById('resetReading');
+      const lifeAreaSelect = document.getElementById('lifeArea');
+      const tarotResult = document.getElementById('tarotResult');
+      const tarotCard = document.getElementById('tarotCard');
+      const cardName = document.getElementById('cardName');
+      const cardMeaning = document.getElementById('cardMeaning');
+      const readingText = document.getElementById('readingText');
+      const selectedCategory = document.getElementById('selectedCategory');
+      
+      drawButton.addEventListener('click', function() {
+        // Get selected life area
+        const lifeArea = lifeAreaSelect.value;
+        const lifeAreaText = lifeAreaSelect.options[lifeAreaSelect.selectedIndex].text;
+        
+        // Select a random card
+        const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+        
+        // Update the display
+        cardName.textContent = randomCard.name;
+        cardMeaning.textContent = randomCard.meanings[lifeArea];
+        readingText.textContent = `For your ${lifeAreaText.toLowerCase()}, the ${randomCard.name} appears. ${randomCard.meanings[lifeArea]}`;
+        selectedCategory.textContent = lifeAreaText;
+        
+        // Show the result
+        tarotResult.classList.remove('hidden');
+        
+        // Flip the card after a short delay
+        setTimeout(() => {
+          tarotCard.classList.add('flipped');
+        }, 500);
+      });
+      
+      resetButton.addEventListener('click', function() {
+        // Reset the display
+        tarotResult.classList.add('hidden');
+        tarotCard.classList.remove('flipped');
+      });
+    });
+  </script>
+</body>
+</html>
