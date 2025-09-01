@@ -723,21 +723,29 @@
   <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // Initialize EmailJS with your Public Key
-  emailjs.init({
-    publicKey: "o-tnka-_5VrrqMgQs", // <-- replace with your EmailJS Public Key
-  });
+  // ✅ Initialize EmailJS with your Public Key
+  emailjs.init("o-tnka-_5VrrqMgQs"); // replace with your actual Public Key
 
-  // Mobile menu toggle
-  document.getElementById('menuToggle').addEventListener('click', function () {
-    document.getElementById('mobileNav').classList.toggle('hidden');
-  });
-
-  // Form submission
+  // ✅ Form submission
   document.getElementById('kundaliForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const responseDiv = document.getElementById('submissionResponse');
+    const email = document.getElementById("email").value; // user email input
+
+    // 🔴 Restrict duplicate submissions
+    if (localStorage.getItem("submitted_" + email)) {
+      responseDiv.innerHTML = `
+        <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+          <i class="fas fa-exclamation-triangle mr-2"></i>
+          <span>⚠️ You have already submitted the form once.</span>
+        </div>
+      `;
+      responseDiv.classList.remove("hidden");
+      return;
+    }
+
+    // Show loading
     responseDiv.classList.remove('hidden');
     responseDiv.innerHTML = `
       <div class="flex items-center justify-center">
@@ -746,65 +754,34 @@
       </div>
     `;
 
-    const SERVICE_ID = "service_6w2tj0r";   // <-- replace with EmailJS Service ID
-    const TEMPLATE_ID = "template_r6rqkf8"; // <-- replace with EmailJS Template ID
+    const SERVICE_ID = "service_6w2tj0r";   // replace with your EmailJS Service ID
+    const TEMPLATE_ID = "template_r6rqkf8"; // replace with your EmailJS Template ID
 
+    // ✅ Send form using EmailJS
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
       .then(() => {
         responseDiv.innerHTML = `
           <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
             <i class="fas fa-check-circle mr-2"></i>
-            <span>Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
+            <span>✅ Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
           </div>
         `;
+
+        // Save submission to prevent duplicate
+        localStorage.setItem("submitted_" + email, "true");
+
+        // Reset & disable form
         document.getElementById('kundaliForm').reset();
+        document.querySelector("#kundaliForm button").disabled = true;
       })
       .catch((error) => {
         console.error("EmailJS Error:", error);
         responseDiv.innerHTML = `
           <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
             <i class="fas fa-times-circle mr-2"></i>
-            <span>Oops! Something went wrong. Please try again later.</span>
+            <span>❌ Oops! Something went wrong. Please try again later.</span>
           </div>
         `;
-      });
-  });
-</script>
-<script>
-  // Form submit handler
-  document.getElementById("kundaliForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("email").value;
-
-    // ✅ Check if this email already submitted
-    if (localStorage.getItem("submitted_" + email)) {
-      document.getElementById("submissionResponse").innerText =
-        "⚠️ You have already submitted the form once.";
-      document.getElementById("submissionResponse").classList.remove("hidden");
-      document.getElementById("submissionResponse").classList.add("text-red-400");
-      return;
-    }
-
-    // ✅ Send via EmailJS
-    emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this, "o-tnka-_5VrrqMgQs")
-      .then(() => {
-        document.getElementById("submissionResponse").innerText =
-          "✅ Thank you! Your Kundali details have been submitted.";
-        document.getElementById("submissionResponse").classList.remove("hidden");
-        document.getElementById("submissionResponse").classList.add("text-green-400");
-
-        // Save submission to prevent duplicate
-        localStorage.setItem("submitted_" + email, "true");
-
-        // Optionally disable form
-        document.getElementById("kundaliForm").reset();
-        document.querySelector("#kundaliForm button").disabled = true;
-      }, (error) => {
-        document.getElementById("submissionResponse").innerText =
-          "❌ Failed to submit. Please try again.";
-        document.getElementById("submissionResponse").classList.remove("hidden");
-        document.getElementById("submissionResponse").classList.add("text-red-400");
       });
   });
 </script>
