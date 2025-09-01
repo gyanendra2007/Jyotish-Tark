@@ -1038,23 +1038,10 @@
       `
     }
   };
-  // Add this to your script section
-document.addEventListener('DOMContentLoaded', function() {
-  const newsletterForm = document.querySelector('form');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const emailInput = this.querySelector('input[type="email"]');
-      if (emailInput && emailInput.value) {
-        alert('Thank you for subscribing to our newsletter!');
-        emailInput.value = '';
-      }
-    });
-  }
-});
+
   // Load the appropriate blog post
   document.addEventListener('DOMContentLoaded', function() {
-    const postId = getQueryParam('id') || 1;
+    const postId = getQueryParam('id');
     const postData = blogPosts[postId];
     
     if (postData) {
@@ -1063,12 +1050,25 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('meta[name="description"]').setAttribute('content', 
         `${postData.title} - ज्योतिष टार्क ब्लॉग से ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
       
-      document.querySelector('.blog-tag').textContent = postData.tag;
-      document.querySelector('h1').textContent = postData.title;
-      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
-      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
-      document.querySelector('.blog-image').src = postData.image;
-      document.querySelector('.article-content').innerHTML = postData.content;
+      // Update all elements with the blog data
+      const tagElement = document.querySelector('.blog-tag');
+      if (tagElement) tagElement.textContent = postData.tag;
+      
+      const titleElement = document.querySelector('h1');
+      if (titleElement) titleElement.textContent = postData.title;
+      
+      const dateElement = document.querySelector('.blog-meta span:first-child');
+      if (dateElement) dateElement.innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
+      
+      const readTimeElement = document.querySelector('.blog-meta span:nth-child(2)');
+      if (readTimeElement) readTimeElement.innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
+      
+      const imageElement = document.querySelector('.blog-image');
+      if (imageElement) imageElement.src = postData.image;
+      if (imageElement) imageElement.alt = postData.title;
+      
+      const contentElement = document.querySelector('.article-content');
+      if (contentElement) contentElement.innerHTML = postData.content;
       
       // Update breadcrumb
       const breadcrumbSpan = document.querySelector('.breadcrumb-title');
@@ -1078,12 +1078,29 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       // Default to first post if no ID specified or invalid
       const firstPost = blogPosts[1];
-      document.querySelector('.blog-tag').textContent = firstPost.tag;
-      document.querySelector('h1').textContent = firstPost.title;
-      document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${firstPost.date}`;
-      document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${firstPost.readTime}`;
-      document.querySelector('.blog-image').src = firstPost.image;
-      document.querySelector('.article-content').innerHTML = firstPost.content;
+      if (firstPost) {
+        document.querySelector('.blog-tag').textContent = firstPost.tag;
+        document.querySelector('h1').textContent = firstPost.title;
+        document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${firstPost.date}`;
+        document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${firstPost.readTime}`;
+        document.querySelector('.blog-image').src = firstPost.image;
+        document.querySelector('.article-content').innerHTML = firstPost.content;
+      }
+    }
+  });
+
+  // Newsletter form handling
+  document.addEventListener('DOMContentLoaded', function() {
+    const newsletterForm = document.querySelector('form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value) {
+          alert('Thank you for subscribing to our newsletter!');
+          emailInput.value = '';
+        }
+      });
     }
   });
 </script>
