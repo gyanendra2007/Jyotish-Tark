@@ -89,10 +89,22 @@
     }
     
     .blog-image {
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.blog-image.main-image {
+  max-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .blog-image, .blog-image.main-image {
+    max-height: 300px;
+  }
+}
     
     .blog-card:hover .blog-image {
       transform: scale(1.05);
@@ -402,6 +414,12 @@
     .twitter:hover { background: #1da1f2; }
     .whatsapp:hover { background: #25d366; }
     .linkedin:hover { background: #0077b5; }
+   @media (max-width: 768px) {
+  #related-posts img {
+    height: 35vw;
+    max-height: 200px;
+  }
+}
   </style>
 </head>
 <body class="min-h-screen">
@@ -474,7 +492,7 @@
         <a href="#" class="share-button whatsapp"><i class="fab fa-whatsapp"></i></a>
         <a href="#" class="share-button linkedin"><i class="fab fa-linkedin-in"></i></a>
       </div>
-      <img class="blog-image rounded-xl mb-6 w-full" src="" alt="">
+      <img class="blog-image main-image rounded-xl mb-6 w-full" src="" alt="">
       <article class="article-content text-gray-300"></article>
       
       <!-- Related Posts Section -->
@@ -992,7 +1010,7 @@
       return `
         <article class="glass-card p-4 rounded-xl">
           <img src="${post.image}" alt="${post.title}" 
-               class="w-full h-40 object-cover rounded-lg mb-4">
+               class="w-full h-48 object-contain rounded-lg mb-4">
           <span class="blog-tag">${post.tag}</span>
           <h3 class="text-lg font-semibold text-white mt-2 mb-2">${post.title}</h3>
           <a href="blog-post.html?id=${id}" 
@@ -1058,18 +1076,24 @@
     }
     
     // Newsletter form handling
-    const newsletterForm = document.getElementById('newsletter-form');
-    if (newsletterForm) {
-      newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const emailInput = this.querySelector('input[type="email"]');
-        if (emailInput && emailInput.value) {
-          alert('✅ Thank you for subscribing to our newsletter!');
-          emailInput.value = '';
-        }
-      });
+const newsletterForm = document.getElementById('newsletter-form');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const emailInput = this.querySelector('input[type="email"]');
+    if (emailInput && emailInput.value) {
+      // Add proper validation
+      if (emailInput.value.includes('@')) {
+        alert('✅ Thank you for subscribing to our newsletter!');
+        emailInput.value = '';
+      } else {
+        alert('❌ Please enter a valid email address');
+      }
+    } else {
+      alert('❌ Please enter your email address');
     }
   });
+}
 </script>
 </body>
 </html>
