@@ -990,7 +990,7 @@
     }
   };
 
-  // === Related Posts ===
+   // === Related Posts ===
   function showRelatedPosts(currentId) {
     const container = document.getElementById("related-posts");
     if (!container) return;
@@ -1057,7 +1057,7 @@
         breadcrumbSpan.textContent = postData.title;
       }
       
-      // Show related posts - THIS WAS MISSING!
+      // Show related posts
       showRelatedPosts(postId);
     } else {
       // Default to first post if no ID specified or invalid
@@ -1076,24 +1076,25 @@
     }
     
     // Newsletter form handling
-const newsletterForm = document.getElementById('newsletter-form');
-if (newsletterForm) {
-  newsletterForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const emailInput = this.querySelector('input[type="email"]');
-    if (emailInput && emailInput.value) {
-      // Add proper validation
-      if (emailInput.value.includes('@')) {
-        alert('✅ Thank you for subscribing to our newsletter!');
-        emailInput.value = '';
-      } else {
-        alert('❌ Please enter a valid email address');
-      }
-    } else {
-      alert('❌ Please enter your email address');
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value) {
+          // Add proper validation
+          if (emailInput.value.includes('@')) {
+            alert('✅ Thank you for subscribing to our newsletter!');
+            emailInput.value = '';
+          } else {
+            alert('❌ Please enter a valid email address');
+          }
+        } else {
+          alert('❌ Please enter your email address');
+        }
+      });
     }
   });
-}
-</script>
+  </script>
 </body>
 </html>
