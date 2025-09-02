@@ -526,7 +526,7 @@
       <div class="cosmic-bg rounded-2xl p-8 text-center mt-12">
         <h3 class="text-2xl font-bold text-white mb-4">Get Weekly Astrology Insights</h3>
         <p class="text-purple-100 mb-6">Subscribe to our newsletter for regular updates on planetary transits and their effects on your life</p>
-        <form class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <input type="email" placeholder="Your Email Address" class="px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto">
           <button type="submit" class="primary-button">
             <i class="fas fa-paper-plane mr-2"></i>
@@ -1047,42 +1047,44 @@ function showRelatedPosts(currentId) {
   const container = document.getElementById("related-posts");
   if (!container) return;
 
-  // Get all blog IDs except current one
-  const otherIds = Object.keys(blogPosts).filter(id => id !== currentId);
+  // Convert currentId to string for comparison
+  const current = String(currentId);
 
-  // Shuffle and pick 3 random
-  const randomIds = otherIds.sort(() => 0.5 - Math.random()).slice(0, 3);
+  // Get all blog IDs except the current one
+  const otherIds = Object.keys(blogPosts).filter(id => id !== current);
 
-  // Generate cards
+  // Pick up to 3 random posts
+  const randomIds = otherIds.sort(() => Math.random() - 0.5).slice(0, 3);
+
+  // Generate related post cards
   container.innerHTML = randomIds.map(id => {
     const post = blogPosts[id];
     return `
       <article class="glass-card p-4 rounded-xl">
-        <img src="${post.image}" alt="${post.title}" class="w-full h-40 object-cover rounded-lg mb-4">
+        <img src="${post.image}" alt="${post.title}" 
+             class="w-full h-40 object-cover rounded-lg mb-4">
         <span class="blog-tag">${post.tag}</span>
         <h3 class="text-lg font-semibold text-white mt-2 mb-2">${post.title}</h3>
-        <a href="blog-post.html?id=${id}" class="text-purple-400 hover:text-amber-300 transition">Read More →</a>
+        <a href="blog-post.html?id=${id}" 
+           class="text-purple-400 hover:text-amber-300 transition">Read More →</a>
       </article>
     `;
   }).join("");
 }
 
-// Call it
-showRelatedPosts(id);
-  // Newsletter form handling
-  document.addEventListener('DOMContentLoaded', function() {
-    const newsletterForm = document.querySelector('form');
-    if (newsletterForm) {
-      newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const emailInput = this.querySelector('input[type="email"]');
-        if (emailInput && emailInput.value) {
-          alert('Thank you for subscribing to our newsletter!');
-          emailInput.value = '';
-        }
-      });
-    }
-  });
+document.addEventListener('DOMContentLoaded', function() {
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailInput = this.querySelector('input[type="email"]');
+      if (emailInput && emailInput.value) {
+        alert('✅ Thank you for subscribing to our newsletter!');
+        emailInput.value = '';
+      }
+    });
+  }
+});
 </script>
 </body>
 </html>
