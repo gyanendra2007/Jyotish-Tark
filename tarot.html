@@ -533,7 +533,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+    <!-- Hero Section -->
   <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
     <div class="relative z-10">
       <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
@@ -549,42 +549,64 @@
 
   <!-- Tarot Reading Section -->
   <main class="max-w-6xl mx-auto px-6 py-12">
-    <div class="glass-card p-8 rounded-2xl text-center">
-      <h2 class="text-3xl font-bold text-white mb-6">Your Personal Tarot Reading</h2>
-      <p class="text-gray-300 mb-8">Focus your energy on a specific area of your life and draw cards for guidance.</p>
-      
-      <div class="mb-10">
-        <h3 class="text-xl text-amber-300 font-medium mb-5">Choose Your Reading Focus:</h3>
-        <div class="tarot-selection">
-          <div class="tarot-option active" data-area="career">
-            <i class="fas fa-briefcase"></i>
-            <span>Career & Finance</span>
-          </div>
-          <div class="tarot-option" data-area="love">
-            <i class="fas fa-heart"></i>
-            <span>Love & Relationships</span>
-          </div>
-          <div class="tarot-option" data-area="health">
-            <i class="fas fa-heartbeat"></i>
-            <span>Health & Wellness</span>
-          </div>
-          <div class="tarot-option" data-area="spirituality">
-            <i class="fas fa-yin-yang"></i>
-            <span>Spiritual Growth</span>
-          </div>
-          <div class="tarot-option" data-area="overall">
-            <i class="fas fa-star"></i>
-            <span>Overall Destiny</span>
-          </div>
+    <div class="glass-card p-8 rounded-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10">
+        <div>
+          <img src="https://cdn.pixabay.com/photo/2024/06/14/20/47/ai-generated-8362275_1280.jpg" 
+               alt="Tarot Cards" 
+               class="w-full h-auto rounded-xl shadow-lg">
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-6">Prepare for Your Reading</h2>
+          <p class="text-gray-300 mb-4">
+            Before drawing your cards, take a moment to center yourself. Think deeply about your question or the area of life you seek guidance for.
+          </p>
+          <p class="text-gray-300 mb-4">
+            Close your eyes, take three deep breaths, and repeat your intention in your mind. Visualize your question clearly as you count slowly to ten.
+          </p>
+          <p class="text-gray-300">
+            When you feel ready, open your eyes and draw your cards. Remember that the universe speaks through these symbols - accept the guidance with an open heart.
+          </p>
         </div>
       </div>
       
-      <button id="drawCard" class="tarot-btn">
-        <i class="fas fa-clover mr-2"></i>Draw Tarot Cards
-      </button>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-white mb-6">Your Personal Tarot Reading</h2>
+        <p class="text-gray-300 mb-8">Focus your energy on a specific area of your life and draw cards for guidance.</p>
+        
+        <div class="mb-10">
+          <h3 class="text-xl text-amber-300 font-medium mb-5">Choose Your Reading Focus:</h3>
+          <div class="tarot-selection">
+            <div class="tarot-option active" data-area="career">
+              <i class="fas fa-briefcase"></i>
+              <span>Career & Finance</span>
+            </div>
+            <div class="tarot-option" data-area="love">
+              <i class="fas fa-heart"></i>
+              <span>Love & Relationships</span>
+            </div>
+            <div class="tarot-option" data-area="health">
+              <i class="fas fa-heartbeat"></i>
+              <span>Health & Wellness</span>
+            </div>
+            <div class="tarot-option" data-area="spirituality">
+              <i class="fas fa-yin-yang"></i>
+              <span>Spiritual Growth</span>
+            </div>
+            <div class="tarot-option" data-area="overall">
+              <i class="fas fa-star"></i>
+              <span>Overall Destiny</span>
+            </div>
+          </div>
+        </div>
+        
+        <button id="drawCard" class="tarot-btn">
+          <i class="fas fa-clover mr-2"></i>Draw Tarot Cards
+        </button>
+      </div>
       
-      <div id="tarotResult" class="hidden card-reveal">
-        <h3 class="text-2xl font-bold text-amber-300 mb-6" id="readingTitle">Your Career Reading</h3>
+      <div id="tarotResult" class="hidden card-reveal mt-12">
+        <h3 class="text-2xl font-bold text-amber-300 mb-6 text-center" id="readingTitle">Your Career Reading</h3>
         
         <div class="tarot-spread">
           <div>
@@ -597,7 +619,6 @@
                 </div>
                 <div class="tarot-back">
                   <h4 id="card1Name">The Magician</h4>
-                  <p id="card1Meaning">You had all the skills needed to advance.</p>
                 </div>
               </div>
             </div>
@@ -613,7 +634,6 @@
                 </div>
                 <div class="tarot-back">
                   <h4 id="card2Name">The High Priestess</h4>
-                  <p id="card2Meaning">Trust your intuition about workplace dynamics.</p>
                 </div>
               </div>
             </div>
@@ -629,7 +649,6 @@
                 </div>
                 <div class="tarot-back">
                   <h4 id="card3Name">Wheel of Fortune</h4>
-                  <p id="card3Meaning">A positive turn of events is coming.</p>
                 </div>
               </div>
             </div>
@@ -646,9 +665,11 @@
           </div>
         </div>
         
-        <button id="resetReading" class="secondary-button mt-8">
-          <i class="fas fa-redo mr-2"></i>New Reading
-        </button>
+        <div class="text-center mt-8">
+          <button id="resetReading" class="secondary-button">
+            <i class="fas fa-redo mr-2"></i>New Reading
+          </button>
+        </div>
       </div>
     </div>
     
