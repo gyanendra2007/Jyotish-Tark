@@ -477,6 +477,12 @@
       <img class="blog-image rounded-xl mb-6 w-full" src="" alt="">
       <article class="article-content text-gray-300"></article>
       
+      <!-- Related Posts Section -->
+<section class="mt-12">
+  <h2 class="text-2xl font-bold text-white mb-6">Related Posts</h2>
+  <div id="related-posts" class="grid md:grid-cols-3 gap-6"></div>
+</section>
+
       <a href="index.html" class="flex items-center space-x-3">
   <!-- Profile Image -->
   <div class="h-12 w-12 rounded-full overflow-hidden">
@@ -1036,7 +1042,33 @@
       }
     }
   });
+  // === Related Posts ===
+function showRelatedPosts(currentId) {
+  const container = document.getElementById("related-posts");
+  if (!container) return;
 
+  // Get all blog IDs except current one
+  const otherIds = Object.keys(blogPosts).filter(id => id !== currentId);
+
+  // Shuffle and pick 3 random
+  const randomIds = otherIds.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+  // Generate cards
+  container.innerHTML = randomIds.map(id => {
+    const post = blogPosts[id];
+    return `
+      <article class="glass-card p-4 rounded-xl">
+        <img src="${post.image}" alt="${post.title}" class="w-full h-40 object-cover rounded-lg mb-4">
+        <span class="blog-tag">${post.tag}</span>
+        <h3 class="text-lg font-semibold text-white mt-2 mb-2">${post.title}</h3>
+        <a href="blog-post.html?id=${id}" class="text-purple-400 hover:text-amber-300 transition">Read More →</a>
+      </article>
+    `;
+  }).join("");
+}
+
+// Call it
+showRelatedPosts(id);
   // Newsletter form handling
   document.addEventListener('DOMContentLoaded', function() {
     const newsletterForm = document.querySelector('form');
