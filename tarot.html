@@ -552,7 +552,7 @@
     <div class="glass-card p-8 rounded-2xl">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10">
         <div>
-          <img src="https://cdn.pixabay.com/photo/2024/06/14/20/47/ai-generated-8362275_1280.jpg" 
+          <img src="tarot.jpg" 
                alt="Tarot Cards" 
                class="w-full h-auto rounded-xl shadow-lg">
         </div>
@@ -767,216 +767,787 @@
 
     // Tarot Card Data - Expanded with more cards
     const tarotCards = [
+            {
+        name: "The Fool",
+        meanings: {
+          career: "A fresh start or unexpected opportunity may appear on your path. While risky, embracing new ventures with an open mind can lead to groundbreaking success. Don’t be afraid to explore unconventional methods or industries, as they may align with your hidden talents.",
+          love: "New relationships may bloom, or a playful spark may reignite in existing bonds. Approach love with openness and curiosity, free from fear of rejection or judgment. If single, someone refreshingly different from your usual type may enter your life.",
+          health: "Adopting new routines or adventurous wellness practices could rejuvenate you. Be cautious not to throw caution to the wind—listen to your body while embracing change.",
+          spirituality: "You’re being called to take a leap of faith on your spiritual journey. Trust in the unknown, as growth comes from stepping beyond comfort zones.",
+          overall: "The Fool embodies new beginnings, spontaneity, and limitless potential. Though the road ahead may be uncertain, it’s filled with wonder if you dare to walk it."
+        }
+      },
       {
         name: "The Magician",
         meanings: {
-          career: "You have all the skills needed to advance. Take initiative on projects and showcase your abilities.",
-          love: "Communication is your magic wand. Express your feelings clearly to strengthen your relationship.",
-          health: "You have the power to improve your wellbeing. Focus on balanced nutrition and regular exercise.",
-          spirituality: "You're connecting with your inner power. Meditation will enhance your spiritual journey.",
-          overall: "You possess all the resources you need. Trust in your abilities to manifest your desires."
+          career: "Your resourcefulness and skill are your greatest assets now. Present your talents boldly, pitch your ideas with confidence, and you will command attention. This is a powerful time to manifest career goals into reality.",
+          love: "Your charm and communication skills can ignite passion. Expressing yourself authentically draws partners closer. Relationships thrive when honesty and imagination meet.",
+          health: "Harness your willpower to create lasting habits. You have the ability to turn small changes into powerful transformations for your body and mind.",
+          spirituality: "You are aligned with the universe’s creative flow. Meditation and visualization will amplify your spiritual practice. Manifestation is within reach.",
+          overall: "The Magician reminds you that you already hold all the tools necessary for success. Your focused energy and intention will transform dreams into tangible results."
         }
       },
       {
         name: "The High Priestess",
         meanings: {
-          career: "Trust your intuition about workplace dynamics. There may be hidden information worth discovering.",
-          love: "Listen to your inner voice about your relationship. Some things are not as they appear on the surface.",
-          health: "Pay attention to your body's subtle signals. Preventive care is important now.",
-          spirituality: "Your intuition is heightened. Pay attention to dreams and subtle messages from the universe.",
-          overall: "Secrets and mysteries are unfolding. Trust your intuition to guide you through uncertainty."
+          career: "Not all information is on the surface at work. Pay attention to hidden motives, subtle dynamics, and trust your instincts before making big moves. Sometimes silence and observation are your strongest tools.",
+          love: "In matters of the heart, look beyond appearances. Your intuition will guide you to deeper truths about your partner or potential relationships.",
+          health: "Your body communicates in whispers. Don’t ignore subtle signals like fatigue, dreams, or intuition about diet and lifestyle choices.",
+          spirituality: "Heightened intuition, prophetic dreams, and synchronicities are at play. This is a sacred time for deep inner listening.",
+          overall: "The High Priestess embodies mystery, wisdom, and hidden knowledge. Trust your inner guidance to illuminate the unseen."
         }
       },
       {
         name: "The Empress",
         meanings: {
-          career: "Creative projects will flourish. Nurture your ideas and they will grow into something beautiful.",
-          love: "A period of harmony and abundance in relationships. Fertility and growth in emotional connections.",
-          health: "Focus on nurturing your body with wholesome foods and self-care practices.",
-          spirituality: "Connect with nature to enhance your spiritual growth. Abundance is flowing to you.",
-          overall: "Abundance, creativity, and nurturing energy surround you. Embrace your feminine power."
+          career: "Your creative and nurturing energy is blooming. Projects you’ve been tending are ready to flourish. Opportunities related to design, art, or leadership through compassion are especially favored.",
+          love: "Relationships enter a fertile stage of harmony, love, and intimacy. Emotional bonds grow stronger, and some may even experience the blessing of new family beginnings.",
+          health: "Focus on nourishment—both physical and emotional. Caring for your body with wholesome foods, self-love, and rest brings radiant vitality.",
+          spirituality: "Nature is your sacred teacher now. Connect with the Earth to find grounding, abundance, and spiritual renewal.",
+          overall: "The Empress radiates abundance, creativity, and nurturing energy. This is a period of growth, pleasure, and profound connection to life’s cycles."
         }
       },
       {
         name: "The Emperor",
         meanings: {
-          career: "Take authority over your projects. Structure and discipline will lead to success.",
-          love: "Establish healthy boundaries in relationships. Stability and security are important now.",
-          health: "Create a structured routine for your health. Discipline will bring positive results.",
-          spirituality: "Establish a regular spiritual practice. Structure will enhance your connection.",
-          overall: "Authority, structure, and stability are emphasized. Take control of your life direction."
+          career: "Authority, discipline, and structure lead you to success. Take responsibility and organize your vision into concrete plans. Leadership opportunities may be presented to you.",
+          love: "Stability and security matter most now. Establish healthy boundaries and honor commitments, creating a reliable foundation for love to thrive.",
+          health: "Implement routines and structured plans for physical wellness. Discipline will support long-term vitality.",
+          spirituality: "Consistent spiritual practice brings strength. Rituals, traditions, or structured teachings can deepen your connection.",
+          overall: "The Emperor stands for authority, control, and stability. By taking command of your life with wisdom and discipline, success follows."
         }
       },
       {
         name: "The Hierophant",
         meanings: {
-          career: "Seek mentorship or follow established protocols. Conventional approaches work best now.",
-          love: "Traditional values strengthen your relationship. Consider long-term commitments.",
-          health: "Follow professional medical advice. Traditional treatments may be most effective.",
-          spirituality: "Explore established spiritual traditions. Conventional wisdom has much to offer.",
-          overall: "Traditional values, education, and spiritual guidance are highlighted. Seek wisdom from mentors."
+          career: "Seek guidance from mentors, teachers, or established traditions. Success may come from respecting systems already in place rather than reinventing them.",
+          love: "Commitment, tradition, and shared values enhance your relationships. Engagements, marriages, or spiritual unions may be significant now.",
+          health: "Turn to professional advice and trusted routines. Time-tested methods will prove most effective for your wellbeing.",
+          spirituality: "Sacred traditions, rituals, or religious teachings can enrich your path. There is wisdom in aligning with a community of like-minded seekers.",
+          overall: "The Hierophant represents wisdom, tradition, and structured learning. Trust in guidance from established paths and teachers."
         }
       },
       {
         name: "The Lovers",
         meanings: {
-          career: "An important decision about your career path. Choose alignment with your values.",
-          love: "A meaningful connection or important relationship choice. Follow your heart wisely.",
-          health: "Balance between different aspects of your wellbeing. Harmony leads to health.",
-          spirituality: "Alignment between your beliefs and actions brings spiritual harmony.",
-          overall: "Choices, relationships, and alignment are emphasized. Seek harmony in all decisions."
+          career: "You are at a crossroads that requires a meaningful choice. Aligning your work with your values will bring fulfillment and long-term growth.",
+          love: "Deep emotional connections or important decisions in relationships are highlighted. This card can indicate soulmates, partnerships, or a choice between two paths in love.",
+          health: "Balance and harmony between your physical and emotional health are essential now. Avoid extremes to find wellness.",
+          spirituality: "When your beliefs and your actions align, spiritual peace blossoms. Live authentically and in harmony with your values.",
+          overall: "The Lovers symbolize union, choices, and alignment. Decisions made from the heart will lead you to greater harmony."
         }
       },
       {
         name: "The Chariot",
         meanings: {
-          career: "Move forward with determination. Control opposing forces to achieve victory.",
-          love: "Take the reins in your relationship. Direct your energy toward mutual goals.",
-          health: "Willpower can overcome health challenges. Stay determined in your wellness journey.",
-          spirituality: "Your spiritual journey requires discipline and control to move forward.",
-          overall: "Willpower, control, and triumph through determination. Move forward with confidence."
+          career: "Your determination and focus will help you conquer obstacles. By controlling opposing forces, you are on track for victory and recognition.",
+          love: "Direct your energy toward shared goals in your relationship. Success comes from teamwork and determination to move forward together.",
+          health: "Strength of will enables you to overcome challenges. Stay disciplined, and progress will be evident in your health journey.",
+          spirituality: "Self-control and focus allow your spiritual path to advance. You are moving toward greater understanding and mastery.",
+          overall: "The Chariot signifies triumph, control, and momentum. With determination, no obstacle is insurmountable."
         }
       },
       {
         name: "Strength",
         meanings: {
-          career: "Inner strength will help you overcome challenges. Courage prevails over obstacles.",
-          love: "Gentle compassion strengthens your relationship. Patience and understanding are key.",
-          health: "Your body has remarkable healing capabilities. Trust in your resilience.",
-          spirituality: "Inner strength and compassion enhance your spiritual path.",
-          overall: "Courage, compassion, and inner strength. You have the power to overcome any challenge."
+          career: "Your quiet confidence and inner courage allow you to handle difficult workplace dynamics with grace. Strength comes not from force, but from patience and resilience.",
+          love: "Gentle compassion and deep understanding bring harmony to relationships. Love thrives when tenderness guides your actions.",
+          health: "Trust in your body’s remarkable healing ability. A calm mind and positive spirit boost physical resilience.",
+          spirituality: "Courage and compassion lead you to deeper self-realization. Embrace patience on your spiritual journey.",
+          overall: "Strength embodies courage, compassion, and inner power. You have all it takes to overcome life’s challenges."
         }
       },
       {
         name: "The Hermit",
         meanings: {
-          career: "Step back to gain perspective. Solitude may bring the answers you seek.",
-          love: "Time alone can bring clarity to relationship matters. Listen to your inner wisdom.",
-          health: "Quiet reflection benefits your wellbeing. Sometimes rest is the best medicine.",
-          spirituality: "Withdraw to find inner guidance. Your answers come from within.",
-          overall: "Soul-searching, introspection, and inner guidance. Withdraw to find wisdom."
+          career: "It may be time to step back and reevaluate your career direction. Solitude, study, or mentorship could illuminate your next steps.",
+          love: "Periods of reflection bring clarity to your relationships. Solitude now can lead to stronger connections later.",
+          health: "Rest, stillness, and quiet reflection are essential for healing. Sometimes withdrawing from noise is the best medicine.",
+          spirituality: "Seek inner guidance through meditation or retreat. Answers to your deepest questions lie within.",
+          overall: "The Hermit calls for introspection, wisdom, and inner search. Retreating inward reveals the light of truth."
         }
       },
-      {
+            {
         name: "Wheel of Fortune",
         meanings: {
-          career: "A positive turn of events is coming. Be ready to embrace new opportunities.",
-          love: "Fate is bringing positive changes to your relationship. Go with the flow.",
-          health: "Your health situation is improving. Positive cycles are beginning.",
-          spirituality: "Divine timing is at work. Trust the universe's plan for you.",
-          overall: "A turn of fate, cycles, and destiny. Positive changes are on the horizon."
+          career: "The wheel turns in your favor—expect sudden opportunities, promotions, or shifts in direction. Stay adaptable, for fortune rewards those who embrace change rather than resist it.",
+          love: "Fate plays an active role in your relationships now. Singles may find themselves meeting a destined partner, while couples may experience transformative changes that bring new joy.",
+          health: "Your health is entering a positive cycle. Improvements come naturally, but consistency is key to sustaining them.",
+          spirituality: "The universe is at work behind the scenes. Trust divine timing, for every twist of the wheel brings you closer to spiritual growth.",
+          overall: "The Wheel of Fortune heralds cycles, fate, and new chapters. Life may shift unexpectedly, but each turn brings valuable lessons."
         }
       },
       {
         name: "Justice",
         meanings: {
-          career: "Fair decisions will be made. Your efforts will be properly rewarded.",
-          love: "Balance and fairness are needed in your relationship. Truth will prevail.",
-          health: "A balanced approach to health is necessary. Consider all aspects of wellbeing.",
-          spirituality: "Karmic justice is at work. Your actions have consequences.",
-          overall: "Fairness, truth, and cause and effect. Decisions will have long-term impacts."
+          career: "Truth, fairness, and accountability are emphasized in your workplace. Contracts, legal matters, or promotions may be decided fairly in your favor.",
+          love: "Balance and honesty are crucial now. Transparency clears misunderstandings, leading to stronger and healthier bonds.",
+          health: "A balanced lifestyle is essential—neither overindulgence nor neglect will serve you. Moderation supports long-term wellbeing.",
+          spirituality: "Karma is active. Your past actions now ripple back to you, teaching spiritual responsibility and integrity.",
+          overall: "Justice represents truth, fairness, and consequences. What you sow, you shall reap—so act with clarity and honesty."
         }
       },
       {
         name: "The Hanged Man",
         meanings: {
-          career: "A different perspective is needed. Sometimes surrender leads to advancement.",
-          love: "Let go of control in your relationship. A new viewpoint may help.",
-          health: "Rest and recovery are necessary. Sometimes inactivity is the best action.",
-          spirituality: "Surrender leads to enlightenment. Let go of attachments.",
-          overall: "Sacrifice, new perspectives, and enlightenment. Sometimes letting go is the answer."
+          career: "Progress may feel stalled, but this pause is not wasted. A new perspective or sacrifice may be required before advancement appears.",
+          love: "Patience and surrender allow relationships to evolve. Sometimes letting go of control is the most loving act.",
+          health: "Rest, reflection, and recovery are highlighted. Healing may require stepping back rather than pushing forward.",
+          spirituality: "Surrendering to divine will opens the door to enlightenment. By releasing attachments, you find freedom.",
+          overall: "The Hanged Man symbolizes sacrifice, patience, and perspective. Transformation comes through stillness and acceptance."
         }
       },
       {
         name: "Death",
         meanings: {
-          career: "An ending leading to a new beginning. Out with the old, in with the new.",
-          love: "The end of one phase and start of another. Transformation in relationships.",
-          health: "Major changes in your health routine. The end of unhealthy patterns.",
-          spirituality: "Spiritual transformation and rebirth. Letting go of the past.",
-          overall: "Endings, transformation, and new beginnings. Change is inevitable and necessary."
+          career: "An ending at work paves the way for transformation. Whether it’s leaving a job or shifting direction, this transition leads to a more fulfilling path.",
+          love: "A relationship may undergo deep transformation. Old patterns fall away, making space for renewal and stronger emotional connection.",
+          health: "Releasing unhealthy habits is essential now. A rebirth of energy and vitality follows these changes.",
+          spirituality: "Profound spiritual transformation awaits you. Death clears the old to make space for divine rebirth.",
+          overall: "Death represents endings, transformation, and new beginnings. Though it can feel heavy, it clears the path for growth."
         }
       },
       {
         name: "Temperance",
         meanings: {
-          career: "Balance and moderation lead to success. Find the middle path.",
-          love: "Patience and compromise strengthen your relationship. Blend differences harmoniously.",
-          health: "A balanced approach to health works best. Moderation in all things.",
-          spirituality: "Integration of spiritual and material worlds. Find your center.",
-          overall: "Balance, moderation, and patience. The middle path brings harmony."
+          career: "Balance and moderation in your approach bring success. Collaboration and patience yield sustainable progress.",
+          love: "Harmony and compromise strengthen your relationships. Differences blend beautifully when both sides meet in the middle.",
+          health: "A steady, moderate approach to diet, rest, and activity supports long-term health. Avoid extremes.",
+          spirituality: "Integration of spiritual and material aspects of life creates peace. You are finding your sacred balance.",
+          overall: "Temperance embodies balance, patience, and flow. By walking the middle path, you find serenity and healing."
         }
       },
       {
         name: "The Devil",
         meanings: {
-          career: "Beware of unhealthy attachments to work. Break free from limiting patterns.",
-          love: "Examine unhealthy patterns in your relationship. Address addictions or dependencies.",
-          health: "Address unhealthy habits or addictions. Take control of your wellbeing.",
-          spirituality: "Break free from material attachments. Spiritual liberation is possible.",
-          overall: "Bondage, materialism, and unhealthy patterns. Freedom comes from awareness."
+          career: "Beware of unhealthy work attachments—overwork, toxic environments, or limiting beliefs. Freedom comes by breaking these chains.",
+          love: "Address unhealthy patterns in relationships such as jealousy, obsession, or co-dependence. Awareness is the first step toward liberation.",
+          health: "Addictions or harmful habits must be confronted. Facing the truth empowers you to reclaim control of your wellbeing.",
+          spirituality: "Release material or ego-based attachments. True spiritual freedom is found when illusions are broken.",
+          overall: "The Devil represents bondage, temptation, and materialism. Liberation comes through awareness and conscious choice."
         }
       },
       {
         name: "The Tower",
         meanings: {
-          career: "Sudden changes disrupt your plans. Embrace the necessary destruction for renewal.",
-          love: "A relationship crisis leads to revelation. Truth breaks down illusions.",
-          health: "A health wake-up call. Major changes to lifestyle may be needed.",
-          spirituality: "Sudden enlightenment breaks down old beliefs. Revelation through disruption.",
-          overall: "Sudden change, revelation, and awakening. Breakdown leads to breakthrough."
+          career: "A sudden shake-up may disrupt your plans—a job change, restructuring, or unexpected event. Though uncomfortable, it clears space for stronger foundations.",
+          love: "Relationship illusions may shatter, revealing truth. Though challenging, these revelations bring deeper authenticity.",
+          health: "A wake-up call regarding health may require dramatic lifestyle changes. The sooner you adapt, the better.",
+          spirituality: "Sudden revelations or spiritual awakenings dismantle outdated beliefs, replacing them with clarity.",
+          overall: "The Tower represents upheaval, revelation, and awakening. Though disruptive, it clears away falsehoods to make room for truth."
         }
       },
       {
         name: "The Star",
         meanings: {
-          career: "Hope and inspiration guide your path. Your talents are recognized.",
-          love: "Healing and renewal in relationships. Hope for the future.",
-          health: "Recovery and healing are happening. A positive prognosis.",
-          spirituality: "Divine guidance and inspiration. Connection to cosmic energy.",
-          overall: "Hope, inspiration, and serenity. Have faith in the future."
+          career: "Hope and inspiration guide your professional path. Recognition and opportunities arise as you shine your unique light.",
+          love: "Healing and renewal flow into relationships. If single, hope opens the door to a bright new connection.",
+          health: "Recovery and rejuvenation are highlighted. Healing energy surrounds you, bringing vitality.",
+          spirituality: "You are divinely guided and connected to cosmic inspiration. Trust in your spiritual path—it is illuminated.",
+          overall: "The Star symbolizes hope, inspiration, and serenity. After hardship, peace and clarity return."
         }
       },
       {
         name: "The Moon",
         meanings: {
-          career: "Uncertainty and illusion in the workplace. Trust your intuition.",
-          love: "Emotional confusion in relationships. Things are not as they seem.",
-          health: "Listen to your body's subtle messages. Dreams may provide insight.",
-          spirituality: "The subconscious is active. Pay attention to dreams and intuition.",
-          overall: "Illusion, intuition, and the subconscious. Things are not as they appear."
+          career: "Confusion or uncertainty surrounds your work. Trust intuition over appearances, as not everything is as it seems.",
+          love: "Emotions run deep, but illusions may cloud your vision. Listen to your instincts to navigate relationship complexities.",
+          health: "Your subconscious may influence your wellbeing—dreams, cycles, or emotional health require attention.",
+          spirituality: "Your intuition and psychic sensitivity are heightened. The Moon opens doors to mysteries of the subconscious.",
+          overall: "The Moon represents illusion, dreams, and intuition. Trust your inner wisdom when clarity is hidden."
         }
       },
       {
         name: "The Sun",
         meanings: {
-          career: "Success and recognition are coming. A positive work environment.",
-          love: "Joy and happiness in relationships. A period of warmth and connection.",
-          health: "Vitality and good health. A positive recovery.",
-          spirituality: "Enlightenment and clarity. Connection to divine light.",
-          overall: "Success, joy, and vitality. A period of happiness and fulfillment."
+          career: "Success, recognition, and joy flow into your professional life. Work feels lighter and filled with opportunity.",
+          love: "Happiness, warmth, and fulfillment bless your relationships. Couples enjoy harmony, while singles radiate attraction.",
+          health: "Vitality and strong energy are highlighted. If healing was needed, this card brings positive outcomes.",
+          spirituality: "Enlightenment and clarity shine through. The light of truth connects you to divine joy.",
+          overall: "The Sun radiates success, joy, and vitality. This is a time of happiness, celebration, and fulfillment."
         }
       },
       {
         name: "Judgment",
         meanings: {
-          career: "A time for evaluation and reflection. Make important decisions.",
-          love: "Re-evaluation of relationships. Forgiveness and renewal.",
-          health: "Time to assess your health journey. Make necessary changes.",
-          spirituality: "Spiritual awakening and renewal. Answering a higher call.",
-          overall: "Reflection, reckoning, and awakening. A time for important decisions."
+          career: "A period of evaluation and rebirth in your career approaches. Past efforts are being reviewed, and new opportunities will reflect your growth.",
+          love: "Relationships undergo renewal. Forgiveness, reconciliation, or reawakening love is possible now.",
+          health: "Time to reassess your health choices. With reflection, new habits bring powerful transformation.",
+          spirituality: "A higher calling awakens within you. This is a moment of spiritual rebirth and profound clarity.",
+          overall: "Judgment symbolizes awakening, renewal, and reflection. A call to rise into your higher self is at hand."
+        }
+      },
+            {
+        name: "The World",
+        meanings: {
+          career: "A major cycle in your professional life reaches completion. Recognition, achievement, and rewards are within reach. This card signals success after long effort, and perhaps the chance to expand globally or step into a new chapter.",
+          love: "A relationship reaches a stage of harmony, balance, and fulfillment. For singles, it signals the end of old cycles, clearing the way for new love to flourish.",
+          health: "Your health journey comes full circle—whether through recovery, lifestyle changes, or reaching a long-term goal. Wholeness and balance are restored.",
+          spirituality: "Spiritual enlightenment is close at hand. You are deeply connected with the cosmos and have reached an elevated state of awareness.",
+          overall: "The World represents completion, fulfillment, and unity. A cycle ends successfully, paving the way for new beginnings."
         }
       },
       {
-        name: "The World",
+        name: "Ace of Wands",
         meanings: {
-          career: "Completion of a major cycle. Achievement and recognition.",
-          love: "A relationship reaches fulfillment. Harmony and completion.",
-          health: "A health journey comes full circle. Wholeness and integration.",
-          spirituality: "Spiritual completion and enlightenment. Connection to the cosmos.",
-          overall: "Completion, achievement, and fulfillment. A cycle comes to a successful end."
+          career: "A burst of creative energy sparks new opportunities. A project, idea, or offer is igniting—this is your chance to take initiative and act boldly.",
+          love: "Passion flares up in relationships. Singles may encounter an exciting new attraction filled with energy and chemistry.",
+          health: "A surge of vitality is available to you now. Starting a new workout or health plan will bring quick results.",
+          spirituality: "The Ace of Wands lights your spiritual path with inspiration. You may feel called to explore new practices or creative rituals.",
+          overall: "This card signifies fresh starts, passion, and boundless energy. It’s the spark that ignites new adventures."
+        }
+      },
+      {
+        name: "Two of Wands",
+        meanings: {
+          career: "Planning for expansion and long-term goals is highlighted. You have the vision, but now it’s about mapping out the path toward success.",
+          love: "Partnerships grow stronger through shared goals and planning for the future. Singles may be choosing between two potential paths in love.",
+          health: "Balance and foresight are key. By setting a plan for wellness, you build a foundation for future health.",
+          spirituality: "You are stepping into a phase of vision and broader awareness. Spiritual exploration beyond your comfort zone brings growth.",
+          overall: "The Two of Wands symbolizes vision, decisions, and planning. It’s a call to step beyond the familiar."
+        }
+      },
+      {
+        name: "Three of Wands",
+        meanings: {
+          career: "Your efforts are beginning to pay off, and opportunities expand. This is a time of growth, partnerships, and possibly overseas connections.",
+          love: "Relationships thrive when shared dreams and future planning are aligned. Singles may encounter love while traveling or expanding horizons.",
+          health: "Consistency brings progress. You’re beginning to see results from your health efforts and can now expand them further.",
+          spirituality: "Broader perspectives open as you explore new philosophies or spiritual communities. Growth flows from exploration.",
+          overall: "The Three of Wands represents expansion, progress, and foresight. You’re stepping into bigger opportunities."
+        }
+      },
+      {
+        name: "Four of Wands",
+        meanings: {
+          career: "Celebration of achievements and teamwork is highlighted. Recognition, promotions, or a supportive work environment uplift you.",
+          love: "Joy and harmony flow in relationships. This card often signifies engagements, weddings, or moving in together.",
+          health: "Stability and balance return. Celebrations may bring emotional uplift and improved vitality.",
+          spirituality: "Community and spiritual gatherings bring you joy and belonging. This is a sacred time of unity.",
+          overall: "The Four of Wands symbolizes celebration, stability, and milestones. It’s a card of joy, harmony, and togetherness."
+        }
+      },
+      {
+        name: "Five of Wands",
+        meanings: {
+          career: "Competition and conflict may arise at work. While frustrating, these challenges can sharpen your skills and push you to grow.",
+          love: "Arguments or misunderstandings may surface in relationships. Communication and compromise will be essential to move forward.",
+          health: "Stress and scattered energy could affect your wellbeing. Focus on calm practices to balance your body and mind.",
+          spirituality: "Inner or outer conflict may challenge your beliefs. This is an opportunity to refine your spiritual path.",
+          overall: "The Five of Wands represents conflict, competition, and challenge. Though chaotic, it can lead to breakthroughs."
+        }
+      },
+      {
+        name: "Six of Wands",
+        meanings: {
+          career: "Victory, recognition, and success shine in your career. A project or effort brings well-deserved praise and accomplishment.",
+          love: "Relationships experience triumph and joy. Singles may attract attention and admiration through confidence and charm.",
+          health: "Your efforts toward health are being rewarded. Progress is visible and inspires further motivation.",
+          spirituality: "Your spiritual growth brings recognition—others may turn to you for guidance or inspiration.",
+          overall: "The Six of Wands represents victory, success, and recognition. You are stepping into the spotlight of achievement."
+        }
+      },
+      {
+        name: "Seven of Wands",
+        meanings: {
+          career: "Challenges and competition test your resolve, but standing your ground leads to respect and triumph. Defend your vision with confidence.",
+          love: "You may feel defensive in relationships, but healthy boundaries strengthen your connection. Don’t be afraid to assert your needs.",
+          health: "Persistence and determination help you overcome setbacks in health. Keep fighting for your wellbeing.",
+          spirituality: "Challenges to your beliefs may arise, but holding to your truth strengthens your spiritual resilience.",
+          overall: "The Seven of Wands symbolizes courage, perseverance, and defense. You are strong enough to stand tall against opposition."
+        }
+      },
+      {
+        name: "Eight of Wands",
+        meanings: {
+          career: "Momentum builds quickly—expect rapid progress, new opportunities, or swift communication that propels you forward.",
+          love: "Love moves fast now! Unexpected messages, travel, or rapid developments bring excitement to relationships.",
+          health: "Energy levels rise, and progress in your health routine comes faster than expected. Stay consistent to maintain results.",
+          spirituality: "Spiritual breakthroughs may come swiftly—dreams, signs, or downloads of insight arrive without warning.",
+          overall: "The Eight of Wands represents speed, momentum, and progress. Life is accelerating, and doors are opening fast."
+        }
+      },
+      {
+        name: "Nine of Wands",
+        meanings: {
+          career: "You may feel weary, but your persistence pays off. Protect your progress and know that success is close despite the obstacles.",
+          love: "Guardedness may surface in relationships, but resilience allows love to endure. Don’t let past wounds close you off completely.",
+          health: "Physical or emotional fatigue may be present. Rest is essential, but so is perseverance toward your wellness goals.",
+          spirituality: "Your spiritual journey may feel like a test of endurance. Stand firm—your growth is unfolding through resilience.",
+          overall: "The Nine of Wands symbolizes perseverance, resilience, and protection. You are stronger than you realize, and the finish line is near."
+        }
+      },
+            {
+        name: "Ten of Wands",
+        meanings: {
+          career: "You may be carrying too much responsibility at work. While your dedication is admirable, the burden could lead to burnout if you don’t delegate. This card urges you to evaluate what truly matters. Are you carrying tasks that no longer serve you? Lightening your load will free energy for projects that truly align with your higher vision.",
+          love: "Relationships may feel heavy under the weight of obligations or unresolved issues. While love is strong, imbalance in effort can create strain. Communication about shared responsibilities is essential—don’t try to carry it all alone. Support and honesty can restore harmony.",
+          health: "Stress and overexertion may be affecting your wellbeing. Physical symptoms of exhaustion could be a sign that you’re doing too much. Prioritize rest, proper sleep, and relaxation techniques to restore balance.",
+          spirituality: "You may feel weighed down by old beliefs, guilt, or expectations that no longer resonate with your spiritual path. Release what doesn’t belong to you. Spiritual lightness comes from setting down the burdens you were never meant to carry.",
+          overall: "The Ten of Wands represents responsibility, hard work, and burden. While effort pays off, the challenge is knowing when to release unnecessary weight. True strength lies not in carrying everything, but in choosing wisely what is worth your energy."
+        }
+      },
+      {
+        name: "Page of Wands",
+        meanings: {
+          career: "Fresh ideas and enthusiasm spark at work. You may feel restless, craving new adventures or creative outlets. This card suggests embracing curiosity—try that side project, pitch that idea, or explore new directions. Small beginnings now can lead to great opportunities later.",
+          love: "In love, the Page of Wands brings excitement and playful energy. For singles, a youthful, passionate connection may enter your life. For couples, this card brings spontaneity—dates, adventures, or rekindling passion through fun.",
+          health: "A boost of energy encourages you to try new wellness practices. Dance, yoga, or outdoor activities refresh both body and spirit. Your health improves when curiosity guides your routine.",
+          spirituality: "This is a time of exploration—trying out new spiritual paths, rituals, or practices that awaken your inner fire. Let your curiosity lead without fear of making mistakes.",
+          overall: "The Page of Wands embodies enthusiasm, curiosity, and new beginnings. While not yet fully matured, this spark of energy is the start of exciting journeys ahead."
+        }
+      },
+      {
+        name: "Knight of Wands",
+        meanings: {
+          career: "You are entering a phase of bold moves and high ambition. Opportunities may arise suddenly, and your fiery confidence pushes you to act quickly. While this momentum can propel you forward, be mindful of recklessness. Ensure your passion is backed by strategy.",
+          love: "Passion runs hot in relationships. A whirlwind romance may sweep you off your feet, or existing partnerships may be reignited with fire and adventure. But beware: intensity without grounding can burn out quickly.",
+          health: "Your energy levels are high, but be cautious of overexertion or impulsive habits. Use this surge wisely, channeling it into constructive routines.",
+          spirituality: "The Knight of Wands calls you to embrace adventure on your spiritual path. Try bold practices or explore philosophies that ignite your soul.",
+          overall: "This card signifies action, passion, and boldness. The Knight of Wands charges into life fearlessly, but balance passion with wisdom to sustain long-term success."
+        }
+      },
+      {
+        name: "Queen of Wands",
+        meanings: {
+          career: "Your charisma and leadership are shining. The Queen of Wands indicates confidence, independence, and the ability to inspire others at work. Now is the time to step into visibility—lead presentations, guide a team, or pursue entrepreneurial ventures.",
+          love: "In relationships, this card represents warmth, passion, and loyalty. For singles, it may signal the presence of someone magnetic and confident entering your life. For couples, it suggests a period of deep intimacy and shared enthusiasm.",
+          health: "Vitality is strong. Practices that boost confidence—such as dance, exercise, or creative expression—enhance not only your health but also your spirit.",
+          spirituality: "The Queen of Wands encourages you to embody authenticity. Your spiritual fire inspires others. Sharing your light with the community strengthens both you and those around you.",
+          overall: "This card radiates confidence, magnetism, and independence. The Queen of Wands is a reminder of your ability to shine brightly and inspire others while staying true to yourself."
+        }
+      },
+      {
+        name: "King of Wands",
+        meanings: {
+          career: "A time of visionary leadership and authority. You have the power to influence and direct others with your wisdom and passion. This card encourages you to think big and act boldly—now is the time to expand your horizons and take charge of major projects.",
+          love: "In love, the King of Wands represents loyalty, passion, and protective energy. A strong, confident partner may play a role in your life, or you may be embodying these qualities in your own relationships.",
+          health: "A commanding energy pushes you to take control of your health. Leading by example, your determination inspires others as you build strength and vitality.",
+          spirituality: "Spiritual leadership is emphasized. You may feel called to guide others or serve as a beacon of wisdom in your community.",
+          overall: "The King of Wands signifies mastery, vision, and authority. This is the card of bold leaders who build not only for themselves but also for the benefit of others."
+        }
+      },
+      {
+        name: "Ace of Cups",
+        meanings: {
+          career: "New emotional fulfillment flows into your work life. Creative inspiration, harmonious teamwork, or projects that bring joy and purpose are highlighted. This card often signals starting a career aligned with your passions.",
+          love: "This is the ultimate card of new love and emotional renewal. For singles, it signals the beginning of a deeply fulfilling relationship. For couples, it represents a new chapter of intimacy, compassion, and overflowing love.",
+          health: "Emotional healing brings physical renewal. Activities that nurture your soul—art, music, time in nature—directly boost your health.",
+          spirituality: "The Ace of Cups signals an opening of the heart chakra. Divine love flows freely to you, encouraging deeper compassion and spiritual awakening.",
+          overall: "This card represents emotional beginnings, deep love, and spiritual blessings. It is a symbol of the heart overflowing with pure joy."
+        }
+      },
+      {
+        name: "Two of Cups",
+        meanings: {
+          career: "Partnerships and collaboration are at the forefront. A business alliance or teamwork brings mutual success. This is an ideal time to build trust and harmony in your work relationships.",
+          love: "The Two of Cups is one of the most romantic cards—it represents soul-level connection, union, and deep mutual affection. A bond may grow into something long-lasting and significant.",
+          health: "Balance in your emotional world directly reflects in your health. A supportive friend, partner, or therapist may play a vital role in your healing.",
+          spirituality: "This card highlights the sacred union between self and spirit. You may experience deep meditative connections or divine synchronicities.",
+          overall: "The Two of Cups represents harmony, love, and partnership. It is a card of mutual respect, emotional balance, and sacred connection."
+        }
+      },
+      {
+        name: "Three of Cups",
+        meanings: {
+          career: "Celebration and teamwork mark your professional life. Collaborations succeed, and recognition may come through a group effort. Networking events may bring joyful opportunities.",
+          love: "This is a time of joy, celebration, and togetherness in love. Friendships may blossom into romance, or existing relationships enjoy social harmony and emotional fulfillment.",
+          health: "A supportive community uplifts your health journey. Group activities, fitness classes, or social gatherings bring joy and vitality.",
+          spirituality: "Spiritual growth through community is emphasized. Rituals, celebrations, or group practices strengthen your faith and happiness.",
+          overall: "The Three of Cups symbolizes celebration, friendship, and unity. Joy shared with others multiplies and strengthens bonds."
+        }
+      },
+      {
+        name: "Four of Cups",
+        meanings: {
+          career: "You may feel unmotivated or dissatisfied with your work. While opportunities are present, they may go unnoticed if you focus only on what you lack. A shift in perspective opens doors to inspiration.",
+          love: "In relationships, feelings of discontent or emotional withdrawal may surface. Take time to reflect, but don’t overlook the love and opportunities already around you.",
+          health: "Emotional stagnation may impact your wellbeing. Engaging in new practices or hobbies could rekindle your energy.",
+          spirituality: "A sense of disconnection from your spiritual path may occur. Meditation and gratitude help reconnect you with the divine flow.",
+          overall: "The Four of Cups represents apathy, reflection, and disconnection. However, unseen opportunities await if you open your eyes to them."
+        }
+      },
+      {
+        name: "Five of Cups",
+        meanings: {
+          career: "Disappointments or setbacks at work may leave you discouraged. Yet, focusing too much on what’s lost can prevent you from seeing the opportunities that remain. Lessons learned here prepare you for greater success.",
+          love: "Heartbreak, loss, or regret may weigh heavily in relationships. While the pain is real, healing begins when you shift focus to what still stands strong in your emotional life.",
+          health: "Emotional struggles may manifest physically. Healing requires compassion toward yourself and focusing on recovery rather than regret.",
+          spirituality: "The Five of Cups invites you to find spiritual wisdom through grief and loss. Hope remains if you shift your gaze to the blessings still present.",
+          overall: "This card symbolizes sorrow, loss, and regret—but also the potential for renewal. Healing begins with choosing to look toward hope rather than despair."
+        }
+      },
+            {
+        name: "Six of Cups",
+        meanings: {
+          career: "Past experiences, old contacts, or previous opportunities may resurface in your work life. This could be a time when nostalgia reminds you of why you chose your path. Someone from your past may reappear with a collaboration or opportunity. Leaning on your history helps you move forward with renewed purpose.",
+          love: "The Six of Cups brings sweetness, innocence, and tender affection in relationships. A past lover or childhood friend may re-enter your life, or existing bonds may soften into a more nurturing and caring phase. For singles, love may come through familiar connections or shared memories.",
+          health: "Healing energy flows when you reconnect with simple joys. Childhood activities, playfulness, or time with family can bring emotional relief and physical rejuvenation.",
+          spirituality: "This card invites you to reconnect with your inner child. Healing past wounds through spiritual practice brings peace and wholeness.",
+          overall: "The Six of Cups represents nostalgia, kindness, and reconnection. It invites you to remember the joy and innocence that once inspired your heart."
+        }
+      },
+      {
+        name: "Seven of Cups",
+        meanings: {
+          career: "Many opportunities may present themselves now, but not all are as beneficial as they appear. Choices can feel overwhelming. The lesson here is discernment—evaluate carefully before committing to one path, for illusion can easily disguise itself as success.",
+          love: "In relationships, this card suggests emotional confusion or fantasy. You may be projecting ideals onto a partner or situation. Clarity comes by grounding your desires in reality.",
+          health: "Multiple approaches to wellness may tempt you, but spreading yourself too thin can dilute results. Choose a method that truly resonates and commit.",
+          spirituality: "Visions, dreams, and psychic impressions may intensify. However, discern between divine guidance and illusion. Meditation and grounding practices are key.",
+          overall: "The Seven of Cups represents choices, illusions, and fantasies. While opportunities abound, wisdom comes from choosing with clarity rather than impulse."
+        }
+      },
+      {
+        name: "Eight of Cups",
+        meanings: {
+          career: "You may feel called to walk away from a job, project, or role that no longer fulfills you. While difficult, leaving behind what drains you opens the door to a path aligned with your soul’s purpose.",
+          love: "In relationships, the Eight of Cups suggests stepping away—whether emotionally or physically—from what no longer nourishes your heart. Sometimes this card represents temporary space, other times a final goodbye.",
+          health: "Healing comes from releasing habits or patterns that no longer serve your body or mind. Walking away creates space for renewal.",
+          spirituality: "This card is a powerful sign of spiritual seeking. You may feel compelled to leave behind superficial beliefs to pursue deeper truths.",
+          overall: "The Eight of Cups symbolizes departure, transition, and inner searching. Though bittersweet, it marks the brave choice to seek fulfillment elsewhere."
+        }
+      },
+      {
+        name: "Nine of Cups",
+        meanings: {
+          career: "Recognition and satisfaction flow into your career. Goals you’ve been pursuing may now be realized. This card suggests enjoying the fruits of your labor, but also reminds you to share your blessings with others.",
+          love: "Emotional contentment and harmony flow in relationships. For singles, this card signals the joy of self-love and readiness for a fulfilling connection. For couples, it represents satisfaction and shared happiness.",
+          health: "Wellness goals are within reach. Celebrate improvements and savor the joy of feeling comfortable in your body.",
+          spirituality: "This card highlights spiritual fulfillment and inner peace. You may feel deeply aligned with your higher self, radiating contentment.",
+          overall: "The Nine of Cups is often called the ‘wish card.’ It represents satisfaction, joy, and emotional fulfillment. What you’ve longed for is coming into your reality."
+        }
+      },
+      {
+        name: "Ten of Cups",
+        meanings: {
+          career: "Harmony flows in your workplace, and you may experience a sense of belonging or purpose. A project that benefits not just you but the collective may bring deep satisfaction.",
+          love: "This is the ultimate card of emotional fulfillment and family harmony. Deep love, commitment, and joy flourish in your relationship. For singles, it promises a future of deep emotional connection and happiness.",
+          health: "Emotional wellness brings physical vitality. When love and joy flow, the body naturally heals and thrives.",
+          spirituality: "The Ten of Cups connects you with divine love and spiritual wholeness. This is a state of bliss, gratitude, and alignment with universal harmony.",
+          overall: "This card represents joy, family, and emotional completion. It is the fulfillment of love and harmony you have been working toward."
+        }
+      },
+      {
+        name: "Page of Cups",
+        meanings: {
+          career: "Unexpected messages or opportunities may arrive at work, often connected to creativity or emotional fulfillment. This is a time to explore ideas with openness, even if they seem naive or unusual at first.",
+          love: "The Page of Cups often heralds messages of love, flirty encounters, or the first stirrings of romance. For couples, it can indicate sweet gestures, apologies, or renewed emotional connection.",
+          health: "Your intuition about your body is heightened now. Pay attention to subtle signs and explore creative methods of healing, such as art therapy or meditation.",
+          spirituality: "This card signals the opening of your heart to spiritual messages. Dreams, synchronicities, and intuitive flashes are especially meaningful.",
+          overall: "The Page of Cups represents youthful emotion, messages, and intuition. It invites you to embrace openness, vulnerability, and the unexpected joys of life."
+        }
+      },
+      {
+        name: "Knight of Cups",
+        meanings: {
+          career: "Your career path may take a creative or emotionally fulfilling turn. An offer or proposal that speaks to your heart could appear—don’t dismiss opportunities that seem unconventional if they stir passion within you.",
+          love: "The Knight of Cups is the quintessential romantic—charming, idealistic, and deeply emotional. In relationships, this card signals proposals, declarations of love, or deep romantic gestures. For singles, a romantic partner may appear.",
+          health: "Gentle self-care practices benefit you now. This is a reminder to listen to your emotional wellbeing as closely as your physical health.",
+          spirituality: "Your spiritual path is guided by the heart. Creative rituals, music, poetry, or meditation through art may become sacred practices.",
+          overall: "The Knight of Cups symbolizes romance, charm, and idealism. It often brings messages of love, creativity, and inspiration."
+        }
+      },
+      {
+        name: "Queen of Cups",
+        meanings: {
+          career: "Empathy, intuition, and emotional intelligence guide your career. You may find success in roles involving care, creativity, or counseling. Leadership now comes through compassion rather than authority.",
+          love: "In relationships, this card reflects deep emotional connection and nurturing. The Queen of Cups embodies unconditional love, making bonds stronger and more meaningful.",
+          health: "Healing is supported through compassion and self-care. Pay attention to your emotional needs, as they are directly tied to physical health.",
+          spirituality: "Your intuition is especially powerful. Dreams, visions, or psychic impressions may provide guidance on your spiritual journey.",
+          overall: "The Queen of Cups represents love, intuition, and compassion. She encourages you to trust your inner wisdom and embrace emotional depth."
+        }
+      },
+      {
+        name: "King of Cups",
+        meanings: {
+          career: "Calm authority and emotional balance define your professional success. You may step into a leadership role where diplomacy and wisdom are needed. This is a time for guiding others with fairness and sensitivity.",
+          love: "In relationships, the King of Cups represents stability, compassion, and mature love. A partner may embody these traits, or you may find yourself offering deep emotional support.",
+          health: "Emotional balance supports physical healing. Practices like mindfulness and meditation bring stability to your health journey.",
+          spirituality: "This card signals mastery of emotions and deep spiritual maturity. You are able to balance intuition with wisdom, embodying a compassionate guide.",
+          overall: "The King of Cups embodies wisdom, balance, and emotional mastery. He reminds you of the strength found in calm compassion."
+        }
+      },
+      {
+        name: "Ace of Swords",
+        meanings: {
+          career: "A moment of clarity arrives—new ideas, breakthroughs, or a decisive plan cut through confusion. This card signals contracts, communication, or new beginnings in your career.",
+          love: "In love, the Ace of Swords cuts through illusion. Truth, honesty, and clarity may arise in a relationship. For singles, a new beginning marked by clear communication is possible.",
+          health: "A clear diagnosis or new understanding brings healing. Mental clarity supports physical recovery.",
+          spirituality: "This card symbolizes spiritual awakening and truth. Meditation or prayer may bring profound clarity and insight.",
+          overall: "The Ace of Swords represents clarity, truth, and breakthroughs. It is the sword that cuts through illusion to reveal wisdom."
+        }
+      },
+            {
+        name: "Two of Swords",
+        meanings: {
+          career: "You may feel caught between two choices at work—perhaps between two career paths, job offers, or projects. The Two of Swords often indicates indecision caused by fear of making the wrong move. At this time, logic alone won’t provide answers—you must also trust your intuition. Sometimes waiting until more information is revealed is wiser than forcing a decision.",
+          love: "In relationships, this card suggests emotional blockages or stalemates. Perhaps both partners are avoiding an uncomfortable truth, or someone is unwilling to see the full reality of a situation. Honest communication is necessary, even if it feels difficult. For singles, this card may indicate emotional guardedness that prevents new love from entering.",
+          health: "You may be ignoring a health issue or avoiding making an important lifestyle change. The longer you delay, the more the problem grows. Face the truth with courage, and you’ll find relief.",
+          spirituality: "Spiritually, the Two of Swords represents the need for balance between logic and intuition. Meditation, journaling, or quiet reflection helps you cut through inner conflict and see the truth clearly.",
+          overall: "This card represents crossroads, indecision, and avoidance. The lesson here is that clarity comes not from avoiding the truth, but from facing it with openness and courage."
+        }
+      },
+      {
+        name: "Three of Swords",
+        meanings: {
+          career: "Disappointment, conflict, or betrayal may sting in your professional life. This could manifest as rejection, a failed project, or strained work relationships. Though painful, this experience clears illusions and allows space for growth. Out of heartbreak comes strength and wisdom.",
+          love: "The Three of Swords is often associated with heartbreak, separation, or painful truths in relationships. It may signal a breakup, a betrayal, or lingering emotional wounds. Yet, this card also carries a message of healing—though the heart is pierced, it still beats, and through honesty, new love will eventually bloom.",
+          health: "Emotional pain may be impacting your physical body. Stress, grief, or sadness can weigh heavily. Healing begins when emotions are expressed rather than suppressed.",
+          spirituality: "On a spiritual level, heartbreak often leads to awakening. Pain can shatter illusions and bring you closer to your authentic self. This card reminds you that suffering can be a profound teacher.",
+          overall: "The Three of Swords represents heartbreak, grief, and painful truth. Though it is one of the most difficult cards, it also clears away illusions, opening the path to healing and renewal."
+        }
+      },
+      {
+        name: "Four of Swords",
+        meanings: {
+          career: "This is a time to pause, reflect, and recharge in your professional life. If you’ve been overworking, burnout may be close. A retreat, vacation, or mental reset allows you to return with clarity and energy.",
+          love: "In relationships, the Four of Swords suggests a cooling-off period. Couples may need space to reflect and process emotions, while singles may benefit from a period of self-reflection before diving into romance again.",
+          health: "Rest is essential now. Your body is asking for stillness, sleep, or healing time. Don’t ignore the call for recovery—it is just as important as action.",
+          spirituality: "Spiritual rest is needed. Silence, meditation, and prayer connect you with inner wisdom. This is a sacred pause before renewal.",
+          overall: "The Four of Swords represents rest, retreat, and recovery. It is the calm after turmoil and the necessary stillness before the next phase of action."
+        }
+      },
+      {
+        name: "Five of Swords",
+        meanings: {
+          career: "Office politics, conflict, or power struggles may be brewing. Winning at all costs could leave you isolated. This card cautions you to choose your battles wisely—sometimes walking away preserves more dignity than victory.",
+          love: "In relationships, this card may signal arguments, manipulation, or feelings of defeat. Even if one person “wins,” both may feel hurt. Healing requires humility and a willingness to let go of pride.",
+          health: "Stress, mental strain, or negative thought patterns may affect your wellbeing. Try to reduce conflict in your environment to restore balance.",
+          spirituality: "Spiritually, this card warns against ego-driven competition. Growth comes from surrender and humility rather than trying to dominate others.",
+          overall: "The Five of Swords represents conflict, tension, and hollow victories. While it may indicate success, it also asks whether the cost of winning is worth the loss of peace."
+        }
+      },
+      {
+        name: "Six of Swords",
+        meanings: {
+          career: "Transition is ahead in your work life—perhaps moving into a new role, company, or project. This card suggests leaving behind difficulties and moving toward calmer waters, even if the process feels uncertain.",
+          love: "In relationships, the Six of Swords indicates healing and moving forward. This may mean working through challenges with your partner, or leaving behind a situation that no longer serves your highest good.",
+          health: "Recovery is emphasized. Healing may be slow but steady, especially after a difficult period. Focus on progress rather than perfection.",
+          spirituality: "This card reflects a spiritual journey toward peace and clarity. You may be moving away from old beliefs that caused confusion and toward a more serene understanding.",
+          overall: "The Six of Swords represents transition, healing, and movement away from struggle. Though the journey may feel uncertain, it ultimately leads to calmer and more peaceful times."
+        }
+      },
+      {
+        name: "Seven of Swords",
+        meanings: {
+          career: "Caution is required. Someone in your workplace may not be acting honestly, or you may feel the need to strategize carefully to achieve your goals. This card suggests being alert to hidden agendas while also ensuring your own actions are aligned with integrity.",
+          love: "In relationships, the Seven of Swords warns of secrets, avoidance, or dishonesty. It could suggest that someone is withholding the truth or avoiding responsibility. Honest communication is the path to healing.",
+          health: "You may be avoiding addressing a health concern or not being fully honest with yourself about your habits. Facing reality will allow for true healing.",
+          spirituality: "Spiritually, this card can represent self-deception or illusions. The lesson is to confront uncomfortable truths rather than hiding from them.",
+          overall: "The Seven of Swords represents secrecy, strategy, and hidden motives. It asks you to be discerning about both your own actions and the actions of others."
+        }
+      },
+      {
+        name: "Eight of Swords",
+        meanings: {
+          career: "You may feel trapped or limited in your professional life, but this imprisonment is often mental rather than external. Fear of failure or lack of confidence may be holding you back. Recognize that you have the power to free yourself from this cage by shifting your mindset.",
+          love: "In relationships, this card suggests feeling restricted, powerless, or stuck. Fear or self-doubt may prevent you from experiencing freedom and joy. Breaking free requires honesty with yourself and your partner.",
+          health: "Anxiety, stress, or negative thought patterns may affect your physical wellbeing. Practices like mindfulness, therapy, or meditation can release these chains.",
+          spirituality: "Spiritually, the Eight of Swords shows you are bound by limiting beliefs. Freedom comes when you recognize these illusions and choose a new perspective.",
+          overall: "This card represents restriction, fear, and self-imposed limitations. The key to freedom lies within—you already hold the power to break free."
+        }
+      },
+      {
+        name: "Nine of Swords",
+        meanings: {
+          career: "Stress, worry, or guilt may keep you up at night regarding work. The Nine of Swords often highlights fears that are amplified in the mind but not as severe in reality. Clarity and communication can ease these anxieties.",
+          love: "In relationships, this card may reflect sleepless nights, regret, or anxiety about love. Fear of rejection or past pain may haunt you. Healing begins with honesty and self-compassion.",
+          health: "Mental health is highlighted here—anxiety, insomnia, or depression may be affecting your physical body. Support, therapy, or rest can bring relief.",
+          spirituality: "This card suggests a dark night of the soul, where fear and doubt overshadow faith. Yet, the dawn always follows. Facing these shadows is part of your awakening.",
+          overall: "The Nine of Swords represents anxiety, fear, and sleepless nights. Though heavy, it often signals worries that can be eased once faced directly."
+        }
+      },
+      {
+        name: "Ten of Swords",
+        meanings: {
+          career: "An ending or loss may occur in your professional life—perhaps a failed project, betrayal, or job loss. Though painful, this ending clears the way for a complete transformation. The darkest hour signals a new dawn.",
+          love: "In relationships, the Ten of Swords can indicate betrayal, heartbreak, or a painful ending. Though devastating, it also marks the closure of a cycle, making space for healing and new beginnings.",
+          health: "Exhaustion or a sudden decline in health may demand immediate rest and attention. Though it feels final, this is the moment from which recovery begins.",
+          spirituality: "Spiritually, this card represents ego death and profound transformation. Old beliefs collapse, but in their place, true wisdom is born.",
+          overall: "The Ten of Swords represents endings, betrayal, and rock bottom moments. Though it is a painful card, it clears away illusions and opens the door to profound rebirth."
+        }
+      },
+      {
+        name: "Page of Swords",
+        meanings: {
+          career: "Curiosity and ambition drive you to seek knowledge and opportunities. This card suggests research, study, or developing new skills. It also encourages caution—think before you speak, as words hold power in your professional life.",
+          love: "In love, the Page of Swords may symbolize curiosity, but also immaturity or overthinking. Someone may be watching from afar, hesitant to express feelings. Honest communication helps move things forward.",
+          health: "Mental energy is high, but anxiety or restlessness may impact your body. Balance intellectual pursuits with grounding practices.",
+          spirituality: "This card represents the seeker—eager to learn, question, and explore. Study, journaling, or reading spiritual texts may bring enlightenment now.",
+          overall: "The Page of Swords symbolizes curiosity, ideas, and communication. It is the energy of a student—ready to learn, eager to grow, but needing to balance thought with action."
+        }
+      },
+            {
+        name: "Knight of Swords",
+        meanings: {
+          career: "This is a time of high momentum in your career. The Knight of Swords represents ambition, drive, and the urge to act quickly. You may receive sudden news, a job offer, or a project that demands immediate attention. While your determination can push you ahead of the competition, beware of rushing without a plan. Acting too hastily could cause mistakes or conflicts. The lesson here is to balance speed with strategy, using your sharp intellect to guide your actions.",
+          love: "In relationships, the Knight of Swords may signal sudden developments, intense communication, or passionate declarations. Someone may rush in with strong feelings, or you may feel swept away by emotions. While exciting, there is also a risk of things moving too fast, creating instability. For singles, a new person may appear suddenly, full of charm and directness. For couples, this card can reflect passionate debates or quick decisions about the future.",
+          health: "Your energy is heightened, but you may be prone to burnout or stress if you don’t pace yourself. Pay attention to your nervous system—rest, hydration, and grounding practices are crucial now.",
+          spirituality: "The Knight of Swords suggests rapid spiritual growth, a hunger for knowledge, and a willingness to challenge old beliefs. Be cautious of arrogance or dismissing wisdom too quickly—true understanding comes with patience and humility.",
+          overall: "This card represents ambition, speed, and bold action. While it encourages courage and decisiveness, it also reminds you that rushing headlong without preparation can create unnecessary setbacks."
+        }
+      },
+      {
+        name: "Queen of Swords",
+        meanings: {
+          career: "The Queen of Swords represents clarity, independence, and intellectual strength. At work, this card suggests you are being recognized for your wisdom, analytical ability, and honesty. You may be called upon to make an important decision or cut through confusion with truth. Leadership comes not from force but from fairness and logic. Be mindful, however, not to come across as too cold or detached.",
+          love: "In relationships, the Queen of Swords values honesty above all else. This card suggests clear communication, boundaries, and truth. While it can sometimes indicate emotional distance, it also brings respect and balance. For singles, it suggests attracting partners who value intelligence and sincerity.",
+          health: "This is a good time to seek clear advice or second opinions regarding your health. The Queen of Swords cuts away confusion and helps you see facts clearly, allowing for effective solutions.",
+          spirituality: "Spiritually, this card encourages discernment. You are learning to cut through illusion and see spiritual truths with clarity, balancing intuition with rational thought.",
+          overall: "The Queen of Swords symbolizes truth, wisdom, and clarity. She teaches the importance of honesty and boundaries, guiding you to make wise decisions while staying fair and compassionate."
+        }
+      },
+      {
+        name: "King of Swords",
+        meanings: {
+          career: "The King of Swords embodies authority, structure, and intellectual mastery. In your career, this card indicates success through strategy, clear thinking, and strong leadership. You may be asked to take a position of authority, manage a team, or make critical decisions. It also warns against becoming too rigid—balance intellect with empathy to inspire others.",
+          love: "In love, the King of Swords suggests a partner who is intelligent, logical, and reliable, though not always emotionally expressive. For couples, this card encourages honest conversations and rational decision-making. For singles, it may indicate attracting someone older, wiser, or in a professional role.",
+          health: "Clarity and structure benefit your health now. This is an excellent time to create a health plan, seek professional advice, or approach wellness logically and consistently.",
+          spirituality: "This card represents wisdom and mastery of thought. Spiritually, it encourages you to seek higher truths and embrace practices that sharpen your mind as well as your spirit.",
+          overall: "The King of Swords represents authority, truth, and intellectual clarity. He is a reminder to use reason and fairness to guide decisions, while not losing touch with compassion."
+        }
+      },
+      {
+        name: "Ace of Pentacles",
+        meanings: {
+          career: "A golden opportunity is arriving. The Ace of Pentacles often signals a new job, financial opportunity, or a project with long-term potential. This is the seed of prosperity—plant it wisely, and it will grow into abundance. Practical action is required to nurture this opportunity into lasting success.",
+          love: "In relationships, this card suggests stability, security, and the potential for long-term growth. It may indicate building a future together, shared financial goals, or the start of a stable relationship rooted in trust.",
+          health: "Improved health and vitality are highlighted. This is a good time to begin a new diet, exercise program, or lifestyle change with long-term benefits.",
+          spirituality: "Spiritually, the Ace of Pentacles represents grounding. It is a reminder that spiritual growth is not separate from physical reality—it flourishes when you feel secure and balanced in daily life.",
+          overall: "This card symbolizes new beginnings, prosperity, and opportunities for growth. It is the first step toward building something lasting and rewarding."
+        }
+      },
+      {
+        name: "Two of Pentacles",
+        meanings: {
+          career: "You may find yourself juggling multiple projects or responsibilities. While busy, you have the skills to maintain balance. This card suggests adaptability and the need to manage resources wisely. Prioritize what truly matters, and avoid stretching yourself too thin.",
+          love: "In love, the Two of Pentacles may indicate balancing relationships with other responsibilities. It can also suggest a playful, adaptable energy in romance—learning to ‘dance’ together through life’s ups and downs.",
+          health: "Your health may feel out of balance. Focus on creating harmony in your daily routines—sleep, nutrition, work, and play must all be managed with care.",
+          spirituality: "This card represents balance between material and spiritual worlds. Flexibility and adaptability allow you to grow without losing stability.",
+          overall: "The Two of Pentacles symbolizes balance, adaptability, and resource management. It is a reminder that you can juggle multiple aspects of life successfully with focus and grace."
+        }
+      },
+      {
+        name: "Three of Pentacles",
+        meanings: {
+          career: "Teamwork, collaboration, and skill development are emphasized. This card suggests recognition for your talents and the importance of working harmoniously with others. A mentor, teacher, or colleague may play a key role in your growth.",
+          love: "In relationships, the Three of Pentacles reflects teamwork, mutual effort, and building a solid foundation together. It may also indicate outside support, such as counseling, helping a partnership thrive.",
+          health: "Healing is supported by collaboration—perhaps through working with a doctor, trainer, or supportive group. Don’t be afraid to seek guidance.",
+          spirituality: "This card reflects learning and building in the spiritual realm. Study, mentorship, or community practice helps strengthen your spiritual foundation.",
+          overall: "The Three of Pentacles symbolizes collaboration, learning, and mastery. Success now comes not from working alone, but from combining skills with others."
+        }
+      },
+      {
+        name: "Four of Pentacles",
+        meanings: {
+          career: "You may feel protective of your finances, position, or resources. While it’s wise to manage carefully, fear of loss can create stagnation. This card suggests loosening your grip slightly to allow growth and expansion.",
+          love: "In relationships, the Four of Pentacles may indicate possessiveness or fear of vulnerability. Love thrives when openness replaces control. Release fear, and intimacy deepens.",
+          health: "Holding onto stress, emotions, or rigidity may impact your physical body. Practices that encourage relaxation and release will restore balance.",
+          spirituality: "This card warns against clinging too tightly to material security at the expense of spiritual growth. Trust that letting go opens space for abundance.",
+          overall: "The Four of Pentacles represents control, security, and fear of loss. While stability is valuable, true abundance requires trust and flow."
+        }
+      },
+      {
+        name: "Five of Pentacles",
+        meanings: {
+          career: "Financial struggles, job insecurity, or setbacks may weigh heavily now. This card reminds you that help is available—reach out to mentors, colleagues, or networks for support. Hardship is temporary, and resilience will lead you to better opportunities.",
+          love: "In relationships, this card may reflect feelings of abandonment, rejection, or emotional distance. However, it also highlights the importance of mutual support during difficult times. Together, challenges can be overcome.",
+          health: "Physical or emotional depletion may require attention. While you may feel isolated, support and healing are available if you seek it.",
+          spirituality: "Spiritually, this card represents feeling disconnected from the divine or from faith. Yet, even in darkness, light remains. Seek connection through community or prayer.",
+          overall: "The Five of Pentacles symbolizes hardship, loss, and struggle. Yet, it also reminds you that support and hope are never far away, even in your darkest hour."
+        }
+      },
+      {
+        name: "Six of Pentacles",
+        meanings: {
+          career: "Generosity, assistance, or mentorship may play a role in your career. This card often reflects financial support, investments, or guidance that helps you grow. It also calls on you to share your resources generously when possible.",
+          love: "In relationships, balance of giving and receiving is highlighted. One partner may be giving more than the other, or generosity may flow between you both. True harmony comes when love is exchanged fairly.",
+          health: "Support from others may play an important role in healing. Accept help graciously, whether from professionals or loved ones.",
+          spirituality: "This card represents the karmic flow of giving and receiving. Spiritually, it reminds you that abundance grows when shared.",
+          overall: "The Six of Pentacles symbolizes generosity, balance, and fairness. It asks you to recognize the cycles of giving and receiving that sustain all relationships."
+        }
+      },
+      {
+        name: "Seven of Pentacles",
+        meanings: {
+          career: "This card highlights patience and evaluation. You’ve worked hard, but results may take longer than expected. Reflect on whether your efforts are aligned with long-term goals.",
+          love: "In relationships, this card suggests reflecting on progress and deciding if you want to continue investing energy. Growth may be slow, but it can be rewarding if both partners are committed.",
+          health: "Progress in health may feel slow, but steady effort leads to lasting change. Patience is key.",
+          spirituality: "Spiritually, this card represents planting seeds for future growth. Trust the process—awakening takes time.",
+          overall: "The Seven of Pentacles is about patience, reflection, and perseverance. It asks you to consider whether you’re investing your energy wisely."
+        }
+      },
+      {
+        name: "Eight of Pentacles",
+        meanings: {
+          career: "Mastery, skill, and dedication are at the forefront. You are honing your craft, and recognition will come through persistence. Apprenticeships, training, or further education may benefit you now.",
+          love: "In love, this card reflects effort and dedication. Relationships strengthen through consistent care and small, daily actions of love.",
+          health: "Healing is supported by discipline and steady routines. Progress builds slowly but surely.",
+          spirituality: "This card represents dedication to spiritual practice. Repetition and focus bring mastery and enlightenment.",
+          overall: "The Eight of Pentacles represents hard work, growth, and skill-building. It reminds you that effort leads to mastery."
+        }
+      },
+      {
+        name: "Nine of Pentacles",
+        meanings: {
+          career: "This card represents independence, prosperity, and recognition. You may enjoy the rewards of your efforts—financial stability, success, and self-sufficiency.",
+          love: "In relationships, the Nine of Pentacles suggests enjoying independence while still being open to love. For singles, it highlights self-worth as the foundation of attracting love. For couples, it represents enjoying abundance together while maintaining individuality.",
+          health: "Self-care and enjoying life’s pleasures boost your wellbeing. Balance luxury with discipline.",
+          spirituality: "Spiritually, this card represents independence and fulfillment. You are in harmony with yourself and the world.",
+          overall: "The Nine of Pentacles symbolizes independence, abundance, and self-mastery. It encourages you to enjoy the richness of life."
+        }
+      },
+      {
+        name: "Ten of Pentacles",
+        meanings: {
+          career: "This is the card of legacy, prosperity, and long-term achievement. It signals stability, financial security, and building something that endures—whether a family business, career legacy, or generational wealth.",
+          love: "In relationships, this card represents long-term commitment, family, and harmony across generations. It suggests building a shared future rooted in trust and prosperity.",
+          health: "Your health is stabilized, supported by routines and family or community networks. Longevity is indicated when care is consistent.",
+          spirituality: "This card reflects ancestral wisdom and the spiritual strength of tradition. Connecting with your roots brings deep guidance.",
+          overall: "The Ten of Pentacles represents fulfillment, stability, and legacy. It is the completion of material and family goals."
+        }
+      },
+      {
+        name: "Page of Pentacles",
+        meanings: {
+          career: "This card represents new beginnings in work or study. You may receive an offer, internship, or chance to learn new skills. Curiosity and dedication will bring success.",
+          love: "In relationships, the Page of Pentacles suggests beginnings—something small but with long-term potential. For couples, it signals steady growth and investment in the future.",
+          health: "New habits or routines started now will have lasting impact. Consistency matters more than speed.",
+          spirituality: "This card reflects curiosity in spiritual matters. Study, reading, or exploring new practices grounds your path.",
+          overall: "The Page of Pentacles represents potential, learning, and steady growth. It is the student energy that builds abundance over time."
+        }
+      },
+      {
+        name: "Knight of Pentacles",
+        meanings: {
+          career: "Steadfast dedication brings results. You may feel progress is slow, but your consistency ensures success. This card highlights responsibility and reliability in career matters.",
+          love: "In love, this card suggests loyalty, devotion, and steady progress. Though romance may feel practical, it is deeply dependable.",
+          health: "Steady routines and patience support your health. Avoid rushing—healing takes time.",
+          spirituality: "Spiritually, the Knight of Pentacles encourages discipline in daily practice. Consistency creates transformation.",
+          overall: "The Knight of Pentacles symbolizes persistence, loyalty, and grounded effort. Success comes through patience and dedication."
+        }
+      },
+      {
+        name: "Queen of Pentacles",
+        meanings: {
+          career: "Abundance, practicality, and nurturing energy define your career. You are capable of balancing professional success with creating comfort for yourself and others. This card often signals financial stability and wise resource management.",
+          love: "In love, the Queen of Pentacles reflects warmth, loyalty, and emotional security. Relationships feel grounded, loving, and long-lasting.",
+          health: "Health flourishes when you care for yourself like a beloved. Balanced meals, rest, and grounding activities bring vitality.",
+          spirituality: "This card reminds you that spirituality is woven into daily life. Acts of care, generosity, and nature connection are sacred practices.",
+          overall: "The Queen of Pentacles represents nurturing abundance and practical wisdom. She embodies the harmony of material success and emotional care."
+        }
+      },
+      {
+        name: "King of Pentacles",
+        meanings: {
+          career: "The King of Pentacles represents mastery, success, and leadership. In your career, it signals authority, prosperity, and recognition. You may step into a position of power or enjoy financial abundance through discipline and determination. It also reminds you to guide others with fairness and generosity.",
+          love: "In relationships, the King of Pentacles represents loyalty, stability, and devotion. A strong, dependable partner is suggested here—someone who values long-term commitment. For couples, it reflects building a prosperous and harmonious life together.",
+          health: "Health thrives with discipline and balance. This card also warns against overindulgence—luxury is pleasant, but moderation sustains vitality.",
+          spirituality: "This card represents mastery of the material world. Spiritually, it teaches that prosperity becomes sacred when it is used wisely for the good of others.",
+          overall: "The King of Pentacles symbolizes abundance, authority, and stability. He is the provider archetype, showing that true success lies in both personal prosperity and what you build for those around you."
         }
       }
+      
     ];
 
     // Guidance messages for each area
