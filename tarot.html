@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Authentic Tarot Card Reading | Jyotish Tark</title>
+  <title>Advanced Tarot Card Reading | Jyotish Tark</title>
 
   <meta name="description" content="Get accurate tarot card readings for career, love, health, and destiny. Professional tarot guidance from Jyotish Tark.">
   <meta name="keywords" content="tarot card reading, tarot prediction, career tarot, love tarot, health tarot, destiny reading, jyotish tark tarot">
@@ -277,13 +277,14 @@
       }
     }
 
-    /* Tarot Specific Styles */
+    /* Enhanced Tarot Styles */
     .tarot-card {
-      width: 120px;
-      height: 200px;
+      width: 150px;
+      height: 250px;
       perspective: 1000px;
       cursor: pointer;
       margin: 0 auto;
+      position: relative;
     }
     
     .tarot-inner {
@@ -307,13 +308,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
     
     .tarot-front {
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       color: white;
-      font-size: 2rem;
+      font-size: 2.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
     }
     
     .tarot-back {
@@ -323,51 +325,72 @@
       padding: 15px;
       flex-direction: column;
       text-align: center;
+      border: 2px solid var(--secondary);
+      overflow: hidden;
+    }
+    
+    .tarot-back::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80') center/cover;
+      opacity: 0.1;
     }
     
     .tarot-back h4 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       margin-bottom: 8px;
       color: var(--secondary);
+      position: relative;
+      z-index: 1;
     }
     
     .tarot-back p {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       line-height: 1.4;
+      position: relative;
+      z-index: 1;
     }
     
     .tarot-spread {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin: 30px 0;
+      gap: 25px;
+      margin: 40px 0;
     }
     
     .tarot-category {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       font-weight: 600;
       color: var(--secondary);
+      font-size: 1.1rem;
     }
     
     .reading-result {
       background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
+      padding: 25px;
       border-radius: 16px;
-      margin-top: 30px;
+      margin-top: 40px;
       backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .tarot-btn {
       background: linear-gradient(to right, var(--primary), var(--accent));
       color: white;
       border: none;
-      padding: 12px 24px;
+      padding: 15px 30px;
       border-radius: 50px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin: 20px 0;
+      margin: 25px 0;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
     }
     
     .tarot-btn:hover {
@@ -378,6 +401,91 @@
     .tarot-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
+    }
+    
+    .tarot-selection {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+    
+    .tarot-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      min-width: 150px;
+    }
+    
+    .tarot-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    .tarot-option.active {
+      border-color: var(--secondary);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    
+    .tarot-option i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+      color: var(--secondary);
+    }
+    
+    .card-shimmer {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      animation: shimmer 3s infinite;
+      opacity: 0.5;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+    
+    .card-reveal {
+      animation: reveal 0.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .energy-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      width: 0%;
+      transition: width 1.5s ease;
+    }
+    
+    .energy-line.animate {
+      width: 100%;
     }
   </style>
 </head>
@@ -402,6 +510,7 @@
         <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
         <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
         <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+        <a href="tarot.html" class="nav-link text-amber-300 transition">Tarot</a>
         <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
         <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
       </nav>
@@ -418,6 +527,7 @@
       <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
       <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
       <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="tarot.html" class="block px-4 py-2 rounded text-amber-300 bg-purple-700 transition"><i class="fas fa-clover astrological-symbol"></i>Tarot</a>
       <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
       <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
     </nav>
@@ -427,48 +537,99 @@
   <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
     <div class="relative z-10">
       <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
-        <span class="block">Tarot Card Reading</span>
+        <span class="block">Cosmic Tarot Reading</span>
         <span class="text-3xl md:text-4xl text-amber-300">Reveal Your Destiny</span>
       </h1>
       <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-        Discover what the cards reveal about your career, love life, health, and overall destiny with our authentic tarot readings.
+        Discover what the cards reveal about your career, love life, health, and spiritual path with our authentic tarot readings.
       </p>
+      <div class="energy-line"></div>
     </div>
   </section>
 
   <!-- Tarot Reading Section -->
-  <main class="max-w-4xl mx-auto px-6 py-12">
+  <main class="max-w-6xl mx-auto px-6 py-12">
     <div class="glass-card p-8 rounded-2xl text-center">
       <h2 class="text-3xl font-bold text-white mb-6">Your Personal Tarot Reading</h2>
-      <p class="text-gray-300 mb-8">Focus your energy on a specific area of your life and draw a card for guidance.</p>
+      <p class="text-gray-300 mb-8">Focus your energy on a specific area of your life and draw cards for guidance.</p>
       
-      <div class="mb-8">
-        <label for="lifeArea" class="block text-amber-300 font-medium mb-3">Select Life Area:</label>
-        <select id="lifeArea" class="bg-gray-800 text-white rounded-lg p-3 border border-purple-600 focus:ring-2 focus:ring-purple-500 focus:outline-none">
-          <option value="career">Career & Finance</option>
-          <option value="love">Love & Relationships</option>
-          <option value="health">Health & Wellness</option>
-          <option value="spirituality">Spiritual Growth</option>
-          <option value="overall">Overall Destiny</option>
-        </select>
+      <div class="mb-10">
+        <h3 class="text-xl text-amber-300 font-medium mb-5">Choose Your Reading Focus:</h3>
+        <div class="tarot-selection">
+          <div class="tarot-option active" data-area="career">
+            <i class="fas fa-briefcase"></i>
+            <span>Career & Finance</span>
+          </div>
+          <div class="tarot-option" data-area="love">
+            <i class="fas fa-heart"></i>
+            <span>Love & Relationships</span>
+          </div>
+          <div class="tarot-option" data-area="health">
+            <i class="fas fa-heartbeat"></i>
+            <span>Health & Wellness</span>
+          </div>
+          <div class="tarot-option" data-area="spirituality">
+            <i class="fas fa-yin-yang"></i>
+            <span>Spiritual Growth</span>
+          </div>
+          <div class="tarot-option" data-area="overall">
+            <i class="fas fa-star"></i>
+            <span>Overall Destiny</span>
+          </div>
+        </div>
       </div>
       
       <button id="drawCard" class="tarot-btn">
-        <i class="fas fa-clover mr-2"></i>Draw Tarot Card
+        <i class="fas fa-clover mr-2"></i>Draw Tarot Cards
       </button>
       
-      <div id="tarotResult" class="hidden">
+      <div id="tarotResult" class="hidden card-reveal">
+        <h3 class="text-2xl font-bold text-amber-300 mb-6" id="readingTitle">Your Career Reading</h3>
+        
         <div class="tarot-spread">
           <div>
-            <div class="tarot-category" id="selectedCategory">Career & Finance</div>
-            <div class="tarot-card" id="tarotCard">
+            <div class="tarot-category">Past Influence</div>
+            <div class="tarot-card" id="card1">
               <div class="tarot-inner">
                 <div class="tarot-front">
                   <i class="fas fa-question"></i>
+                  <div class="card-shimmer"></div>
                 </div>
                 <div class="tarot-back">
-                  <h4 id="cardName">The Magician</h4>
-                  <p id="cardMeaning">You have all the tools you need to succeed. Take action on your ideas.</p>
+                  <h4 id="card1Name">The Magician</h4>
+                  <p id="card1Meaning">You had all the skills needed to advance.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="tarot-category">Present Situation</div>
+            <div class="tarot-card" id="card2">
+              <div class="tarot-inner">
+                <div class="tarot-front">
+                  <i class="fas fa-question"></i>
+                  <div class="card-shimmer"></div>
+                </div>
+                <div class="tarot-back">
+                  <h4 id="card2Name">The High Priestess</h4>
+                  <p id="card2Meaning">Trust your intuition about workplace dynamics.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="tarot-category">Future Potential</div>
+            <div class="tarot-card" id="card3">
+              <div class="tarot-inner">
+                <div class="tarot-front">
+                  <i class="fas fa-question"></i>
+                  <div class="card-shimmer"></div>
+                </div>
+                <div class="tarot-back">
+                  <h4 id="card3Name">Wheel of Fortune</h4>
+                  <p id="card3Meaning">A positive turn of events is coming.</p>
                 </div>
               </div>
             </div>
@@ -476,11 +637,16 @@
         </div>
         
         <div class="reading-result">
-          <h3 class="text-xl font-bold text-amber-300 mb-4">Your Reading</h3>
-          <p id="readingText" class="text-gray-300"></p>
+          <h3 class="text-xl font-bold text-amber-300 mb-4">Your Complete Reading</h3>
+          <p id="readingText" class="text-gray-300 text-left leading-relaxed"></p>
+          
+          <div class="mt-6 p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+            <h4 class="font-semibold text-amber-300 mb-2">Guidance for You:</h4>
+            <p id="readingGuidance" class="text-gray-300 text-left"></p>
+          </div>
         </div>
         
-        <button id="resetReading" class="secondary-button mt-6">
+        <button id="resetReading" class="secondary-button mt-8">
           <i class="fas fa-redo mr-2"></i>New Reading
         </button>
       </div>
@@ -499,7 +665,8 @@
         <h3 class="text-xl font-bold text-amber-300 mb-4">How It Works</h3>
         <ol class="list-decimal list-inside space-y-2 text-gray-300">
           <li>Select the life area you want guidance on</li>
-          <li>Click "Draw Tarot Card" to receive your reading</li>
+          <li>Click "Draw Tarot Cards" to receive your reading</li>
+          <li>The three-card spread reveals past influences, present situation, and future potential</li>
           <li>Focus on the message and how it applies to your situation</li>
           <li>Use the insights to guide your decisions and reflections</li>
         </ol>
@@ -570,7 +737,14 @@
       document.getElementById('mobileNav').classList.toggle('hidden');
     });
 
-    // Tarot Card Data
+    // Animate energy line on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        document.querySelector('.energy-line').classList.add('animate');
+      }, 500);
+    });
+
+    // Tarot Card Data - Expanded with more cards
     const tarotCards = [
       {
         name: "The Magician",
@@ -625,7 +799,7 @@
       {
         name: "The Lovers",
         meanings: {
-          career: "A important decision about your career path. Choose alignment with your values.",
+          career: "An important decision about your career path. Choose alignment with your values.",
           love: "A meaningful connection or important relationship choice. Follow your heart wisely.",
           health: "Balance between different aspects of your wellbeing. Harmony leads to health.",
           spirituality: "Alignment between your beliefs and actions brings spiritual harmony.",
@@ -671,49 +845,210 @@
           spirituality: "Divine timing is at work. Trust the universe's plan for you.",
           overall: "A turn of fate, cycles, and destiny. Positive changes are on the horizon."
         }
+      },
+      {
+        name: "Justice",
+        meanings: {
+          career: "Fair decisions will be made. Your efforts will be properly rewarded.",
+          love: "Balance and fairness are needed in your relationship. Truth will prevail.",
+          health: "A balanced approach to health is necessary. Consider all aspects of wellbeing.",
+          spirituality: "Karmic justice is at work. Your actions have consequences.",
+          overall: "Fairness, truth, and cause and effect. Decisions will have long-term impacts."
+        }
+      },
+      {
+        name: "The Hanged Man",
+        meanings: {
+          career: "A different perspective is needed. Sometimes surrender leads to advancement.",
+          love: "Let go of control in your relationship. A new viewpoint may help.",
+          health: "Rest and recovery are necessary. Sometimes inactivity is the best action.",
+          spirituality: "Surrender leads to enlightenment. Let go of attachments.",
+          overall: "Sacrifice, new perspectives, and enlightenment. Sometimes letting go is the answer."
+        }
+      },
+      {
+        name: "Death",
+        meanings: {
+          career: "An ending leading to a new beginning. Out with the old, in with the new.",
+          love: "The end of one phase and start of another. Transformation in relationships.",
+          health: "Major changes in your health routine. The end of unhealthy patterns.",
+          spirituality: "Spiritual transformation and rebirth. Letting go of the past.",
+          overall: "Endings, transformation, and new beginnings. Change is inevitable and necessary."
+        }
+      },
+      {
+        name: "Temperance",
+        meanings: {
+          career: "Balance and moderation lead to success. Find the middle path.",
+          love: "Patience and compromise strengthen your relationship. Blend differences harmoniously.",
+          health: "A balanced approach to health works best. Moderation in all things.",
+          spirituality: "Integration of spiritual and material worlds. Find your center.",
+          overall: "Balance, moderation, and patience. The middle path brings harmony."
+        }
+      },
+      {
+        name: "The Devil",
+        meanings: {
+          career: "Beware of unhealthy attachments to work. Break free from limiting patterns.",
+          love: "Examine unhealthy patterns in your relationship. Address addictions or dependencies.",
+          health: "Address unhealthy habits or addictions. Take control of your wellbeing.",
+          spirituality: "Break free from material attachments. Spiritual liberation is possible.",
+          overall: "Bondage, materialism, and unhealthy patterns. Freedom comes from awareness."
+        }
+      },
+      {
+        name: "The Tower",
+        meanings: {
+          career: "Sudden changes disrupt your plans. Embrace the necessary destruction for renewal.",
+          love: "A relationship crisis leads to revelation. Truth breaks down illusions.",
+          health: "A health wake-up call. Major changes to lifestyle may be needed.",
+          spirituality: "Sudden enlightenment breaks down old beliefs. Revelation through disruption.",
+          overall: "Sudden change, revelation, and awakening. Breakdown leads to breakthrough."
+        }
+      },
+      {
+        name: "The Star",
+        meanings: {
+          career: "Hope and inspiration guide your path. Your talents are recognized.",
+          love: "Healing and renewal in relationships. Hope for the future.",
+          health: "Recovery and healing are happening. A positive prognosis.",
+          spirituality: "Divine guidance and inspiration. Connection to cosmic energy.",
+          overall: "Hope, inspiration, and serenity. Have faith in the future."
+        }
+      },
+      {
+        name: "The Moon",
+        meanings: {
+          career: "Uncertainty and illusion in the workplace. Trust your intuition.",
+          love: "Emotional confusion in relationships. Things are not as they seem.",
+          health: "Listen to your body's subtle messages. Dreams may provide insight.",
+          spirituality: "The subconscious is active. Pay attention to dreams and intuition.",
+          overall: "Illusion, intuition, and the subconscious. Things are not as they appear."
+        }
+      },
+      {
+        name: "The Sun",
+        meanings: {
+          career: "Success and recognition are coming. A positive work environment.",
+          love: "Joy and happiness in relationships. A period of warmth and connection.",
+          health: "Vitality and good health. A positive recovery.",
+          spirituality: "Enlightenment and clarity. Connection to divine light.",
+          overall: "Success, joy, and vitality. A period of happiness and fulfillment."
+        }
+      },
+      {
+        name: "Judgment",
+        meanings: {
+          career: "A time for evaluation and reflection. Make important decisions.",
+          love: "Re-evaluation of relationships. Forgiveness and renewal.",
+          health: "Time to assess your health journey. Make necessary changes.",
+          spirituality: "Spiritual awakening and renewal. Answering a higher call.",
+          overall: "Reflection, reckoning, and awakening. A time for important decisions."
+        }
+      },
+      {
+        name: "The World",
+        meanings: {
+          career: "Completion of a major cycle. Achievement and recognition.",
+          love: "A relationship reaches fulfillment. Harmony and completion.",
+          health: "A health journey comes full circle. Wholeness and integration.",
+          spirituality: "Spiritual completion and enlightenment. Connection to the cosmos.",
+          overall: "Completion, achievement, and fulfillment. A cycle comes to a successful end."
+        }
       }
     ];
+
+    // Guidance messages for each area
+    const guidanceMessages = {
+      career: "Focus on developing your skills and taking initiative. The opportunities you seek are within your reach if you're willing to take calculated risks and showcase your abilities.",
+      love: "Communication and understanding are key to nurturing your relationships. Be open and honest with your feelings, and remember that compromise strengthens bonds.",
+      health: "Listen to your body's signals and respond with care. A balanced approach to nutrition, exercise, and rest will create the foundation for lasting wellbeing.",
+      spirituality: "Your spiritual journey is unique to you. Take time for quiet reflection and trust the insights that come from within. The universe is guiding you.",
+      overall: "You are exactly where you need to be on your life path. Trust the process, learn from each experience, and remember that every challenge brings growth."
+    };
 
     // Tarot Reading Functionality
     document.addEventListener('DOMContentLoaded', function() {
       const drawButton = document.getElementById('drawCard');
       const resetButton = document.getElementById('resetReading');
-      const lifeAreaSelect = document.getElementById('lifeArea');
+      const tarotOptions = document.querySelectorAll('.tarot-option');
       const tarotResult = document.getElementById('tarotResult');
-      const tarotCard = document.getElementById('tarotCard');
-      const cardName = document.getElementById('cardName');
-      const cardMeaning = document.getElementById('cardMeaning');
+      const readingTitle = document.getElementById('readingTitle');
       const readingText = document.getElementById('readingText');
-      const selectedCategory = document.getElementById('selectedCategory');
+      const readingGuidance = document.getElementById('readingGuidance');
+      const card1 = document.getElementById('card1');
+      const card2 = document.getElementById('card2');
+      const card3 = document.getElementById('card3');
+      
+      let selectedArea = "career";
+      let selectedAreaName = "Career & Finance";
+      
+      // Set up area selection
+      tarotOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          tarotOptions.forEach(opt => opt.classList.remove('active'));
+          this.classList.add('active');
+          selectedArea = this.getAttribute('data-area');
+          selectedAreaName = this.querySelector('span').textContent;
+        });
+      });
       
       drawButton.addEventListener('click', function() {
-        // Get selected life area
-        const lifeArea = lifeAreaSelect.value;
-        const lifeAreaText = lifeAreaSelect.options[lifeAreaSelect.selectedIndex].text;
+        // Get three unique random cards
+        const selectedCards = getRandomCards(3);
         
-        // Select a random card
-        const randomCard = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+        // Update the display with card information
+        document.getElementById('card1Name').textContent = selectedCards[0].name;
+        document.getElementById('card1Meaning').textContent = selectedCards[0].meanings[selectedArea];
         
-        // Update the display
-        cardName.textContent = randomCard.name;
-        cardMeaning.textContent = randomCard.meanings[lifeArea];
-        readingText.textContent = `For your ${lifeAreaText.toLowerCase()}, the ${randomCard.name} appears. ${randomCard.meanings[lifeArea]}`;
-        selectedCategory.textContent = lifeAreaText;
+        document.getElementById('card2Name').textContent = selectedCards[1].name;
+        document.getElementById('card2Meaning').textContent = selectedCards[1].meanings[selectedArea];
+        
+        document.getElementById('card3Name').textContent = selectedCards[2].name;
+        document.getElementById('card3Meaning').textContent = selectedCards[2].meanings[selectedArea];
+        
+        // Generate reading text
+        readingTitle.textContent = `Your ${selectedAreaName} Reading`;
+        readingText.innerHTML = `
+          <p class="mb-4">In your <strong>${selectedAreaName.toLowerCase()}</strong>, the cards reveal:</p>
+          <p class="mb-3"><strong>Past Influence (${selectedCards[0].name}):</strong> ${selectedCards[0].meanings[selectedArea]}</p>
+          <p class="mb-3"><strong>Present Situation (${selectedCards[1].name}):</strong> ${selectedCards[1].meanings[selectedArea]}</p>
+          <p class="mb-4"><strong>Future Potential (${selectedCards[2].name}):</strong> ${selectedCards[2].meanings[selectedArea]}</p>
+          <p>This three-card spread suggests a journey from ${selectedCards[0].name.toLowerCase()} through ${selectedCards[1].name.toLowerCase()} toward ${selectedCards[2].name.toLowerCase()} in your ${selectedAreaName.toLowerCase()}.</p>
+        `;
+        
+        readingGuidance.textContent = guidanceMessages[selectedArea];
         
         // Show the result
         tarotResult.classList.remove('hidden');
         
-        // Flip the card after a short delay
+        // Animate the cards with delays
         setTimeout(() => {
-          tarotCard.classList.add('flipped');
-        }, 500);
+          card1.classList.add('flipped');
+        }, 800);
+        
+        setTimeout(() => {
+          card2.classList.add('flipped');
+        }, 1600);
+        
+        setTimeout(() => {
+          card3.classList.add('flipped');
+        }, 2400);
       });
       
       resetButton.addEventListener('click', function() {
         // Reset the display
         tarotResult.classList.add('hidden');
-        tarotCard.classList.remove('flipped');
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+        card3.classList.remove('flipped');
       });
+      
+      // Helper function to get unique random cards
+      function getRandomCards(count) {
+        const shuffled = [...tarotCards].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+      }
     });
   </script>
 </body>
