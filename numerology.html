@@ -813,46 +813,80 @@
             document.getElementById('mobileNav').classList.toggle('hidden');
         });
 
-        // Numerology calculation function
-        function calculateNumber(event) {
-            event.preventDefault();
-            
-            const dob = document.getElementById('dob').value;
-            const name = document.getElementById('name').value;
-            
-            if (!dob) {
-                alert('Please enter your birth date');
-                return;
-            }
-            
+        // REPLACE THE EXISTING calculateNumber FUNCTION WITH THIS:
+    function calculateNumber(event) {
+        event.preventDefault();
+        
+        const dob = document.getElementById('dob').value;
+        const name = document.getElementById('name').value.trim();
+        
+        if (!dob) {
+            showError('Please enter your birth date');
+            return;
+        }
+        
+        try {
             // Parse date
             const dateParts = dob.split('-');
             const day = parseInt(dateParts[2]);
             const month = parseInt(dateParts[1]);
             const year = parseInt(dateParts[0]);
             
+            // Validate date
+            if (isNaN(day) || isNaN(month) || isNaN(year)) {
+                showError('Please enter a valid birth date');
+                return;
+            }
+            
             // Calculate Life Path Number
-            let lifePathNumber = reduceToSingleDigit(day) + reduceToSingleDigit(month) + reduceToSingleDigit(year);
+            const dayReduced = reduceToSingleDigit(day);
+            const monthReduced = reduceToSingleDigit(month);
+            const yearReduced = reduceToSingleDigit(year);
+            
+            let lifePathNumber = dayReduced + monthReduced + yearReduced;
             
             // Check for master numbers before final reduction
-            if (lifePathNumber === 11 || lifePathNumber === 22 || lifePathNumber === 33) {
-                // Keep as master number
-            } else {
+            if (lifePathNumber !== 11 && lifePathNumber !== 22 && lifePathNumber !== 33) {
                 lifePathNumber = reduceToSingleDigit(lifePathNumber);
             }
             
             // Display results
             displayResults(lifePathNumber, name);
+        } catch (error) {
+            showError('An error occurred while calculating your number. Please try again.');
+            console.error('Numerology calculation error:', error);
+        }
+    }
+    
+    // ADD THIS NEW FUNCTION AFTER calculateNumber:
+    function reduceToSingleDigit(number) {
+        if (number === 11 || number === 22 || number === 33) return number;
+        
+        while (number > 9 && number !== 11 && number !== 22 && number !== 33) {
+            number = Math.floor(number / 10) + (number % 10);
+        }
+        return number;
+    }
+    
+    // ADD THIS NEW FUNCTION AFTER reduceToSingleDigit:
+    function showError(message) {
+        // Create or use an existing error element
+        let errorElement = document.getElementById('calculationError');
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.id = 'calculationError';
+            errorElement.className = 'bg-red-900 text-white p-3 rounded-lg mb-4 text-center';
+            document.querySelector('form').prepend(errorElement);
         }
         
-        function reduceToSingleDigit(number) {
-            if (number === 11 || number === 22 || number === 33) return number;
-            
-            while (number > 9) {
-                number = Math.floor(number / 10) + (number % 10);
-            }
-            return number;
-        }
+        errorElement.textContent = message;
+        
+        // Remove error after 5 seconds
+        setTimeout(() => {
+            errorElement.remove();
+        }, 5000);
+    }
+
         
         function displayResults(number, name) {
             const numberData = getNumberData(number);
