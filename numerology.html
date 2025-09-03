@@ -528,8 +528,8 @@ label {
                         <button onclick="window.print()" class="primary-button mr-4">
                             <i class="fas fa-print mr-2"></i> Print Report
                         </button>
-                        <button onclick="printReport()" class="primary-button mr-4">
-                          <i class="fas fa-print mr-2"></i> Print Report
+                        <button onclick="window.print()" class="primary-button mr-4">
+                          <i class="fas fa-share mr-2"></i> Share Report
                         </button>
 
                         <div id="loading" class="hidden mt-4 text-center">
@@ -1102,25 +1102,6 @@ label {
             // Scroll to results
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
-        // Add this function to your JavaScript
-function printReport() {
-    const originalStyles = document.querySelectorAll('style, link[rel="stylesheet"]');
-    
-    // Temporarily disable all styles
-    originalStyles.forEach(style => {
-        style.setAttribute('media', 'none');
-    });
-    
-    // Print the document
-    window.print();
-    
-    // Restore styles after a short delay
-    setTimeout(() => {
-        originalStyles.forEach(style => {
-            style.removeAttribute('media');
-        });
-    }, 500);
-}
         function getNumberData(number) {
             const numberMeanings = {
                 1: {
