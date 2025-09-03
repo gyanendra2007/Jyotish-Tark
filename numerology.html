@@ -11,6 +11,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary: #7e22ce;
@@ -195,7 +197,34 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
         }
-        
+        /* Hindi font (remember to include the font link in <head>) */
+.hindi-text {
+  font-family: 'Hind', sans-serif;
+}
+
+/* Improve contrast for better accessibility */
+.text-gray-300 { color: #e5e7eb; }
+.text-purple-100 { color: #f3e8ff; }
+
+.primary-button {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Visible focus styles */
+button:focus,
+a:focus,
+input:focus {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Improve label contrast */
+label {
+  color: #e5e7eb;
+  font-weight: 500;
+}
+
         .number-card {
             transition: all 0.3s ease;
             border-bottom: 4px solid transparent;
@@ -223,6 +252,15 @@
     </style>
 </head>
 <body class="min-h-screen">
+   
+    <!-- Language Toggle -->
+    <div class="fixed top-20 right-4 z-50">
+     <button id="languageToggle" class="glass-card px-4 py-2 rounded-full text-sm font-medium flex items-center">
+      <span class="english-text">हिंदी</span>
+      <span class="hindi-text hidden">English</span>
+     </button>
+    </div>
+    
     <!-- Floating Planets -->
     <div class="planet-1"></div>
     <div class="planet-2"></div>
