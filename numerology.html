@@ -40,20 +40,21 @@
             font-family: 'Hind', sans-serif;
         }
         
-        .cosmic-bg {
-            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-            position: relative;
-        }
-        
-        .cosmic-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
-        }
+        <!-- Replace the existing cosmic-bg class in your CSS -->
+.cosmic-bg {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230f172a"/><circle cx="20" cy="20" r="2" fill="%23a855f7" opacity="0.7"/><circle cx="60" cy="30" r="1" fill="%23ec4899" opacity="0.5"/><circle cx="40" cy="70" r="1.5" fill="%23f59e0b" opacity="0.6"/><circle cx="80" cy="60" r="1" fill="%23ffffff" opacity="0.4"/><circle cx="30" cy="50" r="0.8" fill="%23ffffff" opacity="0.3"/></svg>') center/cover no-repeat;
+    position: relative;
+}
+
+.cosmic-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+}
         
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
@@ -232,7 +233,110 @@ label {
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
-        
+        /* Improved mobile responsiveness */
+@media (max-width: 640px) {
+    .cosmic-bg {
+        padding: 1.5rem !important;
+        margin: 1rem !important;
+    }
+    
+    .cosmic-bg h1 {
+        font-size: 1.75rem !important;
+    }
+    @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+    .cosmic-bg h1 span:last-child {
+        font-size: 1.25rem !important;
+    }
+    
+    .glass-card {
+        padding: 1.5rem !important;
+    }
+    
+    .number-card {
+        margin-bottom: 1rem;
+    }
+    
+    .grid.grid-cols-1.md\\:grid-cols-3 {
+        gap: 1rem;
+    }
+    @media print {
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+    }
+    
+    .glass-card {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+    
+    .cosmic-bg {
+        background: none !important;
+    }
+    
+    .cosmic-bg::before {
+        display: none !important;
+    }
+    
+    .primary-button,
+    .nav-link,
+    #languageToggle,
+    #menuToggle,
+    footer {
+        display: none !important;
+    }
+    
+    .number-circle {
+        background: #f0f0f0 !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+    
+    a {
+        color: black !important;
+        text-decoration: underline;
+    }
+}
+    /* Improve form elements on mobile */
+    input[type="date"], 
+    input[type="text"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Adjust footer layout */
+    .grid.grid-cols-1.md\\:grid-cols-4 {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    /* Improve button sizes */
+    .primary-button {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 360px) {
+    .cosmic-bg h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .number-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}
         .number-card:hover {
             transform: translateY(-8px);
             border-bottom-color: var(--secondary);
@@ -253,14 +357,6 @@ label {
 </head>
 <body class="min-h-screen">
    
-    <!-- Language Toggle -->
-    <div class="fixed top-20 right-4 z-50">
-     <button id="languageToggle" class="glass-card px-4 py-2 rounded-full text-sm font-medium flex items-center">
-      <span class="english-text">हिंदी</span>
-      <span class="hindi-text hidden">English</span>
-     </button>
-    </div>
-    
     <!-- Floating Planets -->
     <div class="planet-1"></div>
     <div class="planet-2"></div>
@@ -408,6 +504,12 @@ label {
                         <button onclick="shareResults()" class="primary-button">
                             <i class="fas fa-share-alt mr-2"></i> Share Results
                         </button>
+                        <div id="loading" class="hidden mt-4 text-center">
+                         <div class="inline-flex items-center">
+                         <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-2"></div>
+                         <span class="text-gray-300">Calculating your number...</span>
+                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -851,18 +953,24 @@ label {
             document.getElementById('mobileNav').classList.toggle('hidden');
         });
 
-        // REPLACE THE EXISTING calculateNumber FUNCTION WITH THIS:
-    function calculateNumber(event) {
-        event.preventDefault();
-        
-        const dob = document.getElementById('dob').value;
-        const name = document.getElementById('name').value.trim();
-        
-        if (!dob) {
-            showError('Please enter your birth date');
-            return;
-        }
-        
+        function calculateNumber(event) {
+    event.preventDefault();
+    
+    // Show loading state
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('result').classList.add('hidden');
+    
+    const dob = document.getElementById('dob').value;
+    const name = document.getElementById('name').value.trim();
+    
+    if (!dob) {
+        showError('Please enter your birth date');
+        document.getElementById('loading').classList.add('hidden');
+        return;
+    }
+    
+    // Use setTimeout to allow the UI to update before calculation
+    setTimeout(() => {
         try {
             // Parse date
             const dateParts = dob.split('-');
@@ -873,6 +981,14 @@ label {
             // Validate date
             if (isNaN(day) || isNaN(month) || isNaN(year)) {
                 showError('Please enter a valid birth date');
+                document.getElementById('loading').classList.add('hidden');
+                return;
+            }
+            
+            // Check if date is in the future
+            if (!isValidDate(day, month, year)) {
+                showError('Please enter a date that is not in the future');
+                document.getElementById('loading').classList.add('hidden');
                 return;
             }
             
@@ -890,11 +1006,16 @@ label {
             
             // Display results
             displayResults(lifePathNumber, name);
+            
+            // Hide loading after calculation is complete
+            document.getElementById('loading').classList.add('hidden');
         } catch (error) {
             showError('An error occurred while calculating your number. Please try again.');
             console.error('Numerology calculation error:', error);
+            document.getElementById('loading').classList.add('hidden');
         }
-    }
+    }, 100);
+}
     
     // ADD THIS NEW FUNCTION AFTER calculateNumber:
     function reduceToSingleDigit(number) {
