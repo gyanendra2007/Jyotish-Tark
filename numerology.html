@@ -266,44 +266,71 @@ label {
     .grid.grid-cols-1.md\\:grid-cols-3 {
         gap: 1rem;
     }
-    @media print {
+    /* Replace your existing print media query with this */
+@media print {
     body {
         background: white !important;
         color: black !important;
         font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    body * {
+        visibility: hidden;
+    }
+    
+    #result, #result * {
+        visibility: visible;
+    }
+    
+    #result {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        background: white !important;
     }
     
     .glass-card {
         background: white !important;
         box-shadow: none !important;
         border: 1px solid #ddd !important;
-    }
-    
-    .cosmic-bg {
-        background: none !important;
-    }
-    
-    .cosmic-bg::before {
-        display: none !important;
-    }
-    
-    .primary-button,
-    .nav-link,
-    #languageToggle,
-    #menuToggle,
-    footer {
-        display: none !important;
+        padding: 20px;
+        margin: 0;
     }
     
     .number-circle {
         background: #f0f0f0 !important;
         color: black !important;
         box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .primary-button,
+    .nav-link,
+    #languageToggle,
+    #menuToggle,
+    footer,
+    .planet-1,
+    .planet-2,
+    .cosmic-bg::before {
+        display: none !important;
     }
     
     a {
         color: black !important;
         text-decoration: underline;
+    }
+    
+    h1, h2, h3, h4 {
+        color: black !important;
+        page-break-after: avoid;
+    }
+    
+    .grid {
+        page-break-inside: avoid;
     }
 }
     /* Improve form elements on mobile */
@@ -501,9 +528,10 @@ label {
                         <button onclick="window.print()" class="primary-button mr-4">
                             <i class="fas fa-print mr-2"></i> Print Report
                         </button>
-                        <button onclick="shareResults()" class="primary-button">
-                            <i class="fas fa-share-alt mr-2"></i> Share Results
+                        <button onclick="printReport()" class="primary-button mr-4">
+                          <i class="fas fa-print mr-2"></i> Print Report
                         </button>
+
                         <div id="loading" class="hidden mt-4 text-center">
                          <div class="inline-flex items-center">
                          <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-2"></div>
@@ -1074,7 +1102,25 @@ label {
             // Scroll to results
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
-        
+        // Add this function to your JavaScript
+function printReport() {
+    const originalStyles = document.querySelectorAll('style, link[rel="stylesheet"]');
+    
+    // Temporarily disable all styles
+    originalStyles.forEach(style => {
+        style.setAttribute('media', 'none');
+    });
+    
+    // Print the document
+    window.print();
+    
+    // Restore styles after a short delay
+    setTimeout(() => {
+        originalStyles.forEach(style => {
+            style.removeAttribute('media');
+        });
+    }, 500);
+}
         function getNumberData(number) {
             const numberMeanings = {
                 1: {
@@ -1332,7 +1378,17 @@ label {
             
             document.getElementById('numberModal').classList.remove('hidden');
         }
-        
+        // Add this function to your JavaScript
+function isValidDate(day, month, year) {
+    const inputDate = new Date(year, month - 1, day);
+    const currentDate = new Date();
+    
+    // Check if the date is valid and not in the future
+    return inputDate.getFullYear() === year && 
+           inputDate.getMonth() === month - 1 && 
+           inputDate.getDate() === day &&
+           inputDate <= currentDate;
+}
         function showMasterNumbers() {
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
