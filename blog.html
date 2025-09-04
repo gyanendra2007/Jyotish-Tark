@@ -610,6 +610,37 @@
     document.getElementById('menuToggle').addEventListener('click', function () {
       document.getElementById('mobileNav').classList.toggle('hidden');
     });
+    document.addEventListener("DOMContentLoaded", function () {
+    const blogs = document.querySelectorAll(".blog-card");
+    const blogsPerPage = 6;
+    const paginationContainer = document.querySelector(".pagination");
+    const totalPages = Math.ceil(blogs.length / blogsPerPage);
+
+    function showPage(page) {
+      blogs.forEach((blog, index) => {
+        blog.style.display = (index >= (page - 1) * blogsPerPage && index < page * blogsPerPage) ? "block" : "none";
+      });
+      document.querySelectorAll(".pagination a").forEach((link, i) => {
+        link.classList.toggle("active", i === page - 1);
+      });
+    }
+
+    // Generate Pagination Links
+    paginationContainer.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+      const link = document.createElement("a");
+      link.href = "#";
+      link.textContent = i;
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPage(i);
+      });
+      paginationContainer.appendChild(link);
+    }
+
+    // Show first page initially
+    showPage(1);
+  });
   </script>
 </body>
 </html>
