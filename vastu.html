@@ -768,6 +768,7 @@
                     Submit for Consultation
                 </button>
             </form>
+            <div id="submissionResponse" class="mt-6 p-4 rounded-lg text-center font-semibold text-lg hidden"></div>
         </div>
     </section>
 
@@ -973,7 +974,8 @@
             <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
         </div>
     </footer>
-
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // Mobile menu toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
@@ -1013,6 +1015,68 @@
                 observer.observe(el);
             });
         });
+        
+        // ✅ Initialize EmailJS with your Public Key
+  emailjs.init("o-tnka-_5VrrqMgQs"); // replace with your actual Public Key if different
+
+  // ✅ Form submission
+  document.querySelector('#consultation form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const responseDiv = document.getElementById('submissionResponse');
+    const email = document.getElementById("email").value; // user email input
+
+    // 🔴 Restrict duplicate submissions
+    if (localStorage.getItem("submitted_" + email)) {
+      responseDiv.innerHTML = `
+        <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+          <i class="fas fa-exclamation-triangle mr-2"></i>
+          <span>⚠️ You have already submitted the form once.</span>
+        </div>
+      `;
+      responseDiv.classList.remove("hidden");
+      return;
+    }
+
+    // Show loading
+    responseDiv.classList.remove('hidden');
+    responseDiv.innerHTML = `
+      <div class="flex items-center justify-center">
+        <i class="fas fa-spinner fa-spin text-green-400 mr-2"></i>
+        <span>Submitting your details...</span>
+      </div>
+    `;
+
+    const SERVICE_ID = "service_6w2tj0r";   // replace with your Vastu service ID if different
+    const TEMPLATE_ID = "template_4fsaltf"; // replace with your Vastu template ID if different
+
+    // ✅ Send form using EmailJS
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+      .then(() => {
+        responseDiv.innerHTML = `
+          <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>✅ Your Vastu consultation request has been sent successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Vastu consultation within 2-3 days.</span>
+          </div>
+        `;
+
+        // Save submission to prevent duplicate
+        localStorage.setItem("submitted_" + email, "true");
+
+        // Reset & disable form
+        this.reset();
+        this.querySelector('button').disabled = true;
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        responseDiv.innerHTML = `
+          <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+            <i class="fas fa-times-circle mr-2"></i>
+            <span>❌ Oops! Something went wrong. Please try again later.</span>
+          </div>
+        `;
+      });
+  });
     </script>
 </body>
 </html>
