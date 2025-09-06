@@ -1059,6 +1059,21 @@
             document.getElementById('mobileNav').classList.toggle('hidden');
         });
 
+        // WhatsApp button functionality
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+        
         // Count up animation
         function animateValue(obj, start, end, duration) {
             let startTimestamp = null;
