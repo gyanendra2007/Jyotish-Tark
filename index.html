@@ -280,7 +280,102 @@
             object-fit: cover;
             transition: transform 0.5s ease;
         }
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
         
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .whatsapp-header {
+            background: #075E54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-body {
+            padding: 15px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #25d366;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
         .blog-card:hover .blog-image {
             transform: scale(1.05);
         }
@@ -314,6 +409,44 @@
     <div class="planet-1"></div>
     <div class="planet-2"></div>
 
+        <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
+            <div>
+                <h3 class="font-bold">Jyotish Tark</h3>
+                <p class="text-sm">Typically replies within minutes</p>
+            </div>
+        </div>
+        <div class="whatsapp-body">
+            <p class="mb-4">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold">Chat with us</h4>
+                    <p class="text-sm">Ask questions about our services</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold">Call us</h4>
+                    <p class="text-sm">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold">Book consultation</h4>
+                    <p class="text-sm">Schedule a personal session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
             <!-- Logo -->
