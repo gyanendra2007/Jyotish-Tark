@@ -18,6 +18,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <!-- Performance: preconnects + non-blocking CSS preload -->
+  <!-- Preconnect important origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <!-- Load Font Awesome stylesheet in a non-blocking way -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </noscript>
+
+  <!-- Optionally preload your main CDN CSS (if you keep it) similarly -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -406,8 +424,8 @@
     <div class="planet-1"></div>
     <div class="planet-2"></div>
 
-    <div class="whatsapp-float" id="whatsappButton" aria-label="Chat on Whatsapp">
-    <i class="fab fa-whatsapp"></i></div>   
+    <a class="whatsapp-float" id="whatsappButton">
+    <i class="fab fa-whatsapp"></i></a>   
     
     <!-- WhatsApp Popup -->
     <div class="whatsapp-popup" id="whatsappPopup">
