@@ -602,7 +602,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
-
+  // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('mobileNav').classList.toggle('hidden');
+        });
+    
   // Blog post data - all 6 blog posts with actual content
   const blogPosts = {
     1: {
