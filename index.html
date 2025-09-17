@@ -21,6 +21,8 @@
      crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Preload main About image (LCP) — replace big.avif/webp with actual files if you add them -->
+    <link rel="preload" as="image" href="big.png" imagesrcset="big.avif 1x, big.webp 1x, big.png 1x" imagesizes="(max-width:800px) 100vw, 800px" fetchpriority="high">
     <style>
         :root {
             --primary: #7e22ce;
