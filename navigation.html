@@ -1,0 +1,234 @@
+<!-- navigation.html -->
+<header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+    <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-2">
+            <div class="h-12 w-12 rounded-full overflow-hidden">
+                <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+            </div>
+            <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-8 font-medium">
+            <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+            <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+            
+            <!-- Numerology & Tarot Dropdown -->
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    <i class="fas fa-calculator mr-1"></i>
+                    Numerology
+                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="numerology.html">
+                        <i class="fas fa-calculator text-purple-400"></i>
+                        Numerology Report
+                    </a>
+                    <a href="tarot.html">
+                        <i class="fas fa-clover text-purple-400"></i>
+                        Tarot Reading
+                    </a>
+                </div>
+            </div>
+            
+            <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition">Vastu</a>
+            <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition">Palmistry</a>
+            
+            <!-- Rashifal Dropdown -->
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    <i class="fas fa-sun mr-1"></i>
+                    Rashifal
+                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="weekly-rashifal.html">
+                        <i class="fas fa-calendar-week text-purple-400"></i>
+                        Weekly Rashifal
+                    </a>
+                    <a href="monthly-rashifal.html">
+                        <i class="fas fa-calendar-alt text-purple-400"></i>
+                        Monthly Rashifal
+                    </a>
+                    <a href="rashifal.html">
+                        <i class="fas fa-sun text-purple-400"></i>
+                        Daily Rashifal
+                    </a>
+                </div>
+            </div>
+            
+            <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition">Rudraksha</a>
+            <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+            <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+        <a href="index.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-home astrological-symbol"></i>Home
+        </a>
+        <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-star astrological-symbol"></i>Kundali
+        </a>
+        
+        <!-- Numerology & Tarot Mobile Dropdown -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-toggle block px-4 py-2 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="flex items-center">
+                    <i class="fas fa-calculator astrological-symbol"></i>
+                    <span>Numerology & Tarot</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown-content">
+                <a href="numerology.html">
+                    <i class="fas fa-calculator mr-3"></i>
+                    Numerology Report
+                </a>
+                <a href="tarot.html">
+                    <i class="fas fa-clover mr-3"></i>
+                    Tarot Reading
+                </a>
+            </div>
+        </div>
+        
+        <a href="vastu.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-house astrological-symbol"></i>Vastu
+        </a>
+        <a href="palmistry.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-hand astrological-symbol"></i>Palmistry
+        </a>
+        
+        <!-- Rashifal Mobile Dropdown -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-toggle block px-4 py-2 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="flex items-center">
+                    <i class="fas fa-sun astrological-symbol"></i>
+                    <span>Rashifal</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown-content">
+                <a href="weekly-rashifal.html">
+                    <i class="fas fa-calendar-week mr-3"></i>
+                    Weekly Rashifal
+                </a>
+                <a href="monthly-rashifal.html">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    Monthly Rashifal
+                </a>
+                <a href="rashifal.html">
+                    <i class="fas fa-sun mr-3"></i>
+                    Daily Rashifal
+                </a>
+            </div>
+        </div>
+        
+        <a href="rudraksha.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
+        </a>
+        <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-book-open astrological-symbol"></i>Blog
+        </a>
+        <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition">
+            <i class="fas fa-envelope astrological-symbol"></i>Contact
+        </a>
+    </nav>
+</header>
+
+<!-- WhatsApp Floating Button -->
+<a class="whatsapp-float" id="whatsappButton">
+    <i class="fab fa-whatsapp"></i>
+</a>   
+
+<!-- WhatsApp Popup -->
+<div class="whatsapp-popup" id="whatsappPopup">
+    <div class="whatsapp-header">
+        <img src="logo.png" alt="Jyotish Tark">
+        <div>
+            <h3 class="font-bold">Jyotish Tark</h3>
+            <p class="text-sm">Typically replies within minutes</p>
+        </div>
+    </div>
+    <div class="whatsapp-body">
+        <p class="mb-4">Hello! How can we help you?</p>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+            <i class="fas fa-comment"></i>
+            <div>
+                <h4 class="font-semibold">Chat with us</h4>
+                <p class="text-sm">Ask questions about our services</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+            <i class="fas fa-phone"></i>
+            <div>
+                <h4 class="font-semibold">Call us</h4>
+                <p class="text-sm">Speak directly with our astrologer</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+            <i class="fas fa-calendar-check"></i>
+            <div>
+                <h4 class="font-semibold">Book consultation</h4>
+                <p class="text-sm">Schedule a personal session</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Navigation functionality - this will run after navigation is loaded
+function initNavigation() {
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', function () {
+            mobileNav.classList.toggle('hidden');
+        });
+    }
+
+    // Mobile dropdown functionality
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            this.parentElement.classList.toggle('active');
+        });
+    });
+
+    // WhatsApp button functionality
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
+    
+    if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Initialize navigation when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavigation);
+} else {
+    initNavigation();
+}
+</script>
