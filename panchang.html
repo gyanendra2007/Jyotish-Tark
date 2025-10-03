@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>हिंदी पंचांग | आज का पंचांग | Jyotish Tark</title>
+    <link rel="canonical" href="https://jyotishtark.in/panchang" />
+    <meta name="description" content="Jyotish Tark - हिंदी में पूरा पंचांग। आज का तिथि, वार, नक्षत्र, योग और करण जानें। दैनिक पंचांग और शुभ मुहूर्त।">
+    <meta name="keywords" content="पंचांग, आज का पंचांग, हिंदी पंचांग, तिथि, वार, नक्षत्र, योग, करण, शुभ मुहूर्त, हिंदी कैलेंडर, वैदिक कैलेंडर, ज्योतिषीय कैलेंडर, पंचांग 2025, दैनिक पंचांग, पंचांग दर्शन, Jyotish Tark">
+    <meta name="author" content="Jyotish Tark">
+    <meta name="google-adsense-account" content="ca-pub-2888883494422573">
+    <meta property="og:title" content="हिंदी पंचांग | आज का पंचांग | Jyotish Tark">
+    <meta property="og:description" content="हिंदी में पूरा पंचांग। आज का तिथि, वार, नक्षत्र, योग और करण जानें। दैनिक पंचांग और शुभ मुहूर्त।">
+    <meta property="og:image" content="https://jyotishtark.in/logo.png">
+    <meta property="og:url" content="https://jyotishtark.in/panchang">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secondary-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .whatsapp-header {
+            background: #075E54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-body {
+            padding: 15px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #25d366;
+        }
+        
+        .panchang-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .panchang-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .panchang-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .panchang-icon {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+        
+        .muhurat-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .muhurat-table th, .muhurat-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .muhurat-table th {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .muhurat-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .good-muhurat {
+            color: #10b981;
+        }
+        
+        .bad-muhurat {
+            color: #ef4444;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+            
+            .panchang-value {
+                font-size: 1.25rem;
+            }
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
+
+    <a class="whatsapp-float" id="whatsappButton">
+    <i class="fab fa-whatsapp"></i></a>   
+    
+    <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
+            <div>
+                <h3 class="font-bold">Jyotish Tark</h3>
+                <p class="text-sm">Typically replies within minutes</p>
+            </div>
+        </div>
+        <div class="whatsapp-body">
+            <p class="mb-4">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold">Chat with us</h4>
+                    <p class="text-sm">Ask questions about our services</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold">Call us</h4>
+                    <p class="text-sm">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold">Book consultation</h4>
+                    <p class="text-sm">Schedule a personal session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <div class="h-12 w-12 rounded-full overflow-hidden">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="/" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
+                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition">Panchang</a>
+                <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition">Vastu</a>
+                <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition">Palmistry</a>
+                <a href="tarot.html" class="nav-link text-white hover:text-amber-300 transition">Tarot</a>
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
+            <a href="/" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+            <a href="panchang.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calendar-day astrological-symbol"></i>Panchang</a>
+            <a href="vastu.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-house astrological-symbol"></i>Vastu</a>
+            <a href="palmistry.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-hand astrological-symbol"></i>Palmistry</a>
+            <a href="tarot.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-clover astrological-symbol"></i>Tarot</a>
+            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+            <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                <span class="block">हिंदी पंचांग</span>
+                <span class="text-3xl md:text-4xl text-amber-300">आज का पंचांग</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto hindi">
+                जानें आज की तिथि, वार, नक्षत्र, योग और करण। शुभ मुहूर्त और दैनिक पंचांग की पूरी जानकारी हिंदी में।
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="#today-panchang" class="primary-button">
+                    <i class="fas fa-calendar-day mr-2"></i>
+                    आज का पंचांग देखें
+                </a>
+                <a href="#muhurat" class="secondary-button">
+                    <i class="fas fa-clock mr-2"></i>
+                    शुभ मुहूर्त
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Panchang Section -->
+    <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi">
+                आज का पंचांग
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi">
+                आज के पंचांग की पूरी जानकारी - तिथि, वार, नक्षत्र, योग, करण और राहुकाल।
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Tithi -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">तिथि</h3>
+                <div class="panchang-value hindi" id="tithi">चतुर्दशी</div>
+                <p class="text-gray-300 mt-2 hindi">शुक्ल पक्ष</p>
+            </div>
+
+            <!-- Vara -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">वार</h3>
+                <div class="panchang-value hindi" id="vara">बुधवार</div>
+                <p class="text-gray-300 mt-2 hindi">बुध ग्रह का दिन</p>
+            </div>
+
+            <!-- Nakshatra -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">नक्षत्र</h3>
+                <div class="panchang-value hindi" id="nakshatra">उत्तराभाद्रपद</div>
+                <p class="text-gray-300 mt-2 hindi">शुभ नक्षत्र</p>
+            </div>
+
+            <!-- Yoga -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">योग</h3>
+                <div class="panchang-value hindi" id="yoga">वैधृति</div>
+                <p class="text-gray-300 mt-2 hindi">मध्यम फलदायक</p>
+            </div>
+
+            <!-- Karana -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">करण</h3>
+                <div class="panchang-value hindi" id="karana">वणिज</div>
+                <p class="text-gray-300 mt-2 hindi">शुभ करण</p>
+            </div>
+
+            <!-- Rahu Kaal -->
+            <div class="panchang-card text-center">
+                <div class="panchang-icon">
+                    <i class="fas fa-skull-crossbones"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 hindi">राहु काल</h3>
+                <div class="panchang-value" id="rahu-kaal">07:30 - 09:00</div>
+                <p class="text-gray-300 mt-2 hindi">अशुभ समय</p>
+            </div>
+        </div>
+
+        <!-- Date and Location -->
+        <div class="glass-card p-6 rounded-2xl mt-8 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold text-white hindi">आज की तारीख</h3>
+                    <p class="text-gray-300 text-lg" id="today-date">15 अप्रैल, 2025</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white hindi">स्थान</h3>
+                    <p class="text-gray-300 text-lg">लखनऊ, भारत</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Muhurat Section -->
+    <section id="muhurat" class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi">
+                आज के शुभ मुहूर्त
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi">
+                आज के शुभ और अशुभ समय की जानकारी। महत्वपूर्ण कार्यों के लिए उपयुक्त समय।
+            </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+            <table class="muhurat-table">
+                <thead>
+                    <tr>
+                        <th class="hindi">मुहूर्त</th>
+                        <th class="hindi">समय</th>
+                        <th class="hindi">फल</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="hindi">ब्रह्म मुहूर्त</td>
+                        <td>04:24 - 05:12</td>
+                        <td class="good-muhurat hindi">ध्यान और पूजा के लिए उत्तम</td>
+                    </tr>
+                    <tr>
+                        <td class="hindi">अभिजीत मुहूर्त</td>
+                        <td>11:56 - 12:48</td>
+                        <td class="good-muhurat hindi">सभी शुभ कार्यों के लिए उत्तम</td>
+                    </tr>
+                    <tr>
+                        <td class="hindi">गोदूली मुहूर्त</td>
+                        <td>17:36 - 18:24</td>
+                        <td class="good-muhurat hindi">विवाह और मंगल कार्यों के लिए शुभ</td>
+                    </tr>
+                    <tr>
+                        <td class="hindi">राहु काल</td>
+                        <td>07:30 - 09:00</td>
+                        <td class="bad-muhurat hindi">नए कार्य शुरू करने के लिए अशुभ</td>
+                    </tr>
+                    <tr>
+                        <td class="hindi">यमगंड</td>
+                        <td>10:30 - 12:00</td>
+                        <td class="bad-muhurat hindi">महत्वपूर्ण कार्यों के लिए वर्जित</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-300 mb-4 hindi">क्या आप किसी विशेष कार्य के लिए शुभ मुहूर्त जानना चाहते हैं?</p>
+            <a href="contact.html" class="primary-button">
+                <i class="fas fa-calendar-check mr-2"></i>
+                व्यक्तिगत मुहूर्त जानें
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi">
+                हमारी दिव्य सेवाएं
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Explore our comprehensive Vedic astrology services designed to bring clarity and guidance to your life's journey.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Service 1 - Panchang -->
+            <div class="service-card p-6 rounded-2xl">
+                <div class="feature-icon">📅</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center hindi">दैनिक पंचांग</h3>
+                <p class="text-gray-300 mb-4 text-center hindi">
+                    प्रतिदिन की तिथि, वार, नक्षत्र, योग और करण की पूरी जानकारी। शुभ मुहूर्त और राहुकाल का विवरण।
+                </p>
+                <ul class="space-y-3 text-gray-300 mb-6">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">दैनिक तिथि और वार</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">नक्षत्र और योग विवरण</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">शुभ और अशुभ मुहूर्त</span>
+                    </li>
+                </ul>
+                <a href="#today-panchang" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all hindi">
+                    आज का पंचांग देखें
+                </a>
+            </div>
+
+            <!-- Service 2 - Weekly Rashifal -->
+            <div class="service-card p-6 rounded-2xl">
+                <div class="feature-icon">📊</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center hindi">साप्ताहिक राशिफल</h3>
+                <p class="text-gray-300 mb-4 text-center hindi">
+                    पूरे सप्ताह के लिए आपकी राशि का विस्तृत भविष्यफल। प्रेम, करियर, स्वास्थ्य और धन के बारे में जानें।
+                </p>
+                <ul class="space-y-3 text-gray-300 mb-6">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">सप्ताह भर का भविष्यफल</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">प्रेम और रिश्तों की जानकारी</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">करियर और स्वास्थ्य सलाह</span>
+                    </li>
+                </ul>
+                <a href="weekly-rashifal.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all hindi">
+                    राशिफल देखें
+                </a>
+            </div>
+
+            <!-- Service 3 - Rudraksha -->
+            <div class="service-card p-6 rounded-2xl">
+                <div class="feature-icon">📿</div>
+                <h3 class="text-xl font-bold text-white mb-3 text-center hindi">रुद्राक्ष खरीदें</h3>
+                <p class="text-gray-300 mb-4 text-center hindi">
+                    प्रामाणिक और शुद्ध रुद्राक्ष मालाएं। विभिन्न मुखी रुद्राक्षों के लाभ और उन्हें धारण करने की विधि।
+                </p>
+                <ul class="space-y-3 text-gray-300 mb-6">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">प्रामाणिक रुद्राक्ष</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">विभिन्न मुखी रुद्राक्ष</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                        <span class="hindi">धारण विधि और लाभ</span>
+                    </li>
+                </ul>
+                <a href="rudraksha.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all hindi">
+                    रुद्राक्ष खरीदें
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Jyotish Tark</h3>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted companion in the journey of life through Vedic astrology and spiritual guidance.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4 hindi">ज्योतिष सेवाएं</h4>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-400 hover:text-white transition hindi">कुंडली विश्लेषण</a></li>
+                        <li><a href="numerology.html" class="text-gray-400 hover:text-white transition hindi">अंक ज्योतिष</a></li>
+                        <li><a href="panchang.html" class="text-gray-400 hover:text-white transition hindi">पंचांग</a></li>
+                        <li><a href="vastu.html" class="text-gray-400 hover:text-white transition hindi">वास्तु शास्त्र</a></li>
+                        <li><a href="palmistry.html" class="text-gray-400 hover:text-white transition hindi">हस्तरेखा शास्त्र</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4 hindi">अन्य सेवाएं</h4>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="weekly-rashifal.html" class="text-gray-400 hover:text-white transition hindi">साप्ताहिक राशिफल</a></li>
+                        <li><a href="tarot.html" class="text-gray-400 hover:text-white transition hindi">टैरो कार्ड रीडिंग</a></li>
+                        <li><a href="rudraksha.html" class="text-gray-400 hover:text-white transition hindi">रुद्राक्ष</a></li>
+                        <li><a href="gemstones.html" class="text-gray-400 hover:text-white transition hindi">रत्न परामर्श</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition hindi">ज्योतिष ब्लॉग</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4 hindi">संपर्क करें</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-purple-400"></i>
+                            <span class="hindi">लखनऊ, उत्तर प्रदेश, भारत</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-purple-400"></i>
+                            <span>+91 8318513814</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-purple-400"></i>
+                            <span>info@jyotishtark.in</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p class="hindi">© 2025 Jyotish Tark. सर्वाधिकार सुरक्षित।</p>
+                <div class="mt-2">
+                    <a href="privacy.html" class="text-gray-500 hover:text-white transition mx-2">Privacy Policy</a>
+                    <a href="terms.html" class="text-gray-500 hover:text-white transition mx-2">Terms of Service</a>
+                    <a href="disclaimer.html" class="text-gray-500 hover:text-white transition mx-2">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // WhatsApp Button Functionality
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+
+        // Update Panchang details with current date
+        function updatePanchang() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('hi-IN', options);
+            document.getElementById('today-date').textContent = dateString;
+            
+            // In a real implementation, you would fetch actual panchang data from an API
+            // For now, we'll use static data as an example
+        }
+        
+        // Initialize the page
+        updatePanchang();
+    </script>
+</body>
+</html>
