@@ -337,47 +337,23 @@
             flex-shrink: 0;
         }
         
-        .tab-button {
-            background: transparent;
+        .order-button {
+            background: #25d366;
             color: white;
             padding: 1rem 2rem;
-            border: none;
-            border-bottom: 2px solid transparent;
+            border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
-            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
         
-        .tab-button.active {
-            color: var(--secondary);
-            border-bottom-color: var(--secondary);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .cart-notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--secondary);
-            color: var(--dark);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .order-button:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
         }
         
         @keyframes float {
@@ -461,12 +437,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Cart Notification -->
-    <div class="cart-notification" id="cartNotification">
-        <i class="fas fa-check-circle mr-2"></i>
-        <span id="notificationText">Product added to cart!</span>
-    </div>
     
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
@@ -480,10 +450,9 @@
 
             <!-- Desktop Nav -->
             <nav class="hidden md:flex space-x-8 font-medium">
-                <a href="/" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
                 <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
                 <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
-                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition">Panchang</a>
                 <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition">Vastu</a>
                 <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition">Palmistry</a>
                 <a href="tarot.html" class="nav-link text-white hover:text-amber-300 transition">Tarot</a>
@@ -504,7 +473,6 @@
             <a href="/" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
             <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
             <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
-            <a href="panchang.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calendar-day astrological-symbol"></i>Panchang</a>
             <a href="vastu.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-house astrological-symbol"></i>Vastu</a>
             <a href="palmistry.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-hand astrological-symbol"></i>Palmistry</a>
             <a href="tarot.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-clover astrological-symbol"></i>Tarot</a>
@@ -633,12 +601,12 @@
             <!-- Product 1 - One Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="एक मुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="images/one.jpeg" alt="एक मुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">एक मुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹5,999</div>
+                        <div class="price-tag">₹15,999</div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
                         भगवान शिव का प्रतिनिधित्व करने वाला यह रुद्राक्ष मोक्ष प्रदान करता है और सर्वोच्च सफलता देता है।
@@ -657,8 +625,10 @@
                             <span class="hindi">आध्यात्मिक ऊर्जा बढ़ाता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="एक मुखी रुद्राक्ष" data-price="5999">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="एक मुखी रुद्राक्ष" 
+                            data-price="5999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -666,12 +636,12 @@
             <!-- Product 2 - Five Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1602743864265-31d00a5d8c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="पंचमुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="five.jpg" alt="पंचमुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">पंचमुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹1,999</div>
+                        <div class="price-tag">₹999</div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
                         सबसे आम और सर्वश्रेष्ठ रुद्राक्ष, जो स्वास्थ्य, धन और समृद्धि प्रदान करता है।
@@ -690,8 +660,10 @@
                             <span class="hindi">सकारात्मक ऊर्जा प्रदान करता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="पंचमुखी रुद्राक्ष" data-price="1999">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="पंचमुखी रुद्राक्ष" 
+                            data-price="1999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -699,7 +671,7 @@
             <!-- Product 3 - Seven Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1594736797933-d0d69c3da0d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="सप्तमुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="seven.jpg" alt="सप्तमुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
@@ -723,8 +695,10 @@
                             <span class="hindi">व्यापार में सफलता देता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="सप्तमुखी रुद्राक्ष" data-price="3499">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="सप्तमुखी रुद्राक्ष" 
+                            data-price="3499">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -732,12 +706,12 @@
             <!-- Product 4 - Eleven Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1589308061402-e01dee4dfa3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="एकादश मुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="eleven.jpeg" alt="एकादश मुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">एकादश मुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹6,999</div>
+                        <div class="price-tag">₹9,999</div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
                         भगवान इंद्र का प्रतिनिधित्व करने वाला यह रुद्राक्ष शक्ति और सफलता प्रदान करता है।
@@ -756,8 +730,10 @@
                             <span class="hindi">साहस और आत्मविश्वास देता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="एकादश मुखी रुद्राक्ष" data-price="6999">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="एकादश मुखी रुद्राक्ष" 
+                            data-price="6999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -765,7 +741,7 @@
             <!-- Product 5 - Fourteen Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="चौदह मुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="fourteen.jpg" alt="चौदह मुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
@@ -789,8 +765,10 @@
                             <span class="hindi">नकारात्मक ऊर्जा को नष्ट करता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="चौदह मुखी रुद्राक्ष" data-price="9999">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="चौदह मुखी रुद्राक्ष" 
+                            data-price="9999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -798,12 +776,12 @@
             <!-- Product 6 - Gauri Shankar Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1594736797933-d0d69c3da0d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="गौरी शंकर रुद्राक्ष" class="product-image w-full">
+                    <img src="gauri.jpg" alt="गौरी शंकर रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">गौरी शंकर रुद्राक्ष</h3>
-                        <div class="price-tag">₹7,499</div>
+                        <div class="price-tag">₹17,499</div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
                         भगवान शिव और देवी पार्वती का संयुक्त रूप, यह रुद्राक्ष पारिवारिक सुख और एकता प्रदान करता है।
@@ -822,8 +800,10 @@
                             <span class="hindi">संतान सुख प्रदान करता है</span>
                         </li>
                     </ul>
-                    <button class="w-full bg-purple-700 hover:bg-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all add-to-cart hindi" data-product="गौरी शंकर रुद्राक्ष" data-price="7499">
-                        <i class="fas fa-cart-plus mr-2"></i>कार्ट में जोड़ें
+                    <button class="order-button whatsapp-order hindi" 
+                            data-product="गौरी शंकर रुद्राक्ष" 
+                            data-price="7499">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
@@ -1035,28 +1015,20 @@
             }
         });
 
-        // Add to cart functionality
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        const cartNotification = document.getElementById('cartNotification');
-        const notificationText = document.getElementById('notificationText');
+        // WhatsApp Order Functionality
+        const orderButtons = document.querySelectorAll('.whatsapp-order');
         
-        addToCartButtons.forEach(button => {
+        orderButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const product = this.getAttribute('data-product');
                 const price = this.getAttribute('data-price');
                 
-                // In a real implementation, you would add the product to a cart
-                // For now, we'll just show a notification
-                notificationText.textContent = `${product} कार्ट में जोड़ा गया!`;
-                cartNotification.style.display = 'block';
+                // Create WhatsApp message
+                const message = `नमस्ते Jyotish Tark! 🙏\n\nमुझे यह रुद्राक्ष ऑर्डर करना है:\n\n📿 Product: ${product}\n💰 Price: ₹${price}\n\nकृपया मुझे order process, payment और delivery के बारे में बताएं।\n\nधन्यवाद!`;
+                const encodedMessage = encodeURIComponent(message);
                 
-                // Hide notification after 3 seconds
-                setTimeout(() => {
-                    cartNotification.style.display = 'none';
-                }, 3000);
-                
-                // You could also redirect to a checkout page
-                // window.location.href = 'checkout.html?product=' + encodeURIComponent(product) + '&price=' + price;
+                // Open WhatsApp
+                window.open(`https://wa.me/918318513814?text=${encodedMessage}`, '_blank');
             });
         });
     </script>
