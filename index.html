@@ -1056,31 +1056,20 @@
             window.requestAnimationFrame(step);
         }
         
-        // Load navigation
-        fetch('navigation.html')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-                
-                // Re-initialize navigation functionality
-                if (typeof initNavigation === 'function') {
-                    initNavigation();
-                }
-            })
-            .catch(error => {
-                console.error('Error loading navigation:', error);
-                // Fallback: you can add a basic navigation here if needed
-                document.getElementById('navbar-container').innerHTML = `
-                    <div class="glass-card p-4 text-center">
-                        <a href="index.html" class="text-white text-xl font-bold">Jyotish Tark</a>
-                    </div>
-                `;
-            });
+    // Load navigation - SIMPLIFIED VERSION
+    fetch('navigation.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading navigation:', error);
+            document.getElementById('navbar-container').innerHTML = `
+                <div class="glass-card p-4 text-center">
+                    <a href="index.html" class="text-white text-xl font-bold">Jyotish Tark</a>
+                </div>
+            `;
+        });
     </script>
     <script type="application/ld+json">
     {
