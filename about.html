@@ -815,6 +815,44 @@
         </nav>
     </header>
 
+    <!-- WhatsApp Popup -->
+<div class="whatsapp-popup" id="whatsappPopup">
+    <div class="whatsapp-header">
+        <img src="logo.png" alt="Jyotish Tark">
+        <div>
+            <h3 class="font-bold text-lg">Jyotish Tark</h3>
+            <p class="text-sm opacity-90">Typically replies within minutes</p>
+        </div>
+    </div>
+    <div class="whatsapp-body">
+        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+            <i class="fas fa-comment"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Chat with us</h4>
+                <p class="text-sm text-gray-600">Ask questions about our services</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+            <i class="fas fa-phone"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Call us</h4>
+                <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+            <i class="fas fa-calendar-check"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Book consultation</h4>
+                <p class="text-sm text-gray-600">Schedule a personal session</p>
+            </div>
+        </div>
+    </div>
+</div>
+    
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
         <div class="relative z-10">
@@ -1233,11 +1271,7 @@ document.addEventListener('click', function(event) {
         whatsappPopup.style.display = 'none';
     }
 });
-</script>
-
-/* NAVIGATION JAVASCRIPT END */
-    
-        // Initialize count up animations
+          // Initialize count up animations
             initCountUps();
             
             // Add smooth scrolling for anchor links
