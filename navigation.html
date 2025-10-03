@@ -523,97 +523,44 @@
 </div>
 
 <script>
-// Simple and robust mobile menu functionality
+// Ultra Simple Navigation - No Conflicts
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded - initializing navigation');
+    // Mobile Menu Toggle
+    const menuBtn = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileNav');
     
-    // Mobile menu toggle - SIMPLIFIED
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    
-    if (menuToggle && mobileNav) {
-        menuToggle.addEventListener('click', function() {
-            console.log('Menu button clicked');
-            mobileNav.classList.toggle('hidden');
-            
-            // Change icon based on state
-            const icon = this.querySelector('i');
-            if (mobileNav.classList.contains('hidden')) {
-                icon.className = 'fas fa-bars';
-            } else {
-                icon.className = 'fas fa-times';
-            }
-        });
-    } else {
-        console.error('Mobile menu elements not found:', {menuToggle, mobileNav});
-    }
-
-    // Mobile dropdown functionality - SIMPLIFIED
-    document.addEventListener('click', function(e) {
-        // Handle mobile dropdown toggles
-        if (e.target.closest('.mobile-dropdown-toggle')) {
-            const toggle = e.target.closest('.mobile-dropdown-toggle');
-            const dropdown = toggle.parentElement;
-            
-            // Close all other dropdowns
-            document.querySelectorAll('.mobile-dropdown').forEach(other => {
-                if (other !== dropdown) {
-                    other.classList.remove('active');
-                }
-            });
-            
-            // Toggle current dropdown
-            dropdown.classList.toggle('active');
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        // Close dropdowns when clicking elsewhere
-        if (!e.target.closest('.mobile-dropdown') && !e.target.closest('#menuToggle')) {
-            document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
-
-    // Desktop dropdown hover functionality
-    const desktopDropdowns = document.querySelectorAll('.dropdown');
-    desktopDropdowns.forEach(dropdown => {
-        dropdown.addEventListener('mouseenter', function() {
-            const content = this.querySelector('.dropdown-content');
-            if (content) content.classList.add('show');
+            mobileMenu.classList.toggle('hidden');
         });
-        
-        dropdown.addEventListener('mouseleave', function() {
-            const content = this.querySelector('.dropdown-content');
-            if (content) content.classList.remove('show');
-        });
-    });
-
-    // WhatsApp functionality
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
+    }
     
-    if (whatsappButton && whatsappPopup) {
-        whatsappButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isVisible = whatsappPopup.style.display === 'block';
-            whatsappPopup.style.display = isVisible ? 'none' : 'block';
+    // Mobile Dropdowns
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdown = this.parentElement;
+            dropdown.classList.toggle('active');
+        });
+    });
+    
+    // WhatsApp Functionality
+    const waBtn = document.getElementById('whatsappButton');
+    const waPopup = document.getElementById('whatsappPopup');
+    
+    if (waBtn && waPopup) {
+        waBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            waPopup.style.display = waPopup.style.display === 'block' ? 'none' : 'block';
         });
         
-        // Close popup when clicking outside
+        // Close when clicking outside
         document.addEventListener('click', function(e) {
-            if (!whatsappButton.contains(e.target) && !whatsappPopup.contains(e.target)) {
-                whatsappPopup.style.display = 'none';
+            if (waPopup && !waBtn.contains(e.target) && !waPopup.contains(e.target)) {
+                waPopup.style.display = 'none';
             }
         });
     }
-
-    console.log('Navigation initialized successfully');
-});
-
-// Fallback initialization
-window.addEventListener('load', function() {
-    console.log('Window loaded - ensuring navigation works');
 });
 </script>
