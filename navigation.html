@@ -8,7 +8,30 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
     }
-    
+    /* Fix dropdown gap for desktop */
+.dropdown-content {
+    margin-top: 10px; /* Creates space between trigger and dropdown */
+}
+
+/* Keep dropdown visible when hovering over it */
+.dropdown-content:hover,
+.dropdown:hover .dropdown-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Create invisible gap area for better hover */
+.dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    z-index: 999;
+}
     .nav-link {
         position: relative;
         padding: 0.5rem 0;
@@ -85,6 +108,7 @@
         background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
         padding-left: 24px;
         transform: translateX(5px);
+        display: block !important;
     }
     
     .dropdown-content i {
@@ -238,6 +262,16 @@
     .whatsapp-body {
         padding: 20px;
         color: #4a4a4a;
+    }
+    /* Create an invisible gap area */
+    .dropdown::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: transparent;
     }
     
     .whatsapp-option {
@@ -505,13 +539,25 @@
 <script>
 // Navigation functionality - this will run after navigation is loaded
 function initNavigation() {
-    // Mobile menu toggle
+    // Debug: Check if elements exist
+    console.log('Navigation init - Elements:', {
+        menuToggle: document.getElementById('menuToggle'),
+        mobileNav: document.getElementById('mobileNav'),
+        dropdowns: document.querySelectorAll('.dropdown').length,
+        mobileDropdowns: document.querySelectorAll('.mobile-dropdown').length
+    });
+
+    // Mobile menu toggle - FIXED
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
     
     if (menuToggle && mobileNav) {
-        menuToggle.addEventListener('click', function () {
+        menuToggle.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event bubbling
+            e.preventDefault(); // Prevent default behavior
+            console.log('Menu toggle clicked');
             mobileNav.classList.toggle('hidden');
+            
             // Close all mobile dropdowns when menu is closed
             if (mobileNav.classList.contains('hidden')) {
                 document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
@@ -521,26 +567,46 @@ function initNavigation() {
         });
     }
 
-    // Mobile dropdown functionality
+    // Mobile dropdown functionality - FIXED
     document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
         toggle.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            const dropdown = this.parentElement;
-            dropdown.classList.toggle('active');
+            console.log('Mobile dropdown clicked');
             
-            // Close other dropdowns
+            const dropdown = this.parentElement;
+            const isActive = dropdown.classList.contains('active');
+            
+            // Close all dropdowns first
             document.querySelectorAll('.mobile-dropdown').forEach(otherDropdown => {
-                if (otherDropdown !== dropdown) {
-                    otherDropdown.classList.remove('active');
-                }
+                otherDropdown.classList.remove('active');
             });
+            
+            // Toggle current dropdown if it wasn't active
+            if (!isActive) {
+                dropdown.classList.add('active');
+            }
         });
     });
 
-    // Close mobile dropdowns when clicking outside
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
-            dropdown.classList.remove('active');
+    // Close mobile dropdowns when clicking outside - FIXED
+    document.addEventListener('click', function(e) {
+        // Only close if click is not on dropdown or its children
+        if (!e.target.closest('.mobile-dropdown') && !e.target.closest('#menuToggle')) {
+            document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+
+    // Desktop dropdown hover functionality
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.addEventListener('mouseenter', function() {
+            this.querySelector('.dropdown-content')?.classList.add('show');
+        });
+        
+        dropdown.addEventListener('mouseleave', function() {
+            this.querySelector('.dropdown-content')?.classList.remove('show');
         });
     });
 
@@ -582,6 +648,8 @@ function initNavigation() {
             }
         });
     });
+
+    console.log('Navigation initialized successfully');
 }
 
 // Initialize navigation when DOM is loaded
@@ -590,4 +658,7 @@ if (document.readyState === 'loading') {
 } else {
     initNavigation();
 }
+
+// Fallback: Re-initialize if navigation elements are added later
+setTimeout(initNavigation, 100);
 </script>
