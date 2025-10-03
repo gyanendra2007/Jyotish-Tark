@@ -1200,134 +1200,129 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function () {
-            document.getElementById('mobileNav').classList.toggle('hidden');
+    // Mobile Menu Toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        const mobileNav = document.getElementById('mobileNav');
+        mobileNav.classList.toggle('hidden');
+        
+        // Change icon based on menu state
+        const icon = this.querySelector('i');
+        if (mobileNav.classList.contains('hidden')) {
+            icon.className = 'fas fa-bars';
+        } else {
+            icon.className = 'fas fa-times';
+        }
+    });
+
+    // Mobile Dropdown Toggles
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // WhatsApp Popup Toggle
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
+
+    if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Count up animation
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                                if (progress < 1) {
-                    window.requestAnimationFrame(step);
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+    }
+
+    // Count up animation
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Initialize count up animations when in viewport
+    function initCountUps() {
+        const countElements = document.querySelectorAll('.count-up');
+        
+        countElements.forEach(element => {
+            const target = parseInt(element.getAttribute('data-count'));
+            animateValue(element, 0, target, 2000);
+        });
+    }
+
+    // Initialize animations when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize count up animations
+        initCountUps();
+        
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Initialize count up animations when in viewport
-        function initCountUps() {
-            const countElements = document.querySelectorAll('.count-up');
-            
-            countElements.forEach(element => {
-                const target = parseInt(element.getAttribute('data-count'));
-                animateValue(element, 0, target, 2000);
             });
-        }
-
+        });
         
-        
-        /* NAVIGATION JAVASCRIPT START */
-/* Paste this script at the end of your <body> tag */
-
-<script>
-// Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
-    } else {
-        icon.className = 'fas fa-times';
-    }
-});
-
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
-    });
-});
-
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
-
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-    }
-});
-          // Initialize count up animations
-            initCountUps();
-            
-            // Add smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+        // Add intersection observer for animations
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
                     }
                 });
+            }, { threshold: 0.1 });
+            
+            // Observe all service cards and team cards
+            document.querySelectorAll('.service-card, .team-card').forEach(card => {
+                observer.observe(card);
             });
-            
-            // Add intersection observer for animations
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('animate-fade-in');
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                // Observe all service cards and team cards
-                document.querySelectorAll('.service-card, .team-card').forEach(card => {
-                    observer.observe(card);
-                });
-            }
-        });
+        }
+    });
 
-        // Add CSS for fade-in animation
-        const style = document.createElement('style');
-        style.textContent = `
-            .animate-fade-in {
-                animation: fadeIn 1s ease-out forwards;
-                opacity: 0;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            
-            .service-card, .team-card {
-                opacity: 0;
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    // Add CSS for fade-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .service-card, .team-card {
+            opacity: 0;
+        }
+    `;
+    document.head.appendChild(style);
+   </script>
+    
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
