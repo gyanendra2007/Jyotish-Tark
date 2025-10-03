@@ -447,12 +447,31 @@
             z-index: 1000;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            margin-top: 8px;
+            margin-top: 10px;
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s ease;
         }
         
+        /* Keep dropdown visible when hovering over it */
+.dropdown-content:hover,
+.dropdown:hover .dropdown-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+     /* Create invisible gap area for better hover */
+      .dropdown::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        background: transparent;
+        z-index: 999;
+      }
         .dropdown:hover .dropdown-content {
             display: block;
             opacity: 1;
@@ -759,11 +778,8 @@
                         <a href="weekly-rashifal.html">
                             Weekly Rashifal
                         </a>
-                        <a href="monthly-rashifal.html">
-                            Monthly Rashifal
-                        </a>
                         <a href="rashifal.html">
-                            Daily Rashifal
+                            Monthly Rashifal
                         </a>
                     </div>
                 </div>
@@ -858,13 +874,9 @@
                         <i class="fas fa-calendar-week mr-3"></i>
                         Weekly Rashifal
                     </a>
-                    <a href="monthly-rashifal.html" class="flex items-center">
+                    <a href="rashifal.html" class="flex items-center">
                         <i class="fas fa-calendar-alt mr-3"></i>
                         Monthly Rashifal
-                    </a>
-                    <a href="rashifal.html" class="flex items-center">
-                        <i class="fas fa-sun mr-3"></i>
-                        Daily Rashifal
                     </a>
                 </div>
             </div>
@@ -1433,7 +1445,7 @@
                 <div class="p-5">
                     <h3 class="text-xl font-semibold mb-2 text-white">कुंडली से करियर कैसे देखें?</h3>
                     <p class="text-gray-300 mb-4">क्या आपकी कुंडली आपको सही करियर की दिशा दिखा सकती है? विस्तार से जानिए...</p>
-                    <a href="blog-post.html?id=3" class="text-purple-400 font-medium hover:text-amber-300 transition">Read More about How to see best career <i class="fas fa-arrow-right ml-2"></i></a>
+                    <a href="blog-post.html?id=3" class="text-purple-400 font-medium hover:text-amber-300 transition">Read More about best career <i class="fas fa-arrow-right ml-2"></i></a>
                 </div>
             </article>
         </div>
@@ -1454,9 +1466,9 @@
             <!-- 1 -->
             <div>
                 <h3 class="font-semibold text-lg text-amber-300">Q: कुंडली सेवा की कीमत क्या है?</h3>
-                <p class="mt-2 text-gray-300">A: हमारी कुंडली सेवा केवल ₹499 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।</p>
+                <p class="mt-2 text-gray-300">A: हमारी कुंडली सेवा केवल ₹1101 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।</p>
                 <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How much does the Kundali service cost?</h3>
-                <p class="mt-2 text-gray-300">A: Our personalized Kundali report is just ₹499, including full chart analysis and remedies.</p>
+                <p class="mt-2 text-gray-300">A: Our personalized Kundali report is just ₹1101, including full chart analysis and remedies.</p>
             </div>
 
             <!-- 2 -->
