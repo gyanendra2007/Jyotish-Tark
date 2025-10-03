@@ -532,28 +532,6 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="count-up" data-count="2000+">0</div>
-                <p class="text-gray-300">Happy Clients</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="count-up" data-count="98%">0</div>
-                <p class="text-gray-300">Accuracy Rate</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="count-up" data-count="12">0</div>
-                <p class="text-gray-300">Expert Astrologers</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="count-up" data-count="5+">0</div>
-                <p class="text-gray-300">Years Experience</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Services Section -->
     <section class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-16">
@@ -1103,22 +1081,6 @@
             };
             window.requestAnimationFrame(step);
         }
-        
-        // Initialize count up when in viewport
-        const counters = document.querySelectorAll('.count-up');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const count = parseInt(entry.target.getAttribute('data-count'));
-                    animateValue(entry.target, 0, count, 2000);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        counters.forEach(counter => {
-            observer.observe(counter);
-        });
     </script>
     <script type="application/ld+json">
     {
