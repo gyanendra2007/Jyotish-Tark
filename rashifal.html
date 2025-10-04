@@ -1380,152 +1380,6 @@ document.getElementById('menuToggle').addEventListener('click', function() {
     }
 });
 
-    // Mobile Dropdown Toggles
-    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const dropdown = this.closest('.mobile-dropdown');
-            dropdown.classList.toggle('active');
-        });
-    });
-
-    // WhatsApp Popup Toggle - FIXED
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
-
-    if (whatsappButton && whatsappPopup) {
-        whatsappButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close WhatsApp popup when clicking outside - FIXED
-        document.addEventListener('click', function(event) {
-            if (whatsappPopup && whatsappPopup.style.display === 'block') {
-                if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-                    whatsappPopup.style.display = 'none';
-                }
-            }
-        });
-    }
-
-    // Function to show expanded rashi view - FIXED
-    function showExpandedRashi(rashiId) {
-        // First check if rashiData exists
-        if (typeof rashiData === 'undefined') {
-            console.error('rashiData is not defined');
-            return;
-        }
-        
-        const rashi = rashiData[rashiId];
-        if (!rashi) {
-            console.error('Rashi data not found for:', rashiId);
-            return;
-        }
-        
-        // Hide the grid and show expanded view
-        const rashiGrid = document.getElementById('rashiGrid');
-        const expandedView = document.getElementById('expandedRashiView');
-        
-        if (rashiGrid && expandedView) {
-            rashiGrid.classList.add('hidden');
-            expandedView.classList.remove('hidden');
-            
-            // Populate expanded view content
-            const contentDiv = document.getElementById('expandedRashiContent');
-            if (contentDiv) {
-                contentDiv.innerHTML = `
-                    <div class="flex items-center mb-6">
-                        <span class="text-4xl mr-3">${rashi.symbol}</span>
-                        <h3 class="text-2xl md:text-3xl font-bold text-white">${rashi.name}</h3>
-                    </div>
-                    
-                    <p class="text-lg text-gray-300 mb-8">${rashi.summary}</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="rashi-detail-section">
-                            <h4 class="text-xl"><i class="fas fa-heart text-pink-400"></i> प्रेम और रिश्ते</h4>
-                            <p class="text-gray-300">${rashi.details.love}</p>
-                        </div>
-                        
-                        <div class="rashi-detail-section">
-                            <h4 class="text-xl"><i class="fas fa-briefcase text-blue-400"></i> करियर और व्यवसाय</h4>
-                            <p class="text-gray-300">${rashi.details.career}</p>
-                        </div>
-                        
-                        <div class="rashi-detail-section">
-                            <h4 class="text-xl"><i class="fas fa-heartbeat text-green-400"></i> स्वास्थ्य</h4>
-                            <p class="text-gray-300">${rashi.details.health}</p>
-                        </div>
-                        
-                        <div class="rashi-detail-section">
-                            <h4 class="text-xl"><i class="fas fa-rupee-sign text-yellow-400"></i> धन और वित्त</h4>
-                            <p class="text-gray-300">${rashi.details.finance}</p>
-                        </div>
-                    </div>
-                    <div class="mt-8 p-4 bg-purple-900 bg-opacity-30 rounded-xl"><h4 class="text-xl font-bold text-amber-300 mb-3">⭐ इस महीने के लिए विशेष सलाह</h4><p class="text-gray-300">अक्टूबर 2025 में सूर्य तुला राशि से मीन राशि की ओर गति करेगा, जिससे संबंधों और संतुलन का महत्व बढ़ेगा। बुध तथा राहु पंचम भाव में रहते हुए आपकी रचनात्मकता और संवाद कला सक्रिय करेंगी, लेकिन विचारों में अतिसंकल्प से विवाद हो सकते हैं। केतु दूसरी और आठवीं राशि पर ग्रहण करने की ऊर्जा देगा — आपके अंतर्विचार और गोपनीय मामलों में सतर्कता आवश्यक है। शुक्र कन्या राशि में प्रवेश करेगा और भावनात्मक जुड़ाव तथा घरेलू सुख को बढ़ाएगा। मंगल धनु-मकर लगामों को तोड़ने की प्रेरणा देगा लेकिन क्रोध और अधीरता से बचना ज़रूरी होगा। गुरु और शनि दोनों अपने स्थिर प्रभावों से सोचने-समझने की क्षमता और धैर्य बढ़ाएंगे, विशेषकर कार्यक्षेत्र और आत्म-अनुशासन में।</p><p class="text-yellow-300">इस महीने की सलाह: — शनिवार को शनि मंत्र (“ॐ शं शनैश्चराय नमः”) जप करें, — गुना और पुण्य कार्य करें, — जब भी गुस्सा आए, गहरी साँस लें और शांत रहें, — संवाद में स्पष्टता रखें — विशेषकर विचारों को बोलने से पहले समझने की कोशिश करें, — नए कार्य शुरू करने के लिए शुभ मुहूर्त देखें, — ध्यान, प्राणायाम और हल्की योगाभ्यास रोज़ करें, — परिवार और प्रियजनों को समय दें; ये आपके आधार होंगे। — अनुकूल रंगों (नीला-हरे स्वर), तुला व वृश्चिक अभिरेक जैसे मंगल या शोक समय पर धारण करें।</p></div>
-                `;
-            }
-            
-            // Scroll to the expanded view
-            expandedView.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // Function to hide expanded view and show grid - FIXED
-    function hideExpandedRashi() {
-        const expandedView = document.getElementById('expandedRashiView');
-        const rashiGrid = document.getElementById('rashiGrid');
-        
-        if (expandedView && rashiGrid) {
-            expandedView.classList.add('hidden');
-            rashiGrid.classList.remove('hidden');
-            
-            // Scroll back to the grid
-            rashiGrid.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // Add event listeners to all read more buttons - FIXED
-    document.addEventListener('DOMContentLoaded', function() {
-        const rashiCards = document.querySelectorAll('.rashi-card');
-        
-        rashiCards.forEach(card => {
-            const readMoreBtn = card.querySelector('.read-more-btn');
-            const rashiId = card.getAttribute('data-rashi');
-            
-            if (readMoreBtn) {
-                readMoreBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    showExpandedRashi(rashiId);
-                });
-            }
-            
-            // Also make the entire card clickable
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                showExpandedRashi(rashiId);
-            });
-        });
-
-        // Back to list button - FIXED
-        const backButton = document.getElementById('backToList');
-        if (backButton) {
-            backButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                hideExpandedRashi();
-            });
-        }
-    });
-
-    // Initialize WhatsApp popup as hidden
-    document.addEventListener('DOMContentLoaded', function() {
-        const whatsappPopup = document.getElementById('whatsappPopup');
-        if (whatsappPopup) {
-            whatsappPopup.style.display = 'none';
-        }
-    });
     
     // Rashi data with detailed predictions
     const rashiData = {
@@ -1722,6 +1576,152 @@ makara: {
     finance: "अक्टूबर 2025 आर्थिक दृष्टि से मीन राशि वालों के लिए स्थिरता और संतुलन का संकेत देता है। यह समय तेजी से लाभ कमाने के बजाय दीर्घकालिक सुरक्षा पर ध्यान देने का है। महीने की शुरुआत में कुछ अप्रत्याशित खर्च (घर, यात्रा या बच्चों से संबंधित) हो सकते हैं, परंतु गुरु की कृपा से आप जल्दी ही अपनी वित्तीय स्थिति संतुलित कर लेंगे। व्यवसायी जातकों के लिए नकदी प्रवाह में सुधार होगा। कोई पुराना ग्राहक या प्रोजेक्ट फिर से सक्रिय हो सकता है। यदि आपने किसी मित्र या रिश्तेदार को पैसा उधार दिया है, तो उसके वापस आने की संभावना बन रही है। निवेश के लिए अक्टूबर का मध्य भाग (15 से 22 तारीख के बीच) अनुकूल रहेगा। इस समय आप किसी रचनात्मक या सामाजिक उद्देश्य में निवेश करने के बारे में भी सोच सकते हैं — जैसे शिक्षा, कला, या चैरिटी से जुड़ा प्रोजेक्ट। ऐसा निवेश न केवल आर्थिक, बल्कि मानसिक संतुष्टि भी देगा। हालाँकि केतु का प्रभाव आपको कभी-कभी अस्थिर निर्णय लेने पर प्रेरित कर सकता है, इसलिए विशेषज्ञ की सलाह के बिना बड़े निवेश न करें। शेयर बाजार या क्रिप्टो में निवेश करते समय लॉन्ग-टर्म सोच अपनाएँ। महीने के अंत में धन प्राप्ति के योग बनेंगे — कोई रुका हुआ भुगतान या प्रॉपर्टी से जुड़ा लाभ संभव है। जो जातक नौकरी में हैं, उन्हें बोनस या इन्सेंटिव मिल सकता है। कुल मिलाकर यह महीना आर्थिक स्थिरता, समझदारी और आत्म-नियंत्रण से भरा रहेगा। अगर आप योजनाबद्ध ढंग से चलते हैं, तो वर्ष के अंतिम महीनों में वित्तीय समृद्धि सुनिश्चित है।"
   }
 };
+    // Function to show expanded rashi view - FIXED
+    function showExpandedRashi(rashiId) {
+        // First check if rashiData exists
+        if (typeof rashiData === 'undefined') {
+            console.error('rashiData is not defined');
+            return;
+        }
+        
+        const rashi = rashiData[rashiId];
+        if (!rashi) {
+            console.error('Rashi data not found for:', rashiId);
+            return;
+        }
+        
+        // Hide the grid and show expanded view
+        const rashiGrid = document.getElementById('rashiGrid');
+        const expandedView = document.getElementById('expandedRashiView');
+        
+        if (rashiGrid && expandedView) {
+            rashiGrid.classList.add('hidden');
+            expandedView.classList.remove('hidden');
+            
+            // Populate expanded view content
+            const contentDiv = document.getElementById('expandedRashiContent');
+            if (contentDiv) {
+                contentDiv.innerHTML = `
+                    <div class="flex items-center mb-6">
+                        <span class="text-4xl mr-3">${rashi.symbol}</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white">${rashi.name}</h3>
+                    </div>
+                    
+                    <p class="text-lg text-gray-300 mb-8">${rashi.summary}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="rashi-detail-section">
+                            <h4 class="text-xl"><i class="fas fa-heart text-pink-400"></i> प्रेम और रिश्ते</h4>
+                            <p class="text-gray-300">${rashi.details.love}</p>
+                        </div>
+                        
+                        <div class="rashi-detail-section">
+                            <h4 class="text-xl"><i class="fas fa-briefcase text-blue-400"></i> करियर और व्यवसाय</h4>
+                            <p class="text-gray-300">${rashi.details.career}</p>
+                        </div>
+                        
+                        <div class="rashi-detail-section">
+                            <h4 class="text-xl"><i class="fas fa-heartbeat text-green-400"></i> स्वास्थ्य</h4>
+                            <p class="text-gray-300">${rashi.details.health}</p>
+                        </div>
+                        
+                        <div class="rashi-detail-section">
+                            <h4 class="text-xl"><i class="fas fa-rupee-sign text-yellow-400"></i> धन और वित्त</h4>
+                            <p class="text-gray-300">${rashi.details.finance}</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-purple-900 bg-opacity-30 rounded-xl"><h4 class="text-xl font-bold text-amber-300 mb-3">⭐ इस महीने के लिए विशेष सलाह</h4><p class="text-gray-300">अक्टूबर 2025 में सूर्य तुला राशि से मीन राशि की ओर गति करेगा, जिससे संबंधों और संतुलन का महत्व बढ़ेगा। बुध तथा राहु पंचम भाव में रहते हुए आपकी रचनात्मकता और संवाद कला सक्रिय करेंगी, लेकिन विचारों में अतिसंकल्प से विवाद हो सकते हैं। केतु दूसरी और आठवीं राशि पर ग्रहण करने की ऊर्जा देगा — आपके अंतर्विचार और गोपनीय मामलों में सतर्कता आवश्यक है। शुक्र कन्या राशि में प्रवेश करेगा और भावनात्मक जुड़ाव तथा घरेलू सुख को बढ़ाएगा। मंगल धनु-मकर लगामों को तोड़ने की प्रेरणा देगा लेकिन क्रोध और अधीरता से बचना ज़रूरी होगा। गुरु और शनि दोनों अपने स्थिर प्रभावों से सोचने-समझने की क्षमता और धैर्य बढ़ाएंगे, विशेषकर कार्यक्षेत्र और आत्म-अनुशासन में।</p><p class="text-yellow-300">इस महीने की सलाह: — शनिवार को शनि मंत्र (“ॐ शं शनैश्चराय नमः”) जप करें, — गुना और पुण्य कार्य करें, — जब भी गुस्सा आए, गहरी साँस लें और शांत रहें, — संवाद में स्पष्टता रखें — विशेषकर विचारों को बोलने से पहले समझने की कोशिश करें, — नए कार्य शुरू करने के लिए शुभ मुहूर्त देखें, — ध्यान, प्राणायाम और हल्की योगाभ्यास रोज़ करें, — परिवार और प्रियजनों को समय दें; ये आपके आधार होंगे। — अनुकूल रंगों (नीला-हरे स्वर), तुला व वृश्चिक अभिरेक जैसे मंगल या शोक समय पर धारण करें।</p></div>
+                `;
+            }
+            
+            // Scroll to the expanded view
+            expandedView.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Function to hide expanded view and show grid - FIXED
+    function hideExpandedRashi() {
+        const expandedView = document.getElementById('expandedRashiView');
+        const rashiGrid = document.getElementById('rashiGrid');
+        
+        if (expandedView && rashiGrid) {
+            expandedView.classList.add('hidden');
+            rashiGrid.classList.remove('hidden');
+            
+            // Scroll back to the grid
+            rashiGrid.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Add event listeners to all read more buttons - FIXED
+    document.addEventListener('DOMContentLoaded', function() {
+        const rashiCards = document.querySelectorAll('.rashi-card');
+        
+        rashiCards.forEach(card => {
+            const readMoreBtn = card.querySelector('.read-more-btn');
+            const rashiId = card.getAttribute('data-rashi');
+            
+            if (readMoreBtn) {
+                readMoreBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showExpandedRashi(rashiId);
+                });
+            }
+            
+            // Also make the entire card clickable
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                showExpandedRashi(rashiId);
+            });
+        });
+
+        // Back to list button - FIXED
+        const backButton = document.getElementById('backToList');
+        if (backButton) {
+            backButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideExpandedRashi();
+            });
+        }
+    });
+        
+    // Mobile Dropdown Toggles
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // WhatsApp Popup Toggle - FIXED
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
+
+    if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close WhatsApp popup when clicking outside - FIXED
+        document.addEventListener('click', function(event) {
+            if (whatsappPopup && whatsappPopup.style.display === 'block') {
+                if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                    whatsappPopup.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // Initialize WhatsApp popup as hidden
+    document.addEventListener('DOMContentLoaded', function() {
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        if (whatsappPopup) {
+            whatsappPopup.style.display = 'none';
+        }
+    });
   </script>
 </body>
 </html>
