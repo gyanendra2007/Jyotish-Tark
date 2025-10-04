@@ -64,7 +64,314 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
         }
-        
+        .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--secondary, #f59e0b);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.astrological-symbol {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(30, 41, 59, 0.98);
+    backdrop-filter: blur(20px);
+    min-width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Keep dropdown visible when hovering over it */
+.dropdown-content:hover,
+.dropdown:hover .dropdown-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Create invisible gap area for better hover */
+.dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    z-index: 999;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-weight: 500;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
+    padding-left: 24px;
+    transform: translateX(5px);
+}
+
+.dropdown-content i {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    margin-left: 6px;
+    font-size: 0.8rem;
+}
+
+.dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Mobile Dropdown Styles */
+.mobile-dropdown-content {
+    display: none;
+    padding-left: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-top: 8px;
+    overflow: hidden;
+    border-left: 3px solid var(--primary, #7e22ce);
+}
+
+.mobile-dropdown-content a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.mobile-dropdown-content a:hover {
+    background: rgba(126, 34, 206, 0.2);
+    padding-left: 20px;
+}
+
+.mobile-dropdown.active .mobile-dropdown-content {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+.mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.mobile-dropdown-toggle i:last-child {
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
+    transform: rotate(180deg);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* WhatsApp Styles */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 3px solid white;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-popup {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    overflow: hidden;
+    display: none;
+    animation: popupSlide 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+@keyframes popupSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.whatsapp-header {
+    background: linear-gradient(135deg, #075E54, #128C7E);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.whatsapp-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 2px solid white;
+}
+
+.whatsapp-body {
+    padding: 20px;
+    color: #4a4a4a;
+}
+
+.whatsapp-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.whatsapp-option:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+    border-color: #25d366;
+}
+
+.whatsapp-option i {
+    margin-right: 12px;
+    font-size: 22px;
+    color: #25d366;
+    width: 24px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 24px;
+    }
+    
+    .whatsapp-popup {
+        bottom: 80px;
+        right: 20px;
+        width: 280px;
+    }
+    
+    .dropdown-content {
+        position: static;
+        margin-top: 0;
+        box-shadow: none;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
@@ -195,48 +502,233 @@
     <div class="planet-1"></div>
     <div class="planet-2"></div>
 
-    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-        <div class="flex justify-between items-center">
-            <!-- Logo -->
-            <a href="/" class="flex items-center space-x-2">
-                <div class="h-12 w-12 rounded-full overflow-hidden">
-                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+    <!-- Navigation -->
+<header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+    <div class="flex justify-between items-center">
+        
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-3">
+            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+            </div>
+            <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-6 font-medium">
+            <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Home
+            </a>
+            <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Kundali
+            </a>
+            
+            <!-- Numerology & Tarot Dropdown -->
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Calculator
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="numerology.html">
+                        Numerology Report
+                    </a>
+                    <a href="tarot.html">
+                        Tarot Reading
+                    </a>
                 </div>
-                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </div>
+            
+            <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Vastu
+            </a>
+            <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Palmistry
             </a>
 
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex space-x-8 font-medium">
-                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
-                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
-                <a href="numerology.html" class="nav-link text-white hover:text-amber-300 transition">Numerology</a>
-                <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition">Vastu</a>
-                <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition">Palmistry</a>
-                <a href="tarot.html" class="nav-link text-white hover:text-amber-300 transition">Tarot</a>
-                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
-                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
-                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Nav -->
-        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-3 py-4 glass-card rounded-lg p-4">
-            <a href="/" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
-            <a href="kundali-form.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
-            <a href="numerology.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
-            <a href="vastu.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-house astrological-symbol"></i>Vastu</a>
-            <a href="palmistry.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-hand astrological-symbol"></i>Palmistry</a>
-            <a href="tarot.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-clover astrological-symbol"></i>Tarot</a>
-            <a href="rashifal.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
-            <a href="blog.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
-            <a href="contact.html" class="block px-4 py-2 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+            <!-- Panchang Dropdown -->
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Panchang
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="Panchang.html">
+                        Daily Panchang
+                    </a>
+                    <a href="monthly-panchang.html">
+                        Monthly Panchang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Rashifal Dropdown -->
+            <div class="dropdown">
+                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rashifal
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="weekly-rashifal.html">
+                        Weekly Rashifal
+                    </a>
+                    <a href="rashifal.html">
+                        Monthly Rashifal
+                    </a>
+                </div>
+            </div>
+            
+            <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Rudraksha
+            </a>
+            <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Blog
+            </a>
+            <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                Contact
+            </a>
         </nav>
-    </header>
+
+        <!-- Mobile Menu Button -->
+        <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+        <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-home astrological-symbol"></i>Home
+        </a>
+        <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-star astrological-symbol"></i>Kundali
+        </a>
+        
+        <!-- Numerology & Tarot Mobile Dropdown -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="flex items-center">
+                    <i class="fas fa-calculator astrological-symbol"></i>
+                    <span>Calculator</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown-content">
+                <a href="numerology.html" class="flex items-center">
+                    <i class="fas fa-calculator mr-3"></i>
+                    Numerology Report
+                </a>
+                <a href="tarot.html" class="flex items-center">
+                    <i class="fas fa-clover mr-3"></i>
+                    Tarot Reading
+                </a>
+            </div>
+        </div>
+        
+        <a href="vastu.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-house astrological-symbol"></i>Vastu
+        </a>
+        <a href="palmistry.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-hand astrological-symbol"></i>Palmistry
+        </a>
+
+        <!-- Panchang Mobile Dropdown -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="flex items-center">
+                    <i class="fas fa-calender astrological-symbol"></i>
+                    <span>Panchang</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown-content">
+                <a href="panchang.html" class="flex items-center">
+                    <i class="fas fa-calendar-week mr-3"></i>
+                    Daily Panchang
+                </a>
+                <a href="monthly-panchang.html" class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    Monthly Panchang
+                </a>
+            </div>
+        </div>
+        
+        
+        <!-- Rashifal Mobile Dropdown -->
+        <div class="mobile-dropdown">
+            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="flex items-center">
+                    <i class="fas fa-sun astrological-symbol"></i>
+                    <span>Rashifal</span>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown-content">
+                <a href="weekly-rashifal.html" class="flex items-center">
+                    <i class="fas fa-calendar-week mr-3"></i>
+                    Weekly Rashifal
+                </a>
+                <a href="rashifal.html" class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    Monthly Rashifal
+                </a>
+            </div>
+        </div>
+        
+        <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
+        </a>
+        <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-book-open astrological-symbol"></i>Blog
+        </a>
+        <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <i class="fas fa-envelope astrological-symbol"></i>Contact
+        </a>
+    </nav>
+</header>
+
+<!-- WhatsApp Floating Button -->
+<a class="whatsapp-float" id="whatsappButton">
+    <i class="fab fa-whatsapp"></i>
+</a>   
+
+<!-- WhatsApp Popup -->
+<div class="whatsapp-popup" id="whatsappPopup">
+    <div class="whatsapp-header">
+        <img src="logo.png" alt="Jyotish Tark">
+        <div>
+            <h3 class="font-bold text-lg">Jyotish Tark</h3>
+            <p class="text-sm opacity-90">Typically replies within minutes</p>
+        </div>
+    </div>
+    <div class="whatsapp-body">
+        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+            <i class="fas fa-comment"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Chat with us</h4>
+                <p class="text-sm text-gray-600">Ask questions about our services</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+            <i class="fas fa-phone"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Call us</h4>
+                <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+            </div>
+        </div>
+        
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+            <i class="fas fa-calendar-check"></i>
+            <div>
+                <h4 class="font-semibold text-gray-800">Book consultation</h4>
+                <p class="text-sm text-gray-600">Schedule a personal session</p>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
@@ -396,10 +888,42 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function () {
-            document.getElementById('mobileNav').classList.toggle('hidden');
-        });
+        // Mobile Menu Toggle
+document.getElementById('menuToggle').addEventListener('click', function() {
+    const mobileNav = document.getElementById('mobileNav');
+    mobileNav.classList.toggle('hidden');
+    
+    // Change icon based on menu state
+    const icon = this.querySelector('i');
+    if (mobileNav.classList.contains('hidden')) {
+        icon.className = 'fas fa-bars';
+    } else {
+        icon.className = 'fas fa-times';
+    }
+});
+
+// Mobile Dropdown Toggles
+document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+    toggle.addEventListener('click', function() {
+        const dropdown = this.closest('.mobile-dropdown');
+        dropdown.classList.toggle('active');
+    });
+});
+
+// WhatsApp Popup Toggle
+const whatsappButton = document.getElementById('whatsappButton');
+const whatsappPopup = document.getElementById('whatsappPopup');
+
+whatsappButton.addEventListener('click', function() {
+    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close WhatsApp popup when clicking outside
+document.addEventListener('click', function(event) {
+    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+        whatsappPopup.style.display = 'none';
+    }
+});
     </script>
 </body>
 </html>
