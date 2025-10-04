@@ -1367,42 +1367,122 @@
 
   <script>
     // Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
-    } else {
-        icon.className = 'fas fa-times';
-    }
-});
-
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        const mobileNav = document.getElementById('mobileNav');
+        mobileNav.classList.toggle('hidden');
+        
+        // Change icon based on menu state
+        const icon = this.querySelector('i');
+        if (mobileNav.classList.contains('hidden')) {
+            icon.className = 'fas fa-bars';
+        } else {
+            icon.className = 'fas fa-times';
+        }
     });
-});
 
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
+    // Mobile Dropdown Toggles
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            dropdown.classList.toggle('active');
+        });
+    });
 
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
+    // WhatsApp Popup Toggle
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
 
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
+    whatsappButton.addEventListener('click', function() {
+        whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close WhatsApp popup when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+            whatsappPopup.style.display = 'none';
+        }
+    });
+
+    // Function to show expanded rashi view
+    function showExpandedRashi(rashiId) {
+        const rashi = rashiData[rashiId];
+        if (!rashi) return;
+        
+        // Hide the grid and show expanded view
+        document.getElementById('rashiGrid').classList.add('hidden');
+        document.getElementById('expandedRashiView').classList.remove('hidden');
+        
+        // Populate expanded view content
+        const contentDiv = document.getElementById('expandedRashiContent');
+        contentDiv.innerHTML = `
+            <div class="flex items-center mb-6">
+                <span class="text-4xl mr-3">${rashi.symbol}</span>
+                <h3 class="text-2xl md:text-3xl font-bold text-white">${rashi.name}</h3>
+            </div>
+            
+            <p class="text-lg text-gray-300 mb-8">${rashi.summary}</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="rashi-detail-section">
+                    <h4 class="text-xl"><i class="fas fa-heart text-pink-400"></i> प्रेम और रिश्ते</h4>
+                    <p class="text-gray-300">${rashi.details.love}</p>
+                </div>
+                
+                <div class="rashi-detail-section">
+                    <h4 class="text-xl"><i class="fas fa-briefcase text-blue-400"></i> करियर और व्यवसाय</h4>
+                    <p class="text-gray-300">${rashi.details.career}</p>
+                </div>
+                
+                <div class="rashi-detail-section">
+                    <h4 class="text-xl"><i class="fas fa-heartbeat text-green-400"></i> स्वास्थ्य</h4>
+                    <p class="text-gray-300">${rashi.details.health}</p>
+                </div>
+                
+                <div class="rashi-detail-section">
+                    <h4 class="text-xl"><i class="fas fa-rupee-sign text-yellow-400"></i> धन और वित्त</h4>
+                    <p class="text-gray-300">${rashi.details.finance}</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-4 bg-purple-900 bg-opacity-30 rounded-xl">
+                <h4 class="text-xl font-bold text-amber-300 mb-3">⭐ इस महीने के लिए विशेष सलाह</h4>
+                <p class="text-gray-300">सितंबर 2025 में सूर्य, बुध और केतु की युति सिंह राशि में है, जिससे अहंकार, विवाद और संचार में बाधाएँ आ सकती हैं। वहीं शुक्र का कर्क राशि में होना घर-परिवार और भावनात्मक रिश्तों को मजबूत करेगा। मंगल कन्या राशि में ऊर्जा और परिश्रम को बढ़ाएगा लेकिन जल्दबाज़ी और गुस्से से बचना आवश्यक है। गुरु मिथुन राशि में ज्ञान और अवसर प्रदान करेगा जबकि शनि मीन में धैर्य और कर्म के महत्व को सिखाएगा।</p>
+                <p class="text-yellow-300">इससे बचने के लिए: दान और पुण्य कार्य अवश्य करें, विशेषकर शनिवार और अमावस्या को, अहंकार और क्रोध से बचें, संवाद को सरल और मधुर रखें, किसी भी नए कार्य की शुरुआत शुभ तिथियों पर ही करें, ध्यान और योग का अभ्यास करें ताकि मानसिक संतुलन बना रहे, परिवार और रिश्तों को प्राथमिकता दें, यही आपको शक्ति देंगे।</p>
+            </div>
+        `;
+        
+        // Scroll to the expanded view
+        document.getElementById('expandedRashiView').scrollIntoView({ behavior: 'smooth' });
     }
-});
 
+    // Function to hide expanded view and show grid
+    function hideExpandedRashi() {
+        document.getElementById('expandedRashiView').classList.add('hidden');
+        document.getElementById('rashiGrid').classList.remove('hidden');
+        
+        // Scroll back to the grid
+        document.getElementById('rashiGrid').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Add event listeners to all read more buttons
+    document.querySelectorAll('.rashi-card').forEach(card => {
+        const readMoreBtn = card.querySelector('.read-more-btn');
+        const rashiId = card.getAttribute('data-rashi');
+        
+        readMoreBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showExpandedRashi(rashiId);
+        });
+        
+        // Also make the entire card clickable
+        card.addEventListener('click', () => {
+            showExpandedRashi(rashiId);
+        });
+    });
+
+    // Back to list button
+    document.getElementById('backToList').addEventListener('click', hideExpandedRashi);
+    
     // Rashi data with detailed predictions
     const rashiData = {
       mesha: {
@@ -1598,86 +1678,6 @@ makara: {
     finance: "अक्टूबर 2025 आर्थिक दृष्टि से मीन राशि वालों के लिए स्थिरता और संतुलन का संकेत देता है। यह समय तेजी से लाभ कमाने के बजाय दीर्घकालिक सुरक्षा पर ध्यान देने का है। महीने की शुरुआत में कुछ अप्रत्याशित खर्च (घर, यात्रा या बच्चों से संबंधित) हो सकते हैं, परंतु गुरु की कृपा से आप जल्दी ही अपनी वित्तीय स्थिति संतुलित कर लेंगे। व्यवसायी जातकों के लिए नकदी प्रवाह में सुधार होगा। कोई पुराना ग्राहक या प्रोजेक्ट फिर से सक्रिय हो सकता है। यदि आपने किसी मित्र या रिश्तेदार को पैसा उधार दिया है, तो उसके वापस आने की संभावना बन रही है। निवेश के लिए अक्टूबर का मध्य भाग (15 से 22 तारीख के बीच) अनुकूल रहेगा। इस समय आप किसी रचनात्मक या सामाजिक उद्देश्य में निवेश करने के बारे में भी सोच सकते हैं — जैसे शिक्षा, कला, या चैरिटी से जुड़ा प्रोजेक्ट। ऐसा निवेश न केवल आर्थिक, बल्कि मानसिक संतुष्टि भी देगा। हालाँकि केतु का प्रभाव आपको कभी-कभी अस्थिर निर्णय लेने पर प्रेरित कर सकता है, इसलिए विशेषज्ञ की सलाह के बिना बड़े निवेश न करें। शेयर बाजार या क्रिप्टो में निवेश करते समय लॉन्ग-टर्म सोच अपनाएँ। महीने के अंत में धन प्राप्ति के योग बनेंगे — कोई रुका हुआ भुगतान या प्रॉपर्टी से जुड़ा लाभ संभव है। जो जातक नौकरी में हैं, उन्हें बोनस या इन्सेंटिव मिल सकता है। कुल मिलाकर यह महीना आर्थिक स्थिरता, समझदारी और आत्म-नियंत्रण से भरा रहेगा। अगर आप योजनाबद्ध ढंग से चलते हैं, तो वर्ष के अंतिम महीनों में वित्तीय समृद्धि सुनिश्चित है।"
   }
 };
-
-    // Function to show expanded rashi view
-    function showExpandedRashi(rashiId) {
-      const rashi = rashiData[rashiId];
-      if (!rashi) return;
-      
-      // Hide the grid and show expanded view
-      document.getElementById('rashiGrid').classList.add('hidden');
-      document.getElementById('expandedRashiView').classList.remove('hidden');
-      
-      // Populate expanded view content
-      const contentDiv = document.getElementById('expandedRashiContent');
-      contentDiv.innerHTML = `
-        <div class="flex items-center mb-6">
-          <span class="text-4xl mr-3">${rashi.symbol}</span>
-          <h3 class="text-2xl md:text-3xl font-bold text-white">${rashi.name}</h3>
-        </div>
-        
-        <p class="text-lg text-gray-300 mb-8">${rashi.summary}</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rashi-detail-section">
-            <h4 class="text-xl"><i class="fas fa-heart text-pink-400"></i> प्रेम और रिश्ते</h4>
-            <p class="text-gray-300">${rashi.details.love}</p>
-          </div>
-          
-          <div class="rashi-detail-section">
-            <h4 class="text-xl"><i class="fas fa-briefcase text-blue-400"></i> करियर और व्यवसाय</h4>
-            <p class="text-gray-300">${rashi.details.career}</p>
-          </div>
-          
-          <div class="rashi-detail-section">
-            <h4 class="text-xl"><i class="fas fa-heartbeat text-green-400"></i> स्वास्थ्य</h4>
-            <p class="text-gray-300">${rashi.details.health}</p>
-          </div>
-          
-          <div class="rashi-detail-section">
-            <h4 class="text-xl"><i class="fas fa-rupee-sign text-yellow-400"></i> धन और वित्त</h4>
-            <p class="text-gray-300">${rashi.details.finance}</p>
-          </div>
-        </div>
-        
-        <div class="mt-8 p-4 bg-purple-900 bg-opacity-30 rounded-xl">
-          <h4 class="text-xl font-bold text-amber-300 mb-3">⭐ इस महीने के लिए विशेष सलाह</h4>
-          <p class="text-gray-300">सितंबर 2025 में सूर्य, बुध और केतु की युति सिंह राशि में है, जिससे अहंकार, विवाद और संचार में बाधाएँ आ सकती हैं। वहीं शुक्र का कर्क राशि में होना घर-परिवार और भावनात्मक रिश्तों को मजबूत करेगा। मंगल कन्या राशि में ऊर्जा और परिश्रम को बढ़ाएगा लेकिन जल्दबाज़ी और गुस्से से बचना आवश्यक है। गुरु मिथुन राशि में ज्ञान और अवसर प्रदान करेगा जबकि शनि मीन में धैर्य और कर्म के महत्व को सिखाएगा।</p>
-          <p class="text-yellow-300">इससे बचने के लिए: दान और पुण्य कार्य अवश्य करें, विशेषकर शनिवार और अमावस्या को, अहंकार और क्रोध से बचें, संवाद को सरल और मधुर रखें, किसी भी नए कार्य की शुरुआत शुभ तिथियों पर ही करें, ध्यान और योग का अभ्यास करें ताकि मानसिक संतुलन बना रहे, परिवार और रिश्तों को प्राथमिकता दें, यही आपको शक्ति देंगे।</p>
-        </div>
-      `;
-      
-      // Scroll to the expanded view
-      document.getElementById('expandedRashiView').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Function to hide expanded view and show grid
-    function hideExpandedRashi() {
-      document.getElementById('expandedRashiView').classList.add('hidden');
-      document.getElementById('rashiGrid').classList.remove('hidden');
-      
-      // Scroll back to the grid
-      document.getElementById('rashiGrid').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Add event listeners to all read more buttons
-    document.querySelectorAll('.rashi-card').forEach(card => {
-      const readMoreBtn = card.querySelector('.read-more-btn');
-      const rashiId = card.getAttribute('data-rashi');
-      
-      readMoreBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showExpandedRashi(rashiId);
-      });
-      
-      // Also make the entire card clickable
-      card.addEventListener('click', () => {
-        showExpandedRashi(rashiId);
-      });
-    });
-
-    // Back to list button
-    document.getElementById('backToList').addEventListener('click', hideExpandedRashi);
   </script>
 </body>
 </html>
