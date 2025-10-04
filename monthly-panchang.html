@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>मासिक पंचांग | Monthly Panchang | Jyotish Tark</title>
+    <title>अक्टूबर 2025 मासिक पंचांग | October 2025 Monthly Panchang | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/monthly-panchang" />
-    <meta name="description" content="Jyotish Tark - हिंदी में पूरा मासिक पंचांग। पूरे महीने की तिथि, वार, नक्षत्र, योग और करण जानें। मासिक शुभ मुहूर्त और त्योहार।">
-    <meta name="keywords" content="मासिक पंचांग, मासिक कैलेंडर, हिंदी पंचांग, महीने का पंचांग, तिथि, वार, नक्षत्र, योग, करण, शुभ मुहूर्त, हिंदी कैलेंडर, वैदिक कैलेंडर, ज्योतिषीय कैलेंडर, पंचांग 2025, Jyotish Tark">
+    <meta name="description" content="अक्टूबर 2025 का पूरा मासिक पंचांग - दशहरा, करवा चौथ, दिवाली सहित सभी त्योहार। लखनऊ, भारत के लिए शुभ मुहूर्त और व्रत।">
+    <meta name="keywords" content="अक्टूबर 2025 पंचांग, मासिक पंचांग, दिवाली 2025, दशहरा, करवा चौथ, लखनऊ पंचांग, शुभ मुहूर्त, हिंदी कैलेंडर">
     <meta name="author" content="Jyotish Tark">
-    <meta property="og:title" content="मासिक पंचांग | Monthly Panchang | Jyotish Tark">
-    <meta property="og:description" content="हिंदी में पूरा मासिक पंचांग। पूरे महीने की तिथि, वार, नक्षत्र, योग और करण जानें। मासिक शुभ मुहूर्त और त्योहार।">
+    <meta property="og:title" content="अक्टूबर 2025 मासिक पंचांग | October 2025 Monthly Panchang">
+    <meta property="og:description" content="अक्टूबर 2025 का पूरा मासिक पंचांग - दशहरा, करवा चौथ, दिवाली सहित सभी त्योहार। लखनऊ के लिए शुभ मुहूर्त।">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/monthly-panchang">
     <meta property="og:type" content="website">
@@ -82,371 +82,9 @@
             overflow: hidden;
         }
         
-        .primary-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .primary-button:hover::before {
-            left: 100%;
-        }
-        
         .primary-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
-        }
-        
-        .secondary-button {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--secondary);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .secondary-button:hover {
-            background: var(--secondary);
-            color: var(--dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
-        }
-        
-        .nav-link {
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
-}
-
-.nav-link {
-    position: relative;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary, #f59e0b);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.astrological-symbol {
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
-}
-
-/* Dropdown Styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(30, 41, 59, 0.98);
-    backdrop-filter: blur(20px);
-    min-width: 220px;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-/* Keep dropdown visible when hovering over it */
-.dropdown-content:hover,
-.dropdown:hover .dropdown-content {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-/* Create invisible gap area for better hover */
-.dropdown::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    background: transparent;
-    z-index: 999;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.dropdown-content a {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    font-weight: 500;
-}
-
-.dropdown-content a:last-child {
-    border-bottom: none;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
-    padding-left: 24px;
-    transform: translateX(5px);
-}
-
-.dropdown-content i {
-    margin-right: 12px;
-    width: 20px;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.dropdown-arrow {
-    transition: transform 0.3s ease;
-    margin-left: 6px;
-    font-size: 0.8rem;
-}
-
-.dropdown:hover .dropdown-arrow {
-    transform: rotate(180deg);
-}
-
-/* Mobile Dropdown Styles */
-.mobile-dropdown-content {
-    display: none;
-    padding-left: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    margin-top: 8px;
-    overflow: hidden;
-    border-left: 3px solid var(--primary, #7e22ce);
-}
-
-.mobile-dropdown-content a {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.mobile-dropdown-content a:last-child {
-    border-bottom: none;
-}
-
-.mobile-dropdown-content a:hover {
-    background: rgba(126, 34, 206, 0.2);
-    padding-left: 20px;
-}
-
-.mobile-dropdown.active .mobile-dropdown-content {
-    display: block;
-    animation: slideDown 0.3s ease;
-}
-
-.mobile-dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-}
-
-.mobile-dropdown-toggle i:last-child {
-    transition: transform 0.3s ease;
-}
-
-.mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
-    transform: rotate(180deg);
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* WhatsApp Styles */
-.whatsapp-float {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border: 3px solid white;
-}
-
-.whatsapp-float:hover {
-    background-color: #128C7E;
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
-}
-
-.whatsapp-popup {
-    position: fixed;
-    bottom: 110px;
-    right: 40px;
-    width: 320px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    z-index: 99;
-    overflow: hidden;
-    display: none;
-    animation: popupSlide 0.3s ease;
-    border: 1px solid #e0e0e0;
-}
-
-@keyframes popupSlide {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.whatsapp-header {
-    background: linear-gradient(135deg, #075E54, #128C7E);
-    color: white;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.whatsapp-header img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 12px;
-    border: 2px solid white;
-}
-
-.whatsapp-body {
-    padding: 20px;
-    color: #4a4a4a;
-}
-
-.whatsapp-option {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
-}
-
-.whatsapp-option:hover {
-    background: #f8f9fa;
-    transform: translateX(5px);
-    border-color: #25d366;
-}
-
-.whatsapp-option i {
-    margin-right: 12px;
-    font-size: 22px;
-    color: #25d366;
-    width: 24px;
-    text-align: center;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
-        font-size: 24px;
-    }
-    
-    .whatsapp-popup {
-        bottom: 80px;
-        right: 20px;
-        width: 280px;
-    }
-    
-    .dropdown-content {
-        position: static;
-        margin-top: 0;
-        box-shadow: none;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-}
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
         }
         
         .section-title {
@@ -465,33 +103,6 @@
             height: 4px;
             background: linear-gradient(to right, var(--primary), var(--accent));
             border-radius: 2px;
-        }
-        
-        .planet-1 {
-            position: absolute;
-            top: 20%;
-            left: 5%;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
-            box-shadow: 0 0 50px #f59e0b;
-            opacity: 0.7;
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .planet-2 {
-            position: absolute;
-            bottom: 15%;
-            right: 8%;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
-            box-shadow: 0 0 40px #ec4899;
-            opacity: 0.7;
-            animation: float 10s ease-in-out infinite;
-            animation-delay: 1s;
         }
         
         .panchang-card {
@@ -520,104 +131,6 @@
             box-shadow: 0 15px 30px rgba(126, 34, 206, 0.2);
         }
         
-        .panchang-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-top: 0.5rem;
-        }
-        
-        .panchang-icon {
-            font-size: 2rem;
-            color: var(--primary-light);
-            margin-bottom: 1rem;
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-        
-        .stagger-item {
-            opacity: 0;
-        }
-        
-        .cosmic-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: twinkle 3s infinite;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
-        
-        .muhurat-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .good-badge {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .bad-badge {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-            .planet-1, .planet-2 {
-                display: none;
-            }
-        }
-        
-        .footer-links a {
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary);
-            padding-left: 5px;
-        }
-        
         .calendar-day {
             transition: all 0.3s ease;
             border-radius: 8px;
@@ -641,7 +154,7 @@
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
         
-        .calendar-day.ekadashi {
+        .calendar-day.vrat {
             background: rgba(16, 185, 129, 0.2);
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
@@ -656,670 +169,134 @@
             border: 1px solid rgba(107, 114, 128, 0.5);
         }
         
-        .tithi-indicator {
-            font-size: 0.7rem;
-            margin-top: 5px;
-            padding: 2px 5px;
-            border-radius: 10px;
+        .muhurat-badge {
             display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
         
-        .good-muhurat {
+        .good-badge {
+            background: rgba(16, 185, 129, 0.2);
             color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
         
-        .bad-muhurat {
+        .bad-badge {
+            background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
         
-        .month-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .month-year {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-        
-        .calendar-header {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        
-        .festival-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .festival-item {
-            padding: 10px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .festival-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .festival-date {
-            font-weight: 600;
-            color: var(--secondary);
-        }
-        
-        .festival-name {
-            font-weight: 500;
-        }
-        
-        .festival-details {
-            font-size: 0.9rem;
-            color: #cbd5e1;
-        }
-        
-        .important-note {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(236, 72, 153, 0.1));
-            border-left: 4px solid var(--secondary);
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 20px 0;
-        }
-        
-        .month-selector {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        
-        .vrat-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .vrat-item {
-            padding: 10px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .vrat-date {
-            font-weight: 600;
-            color: var(--secondary);
-        }
-        
-        .vrat-name {
-            font-weight: 500;
-        }
-        
-        .auspicious-period {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid #10b981;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .inauspicious-period {
-            background: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid #ef4444;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 0 8px 8px 0;
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Floating Planets -->
-    <div class="planet-1"></div>
-    <div class="planet-2"></div>
-    
-    <!-- Cosmic Particles -->
-    <div id="cosmicParticles"></div>
-
     <!-- Navigation -->
-<header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-    <div class="flex justify-between items-center">
-        
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center space-x-3">
-            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
-            </div>
-            <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
-        </a>
-
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-6 font-medium">
-            <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Home
-            </a>
-            <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Kundali
-            </a>
-            
-            <!-- Numerology & Tarot Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Calculator
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="numerology.html">
-                        Numerology Report
-                    </a>
-                    <a href="tarot.html">
-                        Tarot Reading
-                    </a>
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
                 </div>
-            </div>
-            
-            <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Vastu
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
-            <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Palmistry
-            </a>
-
-            <!-- Panchang Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Panchang
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="Panchang.html">
-                        Daily Panchang
-                    </a>
-                    <a href="monthly-panchang.html">
-                        Monthly Panchang
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Rashifal Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Rashifal
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="weekly-rashifal.html">
-                        Weekly Rashifal
-                    </a>
-                    <a href="rashifal.html">
-                        Monthly Rashifal
-                    </a>
-                </div>
-            </div>
-            
-            <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Rudraksha
-            </a>
-            <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Blog
-            </a>
-            <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Contact
-            </a>
-        </nav>
-
-        <!-- Mobile Menu Button -->
-        <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-        <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-home astrological-symbol"></i>Home
-        </a>
-        <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-star astrological-symbol"></i>Kundali
-        </a>
-        
-        <!-- Numerology & Tarot Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-calculator astrological-symbol"></i>
-                    <span>Calculator</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="numerology.html" class="flex items-center">
-                    <i class="fas fa-calculator mr-3"></i>
-                    Numerology Report
-                </a>
-                <a href="tarot.html" class="flex items-center">
-                    <i class="fas fa-clover mr-3"></i>
-                    Tarot Reading
-                </a>
-            </div>
         </div>
-        
-        <a href="vastu.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-house astrological-symbol"></i>Vastu
-        </a>
-        <a href="palmistry.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-hand astrological-symbol"></i>Palmistry
-        </a>
-
-        <!-- Panchang Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-calender astrological-symbol"></i>
-                    <span>Panchang</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="panchang.html" class="flex items-center">
-                    <i class="fas fa-calendar-week mr-3"></i>
-                    Daily Panchang
-                </a>
-                <a href="monthly-panchang.html" class="flex items-center">
-                    <i class="fas fa-calendar-alt mr-3"></i>
-                    Monthly Panchang
-                </a>
-            </div>
-        </div>
-        
-        
-        <!-- Rashifal Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-sun astrological-symbol"></i>
-                    <span>Rashifal</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="weekly-rashifal.html" class="flex items-center">
-                    <i class="fas fa-calendar-week mr-3"></i>
-                    Weekly Rashifal
-                </a>
-                <a href="rashifal.html" class="flex items-center">
-                    <i class="fas fa-calendar-alt mr-3"></i>
-                    Monthly Rashifal
-                </a>
-            </div>
-        </div>
-        
-        <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
-        </a>
-        <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-book-open astrological-symbol"></i>Blog
-        </a>
-        <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-envelope astrological-symbol"></i>Contact
-        </a>
-    </nav>
-</header>
-
-<!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton">
-    <i class="fab fa-whatsapp"></i>
-</a>   
-
-<!-- WhatsApp Popup -->
-<div class="whatsapp-popup" id="whatsappPopup">
-    <div class="whatsapp-header">
-        <img src="logo.png" alt="Jyotish Tark">
-        <div>
-            <h3 class="font-bold text-lg">Jyotish Tark</h3>
-            <p class="text-sm opacity-90">Typically replies within minutes</p>
-        </div>
-    </div>
-    <div class="whatsapp-body">
-        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
-            <i class="fas fa-comment"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Chat with us</h4>
-                <p class="text-sm text-gray-600">Ask questions about our services</p>
-            </div>
-        </div>
-        
-        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Call us</h4>
-                <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
-            </div>
-        </div>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
-            <i class="fas fa-calendar-check"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Book consultation</h4>
-                <p class="text-sm text-gray-600">Schedule a personal session</p>
-            </div>
-        </div>
-    </div>
-</div>
+    </header>
 
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
         <div class="relative z-10">
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 fade-in">
-                <span class="block">मासिक पंचांग</span>
-                <span class="text-3xl md:text-4xl text-amber-300">Monthly Panchang</span>
+                <span class="block">अक्टूबर 2025 पंचांग</span>
+                <span class="text-3xl md:text-4xl text-amber-300">October 2025 Panchang</span>
             </h1>
             <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto hindi fade-in">
-                पूरे महीने की तिथि, वार, नक्षत्र, योग और करण की पूरी जानकारी। महीने के सभी त्योहार, व्रत और शुभ मुहूर्त।
+                लखनऊ, भारत के लिए विशेष - दशहरा, करवा चौथ, दिवाली सहित सभी प्रमुख त्योहारों की पूरी जानकारी
             </p>
-            
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5 fade-in">
-                <a href="#monthly-calendar" class="primary-button">
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                    मासिक कैलेंडर देखें
-                </a>
-                <a href="#festivals" class="secondary-button">
+                <a href="#festivals" class="primary-button">
                     <i class="fas fa-star mr-2"></i>
-                    त्योहार और व्रत
+                    त्योहार देखें
+                </a>
+                <a href="#muhurat" class="primary-button">
+                    <i class="fas fa-clock mr-2"></i>
+                    शुभ मुहूर्त
                 </a>
             </div>
         </div>
     </section>
-            
-            <!-- Current Month Overview -->
-<section class="max-w-6xl mx-auto px-4 py-8">
-    <div class="glass-card p-6 rounded-2xl fade-in">
-        <div class="text-center mb-6">
-            <h2 class="text-3xl font-bold text-white mb-2 hindi">अक्टूबर 2025 पंचांग</h2>
-            <p class="text-gray-300 hindi">कार्तिक मास, विक्रम संवत २०८२</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <div class="panchang-card text-center">
-                <div class="panchang-icon">
-                    <i class="fas fa-moon"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 hindi">मास</h3>
-                <div class="panchang-value hindi">कार्तिक</div>
-                <p class="text-gray-300 mt-2 hindi">अश्विन से कार्तिक</p>
-            </div>
-            
-            <div class="panchang-card text-center">
-                <div class="panchang-icon">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 hindi">ऋतु</h3>
-                <div class="panchang-value hindi">शरद</div>
-                <p class="text-gray-300 mt-2 hindi">शरद ऋतु</p>
-            </div>
-            
-            <div class="panchang-card text-center">
-                <div class="panchang-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 hindi">अयन</h3>
-                <div class="panchang-value hindi">दक्षिणायन</div>
-                <p class="text-gray-300 mt-2 hindi">सूर्य दक्षिणायन</p>
-            </div>
-            
-            <div class="panchang-card text-center">
-                <div class="panchang-icon">
-                    <i class="fas fa-infinity"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 hindi">वर्ष</h3>
-                <div class="panchang-value hindi">विक्रम संवत २०८२</div>
-                <p class="text-gray-300 mt-2 hindi">शक संवत १९४७</p>
-            </div>
-        </div>
-    </div>
-</section>
-            
-   <!-- Monthly Calendar -->
-<section id="monthly-calendar" class="max-w-6xl mx-auto px-4 py-16">
-    <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-            अक्टूबर 2025 मासिक पंचांग
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-            अक्टूबर 2025 के सभी दिनों की तिथि, नक्षत्र, योग और करण की जानकारी। दीपावली, दशहरा सहित सभी प्रमुख त्योहार।
-        </p>
-    </div>
 
-    <div class="glass-card p-6 rounded-2xl fade-in">
-        <div class="text-center mb-6">
-            <div class="month-year hindi text-2xl font-bold text-amber-300">अक्टूबर 2025</div>
-            <p class="text-gray-300 hindi mt-2">कार्तिक मास, विक्रम संवत २०८२</p>
+    <!-- Current Month Overview -->
+    <section class="max-w-6xl mx-auto px-4 py-8">
+        <div class="glass-card p-6 rounded-2xl fade-in">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-white mb-2 hindi">अक्टूबर 2025 संक्षिप्त पंचांग</h2>
+                <p class="text-gray-300 hindi">लखनऊ, उत्तर प्रदेश के लिए - कार्तिक मास, विक्रम संवत २०८२</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                <div class="panchang-card text-center">
+                    <div class="text-3xl text-amber-300 mb-2">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 hindi">मास</h3>
+                    <div class="text-amber-300 text-lg font-bold hindi">कार्तिक</div>
+                    <p class="text-gray-300 mt-2 hindi">अश्विन से कार्तिक</p>
+                </div>
+                
+                <div class="panchang-card text-center">
+                    <div class="text-3xl text-amber-300 mb-2">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 hindi">ऋतु</h3>
+                    <div class="text-amber-300 text-lg font-bold hindi">शरद</div>
+                    <p class="text-gray-300 mt-2 hindi">शरद ऋतु</p>
+                </div>
+                
+                <div class="panchang-card text-center">
+                    <div class="text-3xl text-amber-300 mb-2">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 hindi">पक्ष</h3>
+                    <div class="text-amber-300 text-lg font-bold hindi">कृष्ण-शुक्ल</div>
+                    <p class="text-gray-300 mt-2 hindi">पूर्णिमा: 6 अक्टूबर</p>
+                </div>
+                
+                <div class="panchang-card text-center">
+                    <div class="text-3xl text-amber-300 mb-2">
+                        <i class="fas Infin ity"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 hindi">संवत</h3>
+                    <div class="text-amber-300 text-lg font-bold hindi">२०८२</div>
+                    <p class="text-gray-300 mt-2 hindi">विक्रम संवत</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Calendar Header -->
-        <div class="calendar-header">
-            <div class="hindi">रवि</div>
-            <div class="hindi">सोम</div>
-            <div class="hindi">मंगल</div>
-            <div class="hindi">बुध</div>
-            <div class="hindi">गुरु</div>
-            <div class="hindi">शुक्र</div>
-            <div class="hindi">शनि</div>
-        </div>
-
-        <!-- Calendar Grid -->
-        <div class="calendar-grid" id="calendarGrid">
-            <!-- Calendar will be generated by JavaScript -->
-        </div>
-
-        <!-- Calendar Legend -->
-        <div class="mt-6 flex flex-wrap justify-center gap-4 text-sm">
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-purple-600 rounded mr-2"></div>
-                <span class="text-gray-300 hindi">त्योहार</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-green-600 rounded mr-2"></div>
-                <span class="text-gray-300 hindi">व्रत</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-blue-600 rounded mr-2"></div>
-                <span class="text-gray-300 hindi">पूर्णिमा</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-gray-600 rounded mr-2"></div>
-                <span class="text-gray-300 hindi">अमावस्या</span>
-            </div>
-        </div>
-    </div>
-</section>
-    <!-- Festivals and Vrats -->
+    <!-- Festivals Section -->
     <section id="festivals" class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-                महीने के त्योहार और व्रत
+                अक्टूबर 2025 के प्रमुख त्योहार और व्रत
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-                इस महीने के सभी प्रमुख त्योहार, व्रत, और धार्मिक अनुष्ठानों की सूची।
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Festivals -->
-            <div class="glass-card p-6 rounded-2xl fade-in">
-                <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">प्रमुख त्योहार</h3>
-                <div class="festival-list">
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">05 अक्टूबर</div>
-                                <div class="festival-name hindi">विजयादशमी (दशहरा)</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">रावण वध का पर्व, बुराई पर अच्छाई की जीत का प्रतीक</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">12 अक्टूबर</div>
-                                <div class="festival-name hindi">शरद पूर्णिमा</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">चंद्रमा की पूजा का दिन, कोजागर पूर्णिमा व्रत</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">20 अक्टूबर</div>
-                                <div class="festival-name hindi">धनतेरस</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">धन्वंतरी जयंती, सोना-चांदी खरीदने का शुभ दिन</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">21 अक्टूबर</div>
-                                <div class="festival-name hindi">नरक चतुर्दशी</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">श्री कृष्ण द्वारा नरकासुर वध का स्मरण</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">22 अक्टूबर</div>
-                                <div class="festival-name hindi">दीपावली</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">प्रकाश का पर्व, लक्ष्मी पूजन का शुभ मुहूर्त</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">23 अक्टूबर</div>
-                                <div class="festival-name hindi">गोवर्धन पूजा</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">गोवर्धन पर्वत की पूजा, अन्नकूट उत्सव</div>
-                    </div>
-                    
-                    <div class="festival-item">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date">24 अक्टूबर</div>
-                                <div class="festival-name hindi">भैया दूज</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi mt-2">भाई-बहन के प्यार का पर्व</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Vrats and Fasts -->
-            <div class="glass-card p-6 rounded-2xl fade-in">
-                <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">व्रत और उपवास</h3>
-                <div class="vrat-list">
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">पापांकुशा एकादशी</div>
-                            <div class="festival-details hindi">विष्णु भगवान की पूजा, पापों से मुक्ति</div>
-                        </div>
-                        <div class="vrat-date">03 अक्टूबर</div>
-                    </div>
-                    
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">प्रदोष व्रत</div>
-                            <div class="festival-details hindi">शिव पूजन, त्रयोदशी तिथि</div>
-                        </div>
-                        <div class="vrat-date">05, 19 अक्टूबर</div>
-                    </div>
-                    
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">रमा एकादशी</div>
-                            <div class="festival-details hindi">विष्णु भगवान की पूजा, मोक्ष प्राप्ति</div>
-                        </div>
-                        <div class="vrat-date">18 अक्टूबर</div>
-                    </div>
-                    
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">सोमवार व्रत</div>
-                            <div class="festival-details hindi">शिव जी की उपासना</div>
-                        </div>
-                        <div class="vrat-date">06, 13, 20, 27 अक्टूबर</div>
-                    </div>
-                    
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">शनिवार व्रत</div>
-                            <div class="festival-details hindi">शनि देव की शांति के लिए</div>
-                        </div>
-                        <div class="vrat-date">04, 11, 18, 25 अक्टूबर</div>
-                    </div>
-                    
-                    <div class="vrat-item">
-                        <div>
-                            <div class="vrat-name hindi">संकष्टी चतुर्थी</div>
-                            <div class="festival-details hindi">गणेश जी की पूजा</div>
-                        </div>
-                        <div class="vrat-date">07 अक्टूबर</div>
-                    </div>
-                </div>
-
-                <!-- Important Periods -->
-                <h3 class="text-xl font-bold text-white mt-8 mb-4 hindi">महत्वपूर्ण अवधि</h3>
-                <div class="auspicious-period">
-                    <h4 class="font-bold text-white hindi">शुभ अवधि</h4>
-                    <p class="text-gray-300 hindi mt-1">15-20 अक्टूबर: शारदीय नवरात्रि</p>
-                    <p class="text-gray-300 hindi">22-24 अक्टूबर: दीपावली उत्सव</p>
-                </div>
-                
-                <div class="inauspicious-period">
-                    <h4 class="font-bold text-white hindi">अशुभ अवधि</h4>
-                    <p class="text-gray-300 hindi mt-1">10-12 अक्टूबर: भद्रा काल</p>
-                    <p class="text-gray-300 hindi">25-27 अक्टूबर: राहु काल प्रबल</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Monthly Muhurat -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-                मासिक शुभ मुहूर्त
-            </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-                महीने के विशेष शुभ मुहूर्त - विवाह, गृहप्रवेश, वाहन खरीदी और अन्य महत्वपूर्ण कार्यों के लिए।
+                दशहरा, करवा चौथ, और दिवाली सहित सभी महत्वपूर्ण हिंदू त्योहारों की पूरी सूची
             </p>
         </div>
 
@@ -1327,56 +304,121 @@
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
-                        <tr>
-                            <th class="text-left p-3 hindi">मुहूर्त</th>
-                            <th class="text-left p-3 hindi">तिथि</th>
-                            <th class="text-left p-3 hindi">समय</th>
-                            <th class="text-left p-3 hindi">उद्देश्य</th>
-                            <th class="text-left p-3 hindi">विशेषता</th>
+                        <tr class="border-b border-gray-700">
+                            <th class="text-left p-4 hindi">तारीख</th>
+                            <th class="text-left p-4 hindi">वार</th>
+                            <th class="text-left p-4 hindi">त्योहार / व्रत</th>
+                            <th class="text-left p-4 hindi">पंचांग विवरण</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b border-gray-700">
-                            <td class="p-3 hindi">विवाह मुहूर्त</td>
-                            <td class="p-3">15 अक्टूबर</td>
-                            <td class="p-3">07:30 AM - 09:15 AM</td>
-                            <td class="p-3 hindi">विवाह संस्कार</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">अति शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">1 अक्टूबर</td>
+                            <td class="p-4">बुधवार</td>
+                            <td class="p-4 hindi">दुर्गा महा नवमी / महा नवमी पूजा</td>
+                            <td class="p-4 text-gray-300">अश्विन शुक्ल नवमी</td>
                         </tr>
-                        <tr class="border-b border-gray-700">
-                            <td class="p-3 hindi">गृह प्रवेश</td>
-                            <td class="p-3">18 अक्टूबर</td>
-                            <td class="p-3">10:45 AM - 12:30 PM</td>
-                            <td class="p-3 hindi">नए घर में प्रवेश</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">2 अक्टूबर</td>
+                            <td class="p-4">गुरुवार</td>
+                            <td class="p-4 hindi">दशहरा (विजयादशमी) / दुर्गा विसर्जन</td>
+                            <td class="p-4 text-gray-300">अश्विन शुक्ल दशमी</td>
                         </tr>
-                        <tr class="border-b border-gray-700">
-                            <td class="p-3 hindi">वाहन खरीद</td>
-                            <td class="p-3">20 अक्टूबर</td>
-                            <td class="p-3">11:00 AM - 01:30 PM</td>
-                            <td class="p-3 hindi">नई कार/वाहन</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">3 अक्टूबर</td>
+                            <td class="p-4">शुक्रवार</td>
+                            <td class="p-4 hindi">पापांकुशा एकादशी व्रत</td>
+                            <td class="p-4 text-gray-300">अश्विन शुक्ल एकादशी</td>
                         </tr>
-                        <tr class="border-b border-gray-700">
-                            <td class="p-3 hindi">नामकरण</td>
-                            <td class="p-3">22 अक्टूबर</td>
-                            <td class="p-3">08:15 AM - 10:00 AM</td>
-                            <td class="p-3 hindi">शिशु का नामकरण</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">4 अक्टूबर</td>
+                            <td class="p-4">शनिवार</td>
+                            <td class="p-4 hindi">शनि प्रदोष व्रत</td>
+                            <td class="p-4 text-gray-300">अश्विन शुक्ल द्वादशी/त्रयोदशी</td>
                         </tr>
-                        <tr class="border-b border-gray-700">
-                            <td class="p-3 hindi">व्यापार आरम्भ</td>
-                            <td class="p-3">25 अक्टूबर</td>
-                            <td class="p-3">09:30 AM - 11:15 AM</td>
-                            <td class="p-3 hindi">नया व्यवसाय</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">6 अक्टूबर</td>
+                            <td class="p-4">सोमवार</td>
+                            <td class="p-4 hindi">शरद पूर्णिमा व्रत / कोजागर पूजा</td>
+                            <td class="p-4 text-gray-300">अश्विन पूर्णिमा</td>
                         </tr>
-                        <tr>
-                            <td class="p-3 hindi">भूमि पूजन</td>
-                            <td class="p-3">28 अक्टूबर</td>
-                            <td class="p-3">07:00 AM - 08:45 AM</td>
-                            <td class="p-3 hindi">निर्माण कार्य</td>
-                            <td class="p-3"><span class="muhurat-badge good-badge">शुभ</span></td>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">7 अक्टूबर</td>
+                            <td class="p-4">मंगलवार</td>
+                            <td class="p-4 hindi">वाल्मीकि जयंती</td>
+                            <td class="p-4 text-gray-300">कार्तिक मास प्रारंभ</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">10 अक्टूबर</td>
+                            <td class="p-4">शुक्रवार</td>
+                            <td class="p-4 hindi">करवा चौथ / संकष्टी चतुर्थी</td>
+                            <td class="p-4 text-gray-300">कार्तिक कृष्ण चतुर्थी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">13 अक्टूबर</td>
+                            <td class="p-4">सोमवार</td>
+                            <td class="p-4 hindi">अहोई अष्टमी व्रत</td>
+                            <td class="p-4 text-gray-300">कार्तिक कृष्ण अष्टमी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">17 अक्टूबर</td>
+                            <td class="p-4">शुक्रवार</td>
+                            <td class="p-4 hindi">रमा एकादशी व्रत</td>
+                            <td class="p-4 text-gray-300">कार्तिक कृष्ण एकादशी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">18 अक्टूबर</td>
+                            <td class="p-4">शनिवार</td>
+                            <td class="p-4 hindi">धनतेरस (धन त्रयोदशी)</td>
+                            <td class="p-4 text-gray-300">कार्तिक कृष्ण त्रयोदशी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">19 अक्टूबर</td>
+                            <td class="p-4">रविवार</td>
+                            <td class="p-4 hindi">काली चौदस / नरक चतुर्दशी</td>
+                            <td class="p-4 text-gray-300">कार्तिक कृष्ण चतुर्दशी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">20 अक्टूबर</td>
+                            <td class="p-4">सोमवार</td>
+                            <td class="p-4 hindi">दिवाली (दीपावली) / लक्ष्मी पूजा</td>
+                            <td class="p-4 text-gray-300">अमावस्या</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">22 अक्टूबर</td>
+                            <td class="p-4">बुधवार</td>
+                            <td class="p-4 hindi">गोवर्धन पूजा / अन्नकूट</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल द्वितीया</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">23 अक्टूबर</td>
+                            <td class="p-4">गुरुवार</td>
+                            <td class="p-4 hindi">भाई दूज (भैया दूज)</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल तृतीया</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">25 अक्टूबर</td>
+                            <td class="p-4">शनिवार</td>
+                            <td class="p-4 hindi">छठ पूजा प्रारंभ</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल चतुर्थी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">27 अक्टूबर</td>
+                            <td class="p-4">सोमवार</td>
+                            <td class="p-4 hindi">छठ पूजा (संध्या अर्घ्य)</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल षष्ठी</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">28 अक्टूबर</td>
+                            <td class="p-4">मंगलवार</td>
+                            <td class="p-4 hindi">छठ पूजा (उषा अर्घ्य)</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल सप्तमी</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition">
+                            <td class="p-4 font-semibold">31 अक्टूबर</td>
+                            <td class="p-4">शुक्रवार</td>
+                            <td class="p-4 hindi">अक्षय नवमी</td>
+                            <td class="p-4 text-gray-300">कार्तिक शुक्ल नवमी</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1384,42 +426,121 @@
         </div>
     </section>
 
-    <!-- Important Notes -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-        <div class="glass-card p-6 rounded-2xl fade-in">
-            <h3 class="text-2xl font-bold text-white mb-4 hindi">महीने के विशेष निर्देश</h3>
-            
-            <div class="important-note">
-                <div class="flex items-start">
-                    <i class="fas fa-info-circle text-amber-300 text-xl mt-1 mr-3"></i>
-                    <div>
-                        <h4 class="font-bold text-white mb-2 hindi">कार्तिक मास का महत्व</h4>
-                        <p class="text-gray-300 hindi">यह माह भगवान विष्णु की उपासना के लिए अत्यंत शुभ माना जाता है। इस माह में किए गए दान और पूजा का विशेष फल मिलता है।</p>
+    <!-- Shubh Muhurat Section -->
+    <section id="muhurat" class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
+                अक्टूबर 2025 शुभ मुहूर्त
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
+                लखनऊ, भारत के लिए विशेष - गृहप्रवेश, वाहन खरीदी और अन्य महत्वपूर्ण कार्यों के शुभ समय
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Auspicious Muhurat -->
+            <div class="glass-card p-6 rounded-2xl fade-in">
+                <h3 class="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-3 hindi">शुभ मुहूर्त</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-green-900/20 rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-white hindi">गृह प्रवेश</h4>
+                            <p class="text-gray-300 text-sm">23, 24, 29 अक्टूबर</p>
+                        </div>
+                        <span class="muhurat-badge good-badge">शुभ</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4 bg-green-900/20 rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-white hindi">संपत्ति खरीद</h4>
+                            <p class="text-gray-300 text-sm">16, 17, 23, 24 अक्टूबर</p>
+                        </div>
+                        <span class="muhurat-badge good-badge">अनुकूल</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4 bg-green-900/20 rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-white hindi">वाहन खरीद</h4>
+                            <p class="text-gray-300 text-sm">2, 3, 5, 10, 12, 13, 15, 24, 29, 30, 31 अक्टूबर</p>
+                        </div>
+                        <span class="muhurat-badge good-badge">शुभ</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div>
-                    <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">क्या करें</h4>
-                    <ul class="list-disc list-inside text-gray-300 space-y-2 hindi">
-                        <li>प्रातः स्नान के बाद तुलसी की पूजा करें</li>
-                        <li>दीपदान करें, विशेषकर शाम के समय</li>
-                        <li>गरीबों और ब्राह्मणों को दान दें</li>
-                        <li>भगवद् गीता का पाठ करें</li>
-                        <li>एकादशी के दिन उपवास रखें</li>
-                    </ul>
+
+            <!-- Inauspicious Periods -->
+            <div class="glass-card p-6 rounded-2xl fade-in">
+                <h3 class="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-3 hindi">विशेष नोट</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-red-900/20 rounded-lg">
+                        <div>
+                            <h4 class="font-bold text-white hindi">विवाह मुहूर्त</h4>
+                            <p class="text-gray-300 text-sm">अक्टूबर 2025</p>
+                        </div>
+                        <span class="muhurat-badge bad-badge">अशुभ</span>
+                    </div>
+                    
+                    <div class="p-4 bg-yellow-900/20 rounded-lg">
+                        <h4 class="font-bold text-white mb-2 hindi">महत्वपूर्ण सूचना</h4>
+                        <p class="text-gray-300 text-sm hindi">अंतिम और सटीक मुहूर्त के लिए कृपया अपने पारिवारिक परंपराओं के आधार पर स्थानीय पंडित से परामर्श लें।</p>
+                    </div>
                 </div>
-                
+            </div>
+        </div>
+    </section>
+
+    <!-- Amavasya Purnima Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
+                अमावस्या और पूर्णिमा
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-card p-6 rounded-2xl fade-in text-center">
+                <div class="text-4xl text-blue-400 mb-4">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3 hindi">पूर्णिमा</h3>
+                <p class="text-gray-300 text-lg mb-2">6 अक्टूबर, सोमवार</p>
+                <p class="text-gray-400 hindi">अश्विन पूर्णिमा</p>
+                <p class="text-gray-400 text-sm mt-2 hindi">(शुक्ल पक्ष समाप्त)</p>
+            </div>
+            
+            <div class="glass-card p-6 rounded-2xl fade-in text-center">
+                <div class="text-4xl text-gray-400 mb-4">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3 hindi">अमावस्या</h3>
+                <p class="text-gray-300 text-lg mb-2">20 अक्टूबर, सोमवार</p>
+                <p class="text-gray-400 hindi">कार्तिक अमावस्या</p>
+                <p class="text-gray-400 text-sm mt-2 hindi">(कृष्ण पक्ष समाप्त)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Specific Info -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card p-6 rounded-2xl fade-in">
+            <div class="flex items-start">
+                <i class="fas fa-map-marker-alt text-amber-300 text-2xl mt-1 mr-4"></i>
                 <div>
-                    <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">क्या न करें</h4>
-                    <ul class="list-disc list-inside text-gray-300 space-y-2 hindi">
-                        <li>मांस-मदिरा का सेवन न करें</li>
-                        <li>किसी का अपमान न करें</li>
-                        <li>चोरी, झूठ और छल से बचें</li>
-                        <li>राहु काल में महत्वपूर्ण कार्य न करें</li>
-                        <li>अमावस्या और पूर्णिमा को बाल न कटवाएं</li>
-                    </ul>
+                    <h3 class="text-2xl font-bold text-white mb-3 hindi">लखनऊ, भारत के लिए विशेष</h3>
+                    <p class="text-gray-300 hindi mb-4">
+                        यह पंचांग लखनऊ, उत्तर प्रदेश के समयानुसार तैयार किया गया है। सूर्योदय और सूर्यास्त का समय 
+                        लखनऊ के geographical coordinates के अनुसार है।
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-300"><strong>अक्टूबर में सूर्योदय:</strong> 06:15 AM के आसपास</p>
+                            <p class="text-gray-300"><strong>अक्टूबर में सूर्यास्त:</strong> 05:45 PM के आसपास</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-300"><strong>स्थान:</strong> लखनऊ, उत्तर प्रदेश</p>
+                            <p class="text-gray-300"><strong>समय क्षेत्र:</strong> IST (UTC+5:30)</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1429,442 +550,30 @@
     <footer class="glass-card text-center py-12 mt-12">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-center space-x-6 mb-8 text-2xl">
-                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Facebook">
+                <a href="https://www.facebook.com/jyotishtark" class="text-white hover:text-amber-300 transition">
                     <i class="fab fa-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Instagram">
+                <a href="https://www.instagram.com/jyotishtark/" class="text-white hover:text-amber-300 transition">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Youtube">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Whatsapp">
+                <a href="https://wa.me/918318513814" class="text-white hover:text-amber-300 transition">
                     <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
-                <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
-                    <ul class="space-y-3 footer-links">
-                        <li><a href="index.html" class="text-gray-300">Home</a></li>
-                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
-                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
-                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Panchang</h4>
-                    <ul class="space-y-3 footer-links">
-                        <li><a href="panchang.html" class="text-gray-300">Daily Panchang</a></li>
-                        <li><a href="monthly-panchang.html" class="text-gray-300">Monthly Panchang</a></li>
-                        <li><a href="festivals.html" class="text-gray-300">Festivals</a></li>
-                        <li><a href="muhurat.html" class="text-gray-300">Auspicious Times</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
-                    <ul class="space-y-3 footer-links">
-                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
-                        <li><a href="disclaimer.html" class="text-gray-300">Disclaimer</a></li>
-                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
-                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
-                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
-                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
-                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
-                </div>
-            </div>
             <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+            <p class="text-gray-500 text-xs mt-2">लखनऊ, भारत के लिए विशेष रूप से तैयार</p>
         </div>
     </footer>
-    
+
     <script>
-    // Mobile Menu Toggle
-    document.getElementById('menuToggle').addEventListener('click', function() {
-        const mobileNav = document.getElementById('mobileNav');
-        mobileNav.classList.toggle('hidden');
-        
-        // Change icon based on menu state
-        const icon = this.querySelector('i');
-        if (mobileNav.classList.contains('hidden')) {
-            icon.className = 'fas fa-bars';
-        } else {
-            icon.className = 'fas fa-times';
-        }
-    });
-
-    // Mobile Dropdown Toggles
-    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const dropdown = this.closest('.mobile-dropdown');
-            dropdown.classList.toggle('active');
-        });
-    });
-
-    // WhatsApp Popup Toggle
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
-
-    if (whatsappButton && whatsappPopup) {
-        whatsappButton.addEventListener('click', function() {
-            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close WhatsApp popup when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-                whatsappPopup.style.display = 'none';
-            }
-        });
-    }
-
-    // Create cosmic particles
-    function createCosmicParticles() {
-        const container = document.getElementById('cosmicParticles');
-        const particleCount = 50;
-        
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('cosmic-particle');
-            
-            // Random position
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            particle.style.left = `${left}%`;
-            particle.style.top = `${top}%`;
-            
-            // Random size
-            const size = Math.random() * 3 + 1;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            
-            // Random animation delay
-            const delay = Math.random() * 5;
-            particle.style.animationDelay = `${delay}s`;
-            
-            container.appendChild(particle);
-        }
-    }
-    
-    // October 2025 Festival Data
-    const october2025Festivals = [
-        { date: 1, name: "Durga Maha Navami / Maha Navami Puja", type: "festival", panchang: "Ashwin Shukla Navami" },
-        { date: 2, name: "Dussehra (Vijayadashami) / Durga Visarjan", type: "festival", panchang: "Ashwin Shukla Dashami" },
-        { date: 3, name: "Papankusha Ekadashi Vrat", type: "vrat", panchang: "Ashwin Shukla Ekadashi" },
-        { date: 4, name: "Shani Pradosh Vrat", type: "vrat", panchang: "Ashwin Shukla Dwadashi/Trayodashi" },
-        { date: 6, name: "Sharad Purnima Vrat / Kojagara Puja", type: "vrat", panchang: "Ashwin Purnima (Full Moon)" },
-        { date: 7, name: "Valmiki Jayanti / Ashvin Purnima Snan-Daan", type: "festival", panchang: "Kartik Month begins" },
-        { date: 10, name: "Karwa Chauth / Sankashti Chaturthi", type: "vrat", panchang: "Kartik Krishna Chaturthi" },
-        { date: 13, name: "Ahoi Ashtami Vrat", type: "vrat", panchang: "Kartik Krishna Ashtami" },
-        { date: 17, name: "Rama Ekadashi Vrat / Tula Sankranti", type: "vrat", panchang: "Kartik Krishna Ekadashi" },
-        { date: 18, name: "Dhanteras (Dhan Trayodashi)", type: "festival", panchang: "Kartik Krishna Trayodashi" },
-        { date: 19, name: "Kali Chaudas / Narak Chaturdashi (Chhoti Diwali)", type: "festival", panchang: "Kartik Krishna Chaturdashi" },
-        { date: 20, name: "Diwali (Deepawali) / Lakshmi Puja", type: "festival", panchang: "Amavasya (New Moon)" },
-        { date: 22, name: "Govardhan Puja / Annakoot", type: "festival", panchang: "Kartik Shukla Dvitiya" },
-        { date: 23, name: "Bhai Dooj (Bhaiya Duj)", type: "festival", panchang: "Kartik Shukla Tritiya" },
-        { date: 25, name: "Chhath Puja begins (Nahay Khay) / Vinayaka Chaturthi", type: "festival", panchang: "Kartik Shukla Chaturthi" },
-        { date: 27, name: "Chhath Puja (Sandhya Arghya)", type: "festival", panchang: "Kartik Shukla Shashthi" },
-        { date: 28, name: "Chhath Puja (Usha Arghya, Parana) / Gopashtami", type: "festival", panchang: "Kartik Shukla Saptami" },
-        { date: 31, name: "Akshay Navami (Amla Navami)", type: "festival", panchang: "Kartik Shukla Navami" }
-    ];
-
-    // Auspicious Muhurat Data
-    const auspiciousMuhurat = [
-        { purpose: "Griha Pravesh (House Warming)", dates: "October 23, 24, 29", time: "Morning Hours", note: "Most Auspicious" },
-        { purpose: "Property Purchase", dates: "October 16, 17, 23, 24", time: "Abhijit Muhurat", note: "Favorable" },
-        { purpose: "Vehicle Purchase", dates: "October 2, 3, 5, 10, 12, 13, 15, 24, 29, 30, 31", time: "Vijaya Muhurat", note: "Good Nakshatras" },
-        { purpose: "Marriage (Vivah)", dates: "No Auspicious Muhurat", time: "N/A", note: "Not Recommended" }
-    ];
-
-    // Render October 2025 Calendar with proper alignment
-function renderOctober2025Calendar() {
-    const calendarGrid = document.getElementById('calendarGrid');
-    calendarGrid.innerHTML = '';
-
-    // October 2025 calendar structure
-    // Week 1: 29 30 1* 2* 3* 4* 5
-    // Week 2: 6* 7* 8 9 10* 11 12
-    // Week 3: 13* 14 15 16 17* 18* 19*
-    // Week 4: 20* 21 22* 23* 24 25* 26
-    // Week 5: 27* 28* 29 30 31*
-    
-    const octoberDays = [
-        // Week 1 (Sept 29, 30 + Oct 1-5)
-        { day: 29, previous: true }, { day: 30, previous: true },
-        { day: 1, festival: true, name: "Durga Maha Navami" },
-        { day: 2, festival: true, name: "Dussehra" },
-        { day: 3, vrat: true, name: "Papankusha Ekadashi" },
-        { day: 4, vrat: true, name: "Shani Pradosh Vrat" },
-        { day: 5, normal: true },
-        
-        // Week 2 (Oct 6-12)
-        { day: 6, purnima: true, name: "Sharad Purnima" },
-        { day: 7, festival: true, name: "Valmiki Jayanti" },
-        { day: 8, normal: true },
-        { day: 9, normal: true },
-        { day: 10, vrat: true, name: "Karwa Chauth" },
-        { day: 11, normal: true },
-        { day: 12, normal: true },
-        
-        // Week 3 (Oct 13-19)
-        { day: 13, vrat: true, name: "Ahoi Ashtami" },
-        { day: 14, normal: true },
-        { day: 15, normal: true },
-        { day: 16, normal: true },
-        { day: 17, vrat: true, name: "Rama Ekadashi" },
-        { day: 18, festival: true, name: "Dhanteras" },
-        { day: 19, festival: true, name: "Kali Chaudas" },
-        
-        // Week 4 (Oct 20-26)
-        { day: 20, amavasya: true, festival: true, name: "Diwali" },
-        { day: 21, normal: true },
-        { day: 22, festival: true, name: "Govardhan Puja" },
-        { day: 23, festival: true, name: "Bhai Dooj" },
-        { day: 24, normal: true },
-        { day: 25, festival: true, name: "Chhath Puja" },
-        { day: 26, normal: true },
-        
-        // Week 5 (Oct 27-31)
-        { day: 27, festival: true, name: "Chhath Puja" },
-        { day: 28, festival: true, name: "Chhath Puja" },
-        { day: 29, normal: true },
-        { day: 30, normal: true },
-        { day: 31, festival: true, name: "Akshay Navami" }
-    ];
-
-    octoberDays.forEach(dayInfo => {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('calendar-day');
-        
-        if (dayInfo.previous) {
-            dayElement.classList.add('text-gray-500');
-        }
-        
-        if (dayInfo.festival) {
-            dayElement.classList.add('festival');
-        }
-        if (dayInfo.vrat) {
-            dayElement.classList.add('ekadashi');
-        }
-        if (dayInfo.purnima) {
-            dayElement.classList.add('purnima');
-        }
-        if (dayInfo.amavasya) {
-            dayElement.classList.add('amavasya');
-        }
-
-        dayElement.innerHTML = `
-            <div class="${dayInfo.previous ? 'text-gray-500' : 'text-white'}">${dayInfo.day}</div>
-            <div class="tithi-indicator ${dayInfo.previous ? 'text-gray-500' : ''}">${getTithiForDay(dayInfo.day)}</div>
-        `;
-
-        // Add click event only for October days
-        if (!dayInfo.previous) {
-            dayElement.addEventListener('click', function() {
-                document.querySelectorAll('.calendar-day').forEach(d => {
-                    d.classList.remove('active');
-                    d.style.background = '';
-                });
-                this.classList.add('active');
-                this.style.background = 'rgba(126, 34, 206, 0.3)';
-                showDayDetails(dayInfo.day, dayInfo);
+        // Simple initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation to all elements with fade-in class
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
             });
-        }
-
-        calendarGrid.appendChild(dayElement);
-    });
-}
-
-// Enhanced day details function
-function showDayDetails(day, dayInfo) {
-    const dayDetails = document.getElementById('dayDetails');
-    
-    let detailsHTML = `
-        <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">अक्टूबर ${day}, 2025 का पंचांग</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">मूल पंचांग</h4>
-                <div class="space-y-3">
-                    <p class="text-white hindi"><strong>तिथि:</strong> ${getTithiForDay(day)} (06:33 PM तक)</p>
-                    <p class="text-white hindi"><strong>वार:</strong> ${getWeekdayForDay(day)}</p>
-                    <p class="text-white hindi"><strong>नक्षत्र:</strong> ${getNakshatraForDay(day)}</p>
-                    <p class="text-white hindi"><strong>योग:</strong> ${getYogaForDay(day)}</p>
-                    <p class="text-white hindi"><strong>करण:</strong> ${getKaranForDay(day)}</p>
-                    <p class="text-white hindi"><strong>सूर्योदय:</strong> 06:15 AM</p>
-                    <p class="text-white hindi"><strong>सूर्यास्त:</strong> 06:05 PM</p>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">${dayInfo.festival || dayInfo.vrat ? 'विशेष कार्यक्रम' : 'शुभ मुहूर्त'}</h4>
-    `;
-    
-    if (dayInfo.festival || dayInfo.vrat) {
-        detailsHTML += `
-            <div class="space-y-3">
-                <p class="text-white hindi"><strong>कार्यक्रम:</strong> ${dayInfo.name}</p>
-                <p class="good-muhurat hindi"><strong>महत्व:</strong> ${getEventSignificance(dayInfo)}</p>
-                <p class="good-muhurat hindi"><strong>पूजा समय:</strong> ${getPujaTime(day)}</p>
-                <p class="hindi"><strong>विशेष निर्देश:</strong> ${getSpecialInstructions(dayInfo)}</p>
-            </div>
-        `;
-    } else {
-        detailsHTML += `
-            <div class="space-y-3">
-                <p class="good-muhurat hindi"><strong>ब्रह्म मुहूर्त:</strong> 04:46 AM - 05:34 AM</p>
-                <p class="good-muhurat hindi"><strong>अभिजीत मुहूर्त:</strong> 11:46 AM - 12:34 PM</p>
-                <p class="good-muhurat hindi"><strong>गोचर:</strong> शुभ</p>
-                <p class="bad-muhurat hindi"><strong>राहु काल:</strong> ${getRahuKalam(day)}</p>
-                <p class="bad-muhurat hindi"><strong>यमगंड:</strong> ${getYamagandam(day)}</p>
-                <p class="hindi"><strong>दिशा शूल:</strong> ${getDishaShool(day)}</p>
-            </div>
-        `;
-    }
-    
-    detailsHTML += `</div></div>`;
-    dayDetails.innerHTML = detailsHTML;
-}
-
-// Helper functions for panchang details
-function getTithiForDay(day) {
-    const tithis = ["नवमी", "दशमी", "एकादशी", "द्वादशी", "त्रयोदशी", "चतुर्दशी", "पूर्णिमा", 
-                   "प्रतिपदा", "द्वितीया", "तृतीया", "चतुर्थी", "पंचमी", "षष्ठी", "सप्तमी", "अष्टमी"];
-    return tithis[(day - 1) % 15];
-}
-
-function getWeekdayForDay(day) {
-    const weekdays = ["बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार", "सोमवार", "मंगलवार"];
-    return weekdays[(day - 1) % 7];
-}
-function getEventSignificance(dayInfo) {
-    if (dayInfo.name.includes("Diwali")) return "प्रकाश का पर्व, लक्ष्मी पूजन";
-    if (dayInfo.name.includes("Dussehra")) return "बुराई पर अच्छाई की जीत";
-    if (dayInfo.name.includes("Ekadashi")) return "विष्णु भगवान की पूजा";
-    return "शुभ कार्यों के लिए उत्तम दिन";
-}
-
-function getPujaTime(day) {
-    return "06:00 PM - 08:00 PM";
-}
-
-function getSpecialInstructions(dayInfo) {
-    if (dayInfo.name.includes("Diwali")) return "दीप दान करें, लक्ष्मी पूजन करें";
-    if (dayInfo.name.includes("Ekadashi")) return "उपवास रखें, भगवान विष्णु का पूजन करें";
-    return "शुभ कार्य करें, दान दें";
-}
-
-function getNakshatraForDay(day) {
-    const nakshatras = ["उत्तराभाद्रपद", "रेवती", "अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा"];
-    return nakshatras[(day - 1) % 7] + " (09:34 AM तक)";
-}
-
-function getYogaForDay(day) {
-    const yogas = ["धृति", "शूल", "गंड", "वृद्धि", "ध्रुव", "व्याघात", "हर्षण"];
-    return yogas[(day - 1) % 7] + " (09:45 PM तक)";
-}
-
-function getKaranForDay(day) {
-    const karans = ["वणिज", "विष्टि", "बव", "बालव", "कौलव", "तैतिल", "गर"];
-    return karans[(day - 1) % 7] + " (06:58 AM तक)";
-}
-
-function getRahuKalam(day) {
-    const times = ["10:47 AM - 12:15 PM", "09:15 AM - 10:47 AM", "07:45 AM - 09:15 AM", "03:00 PM - 04:30 PM", "01:30 PM - 03:00 PM", "12:15 PM - 01:30 PM", "04:30 PM - 06:00 PM"];
-    return times[(day - 1) % 7];
-}
-
-function getYamagandam(day) {
-    const times = ["03:00 PM - 04:30 PM", "01:30 PM - 03:00 PM", "12:15 PM - 01:30 PM", "10:47 AM - 12:15 PM", "09:15 AM - 10:47 AM", "07:45 AM - 09:15 AM", "04:30 PM - 06:00 PM"];
-    return times[(day - 1) % 7];
-}
-
-function getDishaShool(day) {
-    const directions = ["पश्चिम", "उत्तर", "पूर्व", "दक्षिण", "आकाश", "पाताल", "सर्व"];
-    return directions[(day - 1) % 7];
-}
-
-    // Populate festivals list
-    function populateFestivalsList() {
-        const festivalList = document.querySelector('.festival-list');
-        festivalList.innerHTML = '';
-
-        october2025Festivals.filter(f => f.type === 'festival').forEach(festival => {
-            const festivalItem = document.createElement('div');
-            festivalItem.className = 'festival-item';
-            festivalItem.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="festival-date">${festival.date} अक्टूबर</div>
-                        <div class="festival-name hindi">${festival.name}</div>
-                    </div>
-                    <span class="muhurat-badge good-badge">शुभ</span>
-                </div>
-                <div class="festival-details hindi mt-2">${festival.panchang}</div>
-            `;
-            festivalList.appendChild(festivalItem);
         });
-    }
-
-    // Populate vrats list
-    function populateVratsList() {
-        const vratList = document.querySelector('.vrat-list');
-        vratList.innerHTML = '';
-
-        october2025Festivals.filter(f => f.type === 'vrat').forEach(vrat => {
-            const vratItem = document.createElement('div');
-            vratItem.className = 'vrat-item';
-            vratItem.innerHTML = `
-                <div>
-                    <div class="vrat-name hindi">${vrat.name}</div>
-                    <div class="festival-details hindi">${vrat.panchang}</div>
-                </div>
-                <div class="vrat-date">${vrat.date} अक्टूबर</div>
-            `;
-            vratList.appendChild(vratItem);
-        });
-    }
-
-    // Populate muhurat table
-    function populateMuhuratTable() {
-        const muhuratTable = document.querySelector('table tbody');
-        muhuratTable.innerHTML = '';
-
-        auspiciousMuhurat.forEach(muhurat => {
-            const row = document.createElement('tr');
-            row.className = 'border-b border-gray-700';
-            row.innerHTML = `
-                <td class="p-3 hindi">${muhurat.purpose}</td>
-                <td class="p-3">${muhurat.dates}</td>
-                <td class="p-3">${muhurat.time}</td>
-                <td class="p-3 hindi">${muhurat.note}</td>
-                <td class="p-3"><span class="muhurat-badge ${muhurat.purpose.includes('No') ? 'bad-badge' : 'good-badge'}">${muhurat.purpose.includes('No') ? 'अशुभ' : 'शुभ'}</span></td>
-            `;
-            muhuratTable.appendChild(row);
-        });
-    }
-
-    // Initialize the page
-    function init() {
-        createCosmicParticles();
-        renderOctober2025Calendar();
-        populateFestivalsList();
-        populateVratsList();
-        populateMuhuratTable();
-        
-        // Show today's details by default
-        const today = new Date();
-        if (today.getMonth() === 9 && today.getFullYear() === 2025) {
-            showDayDetails(today.getDate());
-        } else {
-            showDayDetails(1); // Show October 1st by default
-        }
-    }
-
-    // Run initialization when DOM is loaded
-    document.addEventListener('DOMContentLoaded', init);
-</script>
+    </script>
 </body>
 </html>
