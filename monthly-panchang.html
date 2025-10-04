@@ -1146,36 +1146,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Day Details -->
-    <div class="glass-card p-6 rounded-2xl mt-8 fade-in" id="dayDetails">
-        <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">अक्टूबर 1, 2025 का पंचांग</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">मूल पंचांग</h4>
-                <div class="space-y-3">
-                    <p class="text-white hindi"><strong>तिथि:</strong> नवमी (06:33 PM तक)</p>
-                    <p class="text-white hindi"><strong>वार:</strong> बुधवार</p>
-                    <p class="text-white hindi"><strong>नक्षत्र:</strong> उत्तराभाद्रपद (09:34 AM तक)</p>
-                    <p class="text-white hindi"><strong>योग:</strong> धृति (09:45 PM तक)</p>
-                    <p class="text-white hindi"><strong>करण:</strong> वणिज (06:58 AM तक)</p>
-                    <p class="text-white hindi"><strong>सूर्योदय:</strong> 06:15 AM</p>
-                    <p class="text-white hindi"><strong>सूर्यास्त:</strong> 06:05 PM</p>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold text-amber-300 mb-3 hindi">शुभ मुहूर्त</h4>
-                <div class="space-y-3">
-                    <p class="good-muhurat hindi"><strong>ब्रह्म मुहूर्त:</strong> 04:46 AM - 05:34 AM</p>
-                    <p class="good-muhurat hindi"><strong>अभिजीत मुहूर्त:</strong> 11:46 AM - 12:34 PM</p>
-                    <p class="good-muhurat hindi"><strong>गोचर:</strong> शुभ</p>
-                    <p class="bad-muhurat hindi"><strong>राहु काल:</strong> 10:47 AM - 12:15 PM</p>
-                    <p class="bad-muhurat hindi"><strong>यमगंड:</strong> 03:00 PM - 04:30 PM</p>
-                    <p class="hindi"><strong>दिशा शूल:</strong> पश्चिम</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
     <!-- Festivals and Vrats -->
     <section id="festivals" class="max-w-6xl mx-auto px-4 py-16">
@@ -1759,9 +1729,31 @@ function showDayDetails(day, dayInfo) {
 }
 
 // Helper functions for panchang details
+function getTithiForDay(day) {
+    const tithis = ["नवमी", "दशमी", "एकादशी", "द्वादशी", "त्रयोदशी", "चतुर्दशी", "पूर्णिमा", 
+                   "प्रतिपदा", "द्वितीया", "तृतीया", "चतुर्थी", "पंचमी", "षष्ठी", "सप्तमी", "अष्टमी"];
+    return tithis[(day - 1) % 15];
+}
+
 function getWeekdayForDay(day) {
     const weekdays = ["बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार", "सोमवार", "मंगलवार"];
     return weekdays[(day - 1) % 7];
+}
+function getEventSignificance(dayInfo) {
+    if (dayInfo.name.includes("Diwali")) return "प्रकाश का पर्व, लक्ष्मी पूजन";
+    if (dayInfo.name.includes("Dussehra")) return "बुराई पर अच्छाई की जीत";
+    if (dayInfo.name.includes("Ekadashi")) return "विष्णु भगवान की पूजा";
+    return "शुभ कार्यों के लिए उत्तम दिन";
+}
+
+function getPujaTime(day) {
+    return "06:00 PM - 08:00 PM";
+}
+
+function getSpecialInstructions(dayInfo) {
+    if (dayInfo.name.includes("Diwali")) return "दीप दान करें, लक्ष्मी पूजन करें";
+    if (dayInfo.name.includes("Ekadashi")) return "उपवास रखें, भगवान विष्णु का पूजन करें";
+    return "शुभ कार्य करें, दान दें";
 }
 
 function getNakshatraForDay(day) {
