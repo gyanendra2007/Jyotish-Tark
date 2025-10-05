@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /index.html
+Sitemap: https://jyotishtark.in/news-sitemap.xml
+Sitemap: https://jyotishtark.in/sitemap.xml
