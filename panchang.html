@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>हिंदी पंचांग | आज का पंचांग | Jyotish Tark</title>
+    <title>आज का पंचांग - <span id="current-date-display"></span> | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang" />
-    <meta name="description" content="Jyotish Tark - हिंदी में पूरा पंचांग। आज का तिथि, वार, नक्षत्र, योग और करण जानें। दैनिक पंचांग और शुभ मुहूर्त।">
+    <meta name="description" content="<span id='current-date-desc'></span> का पूरा पंचांग: आज की तिथि, वार, नक्षत्र, योग और करण की जानकारी। शुभ मुहूर्त और राहुकाल। दैनिक पंचांग और शुभ मुहूर्त।">
     <meta name="keywords" content="पंचांग, आज का पंचांग, हिंदी पंचांग, तिथि, वार, नक्षत्र, योग, करण, शुभ मुहूर्त, हिंदी कैलेंडर, वैदिक कैलेंडर, ज्योतिषीय कैलेंडर, पंचांग 2025, दैनिक पंचांग, पंचांग दर्शन, Jyotish Tark">
     <meta name="author" content="Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
@@ -1568,6 +1568,30 @@ function updateCountdown() {
                 }
             });
         }
+        // Dynamic meta tags update function
+function updateDynamicMetaTags() {
+    const now = new Date();
+    
+    // Hindi date format
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const hindiDate = now.toLocaleDateString('hi-IN', options);
+    
+    // Update title
+    document.title = `आज का पंचांग - ${hindiDate} | Jyotish Tark`;
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+        metaDescription.content = `${hindiDate} का पूरा पंचांग: आज की तिथि, वार, नक्षत्र, योग और करण की जानकारी। शुभ मुहूर्त और राहुकाल।`;
+    }
+    
+    // Update display date
+    const dateDisplay = document.getElementById('current-date-display');
+    const dateDesc = document.getElementById('current-date-desc');
+    
+    if (dateDisplay) dateDisplay.textContent = hindiDate;
+    if (dateDesc) dateDesc.textContent = hindiDate;
+}
         
         // Update Panchang details with current date
         function updatePanchang() {
@@ -1580,17 +1604,17 @@ function updateCountdown() {
             // For now, we'll use static data as an example
         }
         
-        // Initialize the page
-        function init() {
-            createCosmicParticles();
-            updatePanchang();
-            updateCurrentTime();
-            setInterval(updateCurrentTime, 1000);
-            
-            // Initial animation on scroll
-            animateOnScroll();
-            window.addEventListener('scroll', animateOnScroll);
-        }
+        // Initialize function call karein
+       function init() {
+       createCosmicParticles();
+       updatePanchang();
+       updateCurrentTime();
+       updateDynamicMetaTags(); // YE LINE ADD KAREIN
+       setInterval(updateCurrentTime, 1000);
+    
+       animateOnScroll();
+       window.addEventListener('scroll', animateOnScroll);
+      }
         
         // Run initialization when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
