@@ -1,4 +1,38 @@
 User-agent: *
-Disallow: /index.html
-Sitemap: https://jyotishtark.in/news-sitemap.xml
+Allow: /
+
+# Sitemaps
 Sitemap: https://jyotishtark.in/sitemap.xml
+Sitemap: https://jyotishtark.in/news-sitemap.xml
+
+# Allow all important pages
+Allow: /index.html
+Allow: /kundali-form.html
+Allow: /numerology.html
+Allow: /tarot.html
+Allow: /vastu.html
+Allow: /palmistry.html
+Allow: /rashifal.html
+Allow: /weekly-rashifal.html
+Allow: /monthly-rashifal.html
+Allow: /panchang.html
+Allow: /rudraksha.html
+Allow: /blog.html
+Allow: /contact.html
+
+# Allow CSS and JS files
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+
+# Allow images folder
+Allow: /images/
+
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /cgi-bin/
