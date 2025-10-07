@@ -1102,131 +1102,111 @@
         </div>
     </section>
 
-    <!-- Today's Highlight -->
+    <!-- 🌞 आज का विशेष -->
 <section class="max-w-6xl mx-auto px-4 py-8">
     <div class="today-highlight glass-card p-6 rounded-2xl text-center fade-in">
         <h3 class="text-2xl font-bold text-white mb-4 hindi">आज का विशेष</h3>
-        <p class="text-lg text-amber-300 mb-2 hindi">पूर्णिमा व्रत / पयूर्मिमा</p>
-        <p class="text-gray-300 hindi">आज पूर्णिमा की तिथि है। इस दिन चंद्रमा की पूर्णता होती है, अनुष्ठान, पूजा और ध्यान के लिए शुभ माना जाता है।</p>
+        <p class="text-lg text-amber-300 mb-2 hindi">कृष्ण पक्ष द्वितीया</p>
+        <p class="text-gray-300 hindi">कार्तिक मास के कृष्ण पक्ष की द्वितीया तिथि है। यह दिन मन की शांति, ध्यान और व्रत के लिए शुभ माना गया है।</p>
         
-        <!-- Countdown to next Tithi -->
+        <!-- Countdown -->
         <div class="mt-6">
-            <p class="text-gray-300 mb-2 hindi">अगली तिथि तक शेष:</p>
+            <p class="text-gray-300 mb-2 hindi">अगली तिथि तक शेष समय:</p>
             <div class="countdown">
                 <div class="countdown-item">
                     <div class="countdown-value" id="countdown-hours">--</div>
-                    <div class="countdown-label">घंटे</div>
+                    <div class="countdown-label hindi">घंटे</div>
                 </div>
                 <div class="countdown-item">
                     <div class="countdown-value" id="countdown-minutes">--</div>
-                    <div class="countdown-label">मिनट</div>
+                    <div class="countdown-label hindi">मिनट</div>
                 </div>
                 <div class="countdown-item">
                     <div class="countdown-value" id="countdown-seconds">--</div>
-                    <div class="countdown-label">सेकंड</div>
+                    <div class="countdown-label hindi">सेकंड</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Today's Panchang Section -->
+<!-- 🕉️ आज का पंचांग -->
 <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
     <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-            आज का पंचांग
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-            आज के पंचांग की पूरी जानकारी — तिथि, वार, नक्षत्र, योग, करण और राहुकाल।
-        </p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">आज का पंचांग</h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">आज के पंचांग की सम्पूर्ण जानकारी — तिथि, वार, नक्षत्र, योग, करण, राहुकाल और शुभ मुहूर्त।</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Tithi Card -->
+        <!-- तिथि -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-moon"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-moon"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">तिथि</h3>
-            <div class="panchang-value hindi" id="tithi">पूर्णिमा (तिथि शुरू 12:24 बजे से)</div>
-            <p class="text-gray-300 mt-2 hindi">शुक्ल पक्ष</p>
+            <div class="panchang-value hindi">कृष्ण पक्ष द्वितीया<br>(02:22 AM तक), तत्पश्चात तृतीया</div>
+            <p class="text-gray-300 mt-2 hindi">कार्तिक मास</p>
         </div>
 
-        <!-- Vara Card -->
+        <!-- वार -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-sun"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-sun"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">वार</h3>
-            <div class="panchang-value hindi" id="vara">सोमवार</div>
-            <p class="text-gray-300 mt-2 hindi">चंद्र तथा शांतिपूर्ण दिन</p>
+            <div class="panchang-value hindi">बुधवार</div>
+            <p class="text-gray-300 mt-2 hindi">ज्ञान और व्यापार के लिए शुभ दिन</p>
         </div>
 
-        <!-- Nakshatra Card -->
+        <!-- नक्षत्र -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-star"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-star"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">नक्षत्र</h3>
-            <div class="panchang-value hindi" id="nakshatra">उत्तरभाद्रपद (सुबह 04:01 तक), फिर रेवती</div>
-            <p class="text-gray-300 mt-2 hindi">समय के अनुसार नक्षत्र परिवर्तन</p>
+            <div class="panchang-value hindi">अश्विनी (10:44 PM तक), तत्पश्चात भरणी</div>
+            <p class="text-gray-300 mt-2 hindi">नक्षत्र परिवर्तन रात्रि में</p>
         </div>
 
-        <!-- Yoga Card -->
+        <!-- योग -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-infinity"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-infinity"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">योग</h3>
-            <div class="panchang-value hindi" id="yoga">वृद्धि (दोपहर 01:13 बजे तक), फिर ध्रुव</div>
-            <p class="text-gray-300 mt-2 hindi">वृद्धि योग बाद में ध्रुव योग</p>
+            <div class="panchang-value hindi">हर्षण योग (01:32 AM तक), तत्पश्चात वज्र योग</div>
+            <p class="text-gray-300 mt-2 hindi">हर्षण के बाद वज्र योग</p>
         </div>
 
-        <!-- Karana Card -->
+        <!-- करण -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-hourglass-half"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-hourglass-half"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">करण</h3>
-            <div class="panchang-value hindi" id="karana">वणिज (सुबह – दोपहर 12:24 तक), फिर विष्टि</div>
-            <p class="text-gray-300 mt-2 hindi">वणिज के बाद विष्टि</p>
+            <div class="panchang-value hindi">तैतिल (04:08 PM तक), तत्पश्चात गर करण</div>
+            <p class="text-gray-300 mt-2 hindi">तैतिल के बाद गर करण</p>
         </div>
 
-        <!-- Rahu Kaal Card -->
+        <!-- राहुकाल -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-skull-crossbones"></i>
-            </div>
-            <h3 class="text-xl font-bold text-white mb-2 hindi">राहु काल</h3>
-            <div class="panchang-value hindi" id="rahu-kaal">07:32 AM – 08:59 AM</div>
-            <p class="text-gray-300 mt-2 hindi">अशुभ समय</p>
+            <div class="panchang-icon"><i class="fas fa-skull-crossbones"></i></div>
+            <h3 class="text-xl font-bold text-white mb-2 hindi">राहुकाल</h3>
+            <div class="panchang-value hindi">01:57 PM – 03:27 PM</div>
+            <p class="text-gray-300 mt-2 hindi">इस अवधि में शुभ कार्य वर्जित हैं</p>
         </div>
     </div>
 
-    <!-- Date and Location -->
+    <!-- तारीख व स्थान -->
     <div class="glass-card p-6 rounded-2xl mt-8 text-center fade-in">
         <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0">
                 <h3 class="text-xl font-bold text-white hindi">आज की तारीख</h3>
-                <p class="text-gray-300 text-lg" id="today-date">06 अक्टूबर, 2025</p>
+                <p class="text-gray-300 text-lg hindi">08 अक्टूबर, 2025</p>
             </div>
             <div>
                 <h3 class="text-xl font-bold text-white hindi">स्थान</h3>
-                <p class="text-gray-300 text-lg">लखनऊ, भारत</p>
+                <p class="text-gray-300 text-lg hindi">लखनऊ, भारत</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Muhurat Section -->
+<!-- 🕉️ आज के शुभ मुहूर्त -->
 <section id="muhurat" class="max-w-6xl mx-auto px-4 py-16">
     <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-            आज के शुभ मुहूर्त
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-            आज के शुभ और अशुभ समय की जानकारी। महत्वपूर्ण कार्यों के लिए उपयुक्त समय।
-        </p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">आज के शुभ मुहूर्त</h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">महत्वपूर्ण कार्यों के लिए आज के सर्वश्रेष्ठ समय।</p>
     </div>
 
     <div class="important-note mb-8 fade-in">
@@ -1234,7 +1214,7 @@
             <i class="fas fa-info-circle text-amber-300 text-xl mt-1 mr-3"></i>
             <div>
                 <h4 class="font-bold text-white mb-2 hindi">आज का विशेष ध्यान</h4>
-                <p class="text-gray-300 hindi">राहु काल (07:32 AM – 08:59 AM) में नए कार्य प्रारंभ न करें।</p>
+                <p class="text-gray-300 hindi">राहुकाल (01:57 PM – 03:27 PM) के दौरान कोई नया कार्य आरम्भ न करें।</p>
             </div>
         </div>
     </div>
@@ -1250,65 +1230,60 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hindi">ब्रह्म मुहूर्त <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>04:48 AM - 05:36 AM</td>
-                    <td class="good-muhurat hindi">ध्यान, पूजा और अध्ययन के लिए उत्तम</td>
+                    <td class="hindi">ब्रह्म मुहूर्त</td>
+                    <td>04:48 AM – 05:36 AM</td>
+                    <td class="hindi">ध्यान, साधना और जप के लिए श्रेष्ठ</td>
                 </tr>
                 <tr>
-                    <td class="hindi">अभिजीत मुहूर्त <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>11:51 AM - 12:38 PM</td>
-                    <td class="good-muhurat hindi">दिन का सबसे शुभ समय, सभी कार्यों के लिए उत्तम</td>
+                    <td class="hindi">अभिजीत मुहूर्त</td>
+                    <td>11:45 AM – 12:32 PM</td>
+                    <td class="hindi">सभी कार्यों के लिए शुभ समय</td>
                 </tr>
                 <tr>
-                    <td class="hindi">अमृत काल <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>11:18 PM - 12:45 AM</td>
-                    <td class="good-muhurat hindi">शुभ समय अनुष्ठान और पूजा के लिए</td>
+                    <td class="hindi">गुलिक काल</td>
+                    <td>10:30 AM – 11:58 AM</td>
+                    <td class="hindi">शुभ कार्यों से बचें</td>
                 </tr>
                 <tr>
-                    <td class="hindi">राहु काल <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>07:32 AM – 08:59 AM</td>
-                    <td class="bad-muhurat hindi">नए कार्य शुरू करने के लिए वर्जित</td>
+                    <td class="hindi">यमगण्ड</td>
+                    <td>07:29 AM – 08:58 AM</td>
+                    <td class="hindi">अशुभ समय</td>
                 </tr>
                 <tr>
-                    <td class="hindi">यमगंड <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>10:27 AM – 11:54 AM</td>
-                    <td class="bad-muhurat hindi">महत्वपूर्ण कार्यों के लिए वर्जित</td>
-                </tr>
-                <tr>
-                    <td class="hindi">गुलिक काल <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>01:21 PM – 02:48 PM</td>
-                    <td class="bad-muhurat hindi">शुभ कार्य से बचें</td>
+                    <td class="hindi">अमृत काल</td>
+                    <td>11:18 PM – 12:45 AM</td>
+                    <td class="hindi">पूजा, अनुष्ठान हेतु शुभ</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- अन्य विवरण -->
     <div class="glass-card p-6 rounded-2xl mt-8 fade-in">
         <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">अन्य पंचांग विवरण</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्र राशि:</strong> मीन</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्य राशि:</strong> कन्या</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">शक संवत:</strong> 1947 (विश्वावसु)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">विक्रम संवत:</strong> 2082 (कालयुक्त)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">दिशा शूल:</strong> पूर्व</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्योदय:</strong> 06:18 AM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्यास्त:</strong> 05:59 PM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चन्द्रोदय:</strong> 07:39 PM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्रास्त:</strong> 08:30 AM (अगले दिन)</p>
             </div>
             <div>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्योदय:</strong> 06:24 AM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्यास्त:</strong> 06:05 PM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चन्द्रोदय:</strong> 05:34 PM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्रास्त:</strong> 06:16 AM (अगले दिन)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">आज का व्रत:</strong> पूर्णिमा</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्र राशि:</strong> मेष</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्य राशि:</strong> कन्या</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">विक्रम संवत:</strong> 2082 (कालयुक्त)</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">शक संवत:</strong> 1947 (विश्वावसु)</p>
             </div>
         </div>
     </div>
 
+    <!-- आज के शुभ योग -->
     <div class="glass-card p-6 rounded-2xl mt-8 fade-in">
         <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">आज के शुभ योग</h3>
         <ul class="list-disc list-inside text-lg text-gray-300 ml-4 hindi">
-            <li class="mb-2"><strong class="text-teal-300">ध्रुव योग:</strong> दोपहर 01:13 बजे से जारी रहेगा</li>
-            <li class="mb-2"><strong class="text-teal-300">वृद्धि योग:</strong> सुबह-दोपहर तक</li>
-            <li class="mb-2"><strong class="text-teal-300">सर्वार्थ सिद्धि योग:</strong> 6:16 से 6:20 तक</li>
+            <li class="mb-2"><strong class="text-teal-300">सर्वार्थ सिद्धि योग:</strong> प्रातःकाल से रात्रि 10:44 PM तक (अश्विनी नक्षत्र में)</li>
+            <li class="mb-2"><strong class="text-teal-300">अमृत सिद्धि योग:</strong> रात्रि 10:44 PM तक (अश्विनी नक्षत्र में)</li>
+            <li class="mb-2"><strong class="text-teal-300">रवि योग:</strong> संपूर्ण दिन</li>
         </ul>
     </div>
 
