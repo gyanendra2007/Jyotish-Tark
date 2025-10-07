@@ -1,63 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
+  <!-- Homepage - Highest Priority -->
   <url>
     <loc>https://jyotishtark.in/</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
 
-  <!-- Main content pages -->
+  <!-- Main Services - High Priority -->
   <url>
     <loc>https://jyotishtark.in/kundali-form.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/numerology.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/rashifal.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/contact.html</loc>
-  </url>
-
-  <!-- Trust pages (create these if not existing) -->
-  <url>
-    <loc>https://jyotishtark.in/privacy-policy.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/terms-of-service.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/about.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/blog.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/palmistry.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/vastu.html</loc>
-  </url>
-  <url>
-    <loc>https://jyotishtark.in/blog-post.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/tarot.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://jyotishtark.in/vastu.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/palmistry.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Daily Content - High Priority -->
+  <url>
     <loc>https://jyotishtark.in/panchang.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/Panchang.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Weekly/Monthly Content - Medium Priority -->
+  <url>
+    <loc>https://jyotishtark.in/weekly-rashifal.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/rashifal.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/monthly-panchang.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://jyotishtark.in/weekly-rashifal.html</loc>
-  </url>
+
+  <!-- Other Services - Medium Priority -->
   <url>
     <loc>https://jyotishtark.in/rudraksha.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog & Content - Medium Priority -->
+  <url>
+    <loc>https://jyotishtark.in/blog.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Trust & Legal Pages - Low Priority -->
+  <url>
+    <loc>https://jyotishtark.in/about.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/contact.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/privacy-policy.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/disclaimer.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/shipping-and-delivery.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/cancellation.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/terms-of-service.html</loc>
+    <lastmod>2025-10-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>
-
