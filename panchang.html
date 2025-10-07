@@ -1102,103 +1102,111 @@
         </div>
     </section>
 
-    <!-- Today's Panchang Section -->
+    <!-- 🌞 आज का विशेष -->
+<section class="max-w-6xl mx-auto px-4 py-8">
+    <div class="today-highlight glass-card p-6 rounded-2xl text-center fade-in">
+        <h3 class="text-2xl font-bold text-white mb-4 hindi">आज का विशेष</h3>
+        <p class="text-lg text-amber-300 mb-2 hindi">कृष्ण पक्ष द्वितीया</p>
+        <p class="text-gray-300 hindi">कार्तिक मास के कृष्ण पक्ष की द्वितीया तिथि है। यह दिन मन की शांति, ध्यान और व्रत के लिए शुभ माना गया है।</p>
+        
+        <!-- Countdown -->
+        <div class="mt-6">
+            <p class="text-gray-300 mb-2 hindi">अगली तिथि तक शेष समय:</p>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="countdown-hours">--</div>
+                    <div class="countdown-label hindi">घंटे</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="countdown-minutes">--</div>
+                    <div class="countdown-label hindi">मिनट</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="countdown-seconds">--</div>
+                    <div class="countdown-label hindi">सेकंड</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 🕉️ आज का पंचांग -->
 <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
     <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-            आज का पंचांग
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-            आज के पंचांग की पूरी जानकारी — तिथि, वार, नक्षत्र, योग, करण और राहुकाल।
-        </p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">आज का पंचांग</h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">आज के पंचांग की सम्पूर्ण जानकारी — तिथि, वार, नक्षत्र, योग, करण, राहुकाल और शुभ मुहूर्त।</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Tithi Card -->
+        <!-- तिथि -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-moon"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-moon"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">तिथि</h3>
-            <div class="panchang-value hindi" id="tithi">पूर्णिमा (तिथि शुरू 12:24 बजे से)</div>
-            <p class="text-gray-300 mt-2 hindi">शुक्ल पक्ष</p>
+            <div class="panchang-value hindi">कृष्ण पक्ष द्वितीया<br>(02:22 AM तक), तत्पश्चात तृतीया</div>
+            <p class="text-gray-300 mt-2 hindi">कार्तिक मास</p>
         </div>
 
-        <!-- Vara Card -->
+        <!-- वार -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-sun"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-sun"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">वार</h3>
-            <div class="panchang-value hindi" id="vara">सोमवार</div>
-            <p class="text-gray-300 mt-2 hindi">चंद्र तथा शांतिपूर्ण दिन</p>
+            <div class="panchang-value hindi">बुधवार</div>
+            <p class="text-gray-300 mt-2 hindi">ज्ञान और व्यापार के लिए शुभ दिन</p>
         </div>
 
-        <!-- Nakshatra Card -->
+        <!-- नक्षत्र -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-star"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-star"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">नक्षत्र</h3>
-            <div class="panchang-value hindi" id="nakshatra">उत्तरभाद्रपद (सुबह 04:01 तक), फिर रेवती</div>
-            <p class="text-gray-300 mt-2 hindi">समय के अनुसार नक्षत्र परिवर्तन</p>
+            <div class="panchang-value hindi">अश्विनी (10:44 PM तक), तत्पश्चात भरणी</div>
+            <p class="text-gray-300 mt-2 hindi">नक्षत्र परिवर्तन रात्रि में</p>
         </div>
 
-        <!-- Yoga Card -->
+        <!-- योग -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-infinity"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-infinity"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">योग</h3>
-            <div class="panchang-value hindi" id="yoga">वृद्धि (दोपहर 01:13 बजे तक), फिर ध्रुव</div>
-            <p class="text-gray-300 mt-2 hindi">वृद्धि योग बाद में ध्रुव योग</p>
+            <div class="panchang-value hindi">हर्षण योग (01:32 AM तक), तत्पश्चात वज्र योग</div>
+            <p class="text-gray-300 mt-2 hindi">हर्षण के बाद वज्र योग</p>
         </div>
 
-        <!-- Karana Card -->
+        <!-- करण -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-hourglass-half"></i>
-            </div>
+            <div class="panchang-icon"><i class="fas fa-hourglass-half"></i></div>
             <h3 class="text-xl font-bold text-white mb-2 hindi">करण</h3>
-            <div class="panchang-value hindi" id="karana">वणिज (सुबह – दोपहर 12:24 तक), फिर विष्टि</div>
-            <p class="text-gray-300 mt-2 hindi">वणिज के बाद विष्टि</p>
+            <div class="panchang-value hindi">तैतिल (04:08 PM तक), तत्पश्चात गर करण</div>
+            <p class="text-gray-300 mt-2 hindi">तैतिल के बाद गर करण</p>
         </div>
 
-        <!-- Rahu Kaal Card -->
+        <!-- राहुकाल -->
         <div class="panchang-card text-center stagger-item">
-            <div class="panchang-icon">
-                <i class="fas fa-skull-crossbones"></i>
-            </div>
-            <h3 class="text-xl font-bold text-white mb-2 hindi">राहु काल</h3>
-            <div class="panchang-value hindi" id="rahu-kaal">07:32 AM – 08:59 AM</div>
-            <p class="text-gray-300 mt-2 hindi">अशुभ समय</p>
+            <div class="panchang-icon"><i class="fas fa-skull-crossbones"></i></div>
+            <h3 class="text-xl font-bold text-white mb-2 hindi">राहुकाल</h3>
+            <div class="panchang-value hindi">01:57 PM – 03:27 PM</div>
+            <p class="text-gray-300 mt-2 hindi">इस अवधि में शुभ कार्य वर्जित हैं</p>
         </div>
     </div>
 
-    <!-- Date and Location -->
+    <!-- तारीख व स्थान -->
     <div class="glass-card p-6 rounded-2xl mt-8 text-center fade-in">
         <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0">
                 <h3 class="text-xl font-bold text-white hindi">आज की तारीख</h3>
-                <p class="text-gray-300 text-lg" id="today-date">06 अक्टूबर, 2025</p>
+                <p class="text-gray-300 text-lg hindi">08 अक्टूबर, 2025</p>
             </div>
             <div>
                 <h3 class="text-xl font-bold text-white hindi">स्थान</h3>
-                <p class="text-gray-300 text-lg">लखनऊ, भारत</p>
+                <p class="text-gray-300 text-lg hindi">लखनऊ, भारत</p>
             </div>
         </div>
     </div>
-  </section>  
+</section>
 
-<!-- Muhurat Section -->
+<!-- 🕉️ आज के शुभ मुहूर्त -->
 <section id="muhurat" class="max-w-6xl mx-auto px-4 py-16">
     <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-            आज के शुभ मुहूर्त
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-            आज के शुभ और अशुभ समय की जानकारी। महत्वपूर्ण कार्यों के लिए उपयुक्त समय।
-        </p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">आज के शुभ मुहूर्त</h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">महत्वपूर्ण कार्यों के लिए आज के सर्वश्रेष्ठ समय।</p>
     </div>
 
     <div class="important-note mb-8 fade-in">
@@ -1206,7 +1214,7 @@
             <i class="fas fa-info-circle text-amber-300 text-xl mt-1 mr-3"></i>
             <div>
                 <h4 class="font-bold text-white mb-2 hindi">आज का विशेष ध्यान</h4>
-                <p class="text-gray-300 hindi">राहु काल (07:32 AM – 08:59 AM) में नए कार्य प्रारंभ न करें।</p>
+                <p class="text-gray-300 hindi">राहुकाल (01:57 PM – 03:27 PM) के दौरान कोई नया कार्य आरम्भ न करें।</p>
             </div>
         </div>
     </div>
@@ -1222,65 +1230,60 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="hindi">ब्रह्म मुहूर्त <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>04:48 AM - 05:36 AM</td>
-                    <td class="good-muhurat hindi">ध्यान, पूजा और अध्ययन के लिए उत्तम</td>
+                    <td class="hindi">ब्रह्म मुहूर्त</td>
+                    <td>04:48 AM – 05:36 AM</td>
+                    <td class="hindi">ध्यान, साधना और जप के लिए श्रेष्ठ</td>
                 </tr>
                 <tr>
-                    <td class="hindi">अभिजीत मुहूर्त <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>11:51 AM - 12:38 PM</td>
-                    <td class="good-muhurat hindi">दिन का सबसे शुभ समय, सभी कार्यों के लिए उत्तम</td>
+                    <td class="hindi">अभिजीत मुहूर्त</td>
+                    <td>11:45 AM – 12:32 PM</td>
+                    <td class="hindi">सभी कार्यों के लिए शुभ समय</td>
                 </tr>
                 <tr>
-                    <td class="hindi">अमृत काल <span class="muhurat-badge good-badge">शुभ</span></td>
-                    <td>11:18 PM - 12:45 AM</td>
-                    <td class="good-muhurat hindi">शुभ समय अनुष्ठान और पूजा के लिए</td>
+                    <td class="hindi">गुलिक काल</td>
+                    <td>10:30 AM – 11:58 AM</td>
+                    <td class="hindi">शुभ कार्यों से बचें</td>
                 </tr>
                 <tr>
-                    <td class="hindi">राहु काल <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>07:32 AM – 08:59 AM</td>
-                    <td class="bad-muhurat hindi">नए कार्य शुरू करने के लिए वर्जित</td>
+                    <td class="hindi">यमगण्ड</td>
+                    <td>07:29 AM – 08:58 AM</td>
+                    <td class="hindi">अशुभ समय</td>
                 </tr>
                 <tr>
-                    <td class="hindi">यमगंड <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>10:27 AM – 11:54 AM</td>
-                    <td class="bad-muhurat hindi">महत्वपूर्ण कार्यों के लिए वर्जित</td>
-                </tr>
-                <tr>
-                    <td class="hindi">गुलिक काल <span class="muhurat-badge bad-badge">अशुभ</span></td>
-                    <td>01:21 PM – 02:48 PM</td>
-                    <td class="bad-muhurat hindi">शुभ कार्य से बचें</td>
+                    <td class="hindi">अमृत काल</td>
+                    <td>11:18 PM – 12:45 AM</td>
+                    <td class="hindi">पूजा, अनुष्ठान हेतु शुभ</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- अन्य विवरण -->
     <div class="glass-card p-6 rounded-2xl mt-8 fade-in">
         <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">अन्य पंचांग विवरण</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्र राशि:</strong> मीन</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्य राशि:</strong> कन्या</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">शक संवत:</strong> 1947 (विश्वावसु)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">विक्रम संवत:</strong> 2082 (कालयुक्त)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">दिशा शूल:</strong> पूर्व</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्योदय:</strong> 06:18 AM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्यास्त:</strong> 05:59 PM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चन्द्रोदय:</strong> 07:39 PM</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्रास्त:</strong> 08:30 AM (अगले दिन)</p>
             </div>
             <div>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्योदय:</strong> 06:24 AM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्यास्त:</strong> 06:05 PM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चन्द्रोदय:</strong> 05:34 PM</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्रास्त:</strong> 06:16 AM (अगले दिन)</p>
-                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">आज का व्रत:</strong> पूर्णिमा</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">चंद्र राशि:</strong> मेष</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">सूर्य राशि:</strong> कन्या</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">विक्रम संवत:</strong> 2082 (कालयुक्त)</p>
+                <p class="text-lg text-white mb-2 hindi"><strong class="text-amber-300">शक संवत:</strong> 1947 (विश्वावसु)</p>
             </div>
         </div>
     </div>
 
+    <!-- आज के शुभ योग -->
     <div class="glass-card p-6 rounded-2xl mt-8 fade-in">
         <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">आज के शुभ योग</h3>
         <ul class="list-disc list-inside text-lg text-gray-300 ml-4 hindi">
-            <li class="mb-2"><strong class="text-teal-300">ध्रुव योग:</strong> दोपहर 01:13 बजे से जारी रहेगा</li>
-            <li class="mb-2"><strong class="text-teal-300">वृद्धि योग:</strong> सुबह-दोपहर तक</li>
-            <li class="mb-2"><strong class="text-teal-300">सर्वार्थ सिद्धि योग:</strong> 6:16 से 6:20 तक</li>
+            <li class="mb-2"><strong class="text-teal-300">सर्वार्थ सिद्धि योग:</strong> प्रातःकाल से रात्रि 10:44 PM तक (अश्विनी नक्षत्र में)</li>
+            <li class="mb-2"><strong class="text-teal-300">अमृत सिद्धि योग:</strong> रात्रि 10:44 PM तक (अश्विनी नक्षत्र में)</li>
+            <li class="mb-2"><strong class="text-teal-300">रवि योग:</strong> संपूर्ण दिन</li>
         </ul>
     </div>
 
@@ -1444,180 +1447,383 @@
     </footer>
     
     <script>
-        // Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
-    } else {
-        icon.className = 'fas fa-times';
-    }
-});
-
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
-    });
-});
-
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
-
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-    }
-});
-
-        // Create cosmic particles
-        function createCosmicParticles() {
-            const container = document.getElementById('cosmicParticles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('cosmic-particle');
-                
-                // Random position
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                particle.style.left = `${left}%`;
-                particle.style.top = `${top}%`;
-                
-                // Random size
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random animation delay
-                const delay = Math.random() * 5;
-                particle.style.animationDelay = `${delay}s`;
-                
-                container.appendChild(particle);
-            }
-        }
+    // Mobile Menu Toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        const mobileNav = document.getElementById('mobileNav');
+        mobileNav.classList.toggle('hidden');
         
-        // Update current time
-        function updateCurrentTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const dateString = now.toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        // Change icon based on menu state
+        const icon = this.querySelector('i');
+        if (mobileNav.classList.contains('hidden')) {
+            icon.className = 'fas fa-bars';
+        } else {
+            icon.className = 'fas fa-times';
+        }
+    });
+
+    // Mobile Dropdown Toggles
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // WhatsApp Popup Toggle
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
+
+    if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+    }
+
+    // Safe element selection function
+    function getElementSafe(id) {
+        const element = document.getElementById(id);
+        if (!element) {
+            console.warn(`Element with id '${id}' not found`);
+            return null;
+        }
+        return element;
+    }
+
+    // Safe text content setter
+    function setTextSafe(elementId, text) {
+        const element = getElementSafe(elementId);
+        if (element) {
+            element.textContent = text;
+        }
+    }
+
+    // Create cosmic particles
+    function createCosmicParticles() {
+        const container = document.getElementById('cosmicParticles');
+        if (!container) return;
+        
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('cosmic-particle');
             
-            document.getElementById('currentTime').textContent = timeString;
-            document.getElementById('currentDate').textContent = dateString;
+            // Random position
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            particle.style.left = `${left}%`;
+            particle.style.top = `${top}%`;
+            
+            // Random size
+            const size = Math.random() * 3 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random animation delay
+            const delay = Math.random() * 5;
+            particle.style.animationDelay = `${delay}s`;
+            
+            container.appendChild(particle);
+        }
+    }
+    
+    // Update current time
+    function updateCurrentTime() {
+        try {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('hi-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            const dateString = now.toLocaleDateString('hi-IN', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            setTextSafe('currentTime', timeString);
+            setTextSafe('currentDate', dateString);
             
             // Update countdown
             updateCountdown();
+        } catch (error) {
+            console.log('Time update error:', error);
         }
-        
-        // Countdown function ko fix karo
-function updateCountdown() {
-    // Pehle check karo elements exist karte hain ya nahi
-    const hoursEl = document.getElementById('countdown-hours');
-    const minutesEl = document.getElementById('countdown-minutes'); 
-    const secondsEl = document.getElementById('countdown-seconds');
-    
-    // Agar elements nahi hain to return kar do
-    if (!hoursEl || !minutesEl || !secondsEl) {
-        return;
     }
     
-    const now = new Date();
-    const target = new Date();
-    target.setHours(18, 33, 0, 0);
-    
-    if (now > target) {
-        target.setDate(target.getDate() + 1);
-    }
-    
-    const diff = target - now;
-    
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    hoursEl.textContent = hours.toString().padStart(2, '0');
-    minutesEl.textContent = minutes.toString().padStart(2, '0'); 
-    secondsEl.textContent = seconds.toString().padStart(2, '0');
-}
-        
-        // Animate elements on scroll
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.stagger-item');
+    // Update countdown to next Tithi
+    function updateCountdown() {
+        try {
+            const now = new Date();
+            const target = new Date();
             
-            elements.forEach((element, index) => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
+            // Set target time for next tithi change (example: tomorrow 6:00 AM)
+            target.setDate(target.getDate() + 1);
+            target.setHours(6, 0, 0, 0);
+            
+            const diff = target - now;
+            
+            if (diff > 0) {
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                if (elementTop < window.innerHeight - elementVisible) {
-                    setTimeout(() => {
-                        element.classList.add('fade-in');
-                    }, index * 100);
+                setTextSafe('countdown-hours', hours.toString().padStart(2, '0'));
+                setTextSafe('countdown-minutes', minutes.toString().padStart(2, '0'));
+                setTextSafe('countdown-seconds', seconds.toString().padStart(2, '0'));
+            } else {
+                // Reset if time passed
+                setTextSafe('countdown-hours', '00');
+                setTextSafe('countdown-minutes', '00');
+                setTextSafe('countdown-seconds', '00');
+            }
+        } catch (error) {
+            console.log('Countdown update error:', error);
+        }
+    }
+    
+    // Animate elements on scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.stagger-item');
+        
+        elements.forEach((element, index) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                setTimeout(() => {
+                    element.classList.add('fade-in');
+                }, index * 100);
+            }
+        });
+    }
+    
+    // Dynamic meta tags update function
+    function updateDynamicMetaTags() {
+        try {
+            const now = new Date();
+            
+            // Hindi date format
+            const options = { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            };
+            const hindiDate = now.toLocaleDateString('hi-IN', options);
+            
+            // Update title
+            document.title = `आज का पंचांग - ${hindiDate} | Jyotish Tark`;
+            
+            // Update meta description
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) {
+                metaDescription.content = `${hindiDate} का पूरा पंचांग: आज की तिथि, वार, नक्षत्र, योग और करण की जानकारी। शुभ मुहूर्त और राहुकाल। दैनिक पंचांग और शुभ मुहूर्त।`;
+            }
+            
+            // Update display date
+            const dateDisplay = getElementSafe('current-date-display');
+            const dateDesc = getElementSafe('current-date-desc');
+            
+            if (dateDisplay) dateDisplay.textContent = hindiDate;
+            if (dateDesc) dateDesc.textContent = hindiDate;
+        } catch (error) {
+            console.log('Meta tags update error:', error);
+        }
+    }
+        
+    // Update Panchang details with current date
+    function updatePanchang() {
+        try {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('hi-IN', options);
+            
+            // Update all date elements
+            const dateElements = document.querySelectorAll('#today-date, [id*="date"]');
+            dateElements.forEach(el => {
+                if (!el.id.includes('current-date')) {
+                    el.textContent = dateString;
                 }
             });
-        }
-        // Dynamic meta tags update function
-function updateDynamicMetaTags() {
-    const now = new Date();
-    
-    // Hindi date format
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const hindiDate = now.toLocaleDateString('hi-IN', options);
-    
-    // Update title
-    document.title = `आज का पंचांग - ${hindiDate} | Jyotish Tark`;
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-        metaDescription.content = `${hindiDate} का पूरा पंचांग: आज की तिथि, वार, नक्षत्र, योग और करण की जानकारी। शुभ मुहूर्त और राहुकाल।`;
-    }
-    
-    // Update display date
-    const dateDisplay = document.getElementById('current-date-display');
-    const dateDesc = document.getElementById('current-date-desc');
-    
-    if (dateDisplay) dateDisplay.textContent = hindiDate;
-    if (dateDesc) dateDesc.textContent = hindiDate;
-}
-        
-        // Update Panchang details with current date
-        function updatePanchang() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString('hi-IN', options);
-            document.getElementById('today-date').textContent = dateString;
             
             // In a real implementation, you would fetch actual panchang data from an API
             // For now, we'll use static data as an example
+            updatePanchangDataForDate(now);
+            
+        } catch (error) {
+            console.log('Panchang update error:', error);
         }
+    }
+
+    // Update panchang data based on current date
+    function updatePanchangDataForDate(date) {
+        // This is sample data - in real implementation, fetch from API
+        const panchangData = {
+            tithi: "कृष्ण पक्ष द्वितीया (02:22 AM तक), तत्पश्चात तृतीया",
+            vara: "बुधवार",
+            nakshatra: "अश्विनी (10:44 PM तक), तत्पश्चात भरणी",
+            yoga: "हर्षण योग (01:32 AM तक), तत्पश्चात वज्र योग",
+            karana: "तैतिल (04:08 PM तक), तत्पश्चात गर करण",
+            rahuKaal: "01:57 PM – 03:27 PM",
+            sunrise: "06:18 AM",
+            sunset: "05:59 PM",
+            moonrise: "07:39 PM",
+            moonset: "08:30 AM"
+        };
+
+        // Update panchang elements safely
+        setTextSafe('tithi', panchangData.tithi);
+        setTextSafe('vara', panchangData.vara);
+        setTextSafe('nakshatra', panchangData.nakshatra);
+        setTextSafe('yoga', panchangData.yoga);
+        setTextSafe('karana', panchangData.karana);
+        setTextSafe('rahu-kaal', panchangData.rahuKaal);
+    }
+
+    // Initialize mobile dropdowns
+    function initMobileDropdowns() {
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.closest('.mobile-dropdown');
+                if (dropdown) {
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    function initSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    // Handle dropdown menus
+    function initDropdownMenus() {
+        const dropdowns = document.querySelectorAll('.dropdown');
         
-        // Initialize function call karein
-       function init() {
-       createCosmicParticles();
-       updatePanchang();
-       updateCurrentTime();
-       updateDynamicMetaTags(); // YE LINE ADD KAREIN
-       setInterval(updateCurrentTime, 1000);
-    
-       animateOnScroll();
-       window.addEventListener('scroll', animateOnScroll);
-      }
-        
-        // Run initialization when DOM is loaded
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', function() {
+                const content = this.querySelector('.dropdown-content');
+                if (content) {
+                    content.style.display = 'block';
+                    setTimeout(() => {
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0)';
+                    }, 10);
+                }
+            });
+            
+            dropdown.addEventListener('mouseleave', function() {
+                const content = this.querySelector('.dropdown-content');
+                if (content) {
+                    content.style.opacity = '0';
+                    content.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        content.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    }
+
+    // Performance optimization - Debounce scroll events
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Enhanced scroll animation with debounce
+    const debouncedAnimateOnScroll = debounce(animateOnScroll, 10);
+
+    // Main initialization function
+    function init() {
+        try {
+            // Initialize all components
+            createCosmicParticles();
+            updatePanchang();
+            updateCurrentTime();
+            updateDynamicMetaTags();
+            
+            // Set up intervals
+            setInterval(updateCurrentTime, 1000);
+            setInterval(updateCountdown, 1000);
+            
+            // Initialize interactive components
+            initMobileDropdowns();
+            initSmoothScrolling();
+            initDropdownMenus();
+            
+            // Set up scroll listener
+            animateOnScroll(); // Initial check
+            window.addEventListener('scroll', debouncedAnimateOnScroll);
+            
+            // Log successful initialization
+            console.log('Jyotish Tark Panchang initialized successfully');
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+        }
+    }
+
+    // Error boundary for unhandled errors
+    window.addEventListener('error', function(e) {
+        console.error('Global error:', e.error);
+    });
+
+    // Handle promise rejections
+    window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+    });
+
+    // Run initialization when DOM is fully loaded
+    if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
-    </script>
+    } else {
+        init();
+    }
+
+    // Export functions for global access (if needed)
+    window.JyotishTark = {
+        updatePanchang: updatePanchang,
+        updateCurrentTime: updateCurrentTime,
+        updateCountdown: updateCountdown
+    };
+  </script>
 </body>
 </html>
