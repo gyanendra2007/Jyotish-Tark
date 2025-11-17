@@ -2617,21 +2617,15 @@
 }
   };
 
-   // === Related Posts ===
+  // === Related Posts ===
   function showRelatedPosts(currentId) {
     const container = document.getElementById("related-posts");
     if (!container) return;
 
-    // Convert currentId to string for comparison
     const current = String(currentId);
-
-    // Get all blog IDs except the current one
     const otherIds = Object.keys(blogPosts).filter(id => id !== current);
-
-    // Pick up to 3 random posts
     const randomIds = otherIds.sort(() => Math.random() - 0.5).slice(0, 3);
 
-    // Generate related post cards
     container.innerHTML = randomIds.map(id => {
       const post = blogPosts[id];
       return `
@@ -2647,95 +2641,149 @@
     }).join("");
   }
 
+  // Share button functionality
+  function initShareButtons() {
+    const currentUrl = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.title);
+    
+    document.querySelectorAll('.share-button.facebook').forEach(btn => {
+        btn.href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+    });
+    
+    document.querySelectorAll('.share-button.twitter').forEach(btn => {
+        btn.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${title}`;
+    });
+    
+    document.querySelectorAll('.share-button.whatsapp').forEach(btn => {
+        btn.href = `https://wa.me/?text=${title}%20${currentUrl}`;
+    });
+    
+    document.querySelectorAll('.share-button.linkedin').forEach(btn => {
+        btn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`;
+    });
+  }
+
   // Load the appropriate blog post
   document.addEventListener('DOMContentLoaded', function() {
     const postId = getQueryParam('id') || '1';
     const postData = blogPosts[postId];
     
     if (postData) {
-      // Update the page content
-      document.title = `${postData.title} | Jyotish Tark`;
-      document.querySelector('meta[name="description"]').setAttribute('content', 
-        `${postData.title} - ज्योतिष टार्क ब्लॉग से ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
-      
-      // Update all elements with the blog data
-      const tagElement = document.querySelector('.blog-tag');
-      if (tagElement) tagElement.textContent = postData.tag;
-      
-      const titleElement = document.querySelector('h1');
-      if (titleElement) titleElement.textContent = postData.title;
-      
-      const dateElement = document.querySelector('.blog-meta span:first-child');
-      if (dateElement) dateElement.innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
-      
-      const readTimeElement = document.querySelector('.blog-meta span:nth-child(2)');
-      if (readTimeElement) readTimeElement.innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
-      
-      const imageElement = document.querySelector('.blog-image');
-      if (imageElement) imageElement.src = postData.image;
-      if (imageElement) imageElement.alt = postData.title;
-      
-      const contentElement = document.querySelector('.article-content');
-      if (contentElement) contentElement.innerHTML = postData.content;
-      
-      // Update breadcrumb
-      const breadcrumbSpan = document.querySelector('.breadcrumb-title');
-      if (breadcrumbSpan) {
-        breadcrumbSpan.textContent = postData.title;
-      }
-      
-      // Show related posts
-      showRelatedPosts(postId);
-    } else {
-      // Default to first post if no ID specified or invalid
-      const firstPost = blogPosts['1'];
-      if (firstPost) {
-        document.querySelector('.blog-tag').textContent = firstPost.tag;
-        document.querySelector('h1').textContent = firstPost.title;
-        document.querySelector('.blog-meta span:first-child').innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${firstPost.date}`;
-        document.querySelector('.blog-meta span:nth-child(2)').innerHTML = `<i class="far fa-clock mr-1"></i> ${firstPost.readTime}`;
-        document.querySelector('.blog-image').src = firstPost.image;
-        document.querySelector('.article-content').innerHTML = firstPost.content;
+        // Update the page content
+        document.title = `${postData.title} | Jyotish Tark`;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute('content', 
+                `${postData.title} - ज्योतिष टार्क ब्लॉग से ज्योतिषीय भविष्यवाणियाँ और ग्रहों की चाल का आपके जीवन पर प्रभाव`);
+        }
         
-        // Show related posts for default post too
-        showRelatedPosts('1');
-      }
-    }
-    // Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
+        // Update all elements with the blog data
+        const tagElement = document.querySelector('.blog-tag');
+        if (tagElement) tagElement.textContent = postData.tag;
+        
+        const titleElement = document.querySelector('h1');
+        if (titleElement) titleElement.textContent = postData.title;
+        
+        const dateElement = document.querySelector('.blog-meta span:first-child');
+        if (dateElement) dateElement.innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${postData.date}`;
+        
+        const readTimeElement = document.querySelector('.blog-meta span:nth-child(2)');
+        if (readTimeElement) readTimeElement.innerHTML = `<i class="far fa-clock mr-1"></i> ${postData.readTime}`;
+        
+        const imageElement = document.querySelector('.blog-image');
+        if (imageElement) {
+            imageElement.src = postData.image;
+            imageElement.alt = postData.title;
+        }
+        
+        const contentElement = document.querySelector('.article-content');
+        if (contentElement) contentElement.innerHTML = postData.content;
+        
+        // Update breadcrumb
+        const breadcrumbSpan = document.querySelector('.breadcrumb-title');
+        if (breadcrumbSpan) {
+            breadcrumbSpan.textContent = postData.title;
+        }
+        
+        // Show related posts
+        showRelatedPosts(postId);
     } else {
-        icon.className = 'fas fa-times';
+        // Default to first post if no ID specified or invalid
+        const firstPost = blogPosts['1'];
+        if (firstPost) {
+            const tagElement = document.querySelector('.blog-tag');
+            if (tagElement) tagElement.textContent = firstPost.tag;
+            
+            const titleElement = document.querySelector('h1');
+            if (titleElement) titleElement.textContent = firstPost.title;
+            
+            const dateElement = document.querySelector('.blog-meta span:first-child');
+            if (dateElement) dateElement.innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${firstPost.date}`;
+            
+            const readTimeElement = document.querySelector('.blog-meta span:nth-child(2)');
+            if (readTimeElement) readTimeElement.innerHTML = `<i class="far fa-clock mr-1"></i> ${firstPost.readTime}`;
+            
+            const imageElement = document.querySelector('.blog-image');
+            if (imageElement) {
+                imageElement.src = firstPost.image;
+                imageElement.alt = firstPost.title;
+            }
+            
+            const contentElement = document.querySelector('.article-content');
+            if (contentElement) contentElement.innerHTML = firstPost.content;
+            
+            // Show related posts for default post too
+            showRelatedPosts('1');
+        }
     }
-});
 
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
+    // Initialize share buttons
+    initShareButtons();
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileNav) {
+                mobileNav.classList.toggle('hidden');
+                
+                // Change icon based on menu state
+                const icon = this.querySelector('i');
+                if (mobileNav.classList.contains('hidden')) {
+                    icon.className = 'fas fa-bars';
+                } else {
+                    icon.className = 'fas fa-times';
+                }
+            }
+        });
+    }
+
+    // Mobile Dropdown Toggles
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            dropdown.classList.toggle('active');
+        });
     });
 
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
+    // WhatsApp Popup Toggle
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
 
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
+    if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
 
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
     }
-});
-  </script>
+  });
+</script>
 </body>
 </html>
