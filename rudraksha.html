@@ -697,6 +697,83 @@
             color: var(--secondary);
             padding-left: 5px;
         }
+
+        /* New styles for offers and discounts */
+        .original-price {
+            text-decoration: line-through;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+        
+        .discount-badge {
+            background: linear-gradient(to right, #ef4444, #f97316);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .offer-timer {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .timer-text {
+            font-size: 0.9rem;
+            color: #fca5a5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timer-numbers {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fef3c7;
+        }
+        
+        .free-item-badge {
+            background: linear-gradient(to right, #10b981, #34d399);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .service-benefits {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-icon {
+            background: #10b981;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -705,232 +782,143 @@
     <div class="planet-2"></div>
 
     <!-- Navigation -->
-<header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-    <div class="flex justify-between items-center">
-        
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center space-x-3">
-            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
-            </div>
-            <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
-        </a>
-
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-6 font-medium">
-            <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Home
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
-            <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Kundali
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Home
+                </a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Kundali
+                </a>
+                
+                <!-- Numerology & Tarot Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                        Calculator
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="numerology.html">
+                            Numerology Report
+                        </a>
+                        <a href="tarot.html">
+                            Tarot Reading
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rudraksha
+                </a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Blog
+                </a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home astrological-symbol"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star astrological-symbol"></i>Kundali
             </a>
             
-            <!-- Numerology & Tarot Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Calculator
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="numerology.html">
+            <!-- Numerology & Tarot Mobile Dropdown -->
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator astrological-symbol"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i>
                         Numerology Report
                     </a>
-                    <a href="tarot.html">
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i>
                         Tarot Reading
                     </a>
                 </div>
             </div>
             
-            <a href="vastu.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Vastu
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
             </a>
-            <a href="palmistry.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Palmistry
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open astrological-symbol"></i>Blog
             </a>
-
-            <!-- Panchang Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Panchang
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="Panchang.html">
-                        Daily Panchang
-                    </a>
-                    <a href="monthly-panchang.html">
-                        Monthly Panchang
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Rashifal Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Rashifal
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="weekly-rashifal.html">
-                        Weekly Rashifal
-                    </a>
-                    <a href="rashifal.html">
-                        Monthly Rashifal
-                    </a>
-                </div>
-            </div>
-            
-            <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Rudraksha
-            </a>
-            <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Blog
-            </a>
-            <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Contact
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope astrological-symbol"></i>Contact
             </a>
         </nav>
+    </header>
 
-        <!-- Mobile Menu Button -->
-        <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
+    <!-- WhatsApp Floating Button -->
+    <a class="whatsapp-float" id="whatsappButton">
+        <i class="fab fa-whatsapp"></i>
+    </a>   
 
-    <!-- Mobile Nav -->
-    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-        <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-home astrological-symbol"></i>Home
-        </a>
-        <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-star astrological-symbol"></i>Kundali
-        </a>
-        
-        <!-- Numerology & Tarot Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-calculator astrological-symbol"></i>
-                    <span>Calculator</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="numerology.html" class="flex items-center">
-                    <i class="fas fa-calculator mr-3"></i>
-                    Numerology Report
-                </a>
-                <a href="tarot.html" class="flex items-center">
-                    <i class="fas fa-clover mr-3"></i>
-                    Tarot Reading
-                </a>
-            </div>
-        </div>
-        
-        <a href="vastu.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-house astrological-symbol"></i>Vastu
-        </a>
-        <a href="palmistry.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-hand astrological-symbol"></i>Palmistry
-        </a>
-
-        <!-- Panchang Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-calender astrological-symbol"></i>
-                    <span>Panchang</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="panchang.html" class="flex items-center">
-                    <i class="fas fa-calendar-week mr-3"></i>
-                    Daily Panchang
-                </a>
-                <a href="monthly-panchang.html" class="flex items-center">
-                    <i class="fas fa-calendar-alt mr-3"></i>
-                    Monthly Panchang
-                </a>
-            </div>
-        </div>
-        
-        
-        <!-- Rashifal Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-sun astrological-symbol"></i>
-                    <span>Rashifal</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="weekly-rashifal.html" class="flex items-center">
-                    <i class="fas fa-calendar-week mr-3"></i>
-                    Weekly Rashifal
-                </a>
-                <a href="rashifal.html" class="flex items-center">
-                    <i class="fas fa-calendar-alt mr-3"></i>
-                    Monthly Rashifal
-                </a>
-            </div>
-        </div>
-        
-        <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
-        </a>
-        <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-book-open astrological-symbol"></i>Blog
-        </a>
-        <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-envelope astrological-symbol"></i>Contact
-        </a>
-    </nav>
-</header>
-
-<!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton">
-    <i class="fab fa-whatsapp"></i>
-</a>   
-
-<!-- WhatsApp Popup -->
-<div class="whatsapp-popup" id="whatsappPopup">
-    <div class="whatsapp-header">
-        <img src="logo.png" alt="Jyotish Tark">
-        <div>
-            <h3 class="font-bold text-lg">Jyotish Tark</h3>
-            <p class="text-sm opacity-90">Typically replies within minutes</p>
-        </div>
-    </div>
-    <div class="whatsapp-body">
-        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
-            <i class="fas fa-comment"></i>
+    <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
             <div>
-                <h4 class="font-semibold text-gray-800">Chat with us</h4>
-                <p class="text-sm text-gray-600">Ask questions about our services</p>
+                <h3 class="font-bold text-lg">Jyotish Tark</h3>
+                <p class="text-sm opacity-90">Typically replies within minutes</p>
             </div>
         </div>
-        
-        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Call us</h4>
-                <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+        <div class="whatsapp-body">
+            <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Chat with us</h4>
+                    <p class="text-sm text-gray-600">Ask questions about our services</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
-            <i class="fas fa-calendar-check"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Book consultation</h4>
-                <p class="text-sm text-gray-600">Schedule a personal session</p>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Call us</h4>
+                    <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Book consultation</h4>
+                    <p class="text-sm text-gray-600">Schedule a personal session</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
@@ -955,28 +943,28 @@
         </div>
     </section>
 
-    <!-- Benefits Section -->
-    <section id="benefits" class="max-w-6xl mx-auto px-4 py-16">
+    <!-- Why Wear Rudraksha Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi">
-                रुद्राक्ष के लाभ
+                रुद्राक्ष क्यों धारण करें?
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi">
-                रुद्राक्ष धारण करने के आध्यात्मिक, मानसिक और शारीरिक लाभ।
+                रुद्राक्ष धारण करने के आध्यात्मिक, वैज्ञानिक और स्वास्थ्य लाभ।
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="glass-card p-6 rounded-2xl">
-                <h3 class="text-2xl font-bold text-white mb-4 text-center hindi">आध्यात्मिक लाभ</h3>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center hindi">आध्यात्मिक महत्व</h3>
                 <div class="space-y-4">
                     <div class="benefit-item">
                         <div class="benefit-icon">
                             <i class="fa-solid fa-person-praying"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-white hindi">ध्यान में सहायक</h4>
-                            <p class="text-gray-300 hindi">रुद्राक्ष धारण करने से ध्यान और एकाग्रता बढ़ती है।</p>
+                            <h4 class="font-semibold text-white hindi">भगवान शिव का आशीर्वाद</h4>
+                            <p class="text-gray-300 hindi">रुद्राक्ष को भगवान शिव का प्रतीक माना जाता है और इसे धारण करने से उनकी कृपा प्राप्त होती है।</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -984,8 +972,8 @@
                             <i class="fas fa-pray"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-white hindi">आध्यात्मिक विकास</h4>
-                            <p class="text-gray-300 hindi">आध्यात्मिक मार्ग पर प्रगति में सहायक होता है।</p>
+                            <h4 class="font-semibold text-white hindi">ध्यान में सहायक</h4>
+                            <p class="text-gray-300 hindi">रुद्राक्ष धारण करने से ध्यान और एकाग्रता बढ़ती है, आध्यात्मिक प्रगति में मदद मिलती है।</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -994,14 +982,14 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-white hindi">नकारात्मक ऊर्जा से सुरक्षा</h4>
-                            <p class="text-gray-300 hindi">नकारात्मक ऊर्जा और बुरी नजर से बचाव करता है।</p>
+                            <p class="text-gray-300 hindi">रुद्राक्ष नकारात्मक ऊर्जा, बुरी नजर और अदृश्य शक्तियों से सुरक्षा प्रदान करता है।</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="glass-card p-6 rounded-2xl">
-                <h3 class="text-2xl font-bold text-white mb-4 text-center hindi">शारीरिक और मानसिक लाभ</h3>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center hindi">वैज्ञानिक तथ्य और स्वास्थ्य लाभ</h3>
                 <div class="space-y-4">
                     <div class="benefit-item">
                         <div class="benefit-icon">
@@ -1009,7 +997,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-white hindi">रक्तचाप नियंत्रण</h4>
-                            <p class="text-gray-300 hindi">उच्च रक्तचाप को नियंत्रित करने में सहायक होता है।</p>
+                            <p class="text-gray-300 hindi">वैज्ञानिक शोधों के अनुसार रुद्राक्ष धारण करने से उच्च रक्तचाप को नियंत्रित करने में मदद मिलती है।</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -1017,8 +1005,8 @@
                             <i class="fas fa-brain"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-white hindi">मानसिक शांति</h4>
-                            <p class="text-gray-300 hindi">तनाव और चिंता को कम कर मानसिक शांति प्रदान करता है।</p>
+                            <h4 class="font-semibold text-white hindi">तंत्रिका तंत्र को शांत करता है</h4>
+                            <p class="text-gray-300 hindi">रुद्राक्ष के विद्युत चुम्बकीय गुण तंत्रिका तंत्र को शांत करते हैं, तनाव और चिंता को कम करते हैं।</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -1026,11 +1014,65 @@
                             <i class="fas fa-bolt"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-white hindi">ऊर्जा संतुलन</h4>
-                            <p class="text-gray-300 hindi">शरीर की ऊर्जा चक्रों को संतुलित करता है।</p>
+                            <h4 class="font-semibold text-white hindi">शरीर की ऊर्जा संतुलित करता है</h4>
+                            <p class="text-gray-300 hindi">रुद्राक्ष शरीर के ऊर्जा चक्रों को संतुलित करके समग्र स्वास्थ्य में सुधार करता है।</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl mt-8">
+            <h3 class="text-2xl font-bold text-white mb-4 text-center hindi">रुद्राक्ष कैसे काम करता है?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-3 hindi">भौतिक सिद्धांत</h4>
+                    <p class="text-gray-300 mb-4 hindi">रुद्राक्ष में डायलेक्ट्रिक गुण होते हैं जो शरीर के विद्युत प्रवाह को नियंत्रित करते हैं। यह एक प्राकृतिक कंडक्टर के रूप में काम करता है और शरीर की बायो-इलेक्ट्रिक एनर्जी को संतुलित करता है।</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-3 hindi">आध्यात्मिक सिद्धांत</h4>
+                    <p class="text-gray-300 mb-4 hindi">आध्यात्मिक दृष्टिकोण से, रुद्राक्ष में दिव्य ऊर्जा समाहित होती है जो धारण करने वाले के आसपास एक सुरक्षात्मक आवरण बनाती है और नकारात्मक ऊर्जाओं को दूर रखती है।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Benefits Section -->
+    <section class="max-w-6xl mx-auto px-4 py-8">
+        <div class="service-benefits rounded-2xl">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center hindi">हमारी विशेष सेवाएं</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="benefit-icon mx-auto mb-3">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2 hindi">मुफ्त डिलीवरी</h4>
+                    <p class="text-gray-300 text-sm hindi">पूरे भारत में मुफ्त डिलीवरी</p>
+                </div>
+                <div class="text-center">
+                    <div class="benefit-icon mx-auto mb-3">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2 hindi">पे ऑन डिलीवरी</h4>
+                    <p class="text-gray-300 text-sm hindi">डिलीवरी पर भुगतान का विकल्प</p>
+                </div>
+                <div class="text-center">
+                    <div class="benefit-icon mx-auto mb-3">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2 hindi">तेज डिलीवरी</h4>
+                    <p class="text-gray-300 text-sm hindi">केवल 3 दिनों में प्राप्त करें</p>
+                </div>
+                <div class="text-center">
+                    <div class="benefit-icon mx-auto mb-3">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2 hindi">अभिमंत्रित रुद्राक्ष</h4>
+                    <p class="text-gray-300 text-sm hindi">पूजित और अभिमंत्रित रुद्राक्ष</p>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <p class="text-gray-300 mb-4 hindi">प्रत्येक रुद्राक्ष के साथ मिलेगा विशेष धागा और मंत्र जिससे आप इसे स्वयं ऊर्जावान बना सकते हैं।</p>
             </div>
         </div>
     </section>
@@ -1047,42 +1089,139 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Product 1 - One Mukhi Rudraksha -->
+            <!-- Product 1 - Two Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="images/one.jpg" alt="एक मुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="images/two.jpg" alt="दो मुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white hindi">एक मुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹15,999</div>
+                        <h3 class="text-xl font-bold text-white hindi">दो मुखी रुद्राक्ष</h3>
+                        <div class="flex items-center">
+                            <span class="original-price">₹4,999</span>
+                            <div class="price-tag">₹2,999</div>
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
-                        भगवान शिव का प्रतिनिधित्व करने वाला यह रुद्राक्ष मोक्ष प्रदान करता है और सर्वोच्च सफलता देता है।
+                        अर्धनारीश्वर का प्रतीक, यह रुद्राक्ष पारिवारिक एकता और संबंधों में सुधार लाता है।
                     </p>
                     <ul class="space-y-2 text-gray-300 mb-6">
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">मोक्ष प्राप्ति में सहायक</span>
+                            <span class="hindi">पारिवारिक एकता बढ़ाता है</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">सर्वोच्च सफलता प्रदान करता है</span>
+                            <span class="hindi">संबंधों में सुधार लाता है</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">आध्यात्मिक ऊर्जा बढ़ाता है</span>
+                            <span class="hindi">मानसिक शांति प्रदान करता है</span>
                         </li>
                     </ul>
-                    <button class="order-button whatsapp-order hindi" 
-                            data-product="एक मुखी रुद्राक्ष" 
-                            data-price="5999">
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-1">02:15:33</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
+                            data-product="दो मुखी रुद्राक्ष" 
+                            data-price="2999">
                         <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
 
-            <!-- Product 2 - Five Mukhi Rudraksha -->
+            <!-- Product 2 - Three Mukhi Rudraksha -->
+            <div class="product-card rounded-2xl overflow-hidden">
+                <div class="overflow-hidden">
+                    <img src="images/three.jpg" alt="तीन मुखी रुद्राक्ष" class="product-image w-full">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white hindi">तीन मुखी रुद्राक्ष</h3>
+                        <div class="flex items-center">
+                            <span class="original-price">₹3,999</span>
+                            <div class="price-tag">₹2,499</div>
+                            <span class="discount-badge">38% OFF</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 hindi">
+                        अग्नि देव का प्रतीक, यह रुद्राक्ष पापों से मुक्ति दिलाता है और आत्मविश्वास बढ़ाता है।
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">पापों से मुक्ति दिलाता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">आत्मविश्वास बढ़ाता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">डर और भय दूर करता है</span>
+                        </li>
+                    </ul>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-2">01:45:22</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
+                            data-product="तीन मुखी रुद्राक्ष" 
+                            data-price="2499">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 - Four Mukhi Rudraksha -->
+            <div class="product-card rounded-2xl overflow-hidden">
+                <div class="overflow-hidden">
+                    <img src="images/four.jpg" alt="चार मुखी रुद्राक्ष" class="product-image w-full">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white hindi">चार मुखी रुद्राक्ष</h3>
+                        <div class="flex items-center">
+                            <span class="original-price">₹4,499</span>
+                            <div class="price-tag">₹2,999</div>
+                            <span class="discount-badge">33% OFF</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 hindi">
+                        ब्रह्मा का प्रतीक, यह रुद्राक्ष ज्ञान, स्मरण शक्ति और रचनात्मकता बढ़ाता है।
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">ज्ञान और स्मरण शक्ति बढ़ाता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">रचनात्मकता विकसित करता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">सीखने की क्षमता बढ़ाता है</span>
+                        </li>
+                    </ul>
+                    <div class="free-item-badge">
+                        <i class="fas fa-gift mr-2"></i>₹1500+ ऑर्डर पर मुफ्त रुद्राक्ष धागा
+                    </div>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-3">03:30:15</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
+                            data-product="चार मुखी रुद्राक्ष" 
+                            data-price="2999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 4 - Five Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
                     <img src="images/five.jpg" alt="पंचमुखी रुद्राक्ष" class="product-image w-full">
@@ -1090,10 +1229,14 @@
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">पंचमुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹999</div>
+                        <div class="flex items-center">
+                            <span class="original-price">₹1,999</span>
+                            <div class="price-tag">₹999</div>
+                            <span class="discount-badge">50% OFF</span>
+                        </div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
-                        सबसे आम और सर्वश्रेष्ठ रुद्राक्ष, जो स्वास्थ्य, धन और समृद्धि प्रदान करता है।
+                        कालाग्नि रुद्र का प्रतीक, यह सबसे आम और सर्वश्रेष्ठ रुद्राक्ष है जो स्वास्थ्य, धन और समृद्धि प्रदान करता है।
                     </p>
                     <ul class="space-y-2 text-gray-300 mb-6">
                         <li class="flex items-center">
@@ -1109,15 +1252,65 @@
                             <span class="hindi">सकारात्मक ऊर्जा प्रदान करता है</span>
                         </li>
                     </ul>
-                    <button class="order-button whatsapp-order hindi" 
+                    <div class="free-item-badge">
+                        <i class="fas fa-gift mr-2"></i>₹1500+ ऑर्डर पर मुफ्त रुद्राक्ष पाउच
+                    </div>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-4">05:20:45</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
                             data-product="पंचमुखी रुद्राक्ष" 
-                            data-price="1999">
+                            data-price="999">
                         <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
 
-            <!-- Product 3 - Seven Mukhi Rudraksha -->
+            <!-- Product 5 - Six Mukhi Rudraksha -->
+            <div class="product-card rounded-2xl overflow-hidden">
+                <div class="overflow-hidden">
+                    <img src="images/six.jpg" alt="छह मुखी रुद्राक्ष" class="product-image w-full">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white hindi">छह मुखी रुद्राक्ष</h3>
+                        <div class="flex items-center">
+                            <span class="original-price">₹5,999</span>
+                            <div class="price-tag">₹3,999</div>
+                            <span class="discount-badge">33% OFF</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 hindi">
+                        कार्तिकेय का प्रतीक, यह रुद्राक्ष ज्ञान, बुद्धि और रचनात्मकता बढ़ाता है।
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">ज्ञान और बुद्धि बढ़ाता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">रचनात्मकता विकसित करता है</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
+                            <span class="hindi">शिक्षा में सफलता देता है</span>
+                        </li>
+                    </ul>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-5">04:10:30</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
+                            data-product="छह मुखी रुद्राक्ष" 
+                            data-price="3999">
+                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 6 - Seven Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
                     <img src="images/seven.jpg" alt="सप्तमुखी रुद्राक्ष" class="product-image w-full">
@@ -1125,10 +1318,14 @@
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">सप्तमुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹3,499</div>
+                        <div class="flex items-center">
+                            <span class="original-price">₹6,999</span>
+                            <div class="price-tag">₹3,499</div>
+                            <span class="discount-badge">50% OFF</span>
+                        </div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
-                        धन और समृद्धि का प्रतीक, यह रुद्राक्ष वित्तीय समस्याओं को दूर करता है।
+                        सप्तमातृकाओं का प्रतीक, यह रुद्राक्ष धन और समृद्धि का प्रतीक है और वित्तीय समस्याओं को दूर करता है।
                     </p>
                     <ul class="space-y-2 text-gray-300 mb-6">
                         <li class="flex items-center">
@@ -1144,7 +1341,14 @@
                             <span class="hindi">व्यापार में सफलता देता है</span>
                         </li>
                     </ul>
-                    <button class="order-button whatsapp-order hindi" 
+                    <div class="free-item-badge">
+                        <i class="fas fa-gift mr-2"></i>₹2000+ ऑर्डर पर मुफ्त रुद्राक्ष मंत्र पुस्तिका
+                    </div>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-6">06:45:20</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
                             data-product="सप्तमुखी रुद्राक्ष" 
                             data-price="3499">
                         <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
@@ -1152,77 +1356,50 @@
                 </div>
             </div>
 
-            <!-- Product 4 - Eleven Mukhi Rudraksha -->
+            <!-- Product 7 - Eight Mukhi Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
-                    <img src="images/eleven.jpg" alt="एकादश मुखी रुद्राक्ष" class="product-image w-full">
+                    <img src="images/eight.jpg" alt="आठ मुखी रुद्राक्ष" class="product-image w-full">
                 </div>
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white hindi">एकादश मुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹9,999</div>
+                        <h3 class="text-xl font-bold text-white hindi">आठ मुखी रुद्राक्ष</h3>
+                        <div class="flex items-center">
+                            <span class="original-price">₹7,999</span>
+                            <div class="price-tag">₹4,999</div>
+                            <span class="discount-badge">38% OFF</span>
+                        </div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
-                        भगवान इंद्र का प्रतिनिधित्व करने वाला यह रुद्राक्ष शक्ति और सफलता प्रदान करता है।
+                        गणेश जी का प्रतीक, यह रुद्राक्ष सभी बाधाओं को दूर करता है और सफलता प्रदान करता है।
                     </p>
                     <ul class="space-y-2 text-gray-300 mb-6">
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">शक्ति और सफलता प्रदान करता है</span>
+                            <span class="hindi">सभी बाधाओं को दूर करता है</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">निर्णय लेने की क्षमता बढ़ाता है</span>
+                            <span class="hindi">सफलता प्रदान करता है</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">साहस और आत्मविश्वास देता है</span>
+                            <span class="hindi">नए कार्यों में सफलता देता है</span>
                         </li>
                     </ul>
-                    <button class="order-button whatsapp-order hindi" 
-                            data-product="एकादश मुखी रुद्राक्ष" 
-                            data-price="6999">
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-7">01:30:45</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
+                            data-product="आठ मुखी रुद्राक्ष" 
+                            data-price="4999">
                         <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
                     </button>
                 </div>
             </div>
 
-            <!-- Product 5 - Fourteen Mukhi Rudraksha -->
-            <div class="product-card rounded-2xl overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="images/fourteen.jpg" alt="चौदह मुखी रुद्राक्ष" class="product-image w-full">
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-white hindi">चौदह मुखी रुद्राक्ष</h3>
-                        <div class="price-tag">₹9,999</div>
-                    </div>
-                    <p class="text-gray-300 mb-4 hindi">
-                        भगवान शिव के 'देवदेव' रूप का प्रतिनिधित्व करने वाला यह रुद्राक्ष सभी इच्छाओं को पूरा करता है।
-                    </p>
-                    <ul class="space-y-2 text-gray-300 mb-6">
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">सभी इच्छाओं को पूरा करता है</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">अलौकिक शक्तियां प्रदान करता है</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">नकारात्मक ऊर्जा को नष्ट करता है</span>
-                        </li>
-                    </ul>
-                    <button class="order-button whatsapp-order hindi" 
-                            data-product="चौदह मुखी रुद्राक्ष" 
-                            data-price="9999">
-                        <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
-                    </button>
-                </div>
-            </div>
-
-            <!-- Product 6 - Gauri Shankar Rudraksha -->
+            <!-- Product 8 - Gauri Shankar Rudraksha -->
             <div class="product-card rounded-2xl overflow-hidden">
                 <div class="overflow-hidden">
                     <img src="images/gauri.jpg" alt="गौरी शंकर रुद्राक्ष" class="product-image w-full">
@@ -1230,7 +1407,11 @@
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white hindi">गौरी शंकर रुद्राक्ष</h3>
-                        <div class="price-tag">₹17,499</div>
+                        <div class="flex items-center">
+                            <span class="original-price">₹12,499</span>
+                            <div class="price-tag">₹7,499</div>
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
                     </div>
                     <p class="text-gray-300 mb-4 hindi">
                         भगवान शिव और देवी पार्वती का संयुक्त रूप, यह रुद्राक्ष पारिवारिक सुख और एकता प्रदान करता है।
@@ -1249,7 +1430,14 @@
                             <span class="hindi">संतान सुख प्रदान करता है</span>
                         </li>
                     </ul>
-                    <button class="order-button whatsapp-order hindi" 
+                    <div class="free-item-badge">
+                        <i class="fas fa-gift mr-2"></i>₹5000+ ऑर्डर पर मुफ्त रुद्राक्ष माला
+                    </div>
+                    <div class="offer-timer">
+                        <div class="timer-text hindi">ऑफर समाप्त हो रहा है:</div>
+                        <div class="timer-numbers" id="timer-8">00:45:15</div>
+                    </div>
+                    <button class="order-button whatsapp-order hindi mt-4" 
                             data-product="गौरी शंकर रुद्राक्ष" 
                             data-price="7499">
                         <i class="fab fa-whatsapp mr-2"></i>WhatsApp पर ऑर्डर करें
@@ -1445,41 +1633,41 @@
 
     <script>
         // Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
-    } else {
-        icon.className = 'fas fa-times';
-    }
-});
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
 
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
-    });
-});
+        // Mobile Dropdown Toggles
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
 
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
+        // WhatsApp Popup Toggle
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
 
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
 
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-    }
-});
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
 
         // WhatsApp Order Functionality
         const orderButtons = document.querySelectorAll('.whatsapp-order');
@@ -1497,6 +1685,39 @@ document.addEventListener('click', function(event) {
                 window.open(`https://wa.me/918318513814?text=${encodedMessage}`, '_blank');
             });
         });
+
+        // Countdown Timer Functionality
+        function startCountdown(elementId, hours, minutes, seconds) {
+            const timerElement = document.getElementById(elementId);
+            let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+            
+            const countdown = setInterval(function() {
+                totalSeconds--;
+                
+                if (totalSeconds < 0) {
+                    clearInterval(countdown);
+                    timerElement.textContent = "ऑफर समाप्त!";
+                    return;
+                }
+                
+                const hoursRemaining = Math.floor(totalSeconds / 3600);
+                const minutesRemaining = Math.floor((totalSeconds % 3600) / 60);
+                const secondsRemaining = totalSeconds % 60;
+                
+                timerElement.textContent = 
+                    `${hoursRemaining.toString().padStart(2, '0')}:${minutesRemaining.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Initialize countdown timers for each product
+        startCountdown('timer-1', 2, 15, 33);
+        startCountdown('timer-2', 1, 45, 22);
+        startCountdown('timer-3', 3, 30, 15);
+        startCountdown('timer-4', 5, 20, 45);
+        startCountdown('timer-5', 4, 10, 30);
+        startCountdown('timer-6', 6, 45, 20);
+        startCountdown('timer-7', 1, 30, 45);
+        startCountdown('timer-8', 0, 45, 15);
     </script>
 </body>
 </html>
