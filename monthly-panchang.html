@@ -514,7 +514,7 @@
         <div class="glass-card p-6 rounded-2xl fade-in">
             <div class="text-center mb-6">
                 <h2 class="text-3xl font-bold text-white mb-2 hindi">महीना चुनें</h2>
-                <p class="text-gray-300 hindi">वर्ष 2025 के किसी भी महीने का पंचांग देखें</p>
+                <p class="text-gray-300 hindi">वर्ष <span id="currentYear">2025</span> के किसी भी महीने का पंचांग देखें</p>
             </div>
             
             <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mt-6">
@@ -537,18 +537,22 @@
     <!-- Monthly Calendar -->
     <section id="monthly-calendar" class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-                अक्टूबर 2025 मासिक पंचांग
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in" id="calendarTitle">
+                <!-- Dynamic title will be inserted here -->
             </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-                अक्टूबर 2025 के सभी दिनों की तिथि, नक्षत्र, योग और करण की जानकारी। दीपावली, दशहरा सहित सभी प्रमुख त्योहार।
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in" id="calendarDescription">
+                <!-- Dynamic description will be inserted here -->
             </p>
         </div>
 
         <div class="glass-card p-6 rounded-2xl fade-in">
             <div class="text-center mb-6">
-                <div class="month-year hindi text-2xl font-bold text-amber-300">अक्टूबर 2025</div>
-                <p class="text-gray-300 hindi mt-2">कार्तिक मास, विक्रम संवत २०८२</p>
+                <div class="month-year hindi text-2xl font-bold text-amber-300" id="currentMonthYear">
+                    <!-- Dynamic month year will be inserted here -->
+                </div>
+                <p class="text-gray-300 hindi mt-2" id="vikramSamvat">
+                    <!-- Dynamic vikram samvat will be inserted here -->
+                </p>
             </div>
 
             <!-- Calendar Header -->
@@ -592,11 +596,11 @@
     <!-- Festivals and Vrats -->
     <section id="festivals" class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in">
-                अक्टूबर 2025 के प्रमुख त्योहार और व्रत
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi fade-in" id="festivalsTitle">
+                <!-- Dynamic festivals title will be inserted here -->
             </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in">
-                दशहरा, करवा चौथ, और दिवाली सहित सभी महत्वपूर्ण हिंदू त्योहारों की पूरी सूची
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto hindi fade-in" id="festivalsDescription">
+                <!-- Dynamic festivals description will be inserted here -->
             </p>
         </div>
 
@@ -604,107 +608,16 @@
             <!-- Festivals -->
             <div class="glass-card p-6 rounded-2xl fade-in">
                 <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">प्रमुख त्योहार</h3>
-                <div class="festival-list space-y-4">
-                    <div class="festival-item p-4 bg-amber-900/20 rounded-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date text-amber-300 font-semibold">2 अक्टूबर</div>
-                                <div class="festival-name hindi text-white font-medium">दशहरा (विजयादशमी)</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi text-gray-300 mt-2">बुराई पर अच्छाई की जीत, रावण वध</div>
-                    </div>
-                    
-                    <div class="festival-item p-4 bg-amber-900/20 rounded-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date text-amber-300 font-semibold">18 अक्टूबर</div>
-                                <div class="festival-name hindi text-white font-medium">धनतेरस</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi text-gray-300 mt-2">धन्वंतरी जयंती, सोना-चांदी खरीदने का शुभ दिन</div>
-                    </div>
-                    
-                    <div class="festival-item p-4 bg-amber-900/20 rounded-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date text-amber-300 font-semibold">19 अक्टूबर</div>
-                                <div class="festival-name hindi text-white font-medium">नरक चतुर्दशी</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi text-gray-300 mt-2">श्री कृष्ण द्वारा नरकासुर वध का स्मरण</div>
-                    </div>
-                    
-                    <div class="festival-item p-4 bg-amber-900/20 rounded-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date text-amber-300 font-semibold">20 अक्टूबर</div>
-                                <div class="festival-name hindi text-white font-medium">दीपावली</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi text-gray-300 mt-2">प्रकाश का पर्व, लक्ष्मी पूजन का शुभ मुहूर्त</div>
-                    </div>
-                    
-                    <div class="festival-item p-4 bg-amber-900/20 rounded-lg">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="festival-date text-amber-300 font-semibold">21 अक्टूबर</div>
-                                <div class="festival-name hindi text-white font-medium">गोवर्धन पूजा</div>
-                            </div>
-                            <span class="muhurat-badge good-badge">शुभ</span>
-                        </div>
-                        <div class="festival-details hindi text-gray-300 mt-2">गोवर्धन पर्वत की पूजा, अन्नकूट उत्सव</div>
-                    </div>
+                <div class="festival-list space-y-4" id="festivalsList">
+                    <!-- Dynamic festivals list will be inserted here -->
                 </div>
             </div>
 
             <!-- Vrats and Fasts -->
             <div class="glass-card p-6 rounded-2xl fade-in">
                 <h3 class="text-2xl font-bold text-white mb-4 border-b border-gray-700 pb-2 hindi">व्रत और उपवास</h3>
-                <div class="vrat-list space-y-4">
-                    <div class="vrat-item p-4 bg-green-900/20 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <div class="vrat-name hindi text-white font-medium">पापांकुशा एकादशी</div>
-                                <div class="festival-details hindi text-gray-300">विष्णु भगवान की पूजा, पापों से मुक्ति</div>
-                            </div>
-                            <div class="vrat-date text-amber-300 font-semibold">3 अक्टूबर</div>
-                        </div>
-                    </div>
-                    
-                    <div class="vrat-item p-4 bg-green-900/20 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <div class="vrat-name hindi text-white font-medium">करवा चौथ</div>
-                                <div class="festival-details hindi text-gray-300">सुहागिनों का व्रत, पति की लंबी उम्र के लिए</div>
-                            </div>
-                            <div class="vrat-date text-amber-300 font-semibold">10 अक्टूबर</div>
-                        </div>
-                    </div>
-                    
-                    <div class="vrat-item p-4 bg-green-900/20 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <div class="vrat-name hindi text-white font-medium">रमा एकादशी</div>
-                                <div class="festival-details hindi text-gray-300">विष्णु भगवान की पूजा, मोक्ष प्राप्ति</div>
-                            </div>
-                            <div class="vrat-date text-amber-300 font-semibold">17 अक्टूबर</div>
-                        </div>
-                    </div>
-                    
-                    <div class="vrat-item p-4 bg-green-900/20 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <div class="vrat-name hindi text-white font-medium">शनि प्रदोष व्रत</div>
-                                <div class="festival-details hindi text-gray-300">शिव पूजन, त्रयोदशी तिथि</div>
-                            </div>
-                            <div class="vrat-date text-amber-300 font-semibold">4, 19 अक्टूबर</div>
-                        </div>
-                    </div>
+                <div class="vrat-list space-y-4" id="vratsList">
+                    <!-- Dynamic vrats list will be inserted here -->
                 </div>
             </div>
         </div>
@@ -724,11 +637,29 @@
                     <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
-            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© <span id="currentYearFooter">2025</span> Jyotish Tark. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // Current date information
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth(); // 0-11
+        const currentDay = currentDate.getDate();
+
+        // Hindi month names
+        const hindiMonths = [
+            'जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून',
+            'जुलाई', 'अगस्त', 'सितम्बर', 'अक्टूबर', 'नवम्बर', 'दिसम्बर'
+        ];
+
+        // Hindi month names for descriptions
+        const hindiMonthNames = [
+            'जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून',
+            'जुलाई', 'अगस्त', 'सितम्बर', 'अक्टूबर', 'नवम्बर', 'दिसम्बर'
+        ];
+
         // Mobile Menu Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
@@ -751,64 +682,162 @@
             });
         });
 
-        // Render October 2025 Calendar
-        function renderOctober2025Calendar() {
+        // Calculate Vikram Samvat (approximate calculation)
+        function getVikramSamvat(year, month) {
+            // Vikram Samvat starts around 57 years ahead of Gregorian calendar
+            // This is a simplified calculation
+            let vikramYear = year + 57;
+            
+            // Adjust for months after October (Kartik month start)
+            if (month >= 9) { // October is month 9
+                vikramYear += 1;
+            }
+            
+            return vikramYear;
+        }
+
+        // Get month data (this would normally come from an API or database)
+        function getMonthData(monthIndex, year) {
+            // Sample data structure for each month
+            // In a real implementation, this would be fetched from a server
+            const monthData = {
+                title: `${hindiMonthNames[monthIndex]} ${year} मासिक पंचांग`,
+                description: `${hindiMonthNames[monthIndex]} ${year} के सभी दिनों की तिथि, नक्षत्र, योग और करण की जानकारी। महीने के सभी प्रमुख त्योहार।`,
+                vikramSamvat: `कार्तिक मास, विक्रम संवत ${getVikramSamvat(year, monthIndex)}`,
+                festivalsTitle: `${hindiMonthNames[monthIndex]} ${year} के प्रमुख त्योहार और व्रत`,
+                festivalsDescription: `${hindiMonthNames[monthIndex]} के महीने में मनाए जाने वाले सभी महत्वपूर्ण हिंदू त्योहारों की पूरी सूची`,
+                festivals: [],
+                vrats: [],
+                calendarDays: []
+            };
+
+            // Add sample festivals and vrats based on month
+            if (monthIndex === 9) { // October
+                monthData.festivals = [
+                    { date: '2', name: 'दशहरा (विजयादशमी)', details: 'बुराई पर अच्छाई की जीत, रावण वध' },
+                    { date: '18', name: 'धनतेरस', details: 'धन्वंतरी जयंती, सोना-चांदी खरीदने का शुभ दिन' },
+                    { date: '19', name: 'नरक चतुर्दशी', details: 'श्री कृष्ण द्वारा नरकासुर वध का स्मरण' },
+                    { date: '20', name: 'दीपावली', details: 'प्रकाश का पर्व, लक्ष्मी पूजन का शुभ मुहूर्त' },
+                    { date: '21', name: 'गोवर्धन पूजा', details: 'गोवर्धन पर्वत की पूजा, अन्नकूट उत्सव' }
+                ];
+                
+                monthData.vrats = [
+                    { date: '3', name: 'पापांकुशा एकादशी', details: 'विष्णु भगवान की पूजा, पापों से मुक्ति' },
+                    { date: '10', name: 'करवा चौथ', details: 'सुहागिनों का व्रत, पति की लंबी उम्र के लिए' },
+                    { date: '17', name: 'रमा एकादशी', details: 'विष्णु भगवान की पूजा, मोक्ष प्राप्ति' },
+                    { date: '4, 19', name: 'शनि प्रदोष व्रत', details: 'शिव पूजन, त्रयोदशी तिथि' }
+                ];
+            } else {
+                // Generic data for other months
+                monthData.festivals = [
+                    { date: '1', name: 'सामान्य त्योहार', details: 'यह महीने का एक महत्वपूर्ण त्योहार है' }
+                ];
+                
+                monthData.vrats = [
+                    { date: '10', name: 'सामान्य व्रत', details: 'यह महीने का एक महत्वपूर्ण व्रत है' }
+                ];
+            }
+
+            // Generate calendar days for the month
+            monthData.calendarDays = generateCalendarDays(monthIndex, year);
+
+            return monthData;
+        }
+
+        // Generate calendar days for a specific month
+        function generateCalendarDays(monthIndex, year) {
+            const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+            const firstDayOfMonth = new Date(year, monthIndex, 1).getDay();
+            const days = [];
+
+            // Add empty days for the beginning of the month
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                const prevMonth = monthIndex === 0 ? 11 : monthIndex - 1;
+                const prevYear = monthIndex === 0 ? year - 1 : year;
+                const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+                
+                days.push({
+                    day: daysInPrevMonth - firstDayOfMonth + i + 1,
+                    previous: true,
+                    currentMonth: false
+                });
+            }
+
+            // Add days of the current month
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayInfo = {
+                    day: i,
+                    currentMonth: true,
+                    normal: true
+                };
+
+                // Mark today
+                if (i === currentDay && monthIndex === currentMonth && year === currentYear) {
+                    dayInfo.today = true;
+                }
+
+                // Add festival/vrat markers based on sample data
+                if (monthIndex === 9) { // October
+                    if (i === 2) dayInfo.festival = true;
+                    if (i === 3) dayInfo.vrat = true;
+                    if (i === 4) dayInfo.vrat = true;
+                    if (i === 6) dayInfo.purnima = true;
+                    if (i === 10) dayInfo.vrat = true;
+                    if (i === 17) dayInfo.vrat = true;
+                    if (i === 18) dayInfo.festival = true;
+                    if (i === 19) dayInfo.festival = true;
+                    if (i === 20) {
+                        dayInfo.amavasya = true;
+                        dayInfo.festival = true;
+                    }
+                    if (i === 21) dayInfo.festival = true;
+                    if (i === 22) dayInfo.festival = true;
+                }
+
+                days.push(dayInfo);
+            }
+
+            // Add empty days for the end of the month to complete the grid
+            const totalCells = 42; // 6 weeks * 7 days
+            const remainingCells = totalCells - days.length;
+            for (let i = 1; i <= remainingCells; i++) {
+                days.push({
+                    day: i,
+                    next: true,
+                    currentMonth: false
+                });
+            }
+
+            return days;
+        }
+
+        // Render calendar for a specific month
+        function renderCalendar(monthIndex, year) {
+            const monthData = getMonthData(monthIndex, year);
             const calendarGrid = document.getElementById('calendarGrid');
+            
+            // Update page content
+            document.getElementById('calendarTitle').textContent = monthData.title;
+            document.getElementById('calendarDescription').textContent = monthData.description;
+            document.getElementById('currentMonthYear').textContent = `${hindiMonths[monthIndex]} ${year}`;
+            document.getElementById('vikramSamvat').textContent = monthData.vikramSamvat;
+            document.getElementById('festivalsTitle').textContent = monthData.festivalsTitle;
+            document.getElementById('festivalsDescription').textContent = monthData.festivalsDescription;
+            
+            // Render calendar grid
             calendarGrid.innerHTML = '';
-
-            // October 2025 calendar structure
-            const octoberDays = [
-                // Week 1 (Sept 29, 30 + Oct 1-5)
-                { day: 29, previous: true }, { day: 30, previous: true },
-                { day: 1, normal: true },
-                { day: 2, festival: true, name: "दशहरा" },
-                { day: 3, vrat: true, name: "पापांकुशा एकादशी" },
-                { day: 4, vrat: true, name: "शनि प्रदोष व्रत" },
-                { day: 5, normal: true },
-                
-                // Week 2 (Oct 6-12)
-                { day: 6, purnima: true, name: "शरद पूर्णिमा" },
-                { day: 7, normal: true },
-                { day: 8, normal: true },
-                { day: 9, normal: true },
-                { day: 10, vrat: true, name: "करवा चौथ" },
-                { day: 11, normal: true },
-                { day: 12, normal: true },
-                
-                // Week 3 (Oct 13-19)
-                { day: 13, normal: true },
-                { day: 14, normal: true },
-                { day: 15, normal: true },
-                { day: 16, normal: true },
-                { day: 17, vrat: true, name: "रमा एकादशी" },
-                { day: 18, festival: true, name: "धनतेरस" },
-                { day: 19, festival: true, name: "नरक चतुर्दशी" },
-                
-                // Week 4 (Oct 20-26)
-                { day: 20, amavasya: true, festival: true, name: "दीपावली" },
-                { day: 21, festival: true, name: "गोवर्धन पूजा" },
-                { day: 22, festival: true, name: "भाई दूज" },
-                { day: 23, normal: true },
-                { day: 24, normal: true },
-                { day: 25, normal: true },
-                { day: 26, normal: true },
-                
-                // Week 5 (Oct 27-31)
-                { day: 27, normal: true },
-                { day: 28, normal: true },
-                { day: 29, normal: true },
-                { day: 30, normal: true },
-                { day: 31, normal: true }
-            ];
-
-            octoberDays.forEach(dayInfo => {
+            monthData.calendarDays.forEach(dayInfo => {
                 const dayElement = document.createElement('div');
                 dayElement.classList.add('calendar-day', 'p-2', 'rounded');
                 
-                if (dayInfo.previous) {
+                if (dayInfo.previous || dayInfo.next) {
                     dayElement.classList.add('text-gray-500');
                 } else {
                     dayElement.classList.add('text-white');
+                }
+                
+                if (dayInfo.today) {
+                    dayElement.classList.add('active');
                 }
                 
                 if (dayInfo.festival) {
@@ -830,29 +859,61 @@
 
                 calendarGrid.appendChild(dayElement);
             });
+
+            // Render festivals
+            const festivalsList = document.getElementById('festivalsList');
+            festivalsList.innerHTML = '';
+            monthData.festivals.forEach(festival => {
+                const festivalElement = document.createElement('div');
+                festivalElement.classList.add('festival-item', 'p-4', 'bg-amber-900/20', 'rounded-lg');
+                festivalElement.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="festival-date text-amber-300 font-semibold">${festival.date} ${hindiMonths[monthIndex]}</div>
+                            <div class="festival-name hindi text-white font-medium">${festival.name}</div>
+                        </div>
+                        <span class="muhurat-badge good-badge">शुभ</span>
+                    </div>
+                    <div class="festival-details hindi text-gray-300 mt-2">${festival.details}</div>
+                `;
+                festivalsList.appendChild(festivalElement);
+            });
+
+            // Render vrats
+            const vratsList = document.getElementById('vratsList');
+            vratsList.innerHTML = '';
+            monthData.vrats.forEach(vrat => {
+                const vratElement = document.createElement('div');
+                vratElement.classList.add('vrat-item', 'p-4', 'bg-green-900/20', 'rounded-lg');
+                vratElement.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="vrat-name hindi text-white font-medium">${vrat.name}</div>
+                            <div class="festival-details hindi text-gray-300">${vrat.details}</div>
+                        </div>
+                        <div class="vrat-date text-amber-300 font-semibold">${vrat.date} ${hindiMonths[monthIndex]}</div>
+                    </div>
+                `;
+                vratsList.appendChild(vratElement);
+            });
         }
 
         // Month selector functionality
         document.querySelectorAll('.month-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const monthIndex = parseInt(this.dataset.month);
-                const months = [
-                    'जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून',
-                    'जुलाई', 'अगस्त', 'सितम्बर', 'अक्टूबर', 'नवम्बर', 'दिसम्बर'
-                ];
-                
-                // Update calendar title
-                document.querySelector('.month-year').textContent = `${months[monthIndex]} 2025`;
-                
-                // For now, we'll just show October calendar for all months
-                // In a real implementation, you would fetch data for the selected month
-                renderOctober2025Calendar();
+                renderCalendar(monthIndex, currentYear);
             });
         });
 
         // Initialize the page
         function init() {
-            renderOctober2025Calendar();
+            // Set current year in various places
+            document.getElementById('currentYear').textContent = currentYear;
+            document.getElementById('currentYearFooter').textContent = currentYear;
+            
+            // Render current month's calendar
+            renderCalendar(currentMonth, currentYear);
             
             // Add fade-in animation to all elements with fade-in class
             const fadeElements = document.querySelectorAll('.fade-in');
