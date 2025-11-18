@@ -97,20 +97,44 @@
             box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
         }
         
-        .testimonial-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 24px;
-            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
-        }
-        
+
+        /* Updated testimonial avatar for customer photos */
+    .testimonial-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+    overflow: hidden; /* Added for image containment */
+    }
+
+    .testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
+    /* Video styling for testimonials */
+    video {
+    background: #000;
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    }
+
+    /* Ensure portrait aspect ratio for videos */
+    @media (min-width: 768px) {
+    video {
+        max-width: 320px;
+        margin: 0 auto;
+        display: block;
+    }
+    }
         .primary-button {
             background: linear-gradient(to right, var(--primary), var(--accent));
             color: white;
@@ -1004,97 +1028,133 @@
     </section>
     
     <!-- Testimonials Section -->
-    <section class="max-w-6xl mx-auto px-4 py-16">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                Cosmic Connections We've Made
-            </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                Hear from those who have transformed their lives through our astrological guidance.
+<section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+            Cosmic Connections We've Made
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Hear from those who have transformed their lives through our astrological guidance.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="glass-card p-6 rounded-2xl">
+            <!-- Portrait Video -->
+            <div class="mb-4">
+                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer1-poster.jpg">
+                    <source src="videos/rajesh.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center mb-4">
+                <div class="testimonial-avatar mr-4">
+                    <img src="images/rajesh.jpg" alt="Rajesh Kumar" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div>
+                    <h3 class="font-bold text-white">Rajesh Kumar</h3>
+                    <div class="flex star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-300 italic">
+                "The Kundali analysis was incredibly accurate! It helped me understand why certain patterns kept repeating in my life and gave me practical remedies. My career has improved significantly since following the guidance."
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Testimonial 1 -->
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="flex items-center mb-4">
-                    <div class="testimonial-avatar mr-4">RK</div>
-                    <div>
-                        <h3 class="font-bold text-white">Rajesh Kumar</h3>
-                        <div class="flex star-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+        <!-- Testimonial 2 -->
+        <div class="glass-card p-6 rounded-2xl">
+            <!-- Portrait Video -->
+            <div class="mb-4">
+                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer2-poster.jpg">
+                    <source src="videos/priya.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center mb-4">
+                <div class="testimonial-avatar mr-4">
+                    <img src="images/priya.jpg" alt="Priya Malhotra" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div>
+                    <h3 class="font-bold text-white">Priya Malhotra</h3>
+                    <div class="flex star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
                 </div>
-                <p class="text-gray-300 italic">
-                    "The Kundali analysis was incredibly accurate! It helped me understand why certain patterns kept repeating in my life and gave me practical remedies. My career has improved significantly since following the guidance."
-                </p>
             </div>
-
-            <!-- Testimonial 2 -->
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="flex items-center mb-4">
-                    <div class="testimonial-avatar mr-4">PM</div>
-                    <div>
-                        <h3 class="font-bold text-white">Priya Malhotra</h3>
-                        <div class="flex star-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-gray-300 italic">
-                    "The numerology report was eye-opening! I never realized how much my life path number explained my personality and choices. I has also helped me in choosing the best career for me on the basis of my birth date."
-                </p>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="flex items-center mb-4">
-                    <div class="testimonial-avatar mr-4">AS</div>
-                    <div>
-                        <h3 class="font-bold text-white">Amit Sharma</h3>
-                        <div class="flex star-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-gray-300 italic">
-                    "Jyotish Tark's remedies transformed my life. The marriage prediction was spot on, and the suggested rituals helped remove obstacles. Highly recommend their personalized approach."
-                </p>
-            </div>
-
-            <!-- Testimonial 4 -->
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="flex items-center mb-4">
-                    <div class="testimonial-avatar mr-4">NG</div>
-                    <div>
-                        <h3 class="font-bold text-white">Neha Gupta</h3>
-                        <div class="flex star-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-gray-300 italic">
-                    "I was amazed by the accuracy of my career prediction. The astrologer pinpointed challenges I was facing and suggested perfect solutions. Will definitely come back!"
-                </p>
-            </div>
+            <p class="text-gray-300 italic">
+                "The numerology report was eye-opening! I never realized how much my life path number explained my personality and choices. I has also helped me in choosing the best career for me on the basis of my birth date."
+            </p>
         </div>
-    </section>
+
+        <!-- Testimonial 3 -->
+        <div class="glass-card p-6 rounded-2xl">
+            <!-- Portrait Video -->
+            <div class="mb-4">
+                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer3-poster.jpg">
+                    <source src="videos/amit.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center mb-4">
+                <div class="testimonial-avatar mr-4">
+                    <img src="images/amit.jpg" alt="Amit Sharma" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div>
+                    <h3 class="font-bold text-white">Amit Sharma</h3>
+                    <div class="flex star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-300 italic">
+                "Jyotish Tark's remedies transformed my life. The marriage prediction was spot on, and the suggested rituals helped remove obstacles. Highly recommend their personalized approach."
+            </p>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="glass-card p-6 rounded-2xl">
+            <!-- Portrait Video -->
+            <div class="mb-4">
+                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer4-poster.jpg">
+                    <source src="videos/neha.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center mb-4">
+                <div class="testimonial-avatar mr-4">
+                    <img src="images/neha.jpg" alt="Neha Gupta" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div>
+                    <h3 class="font-bold text-white">Neha Gupta</h3>
+                    <div class="flex star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="text-gray-300 italic">
+                "I was amazed by the accuracy of my career prediction. The astrologer pinpointed challenges I was facing and suggested perfect solutions. Will definitely come back!"
+            </p>
+        </div>
+    </div>
+</section>
 
     <!-- About Section -->
     <section class="max-w-6xl mx-auto px-4 py-16">
@@ -1139,23 +1199,24 @@
     </section>
 
         <!-- YouTube Channel Link -->
-        <div class="mt-16 text-center">
-            <div class="glass-card p-8 rounded-2xl max-w-2xl mx-auto">
-                <div class="flex flex-col items-center">
-                    <div class="mb-6">
-                        <div class="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-4">
-                            <i class="fab fa-youtube text-white text-3xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Subscribe to Our YouTube Channel</h3>
-                        <p class="text-gray-300 mt-2">Get daily astrological guidance and insights</p>
-                    </div>
-                    <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="primary-button bg-red-600 hover:bg-red-700">
-                        <i class="fab fa-youtube mr-2"></i>
-                        Visit Jyotish Tark
-                    </a>
+<div class="mt-16 text-center">
+    <div class="glass-card p-8 rounded-2xl max-w-2xl mx-auto">
+        <div class="flex flex-col items-center">
+            <div class="mb-6">
+                <!-- Your Channel Logo -->
+                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-red-600 flex items-center justify-center mx-auto mb-4">
+                    <img src="logo.png" alt="Jyotish Tark YouTube Channel" class="h-full w-full object-cover">
                 </div>
+                <h3 class="text-2xl font-bold text-white">Subscribe to Our YouTube Channel</h3>
+                <p class="text-gray-300 mt-2">Get daily astrological guidance and insights</p>
             </div>
+            <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="primary-button bg-red-600 hover:bg-red-700">
+                <i class="fab fa-youtube mr-2"></i>
+                Visit Jyotish Tark
+            </a>
         </div>
+    </div>
+</div>
     </section>
 
     <!-- CTA Section -->
