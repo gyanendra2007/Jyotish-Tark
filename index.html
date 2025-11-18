@@ -319,7 +319,31 @@
             justify-content: center;
             transition: all 0.3s ease;
         }
-        
+
+        /* Portrait video styling for 9:16 aspect ratio */
+.portrait-video {
+    width: 280px;
+    height: 497px; /* 9:16 aspect ratio */
+    object-fit: cover;
+    background: #000;
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .portrait-video {
+        width: 240px;
+        height: 427px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portrait-video {
+        width: 200px;
+        height: 355px;
+    }
+}
         .whatsapp-float:hover {
             background-color: #128C7E;
             transform: scale(1.1);
@@ -1041,9 +1065,9 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Testimonial 1 -->
         <div class="glass-card p-6 rounded-2xl">
-            <!-- Portrait Video -->
-            <div class="mb-4">
-                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer1-poster.jpg">
+            <!-- Portrait Video 9:16 -->
+            <div class="mb-4 flex justify-center">
+                <video controls class="portrait-video rounded-lg" poster="images/rajesh-poster.jpg">
                     <source src="images/rajesh.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -1069,9 +1093,9 @@
 
         <!-- Testimonial 2 -->
         <div class="glass-card p-6 rounded-2xl">
-            <!-- Portrait Video -->
-            <div class="mb-4">
-                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer2-poster.jpg">
+            <!-- Portrait Video 9:16 -->
+            <div class="mb-4 flex justify-center">
+                <video controls class="portrait-video rounded-lg" poster="images/priya-poster.jpg">
                     <source src="images/priya.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -1098,9 +1122,9 @@
 
         <!-- Testimonial 3 -->
         <div class="glass-card p-6 rounded-2xl">
-            <!-- Portrait Video -->
-            <div class="mb-4">
-                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer3-poster.jpg">
+            <!-- Portrait Video 9:16 -->
+            <div class="mb-4 flex justify-center">
+                <video controls class="portrait-video rounded-lg" poster="images/amit-poster.jpg">
                     <source src="images/amit.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -1127,9 +1151,9 @@
 
         <!-- Testimonial 4 -->
         <div class="glass-card p-6 rounded-2xl">
-            <!-- Portrait Video -->
-            <div class="mb-4">
-                <video controls class="w-full h-80 object-cover rounded-lg" poster="customer4-poster.jpg">
+            <!-- Portrait Video 9:16 -->
+            <div class="mb-4 flex justify-center">
+                <video controls class="portrait-video rounded-lg" poster="images/neha-poster.jpg">
                     <source src="images/neha.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
