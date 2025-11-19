@@ -900,7 +900,7 @@
             <!-- Founder Photo Section -->
             <div class="lg:col-span-1 bg-gradient-to-br from-purple-900 to-indigo-800 p-8 md:p-12 flex flex-col items-center justify-center text-center">
                 <!-- Big Square Photo -->
-                <div class="w-80 h-80 rounded-2xl overflow-hidden border-4 border-amber-300 shadow-2xl mb-6">
+                <div class="w-150 h-150 rounded-2xl overflow-hidden border-4 border-amber-300 shadow-2xl mb-6">
                     <img src="images/big-profile.JPG" alt="Gyanendra Singh Tomar - Founder Jyotish Tark" class="w-full h-full object-cover">
                 </div>
                 
@@ -1512,6 +1512,37 @@
     </footer>
 
     <script>
+        // Count up animation function
+function animateValue(element, start, end, duration) {
+    let startTime = null;
+    
+    function animationStep(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = value;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animationStep);
+        }
+    }
+    
+    requestAnimationFrame(animationStep);
+}
+
+// Initialize count ups when page loads
+function initializeCountUps() {
+    const counters = document.querySelectorAll('.count-up');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        animateValue(counter, 0, target, 2000);
+    });
+}
+
+// Start the animation when the page loads
+window.addEventListener('load', initializeCountUps);
+        
         // Mobile Menu Toggle - FIXED
         document.getElementById('menuToggle').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
