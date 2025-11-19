@@ -630,7 +630,211 @@
             align-items: flex-start;
             margin-bottom: 1rem;
         }
-        
+        .reviews-section {
+    max-width: 6xl;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+}
+
+.reviews-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+
+.reviews-subtitle {
+    font-size: 1.25rem;
+    color: #d1d5db;
+    margin-bottom: 3rem;
+    text-align: center;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Hind', sans-serif;
+}
+
+.reviews-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 1rem 0.5rem;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #7e22ce #1f2937;
+}
+
+.reviews-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.reviews-container::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 10px;
+}
+
+.reviews-container::-webkit-scrollbar-thumb {
+    background: #7e22ce;
+    border-radius: 10px;
+}
+
+.review-card {
+    min-width: 320px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    transition: all 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -5px rgba(126, 34, 206, 0.3);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.review-video {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.review-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(126, 34, 206, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background: rgba(126, 34, 206, 1);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.review-content {
+    padding: 1.5rem;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviewer-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 2px solid #f59e0b;
+}
+
+.reviewer-info h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    font-family: 'Hind', sans-serif;
+}
+
+.reviewer-info p {
+    font-size: 0.875rem;
+    color: #d1d5db;
+    margin: 0;
+    font-family: 'Hind', sans-serif;
+}
+
+.review-text {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-family: 'Hind', sans-serif;
+}
+
+.review-rating {
+    display: flex;
+    margin-top: 0.75rem;
+}
+
+.review-rating i {
+    color: #f59e0b;
+    margin-right: 0.25rem;
+}
+
+.review-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.review-controls button {
+    background: rgba(126, 34, 206, 0.3);
+    border: 1px solid rgba(126, 34, 206, 0.5);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.review-controls button:hover {
+    background: rgba(126, 34, 206, 0.7);
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .reviews-title {
+        font-size: 1.875rem;
+    }
+    
+    .reviews-subtitle {
+        font-size: 1.125rem;
+    }
+    
+    .review-card {
+        min-width: 280px;
+    }
+}
         .benefit-icon {
             background: var(--primary);
             color: white;
@@ -1036,6 +1240,152 @@
             </div>
         </div>
     </section>
+    <!-- HTML for Review Section -->
+<section class="reviews-section">
+    <div class="text-center mb-16">
+        <h2 class="reviews-title hindi">हमारे ग्राहकों के अनुभव</h2>
+        <p class="reviews-subtitle hindi">जानिए रुद्राक्ष धारण करने के बाद हमारे ग्राहकों के जीवन में क्या बदलाव आए</p>
+    </div>
+    
+    <div class="reviews-container" id="reviewsContainer">
+        <!-- Review 1 -->
+        <div class="review-card">
+            <div class="review-video">
+                <video poster="images/review1-thumb.jpg">
+                    <source src="videos/review1.mp4" type="video/mp4">
+                    आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                </video>
+                <div class="video-overlay">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="review-content">
+                <div class="review-header">
+                    <img src="images/reviewer1.jpg" alt="राजेश शर्मा" class="reviewer-photo">
+                    <div class="reviewer-info">
+                        <h4 class="hindi">राजेश शर्मा</h4>
+                        <p class="hindi">दिल्ली</p>
+                    </div>
+                </div>
+                <p class="review-text hindi">"पंचमुखी रुद्राक्ष पहनने के बाद से मेरे जीवन में अद्भुत शांति आई है। पहले मैं हमेशा तनाव में रहता था, अब मेरा मन शांत रहता है और काम में एकाग्रता बढ़ी है।"</p>
+                <div class="review-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Review 2 -->
+        <div class="review-card">
+            <div class="review-video">
+                <video poster="images/review2-thumb.jpg">
+                    <source src="videos/review2.mp4" type="video/mp4">
+                    आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                </video>
+                <div class="video-overlay">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="review-content">
+                <div class="review-header">
+                    <img src="images/reviewer2.jpg" alt="प्रीति सिंह" class="reviewer-photo">
+                    <div class="reviewer-info">
+                        <h4 class="hindi">प्रीति सिंह</h4>
+                        <p class="hindi">मुंबई</p>
+                    </div>
+                </div>
+                <p class="review-text hindi">"दो मुखी रुद्राक्ष ने मेरे पारिवारिक संबंधों में चमत्कारिक सुधार लाया है। पति के साथ मतभेद कम हुए हैं और घर का माहौल पहले से कहीं बेहतर हुआ है।"</p>
+                <div class="review-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Review 3 -->
+        <div class="review-card">
+            <div class="review-video">
+                <video poster="images/review3-thumb.jpg">
+                    <source src="videos/review3.mp4" type="video/mp4">
+                    आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                </video>
+                <div class="video-overlay">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="review-content">
+                <div class="review-header">
+                    <img src="images/reviewer3.jpg" alt अमित कुमार" class="reviewer-photo">
+                    <div class="reviewer-info">
+                        <h4 class="hindi">अमित कुमार</h4>
+                        <p class="hindi">बेंगलुरु</p>
+                    </div>
+                </div>
+                <p class="review-text hindi">"सप्तमुखी रुद्राक्ष धारण करने के बाद मेरे व्यापार में तेजी से वृद्धि हुई है। कई सालों से चली आ रही आर्थिक समस्याएं अब दूर हो रही हैं।"</p>
+                <div class="review-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Review 4 -->
+        <div class="review-card">
+            <div class="review-video">
+                <video poster="images/review4-thumb.jpg">
+                    <source src="videos/review4.mp4" type="video/mp4">
+                    आपका ब्राउज़र वीडियो सपोर्ट नहीं करता।
+                </video>
+                <div class="video-overlay">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="review-content">
+                <div class="review-header">
+                    <img src="images/reviewer4.jpg" alt="नीतू गुप्ता" class="reviewer-photo">
+                    <div class="reviewer-info">
+                        <h4 class="hindi">नीतू गुप्ता</h4>
+                        <p class="hindi">कोलकाता</p>
+                    </div>
+                </div>
+                <p class="review-text hindi">"चार मुखी रुद्राक्ष पहनने के बाद मेरी पढ़ाई में एकाग्रता बढ़ी है और याद करने की क्षमता में सुधार हुआ है। परीक्षा के परिणाम भी पहले से बेहतर आए हैं।"</p>
+                <div class="review-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="review-controls">
+        <button onclick="scrollReviews('left')">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="scrollReviews('right')">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
 
     <!-- Service Benefits Section -->
     <section class="max-w-6xl mx-auto px-4 py-8">
@@ -1742,6 +2092,79 @@
             });
         });
 
+        // Video Play Function
+function playVideo(button) {
+    const videoContainer = button.closest('.review-video');
+    const video = videoContainer.querySelector('video');
+    const playButton = videoContainer.querySelector('.play-button');
+    
+    if (video.paused) {
+        video.play();
+        playButton.style.display = 'none';
+    } else {
+        video.pause();
+        playButton.style.display = 'flex';
+    }
+    
+    // Reset other videos when one is played
+    document.querySelectorAll('.review-video').forEach(container => {
+        if (container !== videoContainer) {
+            const otherVideo = container.querySelector('video');
+            const otherButton = container.querySelector('.play-button');
+            otherVideo.pause();
+            otherVideo.currentTime = 0;
+            otherButton.style.display = 'flex';
+        }
+    });
+}
+
+// Pause video when it ends and show play button again
+document.querySelectorAll('.review-video video').forEach(video => {
+    video.addEventListener('ended', function() {
+        const playButton = this.closest('.review-video').querySelector('.play-button');
+        playButton.style.display = 'flex';
+    });
+});
+
+// Scroll Reviews Function
+function scrollReviews(direction) {
+    const container = document.getElementById('reviewsContainer');
+    const scrollAmount = 350;
+    
+    if (direction === 'left') {
+        container.scrollLeft -= scrollAmount;
+    } else {
+        container.scrollLeft += scrollAmount;
+    }
+}
+
+// Auto-scroll reviews every 10 seconds (optional)
+let autoScrollInterval;
+function startAutoScroll() {
+    autoScrollInterval = setInterval(() => {
+        const container = document.getElementById('reviewsContainer');
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        if (container.scrollLeft >= maxScroll) {
+            container.scrollLeft = 0;
+        } else {
+            container.scrollLeft += 350;
+        }
+    }, 10000);
+}
+
+// Start auto-scroll when page loads
+window.addEventListener('load', startAutoScroll);
+
+// Pause auto-scroll when user interacts with reviews
+document.getElementById('reviewsContainer').addEventListener('mouseenter', () => {
+    clearInterval(autoScrollInterval);
+});
+
+document.getElementById('reviewsContainer').addEventListener('mouseleave', () => {
+    startAutoScroll();
+});
+        
         // Countdown Timer Functionality
         function startCountdown(elementId, hours, minutes, seconds) {
             const timerElement = document.getElementById(elementId);
