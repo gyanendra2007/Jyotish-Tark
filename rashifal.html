@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Rashifal | Jyotish Tark</title>
+    <link rel="canonical" href="https://jyotishtark.in/rashifal.html" />
+    <meta name="description" content="Daily Rashifal in Hindi by Jyotish Tark. Get your zodiac sign's horoscope, career, finance, love, and health predictions for today.">
+    <meta name="keywords" content="rashifal, daily horoscope, aaj ka rashifal, today horoscope, rashi bhavishya, career prediction, love prediction, health prediction, money prediction, zodiac sign, Jyotish Tark, कुंडली, राशिफल, आज का राशिफल, दैनिक राशिफल, कैरियर भविष्यवाणी, प्रेम भविष्यवाणी, स्वास्थ्य भविष्यवाणी, धन भविष्यवाणी">
+    <meta name="author" content="Jyotish Tark">
+    <meta name="google-adsense-account" content="ca-pub-2888883494422573">
+    <meta property="og:title" content="Daily Rashifal | Jyotish Tark">
+    <meta property="og:description" content="Get your daily horoscope in Hindi. Career, finance, love, and health predictions for all zodiac signs.">
+    <meta property="og:image" content="https://jyotishtark.in/logo.png">
+    <meta property="og:url" content="https://jyotishtark.in/rashifal.html">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .rashi-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .rashi-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .zodiac-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secondary-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .whatsapp-header {
+            background: #075E54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-body {
+            padding: 15px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #25d366;
+        }
+        
+        .rashi-prediction-category {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rashi-prediction-category:last-child {
+            border-bottom: none;
+        }
+        
+        .prediction-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--secondary);
+        }
+        
+        .lucky-number {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .lucky-color {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        /* Navigation Specific Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary, #f59e0b);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(20px);
+            min-width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 500;
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
+            padding-left: 24px;
+            transform: translateX(5px);
+        }
+        
+        .dropdown-content i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+            margin-left: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* Mobile Dropdown Styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 8px;
+            overflow: hidden;
+            border-left: 3px solid var(--primary, #7e22ce);
+        }
+        
+        .mobile-dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(126, 34, 206, 0.2);
+            padding-left: 20px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .mobile-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-toggle i:last-child {
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* WhatsApp Styles */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+            animation: popupSlide 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        @keyframes popupSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .whatsapp-header {
+            background: linear-gradient(135deg, #075E54, #128C7E);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 2px solid white;
+        }
+        
+        .whatsapp-body {
+            padding: 20px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+            border-color: #25d366;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 12px;
+            font-size: 22px;
+            color: #25d366;
+            width: 24px;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+            
+            .dropdown-content {
+                position: static;
+                margin-top: 0;
+                box-shadow: none;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
+
+    <!-- Navigation -->
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Home
+                </a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Kundali
+                </a>
+                
+                <!-- Numerology & Tarot Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                        Calculator
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="numerology.html">
+                            Numerology Report
+                        </a>
+                        <a href="tarot.html">
+                            Tarot Reading
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rashifal
+                </a>
+                
+                <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rudraksha
+                </a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Blog
+                </a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home astrological-symbol"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star astrological-symbol"></i>Kundali
+            </a>
+            
+            <!-- Numerology & Tarot Mobile Dropdown -->
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator astrological-symbol"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i>
+                        Numerology Report
+                    </a>
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i>
+                        Tarot Reading
+                    </a>
+                </div>
+            </div>
+            
+            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-sun astrological-symbol"></i>Rashifal
+            </a>
+            
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
+            </a>
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open astrological-symbol"></i>Blog
+            </a>
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope astrological-symbol"></i>Contact
+            </a>
+        </nav>
+    </header>
+
+    <!-- WhatsApp Floating Button -->
+    <a class="whatsapp-float" id="whatsappButton">
+        <i class="fab fa-whatsapp"></i>
+    </a>   
+
+    <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
+            <div>
+                <h3 class="font-bold text-lg">Jyotish Tark</h3>
+                <p class="text-sm opacity-90">Typically replies within minutes</p>
+            </div>
+        </div>
+        <div class="whatsapp-body">
+            <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Chat with us</h4>
+                    <p class="text-sm text-gray-600">Ask questions about our services</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Call us</h4>
+                    <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Book consultation</h4>
+                    <p class="text-sm text-gray-600">Schedule a personal session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
+                <span class="block">Daily Rashifal</span>
+                <span class="text-3xl md:text-4xl text-amber-300">आज का राशिफल</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Get your personalized daily horoscope for all zodiac signs. Discover what the stars have in store for your career, finance, love, and health today.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="#rashifal-grid" class="primary-button">
+                    <i class="fas fa-sun mr-2"></i>
+                    Check Your Rashi
+                </a>
+                <a href="kundali-form.html" class="secondary-button">
+                    <i class="fas fa-star-and-crescent mr-2"></i>
+                    Get Detailed Kundali
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Date Display -->
+    <section class="max-w-6xl mx-auto px-4 py-8 text-center">
+        <div class="glass-card p-6 rounded-2xl">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                <!-- UPDATE THIS DATE DAILY -->
+                Today's Horoscope for <span class="text-amber-300">April 15, 2025</span>
+            </h2>
+            <p class="text-gray-300">
+                <!-- UPDATE THIS DAILY -->
+                Planetary positions: Sun in Aries, Moon in Taurus, Mercury in Pisces, Venus in Pisces, Mars in Aquarius, Jupiter in Taurus, Saturn in Pisces, Rahu in Pisces, Ketu in Virgo
+            </p>
+        </div>
+    </section>
+
+    <!-- Rashifal Grid -->
+    <section id="rashifal-grid" class="max-w-7xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Today's Predictions for All Zodiac Signs
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Find your zodiac sign below and discover what the planets have planned for you today.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Aries (Mesh) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♈</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Aries (मेष)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Today is favorable for new projects. Your hard work will be recognized by seniors. Avoid conflicts with colleagues.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good day for financial planning. Unexpected gains possible. Avoid large investments today.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Romantic moments expected. Express your feelings openly. Single Aries may meet someone special.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to stress levels. Practice meditation. Avoid heavy foods.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Take initiative in important matters. Your energy will attract positive outcomes.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">7</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #FF0000;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Taurus (Vrishabh) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♉</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Taurus (वृषभ)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Focus on completing pending tasks. Teamwork will bring success. Avoid taking on too many responsibilities.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Stable financial day. Good for saving. Avoid lending money to others.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Harmony in relationships. Plan a special evening. Express appreciation to your partner.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good health overall. Pay attention to digestion. Light exercise recommended.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Patience will help you achieve your goals. Don't rush important decisions.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">4</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #00FF00;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gemini (Mithun) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♊</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Gemini (मिथुन)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Creative ideas will be appreciated. Networking opportunities. Avoid distractions.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Mixed financial day. Unexpected expenses possible. Stick to budget.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good communication day. Resolve misunderstandings. Social gatherings favorable.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Mental stress possible. Practice relaxation techniques. Get adequate rest.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your communication skills will help you today. Share your ideas confidently.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">5</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #FFFF00;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cancer (Kark) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♋</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Cancer (कर्क)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Focus on long-term goals. Your intuition will guide you. Avoid office politics.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good for family financial planning. Avoid risky investments. Savings will grow.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Emotional connection strong. Share your feelings. Family support in relationships.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to emotional health. Practice self-care. Balanced diet important.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Trust your instincts in personal matters. Your emotional intelligence is your strength today.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">2</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #FFFFFF;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Leo (Singh) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♌</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Leo (सिंह)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Leadership qualities will shine. Take charge of projects. Recognition likely.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good for business deals. Financial gains expected. Avoid impulsive spending.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Romantic day. Express your love grandly. Social events favorable.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good energy levels. Exercise will be beneficial. Watch for minor aches.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your confidence will attract opportunities. Don't hesitate to take the spotlight.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">1</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #FFA500;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Virgo (Kanya) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♍</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Virgo (कन्या)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Attention to detail will pay off. Complete pending tasks. Avoid overthinking.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Stable financial day. Good for budgeting. Avoid new financial commitments.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Practical approach in relationships. Communication important. Avoid criticism.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to digestive health. Light meals recommended. Stress management important.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your analytical skills will help solve problems. Trust your practical judgment.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">5</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #808080;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Libra (Tula) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♎</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Libra (तुला)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good for partnerships and collaborations. Your diplomatic skills will help. Avoid indecisiveness.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Balanced financial day. Good for joint investments. Avoid luxury spending.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Harmony in relationships. Romantic gestures appreciated. Social events favorable.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Overall good health. Pay attention to balance. Light exercise beneficial.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your sense of balance will guide you today. Seek harmony in all matters.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">6</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #FFC0CB;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scorpio (Vrishchik) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♏</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Scorpio (वृश्चिक)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Intense focus will bring results. Research projects favorable. Avoid conflicts.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good for investments. Unexpected gains possible. Avoid risky ventures.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Deep emotional connections. Passionate moments. Trust important in relationships.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to emotional well-being. Practice stress relief. Adequate rest important.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your intensity can be channeled productively today. Focus on transformation.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">9</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #800080;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sagittarius (Dhanu) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♐</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Sagittarius (धनु)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Expansion opportunities. Travel related work favorable. Avoid overcommitment.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good financial day. Opportunities for growth. Avoid impulsive purchases.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Adventurous romantic day. New experiences with partner. Social gatherings favorable.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Good energy levels. Outdoor activities beneficial. Watch for minor injuries.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your optimism will attract positive experiences. Embrace new opportunities.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">3</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #0000FF;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Capricorn (Makar) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♑</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Capricorn (मकर)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Hard work will pay off. Long-term planning favorable. Avoid being too rigid.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Stable financial day. Good for savings. Avoid unnecessary expenses.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Practical approach in relationships. Commitment important. Family support.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to bones and joints. Regular exercise important. Balanced diet.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your discipline will help achieve goals. Balance work with relaxation.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">8</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #964B00;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aquarius (Kumbh) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♒</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Aquarius (कुम्भ)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Innovative ideas will be appreciated. Group projects favorable. Avoid being too detached.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Unconventional financial opportunities. Good for technology investments. Avoid speculation.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Intellectual connection important. Friendship basis in relationships. Social causes bonding.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to circulation. Regular breaks important. Mental stimulation beneficial.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your unique perspective will be valuable today. Share your innovative ideas.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">11</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #00FFFF;"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pisces (Meen) -->
+            <div class="rashi-card p-6 rounded-2xl">
+                <div class="zodiac-icon">♓</div>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Pisces (मीन)</h3>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-briefcase prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Career</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Creative work favorable. Intuition will guide decisions. Avoid being too sensitive.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-money-bill-wave prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Finance</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Intuitive financial decisions good. Avoid emotional spending. Savings important.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heart prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Love</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Emotional connection strong. Romantic gestures appreciated. Spiritual bonding.
+                    </p>
+                </div>
+                
+                <div class="rashi-prediction-category">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-heartbeat prediction-icon"></i>
+                        <h4 class="font-semibold text-amber-300">Health</h4>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Pay attention to emotional health. Meditation beneficial. Avoid escapism.
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <h4 class="font-semibold text-amber-300 mb-2">Special Advice</h4>
+                    <p class="text-gray-300 text-sm">
+                        <!-- UPDATE THIS DAILY -->
+                        Your compassion will be appreciated today. Trust your intuition in decisions.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Number:</span>
+                        <span class="lucky-number">7</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 text-sm">Lucky Color:</span>
+                        <span class="lucky-color" style="background-color: #87CEEB;"></span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- General Daily Advice -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card rounded-2xl p-8 md:p-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 section-title">
+                Today's Cosmic Guidance
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6">
+                    <div class="text-4xl text-amber-300 mb-4">🌙</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Moon's Influence</h3>
+                    <p class="text-gray-300">
+                        <!-- UPDATE THIS DAILY -->
+                        The Moon in Taurus brings stability and emotional security. Focus on practical matters and nurturing relationships.
+                    </p>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl text-amber-300 mb-4">☀️</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Sun's Energy</h3>
+                    <p class="text-gray-300">
+                        <!-- UPDATE THIS DAILY -->
+                        Sun in Aries encourages initiative and courage. Take bold steps toward your goals with confidence.
+                    </p>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl text-amber-300 mb-4">💫</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Overall Vibe</h3>
+                    <p class="text-gray-300">
+                        <!-- UPDATE THIS DAILY -->
+                        A day of balanced energy with opportunities for growth in both personal and professional spheres.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    Want Personalized Guidance?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                    Get a detailed Kundali analysis tailored specifically to your birth chart for deeper insights.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="kundali-form.html" class="primary-button">
+                        <i class="fas fa-star-and-crescent mr-2"></i>
+                        Get Your Kundali
+                    </a>
+                    <a href="contact.html" class="secondary-button">
+                        <i class="fas fa-user-astronaut mr-2"></i>
+                        Consult Our Astrologer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300">Daily Horoscope</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="disclaimer.html" class="text-gray-300">Disclaimer</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        // Mobile Dropdown Toggles
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // WhatsApp Popup Toggle
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
