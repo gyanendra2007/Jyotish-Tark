@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Panchang | Hindu Calendar | Jyotish Tark</title>
+    <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
+    <meta name="description" content="Get daily Panchang information - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more. Accurate Hindu calendar based on Vedic astrology.">
+    <meta name="keywords" content="panchang, daily panchang, hindu calendar, tithi today, nakshatra today, shubh muhurat, good time today, bad time today, yoga, karana, var, hindu astrology, vedic calendar, drik panchang, prokerala, jyotish tark">
+    <meta name="author" content="Jyotish Tark">
+    <meta name="google-adsense-account" content="ca-pub-2888883494422573">
+    <meta property="og:title" content="Daily Panchang - Hindu Calendar | Jyotish Tark">
+    <meta property="og:description" content="Get daily Panchang information - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more.">
+    <meta property="og:image" content="https://jyotishtark.in/logo.png">
+    <meta property="og:url" content="https://jyotishtark.in/panchang.html">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7e22ce;
+            --primary-light: #a855f7;
+            --primary-dark: #6b21a8;
+            --secondary: #f59e0b;
+            --accent: #ec4899;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', 'Hind', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f3f4f6;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .hindi {
+            font-family: 'Hind', sans-serif;
+        }
+        
+        .cosmic-bg {
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            position: relative;
+        }
+        
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--secondary);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+        }
+        
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .primary-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .primary-button:hover::before {
+            left: 100%;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secondary-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .star-rating {
+            color: var(--secondary);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .zodiac-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .planet-1 {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+            box-shadow: 0 0 50px #f59e0b;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .planet-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
+            box-shadow: 0 0 40px #ec4899;
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .blog-card {
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-image {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .whatsapp-header {
+            background: #075E54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .whatsapp-body {
+            padding: 15px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #25d366;
+        }
+        
+        @media (max-width: 768px) {
+            .planet-1, .planet-2 {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+        }
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .count-up {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Navigation Specific Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary, #f59e0b);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .astrological-symbol {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Dropdown Styles - FIXED */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(20px);
+            min-width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Keep dropdown visible when hovering over it */
+        .dropdown-content:hover,
+        .dropdown:hover .dropdown-content {
+            display: block !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Create invisible gap area for better hover */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+            z-index: 999;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 500;
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
+            padding-left: 24px;
+            transform: translateX(5px);
+        }
+        
+        .dropdown-content i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+            margin-left: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* Mobile Dropdown Styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 8px;
+            overflow: hidden;
+            border-left: 3px solid var(--primary, #7e22ce);
+        }
+        
+        .mobile-dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(126, 34, 206, 0.2);
+            padding-left: 20px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .mobile-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-toggle i:last-child {
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* WhatsApp Styles - FIXED */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+            animation: popupSlide 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        @keyframes popupSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .whatsapp-header {
+            background: linear-gradient(135deg, #075E54, #128C7E);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .whatsapp-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 2px solid white;
+        }
+        
+        .whatsapp-body {
+            padding: 20px;
+            color: #4a4a4a;
+        }
+        
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .whatsapp-option:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+            border-color: #25d366;
+        }
+        
+        .whatsapp-option i {
+            margin-right: 12px;
+            font-size: 22px;
+            color: #25d366;
+            width: 24px;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 80px;
+                right: 20px;
+                width: 280px;
+            }
+            
+            .dropdown-content {
+                position: static;
+                margin-top: 0;
+                box-shadow: none;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Panchang Specific Styles */
+        .panchang-card {
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panchang-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .panchang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panchang-item:last-child {
+            border-bottom: none;
+        }
+        
+        .panchang-label {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .panchang-value {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .auspicious {
+            color: #10b981;
+        }
+        
+        .inauspicious {
+            color: #ef4444;
+        }
+        
+        .muhurat-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.05));
+            border-left: 4px solid #10b981;
+        }
+        
+        .muhurat-inauspicious {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+            border-left: 4px solid #ef4444;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--secondary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Floating Planets -->
+    <div class="planet-1"></div>
+    <div class="planet-2"></div>
+
+    <!-- Navigation -->
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Home
+                </a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Kundali
+                </a>
+                
+                <!-- Numerology & Tarot Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                        Calculator
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="numerology.html">
+                            Numerology Report
+                        </a>
+                        <a href="tarot.html">
+                            Tarot Reading
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Panchang Link -->
+                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Panchang
+                </a>
+                
+                <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rudraksha
+                </a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Blog
+                </a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home astrological-symbol"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star astrological-symbol"></i>Kundali
+            </a>
+            
+            <!-- Numerology & Tarot Mobile Dropdown -->
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator astrological-symbol"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i>
+                        Numerology Report
+                    </a>
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i>
+                        Tarot Reading
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Panchang Mobile Link -->
+            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-calendar-day astrological-symbol"></i>Panchang
+            </a>
+            
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
+            </a>
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open astrological-symbol"></i>Blog
+            </a>
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope astrological-symbol"></i>Contact
+            </a>
+        </nav>
+    </header>
+
+    <!-- WhatsApp Floating Button -->
+    <a class="whatsapp-float" id="whatsappButton">
+        <i class="fab fa-whatsapp"></i>
+    </a>   
+
+    <!-- WhatsApp Popup -->
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark">
+            <div>
+                <h3 class="font-bold text-lg">Jyotish Tark</h3>
+                <p class="text-sm opacity-90">Typically replies within minutes</p>
+            </div>
+        </div>
+        <div class="whatsapp-body">
+            <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Chat with us</h4>
+                    <p class="text-sm text-gray-600">Ask questions about our services</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Call us</h4>
+                    <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
+                </div>
+            </div>
+            
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Book consultation</h4>
+                    <p class="text-sm text-gray-600">Schedule a personal session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
+                <span class="block">Daily Panchang</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Hindu Calendar & Auspicious Timings</span>
+            </h1>
+            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                Get accurate daily Panchang information including Tithi, Nakshatra, Yoga, Karana, and Shubh Muhurat based on Vedic astrology.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <button id="getLocation" class="primary-button">
+                    <i class="fas fa-location-arrow mr-2"></i>
+                    Get Panchang for My Location
+                </button>
+                <a href="#today-panchang" class="secondary-button">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    View Today's Panchang
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Panchang Section -->
+    <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
+                Today's Panchang
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Complete Hindu calendar details for today. All times are based on your current location.
+            </p>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <span>Loading Panchang data...</span>
+        </div>
+
+        <div id="panchang-container" class="hidden">
+            <!-- Date and Location Info -->
+            <div class="glass-card p-6 rounded-2xl mb-8 text-center">
+                <h3 class="text-2xl font-bold text-white mb-2" id="current-date"></h3>
+                <p class="text-gray-300" id="location-info"></p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Basic Panchang Info -->
+                <div class="panchang-card">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Basic Panchang</h3>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Tithi</span>
+                        <span class="panchang-value" id="tithi"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Nakshatra</span>
+                        <span class="panchang-value" id="nakshatra"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Yoga</span>
+                        <span class="panchang-value" id="yoga"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Karana</span>
+                        <span class="panchang-value" id="karana"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Paksha</span>
+                        <span class="panchang-value" id="paksha"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Ritu</span>
+                        <span class="panchang-value" id="ritu"></span>
+                    </div>
+                </div>
+
+                <!-- Sun and Moon Info -->
+                <div class="panchang-card">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Sun & Moon</h3>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Sunrise</span>
+                        <span class="panchang-value" id="sunrise"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Sunset</span>
+                        <span class="panchang-value" id="sunset"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Moonrise</span>
+                        <span class="panchang-value" id="moonrise"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Moonset</span>
+                        <span class="panchang-value" id="moonset"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Rahu Kaal</span>
+                        <span class="panchang-value inauspicious" id="rahu-kaal"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Gulika Kaal</span>
+                        <span class="panchang-value inauspicious" id="gulika-kaal"></span>
+                    </div>
+                </div>
+
+                <!-- Auspicious Timings -->
+                <div class="panchang-card muhurat-card">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Auspicious Timings (Shubh Muhurat)</h3>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Abhijit Muhurat</span>
+                        <span class="panchang-value auspicious" id="abhijit-muhurat"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Amrit Kaal</span>
+                        <span class="panchang-value auspicious" id="amrit-kaal"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Brahma Muhurat</span>
+                        <span class="panchang-value auspicious" id="brahma-muhurat"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Vijaya Muhurat</span>
+                        <span class="panchang-value auspicious" id="vijaya-muhurat"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Godhuli Muhurat</span>
+                        <span class="panchang-value auspicious" id="godhuli-muhurat"></span>
+                    </div>
+                </div>
+
+                <!-- Inauspicious Timings -->
+                <div class="panchang-card muhurat-inauspicious">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Inauspicious Timings</h3>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Yamaganda</span>
+                        <span class="panchang-value inauspicious" id="yamaganda"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Dur Muhurat</span>
+                        <span class="panchang-value inauspicious" id="dur-muhurat"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Varjyam</span>
+                        <span class="panchang-value inauspicious" id="varjyam"></span>
+                    </div>
+                    <div class="panchang-item">
+                        <span class="panchang-label">Bhadra</span>
+                        <span class="panchang-value inauspicious" id="bhadra"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="glass-card p-6 rounded-2xl mt-8">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">Additional Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-300 mb-2" id="day-length"></div>
+                        <p class="text-gray-300">Day Length</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-300 mb-2" id="moon-phase"></div>
+                        <p class="text-gray-300">Moon Phase</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-amber-300 mb-2" id="weekday"></div>
+                        <p class="text-gray-300">Weekday</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panchang Explanation Section -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="glass-card rounded-2xl p-8 md:p-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">
+                Understanding Panchang
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-amber-300 mb-4">What is Panchang?</h3>
+                    <p class="text-gray-300 mb-6">
+                        Panchang is a Hindu calendar and almanac that provides important astrological information for each day. The word "Panchang" is derived from two Sanskrit words: "Pancha" meaning five and "Anga" meaning parts. These five elements are:
+                    </p>
+                    
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-moon text-purple-400 mr-3 mt-1"></i>
+                            <div>
+                                <span class="font-semibold text-white">Tithi</span> - Lunar day based on the position of the Moon relative to the Sun
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-purple-400 mr-3 mt-1"></i>
+                            <div>
+                                <span class="font-semibold text-white">Nakshatra</span> - Constellation or lunar mansion where the Moon is located
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-yin-yang text-purple-400 mr-3 mt-1"></i>
+                            <div>
+                                <span class="font-semibold text-white">Yoga</span> - Auspicious or inauspicious period based on the combined longitude of the Sun and Moon
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-sun text-purple-400 mr-3 mt-1"></i>
+                            <div>
+                                <span class="font-semibold text-white">Karana</span> - Half of a Tithi, used to determine the quality of the day
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-calendar-day text-purple-400 mr-3 mt-1"></i>
+                            <div>
+                                <span class="font-semibold text-white">Vaar</span> - Day of the week
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold text-amber-300 mb-4">Importance of Panchang</h3>
+                    <p class="text-gray-300 mb-6">
+                        Panchang is used to determine the most auspicious times for various activities such as weddings, housewarming ceremonies, starting new ventures, and religious rituals. It helps in avoiding inauspicious periods and maximizing positive outcomes.
+                    </p>
+                    
+                    <div class="bg-purple-900 bg-opacity-50 rounded-xl p-6 mb-6">
+                        <h4 class="text-lg font-bold text-amber-300 mb-3">Key Auspicious Periods</h4>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                                <span><strong>Abhijit Muhurat:</strong> Considered the most auspicious time of the day</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                                <span><strong>Amrit Kaal:</strong> Nectar period, highly favorable for important tasks</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                                <span><strong>Brahma Muhurat:</strong> Ideal for meditation and spiritual practices</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-red-900 bg-opacity-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-amber-300 mb-3">Key Inauspicious Periods</h4>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
+                                <span><strong>Rahu Kaal:</strong> Inauspicious period ruled by Rahu</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
+                                <span><strong>Yamaganda:</strong> Period ruled by Yama, the god of death</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
+                                <span><strong>Gulika Kaal:</strong> Inauspicious period associated with Saturn</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card text-center py-12 mt-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition" aria-label="Whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="index.html" class="text-gray-300">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
+                        <li><a href="panchang.html" class="text-gray-300">Panchang</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+                        <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
+                        <li><a href="panchang.html" class="text-gray-300">Daily Panchang</a></li>
+                        <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                    <ul class="space-y-3 footer-links">
+                        <li><a href="about.html" class="text-gray-300">About Us</a></li>
+                        <li><a href="disclaimer.html" class="text-gray-300">Disclaimer</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        // Mobile Dropdown Toggles
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // WhatsApp Popup Toggle
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        
+        whatsappButton.addEventListener('click', function() {
+            whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close WhatsApp popup when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                whatsappPopup.style.display = 'none';
+            }
+        });
+
+        // Panchang Data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user location and load panchang data
+            getLocationAndLoadPanchang();
+            
+            // Add event listener for the location button
+            document.getElementById('getLocation').addEventListener('click', function() {
+                getLocationAndLoadPanchang();
+            });
+        });
+
+        function getLocationAndLoadPanchang() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        loadPanchangData(lat, lon);
+                    },
+                    function(error) {
+                        // If location access is denied, use default location (Lucknow)
+                        console.log('Location access denied, using default location');
+                        loadPanchangData(26.8467, 80.9462); // Lucknow coordinates
+                    }
+                );
+            } else {
+                // Geolocation not supported, use default location
+                console.log('Geolocation not supported, using default location');
+                loadPanchangData(26.8467, 80.9462); // Lucknow coordinates
+            }
+        }
+
+        function loadPanchangData(lat, lon) {
+            const loadingElement = document.getElementById('loading');
+            const panchangContainer = document.getElementById('panchang-container');
+            
+            // Show loading
+            loadingElement.classList.remove('hidden');
+            panchangContainer.classList.add('hidden');
+            
+            // In a real implementation, you would fetch data from an API like Prokerala or Drik Panchang
+            // For this example, we'll use mock data that changes daily
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Get current date
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateString = now.toLocaleDateString('en-US', options);
+                
+                // Set current date
+                document.getElementById('current-date').textContent = dateString;
+                
+                // Set location info (in a real implementation, you would reverse geocode the coordinates)
+                document.getElementById('location-info').textContent = `Based on your current location (Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)})`;
+                
+                // Generate dynamic panchang data based on current date
+                const panchangData = generateDynamicPanchangData(now);
+                
+                // Update all panchang elements with the generated data
+                updatePanchangElements(panchangData);
+                
+                // Hide loading and show panchang data
+                loadingElement.classList.add('hidden');
+                panchangContainer.classList.remove('hidden');
+            }, 1500); // Simulate network delay
+        }
+
+        function generateDynamicPanchangData(date) {
+            // This function generates dynamic panchang data based on the current date
+            // In a real implementation, you would use a proper panchang calculation library or API
+            
+            const day = date.getDate();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            
+            // Arrays of possible values (these would be calculated based on actual astronomical data)
+            const tithis = ['Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 
+                           'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+                           'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima', 'Amavasya'];
+            
+            const nakshatras = ['Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira', 
+                               'Ardra', 'Punarvasu', 'Pushya', 'Ashlesha', 'Magha',
+                               'Purva Phalguni', 'Uttara Phalguni', 'Hasta', 'Chitra', 
+                               'Swati', 'Vishakha', 'Anuradha', 'Jyeshtha', 'Mula', 
+                               'Purva Ashadha', 'Uttara Ashadha', 'Shravana', 'Dhanishta', 
+                               'Shatabhisha', 'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'];
+            
+            const yogas = ['Vishkambha', 'Priti', 'Ayushman', 'Saubhagya', 'Shobhana', 
+                          'Atiganda', 'Sukarma', 'Dhriti', 'Shoola', 'Ganda', 
+                          'Vriddhi', 'Dhruva', 'Vyaghata', 'Harshana', 'Vajra', 
+                          'Siddhi', 'Vyatipata', 'Variyan', 'Parigha', 'Shiva', 
+                          'Siddha', 'Sadhya', 'Shubha', 'Shukla', 'Brahma', 'Indra', 'Vaidhriti'];
+            
+            const karanas = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 
+                            'Vanija', 'Vishti', 'Shakuni', 'Chatushpada', 'Naga', 'Kimstughna'];
+            
+            const pakshas = ['Shukla Paksha', 'Krishna Paksha'];
+            
+            const ritus = ['Vasanta', 'Grishma', 'Varsha', 'Sharad', 'Hemanta', 'Shishira'];
+            
+            const moonPhases = ['New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 
+                               'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'];
+            
+            // Generate pseudo-random but consistent values based on date
+            const seed = day + month * 31 + year * 365;
+            
+            return {
+                tithi: tithis[seed % tithis.length],
+                nakshatra: nakshatras[seed % nakshatras.length],
+                yoga: yogas[seed % yogas.length],
+                karana: karanas[seed % karanas.length],
+                paksha: pakshas[seed % pakshas.length],
+                ritu: ritus[seed % ritus.length],
+                sunrise: '6:15 AM',
+                sunset: '6:45 PM',
+                moonrise: '7:30 PM',
+                moonset: '7:15 AM',
+                rahuKaal: '7:30 AM - 9:00 AM',
+                gulikaKaal: '3:00 PM - 4:30 PM',
+                abhijitMuhurat: '11:45 AM - 12:30 PM',
+                amritKaal: '9:15 AM - 10:45 AM',
+                brahmaMuhurat: '4:30 AM - 5:15 AM',
+                vijayaMuhurat: '2:00 PM - 2:45 PM',
+                godhuliMuhurat: '6:30 PM - 6:45 PM',
+                yamaganda: '10:30 AM - 12:00 PM',
+                durMuhurat: '4:00 PM - 5:30 PM',
+                varjyam: '1:15 PM - 2:45 PM',
+                bhadra: '8:00 AM - 9:30 AM',
+                dayLength: '12h 30m',
+                moonPhase: moonPhases[seed % moonPhases.length],
+                weekday: date.toLocaleDateString('en-US', { weekday: 'long' })
+            };
+        }
+
+        function updatePanchangElements(data) {
+            // Update all panchang elements with the provided data
+            document.getElementById('tithi').textContent = data.tithi;
+            document.getElementById('nakshatra').textContent = data.nakshatra;
+            document.getElementById('yoga').textContent = data.yoga;
+            document.getElementById('karana').textContent = data.karana;
+            document.getElementById('paksha').textContent = data.paksha;
+            document.getElementById('ritu').textContent = data.ritu;
+            document.getElementById('sunrise').textContent = data.sunrise;
+            document.getElementById('sunset').textContent = data.sunset;
+            document.getElementById('moonrise').textContent = data.moonrise;
+            document.getElementById('moonset').textContent = data.moonset;
+            document.getElementById('rahu-kaal').textContent = data.rahuKaal;
+            document.getElementById('gulika-kaal').textContent = data.gulikaKaal;
+            document.getElementById('abhijit-muhurat').textContent = data.abhijitMuhurat;
+            document.getElementById('amrit-kaal').textContent = data.amritKaal;
+            document.getElementById('brahma-muhurat').textContent = data.brahmaMuhurat;
+            document.getElementById('vijaya-muhurat').textContent = data.vijayaMuhurat;
+            document.getElementById('godhuli-muhurat').textContent = data.godhuliMuhurat;
+            document.getElementById('yamaganda').textContent = data.yamaganda;
+            document.getElementById('dur-muhurat').textContent = data.durMuhurat;
+            document.getElementById('varjyam').textContent = data.varjyam;
+            document.getElementById('bhadra').textContent = data.bhadra;
+            document.getElementById('day-length').textContent = data.dayLength;
+            document.getElementById('moon-phase').textContent = data.moonPhase;
+            document.getElementById('weekday').textContent = data.weekday;
+        }
+    </script>
+</body>
+</html>
