@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daily Panchang | Hindu Calendar | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
-    <meta name="description" content="Get daily Panchang information - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more. Accurate Hindu calendar based on Vedic astrology.">
-    <meta name="keywords" content="panchang, daily panchang, hindu calendar, tithi today, nakshatra today, shubh muhurat, good time today, bad time today, yoga, karana, var, hindu astrology, vedic calendar, drik panchang, prokerala, jyotish tark">
+    <meta name="description" content="Get daily Panchang information for Lucknow - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more. Accurate Hindu calendar based on Vedic astrology.">
+    <meta name="keywords" content="panchang, daily panchang, lucknow panchang, tithi today, nakshatra today, shubh muhurat, good time today, bad time today, yoga, karana, var, hindu astrology, vedic calendar, jyotish tark">
     <meta name="author" content="Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
     <meta property="og:title" content="Daily Panchang - Hindu Calendar | Jyotish Tark">
-    <meta property="og:description" content="Get daily Panchang information - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more.">
+    <meta property="og:description" content="Get daily Panchang information for Lucknow - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more.">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/panchang.html">
     <meta property="og:type" content="website">
@@ -746,30 +746,6 @@
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
             border-left: 4px solid #ef4444;
         }
-        
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            font-size: 1.2rem;
-            color: var(--secondary);
-        }
-        
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid var(--secondary);
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -931,19 +907,19 @@
         <div class="relative z-10">
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
                 <span class="block">Daily Panchang</span>
-                <span class="text-3xl md:text-4xl text-amber-300">Hindu Calendar & Auspicious Timings</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 25 November 2025</span>
             </h1>
             <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Get accurate daily Panchang information including Tithi, Nakshatra, Yoga, Karana, and Shubh Muhurat based on Vedic astrology.
+                Get accurate daily Panchang information for Lucknow including Tithi, Nakshatra, Yoga, Karana, and Shubh Muhurat based on Vedic astrology.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <button id="getLocation" class="primary-button">
-                    <i class="fas fa-location-arrow mr-2"></i>
-                    Get Panchang for My Location
-                </button>
-                <a href="#today-panchang" class="secondary-button">
+                <a href="#today-panchang" class="primary-button">
                     <i class="fas fa-calendar-alt mr-2"></i>
                     View Today's Panchang
+                </a>
+                <a href="contact.html" class="secondary-button">
+                    <i class="fas fa-user-astronaut mr-2"></i>
+                    Consult Our Astrologer
                 </a>
             </div>
         </div>
@@ -953,147 +929,140 @@
     <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                Today's Panchang
+                आज का पंचांग - लखनऊ
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                Complete Hindu calendar details for today. All times are based on your current location.
+                मंगलवार, 25 नवंबर 2025 के लिए संपूर्ण हिंदू कैलेंडर विवरण
             </p>
         </div>
 
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <span>Loading Panchang data...</span>
+        <!-- Date and Location Info -->
+        <div class="glass-card p-6 rounded-2xl mb-8 text-center">
+            <h3 class="text-2xl font-bold text-white mb-2">मंगलवार, 25 नवंबर 2025</h3>
+            <p class="text-gray-300">लखनऊ, उत्तर प्रदेश, भारत के लिए पंचांग</p>
         </div>
 
-        <div id="panchang-container" class="hidden">
-            <!-- Date and Location Info -->
-            <div class="glass-card p-6 rounded-2xl mb-8 text-center">
-                <h3 class="text-2xl font-bold text-white mb-2" id="current-date"></h3>
-                <p class="text-gray-300" id="location-info"></p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Basic Panchang Info -->
-                <div class="panchang-card">
-                    <h3 class="text-xl font-bold text-white mb-4 text-center">Basic Panchang</h3>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Tithi</span>
-                        <span class="panchang-value" id="tithi"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Nakshatra</span>
-                        <span class="panchang-value" id="nakshatra"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Yoga</span>
-                        <span class="panchang-value" id="yoga"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Karana</span>
-                        <span class="panchang-value" id="karana"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Paksha</span>
-                        <span class="panchang-value" id="paksha"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Ritu</span>
-                        <span class="panchang-value" id="ritu"></span>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Basic Panchang Info -->
+            <div class="panchang-card">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">मूल पंचांग</h3>
+                <div class="panchang-item">
+                    <span class="panchang-label">तिथि</span>
+                    <span class="panchang-value" id="tithi">पंचमी (05:42 तक)</span>
                 </div>
-
-                <!-- Sun and Moon Info -->
-                <div class="panchang-card">
-                    <h3 class="text-xl font-bold text-white mb-4 text-center">Sun & Moon</h3>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Sunrise</span>
-                        <span class="panchang-value" id="sunrise"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Sunset</span>
-                        <span class="panchang-value" id="sunset"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Moonrise</span>
-                        <span class="panchang-value" id="moonrise"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Moonset</span>
-                        <span class="panchang-value" id="moonset"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Rahu Kaal</span>
-                        <span class="panchang-value inauspicious" id="rahu-kaal"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Gulika Kaal</span>
-                        <span class="panchang-value inauspicious" id="gulika-kaal"></span>
-                    </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">नक्षत्र</span>
+                    <span class="panchang-value" id="nakshatra">मृगशिरा (08:15 तक)</span>
                 </div>
-
-                <!-- Auspicious Timings -->
-                <div class="panchang-card muhurat-card">
-                    <h3 class="text-xl font-bold text-white mb-4 text-center">Auspicious Timings (Shubh Muhurat)</h3>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Abhijit Muhurat</span>
-                        <span class="panchang-value auspicious" id="abhijit-muhurat"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Amrit Kaal</span>
-                        <span class="panchang-value auspicious" id="amrit-kaal"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Brahma Muhurat</span>
-                        <span class="panchang-value auspicious" id="brahma-muhurat"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Vijaya Muhurat</span>
-                        <span class="panchang-value auspicious" id="vijaya-muhurat"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Godhuli Muhurat</span>
-                        <span class="panchang-value auspicious" id="godhuli-muhurat"></span>
-                    </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">योग</span>
+                    <span class="panchang-value" id="yoga">शोभन (पूर्ण दिन)</span>
                 </div>
-
-                <!-- Inauspicious Timings -->
-                <div class="panchang-card muhurat-inauspicious">
-                    <h3 class="text-xl font-bold text-white mb-4 text-center">Inauspicious Timings</h3>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Yamaganda</span>
-                        <span class="panchang-value inauspicious" id="yamaganda"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Dur Muhurat</span>
-                        <span class="panchang-value inauspicious" id="dur-muhurat"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Varjyam</span>
-                        <span class="panchang-value inauspicious" id="varjyam"></span>
-                    </div>
-                    <div class="panchang-item">
-                        <span class="panchang-label">Bhadra</span>
-                        <span class="panchang-value inauspicious" id="bhadra"></span>
-                    </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">करण</span>
+                    <span class="panchang-value" id="karana">बव (05:42 तक)</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">पक्ष</span>
+                    <span class="panchang-value" id="paksha">शुक्ल पक्ष</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">मास</span>
+                    <span class="panchang-value" id="masa">मार्गशीर्ष</span>
                 </div>
             </div>
 
-            <!-- Additional Info -->
-            <div class="glass-card p-6 rounded-2xl mt-8">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Additional Information</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-amber-300 mb-2" id="day-length"></div>
-                        <p class="text-gray-300">Day Length</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-amber-300 mb-2" id="moon-phase"></div>
-                        <p class="text-gray-300">Moon Phase</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-amber-300 mb-2" id="weekday"></div>
-                        <p class="text-gray-300">Weekday</p>
-                    </div>
+            <!-- Sun and Moon Info -->
+            <div class="panchang-card">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">सूर्य और चंद्र</h3>
+                <div class="panchang-item">
+                    <span class="panchang-label">सूर्योदय</span>
+                    <span class="panchang-value" id="sunrise">06:42 AM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">सूर्यास्त</span>
+                    <span class="panchang-value" id="sunset">05:28 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">चंद्रोदय</span>
+                    <span class="panchang-value" id="moonrise">10:15 AM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">चंद्रास्त</span>
+                    <span class="panchang-value" id="moonset">09:30 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">राहु काल</span>
+                    <span class="panchang-value inauspicious" id="rahu-kaal">03:00 PM - 04:30 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">गुलिक काल</span>
+                    <span class="panchang-value inauspicious" id="gulika-kaal">12:00 PM - 01:30 PM</span>
+                </div>
+            </div>
+
+            <!-- Auspicious Timings -->
+            <div class="panchang-card muhurat-card">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">शुभ मुहूर्त</h3>
+                <div class="panchang-item">
+                    <span class="panchang-label">अभिजीत मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="abhijit-muhurat">11:45 AM - 12:30 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">अमृत काल</span>
+                    <span class="panchang-value auspicious" id="amrit-kaal">09:15 AM - 10:45 AM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">ब्रह्म मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="brahma-muhurat">04:50 AM - 05:35 AM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">विजय मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="vijaya-muhurat">02:00 PM - 02:45 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">गोधूलि मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="godhuli-muhurat">05:28 PM - 05:43 PM</span>
+                </div>
+            </div>
+
+            <!-- Inauspicious Timings -->
+            <div class="panchang-card muhurat-inauspicious">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">अशुभ समय</h3>
+                <div class="panchang-item">
+                    <span class="panchang-label">यमगंड</span>
+                    <span class="panchang-value inauspicious" id="yamaganda">10:30 AM - 12:00 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">दुर्मुहूर्त</span>
+                    <span class="panchang-value inauspicious" id="dur-muhurat">04:00 PM - 05:30 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">वर्ज्यम</span>
+                    <span class="panchang-value inauspicious" id="varjyam">01:15 PM - 02:45 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">भद्रा</span>
+                    <span class="panchang-value inauspicious" id="bhadra">08:00 AM - 09:30 AM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="glass-card p-6 rounded-2xl mt-8">
+            <h3 class="text-xl font-bold text-white mb-4 text-center">अतिरिक्त जानकारी</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-300 mb-2">10h 46m</div>
+                    <p class="text-gray-300">दिन की अवधि</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-300 mb-2">वृद्धि</div>
+                    <p class="text-gray-300">चंद्र कला</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-amber-300 mb-2">मंगलवार</div>
+                    <p class="text-gray-300">वार</p>
                 </div>
             </div>
         </div>
@@ -1103,88 +1072,88 @@
     <section class="max-w-6xl mx-auto px-4 py-16">
         <div class="glass-card rounded-2xl p-8 md:p-12">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">
-                Understanding Panchang
+                पंचांग की जानकारी
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold text-amber-300 mb-4">What is Panchang?</h3>
+                    <h3 class="text-xl font-bold text-amber-300 mb-4">पंचांग क्या है?</h3>
                     <p class="text-gray-300 mb-6">
-                        Panchang is a Hindu calendar and almanac that provides important astrological information for each day. The word "Panchang" is derived from two Sanskrit words: "Pancha" meaning five and "Anga" meaning parts. These five elements are:
+                        पंचांग एक हिंदू कैलेंडर और पंचांग है जो प्रत्येक दिन के लिए महत्वपूर्ण ज्योतिषीय जानकारी प्रदान करता है। "पंचांग" शब्द दो संस्कृत शब्दों से लिया गया है: "पंच" जिसका अर्थ है पांच और "अंग" जिसका अर्थ है भाग। ये पांच तत्व हैं:
                     </p>
                     
                     <ul class="space-y-4 text-gray-300">
                         <li class="flex items-start">
                             <i class="fas fa-moon text-purple-400 mr-3 mt-1"></i>
                             <div>
-                                <span class="font-semibold text-white">Tithi</span> - Lunar day based on the position of the Moon relative to the Sun
+                                <span class="font-semibold text-white">तिथि</span> - चंद्र दिन सूर्य के सापेक्ष चंद्रमा की स्थिति पर आधारित
                             </div>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-star text-purple-400 mr-3 mt-1"></i>
                             <div>
-                                <span class="font-semibold text-white">Nakshatra</span> - Constellation or lunar mansion where the Moon is located
+                                <span class="font-semibold text-white">नक्षत्र</span> - नक्षत्र या चंद्र महल जहां चंद्रमा स्थित है
                             </div>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-yin-yang text-purple-400 mr-3 mt-1"></i>
                             <div>
-                                <span class="font-semibold text-white">Yoga</span> - Auspicious or inauspicious period based on the combined longitude of the Sun and Moon
+                                <span class="font-semibold text-white">योग</span> - सूर्य और चंद्रमा के संयुक्त देशांतर के आधार पर शुभ या अशुभ अवधि
                             </div>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-sun text-purple-400 mr-3 mt-1"></i>
                             <div>
-                                <span class="font-semibold text-white">Karana</span> - Half of a Tithi, used to determine the quality of the day
+                                <span class="font-semibold text-white">करण</span> - एक तिथि का आधा भाग, दिन की गुणवत्ता निर्धारित करने के लिए उपयोग किया जाता है
                             </div>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-calendar-day text-purple-400 mr-3 mt-1"></i>
                             <div>
-                                <span class="font-semibold text-white">Vaar</span> - Day of the week
+                                <span class="font-semibold text-white">वार</span> - सप्ताह का दिन
                             </div>
                         </li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-xl font-bold text-amber-300 mb-4">Importance of Panchang</h3>
+                    <h3 class="text-xl font-bold text-amber-300 mb-4">पंचांग का महत्व</h3>
                     <p class="text-gray-300 mb-6">
-                        Panchang is used to determine the most auspicious times for various activities such as weddings, housewarming ceremonies, starting new ventures, and religious rituals. It helps in avoiding inauspicious periods and maximizing positive outcomes.
+                        पंचांग का उपयोग विभिन्न गतिविधियों जैसे शादियों, गृहप्रवेश समारोहों, नए उद्यम शुरू करने और धार्मिक अनुष्ठानों के लिए सबसे शुभ समय निर्धारित करने के लिए किया जाता है। यह अशुभ अवधियों से बचने और सकारात्मक परिणामों को अधिकतम करने में मदद करता है।
                     </p>
                     
                     <div class="bg-purple-900 bg-opacity-50 rounded-xl p-6 mb-6">
-                        <h4 class="text-lg font-bold text-amber-300 mb-3">Key Auspicious Periods</h4>
+                        <h4 class="text-lg font-bold text-amber-300 mb-3">मुख्य शुभ अवधियाँ</h4>
                         <ul class="space-y-3 text-gray-300">
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>Abhijit Muhurat:</strong> Considered the most auspicious time of the day</span>
+                                <span><strong>अभिजीत मुहूर्त:</strong> दिन का सबसे शुभ समय माना जाता है</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>Amrit Kaal:</strong> Nectar period, highly favorable for important tasks</span>
+                                <span><strong>अमृत काल:</strong> अमृत अवधि, महत्वपूर्ण कार्यों के लिए अत्यंत अनुकूल</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>Brahma Muhurat:</strong> Ideal for meditation and spiritual practices</span>
+                                <span><strong>ब्रह्म मुहूर्त:</strong> ध्यान और आध्यात्मिक प्रथाओं के लिए आदर्श</span>
                             </li>
                         </ul>
                     </div>
                     
                     <div class="bg-red-900 bg-opacity-50 rounded-xl p-6">
-                        <h4 class="text-lg font-bold text-amber-300 mb-3">Key Inauspicious Periods</h4>
+                        <h4 class="text-lg font-bold text-amber-300 mb-3">मुख्य अशुभ अवधियाँ</h4>
                         <ul class="space-y-3 text-gray-300">
                             <li class="flex items-start">
                                 <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
-                                <span><strong>Rahu Kaal:</strong> Inauspicious period ruled by Rahu</span>
+                                <span><strong>राहु काल:</strong> राहु द्वारा शासित अशुभ अवधि</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
-                                <span><strong>Yamaganda:</strong> Period ruled by Yama, the god of death</span>
+                                <span><strong>यमगंड:</strong> यम, मृत्यु के देवता द्वारा शासित अवधि</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-times-circle text-red-400 mr-3 mt-1"></i>
-                                <span><strong>Gulika Kaal:</strong> Inauspicious period associated with Saturn</span>
+                                <span><strong>गुलिक काल:</strong> शनि से जुड़ी अशुभ अवधि</span>
                             </li>
                         </ul>
                     </div>
@@ -1287,169 +1256,6 @@
                 whatsappPopup.style.display = 'none';
             }
         });
-
-        // Panchang Data
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get user location and load panchang data
-            getLocationAndLoadPanchang();
-            
-            // Add event listener for the location button
-            document.getElementById('getLocation').addEventListener('click', function() {
-                getLocationAndLoadPanchang();
-            });
-        });
-
-        function getLocationAndLoadPanchang() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        loadPanchangData(lat, lon);
-                    },
-                    function(error) {
-                        // If location access is denied, use default location (Lucknow)
-                        console.log('Location access denied, using default location');
-                        loadPanchangData(26.8467, 80.9462); // Lucknow coordinates
-                    }
-                );
-            } else {
-                // Geolocation not supported, use default location
-                console.log('Geolocation not supported, using default location');
-                loadPanchangData(26.8467, 80.9462); // Lucknow coordinates
-            }
-        }
-
-        function loadPanchangData(lat, lon) {
-            const loadingElement = document.getElementById('loading');
-            const panchangContainer = document.getElementById('panchang-container');
-            
-            // Show loading
-            loadingElement.classList.remove('hidden');
-            panchangContainer.classList.add('hidden');
-            
-            // In a real implementation, you would fetch data from an API like Prokerala or Drik Panchang
-            // For this example, we'll use mock data that changes daily
-            
-            // Simulate API call delay
-            setTimeout(() => {
-                // Get current date
-                const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const dateString = now.toLocaleDateString('en-US', options);
-                
-                // Set current date
-                document.getElementById('current-date').textContent = dateString;
-                
-                // Set location info (in a real implementation, you would reverse geocode the coordinates)
-                document.getElementById('location-info').textContent = `Based on your current location (Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)})`;
-                
-                // Generate dynamic panchang data based on current date
-                const panchangData = generateDynamicPanchangData(now);
-                
-                // Update all panchang elements with the generated data
-                updatePanchangElements(panchangData);
-                
-                // Hide loading and show panchang data
-                loadingElement.classList.add('hidden');
-                panchangContainer.classList.remove('hidden');
-            }, 1500); // Simulate network delay
-        }
-
-        function generateDynamicPanchangData(date) {
-            // This function generates dynamic panchang data based on the current date
-            // In a real implementation, you would use a proper panchang calculation library or API
-            
-            const day = date.getDate();
-            const month = date.getMonth();
-            const year = date.getFullYear();
-            
-            // Arrays of possible values (these would be calculated based on actual astronomical data)
-            const tithis = ['Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 
-                           'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
-                           'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima', 'Amavasya'];
-            
-            const nakshatras = ['Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira', 
-                               'Ardra', 'Punarvasu', 'Pushya', 'Ashlesha', 'Magha',
-                               'Purva Phalguni', 'Uttara Phalguni', 'Hasta', 'Chitra', 
-                               'Swati', 'Vishakha', 'Anuradha', 'Jyeshtha', 'Mula', 
-                               'Purva Ashadha', 'Uttara Ashadha', 'Shravana', 'Dhanishta', 
-                               'Shatabhisha', 'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'];
-            
-            const yogas = ['Vishkambha', 'Priti', 'Ayushman', 'Saubhagya', 'Shobhana', 
-                          'Atiganda', 'Sukarma', 'Dhriti', 'Shoola', 'Ganda', 
-                          'Vriddhi', 'Dhruva', 'Vyaghata', 'Harshana', 'Vajra', 
-                          'Siddhi', 'Vyatipata', 'Variyan', 'Parigha', 'Shiva', 
-                          'Siddha', 'Sadhya', 'Shubha', 'Shukla', 'Brahma', 'Indra', 'Vaidhriti'];
-            
-            const karanas = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 
-                            'Vanija', 'Vishti', 'Shakuni', 'Chatushpada', 'Naga', 'Kimstughna'];
-            
-            const pakshas = ['Shukla Paksha', 'Krishna Paksha'];
-            
-            const ritus = ['Vasanta', 'Grishma', 'Varsha', 'Sharad', 'Hemanta', 'Shishira'];
-            
-            const moonPhases = ['New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 
-                               'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'];
-            
-            // Generate pseudo-random but consistent values based on date
-            const seed = day + month * 31 + year * 365;
-            
-            return {
-                tithi: tithis[seed % tithis.length],
-                nakshatra: nakshatras[seed % nakshatras.length],
-                yoga: yogas[seed % yogas.length],
-                karana: karanas[seed % karanas.length],
-                paksha: pakshas[seed % pakshas.length],
-                ritu: ritus[seed % ritus.length],
-                sunrise: '6:15 AM',
-                sunset: '6:45 PM',
-                moonrise: '7:30 PM',
-                moonset: '7:15 AM',
-                rahuKaal: '7:30 AM - 9:00 AM',
-                gulikaKaal: '3:00 PM - 4:30 PM',
-                abhijitMuhurat: '11:45 AM - 12:30 PM',
-                amritKaal: '9:15 AM - 10:45 AM',
-                brahmaMuhurat: '4:30 AM - 5:15 AM',
-                vijayaMuhurat: '2:00 PM - 2:45 PM',
-                godhuliMuhurat: '6:30 PM - 6:45 PM',
-                yamaganda: '10:30 AM - 12:00 PM',
-                durMuhurat: '4:00 PM - 5:30 PM',
-                varjyam: '1:15 PM - 2:45 PM',
-                bhadra: '8:00 AM - 9:30 AM',
-                dayLength: '12h 30m',
-                moonPhase: moonPhases[seed % moonPhases.length],
-                weekday: date.toLocaleDateString('en-US', { weekday: 'long' })
-            };
-        }
-
-        function updatePanchangElements(data) {
-            // Update all panchang elements with the provided data
-            document.getElementById('tithi').textContent = data.tithi;
-            document.getElementById('nakshatra').textContent = data.nakshatra;
-            document.getElementById('yoga').textContent = data.yoga;
-            document.getElementById('karana').textContent = data.karana;
-            document.getElementById('paksha').textContent = data.paksha;
-            document.getElementById('ritu').textContent = data.ritu;
-            document.getElementById('sunrise').textContent = data.sunrise;
-            document.getElementById('sunset').textContent = data.sunset;
-            document.getElementById('moonrise').textContent = data.moonrise;
-            document.getElementById('moonset').textContent = data.moonset;
-            document.getElementById('rahu-kaal').textContent = data.rahuKaal;
-            document.getElementById('gulika-kaal').textContent = data.gulikaKaal;
-            document.getElementById('abhijit-muhurat').textContent = data.abhijitMuhurat;
-            document.getElementById('amrit-kaal').textContent = data.amritKaal;
-            document.getElementById('brahma-muhurat').textContent = data.brahmaMuhurat;
-            document.getElementById('vijaya-muhurat').textContent = data.vijayaMuhurat;
-            document.getElementById('godhuli-muhurat').textContent = data.godhuliMuhurat;
-            document.getElementById('yamaganda').textContent = data.yamaganda;
-            document.getElementById('dur-muhurat').textContent = data.durMuhurat;
-            document.getElementById('varjyam').textContent = data.varjyam;
-            document.getElementById('bhadra').textContent = data.bhadra;
-            document.getElementById('day-length').textContent = data.dayLength;
-            document.getElementById('moon-phase').textContent = data.moonPhase;
-            document.getElementById('weekday').textContent = data.weekday;
-        }
     </script>
 </body>
 </html>
