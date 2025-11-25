@@ -813,99 +813,119 @@
   <div class="planet-1"></div>
   <div class="planet-2"></div>
 
-  <!-- Navigation -->
-<header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-    <div class="flex justify-between items-center">
-        
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center space-x-3">
-            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
-            </div>
-            <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
-        </a>
-
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-6 font-medium">
-            <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Home
+      <!-- Navigation -->
+    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
+        <div class="flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                </div>
+                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
-            <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Kundali
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Home
+                </a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Kundali
+                </a>
+                
+                <!-- Numerology & Tarot Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                        Calculator
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="numerology.html">
+                            Numerology Report
+                        </a>
+                        <a href="tarot.html">
+                            Tarot Reading
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Panchang Link -->
+                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Panchang
+                </a>
+                
+                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rashifal
+                </a>
+                
+                <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Rudraksha
+                </a>
+                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Blog
+                </a>
+                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home astrological-symbol"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star astrological-symbol"></i>Kundali
             </a>
             
-            <!-- Numerology & Tarot Dropdown -->
-            <div class="dropdown">
-                <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Calculator
-                    <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="numerology.html">
+            <!-- Numerology & Tarot Mobile Dropdown -->
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator astrological-symbol"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i>
                         Numerology Report
                     </a>
-                    <a href="tarot.html">
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i>
                         Tarot Reading
                     </a>
                 </div>
             </div>
-            <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Rudraksha
+
+            <!-- Panchang Mobile Link -->
+            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-calendar-day astrological-symbol"></i>Panchang
             </a>
-            <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Blog
+            
+            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-sun astrological-symbol"></i>Rashifal
             </a>
-            <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                Contact
+            
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
+            </a>
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open astrological-symbol"></i>Blog
+            </a>
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope astrological-symbol"></i>Contact
             </a>
         </nav>
-
-        <!-- Mobile Menu Button -->
-        <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-        <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-home astrological-symbol"></i>Home
-        </a>
-        <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-star astrological-symbol"></i>Kundali
-        </a>
-        
-        <!-- Numerology & Tarot Mobile Dropdown -->
-        <div class="mobile-dropdown">
-            <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                <div class="flex items-center">
-                    <i class="fas fa-calculator astrological-symbol"></i>
-                    <span>Calculator</span>
-                </div>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown-content">
-                <a href="numerology.html" class="flex items-center">
-                    <i class="fas fa-calculator mr-3"></i>
-                    Numerology Report
-                </a>
-                <a href="tarot.html" class="flex items-center">
-                    <i class="fas fa-clover mr-3"></i>
-                    Tarot Reading
-                </a>
-            </div>
-        </div>
-        <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
-        </a>
-        <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-book-open astrological-symbol"></i>Blog
-        </a>
-        <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-            <i class="fas fa-envelope astrological-symbol"></i>Contact
-        </a>
-    </nav>
-</header>
+    </header>
 
 <!-- WhatsApp Floating Button -->
 <a class="whatsapp-float" id="whatsappButton">
