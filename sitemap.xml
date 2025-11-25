@@ -3,7 +3,7 @@
   <!-- Homepage - Highest Priority -->
   <url>
     <loc>https://jyotishtark.in/</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,26 +11,35 @@
   <!-- Main Services - High Priority -->
   <url>
     <loc>https://jyotishtark.in/kundali-form.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/numerology.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/tarot.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  
+  <!-- Panchang Page - High Priority (New Addition) -->
+  <url>
+    <loc>https://jyotishtark.in/panchang.html</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Other Services - Medium Priority -->
   <url>
     <loc>https://jyotishtark.in/rudraksha.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -38,58 +47,144 @@
   <!-- Blog & Content - Medium Priority -->
   <url>
     <loc>https://jyotishtark.in/blog.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Individual Blog Posts - Medium Priority -->
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=1</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jyotishtark.in/blog-post.html</loc>
-    <lastmod>2025-10-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://jyotishtark.in/blog-post.html?id=2</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=3</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=4</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=5</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=6</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=7</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=8</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=9</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=10</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=11</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=12</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=13</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=14</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/blog-post.html?id=15</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Trust & Legal Pages - Low Priority -->
   <url>
     <loc>https://jyotishtark.in/about.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/contact.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/privacy-policy.html</loc>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://jyotishtark.in/privacy-policy.html</loc>
-    <lastmod>2025-10-05</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
     <loc>https://jyotishtark.in/disclaimer.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/shipping-and-delivery.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/cancellation.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/terms-of-service.html</loc>
-    <lastmod>2025-10-05</lastmod>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
 </urlset>
