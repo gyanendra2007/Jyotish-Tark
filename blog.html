@@ -1135,10 +1135,7 @@
     </footer>
 
   <script>
-    // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', function () {
-      document.getElementById('mobileNav').classList.toggle('hidden');
-    });
+
     document.addEventListener("DOMContentLoaded", function () {
     const blogs = document.querySelectorAll(".blog-card");
     const blogsPerPage = 6;
@@ -1170,6 +1167,7 @@
     // Show first page initially
     showPage(1);
   });
+    
     // Mobile Menu Toggle
 document.getElementById('menuToggle').addEventListener('click', function() {
     const mobileNav = document.getElementById('mobileNav');
