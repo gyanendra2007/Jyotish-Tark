@@ -915,103 +915,113 @@
 
    <!-- About Founder Section -->
 <section class="max-w-7xl mx-auto px-4 py-16">
-    <div class="glass-card rounded-2xl overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            <!-- Founder Photo Section -->
-            <div class="lg:col-span-1 bg-gradient-to-br from-amber-50 to-amber-100 p-8 md:p-12 flex flex-col items-center justify-center text-center">
-                <!-- Big Square Photo -->
-                <div class="w-180 h-180 rounded-2xl overflow-hidden border-4 border-amber-300 shadow-2xl mb-6">
-                    <img src="images/big-profile.JPG" alt="Gyanendra Singh Tomar - Founder Jyotish Tark" class="w-full h-full object-cover">
+    <div class="glass-card rounded-3xl overflow-hidden shadow-2xl relative">
+        <!-- Background Accents -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 relative z-10">
+            
+            <!-- Left Side: Founder Photo & Socials -->
+            <div class="lg:col-span-5 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-8 md:p-12 flex flex-col items-center justify-center text-center border-b lg:border-b-0 lg:border-r border-white/10">
+                <div class="relative mb-8 group">
+                    <!-- Glow behind image -->
+                    <div class="absolute inset-0 bg-amber-400 rounded-2xl blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                    <!-- Profile Image -->
+                    <div class="w-64 h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-amber-300 relative z-10 transform transition duration-500 group-hover:scale-[1.02] shadow-xl">
+                        <img src="images/big-profile.JPG" alt="Gyanendra Singh Tomar - Founder Jyotish Tark" class="w-full h-full object-cover">
+                    </div>
                 </div>
                 
-                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Gyanendra Singh Tomar</h3>
-                <p class="text-purple-700 mb-6 text-lg font-semibold">Founder & Vedic Astrologer</p>
+                <h3 class="text-3xl font-bold text-white mb-2 tracking-wide">Gyanendra S. Tomar</h3>
+                <p class="text-amber-300 mb-8 text-sm font-bold tracking-widest uppercase">Founder & Vedic Astrologer</p>
                 
                 <!-- Social Media Links -->
-                <div class="flex space-x-4 text-2xl">
-                    <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-purple-600 hover:text-amber-600 transition transform hover:scale-110">
+                <div class="flex space-x-6 text-2xl">
+                    <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-purple-600 hover:text-amber-600 transition transform hover:scale-110">
+                    <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-purple-600 hover:text-amber-600 transition transform hover:scale-110">
+                    <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
                         <i class="fab fa-youtube"></i>
                     </a>
-                    <a href="https://wa.me/918318513814" target="_blank" class="text-purple-600 hover:text-amber-600 transition transform hover:scale-110">
+                    <a href="https://wa.me/918318513814" target="_blank" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
             </div>
             
-            <!-- Founder Story & Motivation Section -->
-            <div class="lg:col-span-1 p-8 md:p-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 section-title">
-                    Your Trusted Guide in Vedic Astrology
+            <!-- Right Side: Founder Story & Expertise -->
+            <div class="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                
+                <div class="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 text-amber-300 font-semibold text-sm mb-6 border border-amber-500/30 w-max">
+                    <i class="fas fa-sparkles mr-2"></i>The Visionary Behind Jyotish Tark
+                </div>
+                
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                    Merging Analytical Precision with <br><span class="text-amber-300">Ancient Vedic Wisdom</span>
                 </h2>
                 
-                <div class="mb-6">
-                    <p class="text-gray-300 mb-4 text-lg leading-relaxed">
-                        <span class="text-amber-300 font-semibold">"ज्योतिष ज्ञान से हर समस्या का समाधान संभव है"</span> - इस विश्वास के साथ, मैं ग्यानेंद्र सिंह तोमर, आपके जीवन की चुनौतियों के लिए सटीक मार्गदर्शन प्रदान करता हूँ।
+                <div class="text-gray-300 mb-8 space-y-4 text-lg">
+                    <p>
+                        <strong class="text-white font-medium">"ज्योतिष ज्ञान से हर समस्या का समाधान संभव है।"</strong><br>
+                        मेरा नाम ज्ञानेंद्र सिंह तोमर है, और मैं लखनऊ से एक समर्पित वैदिक ज्योतिषी हूँ। मेरी जीवन यात्रा विज्ञान और आध्यात्मिकता का एक अनूठा संगम है। एक मेडिकल छात्र (Medical Student) होने के नाते, मेरा दृष्टिकोण हमेशा तार्किक और विश्लेषणात्मक रहा है। यही वजह है कि मेरे मंच का नाम <strong>"ज्योतिष तर्क" (Jyotish Tark)</strong> है—जहाँ प्राचीन ज्ञान को तर्क और सटीकता के साथ प्रस्तुत किया जाता है।
                     </p>
-                    
-                    <p class="text-gray-300 mb-4 leading-relaxed">
-                        5+ वर्षों के अनुभव और 2000+ संतुष्ट ग्राहकों के साथ, मैंने वैदिक ज्योतिष की गहरी समझ विकसित की है। मेरा उद्देश्य है - <span class="text-amber-300">आपके जीवन में सकारात्मक परिवर्तन लाना</span> और आपको सही दिशा में आगे बढ़ने में मदद करना।
+                    <p>
+                        पिछले कई वर्षों में, मैंने वैदिक ज्योतिष के साथ-साथ <strong>लाल किताब (Lal Kitab), अष्टकवर्ग (Ashtakvarga), सुदर्शन चक्र, जैमिनी ज्योतिष (Jaimini Astrology) और अंक ज्योतिष (Numerology)</strong> का गहन अध्ययन किया है। मेरा उद्देश्य आपको डराना या अंधविश्वास में धकेलना नहीं है, बल्कि आपके कॉस्मिक ब्लूप्रिंट का वैज्ञानिक और तार्किक विश्लेषण करके आपके करियर, स्वास्थ्य और विवाह की बाधाओं को दूर करना है।
                     </p>
-                    
-                    <div class="bg-purple-900 bg-opacity-50 rounded-xl p-6 mb-6">
-                        <h3 class="text-xl font-bold text-amber-300 mb-3">क्यों चुनें मेरी सेवाएं?</h3>
-                        <ul class="space-y-3 text-gray-300">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>सटीक भविष्यवाणी:</strong> 98% सटीकता दर के साथ विश्वसनीय ज्योतिषीय विश्लेषण</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>व्यक्तिगत ध्यान:</strong> हर ग्राहक को व्यक्तिगत समय और विस्तृत मार्गदर्शन</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>प्रैक्टिकल उपाय:</strong> जटिल समस्याओं के लिए सरल और प्रभावी समाधान</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                                <span><strong>नैतिक सलाह:</strong> केवल सही और नैतिक ज्योतिषीय सलाह, भय या अंधविश्वास नहीं</span>
-                            </li>
-                        </ul>
+                </div>
+                
+                <!-- Expertise Tags -->
+                <div class="flex flex-wrap gap-3 mb-10">
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
+                        <i class="fas fa-om text-amber-400 mr-2"></i>Vedic Astrology
+                    </span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
+                        <i class="fas fa-book text-amber-400 mr-2"></i>Lal Kitab Remedies
+                    </span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
+                        <i class="fas fa-calculator text-amber-400 mr-2"></i>Advanced Numerology
+                    </span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
+                        <i class="fas fa-chart-pie text-amber-400 mr-2"></i>Jaimini & Ashtakvarga
+                    </span>
+                </div>
+
+                <!-- Success Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                    <div class="border-l-2 border-amber-500 pl-4">
+                        <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="2000">0</span>+</div>
+                        <div class="text-sm text-gray-400">Happy Clients</div>
+                    </div>
+                    <div class="border-l-2 border-amber-500 pl-4">
+                        <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="500">0</span>+</div>
+                        <div class="text-sm text-gray-400">Career Solutions</div>
+                    </div>
+                    <div class="border-l-2 border-amber-500 pl-4">
+                        <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="350">0</span>+</div>
+                        <div class="text-sm text-gray-400">Marriages Saved</div>
+                    </div>
+                    <div class="border-l-2 border-amber-500 pl-4">
+                        <div class="text-3xl font-bold text-white mb-1">98%</div>
+                        <div class="text-sm text-gray-400">Accuracy Rate</div>
                     </div>
                 </div>
                 
-                <!-- Success Stories -->
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-amber-300 mb-3">सफलता की कहानियाँ</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                        <div class="bg-purple-800 bg-opacity-30 rounded-lg p-4">
-                            <div class="count-up text-2xl font-bold text-white" data-count="500">0</div>
-                            <p class="text-sm text-gray-300">करियर समस्याओं का समाधान</p>
-                        </div>
-                        <div class="bg-purple-800 bg-opacity-30 rounded-lg p-4">
-                            <div class="count-up text-2xl font-bold text-white" data-count="350">0</div>
-                            <p class="text-sm text-gray-300">वैवाहिक जीवन में सुधार</p>
-                        </div>
-                        <div class="bg-purple-800 bg-opacity-30 rounded-lg p-4">
-                            <div class="count-up text-2xl font-bold text-white" data-count="200">0</div>
-                            <p class="text-sm text-gray-300">व्यापार में सफलता</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Call to Action -->
+                <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="contact.html" class="primary-button flex-1 text-center">
+                    <a href="contact.html" class="primary-button text-center flex-1 sm:flex-none">
                         <i class="fas fa-calendar-check mr-2"></i>
-                        Consultation Book करें
+                        Book Consultation
                     </a>
-                    <a href="kundali-form.html" class="secondary-button flex-1 text-center">
+                    <a href="kundali-form.html" class="secondary-button text-center flex-1 sm:flex-none bg-white/5 hover:bg-white/10 border-white/20">
                         <i class="fas fa-star-and-crescent mr-2"></i>
-                        कुंडली बनवाएं
+                        अपनी कुंडली बनवाएं
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
