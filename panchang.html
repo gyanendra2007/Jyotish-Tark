@@ -204,6 +204,7 @@
             width: 100%;
         }
 
+        /* Desktop Dropdown Styles */
         .dropdown {
             position: relative;
         }
@@ -242,6 +243,87 @@
             background: rgba(126, 34, 206, 0.3);
             padding-left: 22px;
         }
+
+        /* Mobile Dropdown Styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 8px;
+            overflow: hidden;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .mobile-dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(126, 34, 206, 0.2);
+            padding-left: 20px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .mobile-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-toggle i:last-child {
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1) rotate(5deg);
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -249,6 +331,8 @@
     <!-- Navigation -->
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
+            
+            <!-- Logo -->
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
                     <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
@@ -256,6 +340,7 @@
                 <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
 
+            <!-- Desktop Nav -->
             <nav class="hidden md:flex space-x-6 font-medium">
                 <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
                 <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
@@ -274,18 +359,72 @@
                 <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
                 <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home w-6 mr-2"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star w-6 mr-2"></i>Kundali
+            </a>
+            
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator w-6 mr-2"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i> Numerology Report
+                    </a>
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i> Tarot Reading
+                    </a>
+                </div>
+            </div>
+
+            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-calendar-day w-6 mr-2"></i>Panchang
+            </a>
+            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-sun w-6 mr-2"></i>Rashifal
+            </a>
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands w-6 mr-2"></i>Rudraksha
+            </a>
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open w-6 mr-2"></i>Blog
+            </a>
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope w-6 mr-2"></i>Contact
+            </a>
+        </nav>
     </header>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918318513814" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>   
 
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
         <div class="relative z-10">
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
                 <span class="block">Daily Panchang</span>
-                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 26 August 2026</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 27 August 2026</span>
             </h1>
             <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Accurate daily Panchang for Lucknow. Align your schedule with today's Vedic planetary rhythms and Shubh Muhurat.
+                Accurate daily Panchang for Lucknow. Understand today's Vedic planetary rhythms, including the crucial timing of Bhadra Kaal.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
                 <a href="#today-panchang" class="primary-button">
@@ -305,13 +444,13 @@
                 आज का पंचांग - लखनऊ
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                बुधवार, 26 अगस्त 2026 के लिए संपूर्ण हिंदू कैलेंडर विवरण
+                गुरुवार, 27 अगस्त 2026 के लिए संपूर्ण हिंदू कैलेंडर विवरण
             </p>
         </div>
 
         <!-- Date and Location Info -->
         <div class="glass-card p-6 rounded-2xl mb-8 text-center">
-            <h3 class="text-2xl font-bold text-white mb-2">बुधवार, 26 अगस्त 2026</h3>
+            <h3 class="text-2xl font-bold text-white mb-2">गुरुवार, 27 अगस्त 2026</h3>
             <p class="text-gray-300">लखनऊ, उत्तर प्रदेश, भारत के लिए पंचांग</p>
         </div>
 
@@ -321,19 +460,19 @@
                 <h3 class="text-xl font-bold text-white mb-4 text-center">मूल पंचांग</h3>
                 <div class="panchang-item">
                     <span class="panchang-label">तिथि</span>
-                    <span class="panchang-value" id="tithi">शुक्ल त्रयोदशी (07:59 AM तक), उपरांत चतुर्दशी</span>
+                    <span class="panchang-value" id="tithi">चतुर्दशी (09:08 AM तक), उपरांत पूर्णिमा</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">नक्षत्र</span>
-                    <span class="panchang-value" id="nakshatra">श्रवण (12:47 AM, 27 अगस्त तक)</span>
+                    <span class="panchang-value" id="nakshatra">धनिष्ठा (02:15 AM, 28 अगस्त तक)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">योग</span>
-                    <span class="panchang-value" id="yoga">सौभाग्य (07:59 AM तक), उपरांत शोभन</span>
+                    <span class="panchang-value" id="yoga">अतिगंड (07:28 AM तक)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">करण</span>
-                    <span class="panchang-value" id="karana">तैतिल (07:59 AM तक), उपरांत गर</span>
+                    <span class="panchang-value" id="karana">वणिज (09:08 AM तक), उपरांत विष्टि (भद्रा)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">पक्ष</span>
@@ -350,27 +489,27 @@
                 <h3 class="text-xl font-bold text-white mb-4 text-center">सूर्य और चंद्र</h3>
                 <div class="panchang-item">
                     <span class="panchang-label">सूर्योदय</span>
-                    <span class="panchang-value" id="sunrise">05:44 AM</span>
+                    <span class="panchang-value" id="sunrise">05:56 AM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">सूर्यास्त</span>
-                    <span class="panchang-value" id="sunset">06:35 PM</span>
+                    <span class="panchang-value" id="sunset">06:48 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्रोदय</span>
-                    <span class="panchang-value" id="moonrise">05:32 PM</span>
+                    <span class="panchang-value" id="moonrise">06:23 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्रास्त</span>
-                    <span class="panchang-value" id="moonset">03:45 AM (अगले दिन)</span>
+                    <span class="panchang-value" id="moonset">05:08 AM (अगले दिन)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्र राशि</span>
-                    <span class="panchang-value" id="moon-sign">मकर (Capricorn)</span>
+                    <span class="panchang-value" id="moon-sign">मकर (01:35 PM तक), उपरांत कुंभ</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">सूर्य राशि</span>
-                    <span class="panchang-value" id="sun-sign">सिंह (Leo)</span>
+                    <span class="panchang-label">त्योहार/व्रत</span>
+                    <span class="panchang-value" id="sun-sign">श्रावण पूर्णिमा व्रत, हयग्रीव जयंती</span>
                 </div>
             </div>
 
@@ -378,41 +517,37 @@
             <div class="panchang-card muhurat-card">
                 <h3 class="text-xl font-bold text-white mb-4 text-center">शुभ मुहूर्त</h3>
                 <div class="panchang-item">
-                    <span class="panchang-label">रवि योग</span>
-                    <span class="panchang-value auspicious" id="ravi-yoga">05:56 AM - 12:47 AM (अगले दिन)</span>
+                    <span class="panchang-label">अभिजीत मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="abhijit-muhurat">12:03 PM - 12:53 PM</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">अमृत काल</span>
-                    <span class="panchang-value auspicious" id="amrit-kaal">01:33 PM - 03:17 PM</span>
-                </div>
-                <div class="panchang-item">
-                    <span class="panchang-label">विजय मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="vijay-muhurat">02:32 PM - 03:23 PM</span>
+                    <span class="panchang-label">ब्रह्म मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="vijay-muhurat">04:28 AM - 05:12 AM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">गोधूलि मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="godhuli-muhurat">06:22 PM - 06:45 PM</span>
+                    <span class="panchang-value auspicious" id="godhuli-muhurat">06:48 PM - 07:11 PM</span>
                 </div>
             </div>
 
             <!-- Inauspicious Timings -->
             <div class="panchang-card muhurat-inauspicious">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">अशुभ समय</h3>
+                <h3 class="text-xl font-bold text-white mb-4 text-center">अशुभ समय (Important)</h3>
+                <div class="panchang-item">
+                    <span class="panchang-label font-bold text-red-400">भद्रा काल</span>
+                    <span class="panchang-value font-bold text-red-400" id="bhadra-kaal">09:08 AM - 09:32 PM</span>
+                </div>
                 <div class="panchang-item">
                     <span class="panchang-label">राहु काल</span>
-                    <span class="panchang-value inauspicious" id="rahu-kaal">12:22 PM - 01:59 PM</span>
+                    <span class="panchang-value inauspicious" id="rahu-kaal">01:44 PM - 03:20 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">यमगंड</span>
-                    <span class="panchang-value inauspicious" id="yamaganda">07:32 AM - 09:09 AM</span>
+                    <span class="panchang-value inauspicious" id="yamaganda">06:07 AM - 07:43 AM</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">गुलिक काल</span>
-                    <span class="panchang-value inauspicious" id="gulika-kaal">10:46 AM - 12:22 PM</span>
-                </div>
-                <div class="panchang-item">
-                    <span class="panchang-label">वर्ज्यम</span>
-                    <span class="panchang-value inauspicious" id="varjyam">03:10 AM - 04:53 AM (अगले दिन)</span>
+                    <span class="panchang-label">पंचक</span>
+                    <span class="panchang-value inauspicious" id="gulika-kaal">01:35 PM से प्रारंभ</span>
                 </div>
             </div>
         </div>
@@ -422,28 +557,28 @@
     <section class="max-w-6xl mx-auto px-4 py-12">
         <div class="glass-card rounded-2xl p-8 md:p-12 text-center">
             <h2 class="text-3xl font-bold text-white mb-8 section-title">
-                Today's Cosmic Guidance
+                Today's Cosmic Guidance & Cautions
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">💡</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Intellectual Clarity</h3>
-                    <p class="text-gray-300 text-sm">
-                        Budhavara (Wednesday) is ruled by Mercury, making it a highly intellectual and communicative day. With the Moon traversing the Shravana Nakshatra—the star of listening—the cosmic environment heavily favors gathering information, studying, and engaging in trade or negotiations.
-                    </p>
-                </div>
-                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">📈</div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Auspicious Alignments</h4>
-                    <p class="text-gray-300 text-sm">
-                        The day starts with Shukla Trayodashi, a tithi of vitality that is excellent for celebration and activity. Furthermore, the powerful Ravi Yoga runs throughout the day, providing exceptional support for leadership roles and neutralizing many minor inauspicious influences. 
-                    </p>
-                </div>
-                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
                     <div class="text-4xl text-amber-300 mb-4 text-center">⚠️</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Timing Caution</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Bhadra Kaal Warning</h3>
                     <p class="text-gray-300 text-sm">
-                        While the day is favorable for business and writing, avoid initiating major commitments or signing binding contracts during Rahu Kaal (12:22 PM to 01:59 PM) and Gulika Kaal (10:46 AM to 12:22 PM). Schedule important meetings for the Amrit Kalam window in the afternoon.
+                        Today features a prolonged Bhadra period, starting at 09:08 AM alongside the Purnima Tithi and lasting until approximately 09:32 PM. It is traditional and highly advised not to hold large ceremonies intended to bring good luck, commence major tasks, or perform Raksha Bandhan rituals during this specific window. 
+                    </p>
+                </div>
+                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
+                    <div class="text-4xl text-amber-300 mb-4 text-center">🌕</div>
+                    <h4 class="text-xl font-bold text-white mb-3 text-center">Shravana Purnima Energy</h4>
+                    <p class="text-gray-300 text-sm">
+                        While the full Purnima extends to tomorrow, the Purnima Vrat is observed today, August 27. Chandra (the Moon) symbolizes feelings, family comfort, and the ability to feel financially secure. This makes today an excellent day for spiritual fasting and inner reflection rather than outward expansion.
+                    </p>
+                </div>
+                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
+                    <div class="text-4xl text-amber-300 mb-4 text-center">🧘</div>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Purnima Remedies</h3>
+                    <p class="text-gray-300 text-sm">
+                        To navigate the heavy energy of Bhadra and harness the Moon's power, donate white rice today to someone in real need—a symbolic act tying food security to gratitude. You may also offer water mixed with a little raw milk to the Moon in the evening to pray for emotional stability.
                     </p>
                 </div>
             </div>
@@ -455,5 +590,25 @@
         <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </footer>
 
+    <!-- Script for Navigation -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 </html>
