@@ -132,6 +132,7 @@
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
+            transition: all 0.3s ease;
         }
         
         .nav-link::after {
@@ -141,7 +142,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--secondary);
+            background: var(--secondary, #f59e0b);
             transition: width 0.3s ease;
         }
         
@@ -206,6 +207,7 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
+        /* Desktop Dropdown Styles */
         .dropdown {
             position: relative;
         }
@@ -244,6 +246,87 @@
             background: rgba(126, 34, 206, 0.3);
             padding-left: 22px;
         }
+
+        /* Mobile Dropdown Styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 8px;
+            overflow: hidden;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .mobile-dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .mobile-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(126, 34, 206, 0.2);
+            padding-left: 20px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .mobile-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .mobile-dropdown-toggle i:last-child {
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1) rotate(5deg);
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -251,6 +334,7 @@
     <!-- Navigation -->
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
+            <!-- Logo -->
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
                     <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
@@ -258,6 +342,7 @@
                 <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
 
+            <!-- Desktop Nav -->
             <nav class="hidden md:flex space-x-6 font-medium">
                 <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
                 <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
@@ -276,8 +361,62 @@
                 <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
                 <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+
+        <!-- Mobile Nav -->
+        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-home w-6 mr-2"></i>Home
+            </a>
+            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-star w-6 mr-2"></i>Kundali
+            </a>
+            
+            <div class="mobile-dropdown">
+                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                    <div class="flex items-center">
+                        <i class="fas fa-calculator w-6 mr-2"></i>
+                        <span>Calculator</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="mobile-dropdown-content">
+                    <a href="numerology.html" class="flex items-center">
+                        <i class="fas fa-calculator mr-3"></i> Numerology Report
+                    </a>
+                    <a href="tarot.html" class="flex items-center">
+                        <i class="fas fa-clover mr-3"></i> Tarot Reading
+                    </a>
+                </div>
+            </div>
+
+            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-calendar-day w-6 mr-2"></i>Panchang
+            </a>
+            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-sun w-6 mr-2"></i>Rashifal
+            </a>
+            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-praying-hands w-6 mr-2"></i>Rudraksha
+            </a>
+            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-book-open w-6 mr-2"></i>Blog
+            </a>
+            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+                <i class="fas fa-envelope w-6 mr-2"></i>Contact
+            </a>
+        </nav>
     </header>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918318513814" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>   
 
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
@@ -304,10 +443,10 @@
     <section class="max-w-6xl mx-auto px-4 py-8 text-center">
         <div class="glass-card p-6 rounded-2xl">
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                Horoscope for <span class="text-amber-300">August 26, 2026</span>
+                Horoscope for <span class="text-amber-300">August 27, 2026</span>
             </h2>
             <p class="text-gray-300 text-sm md:text-base">
-                Planetary Transit Overview: The Moon is in Capricorn under Shravana Nakshatra (the star of listening). Wednesday's Mercury energy combined with an active Ravi Yoga provides powerful intellectual clarity.
+                Planetary Transit Overview: The Moon is at its peak in Shravana Purnima, shifting from Capricorn into Aquarius. The restrictive Bhadra Kaal dictates that today is meant for inner reflection, not initiating new ventures. Thursday's Jupiterian energy supports wisdom and patience.
             </p>
         </div>
     </section>
@@ -333,7 +472,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 10th house Moon in Shravana emphasizes verbal communication at work. Listen carefully to instructions from higher-ups before executing plans; clarity prevents costly errors.
+                        The full moon illuminates your 10th and 11th houses. While your ambition is high, the presence of Bhadra Kaal advises against launching new projects today. Consolidate your current workflow.
                     </p>
                 </div>
                 
@@ -343,7 +482,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Avoid finalizing contracts during Rahu Kaal (12:22 PM to 01:59 PM). Consult with an expert before reallocating your professional assets.
+                        Financial clarity arrives regarding a pending professional deal. Do not sign final paperwork until Bhadra passes tonight.
                     </p>
                 </div>
                 
@@ -353,7 +492,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Your partner needs a sounding board today. Offer them your undivided attention rather than trying to immediately "fix" their problems.
+                        You may feel highly protective of your loved ones. Avoid letting professional stress bleed into evening conversations at home.
                     </p>
                 </div>
                 
@@ -363,20 +502,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Protect your vocal cords and throat. Avoid excessively cold drinks if you have back-to-back meetings or presentations.
+                        Emotional intensity from the Purnima can cause temporary spikes in blood pressure. Practice deep breathing exercises.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Keep a green cardamom (elaichi) in your pocket to strengthen Mercury and improve professional diplomacy.
+                        Keep a yellow handkerchief in your pocket to harness Thursday's Jupiterian wisdom and remain calm.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">5</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #22c55e;"></span> Mint Green</div>
+                    <div>Lucky No: <span class="text-amber-300 font-bold">9</span></div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #fbbf24;"></span> Yellow</div>
                 </div>
             </div>
 
@@ -391,7 +530,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 9th house transit favors higher learning and mentorship. An educational opportunity or advice from a senior will provide a significant breakthrough.
+                        The 9th house Purnima brings spiritual and philosophical insights into your work. Long-distance travel plans may face temporary delays; use this time to prepare better.
                     </p>
                 </div>
                 
@@ -401,7 +540,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Investments related to publishing, travel, or digital learning platforms show promise. Read the fine print thoroughly.
+                        Avoid making large transfers or lending money today. Focus your financial energy on charitable donations instead.
                     </p>
                 </div>
                 
@@ -411,7 +550,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Philosophical discussions deepen your emotional connection. Share your long-term visions and spiritual beliefs with your partner.
+                        Shared values become a focal point. Honest discussions about the future will bring profound understanding.
                     </p>
                 </div>
                 
@@ -421,14 +560,14 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Take a brisk walk to stimulate circulation in your lower body, specifically focusing on the hips and thighs.
+                        Your lower back and thighs may feel stiff. Gentle stretching and maintaining proper posture will relieve physical stress.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Feed green grass to a cow or donate green vegetables to a shelter to boost 9th house fortunes.
+                        Donate a sweet made of gram flour (besan) to a temple to invite grace and bypass Bhadra's restrictions.
                     </p>
                 </div>
                 
@@ -449,7 +588,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        With your ruling planet Mercury highlighting the day, the 8th house Moon encourages deep research. Uncover hidden data before making your next move.
+                        The full moon illuminates your 8th house of transformation. Workplace dynamics may shift suddenly. Observe quietly rather than reacting immediately.
                     </p>
                 </div>
                 
@@ -459,7 +598,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Joint resources and tax matters require your attention. Ensure all documentation is accurate to avoid future discrepancies.
+                        Issues regarding taxes, inheritance, or joint accounts will demand attention. Seek expert counsel before taking definitive action.
                     </p>
                 </div>
                 
@@ -469,7 +608,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Secrets may surface. Approach sensitive topics with maturity, keeping the lines of communication open and non-judgmental.
+                        Emotions run exceptionally high today. Avoid bringing up past grievances; patience is your best relationship strategy.
                     </p>
                 </div>
                 
@@ -479,20 +618,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Monitor your hydration and renal function. Avoid excessive caffeine to prevent triggering underlying anxiety.
+                        Hydration is vital. The 8th house Purnima can disrupt your digestive balance and urinary tract health if ignored.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Keep a small piece of alum (phitkari) in your pocket to ward off hidden obstacles and stabilize your nerves.
+                        Apply a saffron (kesar) tilak to your forehead to invoke Jupiter's protection against sudden emotional fluctuations.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">5</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #059669;"></span> Emerald Green</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #22c55e;"></span> Mint Green</div>
                 </div>
             </div>
 
@@ -507,7 +646,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 7th house Moon brings partnerships into focus. Negotiations will succeed if you prioritize mutual benefits and listen attentively to counter-offers.
+                        With your ruling planet (Moon) at maximum strength in your partnership sector, client relations are magnified. Rely on diplomacy, not force.
                     </p>
                 </div>
                 
@@ -517,7 +656,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Business collaborations look profitable. Double-check invoices and terms of service during the afternoon to prevent miscommunication.
+                        Agreements reached today require careful scrutiny due to Bhadra. Verify every clause before confirming financial commitments.
                     </p>
                 </div>
                 
@@ -527,7 +666,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        A beautiful day for marriage and commitment discussions. Your empathy allows your partner to feel truly understood today.
+                        Romantic feelings are deeply intensified. It's a wonderful day for emotional bonding, provided you steer clear of possessiveness.
                     </p>
                 </div>
                 
@@ -537,20 +676,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Balance is crucial. Ensure you aren't absorbing the emotional stress of others, as it may manifest as lower back tension.
+                        You may feel easily fatigued due to sensory overload. Create a quiet environment in the evening to decompress.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Drink water from a silver glass today to enhance the Moon's positive effects on your 7th house interactions.
+                        Offer water (Arghya) to the Moon tonight or pour water over a Shivling to balance your ruling planet's intense energy.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">2</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #e2e8f0;"></span> Light Silver</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #cbd5e1;"></span> Silver Gray</div>
                 </div>
             </div>
 
@@ -565,7 +704,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 6th house Moon gives you the upper hand over competitors. Use your organizational skills and clear communication to resolve workplace bottlenecks.
+                        The 6th house Purnima brings underlying workplace conflicts or backlogs to the surface. Address administrative issues systematically.
                     </p>
                 </div>
                 
@@ -575,7 +714,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Focus on paying off debts and organizing your budget. Avoid taking out new loans today, even if the terms seem favorable.
+                        Avoid loaning money or taking on new debt today. Instead, focus on resolving past financial obligations.
                     </p>
                 </div>
                 
@@ -585,7 +724,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Show love through acts of service. Helping your partner with their daily chores will speak volumes more than grand gestures.
+                        Small misunderstandings can easily escalate if ego is involved. Practice humility and active listening with your partner.
                     </p>
                 </div>
                 
@@ -595,20 +734,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Pay strict attention to your digestive system. Eating light, well-cooked meals will prevent the sluggishness associated with this transit.
+                        Digestive health requires care. Stick to light, home-cooked meals to counteract the sluggishness of the 6th house Moon.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Donate green whole moong dal to a temple or charity to alleviate 6th house obstacles and pacify Mercury.
+                        Donate yellow lentils (Chana Dal) to neutralize workplace opposition and appease Jupiter.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">1</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f59e0b;"></span> Golden Yellow</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f59e0b;"></span> Golden Orange</div>
                 </div>
             </div>
 
@@ -623,7 +762,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 5th house Moon stimulates your creative and educational faculties. An excellent day for brainstorming, writing, and presenting original ideas.
+                        Your 5th house is illuminated, sparking high creative energy. However, Bhadra Kaal suggests you should draft ideas today and launch them tomorrow.
                     </p>
                 </div>
                 
@@ -633,7 +772,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Speculative investments based on thorough research may yield positive results. However, stick strictly to what you understand.
+                        Speculative urges will be strong. Resist the temptation to make impulsive investments; logic must override emotion today.
                     </p>
                 </div>
                 
@@ -643,7 +782,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Romance is highly favored. Plan a intellectually stimulating date—perhaps visiting a museum, a bookstore, or watching a documentary together.
+                        Romantic feelings are deeply amplified. Plan a quiet, artistic evening at home rather than a lavish outward display.
                     </p>
                 </div>
                 
@@ -653,14 +792,14 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Keep cardiovascular exertion moderate. Engage your mind in puzzles or reading to reduce overall physical stress.
+                        Mental overstimulation can lead to restlessness. Engage in meditation to clear your mind before sleeping.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Use a green pen for signing any important documents today to enhance the favorable Mercury energy.
+                        Add a pinch of turmeric to your bathwater to cleanse your aura and promote intellectual calm.
                     </p>
                 </div>
                 
@@ -681,7 +820,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 4th house Moon draws your energy toward foundational stability. Working from home or focusing on real estate matters will be highly productive.
+                        The full moon peaks in your 4th house of foundations. Reorganize your workspace or finalize property-related documentation, but avoid launching businesses.
                     </p>
                 </div>
                 
@@ -691,7 +830,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Investments in property or vehicle maintenance are highlighted. Ensure you review all paperwork carefully before authorizing repairs.
+                        Expenses regarding domestic needs or family members may arise. Handle them practically without unnecessary emotional stress.
                     </p>
                 </div>
                 
@@ -701,7 +840,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Domestic peace is paramount. Spend quality time at home, cultivating a secure and comfortable environment for your family.
+                        Home is your emotional sanctuary today. Ensure you are providing the same comfort to your partner that you expect from them.
                     </p>
                 </div>
                 
@@ -711,20 +850,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Protect your chest and lungs from sudden temperature changes. Emotional calmness will directly benefit your physical wellbeing.
+                        Guard against chest congestion and emotional exhaustion. Practice deep, grounding breathing exercises.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Keep a small piece of alum (phitkari) in your living space to absorb negative energy and maintain domestic harmony.
+                        Donate white sweets or rice to maintain domestic peace and alleviate the heavy lunar energy.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">6</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f472b6;"></span> Soft Pink</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f472b6;"></span> Soft Rose</div>
                 </div>
             </div>
 
@@ -739,7 +878,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 3rd house Moon supercharges your courage and communication skills. Pitch your boldest ideas; your eloquence will persuade skeptics today.
+                        Your 3rd house is energized, making you exceptionally persuasive. Draft your pitches today, but wait until Bhadra Kaal ends to send them.
                     </p>
                 </div>
                 
@@ -749,7 +888,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Short travels related to business will yield profitable results. Freelancers may secure a lucrative contract through cold outreach.
+                        Short travels related to business might experience delays. Reconfirm your appointments and safeguard your valuables while commuting.
                     </p>
                 </div>
                 
@@ -759,7 +898,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Clear, direct communication resolves lingering tension. A quick message of appreciation goes a long way in strengthening your bond.
+                        Your words have deep impact today. Speak kindly; an unintended harsh remark could wound your partner deeply during the Purnima.
                     </p>
                 </div>
                 
@@ -769,20 +908,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Watch your posture. Prevent strain in the neck, shoulders, and upper arms by taking frequent breaks from your desk.
+                        Watch for tension in your neck and upper shoulders. Avoid carrying heavy bags on a single shoulder today.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Avoid using harsh or bitter words today. Speak sweetly to maximize the favorable effects of the Shravana Nakshatra.
+                        Wear a yellow thread on your right wrist to harness Thursday's Jupiter energy and refine your speech.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">9</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #991b1b;"></span> Dark Red</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #991b1b;"></span> Deep Red</div>
                 </div>
             </div>
 
@@ -797,7 +936,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 2nd house Moon directs your focus toward resource management and vocal presentations. Your ability to articulate value will impress superiors.
+                        Your ruling planet Jupiter governs Thursday, offering you protection. Review your professional assets and update your resume or portfolio.
                     </p>
                 </div>
                 
@@ -807,7 +946,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        A highly favorable day for wealth accumulation. Review your savings strategy and look for ways to optimize your current income streams.
+                        The 2nd house Purnima brings financial matters to a climax. A payment may clear, but avoid making new major purchases until tomorrow.
                     </p>
                 </div>
                 
@@ -817,7 +956,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Family matters take precedence. Share a comforting meal with loved ones to foster a sense of security and mutual respect.
+                        Family dynamics require patience. Be mindful of your tone; the lunar energy makes loved ones highly sensitive to criticism.
                     </p>
                 </div>
                 
@@ -827,14 +966,14 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Pay special attention to your throat and vocal cords. Sip warm water and avoid straining your voice during long meetings.
+                        Protect your throat and vocal cords. Sip warm water and avoid overly spicy or extremely cold foods today.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Tie a handful of whole green moong in a green cloth and keep it in your workspace to attract financial stability.
+                        Apply a Kesar (saffron) tilak to activate Jupiter's blessings and maintain financial stability.
                     </p>
                 </div>
                 
@@ -855,7 +994,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        With the Moon in your 1st house under the Shravana Nakshatra, you are highly receptive and intuitive today. Trust your instincts on professional matters.
+                        The full moon illuminates your sign, making you highly visible. Maintain a strictly professional demeanor, as colleagues will look to you for leadership.
                     </p>
                 </div>
                 
@@ -865,7 +1004,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Your confidence attracts financial opportunities. Focus on personal branding and presenting yourself as an authority in your field.
+                        Reassess your personal budgeting goals. The shift of the Moon later today will give you a clearer perspective on upcoming expenses.
                     </p>
                 </div>
                 
@@ -875,7 +1014,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Your magnetism is high, drawing people toward you. Ensure you remain grounded and don't let the attention overshadow your partner's needs.
+                        You may feel an overwhelming surge of emotion today. Express your feelings authentically, but don't demand immediate answers from your partner.
                     </p>
                 </div>
                 
@@ -885,20 +1024,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Maintain equilibrium. Protect yourself from minor head colds by staying adequately hydrated and avoiding sudden temperature shifts.
+                        Headaches or mental fatigue are possible due to the Purnima in your Lagna. Prioritize hydration and quiet time.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Wear a silver chain around your neck to stabilize the lunar energy and enhance your personal aura.
+                        Avoid wearing entirely black clothing today to prevent intensifying the heavy lunar energy on your first house.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">8</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #334155;"></span> Slate Gray</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #e2e8f0;"></span> Light Gray</div>
                 </div>
             </div>
 
@@ -913,7 +1052,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 12th house Moon favors behind-the-scenes work, research, and dealing with foreign clients. Conserve your energy and avoid unnecessary office politics.
+                        The Moon shifts from your 12th to your 1st house. Morning hours require isolated, deep work. By evening, you will feel ready to present your ideas openly.
                     </p>
                 </div>
                 
@@ -923,7 +1062,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Watch out for unexpected expenses related to travel, learning, or health. Keep a strict check on impulse digital purchases today.
+                        Hidden expenses may crop up early in the day. Keep your wallet secure and avoid making digital purchases during Bhadra Kaal.
                     </p>
                 </div>
                 
@@ -933,7 +1072,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        You may feel the need for solitude. Communicate this gently to your partner so they don't mistake your distance for disinterest.
+                        You require significant personal space today. A partner who understands your need for independent reflection will bring you comfort.
                     </p>
                 </div>
                 
@@ -943,20 +1082,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Prioritize rest. The 12th house transit can disrupt sleep patterns, so create a calming evening routine away from blue light.
+                        Sleep disturbances are highly likely tonight as the Moon enters your sign. A warm shower before bed will help ground your energy.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Keep a small piece of camphor in your wallet or purse to absorb negative vibrations and prevent unnecessary losses.
+                        Apply a sandalwood (chandan) paste to your forehead to cool the mind and promote restful sleep.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">11</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #06b6d4;"></span> Electric Blue</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #06b6d4;"></span> Cyan Blue</div>
                 </div>
             </div>
 
@@ -971,7 +1110,7 @@
                         <h4 class="font-semibold text-amber-300">Career</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The 11th house Moon highlights networking and gains. Listening to advice from elder siblings or experienced colleagues will open new professional doors.
+                        The 11th house Purnima brings networking efforts to a climax. Professional recognition is likely, but delay hosting any celebratory events until Bhadra ends.
                     </p>
                 </div>
                 
@@ -981,7 +1120,7 @@
                         <h4 class="font-semibold text-amber-300">Finance</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        A highly favorable day for realizing profits from past investments. Group ventures and collaborative financial planning look extremely promising.
+                        Profits from past investments may manifest today. Secure these gains rather than immediately reinvesting them.
                     </p>
                 </div>
                 
@@ -991,7 +1130,7 @@
                         <h4 class="font-semibold text-amber-300">Love</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Socialize with your partner. Attending a gathering or connecting with mutual friends will inject fun and lightheartedness into your relationship.
+                        Social energy is high, but the transition to the 12th house later today means you will eventually crave quiet intimacy with your partner.
                     </p>
                 </div>
                 
@@ -1001,20 +1140,20 @@
                         <h4 class="font-semibold text-amber-300">Health</h4>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Your vitality is strong. Ensure proper blood circulation in your lower legs by avoiding sitting in one posture for too long.
+                        Watch for swelling or discomfort in the lower legs and ankles. Keep active, but don't overexert your joints.
                     </p>
                 </div>
                 
                 <div class="mt-4 pt-3 border-t border-gray-700">
                     <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
                     <p class="text-gray-300 text-xs">
-                        Wear a yellow thread on your right wrist or carry a yellow sapphire to maximize the 11th house gains today.
+                        As Thursday is ruled by your sign lord Jupiter, offer water mixed with turmeric to a Banana tree for holistic prosperity.
                     </p>
                 </div>
                 
                 <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
                     <div>Lucky No: <span class="text-amber-300 font-bold">3</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #38bdf8;"></span> Sky Blue</div>
+                    <div>Lucky Color: <span class="lucky-color" style="background-color: #fde047;"></span> Bright Yellow</div>
                 </div>
             </div>
 
@@ -1026,5 +1165,25 @@
         <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </footer>
 
+    <!-- Script for Navigation -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            if (mobileNav.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 </html>
