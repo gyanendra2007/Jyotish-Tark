@@ -3,14 +3,14 @@
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Panchang | Hindu Calendar | Jyotish Tark</title>
+    <title>Daily Panchang | Sankashti Chaturthi | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
     <meta name="description" content="Get daily Panchang information for Lucknow - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more. Accurate Hindu calendar based on Vedic astrology.">
-    <meta name="keywords" content="panchang, daily panchang, lucknow panchang, tithi today, nakshatra today, shubh muhurat, good time today, bad time today, yoga, karana, var, hindu astrology, vedic calendar, jyotish tark">
+    <meta name="keywords" content="panchang, daily panchang, lucknow panchang, tithi today, nakshatra today, shubh muhurat, sankashti chaturthi 2026, kajari teej, yoga, karana, var, hindu astrology, vedic calendar, jyotish tark">
     <meta name="author" content="Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
-    <meta property="og:title" content="Daily Panchang - Hindu Calendar | Jyotish Tark">
-    <meta property="og:description" content="Get daily Panchang information for Lucknow - Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat, and more.">
+    <meta property="og:title" content="Daily Panchang - Sankashti Chaturthi Special | Jyotish Tark">
+    <meta property="og:description" content="Get daily Panchang information for Lucknow. Discover today's Shubh Muhurat, Nakshatra, and guidance for Heramba Sankashti Chaturthi.">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/panchang.html">
     <meta property="og:type" content="website">
@@ -123,6 +123,18 @@
         .muhurat-inauspicious {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
             border-left: 4px solid #ef4444;
+        }
+
+        .festival-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(236, 72, 153, 0.1));
+            border-left: 4px solid var(--secondary);
+            border-right: 4px solid var(--accent);
+            animation: glow-pulse 2s infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
+            100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.4); }
         }
         
         .primary-button {
@@ -421,10 +433,10 @@
         <div class="relative z-10">
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
                 <span class="block">Daily Panchang</span>
-                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 30 August 2026</span>
+                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 31 August 2026</span>
             </h1>
             <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Accurate daily Panchang for Lucknow. Understand today's highly auspicious Sarvartha Siddhi Yoga to plan your success.
+                Accurate daily Panchang for Lucknow. Understand today's Vedic planetary rhythms as we observe Heramba Sankashti Chaturthi and Kajari Teej.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
                 <a href="#today-panchang" class="primary-button">
@@ -444,14 +456,15 @@
                 आज का पंचांग - लखनऊ
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                रविवार, 30 अगस्त 2026 के लिए संपूर्ण हिंदू कैलेंडर विवरण
+                सोमवार, 31 अगस्त 2026 के लिए संपूर्ण हिंदू कैलेंडर विवरण
             </p>
         </div>
 
         <!-- Date and Location Info -->
-        <div class="glass-card p-6 rounded-2xl mb-8 text-center">
-            <h3 class="text-2xl font-bold text-white mb-2">रविवार, 30 अगस्त 2026</h3>
-            <p class="text-gray-300">लखनऊ, उत्तर प्रदेश, भारत के लिए पंचांग</p>
+        <div class="glass-card p-6 rounded-2xl mb-8 text-center border-t-4 border-amber-400">
+            <h3 class="text-2xl font-bold text-white mb-2">सोमवार, 31 अगस्त 2026</h3>
+            <p class="text-gray-300 font-semibold text-amber-300 mb-1">विशेष व्रत और त्योहार: हेरम्ब संकष्टी चतुर्थी, बहुला चतुर्थी, कजरी तीज</p>
+            <p class="text-gray-400 text-sm">लखनऊ, उत्तर प्रदेश, भारत के लिए पंचांग</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -460,19 +473,19 @@
                 <h3 class="text-xl font-bold text-white mb-4 text-center">मूल पंचांग</h3>
                 <div class="panchang-item">
                     <span class="panchang-label">तिथि</span>
-                    <span class="panchang-value" id="tithi">कृष्ण द्वितीया (09:36 AM तक), उपरांत तृतीया</span>
+                    <span class="panchang-value" id="tithi">कृष्ण तृतीया (08:50 AM तक), उपरांत चतुर्थी</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">नक्षत्र</span>
-                    <span class="panchang-value" id="nakshatra">उत्तराभाद्रपद (03:44 AM, 31 अगस्त तक)</span>
+                    <span class="panchang-value" id="nakshatra">रेवती (03:23 AM, 01 सितंबर तक)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">योग</span>
-                    <span class="panchang-value" id="yoga">शूल (03:46 AM, 31 अगस्त तक)</span>
+                    <span class="panchang-value" id="yoga">गण्ड (01:51 AM, 01 सितंबर तक)</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">करण</span>
-                    <span class="panchang-value" id="karana">गरज (09:36 AM तक), उपरांत वणिज (09:16 PM तक)</span>
+                    <span class="panchang-value" id="karana">विष्टि/भद्रा (08:50 AM तक), उपरांत बव</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">पक्ष</span>
@@ -493,15 +506,15 @@
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">सूर्यास्त</span>
-                    <span class="panchang-value" id="sunset">06:45 PM</span>
+                    <span class="panchang-value" id="sunset">06:44 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्रोदय</span>
-                    <span class="panchang-value" id="moonrise">07:57 PM</span>
+                    <span class="panchang-value" id="moonrise">08:37 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्रास्त</span>
-                    <span class="panchang-value" id="moonset">07:44 AM (अगले दिन)</span>
+                    <span class="panchang-value" id="moonset">08:49 AM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">चंद्र राशि</span>
@@ -517,20 +530,20 @@
             <div class="panchang-card muhurat-card">
                 <h3 class="text-xl font-bold text-white mb-4 text-center">शुभ मुहूर्त</h3>
                 <div class="panchang-item">
-                    <span class="panchang-label font-bold text-green-400">सर्वार्थ सिद्धि योग</span>
-                    <span class="panchang-value font-bold text-green-400" id="sarvartha-siddhi">05:58 AM - 03:44 AM (अगले दिन)</span>
-                </div>
-                <div class="panchang-item">
                     <span class="panchang-label">ब्रह्म मुहूर्त</span>
                     <span class="panchang-value auspicious" id="brahma-muhurat">04:28 AM - 05:13 AM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">अभिजीत मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="abhijit-muhurat">11:56 AM - 12:47 PM</span>
+                    <span class="panchang-value auspicious" id="abhijit-muhurat">11:55 AM - 12:46 PM</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">विजय मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="vijay-muhurat">02:29 PM - 03:21 PM</span>
+                    <span class="panchang-label">अमृत काल</span>
+                    <span class="panchang-value auspicious" id="amrit-kaal">01:01 PM - 02:35 PM</span>
+                </div>
+                <div class="panchang-item">
+                    <span class="panchang-label">गोधूलि मुहूर्त</span>
+                    <span class="panchang-value auspicious" id="godhuli-muhurat">06:44 PM - 07:06 PM</span>
                 </div>
             </div>
 
@@ -538,24 +551,24 @@
             <div class="panchang-card muhurat-inauspicious">
                 <h3 class="text-xl font-bold text-white mb-4 text-center">अशुभ समय</h3>
                 <div class="panchang-item">
+                    <span class="panchang-label font-bold text-red-400">भद्रा</span>
+                    <span class="panchang-value font-bold text-red-400" id="bhadra">05:58 AM - 08:50 AM</span>
+                </div>
+                <div class="panchang-item">
                     <span class="panchang-label">राहु काल</span>
-                    <span class="panchang-value inauspicious" id="rahu-kaal">05:09 PM - 06:45 PM</span>
+                    <span class="panchang-value inauspicious" id="rahu-kaal">07:34 AM - 09:10 AM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">यमगंड</span>
-                    <span class="panchang-value inauspicious" id="yamaganda">12:22 PM - 01:57 PM</span>
+                    <span class="panchang-value inauspicious" id="yamaganda">10:46 AM - 12:21 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">गुलिक काल</span>
-                    <span class="panchang-value inauspicious" id="gulika-kaal">03:33 PM - 05:09 PM</span>
+                    <span class="panchang-value inauspicious" id="gulika-kaal">01:57 PM - 03:33 PM</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label text-amber-300">पंचक</span>
                     <span class="panchang-value text-amber-300" id="panchaka">पूरे दिन (Whole Day)</span>
-                </div>
-                <div class="panchang-item">
-                    <span class="panchang-label font-bold text-red-400">भद्रा</span>
-                    <span class="panchang-value font-bold text-red-400" id="bhadra">09:16 PM से प्रारंभ</span>
                 </div>
             </div>
         </div>
@@ -569,24 +582,24 @@
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">🌟</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Sarvartha Siddhi Yoga</h3>
+                    <div class="text-4xl text-amber-300 mb-4 text-center">🕉️</div>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Sankashti Chaturthi & Kajari Teej</h3>
                     <p class="text-gray-300 text-sm">
-                        Today features an incredibly powerful and auspicious alignment called Sarvartha Siddhi Yoga, which lasts practically the entire day. This yoga signifies that efforts and new tasks initiated today are highly likely to be completed successfully. It is a fantastic window for important business negotiations or signing contracts.
+                        Today marks Heramba Sankashti Chaturthi and Kajari Teej. The shift from Tritiya to Chaturthi at 08:50 AM makes this an incredibly potent day for fasting and worshiping Lord Ganesha to remove persistent life obstacles. Married women also observe Kajari Teej today for marital bliss and longevity.
                     </p>
                 </div>
                 <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">☀️</div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Solar Leadership</h4>
+                    <div class="text-4xl text-amber-300 mb-4 text-center">🌙</div>
+                    <h4 class="text-xl font-bold text-white mb-3 text-center">Revati's Nourishment</h4>
                     <p class="text-gray-300 text-sm">
-                        Being Ravivara (Sunday) combined with Krishna Dwitiya, the energy naturally favors administrative, governmental, and leadership-oriented planning. If you need to make decisions regarding authority or take a leading role in a project, the Solar energy supports you fully today.
+                        The Moon transits Pisces under the Revati Nakshatra. As the final Nakshatra of the zodiac, Revati is associated with closure, compassion, safe journeys, and completion. It is a day to reflect on what you need to finish before rushing toward new beginnings.
                     </p>
                 </div>
                 <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
                     <div class="text-4xl text-amber-300 mb-4 text-center">⚠️</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Panchaka Advisory</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Bhadra & Panchaka Advisory</h3>
                     <p class="text-gray-300 text-sm">
-                        Please note that the Panchaka period is active throughout the entire day. While the Sarvartha Siddhi Yoga cancels out many minor doshas, traditional practices suggest avoiding activities like starting home construction (especially the roof), traveling southward, or collecting wood/fuel during this period.
+                        Be mindful that Vishti Karana (Bhadra Kaal) is active in the morning until 08:50 AM, rendering that window unsuitable for initiating new, auspicious ventures. Additionally, the Panchaka period continues today, advising caution with major household or travel decisions. Plan important meetings for the midday Abhijit Muhurat.
                     </p>
                 </div>
             </div>
