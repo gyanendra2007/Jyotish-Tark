@@ -1393,6 +1393,22 @@
       { id: 11, label: "11 - Kumbha (Aquarius / कुंभ)" },
       { id: 12, label: "12 - Meena (Pisces / मीन)" }
     ];
+    // Each Vedic Rashi contains exactly 3 Nakshatras
+// (boundary nakshatras like Krittika appear in two adjacent rashis)
+const NAKSHATRAS_BY_RASHI = {
+  1:  [1, 2, 3],       // Mesha: Ashwini, Bharani, Krittika
+  2:  [3, 4, 5],       // Vrishabha: Krittika, Rohini, Mrigashira
+  3:  [5, 6, 7],       // Mithuna: Mrigashira, Ardra, Punarvasu
+  4:  [7, 8, 9],       // Karka: Punarvasu, Pushya, Ashlesha
+  5:  [10, 11, 12],    // Simha: Magha, P.Phalguni, U.Phalguni
+  6:  [12, 13, 14],    // Kanya: U.Phalguni, Hasta, Chitra
+  7:  [14, 15, 16],    // Tula: Chitra, Swati, Vishakha
+  8:  [16, 17, 18],    // Vrishchika: Vishakha, Anuradha, Jyeshtha
+  9:  [19, 20, 21],    // Dhanu: Mula, P.Ashadha, U.Ashadha
+  10: [21, 22, 23],    // Makara: U.Ashadha, Shravana, Dhanishta
+  11: [23, 24, 25],    // Kumbha: Dhanishta, Shatabhisha, P.Bhadrapada
+  12: [25, 26, 27]     // Meena: P.Bhadrapada, U.Bhadrapada, Revati
+};
 
     const FORM_NAKSHATRAS = [
       { id: 1, label: "1. Ashwini (अश्विनी)" },
@@ -1451,7 +1467,7 @@
             <i class="fas ${g.icon} ${g.color} mr-2 w-5 text-center"></i>${g.name}
           </td>
           <td class="py-2.5 px-3">
-            <select id="d1_${g.key}" onchange="syncRahuKetuOpposite('${g.key}', 'd1')" class="form-input text-xs md:text-sm">
+            <select id="d1_${g.key}" onchange="onRashiChange('${g.key}', 'd1')" class="form-input text-xs md:text-sm">
               ${rashiOpts}
             </select>
           </td>
@@ -1496,18 +1512,74 @@
     }
 
     function setSamplePlanetaryDropdowns() {
-      const sample = {
-        Asc:     { d1: 5,  nak: 10, d9: 1 },
-        Sun:     { d1: 10, nak: 21, d9: 11 },
-        Moon:    { d1: 8,  nak: 18, d9: 12 },
-        Mars:    { d1: 11, nak: 23, d9: 8, retro: false },
-        Mercury: { d1: 9,  nak: 19, d9: 3, retro: true },
-        Jupiter: { d1: 2,  nak: 4,  d9: 4, retro: false },
-        Venus:   { d1: 11, nak: 24, d9: 12, retro: false },
-        Saturn:  { d1: 11, nak: 24, d9: 6, retro: true },
-        Rahu:    { d1: 11, nak: 24, d9: 2 },
-        Ketu:    { d1: 5,  nak: 10, d9: 8 }
-      };
+  const sample = {
+    Asc:     { d1: 5,  nak: 10, d9: 1 },
+    Sun:     { d1: 10, nak: 21, d9: 11 },
+    Moon:    { d1: 8,  nak: 18, d9: 12 },
+    Mars:    { d1: 11, nak: 23, d9: 8,  retro: false },
+    Mercury: { d1: 9,  nak: 19, d9: 3,  retro: true  },
+    Jupiter: { d1: 2,  nak: 4,  d9: 4,  retro: false },
+    Venus:   { d1: 11, nak: 24, d9: 12, retro: false },
+    Saturn:  { d1: 11, nak: 24, d9: 6,  retro: true  },
+    Rahu:    { d1: 11, nak: 24, d9: 2 },
+    Ketu:    { d1: 5,  nak: 10, d9: 8 }
+  };
+
+  Object.keys(sample).forEach(k => {
+    const d1El    = document.getElementById(`d1_${k}`);
+    const d9El    = document.getElementById(`d9_${k}`);
+    const retroEl = document.getElementById(`retro_${k}`);
+
+    // 1) Set Rashi first
+    if (d1El) d1El.value = sample[k].d1;
+    if (d9El) d9El.value = sample[k].d9;
+    if (retroEl && sample[k].retro !== undefined) retroEl.checked = sample[k].retro;
+
+    // 2) Narrow Nakshatra options to only the 3 valid for this Rashi
+    updateNakshatraOptions(k, sample[k].d1);
+
+    // 3) Now set the intended Nakshatra (must come AFTER the narrowing)
+    const nakEl = document.getElementById(`nak_${k}`);
+    if (nakEl) nakEl.value = sample[k].nak;
+  });
+}
+      // Rebuild Nakshatra <select> so it only shows the 3 nakshatras valid for the chosen Rashi
+function updateNakshatraOptions(planetKey, rashiValue) {
+  const nakSelect = document.getElementById(`nak_${planetKey}`);
+  if (!nakSelect) return;
+
+  const validNaks = NAKSHATRAS_BY_RASHI[rashiValue] || NAKSHATRAS_BY_RASHI[1];
+  const currentVal = parseInt(nakSelect.value, 10);
+  const currentValid = validNaks.includes(currentVal);
+
+  nakSelect.innerHTML = validNaks.map(nId => {
+    const nakObj = FORM_NAKSHATRAS.find(n => n.id === nId);
+    return `<option value="${nakObj.id}">${nakObj.label}</option>`;
+  }).join("");
+
+  // Preserve the user's selection if still valid; otherwise default to first of the new rashi
+  nakSelect.value = currentValid ? currentVal : validNaks[0];
+}
+
+// Central handler — runs whenever a Rashi (D1) dropdown changes
+function onRashiChange(planetKey, chartPrefix) {
+  // First keep Rahu/Ketu 7 signs apart (existing behaviour)
+  syncRahuKetuOpposite(planetKey, chartPrefix);
+
+  // Nakshatra is only tied to the D1 Rashi, not D9
+  if (chartPrefix !== "d1") return;
+
+  const d1Select = document.getElementById(`d1_${planetKey}`);
+  if (d1Select) updateNakshatraOptions(planetKey, parseInt(d1Select.value, 10));
+
+  // If the user changed Rahu or Ketu, the opposite node was auto-synced —
+  // so we must also refresh the opposite node's nakshatra list
+  if (planetKey === "Rahu" || planetKey === "Ketu") {
+    const otherKey = planetKey === "Rahu" ? "Ketu" : "Rahu";
+    const otherD1 = document.getElementById(`d1_${otherKey}`);
+    if (otherD1) updateNakshatraOptions(otherKey, parseInt(otherD1.value, 10));
+  }
+}
 
       Object.keys(sample).forEach(k => {
         const d1El = document.getElementById(`d1_${k}`);
