@@ -4,16 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kundali Form - Jyotish Tark</title>
+  <title>Instant Kundali, Navamsa & Ashtakavarga Analyzer - Jyotish Tark</title>
   <link rel="canonical" href="https://jyotishtark.in/kundali-form.html" />
-  <meta name="description" content="Get your personalized Vedic Kundali analysis from Jyotish Tark. Fill your birth details for accurate astrological predictions.">
-  <meta name="keywords" content="kundali form, janam kundli, birth chart, vedic astrology, jyotish tark, kundali analysis">
+  <meta name="description" content="Free Instant Vedic Kundali, Navamsa (D9), and Sarvashtakavarga Analyzer by Jyotish Tark. Enter your Lagna & planetary positions or book a full handmade report.">
+  <meta name="keywords" content="kundali form, ashtakavarga calculator, navamsa kundali analysis, prokerala chart analyzer, vedic astrology, jyotish tark, kundali analysis">
   <meta name="author" content="Jyotish Tark">
   <meta name="google-adsense-account" content="ca-pub-2888883494422573">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888883494422573"
-     crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888883494422573" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -43,314 +42,223 @@
     }
     
     .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
-}
-
-.nav-link {
-    position: relative;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--secondary, #f59e0b);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.astrological-symbol {
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
-}
-
-/* Dropdown Styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: rgba(30, 41, 59, 0.98);
-    backdrop-filter: blur(20px);
-    min-width: 220px;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-/* Keep dropdown visible when hovering over it */
-.dropdown-content:hover,
-.dropdown:hover .dropdown-content {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-/* Create invisible gap area for better hover */
-.dropdown::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    background: transparent;
-    z-index: 999;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.dropdown-content a {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    font-weight: 500;
-}
-
-.dropdown-content a:last-child {
-    border-bottom: none;
-}
-
-.dropdown-content a:hover {
-    background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
-    padding-left: 24px;
-    transform: translateX(5px);
-}
-
-.dropdown-content i {
-    margin-right: 12px;
-    width: 20px;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.dropdown-arrow {
-    transition: transform 0.3s ease;
-    margin-left: 6px;
-    font-size: 0.8rem;
-}
-
-.dropdown:hover .dropdown-arrow {
-    transform: rotate(180deg);
-}
-
-/* Mobile Dropdown Styles */
-.mobile-dropdown-content {
-    display: none;
-    padding-left: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    margin-top: 8px;
-    overflow: hidden;
-    border-left: 3px solid var(--primary, #7e22ce);
-}
-
-.mobile-dropdown-content a {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.mobile-dropdown-content a:last-child {
-    border-bottom: none;
-}
-
-.mobile-dropdown-content a:hover {
-    background: rgba(126, 34, 206, 0.2);
-    padding-left: 20px;
-}
-
-.mobile-dropdown.active .mobile-dropdown-content {
-    display: block;
-    animation: slideDown 0.3s ease;
-}
-
-.mobile-dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-}
-
-.mobile-dropdown-toggle i:last-child {
-    transition: transform 0.3s ease;
-}
-
-.mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
-    transform: rotate(180deg);
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
     }
-}
 
-/* WhatsApp Styles */
-.whatsapp-float {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border: 3px solid white;
-}
-
-.whatsapp-float:hover {
-    background-color: #128C7E;
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
-}
-
-.whatsapp-popup {
-    position: fixed;
-    bottom: 110px;
-    right: 40px;
-    width: 320px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    z-index: 99;
-    overflow: hidden;
-    display: none;
-    animation: popupSlide 0.3s ease;
-    border: 1px solid #e0e0e0;
-}
-
-@keyframes popupSlide {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary, #f59e0b);
+      transition: width 0.3s ease;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .nav-link:hover::after {
+      width: 100%;
     }
-}
 
-.whatsapp-header {
-    background: linear-gradient(135deg, #075E54, #128C7E);
-    color: white;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.whatsapp-header img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 12px;
-    border: 2px solid white;
-}
-
-.whatsapp-body {
-    padding: 20px;
-    color: #4a4a4a;
-}
-
-.whatsapp-option {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
-}
-
-.whatsapp-option:hover {
-    background: #f8f9fa;
-    transform: translateX(5px);
-    border-color: #25d366;
-}
-
-.whatsapp-option i {
-    margin-right: 12px;
-    font-size: 22px;
-    color: #25d366;
-    width: 24px;
-    text-align: center;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
-        font-size: 24px;
+    .astrological-symbol {
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
     }
-    
-    .whatsapp-popup {
-        bottom: 80px;
-        right: 20px;
-        width: 280px;
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
     }
-    
+
     .dropdown-content {
-        position: static;
-        margin-top: 0;
-        box-shadow: none;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(30, 41, 59, 0.98);
+      backdrop-filter: blur(20px);
+      min-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
     }
-}
+
+    .dropdown-content:hover,
+    .dropdown:hover .dropdown-content {
+      display: block !important;
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .dropdown::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: transparent;
+      z-index: 999;
+    }
+
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 500;
+    }
+
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
+      padding-left: 24px;
+      transform: translateX(5px);
+    }
+
+    .dropdown-arrow {
+      transition: transform 0.3s ease;
+      margin-left: 6px;
+      font-size: 0.8rem;
+    }
+
+    .dropdown:hover .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Mobile Dropdown Styles */
+    .mobile-dropdown-content {
+      display: none;
+      padding-left: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      margin-top: 8px;
+      overflow: hidden;
+      border-left: 3px solid var(--primary, #7e22ce);
+    }
+
+    .mobile-dropdown.active .mobile-dropdown-content {
+      display: block;
+    }
+
+    .mobile-dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* WhatsApp Styles */
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      border: 3px solid white;
+      cursor: pointer;
+    }
+
+    .whatsapp-float:hover {
+      background-color: #128C7E;
+      transform: scale(1.1);
+    }
+
+    .whatsapp-popup {
+      position: fixed;
+      bottom: 105px;
+      right: 30px;
+      width: 320px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      z-index: 99;
+      overflow: hidden;
+      display: none;
+      border: 1px solid #e0e0e0;
+    }
+
+    .whatsapp-header {
+      background: linear-gradient(135deg, #075E54, #128C7E);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .whatsapp-header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 12px;
+      border: 2px solid white;
+    }
+
+    .whatsapp-body {
+      padding: 20px;
+      color: #4a4a4a;
+    }
+
+    .whatsapp-option {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #f0f0f0;
+    }
+
+    .whatsapp-option:hover {
+      background: #f8f9fa;
+      border-color: #25d366;
+    }
+
+    .whatsapp-option i {
+      margin-right: 12px;
+      font-size: 22px;
+      color: #25d366;
+      width: 24px;
+      text-align: center;
+    }
+
     .cosmic-bg {
-      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
       position: relative;
     }
     
@@ -361,64 +269,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(15, 23, 42, 0.92) 100%);
     }
-    
-    .glass-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
-    }
-    
-    .service-card {
-      transition: all 0.3s ease;
-      border-bottom: 4px solid transparent;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    
-    .service-card:hover {
-      transform: translateY(-8px);
-      border-bottom-color: var(--secondary);
-      box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .feature-icon {
-      width: 80px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: white;
-      border-radius: 50%;
-      font-size: 32px;
-      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
-    }
-    
-    .testimonial-avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 24px;
-      box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
-    }
-    
+
     .primary-button {
       background: linear-gradient(to right, var(--primary), var(--accent));
       color: white;
-      padding: 1rem 2.5rem;
+      padding: 0.9rem 2rem;
       border-radius: 50px;
       font-weight: 600;
       transition: all 0.3s ease;
@@ -426,35 +283,18 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
-    
-    .primary-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: 0.5s;
-    }
-    
-    .primary-button:hover::before {
-      left: 100%;
-    }
-    
+
     .primary-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(236, 72, 153, 0.5);
     }
-    
+
     .secondary-button {
       background: transparent;
       color: white;
       border: 2px solid var(--secondary);
-      padding: 1rem 2.5rem;
+      padding: 0.85rem 2rem;
       border-radius: 50px;
       font-weight: 600;
       transition: all 0.3s ease;
@@ -462,68 +302,72 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .secondary-button:hover {
       background: var(--secondary);
       color: var(--dark);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
     }
-    
-    .star-rating {
-      color: var(--secondary);
-    }
-    
-    .nav-link {
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--secondary);
-      transition: width 0.3s ease;
-    }
-    
-    .nav-link:hover::after {
+
+    .form-input {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fcd34d;
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
       width: 100%;
+      transition: all 0.25s ease;
+      font-size: 0.95rem;
     }
-    
-    .zodiac-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--secondary);
+
+    .form-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
     }
-    
-    .floating {
-      animation: float 6s ease-in-out infinite;
+
+    .form-input option {
+      background: #0f172a;
+      color: #f3f4f6;
     }
-    
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      color: #e5e7eb;
+      font-size: 0.9rem;
     }
-    
-    .glow {
-      box-shadow: 0 0 20px rgba(126, 34, 206, 0.5);
+
+    .tab-btn {
+      transition: all 0.3s ease;
     }
-    
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #7e22ce 0%, #db2777 100%);
+      color: white;
+      border-color: #f59e0b;
+      box-shadow: 0 8px 20px rgba(126, 34, 206, 0.4);
+    }
+
+    .danger-pulse {
+      animation: pulseRed 2.5s infinite;
+    }
+
+    @keyframes pulseRed {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      50% { box-shadow: 0 0 25px 6px rgba(239, 68, 68, 0.25); }
+    }
+
     .section-title {
       position: relative;
       display: inline-block;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
     
     .section-title::after {
       content: '';
       position: absolute;
-      bottom: -15px;
+      bottom: -12px;
       left: 50%;
       transform: translateX(-50%);
       width: 80px;
@@ -531,145 +375,7 @@
       background: linear-gradient(to right, var(--primary), var(--accent));
       border-radius: 2px;
     }
-    
-    .planet-1 {
-      position: absolute;
-      top: 20%;
-      left: 5%;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
-      box-shadow: 0 0 50px #f59e0b;
-      opacity: 0.7;
-      animation: float 8s ease-in-out infinite;
-    }
-    
-    .planet-2 {
-      position: absolute;
-      bottom: 15%;
-      right: 8%;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d);
-      box-shadow: 0 0 40px #ec4899;
-      opacity: 0.7;
-      animation: float 10s ease-in-out infinite;
-      animation-delay: 1s;
-    }
-    
-    .astrological-symbol {
-      font-size: 1.5rem;
-      margin-right: 0.5rem;
-    }
-    
-    .blog-card {
-      transition: all 0.3s ease;
-      overflow: hidden;
-      border-radius: 16px;
-    }
-    
-    .blog-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-    
-    .blog-image {
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    
-    .blog-card:hover .blog-image {
-      transform: scale(1.05);
-    }
-    
-    .footer-links a {
-      transition: all 0.3s ease;
-    }
-    
-    .footer-links a:hover {
-      color: var(--secondary);
-      padding-left: 5px;
-    }
-    
-    .count-up {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(to right, var(--primary-light), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    @media (max-width: 768px) {
-      .planet-1, .planet-2 {
-        display: none;
-      }
-    }
-    
-    .form-input {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #BA8E23;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      width: 100%;
-      transition: all 0.3s ease;
-    }
-    
-    .form-input:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
-      background: rgba(255, 255, 255, 0.12);
-    }
-    
-    .form-input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: #e5e7eb;
-    }
-    
-    .whatsapp-float {
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      bottom: 25px;
-      right: 25px;
-      background-color: #25d366;
-      color: #FFF;
-      border-radius: 50px;
-      text-align: center;
-      font-size: 30px;
-      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .whatsapp-float:hover {
-      background-color: #128C7E;
-      transform: scale(1.1);
-    }
-    
-    .sample-kundali {
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .sample-kundali:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    
+
     .pdf-download-btn {
       background: linear-gradient(to right, var(--secondary), #eab308);
       color: var(--dark);
@@ -680,270 +386,411 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 1rem;
-    }
-    
-    .pdf-download-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4);
     }
   </style>
 </head>
 <body class="min-h-screen">
-  <!-- Floating Planets -->
-  <div class="planet-1"></div>
-  <div class="planet-2"></div>
 
-      <!-- Navigation -->
-    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-        <div class="flex justify-between items-center">
-            
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center space-x-3">
-                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
-                </div>
-                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
-            </a>
-
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex space-x-6 font-medium">
-                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Home
-                </a>
-                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Kundali
-                </a>
-                
-                <!-- Numerology & Tarot Dropdown -->
-                <div class="dropdown">
-                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                        Calculator
-                        <i class="fas fa-chevron-down dropdown-arrow"></i>
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="numerology.html">
-                            Numerology Report
-                        </a>
-                        <a href="tarot.html">
-                            Tarot Reading
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Panchang Link -->
-                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Panchang
-                </a>
-                
-                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Rashifal
-                </a>
-                
-                <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Rudraksha
-                </a>
-                <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Blog
-                </a>
-                <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                    Contact
-                </a>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
-                <i class="fas fa-bars"></i>
-            </button>
+  <!-- Navigation -->
+  <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50">
+    <div class="flex justify-between items-center">
+      <a href="index.html" class="flex items-center space-x-3">
+        <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
+          <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
         </div>
+        <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
+      </a>
 
-        <!-- Mobile Nav -->
-        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-home astrological-symbol"></i>Home
-            </a>
-            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-star astrological-symbol"></i>Kundali
-            </a>
-            
-            <!-- Numerology & Tarot Mobile Dropdown -->
-            <div class="mobile-dropdown">
-                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
-                    <div class="flex items-center">
-                        <i class="fas fa-calculator astrological-symbol"></i>
-                        <span>Calculator</span>
-                    </div>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="mobile-dropdown-content">
-                    <a href="numerology.html" class="flex items-center">
-                        <i class="fas fa-calculator mr-3"></i>
-                        Numerology Report
-                    </a>
-                    <a href="tarot.html" class="flex items-center">
-                        <i class="fas fa-clover mr-3"></i>
-                        Tarot Reading
-                    </a>
-                </div>
-            </div>
-
-            <!-- Panchang Mobile Link -->
-            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-calendar-day astrological-symbol"></i>Panchang
-            </a>
-            
-            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-sun astrological-symbol"></i>Rashifal
-            </a>
-            
-            <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha
-            </a>
-            <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-book-open astrological-symbol"></i>Blog
-            </a>
-            <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-envelope astrological-symbol"></i>Contact
-            </a>
-        </nav>
-    </header>
-
-<!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton">
-    <i class="fab fa-whatsapp"></i>
-</a>   
-
-<!-- WhatsApp Popup -->
-<div class="whatsapp-popup" id="whatsappPopup">
-    <div class="whatsapp-header">
-        <img src="logo.png" alt="Jyotish Tark">
-        <div>
-            <h3 class="font-bold text-lg">Jyotish Tark</h3>
-            <p class="text-sm opacity-90">Typically replies within minutes</p>
+      <nav class="hidden md:flex space-x-6 font-medium">
+        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+        <a href="kundali-form.html" class="nav-link text-amber-300 font-semibold transition">Kundali</a>
+        <div class="dropdown">
+          <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+            Calculator <i class="fas fa-chevron-down dropdown-arrow"></i>
+          </a>
+          <div class="dropdown-content">
+            <a href="numerology.html">Numerology Report</a>
+            <a href="tarot.html">Tarot Reading</a>
+          </div>
         </div>
+        <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition">Panchang</a>
+        <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+        <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition">Rudraksha</a>
+        <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
+        <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
+      </nav>
+
+      <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-    <div class="whatsapp-body">
-        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20would%20like%20to%20chat%20about%20astrology%20services', '_blank');">
-            <i class="fas fa-comment"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Chat with us</h4>
-                <p class="text-sm text-gray-600">Ask questions about our services</p>
-            </div>
-        </div>
-        
-        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Call us</h4>
-                <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
-            </div>
-        </div>
-        
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
-            <i class="fas fa-calendar-check"></i>
-            <div>
-                <h4 class="font-semibold text-gray-800">Book consultation</h4>
-                <p class="text-sm text-gray-600">Schedule a personal session</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-  <!-- Hero Section -->
-  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
+      <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 transition"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="numerology.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calculator astrological-symbol"></i>Numerology</a>
+      <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-calendar-day astrological-symbol"></i>Panchang</a>
+      <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-sun astrological-symbol"></i>Rashifal</a>
+      <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-praying-hands astrological-symbol"></i>Rudraksha</a>
+      <a href="blog.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-book-open astrological-symbol"></i>Blog</a>
+      <a href="contact.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition"><i class="fas fa-envelope astrological-symbol"></i>Contact</a>
+    </nav>
+  </header>
+
+  <!-- Compact Hero Section -->
+  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-7xl mx-4 md:mx-auto mt-8 p-6 md:p-10 text-center relative overflow-hidden">
     <div class="relative z-10">
-      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 floating">
-        <span class="block">Get Your Personalized Kundali</span>
-        <span class="text-3xl md:text-4xl text-amber-300">Unlock Your Cosmic Blueprint</span>
+      <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold mb-4">
+        <i class="fas fa-bolt mr-2"></i> Instant Vedic AI + Parashari Ashtakavarga Engine
+      </div>
+      <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">
+        Decode Your <span class="text-amber-300">Lagna, Navamsa (D9) & Ashtakavarga</span>
       </h1>
-      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-        Discover your life's purpose, challenges, and opportunities through Vedic astrology. Fill your birth details for an accurate Kundali analysis.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Accurate Predictions</span>
-        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Expert Analysis</span>
-        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Personalized Guidance</span>
-        <span class="px-4 py-2 bg-purple-700 bg-opacity-50 text-white rounded-full text-sm">Vedic Remedies</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process Info Section -->
-  <section class="max-w-4xl mx-auto px-4 py-12 text-center">
-    <div class="glass-card p-8 rounded-2xl">
-      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">📋 Process Information</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="p-4">
-          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
-            <span class="text-white text-2xl font-bold">1</span>
-          </div>
-          <h3 class="font-semibold text-white mb-2">Fill Form</h3>
-          <p class="text-gray-300 text-sm">Provide your accurate birth details using the form below</p>
-        </div>
-        <div class="p-4">
-          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
-            <span class="text-white text-2xl font-bold">2</span>
-          </div>
-          <h3 class="font-semibold text-white mb-2">Receive Call</h3>
-          <p class="text-gray-300 text-sm">We'll call you to verify details and process payment (₹499)</p>
-        </div>
-        <div class="p-4">
-          <div class="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
-            <span class="text-white text-2xl font-bold">3</span>
-          </div>
-          <h3 class="font-semibold text-white mb-2">Get Report</h3>
-          <p class="text-gray-300 text-sm">Receive your detailed Kundali report within 2-3 days</p>
-        </div>
-      </div>
-      <p class="text-amber-300 font-medium">
-        <i class="fas fa-info-circle mr-2"></i>
-        After submitting the form, our team will contact you for payment confirmation. Once payment is received, our expert astrologers will prepare your personalized Kundali report.
+      <p class="text-base md:text-lg text-purple-100 max-w-3xl mx-auto">
+        Enter your planetary placements (from Prokerala, AstroSage, or your existing chart) for an instant deep-dive into your Personality, Partner/Marriage, Career & Hidden Doshas—or order a complete hand-crafted Kundali directly.
       </p>
     </div>
   </section>
 
-  <!-- Sample Kundali Section -->
-  <section class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">Sample Kundali Report</h2>
-    <p class="text-xl text-gray-300 text-center mb-10 max-w-3xl mx-auto">
-      Download our sample Kundali reports to see what you'll receive. Our reports include planetary positions, dasha periods, and personalized remedies.
-    </p>
+  <!-- ========================================================================= -->
+  <!-- TOP SECTION: DUAL-MODE KUNDALI ENGINE & FORM (Placed First as Requested) -->
+  <!-- ========================================================================= -->
+  <section class="max-w-7xl mx-auto px-4 py-10" id="analyzerSection">
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="sample-kundali glass-card rounded-2xl overflow-hidden">
-        <img src="sample.png" alt="Sample Kundali Report" class="w-auto h-auto object-cover">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-white mb-2">Basic Kundali Report</h3>
-          <p class="text-gray-300 mb-4">Includes planetary positions, basic personality analysis, and general predictions.</p>
-          <a href="kundali.pdf" download class="pdf-download-btn inline-block">
-            <i class="fas fa-download mr-2"></i>Download Sample PDF
-          </a>
+    <!-- Mode Switcher Tabs -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+      <button type="button" id="tabInstantBtn" onclick="switchMode('instant')" class="tab-btn active flex-1 max-w-md py-4 px-6 rounded-2xl font-bold text-base md:text-lg border border-purple-500/40 glass-card flex items-center justify-center gap-3">
+        <i class="fas fa-microchip text-amber-300 text-xl"></i>
+        <div class="text-left">
+          <div>Instant Kundali & Ashtakavarga Analyzer</div>
+          <div class="text-xs font-normal text-purple-200">Enter Rashi, Nakshatra & D9 Details (100% Free)</div>
+        </div>
+      </button>
+
+      <button type="button" id="tabManualBtn" onclick="switchMode('manual')" class="tab-btn flex-1 max-w-md py-4 px-6 rounded-2xl font-bold text-base md:text-lg border border-white/15 glass-card flex items-center justify-center gap-3 text-gray-300 hover:text-white">
+        <i class="fas fa-scroll text-amber-400 text-xl"></i>
+        <div class="text-left">
+          <div>Book Complete Hand-Made Kundali</div>
+          <div class="text-xs font-normal text-gray-400">Don't know planets? Submit DOB, Time & Place</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- MODE 1: INSTANT LAGNA, D9 & ASHTAKAVARGA ANALYZER      -->
+    <!-- ===================================================== -->
+    <div id="instantAnalyzerContainer" class="glass-card rounded-3xl p-6 md:p-10 border border-purple-500/30">
+      
+      <!-- Top Helper Bar -->
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-6 mb-6 border-b border-white/10">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
+            <span class="text-amber-400">⚡</span> Enter Your Planetary Matrix (D1, Nakshatra & D9)
+          </h2>
+          <p class="text-gray-300 text-sm mt-1">
+            Select which Rashi and Nakshatra each planet occupies in your Lagna Chart (D1) and Navamsa Chart (D9).
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button type="button" onclick="toggleProkeralaModal()" class="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-300 text-sm font-semibold transition flex items-center">
+            <i class="fas fa-question-circle mr-2"></i> Where to get these details? (Prokerala Guide)
+          </button>
+          <button type="button" onclick="loadSampleChartData()" class="px-4 py-2 rounded-xl bg-purple-600/40 hover:bg-purple-600/60 border border-purple-400/40 text-white text-sm font-semibold transition flex items-center">
+            <i class="fas fa-magic mr-2"></i> Load Demo Kundali
+          </button>
         </div>
       </div>
-      
-      <div class="sample-kundali glass-card rounded-2xl overflow-hidden">
-        <img src="sample.png" alt="Sample Kundali Report" class="w-auto h-auto object-cover">
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-white mb-2">Detailed Kundali Report</h3>
-          <p class="text-gray-300 mb-4">Comprehensive analysis including career, relationships, health, and personalized remedies.</p>
-          <a href="kundali.pdf" download class="pdf-download-btn inline-block">
-            <i class="fas fa-download mr-2"></i>Download Sample PDF
-          </a>
+
+      <!-- Prokerala Helper Modal / Accordion -->
+      <div id="prokeralaHelpBox" class="hidden mb-8 p-5 rounded-2xl bg-slate-900/90 border border-amber-400/40 text-sm text-gray-200 space-y-3">
+        <div class="flex justify-between items-center">
+          <h4 class="font-bold text-amber-300 text-base"><i class="fas fa-compass mr-2"></i>How to find your Lagna, Nakshatra & Navamsa (D9) in 30 Seconds:</h4>
+          <button type="button" onclick="toggleProkeralaModal()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
         </div>
+        <ol class="list-decimal list-inside space-y-1.5 text-gray-300">
+          <li>Visit any free birth-chart calculator like <strong>Prokerala.com</strong> or <strong>AstroSage</strong> and enter your Date, Time, and Place of Birth.</li>
+          <li>Look at the <strong>"Planetary Positions"</strong> table: it clearly lists your <strong>Ascendant (Lagna)</strong> and all 9 planets (Sun to Ketu) along with their <strong>Rashi (Sign)</strong> and <strong>Nakshatra</strong>.</li>
+          <li>Scroll slightly down to the <strong>Navamsa Chart (D9)</strong> table and note the Rashi of Lagna and key planets (especially Jupiter, Venus, Mars, and 7th Lord).</li>
+          <li>Enter those selections below and click <strong>"Generate Deep Kundali & Ashtakavarga Analysis"</strong>!</li>
+        </ol>
+      </div>
+
+      <form id="astroAnalyzerForm" onsubmit="runFullAstrologicalAnalysis(event)" class="space-y-8">
+        <!-- Basic User Info -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white/5 p-5 rounded-2xl border border-white/10">
+          <div>
+            <label class="form-label">Your Name <span class="text-red-400">*</span></label>
+            <input type="text" id="calcName" class="form-input" placeholder="e.g., Rahul Sharma" required>
+          </div>
+          <div>
+            <label class="form-label">Gender <span class="text-red-400">*</span></label>
+            <select id="calcGender" class="form-input" required>
+              <option value="male">Male (पुरुष)</option>
+              <option value="female">Female (महिला)</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">WhatsApp / Phone (Optional)</label>
+            <input type="tel" id="calcPhone" class="form-input" placeholder="+91 9876543210">
+          </div>
+          <div>
+            <label class="form-label">Primary Focus Area <span class="text-red-400">*</span></label>
+            <select id="calcFocus" class="form-input" required>
+              <option value="all">Complete Life, Partner & Career</option>
+              <option value="marriage">Love, Partner & Marriage Timing</option>
+              <option value="career">Studies, Govt Job & Wealth</option>
+              <option value="dosha">Hidden Doshas, Health & Obstacles</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Planetary Input Table -->
+        <div class="overflow-x-auto rounded-2xl border border-white/15">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-purple-950/80 text-amber-300 text-xs md:text-sm uppercase tracking-wider border-b border-white/15">
+                <th class="py-3.5 px-4">Graha (Planet / Point)</th>
+                <th class="py-3.5 px-4">Lagna Chart (D1) Rashi <span class="text-red-400">*</span></th>
+                <th class="py-3.5 px-4">Nakshatra (Star)</th>
+                <th class="py-3.5 px-4">Navamsa (D9) Rashi <span class="text-red-400">*</span></th>
+                <th class="py-3.5 px-4 text-center">Retrograde / Combust</th>
+              </tr>
+            </thead>
+            <tbody id="planetMatrixBody" class="divide-y divide-white/10 text-sm bg-slate-900/50">
+              <!-- Populated dynamically by JS for clean code -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <p class="text-xs text-gray-400">
+            <i class="fas fa-shield-alt text-amber-400 mr-1"></i>
+            Note: Rahu & Ketu are automatically kept 180° (7th sign) opposite if you wish, or you can adjust manually.
+          </p>
+          <button type="submit" class="primary-button w-full sm:w-auto text-lg px-10 py-4 shadow-xl">
+            <i class="fas fa-Compass mr-2"></i> Generate Deep Kundali & Ashtakavarga Report
+          </button>
+        </div>
+      </form>
+
+      <!-- =============================================================== -->
+      <!-- DYNAMIC OUTPUT DASHBOARD (Hidden until user clicks Generate)    -->
+      <!-- =============================================================== -->
+      <div id="analysisOutputSection" class="hidden mt-12 pt-10 border-t-2 border-amber-500/40 space-y-10">
+        
+        <!-- Report Header Banner -->
+        <div class="bg-gradient-to-r from-purple-900/80 via-slate-900 to-amber-900/60 p-6 md:p-8 rounded-2xl border border-amber-400/40 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-widest">
+              Jyotish Tark Diagnostic Engine v2.6
+            </span>
+            <h3 class="text-2xl md:text-4xl font-bold text-white mt-2" id="reportTitleName">
+              Cosmic Blueprint Analysis
+            </h3>
+            <p class="text-purple-200 text-sm mt-1" id="reportSubtitleMeta"></p>
+          </div>
+          <div class="flex gap-3">
+            <a href="#dakshinaSection" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition flex items-center shadow-lg">
+              <i class="fas fa-hand-holding-heart mr-2"></i> Offer Guru Dakshina
+            </a>
+            <a id="topWhatsappConsultBtn" href="https://wa.me/918318513814" target="_blank" class="px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-sm transition flex items-center shadow-lg">
+              <i class="fab fa-whatsapp mr-2"></i> Fix Doshas Now
+            </a>
+          </div>
+        </div>
+
+        <!-- 1. BHAVA (HOUSE) SUMMARY PILLS -->
+        <div>
+          <h4 class="text-xl font-bold text-amber-300 mb-4 flex items-center">
+            <i class="fas fa-th-large mr-2"></i> Your 12 Bhava (House) Planetary Placements (From Lagna)
+          </h4>
+          <div id="bhavaGridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <!-- JS Populated -->
+          </div>
+        </div>
+
+        <!-- 2. SARVASHTAKAVARGA (SAV) MATRIX & HOUSE STRENGTH -->
+        <div class="glass-card p-6 md:p-8 rounded-2xl border border-purple-400/30">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-2">
+            <div>
+              <h4 class="text-xl md:text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-chart-bar text-amber-400 mr-3"></i> Authentic Sarvashtakavarga (SAV) Bindu Matrix
+              </h4>
+              <p class="text-gray-300 text-sm">
+                Calculated using classical Parashari Bhinna Ashtakavarga rules (Total 337 Bindus across 12 Houses). Houses with <strong>28+ Bindus</strong> give strong results; <strong>below 25 Bindus</strong> indicate karmic struggle and energy drain.
+              </p>
+            </div>
+            <span class="px-3 py-1 rounded-lg bg-purple-800/80 border border-purple-400/40 text-amber-300 text-xs font-semibold">
+              Total SAV: 337 Bindus
+            </span>
+          </div>
+
+          <div id="savGridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
+            <!-- JS Populated 12 Houses SAV -->
+          </div>
+
+          <div id="savDiagnosticInsight" class="p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 text-sm text-gray-200 space-y-2">
+            <!-- JS Populated SAV Insights (e.g., 10th vs 11th house, 7th house marriage bindus, 1st vs 6th/8th/12th) -->
+          </div>
+        </div>
+
+        <!-- 3. THREE-PILLAR DETAILED ANALYSIS: SELF, PARTNER/MARRIAGE (D1+D9), STUDIES/CAREER -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Pillar A: Self, Core Mindset & Nakshatra Prana -->
+          <div class="glass-card p-6 rounded-2xl border-t-4 border-purple-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-purple-500/20 text-purple-300">Pillar 1 • Atma & Swabhava</span>
+                <i class="fas fa-user-astronaut text-2xl text-purple-400"></i>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Self, Soul & Janma Nakshatra</h4>
+              <div id="selfAnalysisContent" class="text-gray-300 text-sm space-y-3 leading-relaxed"></div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 text-xs text-amber-300 font-medium">
+              <i class="fas fa-lock mr-1"></i> Full Dasha-wise health & psychological cycles require D3/D30 divisional verification.
+            </div>
+          </div>
+
+          <!-- Pillar B: Partner, Love, Marriage & Navamsa (D9) Secrets -->
+          <div class="glass-card p-6 rounded-2xl border-t-4 border-pink-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-pink-500/20 text-pink-300">Pillar 2 • Vivaha & D9 Navamsa</span>
+                <i class="fas fa-heart text-2xl text-pink-400"></i>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Future Partner & Marital Destiny</h4>
+              <div id="partnerAnalysisContent" class="text-gray-300 text-sm space-y-3 leading-relaxed"></div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 text-xs text-pink-300 font-medium">
+              <i class="fas fa-exclamation-circle mr-1"></i> Partner's exact direction, marriage year & Upapada Lagna matching included in full report.
+            </div>
+          </div>
+
+          <!-- Pillar C: Studies, Intelligence, Career & Wealth Yoga -->
+          <div class="glass-card p-6 rounded-2xl border-t-4 border-amber-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300">Pillar 3 • Vidya, Karma & Artha</span>
+                <i class="fas fa-briefcase text-2xl text-amber-400"></i>
+              </div>
+              <h4 class="text-xl font-bold text-white mb-3">Studies, Career & Financial Peak</h4>
+              <div id="careerAnalysisContent" class="text-gray-300 text-sm space-y-3 leading-relaxed"></div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 text-xs text-amber-300 font-medium">
+              <i class="fas fa-lock mr-1"></i> Exact Mahadasha career breakthroughs & D10 Dasamsa analysis available on consultation.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4. HIGH-URGENCY DIAGNOSTIC WARNING BOX (Scare in an Ethical, Analytical Way to Convert) -->
+        <div class="danger-pulse rounded-3xl bg-gradient-to-br from-red-950/90 via-slate-900 to-purple-950/90 p-6 md:p-10 border-2 border-red-500/70 relative overflow-hidden">
+          <div class="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
+            <div class="space-y-4 max-w-3xl">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 border border-red-400 text-red-300 text-xs md:text-sm font-bold uppercase tracking-wider">
+                <i class="fas fa-exclamation-triangle animate-bounce"></i> Critical Karmic & Dosha Diagnostic Alert
+              </div>
+              <h3 class="text-2xl md:text-3xl font-bold text-white">
+                ⚠️ Hidden Planetary Afflictions Detected in Your Chart!
+              </h3>
+              <p class="text-gray-200 text-sm md:text-base leading-relaxed">
+                As a medical student and logical Vedic astrologer, my duty is not to flatter you with false positivity, but to diagnose the <strong>exact planetary blockages (Doshas & D9 afflictions)</strong> before they manifest as severe delays in marriage, sudden career stagnation, emotional heartbreak, or financial drain during upcoming Rahu/Saturn transits:
+              </p>
+              
+              <!-- Dynamic Dosha List -->
+              <div id="criticalDoshaList" class="space-y-3 pt-2">
+                <!-- Populated by JS -->
+              </div>
+
+              <div class="p-4 rounded-xl bg-black/40 border border-red-400/30 text-amber-200 text-sm">
+                <strong>Why Browser Calculations Are Only 25% of the Picture:</strong> Without calculating your exact <strong>Degree-wise Vimshottari Mahadasha-Antardasha, Shadbala, Pushkara Navamsa, and Lal Kitab Sleeping Planets</strong>, doing generic remedies from the internet can accidentally strengthen a Maraka (harmful) planet!
+              </div>
+            </div>
+
+            <!-- Action Conversion Box -->
+            <div class="w-full lg:w-96 bg-slate-950/90 p-6 rounded-2xl border border-amber-400/50 text-center space-y-4 shrink-0 shadow-2xl">
+              <div class="text-xs font-bold uppercase tracking-widest text-amber-400">Complete Diagnosis & Remedies</div>
+              <div class="text-3xl font-bold text-white">₹1101 <span class="text-sm font-normal text-gray-400 line-through">₹2100</span></div>
+              <p class="text-xs text-gray-300">
+                Get your 100% Hand-Crafted Kundali + D9/D10 Analysis + Exact Marriage/Career Dates + Personal Lal Kitab & Vedic Remedies by <strong>Gyanendra S. Tomar</strong>.
+              </p>
+              <ul class="text-xs text-left space-y-2 text-gray-200 bg-white/5 p-3 rounded-xl">
+                <li><i class="fas fa-check text-green-400 mr-2"></i>Exact Mahadasha & Antardasha Timeline</li>
+                <li><i class="fas fa-check text-green-400 mr-2"></i>Spouse Appearance, Nature & Compatibility</li>
+                <li><i class="fas fa-check text-green-400 mr-2"></i>Safe, Practical Vedic & Lal Kitab Remedies</li>
+                <li><i class="fas fa-check text-green-400 mr-2"></i>Direct WhatsApp Voice/Call Guidance</li>
+              </ul>
+              <a id="urgentWhatsappBtn" href="https://wa.me/918318513814" target="_blank" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-base shadow-lg flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5">
+                <i class="fab fa-whatsapp text-xl"></i> Send My Chart & Fix Doshas
+              </a>
+              <button type="button" onclick="switchMode('manual')" class="w-full py-2.5 px-4 rounded-xl border border-amber-400/50 text-amber-300 hover:bg-amber-400/10 text-xs font-semibold transition">
+                Or Fill Birth Details Form Below
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. GURU DAKSHINA / ENERGY EXCHANGE QR SECTION -->
+        <div id="dakshinaSection" class="glass-card rounded-3xl p-6 md:p-10 border-2 border-amber-400/40 bg-gradient-to-r from-amber-950/30 via-slate-900/90 to-purple-950/30">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Description (Hindi + English Spiritual & Logical Appeal) -->
+            <div class="md:col-span-8 space-y-4">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <i class="fas fa-om"></i> Sacred Vedic Tradition • ऊर्जा विनिमय (Guru Dakshina)
+              </div>
+              <h3 class="text-2xl md:text-3xl font-bold text-white">
+                Support Jyotish Tark & Complete Your Karmic Energy Exchange 🙏
+              </h3>
+              <p class="text-gray-200 text-sm md:text-base leading-relaxed hindi">
+                <strong>वैदिक शास्त्रों का नियम:</strong> ज्योतिष एक पवित्र ब्रह्म-विद्या है। शास्त्रों के अनुसार जब भी हम अपने प्रारब्ध या ग्रहों का रहस्य जानते हैं, तो बिना <strong class="text-amber-300">गुरु-दक्षिणा (Energy Exchange)</strong> के उस ज्ञान का पूरा शुभ फल जातक को प्राप्त नहीं होता और ज्योतिषी पर भी 'ग्रह-ऋण' चढ़ता है।
+              </p>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                We have built this advanced Lagna, Navamsa & Ashtakavarga engine without charging mandatory API fees so every seeker can discover the truth about their chart. If this analysis gave you clarity about yourself, your partner, or your career, please offer a voluntary <strong>Dakshina / Support (₹51, ₹101, ₹251, or as per your Shraddha)</strong> by scanning the QR code. Your contribution helps us maintain this free Vedic platform and brings auspicious Jupiter (Guru) blessings to your chart!
+              </p>
+              <div class="flex flex-wrap gap-3 pt-2">
+                <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-amber-300">✨ ₹51 - Shubh Sankalp</span>
+                <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-amber-300">✨ ₹101 - Graha Shanti Support</span>
+                <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-amber-300">✨ ₹501 - Priority Quick Question</span>
+                <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/50 text-xs text-amber-200 font-bold">✨ ₹1101 - Full Hand-Made Kundali PDF</span>
+              </div>
+            </div>
+
+            <!-- Right QR Code Box -->
+            <div class="md:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
+              <div class="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2">Scan & Pay via Any UPI App</div>
+              <div class="w-48 h-48 rounded-xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50 relative">
+                <!-- Replace qr-code.png with your actual UPI QR image file -->
+                <img src="qr-code.png" alt="Jyotish Tark Dakshina QR Code" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-600\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place your qr-code.png file in root folder</strong><br>GPay / PhonePe / Paytm<br>+91 8318513814</div>';">
+              </div>
+              <p class="text-xs font-bold text-slate-800 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
+              <p class="text-[11px] text-gray-500 mb-3">UPI / WhatsApp: +91 8318513814</p>
+              <a href="https://wa.me/918318513814?text=Namaste%20Gyanendra%20Ji,%20I%20have%20offered%20Guru%20Dakshina%20after%20checking%20my%20Kundali%20on%20Jyotish%20Tark.%20Here%20is%20my%20screenshot:" target="_blank" class="w-full py-2 px-3 rounded-lg bg-purple-700 hover:bg-purple-800 text-white text-xs font-semibold text-center transition">
+                <i class="fab fa-whatsapp mr-1"></i> Share Dakshina Screenshot
+              </a>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
-  </section>
 
-  <!-- Kundali Form Section -->
-  <section class="max-w-4xl mx-auto px-4 py-12">
-    <div class="glass-card rounded-2xl p-8">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">Kundali Details Form</h2>
-      <p class="text-gray-300 text-center mb-8">
-        Please provide your accurate birth details for a precise Kundali analysis. All information is kept confidential.
-      </p>
-      
+    <!-- ===================================================== -->
+    <!-- MODE 2: TRADITIONAL BIRTH DETAILS FORM (EmailJS)      -->
+    <!-- ===================================================== -->
+    <div id="manualBookingContainer" class="hidden glass-card rounded-3xl p-6 md:p-10 max-w-4xl mx-auto border border-amber-400/30">
+      <div class="text-center mb-8">
+        <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">100% Hand-Crafted by Gyanendra S. Tomar</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Complete Kundali Booking Form</h2>
+        <p class="text-gray-300 mt-2">
+          Don't have your planetary positions? Fill your exact Date, Time, and Place of Birth below. We will calculate everything manually and prepare your comprehensive report.
+        </p>
+      </div>
+
       <form id="kundaliForm" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -990,8 +837,8 @@
         </div>
 
         <div>
-          <label for="occupation" class="form-label">Occupation</label>
-          <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Your Profession">
+          <label for="occupation" class="form-label">Occupation / Student Field</label>
+          <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Your Profession or Stream of Study">
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1000,253 +847,774 @@
             <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
           </div>
           <div>
-            <label for="phone" class="form-label">Phone Number <span class="text-red-400">*</span></label>
-            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 1234567890" required>
+            <label for="phone" class="form-label">WhatsApp / Phone Number <span class="text-red-400">*</span></label>
+            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 9876543210" required>
           </div>
         </div>
 
         <div>
-          <label for="questions" class="form-label">Specific Questions or Concerns</label>
-          <textarea id="questions" name="questions" class="form-input h-32" placeholder="Any specific areas you want us to focus on (career, marriage, health, etc.)"></textarea>
+          <label for="questions" class="form-label">Specific Questions (Partner, Marriage, Studies, Career, Dosha)</label>
+          <textarea id="questions" name="questions" class="form-input h-32" placeholder="Describe the challenges or questions you want us to focus on..."></textarea>
         </div>
 
         <div class="flex items-center">
-          <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
+          <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 rounded" required>
           <label for="consent" class="ml-2 block text-sm text-gray-300">
             I agree to the <a href="privacy-policy.html" class="text-purple-400 hover:text-purple-300">privacy policy</a> and understand that I will be contacted for payment confirmation.
           </label>
         </div>
 
-        <button type="submit" class="primary-button w-full">
-          <i class="fas fa-paper-plane mr-2"></i>
-          Submit Kundali Details
+        <button type="submit" class="primary-button w-full text-lg">
+          <i class="fas fa-paper-plane mr-2"></i> Submit Details for Full Hand-Made Kundali
         </button>
       </form>
       
       <div id="submissionResponse" class="mt-6 p-4 rounded-lg text-center font-semibold text-lg hidden"></div>
     </div>
+
   </section>
 
-  <!-- Support Section -->
-  <section class="max-w-4xl mx-auto px-4 py-12 text-center">
-    <div class="cosmic-bg rounded-2xl p-8 md:p-12 relative overflow-hidden">
-      <div class="relative z-10">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Need Help With the Form?</h2>
-        <p class="text-xl text-purple-100 mb-8">
-          Our astrology experts are available to assist you in filling out the form correctly.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20need%20help%20filling%20the%20Kundali%20form" class="primary-button bg-green-600 hover:bg-green-700" target="_blank">
-            <i class="fab fa-whatsapp mr-2"></i>
-            Chat on WhatsApp
+  <!-- ========================================================================= -->
+  <!-- BELOW SECTIONS: SAMPLE KUNDALI, PROCESS INFO & SUPPORT (Moved Below Form) -->
+  <!-- ========================================================================= -->
+
+  <!-- Sample Kundali Section -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <div class="text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 section-title">Sample Full Hand-Made Kundali Report</h2>
+    </div>
+    <p class="text-lg text-gray-300 text-center mb-10 max-w-3xl mx-auto">
+      While our instant analyzer gives you a powerful overview of your Lagna, D9, and Ashtakavarga, see what you receive when you order our complete 40+ page hand-analyzed PDF report.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+        <img src="sample.png" alt="Sample Kundali Report" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">Basic Kundali Report (₹499)</h3>
+          <p class="text-gray-300 mb-4 text-sm">Includes planetary positions, Lagna & Navamsa charts, basic personality analysis, and general predictions.</p>
+          <a href="kundali.pdf" download class="pdf-download-btn">
+            <i class="fas fa-download mr-2"></i>Download Sample PDF
           </a>
-          <a href="tel:+918318513814" class="secondary-button">
-            <i class="fas fa-phone-alt mr-2"></i>
-            Call Us Now
+        </div>
+      </div>
+      
+      <div class="glass-card rounded-2xl overflow-hidden border border-amber-400/40 flex flex-col justify-between">
+        <img src="sample.png" alt="Detailed Sample Kundali Report" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="text-xl font-bold text-amber-300">Complete Master Kundali Report (₹1101)</h3>
+            <span class="px-2.5 py-0.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-full">Most Popular</span>
+          </div>
+          <p class="text-gray-300 mb-4 text-sm">Deep 5-year Mahadasha timeline, Partner & Marriage D9 compatibility, Ashtakavarga transit secrets, Career breakthroughs, and personalized Lal Kitab + Vedic remedies.</p>
+          <a href="kundali.pdf" download class="pdf-download-btn">
+            <i class="fas fa-download mr-2"></i>Download Sample PDF
           </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Info Section -->
+  <section class="max-w-5xl mx-auto px-4 py-10 text-center">
+    <div class="glass-card p-8 rounded-2xl">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">📋 How Full Consultation Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="p-4">
+          <div class="w-14 h-14 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-xl font-bold">1</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Run Free Tool or Fill Form</h3>
+          <p class="text-gray-300 text-sm">Test your chart instantly above or submit your birth details for manual calculation.</p>
+        </div>
+        <div class="p-4">
+          <div class="w-14 h-14 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-xl font-bold">2</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Confirm on WhatsApp</h3>
+          <p class="text-gray-300 text-sm">Connect with Gyanendra Ji on WhatsApp to confirm your specific questions and Dakshina.</p>
+        </div>
+        <div class="p-4">
+          <div class="w-14 h-14 rounded-full bg-purple-700 flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-xl font-bold">3</span>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Receive Remedies & Report</h3>
+          <p class="text-gray-300 text-sm">Get your detailed hand-written analysis and exact remedies within 24–48 hours.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="max-w-6xl mx-auto px-4 py-16 glass-card backdrop-blur-md rounded-2xl">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center section-title">FAQ / अक्सर पूछे जाने वाले प्रश्न</h2>
-    <div class="space-y-8">
-
-      <!-- 1 -->
+  <section id="faq" class="max-w-6xl mx-auto px-4 py-12 glass-card rounded-2xl mb-12">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-white mb-8 section-title">FAQ / अक्सर पूछे जाने वाले प्रश्न</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: कुंडली सेवा की कीमत क्या है?</h3>
-        <p class="mt-2 text-gray-300">A: हमारी कुंडली सेवा केवल ₹1101 में उपलब्ध है, जिसमें जन्मकुंडली का पूरा विश्लेषण और सलाह शामिल है।</p>
-        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How much does the Kundali service cost?</h3>
-        <p class="mt-2 text-gray-300">A: Our personalized Kundali report is just ₹1101, including full chart analysis and remedies.</p>
+        <h3 class="font-semibold text-lg text-amber-300">Q: अष्टकवर्ग (Ashtakavarga) और नवांश (D9) विश्लेषण क्यों जरूरी है?</h3>
+        <p class="mt-2 text-gray-300 text-sm">A: केवल लग्न कुंडली देखने से अधूरा सच पता चलता है। नवांश (D9) आपके वैवाहिक जीवन और ग्रहों की असली ताकत बताता है, जबकि अष्टकवर्ग (Ashtakavarga) बताता है कि किस भाव में कितने शुभ बिंदु (Bindus) हैं।</p>
       </div>
-
-      <!-- 2 -->
       <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: मुझे अपनी कुंडली कितने समय में मिल जाएगी?</h3>
-        <p class="mt-2 text-gray-300">A: भुगतान और विवरण भरने के तुरंत बाद आपकी कुंडली 24–48 घंटे में ईमेल कर दी जाएगी।</p>
-        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How soon will I receive my Kundali?</h3>
-        <p class="mt-2 text-gray-300">A: Once payment and details are submitted, you'll get your report via email within 24–48 hours.</p>
-      </div>
-
-      <!-- 3 -->
-      <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: क्या आप हिंदी में राशिफल भी देते हैं?</h3>
-        <p class="mt-2 text-gray-300">A: हाँ, हम हिंदी में मासिक राशिफल प्रदान करते हैं—जैसे अप्रैल 2025 के लिए खास सलाह।</p>
-        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: Do you provide horoscopes in Hindi?</h3>
-        <p class="mt-2 text-gray-300">A: Yes—our monthly Rashifal is available in Hindi, e.g., April 2025 predictions.</p>
-      </div>
-
-      <!-- 4 -->
-      <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: अंकशास्त्र (Numerology) कैसे काम करता है?</h3>
-        <p class="mt-2 text-gray-300">A: हम आपके जन्मतिथि से लाइफ पाथ नंबर निकालकर आपके व्यक्तित्व और भविष्य के रुझानों पर प्रकाश डालते हैं।</p>
-        <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How does Numerology work?</h3>
-        <p class="mt-2 text-gray-300">A: We calculate your Life Path Number from your birth date to reveal personality traits and future trends.</p>
+        <h3 class="font-semibold text-lg text-amber-300">Q: संपूर्ण हस्तनिर्मित कुंडली की दक्षिणा क्या है?</h3>
+        <p class="mt-2 text-gray-300 text-sm">A: हमारी संपूर्ण कुंडली विश्लेषण और लाल किताब/वैदिक उपाय सेवा ₹1101 में उपलब्ध है, जिसमें दशा-अंतर्दशा और व्यक्तिगत परामर्श शामिल है।</p>
       </div>
     </div>
   </section>
+
+  <!-- WhatsApp Floating Button -->
+  <a class="whatsapp-float" id="whatsappButton">
+    <i class="fab fa-whatsapp"></i>
+  </a>   
+
+  <!-- WhatsApp Popup -->
+  <div class="whatsapp-popup" id="whatsappPopup">
+    <div class="whatsapp-header">
+      <img src="logo.png" alt="Jyotish Tark">
+      <div>
+        <h3 class="font-bold text-lg">Jyotish Tark</h3>
+        <p class="text-sm opacity-90">Typically replies within minutes</p>
+      </div>
+    </div>
+    <div class="whatsapp-body">
+      <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
+      <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20checked%20my%20chart%20on%20your%20website%20and%20want%20full%20Kundali%20analysis', '_blank');">
+        <i class="fas fa-comment"></i>
+        <div>
+          <h4 class="font-semibold text-gray-800">Get Full Kundali Analysis</h4>
+          <p class="text-sm text-gray-600">Fix Doshas & get remedies</p>
+        </div>
+      </div>
+      <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+        <i class="fas fa-phone"></i>
+        <div>
+          <h4 class="font-semibold text-gray-800">Call Astrologer</h4>
+          <p class="text-sm text-gray-600">Speak directly (+91 8318513814)</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="glass-card text-center py-12 mt-12">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-center space-x-6 mb-8 text-2xl">
-        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition">
-          <i class="fab fa-youtube"></i>
-        </a>
-        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition">
-          <i class="fab fa-whatsapp"></i>
-        </a>
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
-        <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="index.html" class="text-gray-300">Home</a></li>
-            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
-            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
-            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
-            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
-            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
-            <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="about.html" class="text-gray-300">About Us</a></li>
-            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
-            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
-            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
-          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
-          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
-          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
-          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
-        </div>
-      </div>
-      <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
+      <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </div>
   </footer>
 
   <!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  
-  // Mobile Menu Toggle
-document.getElementById('menuToggle').addEventListener('click', function() {
-    const mobileNav = document.getElementById('mobileNav');
-    mobileNav.classList.toggle('hidden');
-    
-    // Change icon based on menu state
-    const icon = this.querySelector('i');
-    if (mobileNav.classList.contains('hidden')) {
-        icon.className = 'fas fa-bars';
-    } else {
-        icon.className = 'fas fa-times';
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- VEDIC ASTROLOGY, NAVAMSA & SARVASHTAKAVARGA JAVASCRIPT ENGINE             -->
+  <!-- ========================================================================= -->
+  <script>
+    // 1. Master Astrological Data Tables
+    const RASHIS = [
+      { id: 1, name: "1 - Mesha (Aries / मेष)", short: "Mesha (Aries)", lord: "Mars", element: "Fire", nature: "Movable" },
+      { id: 2, name: "2 - Vrishabha (Taurus / वृषभ)", short: "Vrishabha (Taurus)", lord: "Venus", element: "Earth", nature: "Fixed" },
+      { id: 3, name: "3 - Mithuna (Gemini / मिथुन)", short: "Mithuna (Gemini)", lord: "Mercury", element: "Air", nature: "Dual" },
+      { id: 4, name: "4 - Karka (Cancer / कर्क)", short: "Karka (Cancer)", lord: "Moon", element: "Water", nature: "Movable" },
+      { id: 5, name: "5 - Simha (Leo / सिंह)", short: "Simha (Leo)", lord: "Sun", element: "Fire", nature: "Fixed" },
+      { id: 6, name: "6 - Kanya (Virgo / कन्या)", short: "Kanya (Virgo)", lord: "Mercury", element: "Earth", nature: "Dual" },
+      { id: 7, name: "7 - Tula (Libra / तुला)", short: "Tula (Libra)", lord: "Venus", element: "Air", nature: "Movable" },
+      { id: 8, name: "8 - Vrishchika (Scorpio / वृश्चिक)", short: "Vrishchika (Scorpio)", lord: "Mars", element: "Water", nature: "Fixed" },
+      { id: 9, name: "9 - Dhanu (Sagittarius / धनु)", short: "Dhanu (Sagittarius)", lord: "Jupiter", element: "Fire", nature: "Dual" },
+      { id: 10, name: "10 - Makara (Capricorn / मकर)", short: "Makara (Capricorn)", lord: "Saturn", element: "Earth", nature: "Movable" },
+      { id: 11, name: "11 - Kumbha (Aquarius / कुंभ)", short: "Kumbha (Aquarius)", lord: "Saturn", element: "Air", nature: "Fixed" },
+      { id: 12, name: "12 - Meena (Pisces / मीन)", short: "Meena (Pisces)", lord: "Jupiter", element: "Water", nature: "Dual" }
+    ];
+
+    const NAKSHATRAS = [
+      { id: 1, name: "1. Ashwini (अश्विनी)", lord: "Ketu", gana: "Deva", trait: "quick-thinking, pioneering, healing energy, restless ambition" },
+      { id: 2, name: "2. Bharani (भरणी)", lord: "Venus", gana: "Manushya", trait: "intense willpower, creative depth, extremes in emotion and duty" },
+      { id: 3, name: "3. Krittika (कृत्तिका)", lord: "Sun", gana: "Rakshasa", trait: "sharp intellect, fiery determination, protective authority, blunt truth" },
+      { id: 4, name: "4. Rohini (रोहिणी)", lord: "Moon", gana: "Manushya", trait: "magnetic charm, artistic luxury, deep emotional attachment" },
+      { id: 5, name: "5. Mrigashira (मृगशिरा)", lord: "Mars", gana: "Deva", trait: "curious researcher, constantly seeking perfection, sensitive mind" },
+      { id: 6, name: "6. Ardra (आर्द्रा)", lord: "Rahu", gana: "Manushya", trait: "analytical brilliance born through emotional storms and transformation" },
+      { id: 7, name: "7. Punarvasu (पुनर्वसु)", lord: "Jupiter", gana: "Deva", trait: "spiritual resilience, ability to bounce back from setbacks, wisdom" },
+      { id: 8, name: "8. Pushya (पुष्य)", lord: "Saturn", gana: "Deva", trait: "disciplined nurturer, strong dharma, patient wealth builder" },
+      { id: 9, name: "9. Ashlesha (आश्लेषा)", lord: "Mercury", gana: "Rakshasa", trait: "penetrating intuition, hypnotic psychology, guarded inner world" },
+      { id: 10, name: "10. Magha (मघा)", lord: "Ketu", gana: "Rakshasa", trait: "royal self-respect, ancestral pride, leadership command" },
+      { id: 11, name: "11. Purva Phalguni (पूर्वा फाल्गुनी)", lord: "Venus", gana: "Manushya", trait: "romantic warmth, creative magnetism, love for comfort and affection" },
+      { id: 12, name: "12. Uttara Phalguni (उत्तरा फाल्गुनी)", lord: "Sun", gana: "Manushya", trait: "committed partnerships, administrative skill, independent honour" },
+      { id: 13, name: "13. Hasta (हस्त)", lord: "Moon", gana: "Deva", trait: "skillful execution, sharp wit, desire to control destiny" },
+      { id: 14, name: "14. Chitra (चित्रा)", lord: "Mars", gana: "Rakshasa", trait: "architectural vision, charismatic perfectionism, dynamic drive" },
+      { id: 15, name: "15. Swati (स्वाती)", lord: "Rahu", gana: "Deva", trait: "fierce independence, business diplomacy, adaptable ambition" },
+      { id: 16, name: "16. Vishakha (विशाखा)", lord: "Jupiter", gana: "Rakshasa", trait: "laser-focused obsession with goals, dual paths in relationships" },
+      { id: 17, name: "17. Anuradha (अनुराधा)", lord: "Saturn", gana: "Deva", trait: "deep devotion in love, success in foreign or unconventional lands" },
+      { id: 18, name: "18. Jyeshtha (ज्येष्ठा)", lord: "Mercury", gana: "Rakshasa", trait: "protective seniority, occult intelligence, hidden insecurities" },
+      { id: 19, name: "19. Mula (मूल)", lord: "Ketu", gana: "Rakshasa", trait: "root-level investigator, karmic uprooting before massive rise" },
+      { id: 20, name: "20. Purva Ashadha (पूर्वाषाढ़ा)", lord: "Venus", gana: "Manushya", trait: "invincible conviction, persuasive speech, emotional depth" },
+      { id: 21, name: "21. Uttara Ashadha (उत्तराषाढ़ा)", lord: "Sun", gana: "Manushya", trait: "enduring victory in late 20s/30s, righteous authority" },
+      { id: 22, name: "22. Shravana (श्रवण)", lord: "Moon", gana: "Deva", trait: "keen listener, scholarly intellect, fame through knowledge" },
+      { id: 23, name: "23. Dhanishta (धनिष्ठा)", lord: "Mars", gana: "Rakshasa", trait: "wealth accumulation, rhythmic timing, marital delay if ego clashes" },
+      { id: 24, name: "24. Shatabhisha (शतभिषा)", lord: "Rahu", gana: "Rakshasa", trait: "mystic healer, secret researcher, solitary genius" },
+      { id: 25, name: "25. Purva Bhadrapada (पूर्वा भाद्रपद)", lord: "Jupiter", gana: "Manushya", trait: "intense transformational fire, philosophical radicalism" },
+      { id: 26, name: "26. Uttara Bhadrapada (उत्तरा भाद्रपद)", lord: "Saturn", gana: "Manushya", trait: "kundalini depth, steady financial wisdom, sacrificial love" },
+      { id: 27, name: "27. Revati (रेवती)", lord: "Mercury", gana: "Deva", trait: "compassionate soul, foreign connections, over-giving in relationships" }
+    ];
+
+    const GRAHA_ROWS = [
+      { key: "Asc", label: "Lagna (Ascendant / लग्न)", icon: "fa-compass", color: "text-amber-400", allowRetro: false },
+      { key: "Sun", label: "Sun (Surya / सूर्य)", icon: "fa-sun", color: "text-orange-400", allowRetro: false },
+      { key: "Moon", label: "Moon (Chandra / चंद्र)", icon: "fa-moon", color: "text-blue-200", allowRetro: false },
+      { key: "Mars", label: "Mars (Mangal / मंगल)", icon: "fa-fire", color: "text-red-400", allowRetro: true },
+      { key: "Mercury", label: "Mercury (Budh / बुध)", icon: "fa-brain", color: "text-emerald-400", allowRetro: true },
+      { key: "Jupiter", label: "Jupiter (Guru / गुरु)", icon: "fa-om", color: "text-yellow-300", allowRetro: true },
+      { key: "Venus", label: "Venus (Shukra / शुक्र)", icon: "fa-heart", color: "text-pink-400", allowRetro: true },
+      { key: "Saturn", label: "Saturn (Shani / शनि)", icon: "fa-hourglass-half", color: "text-indigo-400", allowRetro: true },
+      { key: "Rahu", label: "Rahu (राहु)", icon: "fa-dragon", color: "text-purple-400", allowRetro: false },
+      { key: "Ketu", label: "Ketu (केतु)", icon: "fa-meteor", color: "text-slate-400", allowRetro: false }
+    ];
+
+    // 2. Classical Parashari Bhinna Ashtakavarga (BAV) Tables (Total = 337 Bindus)
+    const BAV_RULES = {
+      Sun: {
+        Sun: [1,2,4,7,8,9,10,11],
+        Moon: [3,6,10,11],
+        Mars: [1,2,4,7,8,9,10,11],
+        Mercury: [3,5,6,9,10,11,12],
+        Jupiter: [5,6,9,11],
+        Venus: [6,7,12],
+        Saturn: [1,2,4,7,8,9,10,11],
+        Asc: [3,4,6,10,11,12]
+      },
+      Moon: {
+        Sun: [3,6,7,8,10,11],
+        Moon: [1,3,6,7,10,11],
+        Mars: [2,3,5,6,9,10,11],
+        Mercury: [1,3,4,5,7,8,10,11],
+        Jupiter: [1,4,7,8,10,11,12],
+        Venus: [3,4,5,7,9,10,11],
+        Saturn: [3,5,6,11],
+        Asc: [3,6,10,11]
+      },
+      Mars: {
+        Sun: [3,5,6,10,11],
+        Moon: [3,6,11],
+        Mars: [1,2,4,7,8,10,11],
+        Mercury: [3,5,6,11],
+        Jupiter: [6,10,11,12],
+        Venus: [6,8,11,12],
+        Saturn: [1,4,7,8,9,10,11],
+        Asc: [1,3,6,10,11]
+      },
+      Mercury: {
+        Sun: [5,6,9,11,12],
+        Moon: [2,4,6,8,10,11],
+        Mars: [1,2,4,7,8,9,10,11],
+        Mercury: [1,3,5,6,9,10,11,12],
+        Jupiter: [6,8,11,12],
+        Venus: [1,2,3,4,5,8,9,11],
+        Saturn: [1,2,4,7,8,9,10,11],
+        Asc: [1,2,4,6,8,10,11]
+      },
+      Jupiter: {
+        Sun: [1,2,3,4,7,8,9,10,11],
+        Moon: [2,5,7,9,11],
+        Mars: [1,2,4,7,8,10,11],
+        Mercury: [1,2,4,5,6,9,10,11],
+        Jupiter: [1,2,3,4,7,8,10,11],
+        Venus: [2,5,6,9,10,11],
+        Saturn: [3,5,6,12],
+        Asc: [1,2,4,5,6,7,9,10,11]
+      },
+      Venus: {
+        Sun: [8,11,12],
+        Moon: [1,2,3,4,5,8,9,11,12],
+        Mars: [3,5,6,9,11,12],
+        Mercury: [3,5,6,9,11],
+        Jupiter: [5,8,9,10,11],
+        Venus: [1,2,3,4,5,8,9,10,11],
+        Saturn: [3,4,5,8,9,10,11],
+        Asc: [1,2,3,4,5,8,9,11]
+      },
+      Saturn: {
+        Sun: [1,2,4,7,8,10,11],
+        Moon: [3,6,11],
+        Mars: [3,5,6,10,11,12],
+        Mercury: [6,8,9,10,11,12],
+        Jupiter: [5,6,11,12],
+        Venus: [6,11,12],
+        Saturn: [3,5,6,11],
+        Asc: [1,3,4,6,10,11]
+      }
+    };
+
+    // Dignity Lookup (Exalted & Debilitated Signs)
+    const DIGNITY = {
+      Sun: { ex: 1, deb: 7, own: [5] },
+      Moon: { ex: 2, deb: 8, own: [4] },
+      Mars: { ex: 10, deb: 4, own: [1, 8] },
+      Mercury: { ex: 6, deb: 12, own: [3, 6] },
+      Jupiter: { ex: 4, deb: 10, own: [9, 12] },
+      Venus: { ex: 12, deb: 6, own: [2, 7] },
+      Saturn: { ex: 7, deb: 1, own: [10, 11] },
+      Rahu: { ex: 2, deb: 8, own: [11] },
+      Ketu: { ex: 8, deb: 2, own: [8] }
+    };
+
+    // Initialize Planetary Form Table on Load
+    function buildPlanetaryMatrixForm() {
+      const tbody = document.getElementById("planetMatrixBody");
+      const rashiOptions = RASHIS.map(r => `<option value="${r.id}">${r.name}</option>`).join("");
+      const nakOptions = NAKSHATRAS.map(n => `<option value="${n.id}">${n.name}</option>`).join("");
+
+      tbody.innerHTML = GRAHA_ROWS.map((g, idx) => `
+        <tr class="hover:bg-white/5 transition">
+          <td class="py-3 px-4 font-semibold text-white whitespace-nowrap">
+            <i class="fas ${g.icon} ${g.color} mr-2 w-5 text-center"></i> ${g.label}
+          </td>
+          <td class="py-2.5 px-3">
+            <select id="d1_${g.key}" onchange="handleRahuKetuSync('${g.key}', 'd1')" class="form-input text-xs md:text-sm">
+              ${rashiOptions}
+            </select>
+          </td>
+          <td class="py-2.5 px-3">
+            <select id="nak_${g.key}" class="form-input text-xs md:text-sm">
+              ${nakOptions}
+            </select>
+          </td>
+          <td class="py-2.5 px-3">
+            <select id="d9_${g.key}" onchange="handleRahuKetuSync('${g.key}', 'd9')" class="form-input text-xs md:text-sm">
+              ${rashiOptions}
+            </select>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            ${g.allowRetro ? `
+              <label class="inline-flex items-center text-xs text-gray-300 cursor-pointer">
+                <input type="checkbox" id="retro_${g.key}" class="rounded text-purple-600 mr-1.5"> Retro/Combust
+              </label>
+            ` : `<span class="text-xs text-gray-500">${g.key === 'Rahu' || g.key === 'Ketu' ? 'Always Retro' : '—'}</span>`}
+          </td>
+        </tr>
+      `).join("");
+
+      // Set realistic initial defaults so it's never all Aries
+      loadSampleChartData(false);
     }
-});
 
-// Mobile Dropdown Toggles
-document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', function() {
-        const dropdown = this.closest('.mobile-dropdown');
-        dropdown.classList.toggle('active');
-    });
-});
-
-// WhatsApp Popup Toggle
-const whatsappButton = document.getElementById('whatsappButton');
-const whatsappPopup = document.getElementById('whatsappPopup');
-
-whatsappButton.addEventListener('click', function() {
-    whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close WhatsApp popup when clicking outside
-document.addEventListener('click', function(event) {
-    if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-    }
-});
-  
-  // ✅ Initialize EmailJS with your Public Key
-  emailjs.init("o-tnka-_5VrrqMgQs"); // replace with your actual Public Key
-
-  // ✅ Form submission
-  document.getElementById('kundaliForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const responseDiv = document.getElementById('submissionResponse');
-    const email = document.getElementById("email").value; // user email input
-
-    // 🔴 Restrict duplicate submissions
-    if (localStorage.getItem("submitted_" + email)) {
-      responseDiv.innerHTML = `
-        <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
-          <i class="fas fa-exclamation-triangle mr-2"></i>
-          <span>⚠️ You have already submitted the form once.</span>
-        </div>
-      `;
-      responseDiv.classList.remove("hidden");
-      return;
+    // Automatically keep Ketu 7 signs opposite Rahu when Rahu is changed
+    function handleRahuKetuSync(key, chartType) {
+      if (key === "Rahu") {
+        const rahuSign = parseInt(document.getElementById(`${chartType}_Rahu`).value);
+        const ketuSign = ((rahuSign + 5) % 12) + 1;
+        document.getElementById(`${chartType}_Ketu`).value = ketuSign;
+      }
     }
 
-    // Show loading
-    responseDiv.classList.remove('hidden');
-    responseDiv.innerHTML = `
-      <div class="flex items-center justify-center">
-        <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
-        <span>Submitting your details...</span>
-      </div>
-    `;
+    // Load a realistic sample Kundali for quick testing
+    function loadSampleChartData(scrollToForm = true) {
+      document.getElementById("calcName").value = "Aarav Verma";
+      document.getElementById("calcGender").value = "male";
+      const demo = {
+        Asc: { d1: 5, nak: 10, d9: 1 },     // Leo Lagna, Magha, Aries D9
+        Sun: { d1: 10, nak: 21, d9: 11 },   // Sun in 6th (Capricorn)
+        Moon: { d1: 8, nak: 18, d9: 12 },   // Debilitated Moon in Scorpio (Jyeshtha)
+        Mars: { d1: 11, nak: 23, d9: 8, retro: false }, // Mars in 7th House (Manglik!)
+        Mercury: { d1: 9, nak: 19, d9: 3, retro: true },
+        Jupiter: { d1: 2, nak: 4, d9: 4, retro: false }, // Jupiter in 10th
+        Venus: { d1: 11, nak: 24, d9: 12, retro: false }, // Venus in 7th with Mars
+        Saturn: { d1: 11, nak: 24, d9: 6, retro: true }, // Saturn in 7th (Marriage delay/conflict!)
+        Rahu: { d1: 11, nak: 24, d9: 2 },
+        Ketu: { d1: 5, nak: 10, d9: 8 }
+      };
 
-    const SERVICE_ID = "service_6w2tj0r";   // replace with your EmailJS Service ID
-    const TEMPLATE_ID = "template_r6rqkf8"; // replace with your EmailJS Template ID
-
-    // ✅ Send form using EmailJS
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
-      .then(() => {
-        responseDiv.innerHTML = `
-          <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
-            <i class="fas fa-check-circle mr-2"></i>
-            <span>✅ Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation. After payment, you will receive your detailed Kundali report within 2-3 days.</span>
-          </div>
-        `;
-
-        // Save submission to prevent duplicate
-        localStorage.setItem("submitted_" + email, "true");
-
-        // Reset & disable form
-        document.getElementById('kundaliForm').reset();
-        document.querySelector("#kundaliForm button").disabled = true;
-      })
-      .catch((error) => {
-        console.error("EmailJS Error:", error);
-        responseDiv.innerHTML = `
-          <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
-            <i class="fas fa-times-circle mr-2"></i>
-            <span>❌ Oops! Something went wrong. Please try again later.</span>
-          </div>
-        `;
+      Object.keys(demo).forEach(k => {
+        document.getElementById(`d1_${k}`).value = demo[k].d1;
+        document.getElementById(`nak_${k}`).value = demo[k].nak;
+        document.getElementById(`d9_${k}`).value = demo[k].d9;
+        if (demo[k].retro !== undefined && document.getElementById(`retro_${k}`)) {
+          document.getElementById(`retro_${k}`).checked = demo[k].retro;
+        }
       });
-  });
-</script>
+    }
+
+    // Helper functions
+    function getHouseNumber(lagnaSign, planetSign) {
+      return ((planetSign - lagnaSign + 12) % 12) + 1;
+    }
+
+    function getSignInHouse(lagnaSign, houseNum) {
+      return ((lagnaSign + houseNum - 2) % 12) + 1;
+    }
+
+    function getRashiObj(signId) {
+      return RASHIS.find(r => r.id === parseInt(signId));
+    }
+
+    function getNakObj(nakId) {
+      return NAKSHATRAS.find(n => n.id === parseInt(nakId));
+    }
+
+    // Calculate True Parashari Sarvashtakavarga (SAV)
+    function calculateSarvashtakavarga(d1Positions) {
+      const signSAV = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0 };
+      const bavDetails = {};
+
+      Object.keys(BAV_RULES).forEach(planet => {
+        bavDetails[planet] = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0 };
+        const contributors = BAV_RULES[planet];
+        Object.keys(contributors).forEach(refPoint => {
+          const refSign = d1Positions[refPoint];
+          const offsets = contributors[refPoint];
+          offsets.forEach(offset => {
+            const targetSign = ((refSign + offset - 2) % 12) + 1;
+            bavDetails[planet][targetSign] += 1;
+            signSAV[targetSign] += 1;
+          });
+        });
+      });
+
+      return { signSAV, bavDetails };
+    }
+
+    // Main Astrological Engine Execution
+    function runFullAstrologicalAnalysis(e) {
+      e.preventDefault();
+
+      const userName = document.getElementById("calcName").value.trim() || "Seeker";
+      const gender = document.getElementById("calcGender").value;
+      const focusArea = document.getElementById("calcFocus").value;
+
+      // Read all D1, Nakshatra, and D9 positions
+      const d1 = {}, nak = {}, d9 = {}, retro = {};
+      GRAHA_ROWS.forEach(g => {
+        d1[g.key] = parseInt(document.getElementById(`d1_${g.key}`).value);
+        nak[g.key] = parseInt(document.getElementById(`nak_${g.key}`).value);
+        d9[g.key] = parseInt(document.getElementById(`d9_${g.key}`).value);
+        retro[g.key] = document.getElementById(`retro_${g.key}`) ? document.getElementById(`retro_${g.key}`).checked : false;
+      });
+
+      const lagnaRashi = getRashiObj(d1.Asc);
+      const moonRashi = getRashiObj(d1.Moon);
+      const moonNak = getNakObj(nak.Moon);
+      const lagnaNak = getNakObj(nak.Asc);
+      const d9LagnaRashi = getRashiObj(d9.Asc);
+
+      // Map Houses (1 to 12) in D1
+      const housesD1 = {};
+      for (let h = 1; h <= 12; h++) housesD1[h] = [];
+      const grahaHouses = {};
+
+      GRAHA_ROWS.forEach(g => {
+        if (g.key !== "Asc") {
+          const h = getHouseNumber(d1.Asc, d1[g.key]);
+          grahaHouses[g.key] = h;
+          housesD1[h].push(g.key);
+        }
+      });
+
+      // Header Meta
+      document.getElementById("reportTitleName").textContent = `${userName}'s Vedic D1, D9 & Ashtakavarga Diagnostic`;
+      document.getElementById("reportSubtitleMeta").innerHTML = `
+        <strong>Lagna:</strong> ${lagnaRashi.short} (${lagnaNak.name}) &nbsp;|&nbsp;
+        <strong>Rashi (Moon):</strong> ${moonRashi.short} (${moonNak.name}) &nbsp;|&nbsp;
+        <strong>Navamsa (D9) Lagna:</strong> ${d9LagnaRashi.short}
+      `;
+
+      // Render 12 Bhava Grid
+      const bhavaGrid = document.getElementById("bhavaGridContainer");
+      const houseNames = [
+        "1st (Tanu - Self)", "2nd (Dhana - Wealth)", "3rd (Sahaja - Effort)", "4th (Sukha - Home)",
+        "5th (Putra - Intellect)", "6th (Ari - Debt/Roga)", "7th (Yuvati - Spouse)", "8th (Randhra - Karma/Occult)",
+        "9th (Bhagya - Luck)", "10th (Karma - Career)", "11th (Labha - Gains)", "12th (Vyaya - Loss/Foreign)"
+      ];
+
+      bhavaGrid.innerHTML = Array.from({ length: 12 }, (_, idx) => {
+        const hNum = idx + 1;
+        const signId = getSignInHouse(d1.Asc, hNum);
+        const rObj = getRashiObj(signId);
+        const planetsHere = housesD1[hNum];
+        return `
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex flex-col justify-between">
+            <div class="flex justify-between items-center text-[11px] text-gray-400 mb-1">
+              <span>${houseNames[idx]}</span>
+              <span class="font-bold text-amber-400">#${signId}</span>
+            </div>
+            <div class="text-xs font-semibold text-purple-200 mb-1.5">${rObj.short}</div>
+            <div class="flex flex-wrap gap-1">
+              ${planetsHere.length ? planetsHere.map(p => `<span class="px-2 py-0.5 rounded bg-purple-700/60 text-white text-[11px] font-bold">${p}${retro[p] ? '(R)' : ''}</span>`).join("") : `<span class="text-[11px] text-gray-500 italic">Empty</span>`}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // Calculate & Render Sarvashtakavarga (SAV)
+      const { signSAV, bavDetails } = calculateSarvashtakavarga(d1);
+      const savGrid = document.getElementById("savGridContainer");
+      const houseSAV = {};
+
+      savGrid.innerHTML = Array.from({ length: 12 }, (_, idx) => {
+        const hNum = idx + 1;
+        const signId = getSignInHouse(d1.Asc, hNum);
+        const bindus = signSAV[signId];
+        houseSAV[hNum] = bindus;
+
+        let badgeClass = "border-amber-400/50 bg-amber-500/10 text-amber-300";
+        let statusLabel = "Balanced";
+        if (bindus >= 30) {
+          badgeClass = "border-emerald-400/60 bg-emerald-500/15 text-emerald-300";
+          statusLabel = "High Power";
+        } else if (bindus < 25) {
+          badgeClass = "border-red-400/60 bg-red-500/15 text-red-300";
+          statusLabel = "Weak / Drain";
+        }
+
+        return `
+          <div class="p-3.5 rounded-xl border ${badgeClass} text-center">
+            <div class="text-[11px] uppercase tracking-wider opacity-80">${houseNames[idx].split(" ")[0]} House</div>
+            <div class="text-2xl font-bold my-1">${bindus} <span class="text-xs font-normal">pts</span></div>
+            <div class="text-[11px] font-semibold">${ getRashiObj(signId).short } • ${statusLabel}</div>
+          </div>
+        `;
+      }).join("");
+
+      // Generate SAV Diagnostic Summary
+      const savInsightEl = document.getElementById("savDiagnosticInsight");
+      const h1 = houseSAV[1], h7 = houseSAV[7], h10 = houseSAV[10], h11 = houseSAV[11], h12 = houseSAV[12], h8 = houseSAV[8];
+      let savNotes = [];
+
+      if (h11 > h10) {
+        savNotes.push(`<li><i class="fas fa-check-circle text-emerald-400 mr-2"></i><strong>Artha & Gains Ratio (10th House: ${h10} pts vs 11th House: ${h11} pts):</strong> Your 11th house of Labha (income) is stronger than your 10th house of effort, meaning smart strategy and right Dasha activation can yield high wealth returns.</li>`);
+      } else {
+        savNotes.push(`<li><i class="fas fa-exclamation-triangle text-amber-400 mr-2"></i><strong>Karma Over-Exertion Trap (10th House: ${h10} pts vs 11th House: ${h11} pts):</strong> Because your 10th house bindus (${h10}) exceed or equal your 11th house of gains (${h11}), you work 2x harder than others yet face delayed financial rewards or blocked promotions without proper planetary remedies.</li>`);
+      }
+
+      if (h7 < 26) {
+        savNotes.push(`<li><i class="fas fa-heart-broken text-red-400 mr-2"></i><strong>7th House Relationship Bindu Alert (${h7} Bindus):</strong> Classical Ashtakavarga warns that having fewer than 26 bindus in the 7th Bhava causes emotional misunderstandings, one-sided effort in love, or coldness in marriage unless your Navamsa (D9) Jupiter/Venus is strengthened.</li>`);
+      } else {
+        savNotes.push(`<li><i class="fas fa-heart text-pink-400 mr-2"></i><strong>7th House Partnership Strength (${h7} Bindus):</strong> Your 7th Bhava carries ${h7} bindus, giving strong attraction and partnership potential, though D9 Navamsa alignment dictates long-term peace.</li>`);
+      }
+
+      if (h12 >= h1 || h8 >= 30) {
+        savNotes.push(`<li><i class="fas fa-burn text-red-400 mr-2"></i><strong>Hidden Energy & Money Leakage (8th House: ${h8} pts, 12th House: ${h12} pts):</strong> High bindus in Dusthana houses (8th/12th) relative to Lagna (${h1} pts) trigger sudden unexpected expenses, overthinking at night, and secret enemies.</li>`);
+      }
+
+      savInsightEl.innerHTML = `<ul class="space-y-2">${savNotes.join("")}</ul>`;
+
+      // =========================================================================
+      // PILLAR 1: SELF, SOUL & NAKSHATRA ANALYSIS
+      // =========================================================================
+      const lagnaLord = lagnaRashi.lord;
+      const lagnaLordHouse = grahaHouses[lagnaLord];
+      const vargottamaPlanets = GRAHA_ROWS.filter(g => d1[g.key] === d9[g.key]).map(g => g.key);
+
+      document.getElementById("selfAnalysisContent").innerHTML = `
+        <p><strong>• Ascendant (${lagnaRashi.short}) & Lagnesh (${lagnaLord}):</strong> Born under ${lagnaRashi.short} Lagna (${lagnaRashi.element} element, ${lagnaRashi.nature} nature), your Lagna Lord <strong>${lagnaLord}</strong> is placed in the <strong>${lagnaLordHouse}th House</strong>. This makes your life revolve around ${houseNames[lagnaLordHouse - 1]} themes.</p>
+        <p><strong>• Janma Nakshatra (${moonNak.name}):</strong> Ruled by <strong>${moonNak.lord}</strong> (${moonNak.gana} Gana), your subconscious mind carries <em>${moonNak.trait}</em>. Even when you appear calm externally, your mind constantly processes deep karmic patterns.</p>
+        <p><strong>• Inner Soul vs. Outer Projection (D1 vs D9):</strong> While your physical Lagna is ${lagnaRashi.short}, your Navamsa (D9) Lagna shifts to <strong>${d9LagnaRashi.short}</strong>. After age 28–32, you increasingly exhibit ${d9LagnaRashi.short} traits.${vargottamaPlanets.length ? ` <span class="text-amber-300 font-semibold">Vargottama Power: ${vargottamaPlanets.join(", ")} occupy the exact same Rashi in D1 and D9!</span>` : ""}</p>
+      `;
+
+      // =========================================================================
+      // PILLAR 2: PARTNER, MARRIAGE & NAVAMSA (D9) ANALYSIS
+      // =========================================================================
+      const seventhSignId = getSignInHouse(d1.Asc, 7);
+      const seventhRashi = getRashiObj(seventhSignId);
+      const seventhLord = seventhRashi.lord;
+      const seventhLordHouse = grahaHouses[seventhLord];
+      const seventhLordD9Rashi = getRashiObj(d9[seventhLord]);
+      const karakaPlanet = gender === "female" ? "Jupiter" : "Venus";
+      const karakaD1Rashi = getRashiObj(d1[karakaPlanet]);
+      const karakaD9Rashi = getRashiObj(d9[karakaPlanet]);
+      const karakaD9HouseFromD9Lagna = getHouseNumber(d9.Asc, d9[karakaPlanet]);
+
+      document.getElementById("partnerAnalysisContent").innerHTML = `
+        <p><strong>• 7th Bhava & Partner's Core Nature:</strong> Your 7th house of marriage falls in <strong>${seventhRashi.short}</strong>, ruled by <strong>${seventhLord}</strong> (placed in House ${seventhLordHouse}). You are naturally drawn to a partner who embodies ${seventhRashi.element}-sign energy—someone expressive, karmically bound to your ${houseNames[seventhLordHouse - 1]} sector.</p>
+        <p><strong>• Navamsa (D9) Spouse Blueprint:</strong> In your D9 marriage chart, your 7th Lord (${seventhLord}) moves into <strong>${seventhLordD9Rashi.short}</strong>, and your relationship significator <strong>${karakaPlanet}</strong> sits in <strong>${karakaD9Rashi.short}</strong> (House ${karakaD9HouseFromD9Lagna} of D9). ${[6,8,12].includes(karakaD9HouseFromD9Lagna) ? `<span class="text-red-300 font-semibold">⚠️ Alert: Because ${karakaPlanet} falls in the${karakaD9HouseFromD9Lagna}th house of your D9 Navamsa, karmic friction or emotional distance in relationships must be neutralized early!</span>` : `This indicates strong soulful transformation through marriage once Dasha timing aligns.`}</p>
+        <p><strong>• Planets in 7th House:</strong> ${housesD1[7].length ? `<span class="text-amber-300 font-semibold">${housesD1[7].join(", ")} directly occupy your 7th house</span>, creating intense karmic focus—and potential ego/dominance clashes—in love and marriage.` : `Your 7th house is unoccupied in D1, meaning marriage timing and partner quality are controlled entirely by ${seventhLord} (${ getNakObj(nak[seventhLord]).name } Nakshatra) and D9 transits.`}</p>
+      `;
+
+      // =========================================================================
+      // PILLAR 3: STUDIES, INTELLIGENCE & CAREER ANALYSIS
+      // =========================================================================
+      const fifthSignId = getSignInHouse(d1.Asc, 5);
+      const fifthLord = getRashiObj(fifthSignId).lord;
+      const fifthLordHouse = grahaHouses[fifthLord];
+      const tenthSignId = getSignInHouse(d1.Asc, 10);
+      const tenthRashi = getRashiObj(tenthSignId);
+      const tenthLord = tenthRashi.lord;
+      const tenthLordHouse = grahaHouses[tenthLord];
+      const mercuryNak = getNakObj(nak.Mercury);
+
+      document.getElementById("careerAnalysisContent").innerHTML = `
+        <p><strong>• Education & Vidya Bhava (5th House):</strong> Your 5th house Lord <strong>${fifthLord}</strong> is placed in House ${fifthLordHouse}, while Mercury sits in <strong>${mercuryNak.name}</strong>. ${[6,8,12].includes(fifthLordHouse) || housesD1[5].includes("Rahu") || housesD1[5].includes("Saturn") || housesD1[5].includes("Ketu") ? `<span class="text-amber-300 font-semibold">Notice:</span> You have high raw intelligence, but experience sudden breaks in concentration, exam anxiety, or stream changes due to 5th-axis affliction.` : `This gives sharp analytical grasp, research capability, and strong memory retention when focused.`}</p>
+        <p><strong>• Career Authority (10th House - ${tenthRashi.short}):</strong> Your 10th Lord <strong>${tenthLord}</strong> operates from the <strong>${tenthLordHouse}th House</strong> (with ${houseSAV[10]} SAV bindus in the 10th house). Best career alignment comes in fields connected to ${tenthLord} and ${getRashiObj(d9[tenthLord]).lord} (your 10th Lord's Navamsa dispositor).</p>
+        <p><strong>• Saturn (Karma Karaka) Impact:</strong> Saturn in House ${grahaHouses.Saturn} directly aspects Houses <strong>${((grahaHouses.Saturn + 2 - 1) % 12) + 1}, ${((grahaHouses.Saturn + 6 - 1) % 12) + 1}, and ${((grahaHouses.Saturn + 9 - 1) % 12) + 1}</strong>, demanding relentless patience in those exact areas before granting permanent stability.</p>
+      `;
+
+      // =========================================================================
+      // 4. PSYCHOLOGICAL DIAGNOSTIC & DOSHA SCANNER (Conversion Engine)
+      // =========================================================================
+      const doshaWarnings = [];
+
+      // Check 1: Manglik / Kuja Dosha (Mars in 1, 2, 4, 7, 8, 12)
+      if ([1, 2, 4, 7, 8, 12].includes(grahaHouses.Mars)) {
+        doshaWarnings.push({
+          title: `Manglik / Kuja Dosha Affliction (Mars in ${grahaHouses.Mars}th House)`,
+          desc: `Mars occupies your ${grahaHouses.Mars}th Bhava and casts fiery energy onto your relationship/domestic axis. Left un-remedied, this causes sudden temper clashes, delay in finding the right partner, or post-marriage ego friction.`
+        });
+      }
+
+      // Check 2: Rahu-Ketu Karmic Axis Eclipse
+      const rahuH = grahaHouses.Rahu;
+      const ketuH = grahaHouses.Ketu;
+      const eclipsePlanets = GRAHA_ROWS.filter(g => !["Asc", "Rahu", "Ketu"].includes(g.key) && (d1[g.key] === d1.Rahu || d1[g.key] === d1.Ketu)).map(g => g.key);
+      if (eclipsePlanets.length > 0) {
+        doshaWarnings.push({
+          title: `Grahan / Karmic Node Affliction (${eclipsePlanets.join(", ")} with Rahu/Ketu)`,
+          desc: `${eclipsePlanets.join(" & ")} share the same sign as the Rahu-Ketu axis (Houses ${rahuH}/${ketuH}). In Vedic & Lal Kitab astrology, this creates sudden illusions, betrayal in trust, or mental restlessness right when you are close to success.`
+        });
+      } else {
+        doshaWarnings.push({
+          title: `Rahu-Ketu Karmic Axis Trap (House ${rahuH} & House ${ketuH})`,
+          desc: `With Rahu in House ${rahuH} and Ketu in House ${ketuH}, you experience obsessive overthinking in ${houseNames[rahuH - 1]} matters and sudden detachment or unexplained blockages in ${houseNames[ketuH - 1]} matters.`
+        });
+      }
+
+      // Check 3: D9 Navamsa Hidden Weakness or Debilitation
+      const debPlanetsD1 = Object.keys(DIGNITY).filter(p => d1[p] === DIGNITY[p].deb);
+      const debPlanetsD9 = Object.keys(DIGNITY).filter(p => d9[p] === DIGNITY[p].deb);
+      if (debPlanetsD1.length || debPlanetsD9.length) {
+        const list = [...new Set([...debPlanetsD1.map(p => `${p} (in D1)`), ...debPlanetsD9.map(p => `${p} (in D9 Navamsa)`)])];
+        doshaWarnings.push({
+          title: `Neecha (Debilitated) Planetary Weakness: ${list.join(", ")}`,
+          desc: `Even if a chart looks fine on the surface, a debilitated planet in D1 or D9 drains vitality during its Antardasha, causing sudden self-doubt, relationship heartbreak, or career stagnation unless Neecha-Bhanga remedies are performed.`
+        });
+      }
+
+      // Check 4: Saturn Drishti (3rd, 7th, 10th Aspect)
+      const satH = grahaHouses.Saturn;
+      const satAspects = [((satH + 2 - 1) % 12) + 1, ((satH + 6 - 1) % 12) + 1, ((satH + 9 - 1) % 12) + 1];
+      doshaWarnings.push({
+        title: `Shani (Saturn) Karmic Drishti on Houses ${satAspects.join(", ")}`,
+        desc: `Saturn from your ${satH}th house casts its heavy 3rd, 7th, and 10th gaze onto Houses ${satAspects.join(", ")}. This is why nothing comes easily on the first attempt in these areas—and why specific Shani/Lal Kitab precautions are mandatory.`
+      });
+
+      // Check 5: Retrograde / Combust Karmic Debt
+      const retroList = Object.keys(retro).filter(k => retro[k]);
+      if (retroList.length > 0) {
+        doshaWarnings.push({
+          title: `Vakri (Retrograde) Past-Life Prarabdha (${retroList.join(", ")})`,
+          desc: `Having ${retroList.join(", ")} retrograde/combust indicates unfinished past-life karma. You often repeat the same mistake in trust or career twice before learning the lesson.`
+        });
+      }
+
+      document.getElementById("criticalDoshaList").innerHTML = doshaWarnings.map(w => `
+        <div class="p-4 rounded-xl bg-red-950/60 border border-red-400/40 flex items-start gap-3">
+          <i class="fas fa-skull-crossbones text-red-400 mt-1 shrink-0"></i>
+          <div>
+            <h5 class="font-bold text-red-200 text-sm md:text-base">${w.title}</h5>
+            <p class="text-gray-300 text-xs md:text-sm mt-0.5">${w.desc}</p>
+          </div>
+        </div>
+      `).join("");
+
+      // Pre-fill WhatsApp Consultation Link with User's Exact Chart Data!
+      const waText = encodeURIComponent(
+        `Namaste Gyanendra Ji (Jyotish Tark)! 🙏\n` +
+        `I just analyzed my Kundali on your website:\n` +
+        `• Name: ${userName}\n` +
+        `• Lagna (D1): ${lagnaRashi.short} (${lagnaNak.name})\n` +
+        `• Moon: ${moonRashi.short} (${moonNak.name})\n` +
+        `• Navamsa (D9) Lagna: ${d9LagnaRashi.short}\n` +
+        `• 7th House SAV: ${h7} Bindus | 10th House SAV: ${h10} Bindus\n` +
+        `• Detected Alerts: ${doshaWarnings.map(d => d.title.split("(")[0]).join(", ")}\n\n` +
+        `I want to book my Complete Hand-Made Kundali Analysis & get exact remedies to fix these Doshas.`
+      );
+      document.getElementById("urgentWhatsappBtn").href = `https://wa.me/918318513814?text=${waText}`;
+      document.getElementById("topWhatsappConsultBtn").href = `https://wa.me/918318513814?text=${waText}`;
+
+      // Reveal Output & Smooth Scroll
+      const outputSec = document.getElementById("analysisOutputSection");
+      outputSec.classList.remove("hidden");
+      outputSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // Tab Switching Logic (Instant Analyzer vs Manual DOB Form)
+    function switchMode(mode) {
+      const instantDiv = document.getElementById("instantAnalyzerContainer");
+      const manualDiv = document.getElementById("manualBookingContainer");
+      const btnInstant = document.getElementById("tabInstantBtn");
+      const btnManual = document.getElementById("tabManualBtn");
+
+      if (mode === "instant") {
+        instantDiv.classList.remove("hidden");
+        manualDiv.classList.add("hidden");
+        btnInstant.classList.add("active");
+        btnManual.classList.remove("active");
+      } else {
+        instantDiv.classList.add("hidden");
+        manualDiv.classList.remove("hidden");
+        btnManual.classList.add("active");
+        btnInstant.classList.remove("active");
+        manualDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function toggleProkeralaModal() {
+      document.getElementById("prokeralaHelpBox").classList.toggle("hidden");
+    }
+
+    // Initialize UI & EmailJS
+    window.addEventListener("DOMContentLoaded", () => {
+      buildPlanetaryMatrixForm();
+    });
+
+    // Mobile Menu Toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      const mobileNav = document.getElementById('mobileNav');
+      mobileNav.classList.toggle('hidden');
+      const icon = this.querySelector('i');
+      icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
+    });
+
+    // WhatsApp Popup Toggle
+    const whatsappButton = document.getElementById('whatsappButton');
+    const whatsappPopup = document.getElementById('whatsappPopup');
+    whatsappButton.addEventListener('click', function() {
+      whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+    });
+    document.addEventListener('click', function(event) {
+      if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+        whatsappPopup.style.display = 'none';
+      }
+    });
+
+    // EmailJS Manual Form Handler
+    emailjs.init("o-tnka-_5VrrqMgQs");
+    document.getElementById('kundaliForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const responseDiv = document.getElementById('submissionResponse');
+      const email = document.getElementById("email").value;
+
+      if (localStorage.getItem("submitted_" + email)) {
+        responseDiv.innerHTML = `<div class="text-red-400 bg-red-900/30 p-4 rounded-lg">⚠️ You have already submitted the form once. Connect with us on WhatsApp (+91 8318513814) for immediate priority!</div>`;
+        responseDiv.classList.remove("hidden");
+        return;
+      }
+
+      responseDiv.classList.remove('hidden');
+      responseDiv.innerHTML = `<div class="flex items-center justify-center"><i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i><span>Submitting your birth details...</span></div>`;
+
+      emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
+        .then(() => {
+          responseDiv.innerHTML = `<div class="text-green-400 bg-green-900/30 p-4 rounded-lg">✅ Your Kundali details have been sent! Our team will contact you within 24 hours, or message us directly on WhatsApp (+91 8318513814) for faster processing.</div>`;
+          localStorage.setItem("submitted_" + email, "true");
+          document.getElementById('kundaliForm').reset();
+        })
+        .catch((error) => {
+          console.error("EmailJS Error:", error);
+          responseDiv.innerHTML = `<div class="text-red-400 bg-red-900/30 p-4 rounded-lg">❌ Something went wrong. Please message us directly on WhatsApp (+91 8318513814).</div>`;
+        });
+    });
+  </script>
 </body>
 </html>
