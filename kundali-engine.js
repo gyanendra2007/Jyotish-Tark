@@ -2210,7 +2210,7 @@
   // 9. MASTER GLOBAL ENTRY POINT
   // ==========================================================================
 
-  window.generateCompleteLifeDossier = function (event) {
+    window.generateCompleteLifeDossier = function (event) {
     if (event && typeof event.preventDefault === "function") event.preventDefault();
 
     const nameInput   = document.getElementById("userName")?.value.trim() || "Seeker";
@@ -2229,6 +2229,13 @@
       name: nameInput, dob: dobInput, lang: langInput, gender: genderInput,
       chaldean, numData, chart, planetAnalysis, specialLagnas, dasha
     };
+
+    // ---- NEW: display strings for the PDF cover page + stash for the exporter ----
+    ctx.displayAsc     = RASHI_DATA[chart.Asc.d1].en;
+    ctx.displayMoon    = RASHI_DATA[chart.Moon.d1].en;
+    ctx.displayMoonNak = NAKSHATRA_DATA[chart.Moon.nak].name;
+    window.__jyotishLastCtx = ctx;
+    // -----------------------------------------------------------------------------
 
     const setHtml = (id, html) => {
       const el = document.getElementById(id);
@@ -2249,7 +2256,7 @@
     setHtml("contentHiddenTraps",     buildChapter11HiddenTraps(ctx));
     updateChapter12Dakshina(ctx);
 
-    // Pre-populate Manual Booking Form so user doesn't have to re-type
+    // Pre-populate the Manual Booking Form
     const mName = document.getElementById("name");
     const mDob = document.getElementById("dob");
     const mGender = document.getElementById("gender");
@@ -2264,7 +2271,6 @@
       setTimeout(() => outputContainer.scrollIntoView({behavior: "smooth", block: "start"}), 100);
     }
   };
-
   document.addEventListener("DOMContentLoaded", () => {
     initStickyChapterScrollSpy();
     const langSelect = document.getElementById("reportLang");
