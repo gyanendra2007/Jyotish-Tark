@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage - Highest Priority -->
+  <!-- Homepage & Flagship Free 45-Min Kundali Dossier Engine - Highest Priority (1.0) -->
   <url>
     <loc>https://jyotishtark.in/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>   
-
-  <!-- Main Services - High Priority -->
   <url>
     <loc>https://jyotishtark.in/kundali-form.html</loc>
-    <lastmod>2026-10-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
+
+  <!-- Main Calculators & Daily Services - High Priority -->
   <url>
     <loc>https://jyotishtark.in/numerology.html</loc>
     <lastmod>2026-10-18</lastmod>
@@ -27,25 +27,29 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Panchang & Rashifal - High Priority -->
   <url>
     <loc>https://jyotishtark.in/panchang.html</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://jyotishtark.in/rashifal.html</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Products & Sacred eBooks - High Priority -->
+  <!-- Products, Sample Kundali PDF & Sacred eBooks - High Priority -->
   <url>
     <loc>https://jyotishtark.in/rudraksha.html</loc>
     <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jyotishtark.in/kundali.pdf</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
