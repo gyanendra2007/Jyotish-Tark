@@ -733,9 +733,12 @@
             <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
                 <i class="fas fa-home astrological-symbol"></i>Home
             </a>
-            <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-star astrological-symbol"></i>Kundali
-            </a>
+          <!-- Inside Desktop <nav> -->
+<a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+    <span class="px-2 py-0.5 text-[10px] bg-amber-500 text-slate-950 font-extrabold rounded-full mr-1.5">FREE</span>
+    Kundali
+</a>
+                  
             
             <!-- Numerology & Tarot Mobile Dropdown -->
             <div class="mobile-dropdown">
@@ -838,6 +841,28 @@
         <span class="blog-tag">Rashifal</span>
         <span class="blog-tag">Planetary Transits</span>
         <span class="blog-tag">Vedic Astrology</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Pinned Free Kundali & Life Dossier Banner (Visible on All Blog Pages) -->
+  <section class="max-w-7xl mx-auto px-6 pt-10 pb-2">
+    <div class="rounded-2xl p-6 md:p-8 bg-gradient-to-r from-purple-950 via-slate-900 to-amber-950 border-2 border-amber-400/50 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center lg:text-left">
+        <span class="inline-block px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider">
+          <i class="fas fa-bolt mr-1"></i> New Interactive Vedic Tool • English & हिंदी
+        </span>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+          अपनी कुंडली, भावी जीवनसाथी और करियर का <span class="text-amber-300">45-मिनट का संपूर्ण विश्लेषण</span> निःशुल्क पढ़ें!
+        </h2>
+        <p class="text-gray-300 text-sm md:text-base max-w-3xl">
+          केवल अपना <strong>नाम और जन्मतिथि</strong> दर्ज करें (या 99.9% सटीकता के लिए लग्न, नक्षत्र व नवांश D9 चुनें) और पाएं 12 अध्यायों की विस्तृत जीवन रिपोर्ट + <strong>Free Mobile PDF Download</strong>.
+        </p>
+      </div>
+      <div class="shrink-0 w-full sm:w-auto text-center">
+        <a href="kundali-form.html" class="primary-button w-full sm:w-auto text-base py-3.5 px-8 shadow-xl">
+          <i class="fas fa-key mr-2"></i> Check Free Kundali Now
+        </a>
       </div>
     </div>
   </section>
@@ -1183,24 +1208,26 @@
       <a href="#"><i class="fas fa-chevron-right"></i></a>
     </div>
   </main>
-
-  <!-- Newsletter Section -->
-  <section class="max-w-4xl mx-auto px-4 py-16">
-    <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
-      <div class="relative z-10 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-          Subscribe to Our Astrology Insights
+          <!-- Bottom Kundali Conversion Section (Replaces Newsletter Box) -->
+  <section class="max-w-5xl mx-auto px-4 py-14">
+    <div class="cosmic-bg rounded-2xl shadow-2xl p-8 md:p-12 relative overflow-hidden border border-amber-400/30">
+      <div class="relative z-10 text-center space-y-5">
+        <h2 class="text-3xl md:text-4xl font-bold text-white">
+          क्या आपकी कुंडली में भी छिपा है कोई गुप्त राजयोग या दोष?
         </h2>
-        <p class="text-xl text-purple-100 mb-8">
-          Get weekly astrology updates, planetary transit alerts, and exclusive content directly in your inbox.
+        <p class="text-lg md:text-xl text-purple-100 max-w-2xl mx-auto">
+          अंदाजा मत लगाइए! हमारे <strong>45-Minute Kundali & 337-Bindu Ashtakavarga Engine</strong> से अपने सभी 9 ग्रहों की दृष्टि, महादशा-अंतर्दशा और भावी जीवनसाथी का सच अभी जानें।
         </p>
-        <form class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <input type="email" placeholder="Your Email Address" class="px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 w-full sm:w-auto">
-          <button type="submit" class="primary-button">
-            <i class="fas fa-paper-plane mr-2"></i>
-            Subscribe
-          </button>
-        </form>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
+          <a href="kundali-form.html" class="primary-button text-lg">
+            <i class="fas fa-star-and-crescent mr-2"></i>
+            Generate Free 45-Min Kundali Dossier
+          </a>
+          <a href="https://wa.me/918318513814?text=Namaste%20Gyanendra%20Ji,%20I%20was%20reading%20your%20blogs%20and%20want%20to%20book%20my%20complete%20hand-made%20Kundali" target="_blank" class="secondary-button">
+            <i class="fab fa-whatsapp mr-2"></i>
+            Consult Gyanendra Ji (₹1101)
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -1727,6 +1754,7 @@ document.addEventListener('click', function(event) {
             "dateModified": "2026-08-24",
             "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"},
             "keywords": "shiv tandav stotram, ravana stotra, cymatics, fear cure"
+           }
           },
         {
           "@type": "ListItem",
