@@ -1376,50 +1376,53 @@
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-  <!-- SELF-CONTAINED UI & PLANETARY TABLE RENDERER SCRIPT -->
+    <!-- SELF-CONTAINED UI & PLANETARY TABLE RENDERER SCRIPT -->
   <script>
-    // Master Lists for Rendering the 10 Planetary Input Rows Immediately
+    // ============================================================
+    // 1. MASTER DATA TABLES
+    // ============================================================
     const FORM_RASHIS = [
-      { id: 1, label: "1 - Mesha (Aries / मेष)" },
-      { id: 2, label: "2 - Vrishabha (Taurus / वृषभ)" },
-      { id: 3, label: "3 - Mithuna (Gemini / मिथुन)" },
-      { id: 4, label: "4 - Karka (Cancer / कर्क)" },
-      { id: 5, label: "5 - Simha (Leo / सिंह)" },
-      { id: 6, label: "6 - Kanya (Virgo / कन्या)" },
-      { id: 7, label: "7 - Tula (Libra / तुला)" },
-      { id: 8, label: "8 - Vrishchika (Scorpio / वृश्चिक)" },
-      { id: 9, label: "9 - Dhanu (Sagittarius / धनु)" },
+      { id: 1,  label: "1 - Mesha (Aries / मेष)" },
+      { id: 2,  label: "2 - Vrishabha (Taurus / वृषभ)" },
+      { id: 3,  label: "3 - Mithuna (Gemini / मिथुन)" },
+      { id: 4,  label: "4 - Karka (Cancer / कर्क)" },
+      { id: 5,  label: "5 - Simha (Leo / सिंह)" },
+      { id: 6,  label: "6 - Kanya (Virgo / कन्या)" },
+      { id: 7,  label: "7 - Tula (Libra / तुला)" },
+      { id: 8,  label: "8 - Vrishchika (Scorpio / वृश्चिक)" },
+      { id: 9,  label: "9 - Dhanu (Sagittarius / धनु)" },
       { id: 10, label: "10 - Makara (Capricorn / मकर)" },
       { id: 11, label: "11 - Kumbha (Aquarius / कुंभ)" },
       { id: 12, label: "12 - Meena (Pisces / मीन)" }
     ];
+
     // Each Vedic Rashi contains exactly 3 Nakshatras
-// (boundary nakshatras like Krittika appear in two adjacent rashis)
-const NAKSHATRAS_BY_RASHI = {
-  1:  [1, 2, 3],       // Mesha: Ashwini, Bharani, Krittika
-  2:  [3, 4, 5],       // Vrishabha: Krittika, Rohini, Mrigashira
-  3:  [5, 6, 7],       // Mithuna: Mrigashira, Ardra, Punarvasu
-  4:  [7, 8, 9],       // Karka: Punarvasu, Pushya, Ashlesha
-  5:  [10, 11, 12],    // Simha: Magha, P.Phalguni, U.Phalguni
-  6:  [12, 13, 14],    // Kanya: U.Phalguni, Hasta, Chitra
-  7:  [14, 15, 16],    // Tula: Chitra, Swati, Vishakha
-  8:  [16, 17, 18],    // Vrishchika: Vishakha, Anuradha, Jyeshtha
-  9:  [19, 20, 21],    // Dhanu: Mula, P.Ashadha, U.Ashadha
-  10: [21, 22, 23],    // Makara: U.Ashadha, Shravana, Dhanishta
-  11: [23, 24, 25],    // Kumbha: Dhanishta, Shatabhisha, P.Bhadrapada
-  12: [25, 26, 27]     // Meena: P.Bhadrapada, U.Bhadrapada, Revati
-};
+    // (boundary nakshatras like Krittika appear in two adjacent rashis)
+    const NAKSHATRAS_BY_RASHI = {
+      1:  [1, 2, 3],       // Mesha: Ashwini, Bharani, Krittika
+      2:  [3, 4, 5],       // Vrishabha: Krittika, Rohini, Mrigashira
+      3:  [5, 6, 7],       // Mithuna: Mrigashira, Ardra, Punarvasu
+      4:  [7, 8, 9],       // Karka: Punarvasu, Pushya, Ashlesha
+      5:  [10, 11, 12],    // Simha: Magha, P.Phalguni, U.Phalguni
+      6:  [12, 13, 14],    // Kanya: U.Phalguni, Hasta, Chitra
+      7:  [14, 15, 16],    // Tula: Chitra, Swati, Vishakha
+      8:  [16, 17, 18],    // Vrishchika: Vishakha, Anuradha, Jyeshtha
+      9:  [19, 20, 21],    // Dhanu: Mula, P.Ashadha, U.Ashadha
+      10: [21, 22, 23],    // Makara: U.Ashadha, Shravana, Dhanishta
+      11: [23, 24, 25],    // Kumbha: Dhanishta, Shatabhisha, P.Bhadrapada
+      12: [25, 26, 27]     // Meena: P.Bhadrapada, U.Bhadrapada, Revati
+    };
 
     const FORM_NAKSHATRAS = [
-      { id: 1, label: "1. Ashwini (अश्विनी)" },
-      { id: 2, label: "2. Bharani (भरणी)" },
-      { id: 3, label: "3. Krittika (कृत्तिका)" },
-      { id: 4, label: "4. Rohini (रोहिणी)" },
-      { id: 5, label: "5. Mrigashira (मृगशिरा)" },
-      { id: 6, label: "6. Ardra (आर्द्रा)" },
-      { id: 7, label: "7. Punarvasu (पुनर्वसु)" },
-      { id: 8, label: "8. Pushya (पुष्य)" },
-      { id: 9, label: "9. Ashlesha (आश्लेषा)" },
+      { id: 1,  label: "1. Ashwini (अश्विनी)" },
+      { id: 2,  label: "2. Bharani (भरणी)" },
+      { id: 3,  label: "3. Krittika (कृत्तिका)" },
+      { id: 4,  label: "4. Rohini (रोहिणी)" },
+      { id: 5,  label: "5. Mrigashira (मृगशिरा)" },
+      { id: 6,  label: "6. Ardra (आर्द्रा)" },
+      { id: 7,  label: "7. Punarvasu (पुनर्वसु)" },
+      { id: 8,  label: "8. Pushya (पुष्य)" },
+      { id: 9,  label: "9. Ashlesha (आश्लेषा)" },
       { id: 10, label: "10. Magha (मघा)" },
       { id: 11, label: "11. Purva Phalguni (पूर्वा फाल्गुनी)" },
       { id: 12, label: "12. Uttara Phalguni (उत्तरा फाल्गुनी)" },
@@ -1441,17 +1444,77 @@ const NAKSHATRAS_BY_RASHI = {
     ];
 
     const FORM_GRAHAS = [
-      { key: "Asc", name: "Lagna (Ascendant / लग्न)", icon: "fa-compass", color: "text-amber-400", canRetro: false },
-      { key: "Sun", name: "Sun (Surya / सूर्य)", icon: "fa-sun", color: "text-orange-400", canRetro: false },
-      { key: "Moon", name: "Moon (Chandra / चंद्र)", icon: "fa-moon", color: "text-blue-200", canRetro: false },
-      { key: "Mars", name: "Mars (Mangal / मंगल)", icon: "fa-fire", color: "text-red-400", canRetro: true },
-      { key: "Mercury", name: "Mercury (Budh / बुध)", icon: "fa-brain", color: "text-emerald-400", canRetro: true },
-      { key: "Jupiter", name: "Jupiter (Guru / गुरु)", icon: "fa-om", color: "text-yellow-300", canRetro: true },
-      { key: "Venus", name: "Venus (Shukra / शुक्र)", icon: "fa-heart", color: "text-pink-400", canRetro: true },
-      { key: "Saturn", name: "Saturn (Shani / शनि)", icon: "fa-hourglass-half", color: "text-indigo-400", canRetro: true },
-      { key: "Rahu", name: "Rahu (राहु)", icon: "fa-dragon", color: "text-purple-400", canRetro: false },
-      { key: "Ketu", name: "Ketu (केतु)", icon: "fa-meteor", color: "text-slate-400", canRetro: false }
+      { key: "Asc",     name: "Lagna (Ascendant / लग्न)", icon: "fa-compass",         color: "text-amber-400",   canRetro: false },
+      { key: "Sun",     name: "Sun (Surya / सूर्य)",       icon: "fa-sun",             color: "text-orange-400",  canRetro: false },
+      { key: "Moon",    name: "Moon (Chandra / चंद्र)",    icon: "fa-moon",            color: "text-blue-200",    canRetro: false },
+      { key: "Mars",    name: "Mars (Mangal / मंगल)",      icon: "fa-fire",            color: "text-red-400",     canRetro: true },
+      { key: "Mercury", name: "Mercury (Budh / बुध)",      icon: "fa-brain",           color: "text-emerald-400", canRetro: true },
+      { key: "Jupiter", name: "Jupiter (Guru / गुरु)",     icon: "fa-om",              color: "text-yellow-300",  canRetro: true },
+      { key: "Venus",   name: "Venus (Shukra / शुक्र)",    icon: "fa-heart",           color: "text-pink-400",    canRetro: true },
+      { key: "Saturn",  name: "Saturn (Shani / शनि)",      icon: "fa-hourglass-half",  color: "text-indigo-400",  canRetro: true },
+      { key: "Rahu",    name: "Rahu (राहु)",               icon: "fa-dragon",          color: "text-purple-400",  canRetro: false },
+      { key: "Ketu",    name: "Ketu (केतु)",               icon: "fa-meteor",          color: "text-slate-400",   canRetro: false }
     ];
+
+    // ============================================================
+    // 2. NAKSHATRA FILTER HELPERS (Rashi-aware)
+    // ============================================================
+
+    // Rebuild Nakshatra <select> so it only shows the 3 nakshatras valid for the chosen Rashi
+    function updateNakshatraOptions(planetKey, rashiValue) {
+      const nakSelect = document.getElementById(`nak_${planetKey}`);
+      if (!nakSelect) return;
+
+      const validNaks = NAKSHATRAS_BY_RASHI[rashiValue] || NAKSHATRAS_BY_RASHI[1];
+      const currentVal = parseInt(nakSelect.value, 10);
+      const currentValid = validNaks.includes(currentVal);
+
+      nakSelect.innerHTML = validNaks.map(nId => {
+        const nakObj = FORM_NAKSHATRAS.find(n => n.id === nId);
+        return `<option value="${nakObj.id}">${nakObj.label}</option>`;
+      }).join("");
+
+      // Preserve previous selection if still valid; otherwise default to first of new rashi
+      nakSelect.value = currentValid ? currentVal : validNaks[0];
+    }
+
+    // Automatically keep Ketu 7 signs opposite Rahu when Rahu is changed (and vice versa)
+    function syncRahuKetuOpposite(key, chartPrefix) {
+      if (key === 'Rahu') {
+        const rahuVal = parseInt(document.getElementById(`${chartPrefix}_Rahu`).value, 10);
+        const ketuVal = ((rahuVal + 5) % 12) + 1;
+        const ketuSelect = document.getElementById(`${chartPrefix}_Ketu`);
+        if (ketuSelect) ketuSelect.value = ketuVal;
+      } else if (key === 'Ketu') {
+        const ketuVal = parseInt(document.getElementById(`${chartPrefix}_Ketu`).value, 10);
+        const rahuVal = ((ketuVal + 5) % 12) + 1;
+        const rahuSelect = document.getElementById(`${chartPrefix}_Rahu`);
+        if (rahuSelect) rahuSelect.value = rahuVal;
+      }
+    }
+
+    // Central handler — runs whenever a Rashi (D1 or D9) dropdown changes
+    function onRashiChange(planetKey, chartPrefix) {
+      // 1) Keep Rahu / Ketu 7 signs apart
+      syncRahuKetuOpposite(planetKey, chartPrefix);
+
+      // 2) Nakshatra is tied to the D1 Rashi only — not D9
+      if (chartPrefix !== "d1") return;
+
+      const d1Select = document.getElementById(`d1_${planetKey}`);
+      if (d1Select) updateNakshatraOptions(planetKey, parseInt(d1Select.value, 10));
+
+      // 3) If Rahu/Ketu was the trigger, the opposite node was auto-synced — refresh its nakshatra list too
+      if (planetKey === "Rahu" || planetKey === "Ketu") {
+        const otherKey = planetKey === "Rahu" ? "Ketu" : "Rahu";
+        const otherD1 = document.getElementById(`d1_${otherKey}`);
+        if (otherD1) updateNakshatraOptions(otherKey, parseInt(otherD1.value, 10));
+      }
+    }
+
+    // ============================================================
+    // 3. RENDER + SAMPLE DATA
+    // ============================================================
 
     // Render all 10 rows inside #planetaryMatrixRows immediately when page loads
     function renderPlanetaryRowsInForm() {
@@ -1459,7 +1522,14 @@ const NAKSHATRAS_BY_RASHI = {
       if (!tbody) return;
 
       const rashiOpts = FORM_RASHIS.map(r => `<option value="${r.id}">${r.label}</option>`).join('');
-      const nakOpts = FORM_NAKSHATRAS.map(n => `<option value="${n.id}">${n.label}</option>`).join('');
+
+      // Initial render already narrows nakshatra options to Mesha's 3,
+      // so there is NO visible flash of all 27 — the sample loader below
+      // will then set the correct per-planet values.
+      const nakOpts = NAKSHATRAS_BY_RASHI[1].map(nId => {
+        const n = FORM_NAKSHATRAS.find(x => x.id === nId);
+        return `<option value="${n.id}">${n.label}</option>`;
+      }).join('');
 
       tbody.innerHTML = FORM_GRAHAS.map(g => `
         <tr class="hover:bg-white/5 transition">
@@ -1477,7 +1547,7 @@ const NAKSHATRAS_BY_RASHI = {
             </select>
           </td>
           <td class="py-2.5 px-3">
-            <select id="d9_${g.key}" onchange="syncRahuKetuOpposite('${g.key}', 'd9')" class="form-input text-xs md:text-sm">
+            <select id="d9_${g.key}" onchange="onRashiChange('${g.key}', 'd9')" class="form-input text-xs md:text-sm">
               ${rashiOpts}
             </select>
           </td>
@@ -1492,104 +1562,39 @@ const NAKSHATRAS_BY_RASHI = {
         </tr>
       `).join('');
 
-      // Load realistic default planetary positions so dropdowns aren't all stuck on Mesha
       setSamplePlanetaryDropdowns();
     }
 
-    // Automatically keep Ketu 7 signs opposite Rahu when Rahu is changed
-    function syncRahuKetuOpposite(key, chartPrefix) {
-      if (key === 'Rahu') {
-        const rahuVal = parseInt(document.getElementById(`${chartPrefix}_Rahu`).value, 10);
-        const ketuVal = ((rahuVal + 5) % 12) + 1;
-        const ketuSelect = document.getElementById(`${chartPrefix}_Ketu`);
-        if (ketuSelect) ketuSelect.value = ketuVal;
-      } else if (key === 'Ketu') {
-        const ketuVal = parseInt(document.getElementById(`${chartPrefix}_Ketu`).value, 10);
-        const rahuVal = ((ketuVal + 5) % 12) + 1;
-        const rahuSelect = document.getElementById(`${chartPrefix}_Rahu`);
-        if (rahuSelect) rahuSelect.value = rahuVal;
-      }
-    }
-
     function setSamplePlanetaryDropdowns() {
-  const sample = {
-    Asc:     { d1: 5,  nak: 10, d9: 1 },
-    Sun:     { d1: 10, nak: 21, d9: 11 },
-    Moon:    { d1: 8,  nak: 18, d9: 12 },
-    Mars:    { d1: 11, nak: 23, d9: 8,  retro: false },
-    Mercury: { d1: 9,  nak: 19, d9: 3,  retro: true  },
-    Jupiter: { d1: 2,  nak: 4,  d9: 4,  retro: false },
-    Venus:   { d1: 11, nak: 24, d9: 12, retro: false },
-    Saturn:  { d1: 11, nak: 24, d9: 6,  retro: true  },
-    Rahu:    { d1: 11, nak: 24, d9: 2 },
-    Ketu:    { d1: 5,  nak: 10, d9: 8 }
-  };
-
-  Object.keys(sample).forEach(k => {
-    const d1El    = document.getElementById(`d1_${k}`);
-    const d9El    = document.getElementById(`d9_${k}`);
-    const retroEl = document.getElementById(`retro_${k}`);
-
-    // 1) Set Rashi first
-    if (d1El) d1El.value = sample[k].d1;
-    if (d9El) d9El.value = sample[k].d9;
-    if (retroEl && sample[k].retro !== undefined) retroEl.checked = sample[k].retro;
-
-    // 2) Narrow Nakshatra options to only the 3 valid for this Rashi
-    updateNakshatraOptions(k, sample[k].d1);
-
-    // 3) Now set the intended Nakshatra (must come AFTER the narrowing)
-    const nakEl = document.getElementById(`nak_${k}`);
-    if (nakEl) nakEl.value = sample[k].nak;
-  });
-}
-      // Rebuild Nakshatra <select> so it only shows the 3 nakshatras valid for the chosen Rashi
-function updateNakshatraOptions(planetKey, rashiValue) {
-  const nakSelect = document.getElementById(`nak_${planetKey}`);
-  if (!nakSelect) return;
-
-  const validNaks = NAKSHATRAS_BY_RASHI[rashiValue] || NAKSHATRAS_BY_RASHI[1];
-  const currentVal = parseInt(nakSelect.value, 10);
-  const currentValid = validNaks.includes(currentVal);
-
-  nakSelect.innerHTML = validNaks.map(nId => {
-    const nakObj = FORM_NAKSHATRAS.find(n => n.id === nId);
-    return `<option value="${nakObj.id}">${nakObj.label}</option>`;
-  }).join("");
-
-  // Preserve the user's selection if still valid; otherwise default to first of the new rashi
-  nakSelect.value = currentValid ? currentVal : validNaks[0];
-}
-
-// Central handler — runs whenever a Rashi (D1) dropdown changes
-function onRashiChange(planetKey, chartPrefix) {
-  // First keep Rahu/Ketu 7 signs apart (existing behaviour)
-  syncRahuKetuOpposite(planetKey, chartPrefix);
-
-  // Nakshatra is only tied to the D1 Rashi, not D9
-  if (chartPrefix !== "d1") return;
-
-  const d1Select = document.getElementById(`d1_${planetKey}`);
-  if (d1Select) updateNakshatraOptions(planetKey, parseInt(d1Select.value, 10));
-
-  // If the user changed Rahu or Ketu, the opposite node was auto-synced —
-  // so we must also refresh the opposite node's nakshatra list
-  if (planetKey === "Rahu" || planetKey === "Ketu") {
-    const otherKey = planetKey === "Rahu" ? "Ketu" : "Rahu";
-    const otherD1 = document.getElementById(`d1_${otherKey}`);
-    if (otherD1) updateNakshatraOptions(otherKey, parseInt(otherD1.value, 10));
-  }
-}
+      const sample = {
+        Asc:     { d1: 5,  nak: 10, d9: 1 },
+        Sun:     { d1: 10, nak: 21, d9: 11 },
+        Moon:    { d1: 8,  nak: 18, d9: 12 },
+        Mars:    { d1: 11, nak: 23, d9: 8,  retro: false },
+        Mercury: { d1: 9,  nak: 19, d9: 3,  retro: true  },
+        Jupiter: { d1: 2,  nak: 4,  d9: 4,  retro: false },
+        Venus:   { d1: 11, nak: 24, d9: 12, retro: false },
+        Saturn:  { d1: 11, nak: 24, d9: 6,  retro: true  },
+        Rahu:    { d1: 11, nak: 24, d9: 2 },
+        Ketu:    { d1: 5,  nak: 10, d9: 8 }
+      };
 
       Object.keys(sample).forEach(k => {
-        const d1El = document.getElementById(`d1_${k}`);
-        const nakEl = document.getElementById(`nak_${k}`);
-        const d9El = document.getElementById(`d9_${k}`);
+        const d1El    = document.getElementById(`d1_${k}`);
+        const d9El    = document.getElementById(`d9_${k}`);
         const retroEl = document.getElementById(`retro_${k}`);
+
+        // 1) Set Rashi first
         if (d1El) d1El.value = sample[k].d1;
-        if (nakEl) nakEl.value = sample[k].nak;
         if (d9El) d9El.value = sample[k].d9;
         if (retroEl && sample[k].retro !== undefined) retroEl.checked = sample[k].retro;
+
+        // 2) Narrow Nakshatra options to the 3 valid for this Rashi
+        updateNakshatraOptions(k, sample[k].d1);
+
+        // 3) Now set the intended Nakshatra (must run AFTER the narrowing)
+        const nakEl = document.getElementById(`nak_${k}`);
+        if (nakEl) nakEl.value = sample[k].nak;
       });
     }
 
@@ -1603,12 +1608,15 @@ function onRashiChange(planetKey, chartPrefix) {
       setSamplePlanetaryDropdowns();
     }
 
-    // 1. Switch between Instant Life Dossier & Manual Order Form
+    // ============================================================
+    // 4. UI TOGGLES
+    // ============================================================
+
     function switchWorkspaceMode(mode) {
       const instantDiv = document.getElementById('instantWorkspaceContainer');
-      const manualDiv = document.getElementById('manualWorkspaceContainer');
+      const manualDiv  = document.getElementById('manualWorkspaceContainer');
       const tabInstant = document.getElementById('tabInstantDossier');
-      const tabManual = document.getElementById('tabManualOrder');
+      const tabManual  = document.getElementById('tabManualOrder');
 
       if (mode === 'instant') {
         instantDiv.classList.remove('hidden');
@@ -1624,7 +1632,6 @@ function onRashiChange(planetKey, chartPrefix) {
       }
     }
 
-    // 2. Toggle Optional Planetary Placements Panel
     function toggleChartDetailsPanel(isChecked) {
       const panel = document.getElementById('planetaryInputPanel');
       const indicator = document.getElementById('chartToggleIndicator');
@@ -1644,7 +1651,6 @@ function onRashiChange(planetKey, chartPrefix) {
       }
     }
 
-    // 3. Toggle Optional Mahadasha & Antardasha Panel
     function toggleDashaDetailsPanel(isChecked) {
       const panel = document.getElementById('dashaInputPanel');
       const indicator = document.getElementById('dashaToggleIndicator');
@@ -1664,81 +1670,105 @@ function onRashiChange(planetKey, chartPrefix) {
       }
     }
 
-    // Initialize rows immediately on DOM load
-    document.addEventListener('DOMContentLoaded', renderPlanetaryRowsInForm);
+    // ============================================================
+    // 5. INIT
+    // ============================================================
 
-    // 4. Mobile Menu & WhatsApp Popup Toggles
-    document.getElementById('menuToggle').addEventListener('click', function() {
-      const mobileNav = document.getElementById('mobileNav');
-      mobileNav.classList.toggle('hidden');
-      const icon = this.querySelector('i');
-      icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPlanetaryRowsInForm();
 
-    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function() {
-        this.closest('.mobile-dropdown').classList.toggle('active');
+      // Mobile menu toggle
+      document.getElementById('menuToggle').addEventListener('click', function () {
+        const mobileNav = document.getElementById('mobileNav');
+        mobileNav.classList.toggle('hidden');
+        const icon = this.querySelector('i');
+        icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
       });
-    });
 
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
-    whatsappButton.addEventListener('click', function() {
-      whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-    });
-    document.addEventListener('click', function(event) {
-      if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-      }
-    });
-
-    // 5. EmailJS Manual Form Submission
-    emailjs.init("o-tnka-_5VrrqMgQs");
-    document.getElementById('kundaliForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const responseDiv = document.getElementById('submissionResponse');
-      const email = document.getElementById("email").value;
-
-      if (localStorage.getItem("submitted_" + email)) {
-        responseDiv.innerHTML = `
-          <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
-            <i class="fas fa-exclamation-triangle mr-2"></i>
-            <span>⚠️ You have already submitted the form once. Message us on WhatsApp (+91 8318513814) for priority assistance.</span>
-          </div>
-        `;
-        responseDiv.classList.remove("hidden");
-        return;
-      }
-
-      responseDiv.classList.remove('hidden');
-      responseDiv.innerHTML = `
-        <div class="flex items-center justify-center">
-          <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
-          <span>Submitting your details...</span>
-        </div>
-      `;
-
-      emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
-        .then(() => {
-          responseDiv.innerHTML = `
-            <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
-              <i class="fas fa-check-circle mr-2"></i>
-              <span>✅ Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation.</span>
-            </div>
-          `;
-          localStorage.setItem("submitted_" + email, "true");
-          document.getElementById('kundaliForm').reset();
-          document.querySelector("#kundaliForm button").disabled = true;
-        })
-        .catch((error) => {
-          console.error("EmailJS Error:", error);
-          responseDiv.innerHTML = `
-            <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
-              <i class="fas fa-times-circle mr-2"></i>
-              <span>❌ Oops! Something went wrong. Please contact us directly on WhatsApp (+91 8318513814).</span>
-            </div>
-          `;
+      document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function () {
+          this.closest('.mobile-dropdown').classList.toggle('active');
         });
+      });
+
+      // WhatsApp popup
+      const whatsappButton = document.getElementById('whatsappButton');
+      const whatsappPopup  = document.getElementById('whatsappPopup');
+      if (whatsappButton && whatsappPopup) {
+        whatsappButton.addEventListener('click', function () {
+          whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', function (event) {
+          if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+            whatsappPopup.style.display = 'none';
+          }
+        });
+      }
+
+      // Manual form via EmailJS (guarded — won't break if CDN is blocked)
+      if (typeof emailjs !== 'undefined') {
+        try { emailjs.init("o-tnka-_5VrrqMgQs"); } catch (e) { console.warn('EmailJS init failed:', e); }
+      }
+
+      const kundaliForm = document.getElementById('kundaliForm');
+      if (kundaliForm) {
+        kundaliForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const responseDiv = document.getElementById('submissionResponse');
+          const email = document.getElementById("email").value;
+
+          if (localStorage.getItem("submitted_" + email)) {
+            responseDiv.innerHTML = `
+              <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <span>⚠️ You have already submitted the form once. Message us on WhatsApp (+91 8318513814) for priority assistance.</span>
+              </div>
+            `;
+            responseDiv.classList.remove("hidden");
+            return;
+          }
+
+          responseDiv.classList.remove('hidden');
+          responseDiv.innerHTML = `
+            <div class="flex items-center justify-center">
+              <i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i>
+              <span>Submitting your details...</span>
+            </div>
+          `;
+
+          if (typeof emailjs === 'undefined') {
+            responseDiv.innerHTML = `
+              <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+                <i class="fas fa-times-circle mr-2"></i>
+                <span>❌ Form service is temporarily unavailable. Please contact us directly on WhatsApp (+91 8318513814).</span>
+              </div>
+            `;
+            return;
+          }
+
+          emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
+            .then(() => {
+              responseDiv.innerHTML = `
+                <div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">
+                  <i class="fas fa-check-circle mr-2"></i>
+                  <span>✅ Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation.</span>
+                </div>
+              `;
+              localStorage.setItem("submitted_" + email, "true");
+              kundaliForm.reset();
+              kundaliForm.querySelector("button").disabled = true;
+            })
+            .catch((error) => {
+              console.error("EmailJS Error:", error);
+              responseDiv.innerHTML = `
+                <div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg">
+                  <i class="fas fa-times-circle mr-2"></i>
+                  <span>❌ Oops! Something went wrong. Please contact us directly on WhatsApp (+91 831318513814).</span>
+                </div>
+              `;
+            });
+        });
+      }
     });
   </script>
 
