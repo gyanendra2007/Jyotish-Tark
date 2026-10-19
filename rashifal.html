@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Highly Optimized SEO Title for Hal Shashthi -->
-    <title>Daily Rashifal | Hal Shashthi Horoscope September 2, 2026 | Jyotish Tark</title>
+    <title id="dynamic-title">Daily Rashifal October 2026 | Aaj Ka Rashifal | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/rashifal.html" />
     
-    <!-- Festival & Date Specific Meta Description -->
-    <meta name="description" content="Daily Rashifal for September 2, 2026. Discover how the Aries Moon in Bharani Nakshatra and Hal Shashthi influence your zodiac sign's career, finance, love, and health.">
-    
-    <!-- Targeted SEO Keywords -->
-    <meta name="keywords" content="rashifal 2 september 2026, hal shashthi rashifal, lalahi sashti horoscope, today horoscope lucknow, career prediction, love prediction, zodiac sign, Jyotish Tark, राशिफल, आज का राशिफल">
-    
-    <meta name="author" content="Jyotish Tark">
+    <meta name="description" id="dynamic-desc" content="Daily Rashifal in Hindi and English by Jyotish Tark. Get your zodiac sign's career, finance, love, health predictions, Ashtakavarga score, and Lal Kitab remedies.">
+    <meta name="keywords" content="rashifal, daily horoscope, aaj ka rashifal, october 2026 rashifal, today horoscope lucknow, ashtakavarga prediction, lal kitab remedies, Jyotish Tark, राशिफल, आज का राशिफल">
+    <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
-    <meta property="og:title" content="Daily Rashifal & Hal Shashthi Astrological Guidance | Jyotish Tark">
-    <meta property="og:description" content="Navigate today's intense Bharani Nakshatra energy. Read your accurate daily horoscope and Lal Kitab remedies.">
+    <meta property="og:title" id="dynamic-og-title" content="Daily Rashifal & Ashtakavarga Horoscope | Jyotish Tark">
+    <meta property="og:description" content="Check your personalized Chandra Gochar, Ashtakavarga strength, and Lal Kitab remedies for all 12 zodiac signs.">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/rashifal.html">
     <meta property="og:type" content="website">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for 1-Click Rashi WhatsApp Card Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -47,10 +45,6 @@
             font-weight: 700;
         }
         
-        .hindi {
-            font-family: 'Hind', sans-serif;
-        }
-        
         .cosmic-bg {
             background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
             position: relative;
@@ -63,14 +57,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.92) 100%);
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
         }
         
@@ -79,93 +73,74 @@
             border-bottom: 4px solid transparent;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .rashi-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-bottom-color: var(--secondary);
-            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.25);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .rashi-card.highlighted-rashi {
+            border: 2px solid #f59e0b;
+            background: linear-gradient(145deg, rgba(126, 34, 206, 0.25), rgba(15, 23, 42, 0.9));
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
         }
         
-        .zodiac-icon {
-            font-size: 3rem;
+        .rashi-pill {
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(30, 41, 59, 0.7);
+        }
+        .rashi-pill:hover, .rashi-pill.active-rashi-pill {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            font-weight: 700;
+            border-color: #fde047;
+            transform: scale(1.05);
+        }
+        
+        .rashi-prediction-category {
             margin-bottom: 1rem;
-            color: var(--secondary);
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+        .rashi-prediction-category:last-child { border-bottom: none; }
+        .prediction-icon { font-size: 1.15rem; margin-right: 0.5rem; color: var(--secondary); }
         
-        .primary-button {
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+        .lucky-number {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .primary-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
-        }
-        
-        .secondary-button {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--secondary);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .secondary-button:hover {
             background: var(--secondary);
             color: var(--dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.85rem;
         }
         
-        .nav-link {
-            position: relative;
-            padding: 0.5rem 0;
-            transition: all 0.3s ease;
+        .lucky-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--secondary, #f59e0b);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
+
         .section-title {
             position: relative;
             display: inline-block;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
-        
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -173,51 +148,21 @@
             background: linear-gradient(to right, var(--primary), var(--accent));
             border-radius: 2px;
         }
-        
-        .rashi-prediction-category {
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        .rashi-prediction-category:last-child {
-            border-bottom: none;
-        }
-        
-        .prediction-icon {
-            font-size: 1.25rem;
-            margin-right: 0.5rem;
-            color: var(--secondary);
-        }
-        
-        .lucky-number {
-            display: inline-block;
-            background: var(--secondary);
-            color: var(--dark);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 36px;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-        
-        .lucky-color {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            vertical-align: middle;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
 
-        /* Desktop Dropdown Styles */
-        .dropdown {
-            position: relative;
+        .nav-link { position: relative; padding: 0.5rem 0; transition: all 0.3s ease; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
         }
-        
+        .nav-link:hover::after { width: 100%; }
+
+        .dropdown { position: relative; }
         .dropdown-content {
             display: none;
             position: absolute;
@@ -233,11 +178,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             margin-top: 10px;
         }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        
+        .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a {
             display: flex;
             align-items: center;
@@ -247,67 +188,18 @@
             transition: all 0.2s ease;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        
-        .dropdown-content a:hover {
-            background: rgba(126, 34, 206, 0.3);
-            padding-left: 22px;
-        }
+        .dropdown-content a:hover { background: rgba(126, 34, 206, 0.3); padding-left: 22px; }
 
-        /* Mobile Dropdown Styles */
         .mobile-dropdown-content {
             display: none;
             padding-left: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             margin-top: 8px;
-            overflow: hidden;
             border-left: 3px solid var(--primary);
         }
-        
-        .mobile-dropdown-content a {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .mobile-dropdown-content a:last-child {
-            border-bottom: none;
-        }
-        
-        .mobile-dropdown-content a:hover {
-            background: rgba(126, 34, 206, 0.2);
-            padding-left: 20px;
-        }
-        
-        .mobile-dropdown.active .mobile-dropdown-content {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-        
-        .mobile-dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            cursor: pointer;
-        }
-        
-        .mobile-dropdown-toggle i:last-child {
-            transition: transform 0.3s ease;
-        }
-        
-        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
-            transform: rotate(180deg);
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .mobile-dropdown.active .mobile-dropdown-content { display: block; }
+        .mobile-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer; }
 
         .whatsapp-float {
             position: fixed;
@@ -318,7 +210,6 @@
             background-color: #25d366;
             color: #FFF;
             border-radius: 50px;
-            text-align: center;
             font-size: 30px;
             box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
             z-index: 100;
@@ -328,11 +219,7 @@
             transition: all 0.3s ease;
             border: 3px solid white;
         }
-        
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1) rotate(5deg);
-        }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
     </style>
 </head>
 <body class="min-h-screen">
@@ -340,7 +227,6 @@
     <!-- Navigation -->
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
-            <!-- Logo -->
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
                     <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
@@ -348,7 +234,6 @@
                 <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
 
-            <!-- Desktop Nav -->
             <nav class="hidden md:flex space-x-6 font-medium">
                 <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
                 <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
@@ -362,13 +247,12 @@
                     </div>
                 </div>
                 <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition">Panchang</a>
-                <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
+                <a href="rashifal.html" class="nav-link text-amber-300 font-semibold transition">Rashifal</a>
                 <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition">Rudraksha</a>
                 <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
                 <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
             </nav>
 
-            <!-- Mobile Menu Button -->
             <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -382,29 +266,22 @@
             <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
                 <i class="fas fa-star w-6 mr-2"></i>Kundali
             </a>
-            
             <div class="mobile-dropdown">
                 <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
                     <div class="flex items-center">
-                        <i class="fas fa-calculator w-6 mr-2"></i>
-                        <span>Calculator</span>
+                        <i class="fas fa-calculator w-6 mr-2"></i><span>Calculator</span>
                     </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="mobile-dropdown-content">
-                    <a href="numerology.html" class="flex items-center">
-                        <i class="fas fa-calculator mr-3"></i> Numerology Report
-                    </a>
-                    <a href="tarot.html" class="flex items-center">
-                        <i class="fas fa-clover mr-3"></i> Tarot Reading
-                    </a>
+                    <a href="numerology.html" class="block py-2 px-4 text-white"><i class="fas fa-calculator mr-2"></i> Numerology Report</a>
+                    <a href="tarot.html" class="block py-2 px-4 text-white"><i class="fas fa-clover mr-2"></i> Tarot Reading</a>
                 </div>
             </div>
-
             <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
                 <i class="fas fa-calendar-day w-6 mr-2"></i>Panchang
             </a>
-            <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <a href="rashifal.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 font-semibold transition flex items-center">
                 <i class="fas fa-sun w-6 mr-2"></i>Rashifal
             </a>
             <a href="rudraksha.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
@@ -422,773 +299,502 @@
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918318513814" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
-    </a>   
+    </a>
 
-    <!-- Hero Section -->
-    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+    <!-- Hero Section & Time-Travel Date Switcher -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-8 p-6 md:p-10 text-center relative overflow-hidden">
         <div class="relative z-10">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                <span class="block">Daily Rashifal</span>
-                <span class="text-3xl md:text-4xl text-amber-300">आज का राशिफल</span>
+            <span class="px-4 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold inline-block mb-3">
+                <i class="fas fa-star mr-1"></i> अष्टकवर्ग एवं लाल किताब आधारित • अक्टूबर 2026
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">
+                दैनिक चंद्र गोचर राशिफल
             </h1>
-            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Detailed astrological analysis and practical guidance for career, finance, relationships, and health based on Vedic transits.
+            <p id="hero-date-subtitle" class="text-2xl md:text-3xl text-amber-300 font-bold mb-6">
+                Loading Date...
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <a href="#rashifal-grid" class="primary-button">
-                    <i class="fas fa-sun mr-2"></i> Check Your Rashi
-                </a>
-                <a href="kundali-form.html" class="secondary-button">
-                    <i class="fas fa-star-and-crescent mr-2"></i> Get Detailed Kundali
-                </a>
+
+            <!-- Time-Travel Date Switcher (1 Oct to 31 Oct 2026) -->
+            <div class="flex flex-wrap items-center justify-center gap-3 bg-slate-900/75 p-3 rounded-2xl max-w-2xl mx-auto border border-white/15">
+                <button onclick="shiftDate(-1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
+                    <i class="fas fa-chevron-left mr-2"></i> पिछला दिन
+                </button>
+                <button onclick="goToToday()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-sm transition shadow-lg">
+                    आज का राशिफल (Today)
+                </button>
+                <button onclick="shiftDate(1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
+                    अगला दिन <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+                <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-xl border border-gray-600">
+                    <i class="fas fa-calendar-alt text-amber-300 mr-2 text-sm"></i>
+                    <input type="date" id="datePicker" min="2026-10-01" max="2026-10-31" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Planetary Snapshot -->
-    <section class="max-w-6xl mx-auto px-4 py-8 text-center">
-        <div class="glass-card p-6 rounded-2xl border-t-4 border-red-500">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                Horoscope for <span class="text-amber-300">September 2, 2026</span>
-            </h2>
-            <p class="text-gray-300 text-sm md:text-base">
-                <strong>Astrological Overview:</strong> A high-energy Wednesday featuring the Moon in Aries under the intense, transformative Bharani Nakshatra. It is also Hal Shashthi (Lalahi Sashti), drawing focus to agrarian gratitude and maternal prayers. Assertive communication and cutting through restrictive habits are favored today.
-            </p>
+    <!-- Planetary Snapshot Banner -->
+    <section class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="glass-card p-5 rounded-2xl border-l-4 border-amber-400 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <h2 id="snapshot-heading" class="text-lg md:text-xl font-bold text-white">--</h2>
+                <p id="snapshot-sub" class="text-sm text-gray-300 mt-1">--</p>
+            </div>
+            <a href="panchang.html" class="px-5 py-2.5 rounded-xl bg-purple-700/80 hover:bg-purple-600 text-amber-300 font-semibold text-xs whitespace-nowrap border border-purple-400/30 transition">
+                <i class="fas fa-clock mr-1"></i> आज का लाइव मुहूर्त रडार देखें →
+            </a>
         </div>
     </section>
 
-    <!-- Rashifal Grid -->
-    <section id="rashifal-grid" class="max-w-7xl mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                Today's Predictions for All Zodiac Signs
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Aries (Mesh) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♈</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Aries (मेष)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        With the Moon in your 1st house, your energy and assertiveness are at a peak. It is an excellent day for personal branding and pitching bold, independent projects.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Avoid making impulsive financial commitments during the midday Rahu Kaal. Focus on organizing your personal assets instead.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        You may come across as too dominant. Consciously soften your tone and practice active listening with your partner to avoid unnecessary friction.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        High mental activity could lead to tension headaches. Stay hydrated and avoid skipping meals during your busy schedule.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a red handkerchief with you. Offering water to the Sun will balance your intense fiery energy today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">9</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #ef4444;"></span> Crimson</div>
-                </div>
+    <!-- VIRAL FEATURE: 1-CLICK "PIN MY RASHI" BAR -->
+    <section class="max-w-7xl mx-auto px-4 mt-8">
+        <div class="glass-card p-5 rounded-2xl text-center">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-3">
+                📌 अपनी राशि चुनें (Pin Your Zodiac Sign to Top)
             </div>
-
-            <!-- Taurus (Vrishabh) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♉</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Taurus (वृषभ)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 12th house Moon favors isolated work. Retreat from office politics and focus on research, closing out old files, or dealing with overseas clients.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Unexpected expenses related to travel or health might surface. Keep a conservative approach to spending today.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        You may crave solitude. Communicate this gently to your partner so they understand your need to recharge emotionally.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Your sleep cycle might be disrupted due to overthinking. Practice deep breathing or meditation before bedtime.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Donate green fodder or grass to a cow to appease Mercury and mitigate 12th house financial losses.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">6</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f8fafc;"></span> Pearl White</div>
-                </div>
+            <div id="rashi-filter-bar" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-2">
+                <!-- Populated via JS -->
             </div>
-
-            <!-- Gemini (Mithun) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♊</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Gemini (मिथुन)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        An excellent day! The 11th house Moon combined with Wednesday’s Mercury energy makes networking highly profitable. Share your ideas with large groups.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Returns from past investments or delayed payments are likely to clear. It is a great day to discuss salary hikes or new revenue streams.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Friendship is the foundation of romance today. Attending a social event with your partner will reignite joy in your relationship.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Keep physically active but watch your ankles and calves for strain. Comfortable footwear is essential today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a small piece of alum (phitkari) in your workspace to clear out negative energy and boost 11th house gains.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">5</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #22c55e;"></span> Emerald Green</div>
-                </div>
-            </div>
-
-            <!-- Cancer (Kark) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♋</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Cancer (कर्क)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 10th house Moon puts your professional life in the spotlight. Authority figures are watching; deliver on your promises and avoid taking shortcuts.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Career momentum supports long-term financial security. Delay signing binding contracts during the midday Rahu Kaal window.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Work responsibilities may cut into your personal time. Send a thoughtful message to your partner to maintain emotional connection.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Protect your knees and joints. If you sit at a desk, ensure proper ergonomic support to prevent lower back pain.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Seek the blessings of your mother or a maternal figure today to harmonize the intense 10th house lunar energy.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">2</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #cbd5e1;"></span> Silver Gray</div>
-                </div>
-            </div>
-
-            <!-- Leo (Singh) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♌</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Leo (सिंह)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 9th house Moon expands your horizons. Mentorship, higher learning, or interactions with foreign clients will bring highly positive developments.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Investments in courses, certifications, or travel will pay off significantly in the long run. Seek expert financial counsel before proceeding.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Shared philosophical discussions deepen your bond. Connect with your partner over mutual beliefs and long-term life goals today.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Your energy is resilient. However, be cautious of overindulging in rich foods if you are traveling or dining out today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Offer water mixed with a little jaggery to the Sun in the morning to amplify your 9th house luck.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">1</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f59e0b;"></span> Gold</div>
-                </div>
-            </div>
-
-            <!-- Virgo (Kanya) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♍</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Virgo (कन्या)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 8th house Moon in fiery Aries suggests sudden shifts or intense research. Observe quietly; do not react defensively to workplace criticism.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Be highly cautious with joint resources, taxes, or inheritance matters. Delay signing new financial documents until tomorrow.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Intimacy requires vulnerability. Honest conversations about fears and insecurities will strengthen the relationship far more than practical problem-solving.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Drink plenty of water. The 8th house transit can disrupt your excretory system, so avoid heavy, spicy meals today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a small piece of silver with you to pacify the intense 8th house lunar energy and steady your nerves.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">5</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #38bdf8;"></span> Sky Blue</div>
-                </div>
-            </div>
-
-            <!-- Libra (Tula) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♎</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Libra (तुला)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 7th house Moon emphasizes partnerships. If negotiating a contract, your diplomatic skills are heightened. Let the other party speak first.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Joint commercial efforts show positive potential. Verify terms carefully before signing off on contracts during the midday Rahu Kaal.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Your spouse or partner is in the spotlight. Compromise is key today; meeting them halfway will resolve any lingering tension.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Manage autonomic nervous system stress through deep breathing. Pay attention to lower urinary tract health and hydration.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Wear soft pastel tones today to support diplomatic interactions and maintain 7th house balance.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">6</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #f472b6;"></span> Soft Pink</div>
-                </div>
-            </div>
-
-            <!-- Scorpio (Vrishchik) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♏</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Scorpio (वृश्चिक)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 6th house Moon gives you a sharp edge over competitors. It is an excellent day to organize your workspace, clear backlogs, and enforce discipline.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Focus on paying off debts or managing routine expenses. Avoid taking out new loans today, as repayment may become tedious.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Show your love through practical acts of service. Helping your partner with their daily tasks will foster deep appreciation.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Your digestive system is sensitive today. Eat on time and stick to simple, home-cooked meals to maintain your vitality.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a small piece of jaggery or offer it to someone in need to strengthen positive Mars energy and defeat opposition.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">9</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #991b1b;"></span> Dark Red</div>
-                </div>
-            </div>
-
-            <!-- Sagittarius (Dhanu) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♐</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Sagittarius (धनु)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 5th house Moon stimulates creativity and intelligence. Pitching innovative, out-of-the-box ideas to leadership will bring excellent recognition today.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Calculated risks in educational or creative investments are favored. However, ensure you do not initiate transactions during the Rahu Kaal window.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Romance is highly favored. If single, a new intellectual connection could spark. If committed, plan a fun, creative evening with your partner.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Cardiovascular health is highlighted. Enjoy a moderate workout, but ensure you don't exhaust your energy reserves entirely.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Apply a turmeric (Haldi) tilak to your forehead to attract Jupiter's protective aura over your creative projects.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">3</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #fef08a;"></span> Yellow</div>
-                </div>
-            </div>
-
-            <!-- Capricorn (Makar) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♑</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Capricorn (मकर)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 4th house Moon draws your attention to internal foundations. It's a great day to organize your home office or review long-term operational security.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        You may decide to purchase something significant for the household today. Avoid finalizing property paperwork during the midday Rahu Kaal.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Domestic peace is paramount. Spend a quiet evening at home; nurture your emotional sanctuary and connect deeply with family members.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Protect your chest and lungs from sudden drafts. Emotional stability will directly benefit your physical wellbeing today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a solid square piece of silver with you to stabilize the fluctuating emotional energy of the 4th house.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">8</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #334155;"></span> Slate Gray</div>
-                </div>
-            </div>
-
-            <!-- Aquarius (Kumbh) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♒</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Aquarius (कुम्भ)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 3rd house Moon enhances your courage and communication. Effort yields results today; don't hesitate to pitch ideas or negotiate hard for what you want.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Short travels related to business will be profitable. Follow up on delayed payments directly; your assertiveness will pay off.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Clear, direct communication resolves lingering tension. A quick message checking in on your partner goes a long way.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Watch your posture. Prevent strain in the neck, shoulders, and upper arms by taking frequent breaks from your desk or phone.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Help a younger sibling or neighbor today to activate positive 3rd house karma and clear communication hurdles.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">11</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #06b6d4;"></span> Cyan Blue</div>
-                </div>
-            </div>
-
-            <!-- Pisces (Meen) -->
-            <div class="rashi-card p-6 rounded-2xl">
-                <div class="zodiac-icon">♓</div>
-                <h3 class="text-xl font-bold text-white mb-4 text-center">Pisces (मीन)</h3>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-briefcase prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Career</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        The 2nd house Moon shifts your focus directly to asset management and vocal presentations. Express your professional value clearly and confidently.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-money-bill-wave prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Finance</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        A highly favorable day for wealth accumulation. Review your savings strategy and look for ways to optimize your current income streams.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heart prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Love</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Your words carry weight. Use a gentle tone during family discussions. A shared, comforting meal brings peace to the household.
-                    </p>
-                </div>
-                
-                <div class="rashi-prediction-category">
-                    <div class="flex items-center mb-1">
-                        <i class="fas fa-heartbeat prediction-icon"></i>
-                        <h4 class="font-semibold text-amber-300">Health</h4>
-                    </div>
-                    <p class="text-gray-300 text-sm">
-                        Protect your throat and vocal cords. Avoid extremely cold drinks, and prioritize dental hygiene today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-3 border-t border-gray-700">
-                    <h4 class="font-semibold text-amber-300 text-sm mb-1">Daily Remedy</h4>
-                    <p class="text-gray-300 text-xs">
-                        Keep a small square piece of silver in your pocket to stabilize your wealth and harmonize your speech today.
-                    </p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <div>Lucky No: <span class="text-amber-300 font-bold">3</span></div>
-                    <div>Lucky Color: <span class="lucky-color" style="background-color: #fde047;"></span> Bright Yellow</div>
-                </div>
-            </div>
-
         </div>
     </section>
+
+    <!-- Rashifal 12-Card Grid -->
+    <section id="rashifal-grid-section" class="max-w-7xl mx-auto px-4 py-10">
+        <div id="rashifal-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamically generated 12 Rashi Cards -->
+        </div>
+    </section>
+
+    <!-- Hidden Offscreen Template for High-Res WhatsApp Status Card Export -->
+    <div class="overflow-hidden h-0 w-0">
+        <div id="rashi-share-card-capture" class="p-8 rounded-3xl border-2 border-amber-400 text-white" style="width: 540px; background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 60%, #3b0764 100%);">
+            <div class="flex justify-between items-center border-b border-amber-400/30 pb-3 mb-4">
+                <div>
+                    <div class="text-xs text-amber-300 font-bold uppercase">✨ ज्योतिष तर्क • दैनिक राशिफल</div>
+                    <div id="share-card-date" class="text-lg font-bold text-white">--</div>
+                </div>
+                <div id="share-card-score" class="px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-extrabold text-xs">
+                    Score: --%
+                </div>
+            </div>
+            <div class="text-center my-4">
+                <div id="share-card-icon" class="text-5xl text-amber-300 mb-1">♈</div>
+                <h3 id="share-card-rashi" class="text-2xl font-bold text-white">--</h3>
+                <div id="share-card-house" class="text-xs text-purple-200 mt-1">--</div>
+            </div>
+            <div class="space-y-3 text-sm bg-slate-900/80 p-4 rounded-2xl border border-white/10 mb-4">
+                <div><strong class="text-amber-300">💼 करियर:</strong> <span id="share-card-career">--</span></div>
+                <div><strong class="text-amber-300">💰 वित्त:</strong> <span id="share-card-finance">--</span></div>
+                <div><strong class="text-amber-300">🩺 स्वास्थ्य:</strong> <span id="share-card-health">--</span></div>
+                <div class="pt-2 border-t border-white/10"><strong class="text-emerald-300">🔮 लाल किताब उपाय:</strong> <span id="share-card-remedy">--</span></div>
+            </div>
+            <div class="flex justify-between items-center text-xs text-gray-300 pt-2 border-t border-white/10">
+                <span>🌐 <strong>jyotishtark.in</strong></span>
+                <span>📞 Astrologer Gyanendra: <strong>+91 8318513814</strong></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="glass-card text-center py-10 mt-12 max-w-7xl mx-auto rounded-t-lg">
         <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </footer>
 
-    <!-- Script for Navigation -->
+    <!-- Load Shared October 2026 Database -->
+    <script src="astro_data.js"></script>
+
+    <!-- Dynamic Vedic Gochar & Ashtakavarga Rashifal Engine -->
     <script>
+        // Mobile Menu Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('hidden');
             const icon = this.querySelector('i');
-            if (mobileNav.classList.contains('hidden')) {
-                icon.className = 'fas fa-bars';
-            } else {
-                icon.className = 'fas fa-times';
-            }
+            icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
         });
 
         document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', function() {
-                const dropdown = this.closest('.mobile-dropdown');
-                dropdown.classList.toggle('active');
+                this.closest('.mobile-dropdown').classList.toggle('active');
             });
+        });
+
+        // 12 Zodiac Metadata with Clinical/Anatomical Domains & Rulerships
+        const ZODIAC_META = [
+            { idx: 0, icon: "♈", nameEn: "Aries", nameHi: "मेष", lord: "मंगल (Mars)", anatomy: "सिर, मस्तिष्क एवं नेत्र (Cranium & Cerebral circulation)", baseNum: 9, colorName: "Crimson Red", colorHex: "#ef4444" },
+            { idx: 1, icon: "♉", nameEn: "Taurus", nameHi: "वृषभ", lord: "शुक्र (Venus)", anatomy: "गला, थायरॉइड एवं स्वर तंत्र (Oropharynx & Cervical region)", baseNum: 6, colorName: "Pearl White", colorHex: "#f8fafc" },
+            { idx: 2, icon: "♊", nameEn: "Gemini", nameHi: "मिथुन", lord: "बुध (Mercury)", anatomy: "फेफड़े, श्वसन तंत्र एवं कंधे (Pulmonary & Brachial plexus)", baseNum: 5, colorName: "Emerald Green", colorHex: "#22c55e" },
+            { idx: 3, icon: "♋", nameEn: "Cancer", nameHi: "कर्क", lord: "चंद्र (Moon)", anatomy: "आमाशय, पाचन एवं वक्ष (Gastric mucosa & Thoracic cage)", baseNum: 2, colorName: "Silver White", colorHex: "#cbd5e1" },
+            { idx: 4, icon: "♌", nameEn: "Leo", nameHi: "सिंह", lord: "सूर्य (Sun)", anatomy: "हृदय, धमनी एवं रीढ़ (Cardiovascular & Thoracic spine)", baseNum: 1, colorName: "Golden Orange", colorHex: "#f59e0b" },
+            { idx: 5, icon: "♍", nameEn: "Virgo", nameHi: "कन्या", lord: "बुध (Mercury)", anatomy: "आंत, लिवर एवं तंत्रिका तंत्र (Enteric nervous system & Gut)", baseNum: 5, colorName: "Mint Green", colorHex: "#10b981" },
+            { idx: 6, icon: "♎", nameEn: "Libra", nameHi: "तुला", lord: "शुक्र (Venus)", anatomy: "गुर्दे (Kidneys), एड्रेनल एवं कमर (Renal homeostasis & Lumbar)", baseNum: 6, colorName: "Soft Rose", colorHex: "#f472b6" },
+            { idx: 7, icon: "♏", nameEn: "Scorpio", nameHi: "वृश्चिक", lord: "मंगल (Mars)", anatomy: "उत्सर्जन तंत्र एवं पेल्विक क्षेत्र (Pelvic & Autonomic balance)", baseNum: 9, colorName: "Deep Maroon", colorHex: "#991b1b" },
+            { idx: 8, icon: "♐", nameEn: "Sagittarius", nameHi: "धनु", lord: "बृहस्पति (Jupiter)", anatomy: "यकृत (Hepatic metabolism), जांघ एवं साइटिका नर्व", baseNum: 3, colorName: "Saffron Yellow", colorHex: "#eab308" },
+            { idx: 9, icon: "♑", nameEn: "Capricorn", nameHi: "मकर", lord: "शनि (Saturn)", anatomy: "घुटने, अस्थि-संधि एवं त्वचा (Skeletal joints & Synovial fluid)", baseNum: 8, colorName: "Slate Blue", colorHex: "#3b82f6" },
+            { idx: 10, icon: "♒", nameEn: "Aquarius", nameHi: "कुंभ", lord: "शनि (Saturn)", anatomy: "पिंडली, टखने एवं रक्त संचार (Peripheral venous circulation)", baseNum: 8, colorName: "Cyan Blue", colorHex: "#06b6d4" },
+            { idx: 11, icon: "♓", nameEn: "Pisces", nameHi: "मीन", lord: "बृहस्पति (Jupiter)", anatomy: "पैर के तलवे, लसीका तंत्र (Lymphatic drainage & Sleep cycle)", baseNum: 3, colorName: "Bright Yellow", colorHex: "#fde047" }
+        ];
+
+        // 12 Bhava (House) Gochar Prediction Templates (1st to 12th from Natal Moon)
+        const BHAVA_GOCHAR_MATRIX = {
+            1: {
+                tag: "प्रथम भाव (Lagna Chandra) • अष्टकवर्ग बल: 86%",
+                score: 86,
+                career: "चंद्रमा आपकी ही राशि में गोचर कर रहे हैं। आत्मविश्वास और निर्णय क्षमता उच्च रहेगी। कार्यक्षेत्र में आपकी उपस्थिति प्रभावशाली रहेगी और नेतृत्व के अवसर मिलेंगे।",
+                finance: "व्यक्तिगत प्रयासों और सेल्फ-ब्रांडिंग से धन लाभ के प्रबल योग हैं। दीर्घकालिक बचत योजनाओं में निवेश करने के लिए दिन अनुकूल है।",
+                love: "जीवनसाथी और परिवार का पूर्ण भावनात्मक सहयोग प्राप्त होगा। आपके सौम्य व्यवहार से आपसी संबंधों में मधुरता बढ़ेगी।",
+                health: "मानसिक ऊर्जा श्रेष्ठ रहेगी, किंतु अत्यधिक सोचने से बचें। पर्याप्त जल पिएं।",
+                remedy: "घर से निकलते समय माथे पर सफेद चंदन या केसर का तिलक लगाएं।"
+            },
+            2: {
+                tag: "द्वितीय भाव (Dhana Bhava) • अष्टकवर्ग बल: 78%",
+                score: 78,
+                career: "वाणी और संवाद कौशल से कार्यक्षेत्र में अटके काम पूरे होंगे। बैंकिंग, शिक्षा और कंसल्टेंसी से जुड़े जातकों को विशेष सफलता मिलेगी।",
+                finance: "द्वितीय भाव का चंद्रमा संचित धन और पारिवारिक संसाधनों में वृद्धि करता है। रुका हुआ पेमेंट वापस मिलने की प्रबल संभावना है।",
+                love: "कुटुंब में सुख-शांति रहेगी। बातचीत में मधुरता बनाए रखें, कठोर शब्दों के प्रयोग से बचें।",
+                health: "मुख, दांत और गले के स्वास्थ्य का ध्यान रखें; अत्यधिक ठंडे पेय पदार्थों से परहेज करें।",
+                remedy: "चांदी का चौकोर टुकड़ा या सिक्का अपने पर्स में रखें और मीठी वाणी बोलें।"
+            },
+            3: {
+                tag: "तृतीय भाव (Parakrama Bhava) • अष्टकवर्ग बल: 92%",
+                score: 92,
+                career: "पराक्रम भाव में चंद्रमा साहस और नई पहल में बड़ी सफलता दिलाएगा। मार्केटिंग, मीडिया, लेखन और शॉर्ट-ट्रैवल से जुड़े प्रोजेक्ट्स में विजय मिलेगी।",
+                finance: "स्वयं के परिश्रम और नेटवर्किंग से त्वरित आर्थिक लाभ होगा। नए व्यावसायिक अनुबंध फाइनल करने के लिए श्रेष्ठ दिन है।",
+                love: "छोटे भाई-बहनों और मित्रों से सहयोग मिलेगा। पार्टनर के साथ छोटी यात्रा या सार्थक संवाद संबंधों को ताजगी देगा।",
+                health: "गर्दन, कंधे और श्वसन तंत्र को आराम दें; स्क्रीन पर काम करते समय पोस्चर सही रखें।",
+                remedy: "पक्षियों को दाना डालें और किसी जरूरतमंद या छोटे भाई-बहन की सहायता करें।"
+            },
+            4: {
+                tag: "चतुर्थ भाव (Sukha Bhava) • अष्टकवर्ग बल: 58%",
+                score: 58,
+                career: "चतुर्थ चंद्रमा ध्यान को घरेलू और बुनियादी कार्यों की ओर आकर्षित करेगा। ऑफिस में जल्दबाजी के बजाय पेंडिंग फाइलों को व्यवस्थित करने पर ध्यान दें।",
+                finance: "घर की सुख-सुविधाओं, वाहन या प्रॉपर्टी के रखरखाव पर खर्च हो सकता है। आज सट्टा या उच्च जोखिम वाले निवेश से दूर रहें।",
+                love: "माता के स्वास्थ्य और घरेलू शांति को प्राथमिकता दें। छोटी बातों को तूल देने के बजाय धैर्य से काम लें।",
+                health: "छाती में जकड़न या मानसिक बेचैनी से बचने के लिए प्राणायाम और गहरी श्वास का अभ्यास करें।",
+                remedy: "माता का आशीर्वाद लें और सुबह थोड़ा कच्चा दूध जल में मिलाकर शिवलिंग पर चढ़ाएं।"
+            },
+            5: {
+                tag: "पंचम भाव (Putra/Buddhi Bhava) • अष्टकवर्ग बल: 76%",
+                score: 76,
+                career: "बौद्धिक और रचनात्मक क्षमता में वृद्धि होगी। विद्यार्थियों, शिक्षकों और क्रिएटिव प्रोफेशनल्स के लिए नए आइडियाज प्रस्तुत करने का उत्तम दिन है।",
+                finance: "सोच-समझकर किए गए दीर्घकालिक निवेश से भविष्य में लाभ होगा। हालांकि राहु काल के दौरान किसी भी वित्तीय लेन-देन से बचें।",
+                love: "प्रेम संबंधों में प्रगाढ़ता आएगी और संतान पक्ष से शुभ समाचार प्राप्त होगा।",
+                health: "पाचन तंत्र (आमाशय) को हल्का और सुपाच्य भोजन दें; एसिडिटी से बचाव रखें।",
+                remedy: "गायत्री मंत्र का 27 बार जप करें और विद्यार्थियों को स्टेशनरी या पुस्तक भेंट करें।"
+            },
+            6: {
+                tag: "षष्ठ भाव (Ripu/Roga Vijay Bhava) • अष्टकवर्ग बल: 88%",
+                score: 88,
+                career: "छठे भाव का चंद्रमा प्रतियोगी परीक्षाओं, मेडिकल, लीगल और कठिन कार्यक्षेत्र की चुनौतियों में निश्चित विजय दिलाता है। विरोधी स्वतः शांत रहेंगे।",
+                finance: "पुराने कर्ज या बकाया बिलों को निपटाने के लिए दिन अत्यंत अनुकूल है। कार्यक्षमता बढ़ने से आय के स्रोत मजबूत होंगे।",
+                love: "व्यस्तता के कारण पार्टनर को कम समय दे पाएंगे; सेवा भाव और सहयोग से रिश्तों में संतुलन बनाए रखें।",
+                health: "स्वास्थ्य में सुधार होगा, किंतु आंतों के स्वास्थ्य और समय पर भोजन करने का विशेष ध्यान रखें।",
+                remedy: "हनुमान चालीसा का पाठ करें और किसी असहाय व्यक्ति को भोजन या दवा में सहयोग करें।"
+            },
+            7: {
+                tag: "सप्तम भाव (Jaya/Vyapara Bhava) • अष्टकवर्ग बल: 90%",
+                score: 90,
+                career: "साझेदारी के कार्यों, क्लाइंट डील्स और जनसंपर्क (PR) में बड़ी सफलता मिलेगी। आपके कूटनीतिक कौशल की सराहना होगी।",
+                finance: "दैनिक व्यापार और पार्टनरशिप से उत्तम धन लाभ के योग हैं। नए कॉन्ट्रैक्ट साइन करने के लिए शुभ मुहूर्त का उपयोग करें।",
+                love: "दांपत्य जीवन और प्रेम संबंधों के लिए अत्यंत रोमांटिक व सामंजस्यपूर्ण दिन है। अविवाहितों के लिए रिश्ते की बात आगे बढ़ सकती है।",
+                health: "शरीर में जल का संतुलन (Hydration) बनाए रखें और कमर के निचले हिस्से को आराम दें।",
+                remedy: "मंदिर में सफेद मिठाई या मिश्री अर्पित करें और जीवनसाथी का सम्मान करें।"
+            },
+            8: {
+                tag: "अष्टम भाव (Chandra Ashtama) • सावधानी स्कोर: 45%",
+                score: 45,
+                career: "आज आपकी राशि से चंद्रमा अष्टम भाव में है। कार्यक्षेत्र में किसी भी विवाद या राजनीति से दूर रहें। गहन शोध (Research), ऑडिट और गुप्त प्लानिंग के लिए दिन ठीक है।",
+                finance: "आज नया निवेश करने, कर्ज लेने या उधार देने से सख्त परहेज करें। केवल रूटीन के सुरक्षित वित्तीय कार्य ही निपटाएं।",
+                love: "वाणी पर संयम रखें; पुरानी बातों को कुरेदने से संबंधों में अनावश्यक तनाव आ सकता है।",
+                health: "अष्टम चंद्रमा के कारण थकान या अपच हो सकती है। बासी या गरिष्ठ भोजन से बचें।",
+                remedy: "लाल किताब रक्षा उपाय: महामृत्युंजय मंत्र या 'ॐ नमः शिवाय' का जप करें और मंदिर में चने की दाल या चावल दान करें।"
+            },
+            9: {
+                tag: "नवम भाव (Bhagya Bhava) • अष्टकवर्ग बल: 89%",
+                score: 89,
+                career: "भाग्य का पूर्ण साथ मिलेगा। वरिष्ठ अधिकारियों, प्रोफेसर्स और गुरुजनों के मार्गदर्शन से करियर की रुकावटें दूर होंगी।",
+                finance: "धर्म-कर्म, उच्च शिक्षा या लंबी दूरी के संपर्कों से आर्थिक लाभ के अवसर बनेंगे। रुके हुए प्रोजेक्ट्स गति पकड़ेंगे।",
+                love: "परिवार में मांगलिक चर्चा होगी और संबंधों में आध्यात्मिक विश्वास बढ़ेगा।",
+                health: "स्वास्थ्य उत्तम रहेगा; सुबह की धूप और हल्की स्ट्रेचिंग से ऊर्जा बनी रहेगी।",
+                remedy: "अपने गुरु, पिता या घर के बुजुर्गों का आशीर्वाद लेकर दिन की शुरुआत करें।"
+            },
+            10: {
+                tag: "दशम भाव (Karma/Rajya Bhava) • अष्टकवर्ग बल: 95%",
+                score: 95,
+                career: "कर्म भाव में चंद्रमा आपको कार्यक्षेत्र का स्टार बनाएगा! प्रमोशन, सरकारी कार्यों और बड़े प्रोजेक्ट्स को पूरा करने के लिए महीने के सर्वश्रेष्ठ दिनों में से एक है।",
+                finance: "व्यावसायिक विस्तार और पद-प्रतिष्ठा से धन लाभ के प्रबल योग हैं। आपके निर्णय सटीक साबित होंगे।",
+                love: "कार्य की अधिकता के बीच परिवार के साथ अपनी उपलब्धियां साझा करें, घर का माहौल प्रसन्नतापूर्ण रहेगा।",
+                health: "घुटनों और जोड़ों को अतिरिक्त आराम दें; लगातार एक ही मुद्रा में बैठने से बचें।",
+                remedy: "कार्य प्रारंभ करने से पूर्व अपने इष्ट देव का स्मरण करें और कार्यस्थल को स्वच्छ रखें।"
+            },
+            11: {
+                tag: "एकादश भाव (Labha Bhava) • अष्टकवर्ग बल: 97%",
+                score: 97,
+                career: "लाभ भाव का चंद्रमा आपकी महत्वाकांक्षाओं की पूर्ति करेगा। सोशल नेटवर्क, बड़े समूहों और वरिष्ठ मित्रों के माध्यम से शानदार अवसर मिलेंगे।",
+                finance: "आर्थिक दृष्टि से सर्वश्रेष्ठ गोचर! आय के नए स्रोत खुलेंगे, पुराना निवेश लाभ देगा और आर्थिक स्थिति सुदृढ़ होगी।",
+                love: "मित्रों और प्रियजनों के साथ उत्सव जैसा माहौल रहेगा। रिश्तों में खुलापन और प्रसन्नता बढ़ेगी।",
+                health: "उच्च ऊर्जा और उत्तम स्वास्थ्य का अनुभव करेंगे। पिंडलियों व रक्त संचार के लिए शाम को टहलें।",
+                remedy: "अपनी आय का एक छोटा हिस्सा गौ सेवा या किसी धार्मिक कार्य में अर्पित करें।"
+            },
+            12: {
+                tag: "द्वादश भाव (Vyaya/Moksha Bhava) • सावधानी स्कोर: 52%",
+                score: 52,
+                career: "द्वादश चंद्रमा के कारण एकांत में किए जाने वाले कार्य, विदेश से जुड़े प्रोजेक्ट्स, अस्पताल या रिसर्च के काम सफल होंगे। दिखावे से बचें।",
+                finance: "अनावश्यक खर्चों पर नियंत्रण रखें। बजट बनाकर चलें और आज किसी भी कागज पर बिना पढ़े हस्ताक्षर न करें।",
+                love: "भावनात्मक रूप से थोड़ा एकांत पसंद करेंगे; अपनी बात पार्टनर को शांति से समझाएं।",
+                health: "रात्रि निद्रा (Sleep hygiene) और आंखों को स्क्रीन से आराम देने पर विशेष ध्यान दें।",
+                remedy: "रात्रि में सिरहाने तांबे के पात्र में जल रखें और सुबह उसे किसी पौधे में डाल दें।"
+            }
+        };
+
+        let currentSelectedDate = new Date();
+        let currentDateKey = "";
+        let pinnedRashiIndex = localStorage.getItem('jt_pinned_rashi') !== null 
+            ? parseInt(localStorage.getItem('jt_pinned_rashi'), 10) 
+            : null;
+
+        function formatDateKey(dateObj) {
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Build the 12 Rashi Quick-Filter Pills
+        function renderRashiFilterBar() {
+            const bar = document.getElementById('rashi-filter-bar');
+            bar.innerHTML = ZODIAC_META.map(z => {
+                const isPinned = pinnedRashiIndex === z.idx;
+                return `
+                    <button onclick="togglePinRashi(${z.idx})" class="rashi-pill ${isPinned ? 'active-rashi-pill' : 'text-gray-200'} px-2 py-2 rounded-xl text-xs flex flex-col items-center justify-center gap-1">
+                        <span class="text-xl">${z.icon}</span>
+                        <span>${z.nameHi}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function togglePinRashi(idx) {
+            if (pinnedRashiIndex === idx) {
+                pinnedRashiIndex = null;
+                localStorage.removeItem('jt_pinned_rashi');
+            } else {
+                pinnedRashiIndex = idx;
+                localStorage.setItem('jt_pinned_rashi', idx);
+            }
+            renderRashiFilterBar();
+            renderRashifal(currentDateKey);
+        }
+
+        // Generate Customized Prediction for a Rashi on a Specific Date
+        function computeRashiPrediction(zMeta, dayData) {
+            const transitMoonIdx = dayData.moonSignIndex;
+            const houseFromMoon = ((transitMoonIdx - zMeta.idx + 12) % 12) + 1;
+            const bTemplate = BHAVA_GOCHAR_MATRIX[houseFromMoon];
+            const nakShort = dayData.panchang.nakshatra.split('(')[0].trim();
+            const dayNumber = parseInt(currentDateKey.split('-')[2], 10);
+            const luckyNum = ((zMeta.baseNum + dayNumber + dayData.nakshatraIndex) % 9) + 1;
+
+            return {
+                ...zMeta,
+                houseFromMoon,
+                tag: bTemplate.tag,
+                score: bTemplate.score,
+                career: `${nakShort} नक्षत्र के प्रभाव में ${bTemplate.career}`,
+                finance: `${bTemplate.finance} (राहु काल ${dayData.panchang.rahuKaal} में लेन-देन टालें)।`,
+                love: bTemplate.love,
+                health: `${bTemplate.health} विशेष ध्यान: ${zMeta.anatomy}।`,
+                remedy: `${bTemplate.remedy} (${dayData.festival.split(',')[0]} विशेष)।`,
+                luckyNum
+            };
+        }
+
+        // Render All 12 Rashi Cards
+        function renderRashifal(dateKey) {
+            const availableKeys = Object.keys(ASTRO_DATABASE).sort();
+            if (!ASTRO_DATABASE[dateKey]) {
+                dateKey = availableKeys.includes(formatDateKey(new Date())) 
+                    ? formatDateKey(new Date()) 
+                    : "2026-10-19";
+            }
+            currentDateKey = dateKey;
+            const dayData = ASTRO_DATABASE[dateKey];
+            const p = dayData.panchang;
+
+            document.getElementById('datePicker').value = dateKey;
+            document.getElementById('dynamic-title').innerText = `Aaj Ka Rashifal (${dayData.dateEnglish}) - ${dayData.festival} | Jyotish Tark`;
+            document.getElementById('hero-date-subtitle').innerText = `${dayData.dateHindi}`;
+            document.getElementById('snapshot-heading').innerText = `गोचर सारांश: चंद्रमा ${p.moonSign} में • नक्षत्र: ${p.nakshatra}`;
+            document.getElementById('snapshot-sub').innerText = `पर्व: ${dayData.festival} | तिथि: ${p.tithi} | शुभ अमृत काल: ${p.amritKaal}`;
+
+            // Sort Rashis so Pinned Rashi appears first
+            const orderedZodiacs = [...ZODIAC_META].sort((a, b) => {
+                if (pinnedRashiIndex === a.idx) return -1;
+                if (pinnedRashiIndex === b.idx) return 1;
+                return a.idx - b.idx;
+            });
+
+            const gridEl = document.getElementById('rashifal-grid');
+            gridEl.innerHTML = orderedZodiacs.map(z => {
+                const pred = computeRashiPrediction(z, dayData);
+                const isPinned = pinnedRashiIndex === z.idx;
+                const badgeColor = pred.score >= 75 
+                    ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" 
+                    : (pred.score >= 55 ? "bg-amber-500/20 text-amber-300 border-amber-500/40" : "bg-red-500/20 text-red-300 border-red-500/40");
+
+                return `
+                    <div class="rashi-card ${isPinned ? 'highlighted-rashi' : ''} p-6 rounded-2xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-full border ${badgeColor}">
+                                    ${pred.tag}
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="speakRashi(${z.idx})" title="राशिफल सुनें" class="h-8 w-8 rounded-full bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 transition flex items-center justify-center text-xs">
+                                        <i class="fas fa-volume-high"></i>
+                                    </button>
+                                    <button onclick="downloadRashiCard(${z.idx})" title="Download WhatsApp Status Card" class="h-8 w-8 rounded-full bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-slate-950 transition flex items-center justify-center text-xs">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 mb-4 pb-3 border-b border-white/10">
+                                <div class="text-4xl text-amber-400">${pred.icon}</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">${pred.nameHi} (${pred.nameEn})</h3>
+                                    <p class="text-xs text-gray-400">राशि स्वामी: ${pred.lord} ${isPinned ? '• <span class="text-amber-300 font-bold">📌 आपकी पिन की गई राशि</span>' : ''}</p>
+                                </div>
+                            </div>
+
+                            <div class="rashi-prediction-category">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-briefcase prediction-icon"></i>
+                                    <h4 class="font-semibold text-amber-300 text-sm">करियर एवं व्यवसाय (Career)</h4>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">${pred.career}</p>
+                            </div>
+
+                            <div class="rashi-prediction-category">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-coins prediction-icon"></i>
+                                    <h4 class="font-semibold text-amber-300 text-sm">आर्थिक स्थिति (Finance)</h4>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">${pred.finance}</p>
+                            </div>
+
+                            <div class="rashi-prediction-category">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-heart prediction-icon"></i>
+                                    <h4 class="font-semibold text-amber-300 text-sm">प्रेम एवं परिवार (Relationships)</h4>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">${pred.love}</p>
+                            </div>
+
+                            <div class="rashi-prediction-category">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-heartbeat prediction-icon"></i>
+                                    <h4 class="font-semibold text-amber-300 text-sm">स्वास्थ्य एवं शारीरिक ऊर्जा (Health)</h4>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">${pred.health}</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mt-2 p-3 rounded-xl bg-purple-950/50 border border-purple-500/30">
+                                <h4 class="font-semibold text-amber-300 text-xs uppercase mb-1">
+                                    <i class="fas fa-wand-magic-sparkles mr-1"></i> लाल किताब एवं वैदिक उपाय
+                                </h4>
+                                <p class="text-gray-200 text-xs leading-relaxed">${pred.remedy}</p>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs text-gray-400">
+                                <div class="flex items-center gap-2">
+                                    <span>शुभ अंक:</span>
+                                    <span class="lucky-number">${pred.luckyNum}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span>शुभ रंग:</span>
+                                    <span class="lucky-color" style="background-color: ${pred.colorHex};"></span>
+                                    <span class="text-gray-200 font-medium">${pred.colorName}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // VIRAL FEATURE: LISTEN TO SPECIFIC RASHI IN HINDI
+        function speakRashi(rashiIdx) {
+            if (!('speechSynthesis' in window)) {
+                alert("आपके ब्राउज़र में ऑडियो सपोर्ट उपलब्ध नहीं है।");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const dayData = ASTRO_DATABASE[currentDateKey];
+            const pred = computeRashiPrediction(ZODIAC_META[rashiIdx], dayData);
+            const text = `नमस्कार, ज्योतिष तर्क में सुनिए ${dayData.dateHindi} का ${pred.nameHi} राशिफल। आज चंद्रमा आपकी राशि से ${pred.houseFromMoon}वें भाव में गोचर कर रहे हैं। करियर: ${pred.career} आर्थिक स्थिति: ${pred.finance} स्वास्थ्य: ${pred.health} आज का विशेष उपाय: ${pred.remedy} आपका शुभ अंक ${pred.luckyNum} है।`;
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'hi-IN';
+            utter.rate = 0.95;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // VIRAL FEATURE: 1-CLICK WHATSAPP STATUS GRAPHIC FOR ANY RASHI
+        function downloadRashiCard(rashiIdx) {
+            const dayData = ASTRO_DATABASE[currentDateKey];
+            const pred = computeRashiPrediction(ZODIAC_META[rashiIdx], dayData);
+
+            document.getElementById('share-card-date').innerText = dayData.dateHindi;
+            document.getElementById('share-card-score').innerText = `अष्टकवर्ग बल: ${pred.score}%`;
+            document.getElementById('share-card-icon').innerText = pred.icon;
+            document.getElementById('share-card-rashi').innerText = `${pred.nameHi} (${pred.nameEn}) राशिफल`;
+            document.getElementById('share-card-house').innerText = pred.tag;
+            document.getElementById('share-card-career').innerText = pred.career;
+            document.getElementById('share-card-finance').innerText = pred.finance;
+            document.getElementById('share-card-health').innerText = pred.health;
+            document.getElementById('share-card-remedy').innerText = pred.remedy;
+
+            const captureEl = document.getElementById('rashi-share-card-capture');
+            html2canvas(captureEl, { scale: 2, backgroundColor: "#0f172a" }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Jyotish-Tark-${pred.nameEn}-Rashifal-${currentDateKey}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // Date Navigation Controls
+        function shiftDate(days) {
+            currentSelectedDate.setDate(currentSelectedDate.getDate() + days);
+            const key = formatDateKey(currentSelectedDate);
+            if (ASTRO_DATABASE[key]) {
+                renderRashifal(key);
+            } else {
+                alert("अक्टूबर 2026 (1 अक्टूबर से 31 अक्टूबर) का संपूर्ण राशिफल उपलब्ध है।");
+                currentSelectedDate.setDate(currentSelectedDate.getDate() - days);
+            }
+        }
+
+        function goToToday() {
+            currentSelectedDate = new Date();
+            renderRashifal(formatDateKey(currentSelectedDate));
+        }
+
+        function onDatePickerChange(val) {
+            if (ASTRO_DATABASE[val]) {
+                currentSelectedDate = new Date(val + "T00:00:00");
+                renderRashifal(val);
+            } else {
+                alert("कृपया अक्टूबर 2026 के भीतर की तिथि चुनें।");
+                document.getElementById('datePicker').value = currentDateKey;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderRashiFilterBar();
+            goToToday();
         });
     </script>
 </body>
