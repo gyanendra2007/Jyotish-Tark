@@ -7,12 +7,30 @@
   <title>Astrology & Medical Science Blogs | Jyotish Tark</title>
   <meta name="google-adsense-account" content="ca-pub-2888883494422573">
   <meta name="description" content="Read insightful astrology and medical science blogs from Jyotish Tark. Vedic astrology, Kundali, numerology, stotras, and rashifal insights in Hindi.">
-  <meta name="keywords" content="astrology blog, jyotish blog, medical astrology, shree suktam, shani stotra, shiv tandav, durga saptashati pdf, rashifal 2026, Jyotish Tark">
+  <meta name="keywords" content="astrology blog, jyotish blog, medical astrology, shree suktam, shani stotra, shiv tandav, durga saptashati pdf, nadi dosha blood group, pitra dosha epigenetics, rashifal 2026, Jyotish Tark">
   <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
-  <meta name="robots" content="max-image-preview:large">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- Open Graph / WhatsApp / Facebook Meta Tags for Viral Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jyotishtark.in/blog.html">
+  <meta property="og:title" content="Astrology & Medical Science Blogs | Jyotish Tark">
+  <meta property="og:description" content="वैदिक ज्योतिष, मेडिकल साइंस (Genetics & Neuroscience), सिद्ध स्तोत्र और राशिफल का अनूठा संगम। निःशुल्क PDF और वैज्ञानिक विश्लेषण पढ़ें।">
+  <meta property="og:image" content="https://jyotishtark.in/images/durga-saptashati-hero.jpg">
+  <meta property="og:site_name" content="Jyotish Tark">
+  <meta property="og:locale" content="hi_IN">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Astrology & Medical Science Blogs | Jyotish Tark">
+  <meta name="twitter:description" content="वैदिक ज्योतिष, मेडिकल साइंस (Genetics & Neuroscience), सिद्ध स्तोत्र और राशिफल का अनूठा संगम।">
+  <meta name="twitter:image" content="https://jyotishtark.in/images/durga-saptashati-hero.jpg">
+
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888883494422573" crossorigin="anonymous"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -58,16 +76,16 @@
         position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
         background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px;
         box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); z-index: 100; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
-        border: 3px solid white;
+        border: 3px solid white; cursor: pointer;
     }
     .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
     .whatsapp-popup {
-        position: fixed; bottom: 110px; right: 40px; width: 320px; background: white; border-radius: 16px; display: none; z-index: 99; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        position: fixed; bottom: 110px; right: 40px; width: 320px; background: white; border-radius: 16px; display: none; z-index: 99; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden;
     }
     .whatsapp-header { background: linear-gradient(135deg, #075E54, #128C7E); color: white; padding: 20px; display: flex; align-items: center; }
     .whatsapp-header img { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; border: 2px solid white; }
     .whatsapp-body { padding: 20px; color: #4a4a4a; }
-    .whatsapp-option { display: flex; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; border: 1px solid #f0f0f0; transition: 0.3s; }
+    .whatsapp-option { display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; border: 1px solid #f0f0f0; transition: 0.3s; }
     .whatsapp-option:hover { background: #f8f9fa; border-color: #25d366; }
 
     body {
@@ -76,7 +94,7 @@
       color: #f3f4f6; background-attachment: fixed;
     }
     
-    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', 'Hind', serif; font-weight: 700; }
     .hindi { font-family: 'Hind', sans-serif; }
     
     .cosmic-bg {
@@ -92,8 +110,9 @@
       transition: all 0.3s ease; overflow: hidden; border-radius: 16px;
       background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-color: rgba(245, 158, 11, 0.3); }
+    .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); border-color: rgba(245, 158, 11, 0.4); }
     
     .blog-image {
       width: 100%; height: 210px; object-fit: cover;
@@ -101,8 +120,10 @@
     }
     .blog-card:hover .blog-image { transform: scale(1.05); }
 
-    .blog-meta { display: flex; align-items: center; gap: 15px; margin: 15px 0; font-size: 0.9rem; color: #d1d5db; }
-    .blog-tag { background: linear-gradient(to right, var(--primary), var(--accent)); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .blog-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.85rem; color: #d1d5db; }
+    .blog-tag { background: linear-gradient(to right, var(--primary), var(--accent)); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; display: inline-block; }
+    .read-more-link { color: #fbbf24; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; transition: gap 0.2s ease; }
+    .blog-card:hover .read-more-link { gap: 9px; color: #f59e0b; }
 
     /* Filter & Search UI */
     .filter-btn {
@@ -115,7 +136,7 @@
     }
 
     .search-input {
-      background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2);
       color: white; padding: 12px 20px 12px 45px; border-radius: 50px; width: 100%; max-width: 500px;
       font-size: 1rem; outline: none; transition: all 0.3s ease;
     }
@@ -123,11 +144,11 @@
 
     .planet-1 {
       position: absolute; top: 20%; left: 5%; width: 100px; height: 100px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309); box-shadow: 0 0 50px #f59e0b; opacity: 0.7;
+      background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309); box-shadow: 0 0 50px #f59e0b; opacity: 0.7; pointer-events: none;
     }
     .planet-2 {
       position: absolute; bottom: 15%; right: 8%; width: 70px; height: 70px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d); box-shadow: 0 0 40px #ec4899; opacity: 0.7;
+      background: radial-gradient(circle at 30% 30%, #ec4899, #be185d); box-shadow: 0 0 40px #ec4899; opacity: 0.7; pointer-events: none;
     }
     @media (max-width: 768px) { .planet-1, .planet-2 { display: none; } }
   </style>
@@ -164,7 +185,7 @@
                 <a href="contact.html" class="nav-link">Contact</a>
             </nav>
 
-            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl">
+            <button id="menuToggle" aria-label="Toggle Menu" class="md:hidden text-white focus:outline-none text-2xl">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -183,32 +204,35 @@
     </header>
 
 <!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+<a class="whatsapp-float" id="whatsappButton" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>   
 <div class="whatsapp-popup" id="whatsappPopup">
     <div class="whatsapp-header">
         <img src="logo.png" alt="Jyotish Tark">
         <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
     </div>
     <div class="whatsapp-body">
-        <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark', '_blank');">
-            <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+        <p class="mb-4 text-gray-600 text-center">नमस्ते! हम आपकी क्या सहायता कर सकते हैं?</p>
+        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark%2C%20I%20was%20reading%20your%20blog%20and%20want%20astrology%20guidance.', '_blank');">
+            <i class="fas fa-comment text-green-600 text-xl"></i><div><h4 class="font-semibold text-gray-800">Chat with Astrologer</h4><p class="text-xs text-gray-500">Instant WhatsApp Consultation</p></div>
         </div>
         <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+            <i class="fas fa-phone text-purple-600 text-xl"></i><div><h4 class="font-semibold text-gray-800">Call Us Directly</h4><p class="text-xs text-gray-500">+91 83185 13814</p></div>
         </div>
     </div>
 </div>
 
   <!-- Hero Section -->
-  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
+  <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-10 p-8 md:p-12 text-center relative overflow-hidden">
     <div class="relative z-10">
+      <span class="inline-block bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
+        <i class="fas fa-dna mr-1"></i> India's First Science-Backed Vedic Portal
+      </span>
       <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
         <span class="block">Jyotish Tark Blog</span>
-        <span class="text-3xl md:text-4xl text-amber-300">Cosmic Wisdom & Medical Astrology</span>
+        <span class="text-2xl md:text-4xl text-amber-300 mt-2 block">Cosmic Wisdom & Medical Astrology</span>
       </h1>
-      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-        Explore our collection of science-backed Vedic astrology articles, stotras, and horoscope forecasts.
+      <p class="text-lg md:text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        Explore our collection of neuroscience & genetics-backed Vedic astrology articles, सिद्ध स्तोत्र (Free PDFs), and accurate horoscope forecasts.
       </p>
 
       <!-- Live Search Bar -->
@@ -216,329 +240,635 @@
         <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
           <i class="fas fa-search"></i>
         </span>
-        <input type="text" id="blogSearch" class="search-input" placeholder="ब्लॉग खोजें (जैसे: Durga Saptashati, Shani Stotra, Rashifal)..." onkeyup="filterBlogs()">
+        <input type="text" id="blogSearch" class="search-input" placeholder="ब्लॉग खोजें (जैसे: Durga Saptashati, Nadi Dosha, Shani)..." onkeyup="filterBlogs()">
       </div>
 
       <!-- Category Filter Tabs -->
       <div class="flex flex-wrap justify-center gap-3 mt-4" id="categoryFilters">
-        <button class="filter-btn active" onclick="filterCategory('all', this)">सभी (All)</button>
+        <button class="filter-btn active" onclick="filterCategory('all', this)">सभी (All 28)</button>
         <button class="filter-btn" onclick="filterCategory('ebook', this)">📖 फ्री eBook / PDF</button>
-        <button class="filter-btn" onclick="filterCategory('stotra', this)">🔱 वैदिक स्तोत्र & कवच</button>
         <button class="filter-btn" onclick="filterCategory('medical', this)">🧬 मेडिकल एस्ट्रोलॉजी</button>
-        <button class="filter-btn" onclick="filterCategory('rashifal', this)">⭐ राशिफल & गोचर</button>
+        <button class="filter-btn" onclick="filterCategory('stotra', this)">🔱 वैदिक स्तोत्र & कवच</button>
+        <button class="filter-btn" onclick="filterCategory('rashifal', this)">⭐ राशिफल & कुंडली</button>
       </div>
     </div>
   </section>
 
-  <!-- Blog Listing Grid (All 28 Blogs with Category Data Attributes) -->
-  <main class="max-w-7xl mx-auto px-6 py-12">
+  <!-- Interactive Tools Quick-Action Bar (Internal Linking & Conversion Booster) -->
+  <section class="max-w-7xl mx-auto px-6 mt-8">
+    <div class="glass-card rounded-2xl p-4 md:p-6 border border-purple-500/30 flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4 text-center lg:text-left">
+        <div class="hidden sm:flex h-12 w-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 items-center justify-center text-slate-900 text-xl font-bold shrink-0">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div>
+          <h2 class="text-lg md:text-xl font-bold text-white">अपनी कुंडली और नामांक का वैज्ञानिक विश्लेषण अभी करें!</h2>
+          <p class="text-sm text-gray-300">हमारे फ्री इंटरएक्टिव टूल्स से जानें अपना लग्न, अष्टकवर्ग, चाल्डियन अंक और सिद्ध रुद्राक्ष उपाय।</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 shrink-0">
+        <a href="kundali-form.html" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-4 py-2.5 rounded-full text-sm transition flex items-center gap-2 shadow-lg">
+          <i class="fas fa-chart-pie"></i> फ्री कुंडली बनाएं
+        </a>
+        <a href="numerology.html" class="bg-purple-700 hover:bg-purple-600 text-white font-semibold px-4 py-2.5 rounded-full text-sm transition flex items-center gap-2 border border-purple-400/30">
+          <i class="fas fa-hashtag"></i> अंक ज्योतिष (Chaldean)
+        </a>
+        <a href="rudraksha.html" class="bg-pink-700 hover:bg-pink-600 text-white font-semibold px-4 py-2.5 rounded-full text-sm transition flex items-center gap-2 border border-pink-400/30">
+          <i class="fas fa-gem"></i> अभिमंत्रित रुद्राक्ष
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Listing Grid (All 28 Blogs with Full Clickable Headlines & Lazy Loading) -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
     <div class="grid md:grid-cols-3 gap-8" id="blogGrid">
       
       <!-- 1. Durga Saptashati PDF -->
       <article class="blog-card overflow-hidden" data-category="ebook medical stotra">
-        <a href="durga-saptashati-hindi-pdf.html"><img src="images/durga-saptashati-hero.jpg" alt="दुर्गासप्तशती PDF" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Free eBook & Neuroscience</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">श्रीदुर्गासप्तशती (सम्पूर्ण १३ अध्याय): शुद्ध हिन्दी PDF निःशुल्क डाउनलोड</h3>
-          <p class="text-gray-300 mb-4">त्रुटिरहित और सुस्पष्ट हिन्दी अनुवाद में सम्पूर्ण दुर्गासप्तशती PDF डाउनलोड करें। कवच, अर्गला, कीलक व ७०० श्लोकों का विज्ञान।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Oct 18, 2026</span><span><i class="far fa-clock mr-1"></i> 25 min read</span></div>
+        <div>
+          <a href="durga-saptashati-hindi-pdf.html"><img src="images/durga-saptashati-hero.jpg" alt="श्रीदुर्गासप्तशती सम्पूर्ण १३ अध्याय हिन्दी PDF" class="blog-image" fetchpriority="high"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Free eBook & Neuroscience</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="durga-saptashati-hindi-pdf.html" class="hover:text-amber-300 transition">श्रीदुर्गासप्तशती (सम्पूर्ण १३ अध्याय): शुद्ध हिन्दी PDF निःशुल्क डाउनलोड</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">त्रुटिरहित और सुस्पष्ट हिन्दी अनुवाद में सम्पूर्ण दुर्गासप्तशती PDF डाउनलोड करें। कवच, अर्गला, कीलक व ७०० श्लोकों का विज्ञान।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Oct 18, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 25 min</span>
+            <a href="durga-saptashati-hindi-pdf.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 2. Nadi Dosha & Blood Group -->
       <article class="blog-card overflow-hidden" data-category="medical rashifal">
-        <a href="nadi-dosha-blood-group.html"><img src="images/nadi-dosha-hero.jpg" alt="नाड़ी दोष और ब्लड ग्रुप" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Genetics & Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">नाड़ी दोष का मेडिकल विज्ञान: क्या 'नाड़ी दोष' वाले कपल्स के बच्चे बीमार होते हैं?</h3>
-          <p class="text-gray-300 mb-4">नाड़ी दोष, Rh-Factor और ब्लड ग्रुप क्लैश का असली वैज्ञानिक और जेनेटिक सच।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 29, 2026</span><span><i class="far fa-clock mr-1"></i> 18 min read</span></div>
+        <div>
+          <a href="nadi-dosha-blood-group.html"><img src="images/nadi-dosha-hero.jpg" alt="नाड़ी दोष और ब्लड ग्रुप का मेडिकल विज्ञान" class="blog-image"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Genetics & Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="nadi-dosha-blood-group.html" class="hover:text-amber-300 transition">नाड़ी दोष का मेडिकल विज्ञान: क्या 'नाड़ी दोष' वाले कपल्स के बच्चे बीमार होते हैं?</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">नाड़ी दोष, Rh-Factor (Erythroblastosis Fetalis) और ब्लड ग्रुप क्लैश का असली वैज्ञानिक और जेनेटिक सच।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 29, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 18 min</span>
+            <a href="nadi-dosha-blood-group.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 3. Evil Eye & Bio-Magnetism -->
       <article class="blog-card overflow-hidden" data-category="medical stotra">
-        <a href="evil-eye-science-aura.html"><img src="images/evil-eye-hero.jpg" alt="बुरी नज़र और ऑरा" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Quantum Physics</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">'बुरी नज़र' (Evil Eye) का वैज्ञानिक सच: कैसे दूसरों की जलन ऑरा जलाती है?</h3>
-          <p class="text-gray-300 mb-4">क्वांटम फिजिक्स और बायो-मैग्नेटिज्म के अनुसार नज़र लगने और नमक-फिटकरी के उपाय का विज्ञान।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 26, 2026</span><span><i class="far fa-clock mr-1"></i> 15 min read</span></div>
+        <div>
+          <a href="evil-eye-science-aura.html"><img src="images/evil-eye-hero.jpg" alt="बुरी नज़र और ऑरा का वैज्ञानिक सच" class="blog-image"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Quantum & Bio-Magnetism</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="evil-eye-science-aura.html" class="hover:text-amber-300 transition">'बुरी नज़र' (Evil Eye) का वैज्ञानिक सच: कैसे दूसरों की जलन ऑरा जलाती है?</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">क्वांटम फिजिक्स और बायो-मैग्नेटिज्म के अनुसार नज़र लगने और नमक-फिटकरी के उपाय का विज्ञान।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 26, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 15 min</span>
+            <a href="evil-eye-science-aura.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 4. Pitra Dosha & Epigenetics -->
       <article class="blog-card overflow-hidden" data-category="medical rashifal">
-        <a href="pitra-dosha-epigenetics.html"><img src="images/pitra-dosha-hero.jpg" alt="पितृ दोष और जेनेटिक्स" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Genetics & Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">पितृ दोष का असली सच: क्या यह पूर्वजों का श्राप है या आपका DNA Mutation?</h3>
-          <p class="text-gray-300 mb-4">जानें कैसे पितृ दोष असल में 'Epigenetics' और जेनेटिक मेमोरी का खेल है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 25, 2026</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
+        <div>
+          <a href="pitra-dosha-epigenetics.html"><img src="images/pitra-dosha-hero.jpg" alt="पितृ दोष और जेनेटिक्स Epigenetics" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Epigenetics & Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="pitra-dosha-epigenetics.html" class="hover:text-amber-300 transition">पितृ दोष का असली सच: क्या यह पूर्वजों का श्राप है या आपका DNA Mutation?</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">जानें कैसे पितृ दोष असल में 'Epigenetics' (Transgenerational Trauma) और जेनेटिक मेमोरी का खेल है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 25, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="pitra-dosha-epigenetics.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 5. Lakshmi Bhakti Sangrah -->
-      <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="lakshmi-bhakti-sangrah.html"><img src="images/lakshmi-bhakti-hero.jpg" alt="महालक्ष्मी भक्ति संग्रह" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Wealth & Neuroscience</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">महालक्ष्मी भक्ति संग्रह: चालीसा, अष्टकम और धन प्राप्ति का न्यूरोलॉजिकल विज्ञान</h3>
-          <p class="text-gray-300 mb-4">लक्ष्मी चालीसा और इन्द्र कृत अष्टकम से नर्वस सिस्टम को 'अमीरी' के लिए री-प्रोग्राम करें।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span><span><i class="far fa-clock mr-1"></i> 30 min read</span></div>
+      <article class="blog-card overflow-hidden" data-category="stotra medical">
+        <div>
+          <a href="lakshmi-bhakti-sangrah.html"><img src="images/lakshmi-bhakti-hero.jpg" alt="महालक्ष्मी भक्ति संग्रह" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Wealth & Neuroscience</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="lakshmi-bhakti-sangrah.html" class="hover:text-amber-300 transition">महालक्ष्मी भक्ति संग्रह: चालीसा, अष्टकम और धन प्राप्ति का न्यूरोलॉजिकल विज्ञान</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">लक्ष्मी चालीसा और इन्द्र कृत अष्टकम से नर्वस सिस्टम (RAS) को 'अमीरी' के लिए री-प्रोग्राम करें।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 30 min</span>
+            <a href="lakshmi-bhakti-sangrah.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 6. Shiv Tandav Stotram -->
-      <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="shiv-tandav-stotram.html"><img src="images/shiv-tandav-hero.jpg" alt="शिव तांडव स्तोत्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Neuroscience & Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">शिव तांडव स्तोत्र: डमरू की ध्वनि का न्यूरोलॉजिकल विज्ञान और सम्पूर्ण पाठ</h3>
-          <p class="text-gray-300 mb-4">रावण रचित 15 श्लोकों का ब्रह्मांडीय एल्गोरिदम जो आपके मस्तिष्क के तनाव को भस्म करता है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span><span><i class="far fa-clock mr-1"></i> 30 min read</span></div>
-        </div>
-      </article>
-
-      <!-- 7. Weekly Rashifal -->
-      <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="weekly-rashifal-24-30-august-2026.html"><img src="images/weekly-rashifal-24-30-aug-hero.jpg" alt="साप्ताहिक राशिफल" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Weekly Horoscope</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">साप्ताहिक राशिफल: 24 से 30 अगस्त 2026 (सभी 12 राशियों का भविष्यफल)</h3>
-          <p class="text-gray-300 mb-4">सूर्य-सिंह संक्रांति और चंद्र गोचर का करियर, स्वास्थ्य और वित्त पर प्रभाव।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
-        </div>
-      </article>
-
-      <!-- 8. Rashifal 2026 -->
-      <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="rashifal-2026.html"><img src="images/rashifal-2026-hero.jpg" alt="राशिफल 2026" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Yearly Horoscope</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">राशिफल 2026: क्या कहता है आपका भविष्य? (न्यूरो-एस्ट्रोलॉजिकल विश्लेषण)</h3>
-          <p class="text-gray-300 mb-4">वर्ष 2026 में करियर, स्वास्थ्य और आर्थिक स्थिति के लिए 12 राशियों का वार्षिक भविष्यफल।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span><span><i class="far fa-clock mr-1"></i> 25 min read</span></div>
-        </div>
-      </article>
-
-      <!-- 9. Shani Stotra -->
       <article class="blog-card overflow-hidden" data-category="stotra medical">
-        <a href="dasharath-krit-shani-stotra.html"><img src="images/shani-hero.jpg" alt="दशरथ कृत शनि स्तोत्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Divine Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">दशरथ कृत शनि स्तोत्र: साढ़ेसाती, डिप्रेशन और हड्डियों के दर्द का वैज्ञानिक उपचार</h3>
-          <p class="text-gray-300 mb-4">राजा दशरथ रचित शनि स्तोत्र - साढ़ेसाती और ढैय्या से मुक्ति का अचूक वैदिक उपाय।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Nov 19, 2025</span><span><i class="far fa-clock mr-1"></i> 18 min read</span></div>
+        <div>
+          <a href="shiv-tandav-stotram.html"><img src="images/shiv-tandav-hero.jpg" alt="शिव तांडव स्तोत्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Neuroscience & Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="shiv-tandav-stotram.html" class="hover:text-amber-300 transition">शिव तांडव स्तोत्र: डमरू की ध्वनि का न्यूरोलॉजिकल विज्ञान और सम्पूर्ण पाठ</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">रावण रचित 15 श्लोकों का ब्रह्मांडीय एल्गोरिदम जो आपके मस्तिष्क के तनाव को भस्म करता है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 30 min</span>
+            <a href="shiv-tandav-stotram.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
-      <!-- 10. Shree Suktam -->
-      <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="shree-suktam.html"><img src="images/shree-hero.jpg" alt="श्री सूक्त" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Vedic Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">श्री सूक्त: महालक्ष्मी का दिव्य स्तोत्र और असीमित धन का न्यूरोलॉजिकल विज्ञान</h3>
-          <p class="text-gray-300 mb-4">ऋग्वेद के श्री सूक्त के 16 श्लोकों का पाठ और मस्तिष्क से 'दरिद्रता' मिटाने का विज्ञान।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Oct 27, 2025</span><span><i class="far fa-clock mr-1"></i> 22 min read</span></div>
+      <!-- 7. Rashifal 2026 -->
+      <article class="blog-card overflow-hidden" data-category="rashifal medical">
+        <div>
+          <a href="rashifal-2026.html"><img src="images/rashifal-2026-hero.jpg" alt="राशिफल 2026" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Yearly Horoscope 2026</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="rashifal-2026.html" class="hover:text-amber-300 transition">राशिफल 2026: क्या कहता है आपका भविष्य? (न्यूरो-एस्ट्रोलॉजिकल विश्लेषण)</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">वर्ष 2026 में करियर, स्वास्थ्य और आर्थिक स्थिति के लिए 12 राशियों का वार्षिक भविष्यफल।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 25 min</span>
+            <a href="rashifal-2026.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 8. Shani Stotra -->
+      <article class="blog-card overflow-hidden" data-category="stotra medical">
+        <div>
+          <a href="dasharath-krit-shani-stotra.html"><img src="images/shani-hero.jpg" alt="दशरथ कृत शनि स्तोत्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Divine Stotra & Bones</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="dasharath-krit-shani-stotra.html" class="hover:text-amber-300 transition">दशरथ कृत शनि स्तोत्र: साढ़ेसाती, डिप्रेशन और हड्डियों के दर्द का वैज्ञानिक उपचार</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">राजा दशरथ रचित शनि स्तोत्र - साढ़ेसाती, कोर्टिसोल (Cortisol) और ढैय्या से मुक्ति का अचूक वैदिक उपाय।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Nov 19, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 18 min</span>
+            <a href="dasharath-krit-shani-stotra.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 9. Shree Suktam -->
+      <article class="blog-card overflow-hidden" data-category="stotra medical">
+        <div>
+          <a href="shree-suktam.html"><img src="images/shree-hero.jpg" alt="श्री सूक्त" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Vedic Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="shree-suktam.html" class="hover:text-amber-300 transition">श्री सूक्त: महालक्ष्मी का दिव्य स्तोत्र और असीमित धन का न्यूरोलॉजिकल विज्ञान</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">ऋग्वेद के श्री सूक्त के 16 श्लोकों का पाठ और मस्तिष्क से 'दरिद्रता' मिटाने का विज्ञान।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Oct 27, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 22 min</span>
+            <a href="shree-suktam.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10. Weekly Rashifal -->
+      <article class="blog-card overflow-hidden" data-category="rashifal">
+        <div>
+          <a href="weekly-rashifal-24-30-august-2026.html"><img src="images/weekly-rashifal-24-30-aug-hero.jpg" alt="साप्ताहिक राशिफल" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Transit Analysis</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="weekly-rashifal-24-30-august-2026.html" class="hover:text-amber-300 transition">साप्ताहिक राशिफल व गोचर विश्लेषण: सभी 12 राशियों का भविष्यफल</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">सूर्य-सिंह संक्रांति और चंद्र गोचर का करियर, स्वास्थ्य और वित्त पर विस्तृत प्रभाव।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="weekly-rashifal-24-30-august-2026.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 11. Shiv Kavach -->
       <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="shiv-kavach.html"><img src="images/blog18.jpg" alt="शिव कवच" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Divine Protection</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">अमोघ शिव कवच: भगवान शिव का दिव्य सुरक्षा कवच</h3>
-          <p class="text-gray-300 mb-4">शिव कवच का सम्पूर्ण पाठ, हिन्दी अर्थ और सभी भयों व संकटों से मुक्ति का साधन।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Oct 15, 2025</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
+        <div>
+          <a href="shiv-kavach.html"><img src="images/blog18.jpg" alt="शिव कवच" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Divine Protection</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="shiv-kavach.html" class="hover:text-amber-300 transition">अमोघ शिव कवच: भगवान शिव का दिव्य सुरक्षा कवच</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">शिव कवच का सम्पूर्ण पाठ, हिन्दी अर्थ और सभी भयों व संकटों से मुक्ति का साधन।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Oct 15, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="shiv-kavach.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 12. Narayan Kavach -->
       <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="narayan-kavach.html"><img src="images/blog17.jpg" alt="नारायण कवच" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Divine Protection</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">श्री नारायण कवच: दिव्य सुरक्षा कवच का सम्पूर्ण विवरण</h3>
-          <p class="text-gray-300 mb-4">श्रीमद्भागवत पुराण में वर्णित नारायण कवच का विस्तृत ज्ञान और पाठ विधि।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Sep 28, 2025</span><span><i class="far fa-clock mr-1"></i> 18 min read</span></div>
+        <div>
+          <a href="narayan-kavach.html"><img src="images/blog17.jpg" alt="नारायण कवच" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Divine Protection</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="narayan-kavach.html" class="hover:text-amber-300 transition">श्री नारायण कवच: दिव्य सुरक्षा कवच का सम्पूर्ण विवरण</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">श्रीमद्भागवत पुराण में वर्णित नारायण कवच का विस्तृत ज्ञान और पाठ विधि।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Sep 28, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 18 min</span>
+            <a href="narayan-kavach.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 13. Mangal Dosh Nivaran -->
       <article class="blog-card overflow-hidden" data-category="medical rashifal">
-        <a href="mangal-dosha-nivaran.html"><img src="images/blog16.jpg" alt="मंगल दोष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Astrology & Remedies</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">मंगल दोष: कारण, प्रभाव और सम्पूर्ण निवारण उपाय</h3>
-          <p class="text-gray-300 mb-4">कुण्डली में मंगल दोष के कारण, प्रभाव और अंगारक स्तोत्र से सम्पूर्ण निवारण।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Sep 16, 2025</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
+        <div>
+          <a href="mangal-dosha-nivaran.html"><img src="images/blog16.jpg" alt="मंगल दोष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Astrology & Remedies</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="mangal-dosha-nivaran.html" class="hover:text-amber-300 transition">मंगल दोष: कारण, प्रभाव और सम्पूर्ण निवारण उपाय</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">कुण्डली में मंगल दोष के कारण, प्रभाव और अंगारक स्तोत्र से सम्पूर्ण निवारण।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Sep 16, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="mangal-dosha-nivaran.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 14. Hanuman Bhakti Sangrah -->
       <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="hanuman-bhakti-sangrah.html"><img src="images/blog15.jpg" alt="हनुमान भक्ति संग्रह" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Devotional Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">हनुमान भक्ति संग्रह: चालीसा, बाण, अष्टक और अंगारक स्तोत्र</h3>
-          <p class="text-gray-300 mb-4">संपूर्ण हनुमान चालीसा, हनुमान बाण, हनुमान अष्टक और अंगारक स्तोत्र का विस्तृत संग्रह।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 31, 2025</span><span><i class="far fa-clock mr-1"></i> 25 min read</span></div>
+        <div>
+          <a href="hanuman-bhakti-sangrah.html"><img src="images/blog15.jpg" alt="हनुमान भक्ति संग्रह" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Devotional Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="hanuman-bhakti-sangrah.html" class="hover:text-amber-300 transition">हनुमान भक्ति संग्रह: चालीसा, बाण, अष्टक और अंगारक स्तोत्र</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">संपूर्ण हनुमान चालीसा, हनुमान बाण, हनुमान अष्टक और अंगारक स्तोत्र का विस्तृत संग्रह।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 31, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 25 min</span>
+            <a href="hanuman-bhakti-sangrah.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 15. Medha Suktam -->
-      <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="medha-suktam.html"><img src="images/blog14.jpg" alt="मेदासूक्त" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Vedic Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">मेदासूक्त: सम्पूर्ण पाठ हिंदी अर्थ सहित (बुद्धि व स्मरण शक्ति)</h3>
-          <p class="text-gray-300 mb-4">विद्यार्थियों और ज्ञानार्जन करने वाले साधकों के लिए स्मरणशक्ति जाग्रत करने वाला वैदिक सूक्त।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Aug 15, 2025</span><span><i class="far fa-clock mr-1"></i> 15 min read</span></div>
+      <article class="blog-card overflow-hidden" data-category="stotra medical">
+        <div>
+          <a href="medha-suktam.html"><img src="images/blog14.jpg" alt="मेधा सूक्त" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Memory & Vedic Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="medha-suktam.html" class="hover:text-amber-300 transition">मेधा सूक्त: सम्पूर्ण पाठ हिंदी अर्थ सहित (बुद्धि व स्मरण शक्ति)</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">विद्यार्थियों और ज्ञानार्जन करने वाले साधकों के लिए स्मरणशक्ति जाग्रत करने वाला वैदिक सूक्त।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Aug 15, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 15 min</span>
+            <a href="medha-suktam.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 16. Annapurna Stotra -->
       <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="annapurna-stotra.html"><img src="images/blog13.jpg" alt="अन्नपूर्णा स्तोत्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">अन्नपूर्णा स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित</h3>
-          <p class="text-gray-300 mb-4">माता अन्नपूर्णा की स्तुति जो घर में कभी अन्न-धन की कमी नहीं होने देती।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Jul 31, 2025</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
+        <div>
+          <a href="annapurna-stotra.html"><img src="images/blog13.jpg" alt="अन्नपूर्णा स्तोत्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="annapurna-stotra.html" class="hover:text-amber-300 transition">अन्नपूर्णा स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">माता अन्नपूर्णा की स्तुति जो घर में कभी अन्न-धन की कमी नहीं होने देती।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Jul 31, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="annapurna-stotra.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 17. Navagraha Stotra -->
       <article class="blog-card overflow-hidden" data-category="stotra rashifal">
-        <a href="navagraha-stotra.html"><img src="images/blog12.jpg" alt="नवग्रह स्तोत्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">नवग्रह स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित</h3>
-          <p class="text-gray-300 mb-4">नौ ग्रहों को शांत करने और उनके नकारात्मक प्रभावों को दूर करने वाला दिव्य स्तोत्र।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Jul 20, 2025</span><span><i class="far fa-clock mr-1"></i> 25 min read</span></div>
+        <div>
+          <a href="navagraha-stotra.html"><img src="images/blog12.jpg" alt="नवग्रह स्तोत्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Stotra</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="navagraha-stotra.html" class="hover:text-amber-300 transition">नवग्रह स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">नौ ग्रहों को शांत करने और उनके नकारात्मक प्रभावों को दूर करने वाला दिव्य स्तोत्र।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Jul 20, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 25 min</span>
+            <a href="navagraha-stotra.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 18. Aditya Hridaya Stotra -->
-      <article class="blog-card overflow-hidden" data-category="stotra">
-        <a href="aditya-hridaya-stotra.html"><img src="images/blog11.jpg" alt="आदित्य हृदय स्तोत्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Stotra</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">आदित्य हृदय स्तोत्र: महत्व, लाभ और संपूर्ण हिंदी अर्थ</h3>
-          <p class="text-gray-300 mb-4">रामायण का वह दिव्य स्तोत्र जिसने श्रीराम को विजय दिलाया और आत्मबल बढ़ाया।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Jun 30, 2025</span><span><i class="far fa-clock mr-1"></i> 25 min read</span></div>
+      <article class="blog-card overflow-hidden" data-category="stotra medical">
+        <div>
+          <a href="aditya-hridaya-stotra.html"><img src="images/blog11.jpg" alt="आदित्य हृदय स्तोत्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Stotra & Vitality</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="aditya-hridaya-stotra.html" class="hover:text-amber-300 transition">आदित्य हृदय स्तोत्र: महत्व, लाभ और संपूर्ण हिंदी अर्थ</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">रामायण का वह दिव्य स्तोत्र जिसने श्रीराम को विजय दिलाया और आत्मबल बढ़ाया।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Jun 30, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 25 min</span>
+            <a href="aditya-hridaya-stotra.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 19. Kaalsarp Dosha Remedies -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="kaalsarp-dosha-remedies.html"><img src="images/blog10.png" alt="कालसर्प दोष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">कालसर्प दोष: प्रकार, प्रभाव, और निवारण विधियाँ</h3>
-          <p class="text-gray-300 mb-4">कालसर्प दोष के 12 प्रकार, जीवन पर प्रभाव और इसके वैदिक उपाय।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Jun 17, 2025</span><span><i class="far fa-clock mr-1"></i> 20 min read</span></div>
+        <div>
+          <a href="kaalsarp-dosha-remedies.html"><img src="images/blog10.png" alt="कालसर्प दोष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="kaalsarp-dosha-remedies.html" class="hover:text-amber-300 transition">कालसर्प दोष: प्रकार, प्रभाव, और निवारण विधियाँ</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">कालसर्प दोष के 12 प्रकार, जीवन पर प्रभाव और इसके प्रामाणिक वैदिक उपाय।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Jun 17, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 20 min</span>
+            <a href="kaalsarp-dosha-remedies.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 20. Ketu Dosha Remedies -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="ketu-dosha-remedies.html"><img src="images/blog9.png" alt="केतु दोष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">केतु दोष और इसके सरल व प्रभावी उपाय</h3>
-          <p class="text-gray-300 mb-4">जानिए केतु दोष क्या है, यह जीवन को कैसे प्रभावित करता है और इसके निवारण।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> May 31, 2025</span><span><i class="far fa-clock mr-1"></i> 15 min read</span></div>
+        <div>
+          <a href="ketu-dosha-remedies.html"><img src="images/blog9.png" alt="केतु दोष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="ketu-dosha-remedies.html" class="hover:text-amber-300 transition">केतु दोष और इसके सरल व प्रभावी उपाय</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">जानिए केतु दोष क्या है, यह जीवन को कैसे प्रभावित करता है और इसके निवारण।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> May 31, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 15 min</span>
+            <a href="ketu-dosha-remedies.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 21. Vastu Shastra -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="vastu-shastra.html"><img src="images/vastu-hero.jpg" alt="वास्तु शास्त्र" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Vastu</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">वास्तु शास्त्र और घर की सकारात्मक ऊर्जा</h3>
-          <p class="text-gray-300 mb-4">जानें कैसे वास्तु आपके घर में सुख-समृद्धि और खुशहाली ला सकता है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> May 15, 2025</span><span><i class="far fa-clock mr-1"></i> 12 min read</span></div>
+        <div>
+          <a href="vastu-shastra.html"><img src="images/vastu-hero.jpg" alt="वास्तु शास्त्र" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Vastu</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="vastu-shastra.html" class="hover:text-amber-300 transition">वास्तु शास्त्र और घर की सकारात्मक ऊर्जा</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">जानें कैसे वास्तु आपके घर में सुख-समृद्धि और खुशहाली ला सकता है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> May 15, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 12 min</span>
+            <a href="vastu-shastra.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 22. Nadi Astrology -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="nadi-astrology.html"><img src="images/nadi-hero.jpg" alt="नाड़ी ज्योतिष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">क्या है नाड़ी ज्योतिष?—तमिलनाडु की प्राचीन भविष्यवाणी तकनीक</h3>
-          <p class="text-gray-300 mb-4">तमिलनाडु की प्राचीन नाड़ी ज्योतिष पद्धति से जन्म के रहस्यों की सटीक जानकारी।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Apr 24, 2025</span><span><i class="far fa-clock mr-1"></i> 10 min read</span></div>
+        <div>
+          <a href="nadi-astrology.html"><img src="images/nadi-hero.jpg" alt="नाड़ी ज्योतिष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="nadi-astrology.html" class="hover:text-amber-300 transition">क्या है नाड़ी ज्योतिष?—तमिलनाडु की प्राचीन भविष्यवाणी तकनीक</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">तमिलनाडु की प्राचीन नाड़ी ज्योतिष पद्धति से जन्म के रहस्यों की सटीक जानकारी।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Apr 24, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 10 min</span>
+            <a href="nadi-astrology.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 23. Rashifal 2025 -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="rashifal-2025.html"><img src="images/blog1.png" alt="राशिफल 2025" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Rashifal</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">राशिफल 2025: क्या कहता है आपका भविष्य?</h3>
-          <p class="text-gray-300 mb-4">प्रेम, करियर, स्वास्थ्य और वित्त—2025 का संपूर्ण वार्षिक राशिफल।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Apr 10, 2025</span><span><i class="far fa-clock mr-1"></i> 5 min read</span></div>
+        <div>
+          <a href="rashifal-2025.html"><img src="images/blog1.png" alt="राशिफल 2025" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Rashifal Archive</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="rashifal-2025.html" class="hover:text-amber-300 transition">राशिफल 2025: क्या कहता है आपका भविष्य?</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">प्रेम, करियर, स्वास्थ्य और वित्त—2025 का संपूर्ण वार्षिक राशिफल।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Apr 10, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 5 min</span>
+            <a href="rashifal-2025.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 24. Ank Jyotish -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="ank-jyotish.html"><img src="images/blog2.png" alt="अंक ज्योतिष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Numerology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">अंक ज्योतिष और भाग्य का रहस्य</h3>
-          <p class="text-gray-300 mb-4">क्या आपका भाग्य आपके जन्मांक से जुड़ा है? आइए जानते हैं अंक ज्योतिष का महत्व।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Mar 28, 2025</span><span><i class="far fa-clock mr-1"></i> 7 min read</span></div>
+        <div>
+          <a href="ank-jyotish.html"><img src="images/blog2.png" alt="अंक ज्योतिष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Numerology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="ank-jyotish.html" class="hover:text-amber-300 transition">अंक ज्योतिष और भाग्य का रहस्य</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">क्या आपका भाग्य आपके जन्मांक से जुड़ा है? आइए जानते हैं अंक ज्योतिष का महत्व।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Mar 28, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 7 min</span>
+            <a href="ank-jyotish.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 25. Career Astrology -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="career-astrology.html"><img src="images/blog3.jpg" alt="कुंडली और करियर" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Kundali</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">कुंडली से करियर कैसे देखें?</h3>
-          <p class="text-gray-300 mb-4">क्या आपकी कुंडली आपको सही करियर की दिशा दिखा सकती है? विस्तार से जानिए।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Mar 15, 2025</span><span><i class="far fa-clock mr-1"></i> 6 min read</span></div>
+        <div>
+          <a href="career-astrology.html"><img src="images/blog3.jpg" alt="कुंडली और करियर" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Kundali</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="career-astrology.html" class="hover:text-amber-300 transition">कुंडली से करियर कैसे देखें?</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">क्या आपकी कुंडली आपको सही करियर की दिशा दिखा सकती है? विस्तार से जानिए।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Mar 15, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 6 min</span>
+            <a href="career-astrology.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 26. Planetary Transits -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="planetary-transits.html"><img src="images/transit-hero.jpg" alt="ग्रहों का प्रभाव" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Planetary Transits</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">ग्रहों की चाल का आपके जीवन पर प्रभाव</h3>
-          <p class="text-gray-300 mb-4">जानें कैसे ग्रहों की गति आपके रोजमर्रा के जीवन और करियर को प्रभावित करती है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Mar 5, 2025</span><span><i class="far fa-clock mr-1"></i> 8 min read</span></div>
+        <div>
+          <a href="planetary-transits.html"><img src="images/transit-hero.jpg" alt="ग्रहों का प्रभाव" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Planetary Transits</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="planetary-transits.html" class="hover:text-amber-300 transition">ग्रहों की चाल का आपके जीवन पर प्रभाव</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">जानें कैसे ग्रहों की गति आपके रोजमर्रा के जीवन और करियर को प्रभावित करती है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Mar 5, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 8 min</span>
+            <a href="planetary-transits.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 27. Vedic Modern Astrology -->
       <article class="blog-card overflow-hidden" data-category="medical">
-        <a href="vedic-modern-astrology.html"><img src="images/vedic-modern.jpg" alt="वैदिक ज्योतिष" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Vedic Astrology</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">वैदिक ज्योतिष: प्राचीन ज्ञान का आधुनिक उपयोग</h3>
-          <p class="text-gray-300 mb-4">कैसे प्राचीन वैदिक ज्योतिष आज के आधुनिक युग में आपके जीवन को बेहतर बना सकता है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Feb 22, 2025</span><span><i class="far fa-clock mr-1"></i> 10 min read</span></div>
+        <div>
+          <a href="vedic-modern-astrology.html"><img src="images/vedic-modern.jpg" alt="वैदिक ज्योतिष" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Vedic Astrology</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="vedic-modern-astrology.html" class="hover:text-amber-300 transition">वैदिक ज्योतिष: प्राचीन ज्ञान का आधुनिक उपयोग</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">कैसे प्राचीन वैदिक ज्योतिष आज के आधुनिक युग में आपके जीवन को बेहतर बना सकता है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Feb 22, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 10 min</span>
+            <a href="vedic-modern-astrology.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
       <!-- 28. Kundali Milan -->
       <article class="blog-card overflow-hidden" data-category="rashifal">
-        <a href="kundali-milan.html"><img src="images/blog6.png" alt="कुंडली मिलान" class="blog-image"></a>
-        <div class="p-5">
-          <span class="blog-tag">Relationships</span>
-          <h3 class="text-xl font-semibold mb-2 text-white mt-3">कुंडली मिलान: सही जीवनसाथी चुनने की कला</h3>
-          <p class="text-gray-300 mb-4">जानें कैसे कुंडली मिलान आपको सही जीवनसाथी चुनने में मदद करता है।</p>
-          <div class="blog-meta"><span><i class="far fa-calendar-alt mr-1"></i> Feb 15, 2025</span><span><i class="far fa-clock mr-1"></i> 9 min read</span></div>
+        <div>
+          <a href="kundali-milan.html"><img src="images/blog6.png" alt="कुंडली मिलान" class="blog-image" loading="lazy" decoding="async"></a>
+          <div class="p-5 pb-0">
+            <span class="blog-tag">Relationships</span>
+            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
+              <a href="kundali-milan.html" class="hover:text-amber-300 transition">कुंडली मिलान: सही जीवनसाथी चुनने की कला</a>
+            </h3>
+            <p class="text-gray-300 text-sm leading-relaxed">जानें कैसे कुंडली मिलान आपको सही जीवनसाथी चुनने में मदद करता है।</p>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="blog-meta">
+            <span><i class="far fa-calendar-alt mr-1"></i> Feb 15, 2025</span>
+            <span><i class="far fa-clock mr-1"></i> 9 min</span>
+            <a href="kundali-milan.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
+          </div>
         </div>
       </article>
 
@@ -548,20 +878,23 @@
     <div id="noResults" class="hidden text-center py-16">
       <i class="fas fa-search text-5xl text-gray-500 mb-4"></i>
       <h3 class="text-2xl font-bold text-white">कोई ब्लॉग नहीं मिला</h3>
-      <p class="text-gray-400 mt-2">कृपया दूसरा कीवर्ड सर्च करें या 'सभी' टैब पर क्लिक करें।</p>
+      <p class="text-gray-400 mt-2">कृपया दूसरा कीवर्ड सर्च करें या 'सभी (All 28)' टैब पर क्लिक करें।</p>
     </div>
   </main>
 
-  <!-- Newsletter Section -->
-  <section class="max-w-4xl mx-auto px-4 py-16">
-    <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden">
+  <!-- Functional WhatsApp & Insights Lead Funnel Section -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <div class="cosmic-bg rounded-2xl shadow-lg p-8 md:p-12 relative overflow-hidden border border-purple-500/30">
       <div class="relative z-10 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Subscribe to Our Astrology Insights</h2>
-        <p class="text-xl text-purple-100 mb-8">Get weekly astrology updates, free PDF alerts, and exclusive content in your inbox.</p>
-        <form class="flex flex-col sm:flex-row gap-4 justify-center items-center" onsubmit="event.preventDefault(); alert('धन्यवाद! आप सफलतापूर्वक सब्सक्राइब हो गए हैं।');">
-          <input type="email" placeholder="Your Email Address" required class="px-4 py-3 rounded-full text-slate-900 focus:outline-none w-full sm:w-auto">
-          <button type="submit" class="bg-gradient-to-right from-purple-600 to-pink-600 bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition">
-            <i class="fas fa-paper-plane mr-2"></i> Subscribe
+        <span class="inline-block bg-green-500/20 border border-green-400/40 text-green-300 text-xs font-semibold px-4 py-1 rounded-full mb-3">
+          <i class="fab fa-whatsapp mr-1"></i> Free VIP Vedic Updates
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">जुड़ें हमारे ज्योतिष तर्क VIP समुदाय से</h2>
+        <p class="text-lg text-purple-100 mb-8 max-w-2xl mx-auto">साप्ताहिक राशिफल, नए मेडिकल एस्ट्रोलॉजी ब्लॉग, और निःशुल्क सिद्ध स्तोत्र PDF सीधे अपने WhatsApp पर प्राप्त करें।</p>
+        <form id="subscribeForm" class="flex flex-col sm:flex-row gap-4 justify-center items-center" onsubmit="handleLeadSubmit(event)">
+          <input type="text" id="subscriberInput" placeholder="आपका नाम या राशि लिखें..." required class="px-5 py-3.5 rounded-full text-slate-900 focus:outline-none w-full sm:w-72 font-medium">
+          <button type="submit" class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3.5 rounded-full font-semibold hover:opacity-95 transition shadow-lg flex items-center justify-center w-full sm:w-auto">
+            <i class="fab fa-whatsapp text-xl mr-2"></i> WhatsApp पर जुड़ें
           </button>
         </form>
       </div>
@@ -572,37 +905,37 @@
   <footer class="glass-card text-center py-12 mt-12">
     <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-center space-x-6 mb-8 text-2xl">
-            <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
-            <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/jyotishtark" target="_blank" rel="noopener" aria-label="Facebook" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/jyotishtark/" target="_blank" rel="noopener" aria-label="Instagram" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" rel="noopener" aria-label="YouTube" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/918318513814" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
             <div>
                 <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
                 <ul class="space-y-3 footer-links">
-                    <li><a href="index.html" class="text-gray-300">Home</a></li>
-                    <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
-                    <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
-                    <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+                    <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                    <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Kundali</a></li>
+                    <li><a href="numerology.html" class="text-gray-300 hover:text-white transition">Numerology</a></li>
+                    <li><a href="rashifal.html" class="text-gray-300 hover:text-white transition">Rashifal</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
                 <ul class="space-y-3 footer-links">
-                    <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
-                    <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
-                    <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
-                    <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+                    <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Get Your Kundali</a></li>
+                    <li><a href="numerology.html" class="text-gray-300 hover:text-white transition">Numerology Report</a></li>
+                    <li><a href="rudraksha.html" class="text-gray-300 hover:text-white transition">Energized Rudraksha</a></li>
+                    <li><a href="contact.html" class="text-gray-300 hover:text-white transition">Consult Astrologer</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
                 <ul class="space-y-3 footer-links">
-                    <li><a href="about.html" class="text-gray-300">About Us</a></li>
-                    <li><a href="disclaimer.html" class="text-gray-300">Disclaimer</a></li>
-                    <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+                    <li><a href="about.html" class="text-gray-300 hover:text-white transition">About Us</a></li>
+                    <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition">Disclaimer</a></li>
+                    <li><a href="privacy-policy.html" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="terms-of-service.html" class="text-gray-300 hover:text-white transition">Terms of Service</a></li>
                 </ul>
             </div>
             <div>
@@ -635,6 +968,14 @@
         }
     });
 
+    // Functional Lead Funnel Redirect to WhatsApp
+    function handleLeadSubmit(event) {
+      event.preventDefault();
+      const userVal = document.getElementById('subscriberInput').value.trim();
+      const msg = encodeURIComponent(`नमस्ते ज्योतिष तर्क! मेरा नाम/राशि (${userVal}) है। मुझे आपके नए ज्योतिष व मेडिकल साइंस ब्लॉग और फ्री PDF अपडेट्स से जोड़ें।`);
+      window.open(`https://wa.me/918318513814?text=${msg}`, '_blank');
+    }
+
     // Live Search Function
     function filterBlogs() {
       const input = document.getElementById('blogSearch').value.toLowerCase();
@@ -644,7 +985,7 @@
       cards.forEach(card => {
         const text = card.textContent.toLowerCase();
         if (text.includes(input)) {
-          card.style.display = "block";
+          card.style.display = "flex";
           visibleCount++;
         } else {
           card.style.display = "none";
@@ -666,7 +1007,7 @@
       cards.forEach(card => {
         const categories = card.getAttribute('data-category') || '';
         if (category === 'all' || categories.includes(category)) {
-          card.style.display = "block";
+          card.style.display = "flex";
           visibleCount++;
         } else {
           card.style.display = "none";
@@ -686,18 +1027,19 @@
         "@type": "WebPage",
         "@id": "https://jyotishtark.in/blog.html",
         "url": "https://jyotishtark.in/blog.html",
-        "name": "Astrology Blogs | Jyotish Tark",
+        "name": "Astrology & Medical Science Blogs | Jyotish Tark",
         "description": "Read insightful astrology and medical science blogs from Jyotish Tark. Vedic astrology, Kundali, numerology, and stotras in Hindi."
       },
       {
         "@type": "ItemList",
+        "numberOfItems": 28,
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "item": {
               "@type": "BlogPosting",
-              "headline": "श्रीदुर्गासप्तशती (सम्पूर्ण १३ अध्याय): शुद्ध हिन्दी PDF निःशुल्क डाउनलोड और ७०० श्लोकों का वैज्ञानिक रहस्य",
+              "headline": "श्रीदुर्गासप्तशती (सम्पूर्ण १३ अध्याय): शुद्ध हिन्दी PDF निःशुल्क डाउनलोड",
               "url": "https://jyotishtark.in/durga-saptashati-hindi-pdf.html",
               "datePublished": "2026-10-18",
               "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
@@ -708,7 +1050,7 @@
             "position": 2,
             "item": {
               "@type": "BlogPosting",
-              "headline": "नाड़ी दोष का मेडिकल विज्ञान: क्या 'नाड़ी दोष' वाले कपल्स के बच्चे सच में बीमार पैदा होते हैं?",
+              "headline": "नाड़ी दोष का मेडिकल विज्ञान: क्या 'नाड़ी दोष' वाले कपल्स के बच्चे बीमार होते हैं?",
               "url": "https://jyotishtark.in/nadi-dosha-blood-group.html",
               "datePublished": "2026-08-29",
               "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
@@ -719,7 +1061,7 @@
             "position": 3,
             "item": {
               "@type": "BlogPosting",
-              "headline": "'बुरी नज़र' (Evil Eye) का वैज्ञानिक सच: कैसे दूसरों की ईर्ष्या आपके 'ऑरा' को जला देती है?",
+              "headline": "'बुरी नज़र' (Evil Eye) का वैज्ञानिक सच: कैसे दूसरों की जलन ऑरा जलाती है?",
               "url": "https://jyotishtark.in/evil-eye-science-aura.html",
               "datePublished": "2026-08-26",
               "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
@@ -763,18 +1105,7 @@
             "position": 7,
             "item": {
               "@type": "BlogPosting",
-              "headline": "साप्ताहिक राशिफल: 24 से 30 अगस्त 2026",
-              "url": "https://jyotishtark.in/weekly-rashifal-24-30-august-2026.html",
-              "datePublished": "2026-08-24",
-              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 8,
-            "item": {
-              "@type": "BlogPosting",
-              "headline": "राशिफल 2026: क्या कहता है आपका भविष्य?",
+              "headline": "राशिफल 2026: क्या कहता है आपका भविष्य? (न्यूरो-एस्ट्रोलॉजिकल विश्लेषण)",
               "url": "https://jyotishtark.in/rashifal-2026.html",
               "datePublished": "2026-08-24",
               "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
@@ -782,7 +1113,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 9,
+            "position": 8,
             "item": {
               "@type": "BlogPosting",
               "headline": "दशरथ कृत शनि स्तोत्र: साढ़ेसाती, डिप्रेशन और हड्डियों के दर्द का वैज्ञानिक उपचार",
@@ -793,12 +1124,221 @@
           },
           {
             "@type": "ListItem",
-            "position": 10,
+            "position": 9,
             "item": {
               "@type": "BlogPosting",
               "headline": "श्री सूक्त: महालक्ष्मी का दिव्य स्तोत्र और असीमित धन का न्यूरोलॉजिकल विज्ञान",
               "url": "https://jyotishtark.in/shree-suktam.html",
               "datePublished": "2025-10-27",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 10,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "साप्ताहिक राशिफल व गोचर विश्लेषण: सभी 12 राशियों का भविष्यफल",
+              "url": "https://jyotishtark.in/weekly-rashifal-24-30-august-2026.html",
+              "datePublished": "2026-08-24",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 11,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "अमोघ शिव कवच: भगवान शिव का दिव्य सुरक्षा कवच",
+              "url": "https://jyotishtark.in/shiv-kavach.html",
+              "datePublished": "2025-10-15",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 12,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "श्री नारायण कवच: दिव्य सुरक्षा कवच का सम्पूर्ण विवरण",
+              "url": "https://jyotishtark.in/narayan-kavach.html",
+              "datePublished": "2025-09-28",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 13,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "मंगल दोष: कारण, प्रभाव और सम्पूर्ण निवारण उपाय",
+              "url": "https://jyotishtark.in/mangal-dosha-nivaran.html",
+              "datePublished": "2025-09-16",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 14,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "हनुमान भक्ति संग्रह: चालीसा, बाण, अष्टक और अंगारक स्तोत्र",
+              "url": "https://jyotishtark.in/hanuman-bhakti-sangrah.html",
+              "datePublished": "2025-08-31",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 15,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "मेधा सूक्त: सम्पूर्ण पाठ हिंदी अर्थ सहित (बुद्धि व स्मरण शक्ति)",
+              "url": "https://jyotishtark.in/medha-suktam.html",
+              "datePublished": "2025-08-15",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 16,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "अन्नपूर्णा स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित",
+              "url": "https://jyotishtark.in/annapurna-stotra.html",
+              "datePublished": "2025-07-31",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 17,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "नवग्रह स्तोत्र: सम्पूर्ण पाठ हिंदी अर्थ सहित",
+              "url": "https://jyotishtark.in/navagraha-stotra.html",
+              "datePublished": "2025-07-20",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 18,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "आदित्य हृदय स्तोत्र: महत्व, लाभ और संपूर्ण हिंदी अर्थ",
+              "url": "https://jyotishtark.in/aditya-hridaya-stotra.html",
+              "datePublished": "2025-06-30",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 19,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "कालसर्प दोष: प्रकार, प्रभाव, और निवारण विधियाँ",
+              "url": "https://jyotishtark.in/kaalsarp-dosha-remedies.html",
+              "datePublished": "2025-06-17",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 20,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "केतु दोष और इसके सरल व प्रभावी उपाय",
+              "url": "https://jyotishtark.in/ketu-dosha-remedies.html",
+              "datePublished": "2025-05-31",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 21,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "वास्तु शास्त्र और घर की सकारात्मक ऊर्जा",
+              "url": "https://jyotishtark.in/vastu-shastra.html",
+              "datePublished": "2025-05-15",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 22,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "क्या है नाड़ी ज्योतिष?—तमिलनाडु की प्राचीन भविष्यवाणी तकनीक",
+              "url": "https://jyotishtark.in/nadi-astrology.html",
+              "datePublished": "2025-04-24",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 23,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "राशिफल 2025: क्या कहता है आपका भविष्य?",
+              "url": "https://jyotishtark.in/rashifal-2025.html",
+              "datePublished": "2025-04-10",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 24,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "अंक ज्योतिष और भाग्य का रहस्य",
+              "url": "https://jyotishtark.in/ank-jyotish.html",
+              "datePublished": "2025-03-28",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 25,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "कुंडली से करियर कैसे देखें?",
+              "url": "https://jyotishtark.in/career-astrology.html",
+              "datePublished": "2025-03-15",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 26,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "ग्रहों की चाल का आपके जीवन पर प्रभाव",
+              "url": "https://jyotishtark.in/planetary-transits.html",
+              "datePublished": "2025-03-05",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 27,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "वैदिक ज्योतिष: प्राचीन ज्ञान का आधुनिक उपयोग",
+              "url": "https://jyotishtark.in/vedic-modern-astrology.html",
+              "datePublished": "2025-02-22",
+              "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 28,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "कुंडली मिलान: सही जीवनसाथी चुनने की कला",
+              "url": "https://jyotishtark.in/kundali-milan.html",
+              "datePublished": "2025-02-15",
               "author": {"@type": "Person", "name": "Gyanendra Singh Tomar"}
             }
           }
