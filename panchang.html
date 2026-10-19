@@ -3,18 +3,21 @@
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="dynamic-title">Daily Panchang | Hindu Calendar | Jyotish Tark</title>
+    <title id="dynamic-title">Daily Panchang October 2026 | Hindu Calendar | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
-    <meta name="description" id="dynamic-desc" content="Get daily Live Panchang information for Lucknow - Tithi, Nakshatra, Tara Bala Personal Luck Calculator, and Shubh Muhurat Radar.">
-    <meta name="keywords" content="panchang, daily panchang, lucknow panchang, tara bala calculator, chandra bala today, live rahu kaal timer, shubh muhurat, jyotish tark">
-    <meta name="author" content="Jyotish Tark">
+    <meta name="description" id="dynamic-desc" content="Get complete October 2026 Live Panchang for Lucknow - Tithi, Nakshatra, Tara Bala Personal Luck Calculator, Live Muhurat Radar, and WhatsApp Status Card.">
+    <meta name="keywords" content="october 2026 panchang, lucknow panchang, navratri 2026 panchang, dussehra 2026 muhurat, karwa chauth 2026 panchang, tara bala calculator, jyotish tark">
+    <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
     <meta property="og:title" id="dynamic-og-title" content="Live Daily Panchang & Personal Muhurat Calculator | Jyotish Tark">
-    <meta property="og:description" content="Check your personal Tara Bala luck score today, Live Shubh/Ashubh Muhurat countdown, and Panchang for Lucknow.">
+    <meta property="og:description" content="Check your personal Tara Bala luck score today, Live Shubh/Ashubh Muhurat countdown, and October 2026 Panchang for Lucknow.">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/panchang.html">
     <meta property="og:type" content="website">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas for 1-Click WhatsApp Status Card Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -104,7 +107,6 @@
             border-left: 4px solid #ef4444;
         }
 
-        /* Live Radar Pulse Animations */
         .radar-green {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 95, 70, 0.4));
             border: 1px solid #10b981;
@@ -337,11 +339,11 @@
         </div>
     </section>
 
-    <!-- Hero & Interactive Date Switcher -->
+    <!-- Hero, Date Switcher & Audio/WhatsApp Viral Action Buttons -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-6 p-6 md:p-10 text-center relative overflow-hidden">
         <div class="relative z-10">
             <span class="px-4 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold inline-block mb-3">
-                <i class="fas fa-location-dot mr-1"></i> लखनऊ (Lucknow, UP)
+                <i class="fas fa-location-dot mr-1"></i> लखनऊ (Lucknow, UP) • अक्टूबर 2026
             </span>
             <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">
                 दैनिक वैदिक पंचांग
@@ -350,21 +352,31 @@
                 Loading Date...
             </p>
 
-            <!-- Time-Travel Date Switcher Controls -->
-            <div class="flex flex-wrap items-center justify-center gap-3 bg-slate-900/70 p-3 rounded-2xl max-w-2xl mx-auto border border-white/15">
+            <!-- Time-Travel Date Switcher Controls (1 Oct to 31 Oct 2026) -->
+            <div class="flex flex-wrap items-center justify-center gap-3 bg-slate-900/75 p-3 rounded-2xl max-w-2xl mx-auto border border-white/15 mb-6">
                 <button onclick="shiftDate(-1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
-                    <i class="fas fa-chevron-left mr-2"></i> कल (Yesterday)
+                    <i class="fas fa-chevron-left mr-2"></i> पिछला दिन
                 </button>
                 <button onclick="goToToday()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-sm transition shadow-lg">
                     आज (Today)
                 </button>
                 <button onclick="shiftDate(1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
-                    कल (Tomorrow) <i class="fas fa-chevron-right ml-2"></i>
+                    अगला दिन <i class="fas fa-chevron-right ml-2"></i>
                 </button>
                 <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-xl border border-gray-600">
                     <i class="fas fa-calendar-alt text-amber-300 mr-2 text-sm"></i>
-                    <input type="date" id="datePicker" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
+                    <input type="date" id="datePicker" min="2026-10-01" max="2026-10-31" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
                 </div>
+            </div>
+
+            <!-- VIRAL FEATURES #4 & #5: AUDIO PANCHANG + WHATSAPP STATUS GENERATOR -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button onclick="speakPanchang()" id="audioBtn" class="px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold text-sm shadow-lg transition flex items-center gap-2">
+                    <i class="fas fa-volume-high text-lg"></i> <span>आज का पंचांग सुनें (30 Sec Audio)</span>
+                </button>
+                <button onclick="downloadStatusCard()" class="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg transition flex items-center gap-2 border border-emerald-400/40">
+                    <i class="fab fa-whatsapp text-lg"></i> <span>Download WhatsApp Status Card</span>
+                </button>
             </div>
         </div>
     </section>
@@ -372,18 +384,16 @@
     <!-- VIRAL FEATURE #2: PERSONAL CHANDRA & TARA BALA CALCULATOR -->
     <section class="max-w-6xl mx-auto px-4 mt-8">
         <div class="glass-card rounded-2xl p-6 md:p-8 border-l-4 border-purple-500">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-500/10 px-3 py-1 rounded-full">
-                        ✨ Personalized Vedic Meter
-                    </span>
-                    <h2 class="text-2xl md:text-3xl font-bold text-white mt-2">
-                        आज का तारा बल और चंद्र बल (Your Personal Day Score)
-                    </h2>
-                    <p class="text-gray-300 text-sm mt-1">
-                        जानिए आज का पंचांग आपकी जन्म राशि और जन्म नक्षत्र के लिए कितना भाग्यशाली है:
-                    </p>
-                </div>
+            <div class="mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-500/10 px-3 py-1 rounded-full">
+                    ✨ Personalized Vedic Meter
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mt-2">
+                    आज का तारा बल और चंद्र बल (Your Personal Day Score)
+                </h2>
+                <p class="text-gray-300 text-sm mt-1">
+                    अपनी जन्म राशि और नक्षत्र चुनें—हमारा सिस्टम आपकी पसंद याद रखेगा और प्रतिदिन आपका व्यक्तिगत कॉस्मिक स्कोर दिखाएगा:
+                </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
@@ -410,7 +420,7 @@
             <div id="personal-luck-result" class="hidden mt-6 p-5 rounded-xl bg-slate-900/80 border border-white/15">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                     <div class="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-                        <div class="text-xs text-gray-400 uppercase">आपका आज का कॉस्मिक स्कोर</div>
+                        <div class="text-xs text-gray-400 uppercase">आपका कॉस्मिक स्कोर</div>
                         <div id="luck-score-badge" class="text-4xl font-extrabold text-amber-300 my-1">--%</div>
                         <div id="luck-verdict-tag" class="text-xs font-bold px-2.5 py-0.5 rounded-full inline-block">--</div>
                     </div>
@@ -431,7 +441,7 @@
                 आज आप क्या करना चाहते हैं? (Instant Muhurat Checker)
             </h2>
             <p class="text-gray-300 text-sm mb-6">
-                किसी भी कार्य पर क्लिक करें और जानें कि आज की तिथि, वार और नक्षत्र उसके लिए शुभ हैं या नहीं:
+                किसी भी कार्य पर क्लिक करें और जानें कि चयनित तिथि, वार और नक्षत्र उसके लिए शुभ हैं या नहीं:
             </p>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
@@ -613,16 +623,68 @@
             </div>
         </div>
     </section>
+
+    <!-- VIRAL FEATURE #4: WHATSAPP STATUS SHAREABLE GRAPHIC CARD PREVIEW -->
+    <section class="max-w-4xl mx-auto px-4 py-8">
+        <div class="text-center mb-4">
+            <span class="text-xs uppercase tracking-widest text-amber-300 font-bold">📲 Daily Viral Share Card</span>
+            <h3 class="text-2xl font-bold text-white">WhatsApp एवं Instagram Status कार्ड</h3>
+        </div>
+        <div id="whatsapp-card-capture" class="rounded-3xl p-6 md:p-8 border-2 border-amber-400/60 shadow-2xl mx-auto max-w-xl" style="background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 60%, #3b0764 100%);">
+            <div class="flex items-center justify-between border-b border-amber-400/30 pb-4 mb-4">
+                <div>
+                    <div class="text-xs text-amber-300 font-bold uppercase tracking-wider">✨ ज्योतिष तर्क • दैनिक पंचांग</div>
+                    <h4 id="card-date" class="text-xl md:text-2xl font-bold text-white mt-0.5">--</h4>
+                </div>
+                <div class="text-right">
+                    <span class="px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-extrabold text-xs">लखनऊ (IST)</span>
+                </div>
+            </div>
+            <div id="card-festival" class="bg-amber-500/20 border border-amber-400/40 rounded-xl p-2.5 text-center text-amber-300 font-bold text-sm mb-4">
+                --
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-white/10">
+                    <div class="text-xs text-gray-400">तिथि (Tithi)</div>
+                    <div id="card-tithi" class="font-bold text-white mt-0.5">--</div>
+                </div>
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-white/10">
+                    <div class="text-xs text-gray-400">नक्षत्र एवं चंद्र राशि</div>
+                    <div id="card-nak" class="font-bold text-amber-300 mt-0.5">--</div>
+                </div>
+                <div class="bg-emerald-950/60 p-3 rounded-xl border border-emerald-500/40">
+                    <div class="text-xs text-emerald-300">🟢 शुभ अमृत काल</div>
+                    <div id="card-shubh" class="font-bold text-white mt-0.5">--</div>
+                </div>
+                <div class="bg-red-950/60 p-3 rounded-xl border border-red-500/40">
+                    <div class="text-xs text-red-300">🔴 राहु काल (त्याज्य)</div>
+                    <div id="card-rahu" class="font-bold text-white mt-0.5">--</div>
+                </div>
+            </div>
+            <div class="bg-purple-950/60 border border-purple-400/30 rounded-xl p-3 text-xs text-purple-100 mb-4">
+                <span class="font-bold text-amber-300">💡 आज का विशेष उपाय:</span> <span id="card-remedy">--</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-300 pt-2 border-t border-white/10">
+                <span>🌐 <strong>jyotishtark.in</strong></span>
+                <span>📞 Consultation: <strong>+91 8318513814</strong></span>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <button onclick="downloadStatusCard()" class="primary-button px-8 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold shadow-xl hover:scale-105 transition">
+                <i class="fas fa-download mr-2"></i> इस पंचांग कार्ड को डाउनलोड करें (Share on WhatsApp)
+            </button>
+        </div>
+    </section>
     
     <!-- Footer -->
     <footer class="glass-card text-center py-10 mt-12 max-w-7xl mx-auto rounded-t-lg">
         <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </footer>
 
-    <!-- Load Monthly Database -->
+    <!-- Load Full October 2026 Database -->
     <script src="astro_data.js"></script>
 
-    <!-- Smart Panchang Engine, Tara Bala Calculator & Activity Filter -->
+    <!-- Smart Panchang Engine -->
     <script>
         // Mobile Menu Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
@@ -638,7 +700,6 @@
             });
         });
 
-        // Populate Rashi & Nakshatra Dropdowns
         function initPersonalSelectors() {
             const rashiSel = document.getElementById('userRashiSelect');
             const nakSel = document.getElementById('userNakshatraSelect');
@@ -657,7 +718,6 @@
                 nakSel.appendChild(opt);
             });
 
-            // Restore from localStorage if user visited before
             const savedRashi = localStorage.getItem('jt_user_rashi');
             const savedNak = localStorage.getItem('jt_user_nak');
             if (savedRashi !== null && savedRashi !== "") rashiSel.value = savedRashi;
@@ -675,13 +735,12 @@
         let currentDateKey = "";
         let currentActivityKey = "vehicle";
 
-        // Render Panchang for a given "YYYY-MM-DD" key
         function renderPanchang(dateKey) {
             const availableKeys = Object.keys(ASTRO_DATABASE).sort();
             if (!ASTRO_DATABASE[dateKey]) {
                 dateKey = availableKeys.includes(formatDateKey(new Date())) 
                     ? formatDateKey(new Date()) 
-                    : availableKeys[0];
+                    : "2026-10-19";
             }
             currentDateKey = dateKey;
 
@@ -727,24 +786,59 @@
             `).join('');
             document.getElementById('guidance-container').innerHTML = guidanceHTML;
 
-            // Refresh Activity Filter & Personal Luck for the newly selected date
+            // Populate WhatsApp Status Card
+            document.getElementById('card-date').innerText = dayData.dateHindi;
+            document.getElementById('card-festival').innerText = `🚩 ${dayData.festival}`;
+            document.getElementById('card-tithi').innerText = p.tithi.split(',')[0];
+            document.getElementById('card-nak').innerText = `${p.nakshatra.split('(')[0]} • ${p.moonSign.split(' ')[0]}`;
+            document.getElementById('card-shubh').innerText = p.amritKaal;
+            document.getElementById('card-rahu').innerText = p.rahuKaal;
+            document.getElementById('card-remedy').innerText = dayData.guidance[1].text.split('उपाय:')[1] || dayData.guidance[1].text;
+
             selectActivity(currentActivityKey);
             if (document.getElementById('userRashiSelect').value !== "") {
                 calculatePersonalLuck();
             }
         }
 
-        // VIRAL FEATURE #2: CHANDRA BALA & TARA BALA ENGINE
+        // VIRAL FEATURE #4: DOWNLOAD WHATSAPP STATUS CARD AS PNG
+        function downloadStatusCard() {
+            const cardEl = document.getElementById('whatsapp-card-capture');
+            html2canvas(cardEl, { scale: 2, backgroundColor: "#0f172a" }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Jyotish-Tark-Panchang-${currentDateKey}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // VIRAL FEATURE #5: 30-SECOND HINDI AUDIO PANCHANG
+        function speakPanchang() {
+            if (!('speechSynthesis' in window)) {
+                alert("आपके ब्राउज़र में ऑडियो सपोर्ट उपलब्ध नहीं है।");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const dayData = ASTRO_DATABASE[currentDateKey];
+            const p = dayData.panchang;
+            const script = `नमस्कार, ज्योतिष तर्क के दैनिक पंचांग में आपका स्वागत है। आज ${dayData.dateHindi} है। आज का विशेष पर्व ${dayData.festival} है। आज की तिथि ${p.tithi} है, तथा नक्षत्र ${p.nakshatra} है। आज चंद्रमा ${p.moonSign} राशि में गोचर कर रहे हैं। आज का शुभ अमृत काल ${p.amritKaal} तक रहेगा, और राहु काल ${p.rahuKaal} तक रहेगा। राहु काल में नए कार्य प्रारंभ न करें। आपका दिन मंगलमय हो!`;
+            
+            const utterance = new SpeechSynthesisUtterance(script);
+            utterance.lang = 'hi-IN';
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // CHANDRA BALA & TARA BALA ENGINE
         function calculatePersonalLuck() {
             const rashiVal = document.getElementById('userRashiSelect').value;
             const nakVal = document.getElementById('userNakshatraSelect').value;
 
             if (rashiVal === "") {
-                alert("कृपया पहले अपनी जन्म राशि चुनें (Please select your Moon Sign first).");
+                alert("कृपया पहले अपनी जन्म राशि चुनें।");
                 return;
             }
 
-            // Save user preference
             localStorage.setItem('jt_user_rashi', rashiVal);
             localStorage.setItem('jt_user_nak', nakVal);
 
@@ -752,7 +846,6 @@
             const userRashiIdx = parseInt(rashiVal, 10);
             const transitMoonIdx = dayData.moonSignIndex;
 
-            // Calculate House position of transit Moon from user's Janma Rashi (1 to 12)
             const houseFromMoon = ((transitMoonIdx - userRashiIdx + 12) % 12) + 1;
             const goodChandraHouses = [1, 3, 6, 7, 10, 11];
             const ashtamaOrBadHouses = [4, 8, 12];
@@ -764,18 +857,17 @@
             if (goodChandraHouses.includes(houseFromMoon)) {
                 score += 30;
                 chandraSummary = `🟢 <strong>चंद्र बल शुभ (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में गोचर कर रहे हैं। यह मानसिक स्पष्टता, धन लाभ और कार्यों में सफलता प्रदान करेगा।`;
-                remedyText = `💡 <strong>आज का व्यक्तिगत उपाय:</strong> अपने महत्वपूर्ण कार्य <strong>${dayData.panchang.abhijitMuhurat}</strong> या अमृत काल में प्रारंभ करें।`;
+                remedyText = `💡 <strong>व्यक्तिगत मुहूर्त सलाह:</strong> अपने महत्वपूर्ण कार्य <strong>${dayData.panchang.amritKaal}</strong> (अमृत काल) में प्रारंभ करें।`;
             } else if (ashtamaOrBadHouses.includes(houseFromMoon)) {
                 score -= 20;
-                chandraSummary = `🔴 <strong>चंद्र बल कमजोर (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। अष्टम/द्वादश या चतुर्थ चंद्रमा के कारण आज बड़े जोखिम, विवाद और जल्दबाजी से बचें।`;
-                remedyText = `💡 <strong>लाल किताब रक्षा उपाय:</strong> आज घर से निकलने से पहले माथे पर <strong>सफेद चंदन या केसर का तिलक</strong> लगाएं और <em>"ॐ श्रां श्रीं श्रौं सः चंद्रमसे नमः"</em> का 11 बार जप करें।`;
+                chandraSummary = `🔴 <strong>चंद्र बल कमजोर (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। अष्टम/द्वादश या चतुर्थ चंद्रमा के कारण आज बड़े जोखिम और विवाद से बचें।`;
+                remedyText = `💡 <strong>लाल किताब रक्षा उपाय:</strong> आज घर से निकलने से पहले माथे पर <strong>सफेद चंदन या दही का तिलक</strong> लगाएं और <em>"ॐ नमः शिवाय"</em> का जप करें।`;
             } else {
                 score += 10;
                 chandraSummary = `🟡 <strong>चंद्र बल मध्यम (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। परिश्रम के अनुपात में परिणाम मिलेंगे।`;
                 remedyText = `💡 <strong>आज का उपाय:</strong> किसी भी महत्वपूर्ण मीटिंग से पहले थोड़ा सा गुड़ या मिश्री खाकर पानी पिएं।`;
             }
 
-            // Calculate Tara Bala if Birth Nakshatra is selected
             let taraSummary = "";
             if (nakVal !== "") {
                 const userNakIdx = parseInt(nakVal, 10);
@@ -803,9 +895,7 @@
                 taraSummary = `ℹ️ <em>टिप: सटीक तारा बल (Sampat/Kshema/Sadhana) जानने के लिए ऊपर अपना जन्म नक्षत्र भी चुनें।</em>`;
             }
 
-            // Clamp score between 25 and 98
             score = Math.max(25, Math.min(98, score));
-
             const resultBox = document.getElementById('personal-luck-result');
             const scoreBadge = document.getElementById('luck-score-badge');
             const verdictTag = document.getElementById('luck-verdict-tag');
@@ -832,7 +922,6 @@
             document.getElementById('personal-remedy-text').innerHTML = remedyText;
         }
 
-        // VIRAL FEATURE #3: INTERACTIVE ACTIVITY MUHURAT FILTER
         function selectActivity(actKey) {
             currentActivityKey = actKey;
             const allKeys = ['vehicle', 'finance', 'travel', 'property', 'career', 'medical'];
@@ -856,23 +945,18 @@
 
             const scoreEl = document.getElementById('act-score');
             scoreEl.innerText = act.score;
-            if (act.status === 'good') {
-                scoreEl.className = "text-2xl font-extrabold text-emerald-400";
-            } else if (act.status === 'caution') {
-                scoreEl.className = "text-2xl font-extrabold text-amber-400";
-            } else {
-                scoreEl.className = "text-2xl font-extrabold text-red-400";
-            }
+            scoreEl.className = act.status === 'good' 
+                ? "text-2xl font-extrabold text-emerald-400" 
+                : (act.status === 'caution' ? "text-2xl font-extrabold text-amber-400" : "text-2xl font-extrabold text-red-400");
         }
 
-        // Date Navigation Buttons
         function shiftDate(days) {
             currentSelectedDate.setDate(currentSelectedDate.getDate() + days);
             const key = formatDateKey(currentSelectedDate);
             if (ASTRO_DATABASE[key]) {
                 renderPanchang(key);
             } else {
-                alert("इस तिथि का पंचांग जल्द ही अपडेट किया जाएगा। (Available: Oct 18 - Oct 21)");
+                alert("अक्टूबर 2026 (1 अक्टूबर से 31 अक्टूबर) का संपूर्ण पंचांग उपलब्ध है।");
                 currentSelectedDate.setDate(currentSelectedDate.getDate() - days);
             }
         }
@@ -887,12 +971,11 @@
                 currentSelectedDate = new Date(val + "T00:00:00");
                 renderPanchang(val);
             } else {
-                alert("यह तिथि अभी डेटाबेस में उपलब्ध नहीं है।");
-                document.getElementById('datePicker').value = formatDateKey(currentSelectedDate);
+                alert("कृपया अक्टूबर 2026 के भीतर की तिथि चुनें।");
+                document.getElementById('datePicker').value = currentDateKey;
             }
         }
 
-        // LIVE MUHURAT RADAR & COUNTDOWN ENGINE
         function parseTimeToday(hhmmStr, now) {
             const [hh, mm] = hhmmStr.split(':').map(Number);
             const d = new Date(now);
@@ -914,7 +997,7 @@
             document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-IN', { hour12: true });
 
             const todayKey = formatDateKey(now);
-            const todayData = ASTRO_DATABASE[todayKey] || ASTRO_DATABASE[Object.keys(ASTRO_DATABASE)[0]];
+            const todayData = ASTRO_DATABASE[todayKey] || ASTRO_DATABASE[currentDateKey];
             if (!todayData || !todayData.liveWindows) return;
 
             const w = todayData.liveWindows;
@@ -977,7 +1060,6 @@
             }
         }
 
-        // Initialize on page load
         window.addEventListener('DOMContentLoaded', () => {
             initPersonalSelectors();
             goToToday();
