@@ -3,14 +3,14 @@
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Panchang | Hal Shashthi 2026 | Jyotish Tark</title>
+    <title id="dynamic-title">Daily Panchang | Hindu Calendar | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
-    <meta name="description" content="Get today's Panchang for September 2, 2026. Find Shubh Muhurat, Tithi, Nakshatra, Yoga, and astrological guidance for Hal Shashthi (Lalahi Sashti).">
-    <meta name="keywords" content="panchang 2 september 2026, lucknow panchang, tithi today, nakshatra today, shubh muhurat, hal shashthi 2026, lalahi sashti, hindu astrology, vedic calendar, jyotish tark">
+    <meta name="description" id="dynamic-desc" content="Get daily Live Panchang information for Lucknow - Tithi, Nakshatra, Yoga, Karana, Live Shubh Muhurat Radar, and Rahu Kaal timer.">
+    <meta name="keywords" content="panchang, daily panchang, lucknow panchang, live rahu kaal timer, tithi today, nakshatra today, shubh muhurat, hindu astrology, vedic calendar, jyotish tark">
     <meta name="author" content="Jyotish Tark">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
-    <meta property="og:title" content="Daily Panchang - Hal Shashthi Special | Jyotish Tark">
-    <meta property="og:description" content="Get daily Panchang information for Lucknow. Discover today's Shubh Muhurat, Nakshatra, and guidance for Hal Shashthi.">
+    <meta property="og:title" id="dynamic-og-title" content="Live Daily Panchang & Muhurat Radar | Jyotish Tark">
+    <meta property="og:description" content="Check Live Shubh/Ashubh Muhurat countdown, Rahu Kaal, Tithi, and Nakshatra for Lucknow.">
     <meta property="og:image" content="https://jyotishtark.in/logo.png">
     <meta property="og:url" content="https://jyotishtark.in/panchang.html">
     <meta property="og:type" content="website">
@@ -41,10 +41,6 @@
             font-weight: 700;
         }
         
-        .hindi {
-            font-family: 'Hind', sans-serif;
-        }
-        
         .cosmic-bg {
             background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
             position: relative;
@@ -57,14 +53,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.92) 100%);
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
         }
         
@@ -72,16 +68,14 @@
             transition: all 0.3s ease;
             border-radius: 16px;
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .panchang-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
             background: rgba(255, 255, 255, 0.08);
         }
         
@@ -91,6 +85,7 @@
             align-items: center;
             padding: 0.75rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 1rem;
         }
         
         .panchang-item:last-child {
@@ -100,6 +95,7 @@
         .panchang-label {
             font-weight: 600;
             color: var(--secondary);
+            white-space: nowrap;
         }
         
         .panchang-value {
@@ -107,86 +103,56 @@
             text-align: right;
         }
         
-        .auspicious {
-            color: #10b981;
-        }
-        
-        .inauspicious {
-            color: #ef4444;
-        }
+        .auspicious { color: #10b981; }
+        .inauspicious { color: #ef4444; }
         
         .muhurat-card {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.05));
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 197, 94, 0.05));
             border-left: 4px solid #10b981;
         }
         
         .muhurat-inauspicious {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(220, 38, 38, 0.05));
             border-left: 4px solid #ef4444;
         }
 
-        .festival-card {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(236, 72, 153, 0.1));
-            border-left: 4px solid var(--secondary);
-            border-right: 4px solid var(--accent);
-            animation: glow-pulse 2s infinite alternate;
+        /* Live Radar Pulse Animations */
+        .radar-green {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 95, 70, 0.4));
+            border: 1px solid #10b981;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+        }
+        .radar-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(153, 27, 27, 0.4));
+            border: 1px solid #ef4444;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);
+        }
+        .radar-neutral {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(30, 41, 59, 0.7));
+            border: 1px solid #f59e0b;
         }
 
-        @keyframes glow-pulse {
-            0% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
-            100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.4); }
+        .pulse-dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
-        
-        .primary-button {
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .primary-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
-        }
-        
-        .secondary-button {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--secondary);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .secondary-button:hover {
-            background: var(--secondary);
-            color: var(--dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        @keyframes ping {
+            75%, 100% { transform: scale(2); opacity: 0; }
         }
         
         .section-title {
             position: relative;
             display: inline-block;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
         
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -208,19 +174,13 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--secondary, #f59e0b);
+            background: var(--secondary);
             transition: width 0.3s ease;
         }
         
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        .nav-link:hover::after { width: 100%; }
 
-        /* Desktop Dropdown Styles */
-        .dropdown {
-            position: relative;
-        }
-        
+        .dropdown { position: relative; }
         .dropdown-content {
             display: none;
             position: absolute;
@@ -236,11 +196,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             margin-top: 10px;
         }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        
+        .dropdown:hover .dropdown-content { display: block; }
         .dropdown-content a {
             display: flex;
             align-items: center;
@@ -250,66 +206,26 @@
             transition: all 0.2s ease;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        
         .dropdown-content a:hover {
             background: rgba(126, 34, 206, 0.3);
             padding-left: 22px;
         }
 
-        /* Mobile Dropdown Styles */
         .mobile-dropdown-content {
             display: none;
             padding-left: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             margin-top: 8px;
-            overflow: hidden;
             border-left: 3px solid var(--primary);
         }
-        
-        .mobile-dropdown-content a {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .mobile-dropdown-content a:last-child {
-            border-bottom: none;
-        }
-        
-        .mobile-dropdown-content a:hover {
-            background: rgba(126, 34, 206, 0.2);
-            padding-left: 20px;
-        }
-        
-        .mobile-dropdown.active .mobile-dropdown-content {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-        
+        .mobile-dropdown.active .mobile-dropdown-content { display: block; }
         .mobile-dropdown-toggle {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
             cursor: pointer;
-        }
-        
-        .mobile-dropdown-toggle i:last-child {
-            transition: transform 0.3s ease;
-        }
-        
-        .mobile-dropdown.active .mobile-dropdown-toggle i:last-child {
-            transform: rotate(180deg);
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .whatsapp-float {
@@ -321,7 +237,6 @@
             background-color: #25d366;
             color: #FFF;
             border-radius: 50px;
-            text-align: center;
             font-size: 30px;
             box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
             z-index: 100;
@@ -331,7 +246,6 @@
             transition: all 0.3s ease;
             border: 3px solid white;
         }
-        
         .whatsapp-float:hover {
             background-color: #128C7E;
             transform: scale(1.1) rotate(5deg);
@@ -343,8 +257,6 @@
     <!-- Navigation -->
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
-            
-            <!-- Logo -->
             <a href="index.html" class="flex items-center space-x-3">
                 <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
                     <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
@@ -352,7 +264,6 @@
                 <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
 
-            <!-- Desktop Nav -->
             <nav class="hidden md:flex space-x-6 font-medium">
                 <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
                 <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
@@ -365,14 +276,13 @@
                         <a href="tarot.html"><i class="fas fa-clover mr-2"></i> Tarot Reading</a>
                     </div>
                 </div>
-                <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition">Panchang</a>
+                <a href="panchang.html" class="nav-link text-amber-300 font-semibold transition">Panchang</a>
                 <a href="rashifal.html" class="nav-link text-white hover:text-amber-300 transition">Rashifal</a>
                 <a href="rudraksha.html" class="nav-link text-white hover:text-amber-300 transition">Rudraksha</a>
                 <a href="blog.html" class="nav-link text-white hover:text-amber-300 transition">Blog</a>
                 <a href="contact.html" class="nav-link text-white hover:text-amber-300 transition">Contact</a>
             </nav>
 
-            <!-- Mobile Menu Button -->
             <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl hover:text-amber-300 transition" aria-label="Open menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -386,26 +296,19 @@
             <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
                 <i class="fas fa-star w-6 mr-2"></i>Kundali
             </a>
-            
             <div class="mobile-dropdown">
                 <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
                     <div class="flex items-center">
-                        <i class="fas fa-calculator w-6 mr-2"></i>
-                        <span>Calculator</span>
+                        <i class="fas fa-calculator w-6 mr-2"></i><span>Calculator</span>
                     </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="mobile-dropdown-content">
-                    <a href="numerology.html" class="flex items-center">
-                        <i class="fas fa-calculator mr-3"></i> Numerology Report
-                    </a>
-                    <a href="tarot.html" class="flex items-center">
-                        <i class="fas fa-clover mr-3"></i> Tarot Reading
-                    </a>
+                    <a href="numerology.html" class="block py-2 px-4 text-white"><i class="fas fa-calculator mr-2"></i> Numerology Report</a>
+                    <a href="tarot.html" class="block py-2 px-4 text-white"><i class="fas fa-clover mr-2"></i> Tarot Reading</a>
                 </div>
             </div>
-
-            <a href="panchang.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <a href="panchang.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 font-semibold transition flex items-center">
                 <i class="fas fa-calendar-day w-6 mr-2"></i>Panchang
             </a>
             <a href="rashifal.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
@@ -426,178 +329,197 @@
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918318513814" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
-    </a>   
+    </a>
 
-    <!-- Hero Section -->
-    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-12 p-8 md:p-12 text-center relative overflow-hidden">
-        <div class="relative z-10">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                <span class="block">Daily Panchang</span>
-                <span class="text-3xl md:text-4xl text-amber-300">Lucknow - 2 September 2026</span>
-            </h1>
-            <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Accurate daily Panchang for Lucknow. Align your schedule with today's Vedic planetary rhythms as we observe Hal Shashthi (Lalahi Sashti Vrat).
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <a href="#today-panchang" class="primary-button">
-                    <i class="fas fa-calendar-alt mr-2"></i> View Today's Panchang
-                </a>
-                <a href="contact.html" class="secondary-button">
-                    <i class="fas fa-user-astronaut mr-2"></i> Consult Our Astrologer
-                </a>
+    <!-- VIRAL FEATURE #1: LIVE MUHURAT RADAR & COUNTDOWN BAR -->
+    <section class="max-w-6xl mx-4 md:mx-auto mt-6">
+        <div id="live-radar-box" class="radar-neutral rounded-2xl p-4 md:px-8 md:py-5 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-500">
+            <div class="flex items-center space-x-4">
+                <div class="relative flex items-center justify-center">
+                    <span id="radar-pulse" class="pulse-dot bg-amber-400"></span>
+                    <span id="radar-dot" class="h-3 w-3 rounded-full bg-amber-400 absolute"></span>
+                </div>
+                <div>
+                    <div class="text-xs uppercase tracking-wider text-gray-300 font-semibold flex items-center gap-2">
+                        <span>LIVE COSMIC RADAR (LUCKNOW IST)</span>
+                        <span id="live-clock" class="text-amber-300 font-mono">--:--:--</span>
+                    </div>
+                    <h2 id="radar-status-title" class="text-lg md:text-xl font-bold text-white mt-0.5">
+                        Calculating current planetary window...
+                    </h2>
+                </div>
+            </div>
+            <div class="bg-slate-900/80 px-5 py-2.5 rounded-xl border border-white/10 text-center min-w-[210px]">
+                <div id="radar-timer-label" class="text-xs text-gray-400 uppercase">Window Countdown</div>
+                <div id="radar-countdown" class="text-2xl font-mono font-bold text-amber-300">--h --m --s</div>
             </div>
         </div>
     </section>
 
-    <!-- Today's Panchang Section -->
-    <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                आज का पंचांग - लखनऊ
-            </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                बुधवार, 2 सितंबर 2026 के लिए संपूर्ण हिंदू कैलेंडर विवरण
+    <!-- Hero & Interactive Date Switcher -->
+    <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-6 p-6 md:p-10 text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <span class="px-4 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold inline-block mb-3">
+                <i class="fas fa-location-dot mr-1"></i> लखनऊ (Lucknow, UP)
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">
+                दैनिक वैदिक पंचांग
+            </h1>
+            <p id="hero-date-subtitle" class="text-2xl md:text-3xl text-amber-300 font-bold mb-6">
+                Loading Date...
             </p>
-        </div>
 
-        <!-- Date and Location Info -->
+            <!-- Time-Travel Date Switcher Controls -->
+            <div class="flex flex-wrap items-center justify-center gap-3 bg-slate-900/70 p-3 rounded-2xl max-w-2xl mx-auto border border-white/15">
+                <button onclick="shiftDate(-1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
+                    <i class="fas fa-chevron-left mr-2"></i> कल (Yesterday)
+                </button>
+                <button onclick="goToToday()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-sm transition shadow-lg">
+                    आज (Today)
+                </button>
+                <button onclick="shiftDate(1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
+                    कल (Tomorrow) <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+                <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-xl border border-gray-600">
+                    <i class="fas fa-calendar-alt text-amber-300 mr-2 text-sm"></i>
+                    <input type="date" id="datePicker" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Panchang Content -->
+    <section id="today-panchang" class="max-w-6xl mx-auto px-4 py-10">
+        
+        <!-- Festival & Disha Shool Banner -->
         <div class="glass-card p-6 rounded-2xl mb-8 text-center border-t-4 border-amber-400">
-            <h3 class="text-2xl font-bold text-white mb-2">बुधवार, 2 सितंबर 2026</h3>
-            <p class="text-gray-300 font-semibold text-amber-300 mb-1">विशेष व्रत और त्योहार: हल षष्ठी (ललही षष्ठी), रंधान छठ</p>
-            <p class="text-gray-400 text-sm">लखनऊ, उत्तर प्रदेश, भारत के लिए पंचांग[cite: 2]</p>
+            <h3 id="display-hindi-date" class="text-2xl font-bold text-white mb-2">--</h3>
+            <p id="display-festival" class="text-lg font-semibold text-amber-300 mb-2">--</p>
+            <div class="inline-flex items-center bg-purple-900/50 border border-purple-500/40 px-4 py-1.5 rounded-full text-sm text-purple-200 mt-1">
+                <i class="fas fa-compass text-amber-400 mr-2"></i>
+                <span><strong>दिशा शूल:</strong> <span id="display-disha-shool">--</span></span>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Basic Panchang Info -->
             <div class="panchang-card">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">मूल पंचांग</h3>
+                <h3 class="text-xl font-bold text-white mb-4 text-center border-b border-white/10 pb-3">
+                    <i class="fas fa-scroll text-amber-400 mr-2"></i>मूल पंचांग (Core Elements)
+                </h3>
                 <div class="panchang-item">
-                    <span class="panchang-label">तिथि</span>
-                    <span class="panchang-value" id="tithi">कृष्ण पंचमी (06:13 AM तक), उपरांत षष्ठी[cite: 2]</span>
+                    <span class="panchang-label">तिथि (Tithi)</span>
+                    <span class="panchang-value" id="tithi">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">नक्षत्र</span>
-                    <span class="panchang-value" id="nakshatra">भरणी (01:43 AM, 3 सितंबर तक)[cite: 2]</span>
+                    <span class="panchang-label">नक्षत्र (Nakshatra)</span>
+                    <span class="panchang-value" id="nakshatra">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">योग</span>
-                    <span class="panchang-value" id="yoga">ध्रुव (09:12 PM तक)[cite: 2]</span>
+                    <span class="panchang-label">योग (Yoga)</span>
+                    <span class="panchang-value" id="yoga">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">करण</span>
-                    <span class="panchang-value" id="karana">तैतिल (06:13 AM तक), उपरांत गर[cite: 2]</span>
+                    <span class="panchang-label">करण (Karana)</span>
+                    <span class="panchang-value" id="karana">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">पक्ष</span>
-                    <span class="panchang-value" id="paksha">कृष्ण पक्ष[cite: 2]</span>
+                    <span class="panchang-label">पक्ष (Paksha)</span>
+                    <span class="panchang-value" id="paksha">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">मास</span>
-                    <span class="panchang-value" id="masa">भाद्रपद[cite: 2]</span>
+                    <span class="panchang-label">मास (Masa)</span>
+                    <span class="panchang-value" id="masa">--</span>
                 </div>
             </div>
 
             <!-- Sun and Moon Info -->
             <div class="panchang-card">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">सूर्य और चंद्र</h3>
+                <h3 class="text-xl font-bold text-white mb-4 text-center border-b border-white/10 pb-3">
+                    <i class="fas fa-sun text-amber-400 mr-2"></i>सूर्य एवं चंद्र गणना
+                </h3>
                 <div class="panchang-item">
-                    <span class="panchang-label">सूर्योदय</span>
-                    <span class="panchang-value" id="sunrise">05:51 AM[cite: 2]</span>
+                    <span class="panchang-label">सूर्योदय (Sunrise)</span>
+                    <span class="panchang-value" id="sunrise">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">सूर्यास्त</span>
-                    <span class="panchang-value" id="sunset">06:29 PM[cite: 2]</span>
+                    <span class="panchang-label">सूर्यास्त (Sunset)</span>
+                    <span class="panchang-value" id="sunset">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">चंद्रोदय</span>
-                    <span class="panchang-value" id="moonrise">09:15 PM[cite: 2]</span>
+                    <span class="panchang-label">चंद्रोदय (Moonrise)</span>
+                    <span class="panchang-value" id="moonrise">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">चंद्रास्त</span>
-                    <span class="panchang-value" id="moonset">10:15 AM[cite: 2]</span>
+                    <span class="panchang-label">चंद्रास्त (Moonset)</span>
+                    <span class="panchang-value" id="moonset">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">चंद्र राशि</span>
-                    <span class="panchang-value" id="moon-sign">मेष (Aries)[cite: 2]</span>
+                    <span class="panchang-label">चंद्र राशि (Moon Sign)</span>
+                    <span class="panchang-value text-amber-300 font-semibold" id="moon-sign">--</span>
                 </div>
                 <div class="panchang-item">
-                    <span class="panchang-label">सूर्य राशि</span>
-                    <span class="panchang-value" id="sun-sign">सिंह (Leo)[cite: 2]</span>
+                    <span class="panchang-label">सूर्य राशि (Sun Sign)</span>
+                    <span class="panchang-value" id="sun-sign">--</span>
                 </div>
             </div>
 
             <!-- Auspicious Timings -->
             <div class="panchang-card muhurat-card">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">शुभ मुहूर्त</h3>
+                <h3 class="text-xl font-bold text-white mb-4 text-center border-b border-white/10 pb-3">
+                    <i class="fas fa-check-circle text-emerald-400 mr-2"></i>शुभ मुहूर्त (Auspicious Timings)
+                </h3>
                 <div class="panchang-item">
                     <span class="panchang-label">ब्रह्म मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="brahma-muhurat">04:20 AM - 05:05 AM[cite: 2]</span>
+                    <span class="panchang-value auspicious" id="brahma-muhurat">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">अभिजीत मुहूर्त</span>
-                    <span class="panchang-value text-gray-400" id="abhijit-muhurat">बुधवार को उपलब्ध नहीं[cite: 2]</span>
+                    <span class="panchang-value auspicious font-bold" id="abhijit-muhurat">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">अमृत काल</span>
-                    <span class="panchang-value auspicious" id="amrit-kaal">09:07 PM - 10:39 PM[cite: 2]</span>
+                    <span class="panchang-value auspicious font-bold" id="amrit-kaal">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">गोधूलि मुहूर्त</span>
-                    <span class="panchang-value auspicious" id="godhuli-muhurat">06:29 PM - 06:51 PM[cite: 2]</span>
+                    <span class="panchang-value auspicious" id="godhuli-muhurat">--</span>
                 </div>
             </div>
 
             <!-- Inauspicious Timings -->
             <div class="panchang-card muhurat-inauspicious">
-                <h3 class="text-xl font-bold text-white mb-4 text-center">अशुभ समय</h3>
+                <h3 class="text-xl font-bold text-white mb-4 text-center border-b border-white/10 pb-3">
+                    <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>अशुभ समय (Avoid New Work)
+                </h3>
                 <div class="panchang-item">
                     <span class="panchang-label">राहु काल</span>
-                    <span class="panchang-value inauspicious" id="rahu-kaal">12:10 PM - 01:45 PM[cite: 2]</span>
+                    <span class="panchang-value inauspicious font-bold" id="rahu-kaal">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">यमगंड</span>
-                    <span class="panchang-value inauspicious" id="yamaganda">07:25 AM - 09:00 AM[cite: 2]</span>
+                    <span class="panchang-value inauspicious" id="yamaganda">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">गुलिक काल</span>
-                    <span class="panchang-value inauspicious" id="gulika-kaal">10:35 AM - 12:10 PM[cite: 2]</span>
+                    <span class="panchang-value inauspicious" id="gulika-kaal">--</span>
                 </div>
                 <div class="panchang-item">
                     <span class="panchang-label">वर्ज्यम</span>
-                    <span class="panchang-value inauspicious" id="varjyam">11:54 AM - 01:26 PM[cite: 2]</span>
+                    <span class="panchang-value inauspicious" id="varjyam">--</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- General Daily Advice -->
-    <section class="max-w-6xl mx-auto px-4 py-12">
-        <div class="glass-card rounded-2xl p-8 md:p-12 text-center">
-            <h2 class="text-3xl font-bold text-white mb-8 section-title">
-                Today's Cosmic Guidance & Cautions
+    <!-- Dynamic Astrologer's Cosmic Guidance -->
+    <section class="max-w-6xl mx-auto px-4 py-8">
+        <div class="glass-card rounded-2xl p-8 md:p-10 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 section-title">
+                Today's Cosmic Guidance & Remedies
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">🌾</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Hal Shashthi Festival</h3>
-                    <p class="text-gray-300 text-sm">
-                        Today marks Hal Shashthi (also known as Lalahi Sashti), an important fasting day dedicated to Lord Balarama[cite: 2]. This day emphasizes agrarian gratitude and maternal prayers for the well-being of sons. Fasting individuals traditionally avoid cow milk and plow-cultivated grains today[cite: 2].
-                    </p>
-                </div>
-                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">⚖️</div>
-                    <h4 class="text-xl font-bold text-white mb-3 text-center">Bharani Nakshatra's Intensity</h4>
-                    <p class="text-gray-300 text-sm">
-                        The Moon traverses the intense Bharani Nakshatra in Aries[cite: 2]. Governed by Venus and Yama, Bharani is characterized by endurance, bearing burdens, and transformation[cite: 2]. It is an excellent day to cut away restrictive habits and tackle profound personal or professional challenges head-on[cite: 2].
-                    </p>
-                </div>
-                <div class="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                    <div class="text-4xl text-amber-300 mb-4 text-center">⚠️</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Timing Advisory</h3>
-                    <p class="text-gray-300 text-sm">
-                        On Wednesdays, the Abhijit Muhurat is traditionally considered compromised and is marked as inactive[cite: 2]. Furthermore, Rahu Kaal strongly overlaps the midday period from 12:10 PM to 01:45 PM[cite: 2]. Avoid making binding financial decisions or initiating new journeys during these restricted hours[cite: 2].
-                    </p>
-                </div>
+            <div id="guidance-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <!-- Populated dynamically via JS -->
             </div>
         </div>
     </section>
@@ -607,24 +529,216 @@
         <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
     </footer>
 
-    <!-- Script for Navigation -->
+    <!-- Load Monthly Database -->
+    <script src="astro_data.js"></script>
+
+    <!-- Smart Panchang Engine & Live Radar Script -->
     <script>
+        // Mobile Menu Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('hidden');
             const icon = this.querySelector('i');
-            if (mobileNav.classList.contains('hidden')) {
-                icon.className = 'fas fa-bars';
-            } else {
-                icon.className = 'fas fa-times';
-            }
+            icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
         });
 
         document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', function() {
-                const dropdown = this.closest('.mobile-dropdown');
-                dropdown.classList.toggle('active');
+                this.closest('.mobile-dropdown').classList.toggle('active');
             });
+        });
+
+        // Helper: Format JS Date to "YYYY-MM-DD" in local IST
+        function formatDateKey(dateObj) {
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // State for currently selected date
+        let currentSelectedDate = new Date();
+
+        // Render Panchang for a given "YYYY-MM-DD" key
+        function renderPanchang(dateKey) {
+            const availableKeys = Object.keys(ASTRO_DATABASE).sort();
+            
+            // Fallback to closest available date if user picks outside loaded range
+            if (!ASTRO_DATABASE[dateKey]) {
+                dateKey = availableKeys.includes(formatDateKey(new Date())) 
+                    ? formatDateKey(new Date()) 
+                    : availableKeys[0];
+            }
+
+            const dayData = ASTRO_DATABASE[dateKey];
+            const p = dayData.panchang;
+
+            // Update Date Picker UI
+            document.getElementById('datePicker').value = dateKey;
+
+            // Update Dynamic SEO & Headings
+            document.getElementById('dynamic-title').innerText = `Aaj Ka Panchang (${dayData.dateEnglish}) - ${dayData.festival} | Jyotish Tark`;
+            document.getElementById('hero-date-subtitle').innerText = `${dayData.dateHindi}`;
+            document.getElementById('display-hindi-date').innerText = dayData.dateHindi;
+            document.getElementById('display-festival').innerText = `विशेष पर्व: ${dayData.festival}`;
+            document.getElementById('display-disha-shool').innerText = p.dishaShool;
+
+            // Update Core Panchang Fields
+            document.getElementById('tithi').innerText = p.tithi;
+            document.getElementById('nakshatra').innerText = p.nakshatra;
+            document.getElementById('yoga').innerText = p.yoga;
+            document.getElementById('karana').innerText = p.karana;
+            document.getElementById('paksha').innerText = p.paksha;
+            document.getElementById('masa').innerText = p.masa;
+
+            // Update Sun & Moon Fields
+            document.getElementById('sunrise').innerText = p.sunrise;
+            document.getElementById('sunset').innerText = p.sunset;
+            document.getElementById('moonrise').innerText = p.moonrise;
+            document.getElementById('moonset').innerText = p.moonset;
+            document.getElementById('moon-sign').innerText = p.moonSign;
+            document.getElementById('sun-sign').innerText = p.sunSign;
+
+            // Update Muhurats
+            document.getElementById('brahma-muhurat').innerText = p.brahmaMuhurat;
+            document.getElementById('abhijit-muhurat').innerText = p.abhijitMuhurat;
+            document.getElementById('amrit-kaal').innerText = p.amritKaal;
+            document.getElementById('godhuli-muhurat').innerText = p.godhuliMuhurat;
+            document.getElementById('rahu-kaal').innerText = p.rahuKaal;
+            document.getElementById('yamaganda').innerText = p.yamaganda;
+            document.getElementById('gulika-kaal').innerText = p.gulikaKaal;
+            document.getElementById('varjyam').innerText = p.varjyam;
+
+            // Render Guidance Cards
+            const guidanceHTML = dayData.guidance.map(item => `
+                <div class="p-6 bg-gray-800/60 rounded-xl border border-gray-700 hover:border-amber-400/50 transition">
+                    <div class="text-4xl mb-3 text-center">${item.icon}</div>
+                    <h3 class="text-lg font-bold text-amber-300 mb-2 text-center">${item.title}</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">${item.text}</p>
+                </div>
+            `).join('');
+            document.getElementById('guidance-container').innerHTML = guidanceHTML;
+        }
+
+        // Date Navigation Buttons
+        function shiftDate(days) {
+            currentSelectedDate.setDate(currentSelectedDate.getDate() + days);
+            const key = formatDateKey(currentSelectedDate);
+            if (ASTRO_DATABASE[key]) {
+                renderPanchang(key);
+            } else {
+                alert("इस तिथि का पंचांग जल्द ही अपडेट किया जाएगा। (Data available for Oct 18 - Oct 21 in demo)");
+                currentSelectedDate.setDate(currentSelectedDate.getDate() - days);
+            }
+        }
+
+        function goToToday() {
+            currentSelectedDate = new Date();
+            renderPanchang(formatDateKey(currentSelectedDate));
+        }
+
+        function onDatePickerChange(val) {
+            if (ASTRO_DATABASE[val]) {
+                currentSelectedDate = new Date(val + "T00:00:00");
+                renderPanchang(val);
+            } else {
+                alert("यह तिथि अभी डेटाबेस में उपलब्ध नहीं है।");
+                document.getElementById('datePicker').value = formatDateKey(currentSelectedDate);
+            }
+        }
+
+        // VIRAL FEATURE #1: LIVE MUHURAT RADAR & COUNTDOWN ENGINE
+        function parseTimeToday(hhmmStr, now) {
+            const [hh, mm] = hhmmStr.split(':').map(Number);
+            const d = new Date(now);
+            d.setHours(hh, mm, 0, 0);
+            return d;
+        }
+
+        function formatCountdown(ms) {
+            if (ms <= 0) return "00h 00m 00s";
+            const totalSec = Math.floor(ms / 1000);
+            const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+            const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+            const s = String(totalSec % 60).padStart(2, '0');
+            return `${h}h ${m}m ${s}s`;
+        }
+
+        function updateLiveRadar() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-IN', { hour12: true });
+
+            const todayKey = formatDateKey(now);
+            const todayData = ASTRO_DATABASE[todayKey] || ASTRO_DATABASE[Object.keys(ASTRO_DATABASE)[0]];
+            if (!todayData || !todayData.liveWindows) return;
+
+            const w = todayData.liveWindows;
+            const windows = [
+                { type: 'bad', ...w.rahu },
+                { type: 'bad', ...w.yamaganda },
+                { type: 'good', ...w.abhijit },
+                { type: 'good', ...w.amrit }
+            ].map(win => ({
+                ...win,
+                startTime: parseTimeToday(win.start, now),
+                endTime: parseTimeToday(win.end, now)
+            }));
+
+            const radarBox = document.getElementById('live-radar-box');
+            const statusTitle = document.getElementById('radar-status-title');
+            const timerLabel = document.getElementById('radar-timer-label');
+            const countdownEl = document.getElementById('radar-countdown');
+            const pulseDot = document.getElementById('radar-pulse');
+            const solidDot = document.getElementById('radar-dot');
+
+            // 1. Check if we are currently inside any active window
+            const activeWin = windows.find(win => now >= win.startTime && now < win.endTime);
+
+            if (activeWin) {
+                const remaining = activeWin.endTime - now;
+                countdownEl.innerText = formatCountdown(remaining);
+
+                if (activeWin.type === 'bad') {
+                    radarBox.className = "radar-red rounded-2xl p-4 md:px-8 md:py-5 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-500";
+                    statusTitle.innerHTML = `🔴 <span class="text-red-300">सावधान (ACTIVE NOW):</span> ${activeWin.label}`;
+                    timerLabel.innerText = "Ashubh Period Ends In";
+                    pulseDot.className = "pulse-dot bg-red-500";
+                    solidDot.className = "h-3 w-3 rounded-full bg-red-500 absolute";
+                } else {
+                    radarBox.className = "radar-green rounded-2xl p-4 md:px-8 md:py-5 flex flex-col md:flex-col lg:flex-row items-center justify-between gap-4 transition-all duration-500";
+                    statusTitle.innerHTML = `🟢 <span class="text-emerald-300">शुभ समय (LIVE NOW):</span> ${activeWin.label}`;
+                    timerLabel.innerText = "Shubh Muhurat Ends In";
+                    pulseDot.className = "pulse-dot bg-emerald-400";
+                    solidDot.className = "h-3 w-3 rounded-full bg-emerald-400 absolute";
+                }
+            } else {
+                // 2. Otherwise find the next upcoming window today
+                const upcoming = windows
+                    .filter(win => win.startTime > now)
+                    .sort((a, b) => a.startTime - b.startTime)[0];
+
+                radarBox.className = "radar-neutral rounded-2xl p-4 md:px-8 md:py-5 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-500";
+                pulseDot.className = "pulse-dot bg-amber-400";
+                solidDot.className = "h-3 w-3 rounded-full bg-amber-400 absolute";
+
+                if (upcoming) {
+                    const diff = upcoming.startTime - now;
+                    statusTitle.innerHTML = `⏳ सामान्य समय (Normal Flow) • <span class="text-amber-300">अगला: ${upcoming.label}</span>`;
+                    timerLabel.innerText = "Starts In";
+                    countdownEl.innerText = formatCountdown(diff);
+                } else {
+                    statusTitle.innerHTML = `🌙 आज के मुख्य मुहूर्त समाप्त • <span class="text-amber-300">रात्रि शांति एवं ध्यान का समय</span>`;
+                    timerLabel.innerText = "Status";
+                    countdownEl.innerText = "शांत काल";
+                }
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            goToToday();
+            updateLiveRadar();
+            setInterval(updateLiveRadar, 1000);
         });
     </script>
 </body>
