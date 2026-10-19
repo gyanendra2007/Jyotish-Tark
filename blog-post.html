@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, follow">
+  <title>Redirecting... | Jyotish Tark</title>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      
+      // Map old ?id= numbers to your new static HTML filenames
+      const urlMap = {
+        '1': 'rashifal-2025.html',
+        '2': 'ank-jyotish.html',
+        '3': 'career-astrology.html',
+        '4': 'planetary-transits.html',
+        '5': 'vedic-modern-astrology.html',
+        '6': 'kundali-milan.html',
+        '7': 'nadi-astrology.html',
+        '8': 'vastu-shastra.html',
+        '9': 'ketu-dosha-remedies.html',
+        '10': 'kaalsarp-dosha-remedies.html',
+        '11': 'aditya-hridaya-stotra.html',
+        '12': 'navagraha-stotra.html',
+        '13': 'annapurna-stotra.html',
+        '14': 'medha-suktam.html',
+        '15': 'hanuman-bhakti-sangrah.html',
+        '16': 'mangal-dosha-nivaran.html',
+        '17': 'narayan-kavach.html',
+        '18': 'shiv-kavach.html'
+      };
+
+      const targetPage = urlMap[id] || 'blog.html';
+      window.location.replace('https://jyotishtark.in/' + targetPage);
+    })();
+  </script>
+</head>
+<body style="background:#0f172a; color:#fff; font-family:sans-serif; text-align:center; padding-top:20%;">
+  <p>नए पेज पर ले जाया जा रहा है... <a href="blog.html" style="color:#fbbf24;">यहाँ क्लिक करें</a></p>
+</body>
+</html>
