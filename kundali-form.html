@@ -1,6 +1,6 @@
 <!-- kundali-form.html -->
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +12,20 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="google-adsense-account" content="ca-pub-2888883494422573">
 
+  <!-- Open Graph / WhatsApp / Facebook Meta Tags -->
   <meta property="og:title" content="Free 45-Min Janam Kundali, Future Partner & D9/Ashtakavarga Dossier | Jyotish Tark">
   <meta property="og:description" content="Reveal your 12-Chapter Personalized Life Dossier in English & हिंदी (Personality, Career, Wealth, Future Partner, All 9 Planets' Aspects & Active Dasha) + Free Mobile PDF Export.">
   <meta property="og:image" content="https://jyotishtark.in/sample.png">
   <meta property="og:url" content="https://jyotishtark.in/kundali-form.html">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Jyotish Tark">
+  <meta property="og:locale" content="hi_IN">
+
+  <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free 45-Min Janam Kundali & Future Partner Dossier | Jyotish Tark">
+  <meta name="twitter:description" content="Instant 12-Chapter Vedic Kundali, Future Partner Appearance & Direction, 337-Bindu Ashtakavarga & Mobile PDF Download.">
+  <meta name="twitter:image" content="https://jyotishtark.in/sample.png">
 
   <script type="application/ld+json">
   {
@@ -61,9 +69,10 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888883494422573" crossorigin="anonymous"></script>
-  <!-- CHANGED: html2pdf replaced with dedicated html2canvas + jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -77,6 +86,7 @@
       background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 45%, #020617 100%);
       color: #f3f4f6;
       background-attachment: fixed;
+      overflow-x: hidden;
     }
     h1, h2, h3, h4, .serif-heading { font-family: 'Playfair Display', 'Hind', serif; font-weight: 700; }
     .hindi { font-family: 'Hind', sans-serif; }
@@ -86,7 +96,7 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
     }
-    .nav-link { position: relative; padding: 0.5rem 0; transition: all 0.3s ease; }
+    .nav-link { position: relative; padding: 0.5rem 0; transition: all 0.3s ease; background: transparent; border: none; cursor: pointer; }
     .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--secondary, #f59e0b); transition: width 0.3s ease; }
     .nav-link:hover::after { width: 100%; }
     .astrological-symbol { font-size: 1.2rem; margin-right: 0.5rem; }
@@ -94,27 +104,29 @@
     .dropdown-content {
       display: none; position: absolute; top: 100%; left: 0;
       background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(20px);
-      min-width: 220px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      min-width: 240px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
       z-index: 1000; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 10px;
     }
     .dropdown-content:hover, .dropdown:hover .dropdown-content { display: block !important; }
     .dropdown::after { content: ''; position: absolute; bottom: -15px; left: 0; width: 100%; height: 20px; background: transparent; z-index: 999; }
     .dropdown-content a {
-      display: flex; align-items: center; padding: 14px 20px; color: white; text-decoration: none;
+      display: flex; align-items: center; gap: 10px; padding: 14px 20px; color: white; text-decoration: none;
       transition: all 0.3s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-weight: 500;
     }
     .dropdown-content a:hover { background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2)); padding-left: 24px; }
     .mobile-dropdown-content { display: none; padding-left: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; margin-top: 8px; border-left: 3px solid var(--primary, #7e22ce); }
     .mobile-dropdown.active .mobile-dropdown-content { display: block; }
     .mobile-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer; }
+
+    /* Zero-Latency Pure CSS Nebula Hero Background */
     .cosmic-bg {
-      background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      background: 
+        radial-gradient(circle at 20% 25%, rgba(236, 72, 153, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(88, 28, 135, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
       position: relative;
     }
-    .cosmic-bg::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(88, 28, 135, 0.88) 0%, rgba(15, 23, 42, 0.94) 100%);
-    }
+
     .primary-button {
       background: linear-gradient(135deg, #7e22ce 0%, #db2777 50%, #f59e0b 100%);
       background-size: 200% auto; color: white; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 700;
@@ -213,9 +225,7 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
     /* ============================================================
-       NEW — PDF LIGHT-THEME CLONE STYLES
-       Applied to the off-screen clone handed to html2canvas.
-       Fully overrides every dark Tailwind class → clean print look.
+       PDF LIGHT-THEME CLONE STYLES
        ============================================================ */
     .pdf-mode,
     .pdf-mode * {
@@ -292,8 +302,7 @@
     .pdf-mode .chapter-body p { margin-bottom: 10px; }
 
     /* ============================================================
-       NEW — NATIVE BROWSER PRINT / SAVE-AS-PDF STYLESHEET
-       Activated by window.print() from the Print / Save PDF button.
+       NATIVE BROWSER PRINT / SAVE-AS-PDF STYLESHEET
        ============================================================ */
     @page { size: A4; margin: 12mm; }
     @media print {
@@ -303,7 +312,6 @@
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      /* Hide everything outside the dossier */
       body * { visibility: hidden; }
       #masterDossierOutput, #masterDossierOutput * { visibility: visible; }
       #masterDossierOutput {
@@ -313,13 +321,11 @@
         margin: 0; padding: 0;
         border: none !important;
       }
-      /* Hide interactive chrome inside the dossier */
       #masterDossierOutput .no-print,
       #masterDossierOutput button,
       #masterDossierOutput a[href^="https://wa.me"],
       #masterDossierOutput a[href^="tel:"],
       #masterDossierOutput .chapter-nav-pill { display: none !important; }
-      /* Page breaks per chapter */
       #masterDossierOutput article,
       #masterDossierOutput .chapter-card {
         page-break-inside: avoid;
@@ -340,20 +346,26 @@
   <!-- Navigation Header -->
   <header class="glass-card shadow-md px-4 md:px-6 py-4 max-w-7xl mx-auto rounded-b-2xl sticky top-0 z-50 no-print">
     <div class="flex justify-between items-center">
-      <a href="index.html" class="flex items-center space-x-3">
+      <a href="https://jyotishtark.in/" class="flex items-center space-x-3">
         <div class="h-11 w-11 md:h-12 md:w-12 rounded-full overflow-hidden border-2 border-amber-300">
-          <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+          <img src="logo.png" alt="Jyotish Tark Logo" width="48" height="48" class="h-full w-full object-cover">
         </div>
         <span class="text-xl md:text-3xl font-bold text-white">Jyotish Tark</span>
       </a>
-      <nav class="hidden md:flex space-x-6 font-medium">
-        <a href="index.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">Home</a>
-        <a href="kundali-form.html" class="nav-link text-amber-300 font-semibold transition flex items-center">Kundali</a>
+      <nav class="hidden md:flex space-x-6 font-medium items-center">
+        <a href="https://jyotishtark.in/" class="nav-link text-white hover:text-amber-300 transition flex items-center">Home</a>
+        <a href="kundali-form.html" class="nav-link text-amber-300 font-semibold transition flex items-center">
+          <span class="px-2 py-0.5 text-[10px] bg-amber-500 text-slate-950 font-extrabold rounded-full mr-1.5">FREE</span>
+          Kundali
+        </a>
         <div class="dropdown">
-          <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">Calculator <i class="fas fa-chevron-down ml-1.5 text-xs"></i></a>
+          <button type="button" class="nav-link text-white hover:text-amber-300 transition flex items-center font-medium">
+            Calculator <i class="fas fa-chevron-down ml-1.5 text-xs"></i>
+          </button>
           <div class="dropdown-content">
-            <a href="numerology.html">Numerology Report</a>
-            <a href="tarot.html">Tarot Reading</a>
+            <a href="kundali-form.html"><i class="fas fa-star text-amber-400"></i> Free Kundali & Life Dossier</a>
+            <a href="numerology.html"><i class="fas fa-calculator text-purple-400"></i> Numerology Report</a>
+            <a href="tarot.html"><i class="fas fa-clover text-pink-400"></i> Tarot Reading</a>
           </div>
         </div>
         <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">Panchang</a>
@@ -367,14 +379,15 @@
       </button>
     </div>
     <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-      <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center"><i class="fas fa-home astrological-symbol"></i>Home</a>
-      <a href="kundali-form.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 transition flex items-center"><i class="fas fa-star astrological-symbol"></i>Kundali</a>
+      <a href="https://jyotishtark.in/" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center"><i class="fas fa-home astrological-symbol"></i>Home</a>
+      <a href="kundali-form.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 font-bold transition flex items-center"><i class="fas fa-star astrological-symbol"></i>Free Kundali & Life Dossier</a>
       <div class="mobile-dropdown">
-        <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition">
+        <div class="mobile-dropdown-toggle px-4 py-3 rounded text-white hover:bg-purple-700 transition">
           <div class="flex items-center"><i class="fas fa-calculator astrological-symbol"></i><span>Calculator</span></div>
-          <i class="fas fa-chevron-down"></i>
+          <i class="fas fa-chevron-down text-xs"></i>
         </div>
         <div class="mobile-dropdown-content">
+          <a href="kundali-form.html" class="flex items-center py-2.5 px-4 text-amber-300"><i class="fas fa-star mr-3"></i>Free 45-Min Kundali Dossier</a>
           <a href="numerology.html" class="flex items-center py-2.5 px-4 text-white"><i class="fas fa-calculator mr-3"></i>Numerology Report</a>
           <a href="tarot.html" class="flex items-center py-2.5 px-4 text-white"><i class="fas fa-clover mr-3"></i>Tarot Reading</a>
         </div>
@@ -594,7 +607,7 @@
               <p class="text-xs sm:text-sm md:text-base text-purple-200" id="dossierHeaderSubtext"></p>
             </div>
 
-            <!-- Action Buttons — includes Download PDF and Print / Save PDF -->
+            <!-- Action Buttons — includes Download PDF, Viral WhatsApp Share, and Print -->
             <div class="flex flex-wrap gap-2.5 w-full lg:w-auto shrink-0 no-print">
               <div class="px-3.5 py-2 rounded-xl bg-slate-950/80 border border-white/15 text-xs text-gray-300 flex items-center gap-2">
                 <i class="fas fa-book-open text-amber-400 text-sm"></i>
@@ -608,8 +621,12 @@
                 <i class="fas fa-file-pdf mr-2 text-base"></i> Save Dossier PDF
               </button>
 
+              <button type="button" onclick="shareMyDossierOnWhatsApp()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs md:text-sm transition flex items-center justify-center shadow-lg">
+                <i class="fab fa-whatsapp mr-1.5 text-base"></i> Share Reading
+              </button>
+
               <button type="button" id="printDossierBtn" onclick="printDossier()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 border border-amber-400/40 text-white font-bold text-xs md:text-sm transition flex items-center justify-center shadow-lg">
-                <i class="fas fa-print mr-1.5"></i> Print / Save PDF
+                <i class="fas fa-print mr-1.5"></i> Print
               </button>
 
               <a href="#chapter-dakshina" class="px-4 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-600 border border-purple-400/40 text-white font-bold text-xs md:text-sm transition flex items-center justify-center shadow-lg">
@@ -622,7 +639,22 @@
             </div>
           </div>
 
-          <div class="mt-6 pt-4 border-t border-white/15 no-print">
+          <!-- NEW VIRAL HOOK: YouTube LIVE Priority Token Bar (Connects @jyotishtark YouTube Live with Website) -->
+          <div id="youtubeLiveTokenBar" class="mt-5 p-3.5 rounded-2xl bg-slate-950/90 border border-red-500/40 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+              <span class="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0 hidden sm:inline-block"></span>
+              <div class="text-xs md:text-sm">
+                <span class="font-extrabold text-red-400 uppercase tracking-wider">🔴 YouTube LIVE Priority Token:</span>
+                <strong id="ytLiveCodeDisplay" class="text-amber-300 ml-1.5 font-mono text-sm">#JT-LIVE</strong>
+                <span class="text-gray-300 block sm:inline sm:ml-2 hindi">यूट्यूब लाइव (@jyotishtark) में अपना प्रश्न पूछने के लिए यह कोड कॉपी कर चैट में पेस्ट करें!</span>
+              </div>
+            </div>
+            <button type="button" onclick="copyYoutubeLiveToken()" id="copyYtTokenBtn" class="shrink-0 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition flex items-center gap-1.5 shadow">
+              <i class="fas fa-copy"></i> Copy for YouTube Live Chat
+            </button>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-white/15 no-print">
             <div class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-2.5"><i class="fas fa-list-ul mr-1.5"></i> Jump to Any Chapter in Your Dossier:</div>
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
               <a href="#chapter-personality" class="chapter-nav-pill">1. Core Personality</a>
@@ -716,6 +748,21 @@
             <div class="w-11 h-11 rounded-2xl bg-rose-600/30 border border-rose-400/40 flex items-center justify-center text-rose-300 text-lg shrink-0"><i class="fas fa-ring"></i></div>
           </div>
           <div id="contentPartner" class="chapter-body"></div>
+
+          <!-- Viral Share Hook Inside Chapter 7 (Future Partner Prediction) -->
+          <div class="mt-6 pt-4 border-t border-pink-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 bg-pink-950/30 p-4 rounded-2xl no-print">
+            <div class="text-xs md:text-sm text-pink-100 hindi">
+              <i class="fas fa-heart text-pink-400 mr-1.5"></i><strong>अपने पार्टनर या मित्र की कुंडली भी चेक करें!</strong> क्या आप यह भविष्यवाणी अपने पार्टनर/दोस्तों को WhatsApp पर भेजना चाहते हैं?
+            </div>
+            <div class="flex gap-2 shrink-0">
+              <button type="button" onclick="shareMyDossierOnWhatsApp()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow">
+                <i class="fab fa-whatsapp"></i> Share Partner Prediction
+              </button>
+              <a href="#topKundaliWorkspace" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition">
+                Check Another DOB ↑
+              </a>
+            </div>
+          </div>
         </article>
 
         <article id="chapter-planets" class="chapter-card">
@@ -757,7 +804,22 @@
               <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 border border-red-400 text-red-300 text-xs md:text-sm font-bold uppercase tracking-wider"><i class="fas fa-exclamation-triangle animate-bounce"></i> Chapter 11 • Critical Root-Cause Diagnostic Alert</div>
               <h3 class="text-2xl md:text-4xl font-bold text-white leading-tight" id="ch11Title">⚠️ The Hidden Blockages & Unseen Traps Silently Sabotaging Your Progress</h3>
               <div id="contentHiddenTraps" class="chapter-body text-gray-200 space-y-4"></div>
+
+              <!-- Dynamic Rudraksha Remedy Card (Automatically Calibrated to User's Dasha/Chart) -->
+              <div id="dynamicRudrakshaCard" class="mt-6 p-5 rounded-2xl bg-slate-900/95 border border-amber-400/50 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+                <div class="space-y-1 text-center sm:text-left">
+                  <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full">
+                    <i class="fas fa-gem mr-1"></i> Safe Bio-Magnetic Vedic Remedy (बिना साइड-इफेक्ट का सुरक्षा कवच)
+                  </span>
+                  <h4 id="rudraRecHeading" class="text-lg font-bold text-white hindi mt-1">आपकी दशा व ग्रह-बाधा निवारण हेतु अभिमंत्रित रुद्राक्ष</h4>
+                  <p id="rudraRecSub" class="text-xs text-gray-300 hindi">रत्न पहनने से पहले लैब-प्रमाणित और वैदिक मंत्रों से अभिमंत्रित रुद्राक्ष धारण कर अपने बाधकेश और महादशा को शांत करें।</p>
+                </div>
+                <a id="rudraRecLink" href="rudraksha.html" class="shrink-0 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:opacity-95 text-slate-950 font-extrabold text-xs md:text-sm shadow-lg transition flex items-center gap-2">
+                  <i class="fas fa-shopping-bag"></i> <span id="rudraRecBtnText">सिद्ध रुद्राक्ष देखें (₹499 से)</span>
+                </a>
+              </div>
             </div>
+
             <div class="lg:col-span-4 bg-slate-950/95 p-6 md:p-7 rounded-2xl border-2 border-amber-400/60 shadow-2xl space-y-5 lg:sticky lg:top-28">
               <div class="text-center border-b border-white/10 pb-4">
                 <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">Personal Remedy & Dasha Solution</span>
@@ -794,7 +856,7 @@
             <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
               <div class="text-xs font-extrabold uppercase tracking-wider text-purple-800 mb-2 text-center">Scan with Any UPI App (GPay / PhonePe / Paytm)</div>
               <div class="w-52 h-52 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
-                <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place qr-code.png in root folder</strong><br>UPI / WhatsApp:<br>+91 8318513814</div>';">
+                <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place qr-code.png in root folder</strong><br>UPI / WhatsApp:<br>+91 8318513814</div>';">
               </div>
               <p class="text-sm font-bold text-slate-900 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
               <p class="text-xs text-gray-500 mb-3">WhatsApp & UPI: +91 8318513814</p>
@@ -806,14 +868,17 @@
         <div class="p-5 rounded-2xl bg-slate-900/95 border border-amber-400/40 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
           <div>
             <h4 class="font-bold text-white text-base">Want to read or share this 45-Minute Dossier offline on your phone?</h4>
-            <p class="text-xs text-gray-300">Download a fully branded PDF or use browser Print for the sharpest vector-quality copy.</p>
+            <p class="text-xs text-gray-300">Download a fully branded PDF, share on WhatsApp, or use browser Print for vector quality.</p>
           </div>
-          <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <button type="button" onclick="exportDossierToPDF()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm flex items-center justify-center shadow-lg transition">
-              <i class="fas fa-file-download mr-2"></i> Download Dossier PDF
+          <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+            <button type="button" onclick="exportDossierToPDF()" class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm flex items-center justify-center shadow-lg transition">
+              <i class="fas fa-file-download mr-2"></i> Download PDF
             </button>
-            <button type="button" onclick="printDossier()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 border border-amber-400/40 text-white font-bold text-sm flex items-center justify-center shadow-lg transition">
-              <i class="fas fa-print mr-2"></i> Print / Save PDF
+            <button type="button" onclick="shareMyDossierOnWhatsApp()" class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center shadow-lg transition">
+              <i class="fab fa-whatsapp mr-2"></i> Share on WhatsApp
+            </button>
+            <button type="button" onclick="printDossier()" class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 border border-amber-400/40 text-white font-bold text-sm flex items-center justify-center shadow-lg transition">
+              <i class="fas fa-print mr-2"></i> Print
             </button>
           </div>
         </div>
@@ -902,7 +967,7 @@
     <p class="text-lg text-gray-300 text-center mb-10 max-w-3xl mx-auto">Download our sample hand-crafted Kundali reports to see what you'll receive when you book our full consultation.</p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
-        <img src="sample.png" alt="Sample Basic Kundali Report" class="w-full h-64 object-cover">
+        <img src="sample.png" alt="Sample Basic Kundali Report" width="520" height="256" class="w-full h-64 object-cover" loading="lazy" decoding="async">
         <div class="p-6">
           <h3 class="text-xl font-bold text-white mb-2">Basic Kundali Report</h3>
           <p class="text-gray-300 mb-4 text-sm">Includes planetary positions, basic personality analysis, and general predictions.</p>
@@ -910,7 +975,7 @@
         </div>
       </div>
       <div class="glass-card rounded-2xl overflow-hidden border border-amber-400/40 flex flex-col justify-between">
-        <img src="sample.png" alt="Sample Detailed Kundali Report" class="w-full h-64 object-cover">
+        <img src="sample.png" alt="Sample Detailed Kundali Report" width="520" height="256" class="w-full h-64 object-cover" loading="lazy" decoding="async">
         <div class="p-6">
           <h3 class="text-xl font-bold text-amber-300 mb-2">Detailed Master Kundali Report (₹1101)</h3>
           <p class="text-gray-300 mb-4 text-sm">Comprehensive analysis including career, marriage, partner traits, health, multi-year dasha periods, and personalized remedies.</p>
@@ -945,12 +1010,12 @@
   </section>
 
   <section class="max-w-4xl mx-auto px-4 py-10 text-center no-print">
-    <div class="cosmic-bg rounded-2xl p-8 md:p-12 relative overflow-hidden">
+    <div class="cosmic-bg rounded-2xl p-8 md:p-12 relative overflow-hidden border border-purple-500/30">
       <div class="relative z-10">
         <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Need Help Entering Your Details?</h2>
         <p class="text-lg text-purple-100 mb-8">Our astrology team is available on WhatsApp to help you find your chart details or book a direct consultation.</p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20need%20help%20with%20my%20Kundali%20analysis" class="primary-button bg-green-600 hover:bg-green-700" target="_blank"><i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp</a>
+          <a href="https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20need%20help%20with%20my%20Kundali%20analysis" class="primary-button bg-green-600 hover:bg-green-700" target="_blank" rel="noopener"><i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp</a>
           <a href="tel:+918318513814" class="secondary-button"><i class="fas fa-phone-alt mr-2"></i> Call Us Now</a>
         </div>
       </div>
@@ -961,25 +1026,25 @@
     <div class="text-center"><h2 class="text-3xl md:text-4xl font-bold text-white mb-8 section-title">FAQ / अक्सर पूछे जाने वाले प्रश्न</h2></div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: कुंडली सेवा की कीमत क्या है?</h3>
-        <p class="mt-2 text-gray-300 text-sm">A: आप ऊपर दिए गए टूल से अपना 45-मिनट का प्रारंभिक जीवन विश्लेषण नि:शुल्क पढ़ और PDF डाउनलोड कर सकते हैं। संपूर्ण हस्तनिर्मित कुंडली पीडीएफ और व्यक्तिगत वैदिक/लाल किताब उपायों की सेवा केवल ₹1101 में उपलब्ध है।</p>
+        <h3 class="font-semibold text-lg text-amber-300 hindi">Q: कुंडली सेवा की कीमत क्या है?</h3>
+        <p class="mt-2 text-gray-300 text-sm hindi">A: आप ऊपर दिए गए टूल से अपना 45-मिनट का प्रारंभिक जीवन विश्लेषण नि:शुल्क पढ़ और PDF डाउनलोड कर सकते हैं। संपूर्ण हस्तनिर्मित कुंडली पीडीएफ और व्यक्तिगत वैदिक/लाल किताब उपायों की सेवा केवल ₹1101 में उपलब्ध है।</p>
         <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How much does the full Kundali service cost?</h3>
         <p class="mt-2 text-gray-300 text-sm">A: Our instant online dossier is free to read and save as PDF, and you may offer voluntary Guru Dakshina. Our complete 1-on-1 hand-crafted Kundali report with remedies is ₹1101.</p>
       </div>
       <div>
-        <h3 class="font-semibold text-lg text-amber-300">Q: मुझे अपनी हस्तनिर्मित कुंडली कितने समय में मिल जाएगी?</h3>
-        <p class="mt-2 text-gray-300 text-sm">A: भुगतान और विवरण भरने के तुरंत बाद आपकी विस्तृत कुंडली 24–48 घंटे में व्हाट्सएप और ईमेल कर दी जाएगी।</p>
+        <h3 class="font-semibold text-lg text-amber-300 hindi">Q: मुझे अपनी हस्तनिर्मित कुंडली कितने समय में मिल जाएगी?</h3>
+        <p class="mt-2 text-gray-300 text-sm hindi">A: भुगतान और विवरण भरने के तुरंत बाद आपकी विस्तृत कुंडली 24–48 घंटे में व्हाट्सएप और ईमेल कर दी जाएगी।</p>
         <h3 class="font-semibold text-lg text-amber-300 mt-6">Q: How soon will I receive my hand-crafted Kundali?</h3>
         <p class="mt-2 text-gray-300 text-sm">A: Once payment and details are confirmed, you'll receive your complete PDF report within 24–48 hours.</p>
       </div>
     </div>
   </section>
 
-  <a class="whatsapp-float no-print" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>
+  <a class="whatsapp-float no-print" id="whatsappButton" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
 
   <div class="whatsapp-popup no-print" id="whatsappPopup">
     <div class="whatsapp-header">
-      <img src="logo.png" alt="Jyotish Tark">
+      <img src="logo.png" alt="Jyotish Tark" width="46" height="46">
       <div>
         <h3 class="font-bold text-lg">Jyotish Tark</h3>
         <p class="text-sm opacity-90">Typically replies within minutes</p>
@@ -1002,48 +1067,54 @@
     </div>
   </div>
 
+  <!-- Footer (Synchronized with All Policy & Sitemap Pages) -->
   <footer class="glass-card text-center py-12 mt-12 no-print">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-center space-x-6 mb-8 text-2xl">
-        <a href="https://www.facebook.com/jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.instagram.com/jyotishtark/" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.youtube.com/@jyotishtark" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
-        <a href="https://wa.me/918318513814" target="_blank" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/jyotishtark" target="_blank" rel="noopener" aria-label="Facebook" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/jyotishtark/" target="_blank" rel="noopener" aria-label="Instagram" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@jyotishtark" target="_blank" rel="noopener" aria-label="YouTube" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/918318513814" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
         <div>
           <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="index.html" class="text-gray-300">Home</a></li>
-            <li><a href="kundali-form.html" class="text-gray-300">Kundali</a></li>
-            <li><a href="numerology.html" class="text-gray-300">Numerology</a></li>
-            <li><a href="rashifal.html" class="text-gray-300">Rashifal</a></li>
+          <ul class="space-y-2.5 footer-links text-sm">
+            <li><a href="https://jyotishtark.in/" class="text-gray-300 hover:text-white transition">Home</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Free 45-Min Kundali Dossier</a></li>
+            <li><a href="numerology.html" class="text-gray-300 hover:text-white transition">Chaldean Numerology</a></li>
+            <li><a href="tarot.html" class="text-gray-300 hover:text-white transition">Tarot Reading</a></li>
+            <li><a href="panchang.html" class="text-gray-300 hover:text-white transition">Daily Panchang</a></li>
+            <li><a href="rashifal.html" class="text-gray-300 hover:text-white transition">Rashifal</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
-            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
-            <li><a href="rashifal.html" class="text-gray-300">Monthly Horoscope</a></li>
-            <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
+          <h4 class="font-semibold text-amber-300 mb-4">Services & Store</h4>
+          <ul class="space-y-2.5 footer-links text-sm">
+            <li><a href="kundali-form.html" onclick="switchWorkspaceMode('manual')" class="text-gray-300 hover:text-white transition">Order Hand-Made Kundali (₹1101)</a></li>
+            <li><a href="rudraksha.html" class="text-gray-300 hover:text-white transition">Buy Lab-Certified Rudraksha</a></li>
+            <li><a href="durga-saptashati-hindi-pdf.html" class="text-gray-300 hover:text-white transition">Free Durga Saptashati PDF</a></li>
+            <li><a href="blog.html" class="text-gray-300 hover:text-white transition">Medical Astrology Blogs</a></li>
+            <li><a href="contact.html" class="text-gray-300 hover:text-white transition">Consult Astrologer</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
-          <ul class="space-y-3 footer-links">
-            <li><a href="about.html" class="text-gray-300">About Us</a></li>
-            <li><a href="contact.html" class="text-gray-300">Contact Us</a></li>
-            <li><a href="privacy-policy.html" class="text-gray-300">Privacy Policy</a></li>
-            <li><a href="terms-of-service.html" class="text-gray-300">Terms of Service</a></li>
+          <h4 class="font-semibold text-amber-300 mb-4">Information & Policies</h4>
+          <ul class="space-y-2.5 footer-links text-sm">
+            <li><a href="about.html" class="text-gray-300 hover:text-white transition">About Us</a></li>
+            <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition">Disclaimer</a></li>
+            <li><a href="privacy-policy.html" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="terms-of-service.html" class="text-gray-300 hover:text-white transition">Terms of Service</a></li>
+            <li><a href="shipping-and-delivery.html" class="text-gray-300 hover:text-white transition">Shipping & Delivery</a></li>
+            <li><a href="cancellation.html" class="text-gray-300 hover:text-white transition">Cancellation & Refund</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
-          <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
-          <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
-          <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
-          <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+          <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-envelope mr-2 text-amber-400"></i> jyotishtark@gmail.com</p>
+          <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-phone-alt mr-2 text-amber-400"></i> +91 8318513814</p>
+          <p class="text-gray-300 mb-3 text-sm"><i class="fab fa-whatsapp mr-2 text-green-400"></i> +91 8318513814</p>
+          <p class="text-gray-300 text-sm"><i class="fas fa-map-marker-alt mr-2 text-amber-400"></i> Lucknow, Uttar Pradesh, India</p>
         </div>
       </div>
       <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
@@ -1235,7 +1306,86 @@
     }
 
     // ============================================================
-    // PDF EXPORT — Light-theme A4 PDF via html2canvas + jsPDF
+    // VIRAL WHATSAPP SHARE, YOUTUBE LIVE TOKEN & RUDRAKSHA MATCHER
+    // ============================================================
+    function refreshViralWidgetsFromCtx() {
+      const ctx = window.__jyotishLastCtx;
+      if (!ctx) return;
+
+      // 1. Update YouTube Live Token
+      const shortAsc = (ctx.displayAsc || "Lagna").split(" ")[0].toUpperCase();
+      const shortMoon = (ctx.displayMoon || "Moon").split(" ")[0].toUpperCase();
+      const tokenCode = `#JT-${shortAsc.slice(0,3)}-${shortMoon.slice(0,3)}-M${ctx.numData.mulank}B${ctx.numData.bhagyank}`;
+      const tokenEl = document.getElementById('ytLiveCodeDisplay');
+      if (tokenEl) tokenEl.textContent = tokenCode;
+
+      // 2. Calibrate Dynamic Rudraksha Recommendation Card by Active Mahadasha
+      const rudraMap = {
+        Saturn:  { name: "सप्तमुखी रुद्राक्ष (7 Mukhi)", price: "₹1,999", id: "prod-7", desc: "शनि महादशा, साढ़ेसाती और कर्ज/हड्डियों के दर्द से रक्षा हेतु महालक्ष्मी स्वरूप सप्तमुखी रुद्राक्ष सर्वोत्तम है।" },
+        Rahu:    { name: "आठ मुखी रुद्राक्ष (8 Mukhi)",  price: "₹3,999", id: "prod-8", desc: "राहु महादशा और कार्य की आकस्मिक बाधाओं को दूर करने हेतु गणेश स्वरूप आठ मुखी रुद्राक्ष धारण करें।" },
+        Ketu:    { name: "नौ मुखी रुद्राक्ष (9 Mukhi)",   price: "₹4,999", id: "prod-9", desc: "केतु महादशा, अज्ञात भय और शत्रु बाधा निवारण हेतु नवदुर्गा स्वरूप नौ मुखी रुद्राक्ष धारण करें।" },
+        Mars:    { name: "तीन मुखी रुद्राक्ष (3 Mukhi)",  price: "₹1,499", id: "prod-3", desc: "मंगल महादशा/कुज दोष शांत करने और आत्मविश्वास बढ़ाने हेतु अग्नि स्वरूप तीन मुखी रुद्राक्ष सर्वोत्तम है।" },
+        Mercury: { name: "चार मुखी रुद्राक्ष (4 Mukhi)",  price: "₹999",   id: "prod-4", desc: "बुध महादशा, तीव्र बुद्धि, एकाग्रता और करियर ग्रोथ हेतु ब्रह्मा स्वरूप चार मुखी रुद्राक्ष धारण करें।" },
+        Venus:   { name: "छह मुखी / गौरी शंकर रुद्राक्ष", price: "₹1,499", id: "prod-6", desc: "शुक्र महादशा, आकर्षण, धन और वैवाहिक सुख हेतु कार्तिकेय स्वरूप छह मुखी रुद्राक्ष सर्वोत्तम है।" },
+        Moon:    { name: "दो मुखी / पंचमुखी रुद्राक्ष",   price: "₹499",   id: "prod-5", desc: "चंद्र महादशा, ओवरथिंकिंग और मानसिक शांति हेतु अभिमंत्रित रुद्राक्ष कवच धारण करें।" },
+        Jupiter: { name: "पंचमुखी रुद्राक्ष (5 Mukhi)",   price: "₹499",   id: "prod-5", desc: "गुरु महादशा, BP नियंत्रण, स्वास्थ्य और भाग्य वृद्धि हेतु कालाग्नि रुद्र पंचमुखी रुद्राक्ष (महाकाल कड़ा मुफ्त) सर्वोत्तम है।" },
+        Sun:     { name: "पंचमुखी / तीन मुखी रुद्राक्ष",  price: "₹499",   id: "prod-5", desc: "सूर्य बल, स्वास्थ्य और राजयोग जागृति हेतु अभिमंत्रित रुद्राक्ष कवच धारण करें।" }
+      };
+
+      const rec = rudraMap[ctx.dasha.md] || rudraMap.Jupiter;
+      const rHead = document.getElementById('rudraRecHeading');
+      const rSub  = document.getElementById('rudraRecSub');
+      const rLink = document.getElementById('rudraRecLink');
+      const rBtn  = document.getElementById('rudraRecBtnText');
+
+      if (rHead) rHead.textContent = `आपकी ${ctx.dasha.md} महादशा हेतु सिद्ध कवच: ${rec.name}`;
+      if (rSub)  rSub.textContent  = rec.desc;
+      if (rLink) rLink.href        = `rudraksha.html#${rec.id}`;
+      if (rBtn)  rBtn.textContent  = `${rec.name} (${rec.price}) देखें →`;
+    }
+
+    function copyYoutubeLiveToken() {
+      const ctx = window.__jyotishLastCtx;
+      if (!ctx) return;
+      const tokenEl = document.getElementById('ytLiveCodeDisplay');
+      const code = tokenEl ? tokenEl.textContent : '#JT-LIVE';
+      const chatText = `जय सिया राम गुरुजी 🙏 [${code}] नाम: ${ctx.name} | DOB: ${ctx.dob} | लग्न: ${ctx.displayAsc} | चंद्र: ${ctx.displayMoon} (${ctx.displayMoonNak}) | दशा: ${ctx.dasha.md}-${ctx.dasha.ad} — कृपया मार्गदर्शन करें! (Checked on jyotishtark.in)`;
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(chatText).then(() => {
+          const btn = document.getElementById('copyYtTokenBtn');
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied! Paste in YouTube Live';
+            setTimeout(() => { btn.innerHTML = orig; }, 3500);
+          }
+        });
+      } else {
+        prompt("Copy this line and paste it in the Jyotish Tark YouTube Live chat:", chatText);
+      }
+    }
+
+    function shareMyDossierOnWhatsApp() {
+      const ctx = window.__jyotishLastCtx;
+      const name = ctx ? ctx.name : (document.getElementById('userName')?.value || 'मेरी');
+      const mulank = ctx ? ctx.numData.mulank : '';
+      const bhagyank = ctx ? ctx.numData.bhagyank : '';
+      const asc = ctx ? ctx.displayAsc : '';
+      const dasha = ctx ? `${ctx.dasha.md}–${ctx.dasha.ad}` : '';
+
+      const shareMsg =
+        `🔮 *मैंने अभी Jyotish Tark पर अपनी 45-मिनट की संपूर्ण जन्म कुंडली और भावी जीवनसाथी (Future Partner) की भविष्यवाणी देखी!* ✨\n\n` +
+        `👤 *नाम:* ${name}\n` +
+        (mulank ? `🔢 *मूलांक / भाग्यांक:* ${mulank} / ${bhagyank}\n` : '') +
+        (asc ? `🌌 *लग्न:* ${asc} | *सक्रिय दशा:* ${dasha}\n\n` : '\n') +
+        `आप भी केवल अपना *नाम और जन्मतिथि (DOB)* डालकर अपने करियर, धन, और भावी जीवनसाथी का रंग-रूप व दिशा *100% FREE* में यहाँ चेक करें (PDF भी डाउनलोड करें) 👇\n` +
+        `https://jyotishtark.in/kundali-form.html`;
+
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareMsg)}`, '_blank');
+    }
+
+    // ============================================================
+    // PDF EXPORT — Mobile-Safe Light-Theme A4 PDF via html2canvas + jsPDF
     // ============================================================
     function buildCoverPageHtml(ctx) {
       const safeName = (ctx && ctx.name) || 'Seeker';
@@ -1345,7 +1495,8 @@
         return;
       }
       if (typeof window.html2canvas !== 'function' || !window.jspdf || !window.jspdf.jsPDF) {
-        alert('PDF library not loaded. Please check your internet connection, or use the Print / Save PDF button instead.');
+        alert('PDF library not loaded. Falling back to Print / Save PDF.');
+        printDossier();
         return;
       }
 
@@ -1355,7 +1506,7 @@
       const originalHTML = btn ? btn.innerHTML : '';
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Building PDF...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Preparing PDF...';
       }
 
       const ctxForCover = window.__jyotishLastCtx || {
@@ -1369,7 +1520,7 @@
       clone.classList.add('pdf-mode');
 
       clone.querySelectorAll(
-        'button, a[href^="https://wa.me"], a[href^="tel:"], .chapter-nav-pill, .no-print, #urgentConsultWhatsappBtn, #dossierTopWhatsappBtn'
+        'button, a[href^="https://wa.me"], a[href^="tel:"], .chapter-nav-pill, .no-print, #urgentConsultWhatsappBtn, #dossierTopWhatsappBtn, #youtubeLiveTokenBar, #dynamicRudrakshaCard'
       ).forEach(el => el.remove());
       clone.querySelectorAll('a[href^="#"]').forEach(a => {
         a.replaceWith(document.createTextNode(a.textContent || ''));
@@ -1391,35 +1542,42 @@
       document.body.appendChild(wrapper);
 
       try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 300));
 
       try {
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+        const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
 
         const pageW = 210, pageH = 297;
         const mL = 15, mR = 15, mT = 20, mB = 20;
         const contentW = pageW - mL - mR;
         const contentH = pageH - mT - mB;
+        const renderScale = window.innerWidth < 768 ? 1.55 : 2;
 
         const sections  = Array.from(wrapper.children);
         let isFirstPage = true;
         let pageNum     = 1;
 
-        for (const section of sections) {
+        for (let idx = 0; idx < sections.length; idx++) {
+          const section = sections[idx];
           if (!section.textContent.trim() && !section.querySelector('img')) continue;
+
+          if (btn) {
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Building (${idx + 1}/${sections.length})...`;
+          }
+          await new Promise(r => setTimeout(r, 35)); // Yield to mobile garbage collector
 
           let canvas;
           try {
             canvas = await window.html2canvas(section, {
-              scale: 2,
+              scale: renderScale,
               useCORS: true,
               backgroundColor: '#ffffff',
               logging: false,
               windowWidth: 800
             });
           } catch (err) {
-            console.warn('html2canvas failed on one section, skipping:', err);
+            console.warn('html2canvas skipped section:', err);
             continue;
           }
 
@@ -1429,7 +1587,7 @@
           if (imgH_mm <= contentH) {
             if (!isFirstPage) pdf.addPage();
             drawPdfPageChrome(pdf, pageNum, userName);
-            pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', mL, mT, imgW_mm, imgH_mm);
+            pdf.addImage(canvas.toDataURL('image/jpeg', 0.90), 'JPEG', mL, mT, imgW_mm, imgH_mm);
             pageNum++;
             isFirstPage = false;
           } else {
@@ -1449,20 +1607,28 @@
               drawPdfPageChrome(pdf, pageNum, userName);
 
               const sliceH_mm = (sliceH * contentW) / canvas.width;
-              pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.92), 'JPEG', mL, mT, contentW, sliceH_mm);
+              pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.90), 'JPEG', mL, mT, contentW, sliceH_mm);
+
+              // Release slice canvas memory immediately on mobile
+              sliceCanvas.width = 0;
+              sliceCanvas.height = 0;
 
               srcY += sliceH;
               pageNum++;
               isFirstPage = false;
             }
           }
+
+          // Release section canvas memory immediately
+          canvas.width = 0;
+          canvas.height = 0;
         }
 
         pdf.save(`Jyotish_Tark_Dossier_${safeFile}.pdf`);
       } catch (err) {
         console.error('PDF generation failed:', err);
-        alert('PDF generation encountered an error. Falling back to browser Print — please choose "Save as PDF" in the print dialog.');
-        try { window.print(); } catch (e) {}
+        alert('Opening Print / Save as PDF dialog for high-resolution export.');
+        printDossier();
       } finally {
         wrapper.remove();
         if (btn) {
@@ -1472,10 +1638,6 @@
       }
     }
 
-    // ============================================================
-    // NATIVE PRINT — applies .pdf-mode temporarily so print
-    // uses the same light-theme layout as the downloaded PDF.
-    // ============================================================
     function printDossier() {
       const target = document.getElementById('masterDossierOutput');
       if (!target || target.classList.contains('hidden')) {
@@ -1547,6 +1709,50 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderPlanetaryRowsInForm();
 
+      // Hook into generateCompleteLifeDossier so our YouTube Live Token & Rudraksha Matcher update automatically
+      const origGen = window.generateCompleteLifeDossier;
+      if (typeof origGen === 'function') {
+        window.generateCompleteLifeDossier = function(ev) {
+          origGen(ev);
+          refreshViralWidgetsFromCtx();
+        };
+      }
+
+      // 1. Check if user clicked "Book Hand-Made Kundali (₹1101)" on Homepage
+      if (localStorage.getItem('openManualTab') === '1') {
+        localStorage.removeItem('openManualTab');
+        switchWorkspaceMode('manual');
+      }
+
+      // 2. Check if user launched Quick Kundali from Homepage (URL params or localStorage)
+      const urlParams = new URLSearchParams(window.location.search);
+      let prefillName = urlParams.get('name');
+      let prefillDob  = urlParams.get('dob');
+      let prefillLang = urlParams.get('lang');
+      let autoRun     = urlParams.get('autorun') === '1';
+
+      const storedPrefillRaw = localStorage.getItem('jt_prefill_dossier');
+      if (storedPrefillRaw) {
+        try {
+          const parsed = JSON.parse(storedPrefillRaw);
+          prefillName = prefillName || parsed.name;
+          prefillDob  = prefillDob  || parsed.dob;
+          prefillLang = prefillLang || parsed.lang;
+          autoRun     = autoRun     || Boolean(parsed.autoRun);
+        } catch (e) {}
+        localStorage.removeItem('jt_prefill_dossier');
+      }
+
+      if (prefillName) document.getElementById('userName').value = prefillName;
+      if (prefillDob)  document.getElementById('userDob').value  = prefillDob;
+      if (prefillLang && (prefillLang === 'hi' || prefillLang === 'en')) {
+        document.getElementById('reportLang').value = prefillLang;
+      }
+      if (autoRun && prefillName && prefillDob && typeof window.generateCompleteLifeDossier === 'function') {
+        setTimeout(() => window.generateCompleteLifeDossier(), 120);
+      }
+
+      // Mobile Nav & Dropdowns
       document.getElementById('menuToggle').addEventListener('click', function () {
         const mobileNav = document.getElementById('mobileNav');
         mobileNav.classList.toggle('hidden');
