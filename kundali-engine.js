@@ -1,28 +1,26 @@
 /**
  * ============================================================================
  * JYOTISH TARK — MASTER VEDIC ASTROLOGY & CHALDEAN NUMEROLOGY ENGINE
- * File: kundali-engine.js • v6.5 (Unified Exact-Astronomy + v5.0 Anti-Repeat Edition)
+ * File: kundali-engine.js • v7.0 (Dated Real-Life Events & 99.99% Red Alert Edition)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
  * ============================================================================
- * UNIFIED CAPABILITIES:
- * 1. Exact Birth-Time Mode (via birth-chart-calculator.js + vedic-chart-analyzer.js):
- *    - True Lahiri Sidereal Lagna, Planetary Degrees (0°-30°), Vakri Detection
- *    - North Indian D1 SVG + South Indian D9 Navamsa SVG + PNG Download
- *    - Midpoint Bhava Chalit Table, Shadbala Bars & Calendar-Date Dasha Timeline
- * 2. DOB-Only Derived Mode (When Birth Time/Place is not entered):
- *    - Full 12-Chapter Solar-Lunar & Chaldean Blueprint with Derived Lagna,
- *      Moon Nakshatra, D9 Maturity & 337-Bindu Ashtakavarga + Optional 8-Chapter
- *      Pure Numerology View Switcher.
- * 3. v5.0 Session-Aware Anti-Repeat & Twin-Differentiated Narrative Engine:
- *    - Multiple searches in the same browser never repeat cold-reading hooks.
- *    - Deduplicated D1/D9 Marriage Directions & True Parashari Maturity Ages.
+ * UPGRADES IN v7.0:
+ * 1. Red 99.99% Precision Alert for DOB-Only Users: Prompts users who only
+ *    entered Date of Birth to add Birth Time & City for 99.99% Lagna/D9/Dasha.
+ * 2. Honest DOB-Only Astronomy Mode: Uses real 12:00 PM Noon IST Natal Planets
+ *    (Surya Kundali + Chandra Kundali + Bhrigu Nandi Nadi + Chaldean Numerology),
+ *    hides fake D1/D9 charts & SAV tables, and delivers a 2026–2029 Year Forecast.
+ * 3. Dated Past-Verification & Concrete Future Windows (Career, Loss, Marriage).
+ * 4. NEW Section: 👶 Childbirth, Progeny & Santan Yoga (Injected after Partner).
+ * 5. 🙏 Sacred Guru Dakshina Moved to the Middle (Right after Partner & Baby).
+ * 6. Punchy 3-Point Real-Life Planetary Verdicts in Chapter 8 (Zero Fluff).
  * ============================================================================
  */
 
 (function () {
   "use strict";
 
-  window.__jtMode = window.__jtMode || "derived"; // "vedic" | "manual" | "derived" | "numerology"
+  window.__jtMode = window.__jtMode || "derived"; // "vedic" | "manual" | "derived"
   window.__jtVedicData = window.__jtVedicData || null;
 
   // ==========================================================================
@@ -40,7 +38,6 @@
     F: 8, P: 8
   };
 
-  // True Parashari Planetary Maturity Ages (Graha Pakva Ayu)
   const PLANET_MATURITY_AGES = {
     Jupiter: [16, 24, 32],
     Sun:     [22, 28, 34],
@@ -54,110 +51,86 @@
   };
 
   const LAGNA_FUNCTIONAL_MATRIX = {
-    1: { // Mesha (Aries)
-      yogakaraka: ["Sun", "Jupiter"],
-      benefics: ["Sun", "Moon", "Mars", "Jupiter"],
-      malefics: ["Mercury", "Venus", "Saturn"],
-      marakas: ["Venus", "Saturn"],
+    1: {
+      yogakaraka: ["Sun", "Jupiter"], benefics: ["Sun", "Moon", "Mars", "Jupiter"],
+      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Venus", "Saturn"],
       badhakaHouse: 11, badhakesh: "Saturn",
       secretWeaknessEn: "impulsive trust, sudden bursts of righteous anger that fade within minutes, and fighting everyone else's battles while hiding your own exhaustion",
       secretWeaknessHi: "आवेग में आकर भरोसा करना, क्षणिक क्रोध जिसके बाद आपको स्वयं ग्लानि होती है, और अपनी थकान छिपाकर दूसरों की जिम्मेदारियां अपने सिर ले लेना"
     },
-    2: { // Vrishabha (Taurus)
-      yogakaraka: ["Saturn"],
-      benefics: ["Saturn", "Mercury", "Venus", "Sun"],
-      malefics: ["Jupiter", "Moon", "Mars"],
-      marakas: ["Mars", "Jupiter"],
+    2: {
+      yogakaraka: ["Saturn"], benefics: ["Saturn", "Mercury", "Venus", "Sun"],
+      malefics: ["Jupiter", "Moon", "Mars"], marakas: ["Mars", "Jupiter"],
       badhakaHouse: 9, badhakesh: "Saturn",
       secretWeaknessEn: "silent stubbornness, holding onto past emotional wounds for years without speaking, and sacrificing personal desires to keep family stability intact",
       secretWeaknessHi: "भीतर ही भीतर पुरानी बातों को वर्षों तक दबाए रखना, जिद्दी स्वाभिमान और परिवार की स्थिरता के लिए अपनी इच्छाओं का चुपचाप त्याग करना"
     },
-    3: { // Mithuna (Gemini)
-      yogakaraka: ["Venus"],
-      benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Sun"],
-      marakas: ["Mars", "Jupiter"],
+    3: {
+      yogakaraka: ["Venus"], benefics: ["Venus", "Mercury", "Saturn"],
+      malefics: ["Mars", "Jupiter", "Sun"], marakas: ["Mars", "Jupiter"],
       badhakaHouse: 7, badhakesh: "Jupiter",
       secretWeaknessEn: "two parallel tracks of thought running 24/7 in your head, late-night mental replay of conversations, and feeling intellectually lonely even in a room full of people",
       secretWeaknessHi: "दिमाग में 24 घंटे दो समानांतर विचारों का चलना, रात्रि में अत्यधिक ओवरथिंकिंग और भीड़ में भी अपने बौद्धिक स्तर का साथी न मिल पाने का एकाकीपन"
     },
-    4: { // Karka (Cancer)
-      yogakaraka: ["Mars"],
-      benefics: ["Mars", "Jupiter", "Moon"],
-      malefics: ["Venus", "Mercury", "Saturn"],
-      marakas: ["Saturn", "Mercury"],
+    4: {
+      yogakaraka: ["Mars"], benefics: ["Mars", "Jupiter", "Moon"],
+      malefics: ["Venus", "Mercury", "Saturn"], marakas: ["Saturn", "Mercury"],
       badhakaHouse: 11, badhakesh: "Venus",
       secretWeaknessEn: "absorbing the emotional stress of people around you like a sponge, giving 100% loyalty to those who return 30%, and silent internal mood tides",
       secretWeaknessHi: "दूसरों के दुख और तनाव को अपने भीतर सोख लेना, उन लोगों को 100% वफादारी देना जो बदले में 30% भी नहीं लौटाते, और अचानक मन का उदास हो जाना"
     },
-    5: { // Simha (Leo)
-      yogakaraka: ["Mars"],
-      benefics: ["Mars", "Sun", "Jupiter"],
-      malefics: ["Mercury", "Venus", "Saturn"],
-      marakas: ["Saturn", "Venus"],
+    5: {
+      yogakaraka: ["Mars"], benefics: ["Mars", "Sun", "Jupiter"],
+      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Saturn", "Venus"],
       badhakaHouse: 9, badhakesh: "Mars",
       secretWeaknessEn: "fierce royal pride that refuses to ask for help even when bleeding internally, and feeling taken for granted by the very people you shelter",
       secretWeaknessHi: "अटूट राजसी स्वाभिमान जिसके कारण आप टूटने पर भी किसी से मदद नहीं मांगते, और जिन लोगों की आप रक्षा करते हैं उन्हीं से अपेक्षित सम्मान न मिलना"
     },
-    6: { // Kanya (Virgo)
-      yogakaraka: ["Venus", "Mercury"],
-      benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Moon"],
-      marakas: ["Mars", "Jupiter"],
+    6: {
+      yogakaraka: ["Venus", "Mercury"], benefics: ["Venus", "Mercury", "Saturn"],
+      malefics: ["Mars", "Jupiter", "Moon"], marakas: ["Mars", "Jupiter"],
       badhakaHouse: 7, badhakesh: "Jupiter",
       secretWeaknessEn: "hyper-critical perfectionism, spotting micro-flaws that others miss, gut/nervous tension when plans go off-script, and acting as the unpaid fixer in relationships",
       secretWeaknessHi: "हर काम में पूर्णता (perfection) खोजने की आदत, सूक्ष्म से सूक्ष्म गलती को तुरंत पकड़ लेना, और रिश्तों में हमेशा दूसरों की समस्याएं सुलझाते रहना"
     },
-    7: { // Tula (Libra)
-      yogakaraka: ["Saturn"],
-      benefics: ["Saturn", "Mercury", "Venus"],
-      malefics: ["Sun", "Mars", "Jupiter"],
-      marakas: ["Mars", "Jupiter"],
+    7: {
+      yogakaraka: ["Saturn"], benefics: ["Saturn", "Mercury", "Venus"],
+      malefics: ["Sun", "Mars", "Jupiter"], marakas: ["Mars", "Jupiter"],
       badhakaHouse: 11, badhakesh: "Sun",
       secretWeaknessEn: "swallowing your own hurt to preserve surface harmony until you suddenly detach forever, and second-guessing yourself at major life crossroads",
       secretWeaknessHi: "शांति बनाए रखने के लिए अपनी भावनाओं को दबाना—और जब सहनशक्ति की सीमा समाप्त हो जाए तो बिना शोर किए पूरी तरह तटस्थ (detach) हो जाना"
     },
-    8: { // Vrishchika (Scorpio)
-      yogakaraka: ["Moon", "Jupiter"],
-      benefics: ["Sun", "Moon", "Jupiter", "Mars"],
-      malefics: ["Mercury", "Venus", "Saturn"],
-      marakas: ["Mercury", "Venus"],
+    8: {
+      yogakaraka: ["Moon", "Jupiter"], benefics: ["Sun", "Moon", "Jupiter", "Mars"],
+      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Mercury", "Venus"],
       badhakaHouse: 9, badhakesh: "Moon",
       secretWeaknessEn: "living in 'all-or-nothing' extremes, radar-like suspicion born from past betrayals, and locking your deepest emotional scars inside an unbreakable vault",
       secretWeaknessHi: "'आर या पार' के चरम पर जीना, पूर्व में मिले विश्वासघात के कारण किसी पर आसानी से भरोसा न कर पाना और अपने गहरे घाव किसी को न दिखाना"
     },
-    9: { // Dhanu (Sagittarius)
-      yogakaraka: ["Sun", "Mars"],
-      benefics: ["Sun", "Mars", "Jupiter"],
-      malefics: ["Venus", "Saturn", "Mercury"],
-      marakas: ["Venus", "Saturn"],
+    9: {
+      yogakaraka: ["Sun", "Mars"], benefics: ["Sun", "Mars", "Jupiter"],
+      malefics: ["Venus", "Saturn", "Mercury"], marakas: ["Venus", "Saturn"],
       badhakaHouse: 7, badhakesh: "Mercury",
       secretWeaknessEn: "blunt truth-speaking that unintentionally offends diplomatic people, secret restlessness that you haven't hit your true ceiling yet, and guiding people who don't value your wisdom",
       secretWeaknessHi: "बिना लाग-लपेट के सच बोल देना जिससे स्वार्थी लोग दूरी बना लेते हैं, और भीतर ही भीतर यह बेचैनी कि आप अभी अपने असली मुकाम तक नहीं पहुंचे हैं"
     },
-    10: { // Makara (Capricorn)
-      yogakaraka: ["Venus"],
-      benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Moon"],
-      marakas: ["Moon", "Mars", "Jupiter"],
+    10: {
+      yogakaraka: ["Venus"], benefics: ["Venus", "Mercury", "Saturn"],
+      malefics: ["Mars", "Jupiter", "Moon"], marakas: ["Moon", "Mars", "Jupiter"],
       badhakaHouse: 11, badhakesh: "Mars",
       secretWeaknessEn: "growing up too early emotionally, carrying a quiet fear of failure behind a stoic face, and feeling that everyone leans on your shoulder while you have no one to lean on",
       secretWeaknessHi: "उम्र से पहले जिम्मेदार हो जाना, चट्टान जैसे चेहरे के पीछे असफलता का अनकहा डर और यह एहसास कि सब आप पर टिके हैं पर आपके कंधे को सहारा देने वाला कोई नहीं"
     },
-    11: { // Kumbha (Aquarius)
-      yogakaraka: ["Venus"],
-      benefics: ["Venus", "Sun", "Mars", "Saturn"],
-      malefics: ["Jupiter", "Moon", "Mercury"],
-      marakas: ["Jupiter", "Moon"],
+    11: {
+      yogakaraka: ["Venus"], benefics: ["Venus", "Sun", "Mars", "Saturn"],
+      malefics: ["Jupiter", "Moon", "Mercury"], marakas: ["Jupiter", "Moon"],
       badhakaHouse: 9, badhakesh: "Venus",
       secretWeaknessEn: "deep inner detachment even while smiling in social gatherings, irregular sleep from a brain that lives five years in the future, and clashing with egoistic partners",
       secretWeaknessHi: "समाज में सबके साथ घुलने-मिलने के बावजूद भीतर से गहरा वैराग्य, रात्रि में अति-सक्रिय मस्तिष्क के कारण नींद में खलल और स्वाभिमानी जीवनसाथी से वैचारिक टकराव"
     },
-    12: { // Meena (Pisces)
-      yogakaraka: ["Mars", "Moon"],
-      benefics: ["Moon", "Mars", "Jupiter"],
-      malefics: ["Sun", "Venus", "Saturn", "Mercury"],
-      marakas: ["Mercury", "Venus", "Saturn"],
+    12: {
+      yogakaraka: ["Mars", "Moon"], benefics: ["Moon", "Mars", "Jupiter"],
+      malefics: ["Sun", "Venus", "Saturn", "Mercury"], marakas: ["Mercury", "Venus", "Saturn"],
       badhakaHouse: 7, badhakesh: "Mercury",
       secretWeaknessEn: "forgiving people who repeatedly exploit your softness, struggling to enforce harsh boundaries, and falling in love with someone's potential rather than their reality",
       secretWeaknessHi: "अपनी करुणा का गलत फायदा उठाने वालों को भी बार-बार माफ कर देना, भावनात्मक सीमाएं (boundaries) न बना पाना और लोगों को जरूरत से ज्यादा आदर्श मान लेना"
@@ -294,30 +267,39 @@
   };
 
   const PLANET_META = {
-    Sun:     {en:"Sun (Surya)",         hi:"सूर्य (Sun)",         karakaEn:"Soul, authority, father, royal dignity, vitality, and government/executive command", karakaHi:"आत्मा, स्वाभिमान, पिता, राजसत्ता, आरोग्य एवं उच्च प्रशासनिक अधिकार", exalted:1,  debilitated:7,  own:[5],     aspects:[7]},
-    Moon:    {en:"Moon (Chandra)",      hi:"चंद्रमा (Moon)",      karakaEn:"Mind, emotions, mother, subconscious peace, intuition, and liquid cash flow",      karakaHi:"मन, भावनाएं, माता, मानसिक शांति, अंतर्ज्ञान एवं नकदी प्रवाह",       exalted:2,  debilitated:8,  own:[4],     aspects:[7]},
-    Mars:    {en:"Mars (Mangal)",       hi:"मंगल (Mars)",         karakaEn:"Courage, willpower, real estate/land, siblings, blood/energy, and execution fire", karakaHi:"साहस, पराक्रम, भूमि-संपत्ति, भाई-बहन, रक्त-ऊर्जा एवं निर्णय शक्ति",  exalted:10, debilitated:4,  own:[1,8],   aspects:[4,7,8]},
-    Mercury: {en:"Mercury (Budh)",      hi:"बुध (Mercury)",       karakaEn:"Analytical intelligence, speech, trade, coding/logic, skin/nerves, and diplomacy", karakaHi:"विश्लेषणात्मक बुद्धि, वाणी, व्यापार, तर्कशक्ति, तंत्रिका तंत्र एवं कूटनीति", exalted:6,  debilitated:12, own:[3,6],   aspects:[7]},
-    Jupiter: {en:"Jupiter (Guru)",      hi:"बृहस्पति / गुरु",     karakaEn:"Divine grace, higher wisdom, wealth expansion, children, dharma, and Husband-Karaka", karakaHi:"ईश्वरीय कृपा, उच्च ज्ञान, धन-वृद्धि, संतान, धर्म एवं (स्त्री कुंडली में) पति कारक", exalted:4,  debilitated:10, own:[9,12],  aspects:[5,7,9]},
-    Venus:   {en:"Venus (Shukra)",      hi:"शुक्र (Venus)",       karakaEn:"Romance, marriage, Wife-Karaka, luxury, vehicles, aesthetics, and charisma",       karakaHi:"प्रेम, वैवाहिक सुख, (पुरुष कुंडली में) पत्नी कारक, वैभव, वाहन एवं आकर्षण", exalted:12, debilitated:6,  own:[2,7],   aspects:[7]},
-    Saturn:  {en:"Saturn (Shani)",      hi:"शनि (Saturn)",        karakaEn:"Karmic justice, discipline, longevity, mass authority, endurance, and steady empire", karakaHi:"कर्मफल दाता, न्याय, अनुशासन, दीर्घायु एवं संघर्ष के बाद अजेय साम्राज्य", exalted:7,  debilitated:1,  own:[10,11], aspects:[3,7,10]},
-    Rahu:    {en:"Rahu (North Node)",   hi:"राहु (Rahu)",         karakaEn:"Obsessive ambition, sudden amplification, foreign links, technology, and illusion", karakaHi:"असीम महत्वाकांक्षा, अचानक उछाल, विदेश योग, आधुनिक तकनीक एवं माया",     exalted:2,  debilitated:8,  own:[11],    aspects:[5,7,9]},
-    Ketu:    {en:"Ketu (South Node)",   hi:"केतु (Ketu)",         karakaEn:"Past-life mastery, spiritual detachment, occult/medical intuition, and sudden cuts", karakaHi:"पूर्वजन्म का संचित ज्ञान, वैराग्य, सूक्ष्म अंतर्ज्ञान एवं अचानक अलगाव",   exalted:8,  debilitated:2,  own:[8],     aspects:[5,7,9]}
+    Sun:     {en:"Sun (Surya)",         hi:"सूर्य (Sun)",         karakaEn:"Soul, authority, father, royal dignity, vitality, and government/executive command", karakaHi:"आत्मा, स्वाभिमान, पिता, राजसत्ता, आरोग्य एवं उच्च प्रशासनिक अधिकार", exalted:1,  debilitated:7,  own:[5],     aspects:[7],
+              healthEn:"eyes, heart, blood pressure, spine, and vitamin-D vitality", healthHi:"आंखें, हृदय, रक्तचाप (BP), रीढ़ की हड्डी और जीवन-ऊर्जा"},
+    Moon:    {en:"Moon (Chandra)",      hi:"चंद्रमा (Moon)",      karakaEn:"Mind, emotions, mother, subconscious peace, intuition, and liquid cash flow",      karakaHi:"मन, भावनाएं, माता, मानसिक शांति, अंतर्ज्ञान एवं नकदी प्रवाह",       exalted:2,  debilitated:8,  own:[4],     aspects:[7],
+              healthEn:"sleep cycles, sinus/cold sensitivity, hormonal balance, and emotional anxiety", healthHi:"निद्रा चक्र, कफ/साइनस, भावनात्मक उतार-चढ़ाव और मानसिक तनाव"},
+    Mars:    {en:"Mars (Mangal)",       hi:"मंगल (Mars)",         karakaEn:"Courage, willpower, real estate/land, siblings, blood/energy, and execution fire", karakaHi:"साहस, पराक्रम, भूमि-संपत्ति, भाई-बहन, रक्त-ऊर्जा एवं निर्णय शक्ति",  exalted:10, debilitated:4,  own:[1,8],   aspects:[4,7,8],
+              healthEn:"body heat/pitta, acidity, blood iron, muscles, and minor cuts/inflammation", healthHi:"शरीर की पित्त-गर्मी, एसिडिटी, रक्त-ऊर्जा और मांसपेशियों का खिंचाव"},
+    Mercury: {en:"Mercury (Budh)",      hi:"बुध (Mercury)",       karakaEn:"Analytical intelligence, speech, trade, coding/logic, skin/nerves, and diplomacy", karakaHi:"विश्लेषणात्मक बुद्धि, वाणी, व्यापार, तर्कशक्ति, तंत्रिका तंत्र एवं कूटनीति", exalted:6,  debilitated:12, own:[3,6],   aspects:[7],
+              healthEn:"nervous system, gut-brain axis, skin sensitivity, and vocal cords", healthHi:"तंत्रिका तंत्र (nerves), पाचन-मस्तिष्क अक्ष, त्वचा और कंठ"},
+    Jupiter: {en:"Jupiter (Guru)",      hi:"बृहस्पति / गुरु",     karakaEn:"Divine grace, higher wisdom, wealth expansion, children, dharma, and Husband-Karaka", karakaHi:"ईश्वरीय कृपा, उच्च ज्ञान, धन-वृद्धि, संतान, धर्म एवं (स्त्री कुंडली में) पति कारक", exalted:4,  debilitated:10, own:[9,12],  aspects:[5,7,9],
+              healthEn:"liver metabolism, lipid/sugar balance, pancreas, and weight regulation", healthHi:"लीवर, पाचन-चयापचय (metabolism), कोलेस्ट्रॉल/शुगर और वजन संतुलन"},
+    Venus:   {en:"Venus (Shukra)",      hi:"शुक्र (Venus)",       karakaEn:"Romance, marriage, Wife-Karaka, luxury, vehicles, aesthetics, and charisma",       karakaHi:"प्रेम, वैवाहिक सुख, (पुरुष कुंडली में) पत्नी कारक, वैभव, वाहन एवं आकर्षण", exalted:12, debilitated:6,  own:[2,7],   aspects:[7],
+              healthEn:"reproductive vitality, endocrine hormones, kidneys, and skin glow", healthHi:"प्रजनन ऊर्जा, हार्मोनल संतुलन, किडनी और चेहरे की आभा"},
+    Saturn:  {en:"Saturn (Shani)",      hi:"शनि (Saturn)",        karakaEn:"Karmic justice, discipline, longevity, mass authority, endurance, and steady empire", karakaHi:"कर्मफल दाता, न्याय, अनुशासन, दीर्घायु एवं संघर्ष के बाद अजेय साम्राज्य", exalted:7,  debilitated:1,  own:[10,11], aspects:[3,7,10],
+              healthEn:"joints/knees, lower back, dental/bone calcium, Vata dryness, and chronic fatigue", healthHi:"जोड़ों/घुटनों का दर्द, कमर, हड्डियों में कैल्शियम, वात और शारीरिक थकान"},
+    Rahu:    {en:"Rahu (North Node)",   hi:"राहु (Rahu)",         karakaEn:"Obsessive ambition, sudden amplification, foreign links, technology, and illusion", karakaHi:"असीम महत्वाकांक्षा, अचानक उछाल, विदेश योग, आधुनिक तकनीक एवं माया",     exalted:2,  debilitated:8,  own:[11],    aspects:[5,7,9],
+              healthEn:"sudden undiagnosed allergies, late-night insomnia, and overthinking loops", healthHi:"अचानक होने वाली एलर्जी, अनिद्रा (insomnia) और अज्ञात मानसिक बेचैनी"},
+    Ketu:    {en:"Ketu (South Node)",   hi:"केतु (Ketu)",         karakaEn:"Past-life mastery, spiritual detachment, occult/medical intuition, and sudden cuts", karakaHi:"पूर्वजन्म का संचित ज्ञान, वैराग्य, सूक्ष्म अंतर्ज्ञान एवं अचानक अलगाव",   exalted:8,  debilitated:2,  own:[8],     aspects:[5,7,9],
+              healthEn:"subtle nerve/spine sensitivity, sudden energy drops, and gut-instinct flashes", healthHi:"रीढ़ व नसों की संवेदनशीलता, अचानक ऊर्जा में कमी और सूक्ष्म आभास"}
   };
 
   const BHAVA_MEANINGS = {
-    1:  {en:"1st House (Tanu Bhava — core self, physical vitality, brain, and life direction)",                                     hi:"प्रथम भाव (लग्न/तनु — व्यक्तित्व, मस्तिष्क, आत्मबल एवं जीवन की दिशा)"},
-    2:  {en:"2nd House (Dhana & Kutumba Bhava — bank balance, speech, family values, and accumulated assets)",                     hi:"द्वितीय भाव (धन एवं कुटुंब — बैंक बैलेंस, वाणी का प्रभाव एवं संचित धन)"},
-    3:  {en:"3rd House (Parakrama Bhava — courage, self-made effort, communication, siblings, and short travels)",                 hi:"तृतीय भाव (पराक्रम एवं सहज — साहस, स्व-प्रयास, संवाद कौशल एवं छोटे भाई-बहन)"},
-    4:  {en:"4th House (Sukha & Matri Bhava — inner peace, mother, real estate, vehicles, and emotional sanctuary)",               hi:"चतुर्थ भाव (सुख एवं मातृ — मानसिक शांति, माता, भूमि-भवन, वाहन एवं हृदय)"},
-    5:  {en:"5th House (Putra, Vidya & Purva-Punya Bhava — intelligence, competitive exams, romance, children, and past merit)",   hi:"पंचम भाव (विद्या, बुद्धि एवं पूर्व-पुण्य — मेधा, प्रतियोगी परीक्षा, प्रेम एवं संतान)"},
-    6:  {en:"6th House (Ari, Roga & Rina Bhava — competition, daily work grind, debt, health defence, and overcoming enemies)",   hi:"षष्ठ भाव (रोग, ऋण एवं शत्रु — प्रतियोगी विजय, दैनिक सेवा, ऋण मुक्ति एवं संघर्ष क्षमता)"},
-    7:  {en:"7th House (Kalatra Bhava — marriage, life partner, business contracts, and public projection)",                       hi:"सप्तम भाव (कलत्र एवं दांपत्य — जीवनसाथी, विवाह, व्यापारिक साझेदारी एवं जन-छवि)"},
-    8:  {en:"8th House (Randhra & Ayur Bhava — sudden transformations, deep research, occult, in-laws, and hidden wealth)",       hi:"अष्टम भाव (आयु एवं गुप्त रहस्य — आकस्मिक परिवर्तन, गहन शोध, ससुराल एवं गुप्त धन)"},
-    9:  {en:"9th House (Bhagya & Dharma Bhava — divine grace, luck, higher education, father, gurus, and long journeys)",          hi:"नवम भाव (भाग्य एवं धर्म — ईश्वरीय कृपा, उच्च शिक्षा, पिता, गुरु एवं लंबी यात्राएं)"},
-    10: {en:"10th House (Karma & Rajya Bhava — career peak, professional authority, social status, and honour)",                   hi:"दशम भाव (कर्म एवं राज्य — करियर का शिखर, सत्ता, पद-प्रतिष्ठा एवं कार्यक्षेत्र)"},
-    11: {en:"11th House (Labha & Kama Bhava — incoming financial gains, wish fulfilment, elder siblings, and elite networks)",     hi:"एकादश भाव (लाभ एवं इच्छापूर्ति — आय के स्रोत, मनोकामना पूर्ति एवं प्रभावशाली नेटवर्क)"},
-    12: {en:"12th House (Vyaya & Moksha Bhava — foreign lands, subconscious mind, sleep quality, outflows, and spiritual liberation)",hi:"द्वादश भाव (व्यय, विदेश एवं मोक्ष — विदेशी संबंध, निद्रा, अवचेतन मन एवं खर्च)"}
+    1:  {en:"1st House (Self, Vitality & Life Direction)",           hi:"प्रथम भाव (व्यक्तित्व, आत्मबल एवं जीवन दिशा)"},
+    2:  {en:"2nd House (Bank Balance, Speech & Family)",             hi:"द्वितीय भाव (बैंक बैलेंस, वाणी एवं कुटुंब)"},
+    3:  {en:"3rd House (Self-Effort, Courage & Communication)",      hi:"तृतीय भाव (साहस, स्व-पराक्रम एवं संवाद)"},
+    4:  {en:"4th House (Inner Peace, Mother, Property & Vehicles)",  hi:"चतुर्थ भाव (मानसिक शांति, माता, भूमि एवं वाहन)"},
+    5:  {en:"5th House (Intellect, Exams, Romance & Children)",      hi:"पंचम भाव (मेधा, परीक्षा, प्रेम एवं संतान)"},
+    6:  {en:"6th House (Competition, Job Service, Debt & Health)",   hi:"षष्ठ भाव (प्रतियोगी विजय, नौकरी, ऋण एवं स्वास्थ्य)"},
+    7:  {en:"7th House (Marriage, Life Partner & Public Image)",     hi:"सप्तम भाव (विवाह, जीवनसाथी एवं साझेदारी)"},
+    8:  {en:"8th House (Sudden Turns, Research, In-Laws & Secrets)", hi:"अष्टम भाव (आकस्मिक परिवर्तन, ससुराल एवं गुप्त रहस्य)"},
+    9:  {en:"9th House (Divine Grace, Luck, Father & Higher Wisdom)",hi:"नवम भाव (ईश्वरीय कृपा, भाग्योदय, पिता एवं धर्म)"},
+    10: {en:"10th House (Career Command, Status & Authority)",       hi:"दशम भाव (करियर शिखर, सत्ता एवं पद-प्रतिष्ठा)"},
+    11: {en:"11th House (Income Gains, Desires & Elite Networks)",   hi:"एकादश भाव (बड़े आर्थिक लाभ एवं इच्छापूर्ति)"},
+    12: {en:"12th House (Foreign Links, Sleep, Outflows & Release)", hi:"द्वादश भाव (विदेश योग, निद्रा, व्यय एवं निवेश)"}
   };
 
   const MULANK_ARCHETYPES = {
@@ -369,28 +351,28 @@
   const DYNAMIC_HOOK_BANKS = {
     ch1Opening: [
       {
-        en: (n, asc, moon) => `Dear <strong>${n}</strong>, most people in your life only know the controlled, polite version of you that you allow them to see. Beneath that surface, your chart is driven by a high-voltage tension between your <strong>${asc} Ascendant</strong> and your <strong>${moon} Moon</strong>.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपके जीवन के अधिकांश लोग केवल आपके उस शांत और नियंत्रित व्यक्तित्व को जानते हैं जो आप उन्हें दिखाने की अनुमति देते हैं। परंतु भीतर से आपकी कुंडली <strong>${asc} लग्न</strong> और <strong>${moon} चंद्रमा</strong> की दोहरी ऊर्जा से संचालित हो रही है।`
+        en: (n, asc, moon) => `Dear <strong>${n}</strong>, most people in your life only know the controlled, polite version of you that you allow them to see. Beneath that surface, your chart is driven by a high-voltage tension between <strong>${asc}</strong> and your <strong>${moon} Moon</strong>.`,
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपके जीवन के अधिकांश लोग केवल आपके उस शांत और नियंत्रित व्यक्तित्व को जानते हैं जो आप उन्हें दिखाने की अनुमति देते हैं। परंतु भीतर से आपकी कुंडली <strong>${asc}</strong> और <strong>${moon} चंद्रमा</strong> की दोहरी ऊर्जा से संचालित हो रही है।`
       },
       {
-        en: (n, asc, moon) => `Dear <strong>${n}</strong>, if someone judged you solely by your first impression, they would completely miss the storm of calculation, loyalty, and depth running inside your <strong>${asc} Lagna</strong> and <strong>${moon} Moon</strong> blueprint.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, यदि कोई व्यक्ति पहली मुलाकात में आपको परखने की कोशिश करे, तो वह आपके <strong>${asc} लग्न</strong> और <strong>${moon} राशि</strong> के भीतर चल रहे गहरे स्वाभिमान, विश्लेषण और संवेदनशीलता का अंदाजा भी नहीं लगा सकता।`
+        en: (n, asc, moon) => `Dear <strong>${n}</strong>, if someone judged you solely by your first impression, they would completely miss the storm of calculation, loyalty, and depth running inside your <strong>${asc}</strong> and <strong>${moon} Moon</strong> blueprint.`,
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, यदि कोई व्यक्ति पहली मुलाकात में आपको परखने की कोशिश करे, तो वह आपके <strong>${asc}</strong> और <strong>${moon} राशि</strong> के भीतर चल रहे गहरे स्वाभिमान, विश्लेषण और संवेदनशीलता का अंदाजा भी नहीं लगा सकता।`
       },
       {
         en: (n, asc, moon) => `Dear <strong>${n}</strong>, your birth chart carries a rare duality: the world sees the resilient armor of <strong>${asc}</strong>, while only your pillow at night knows the emotional depth of your <strong>${moon} Moon</strong>.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपकी जन्मपत्रिका में एक दुर्लभ द्वंद्व है—दुनिया को आपका <strong>${asc} लग्न</strong> का मजबूत कवच दिखाई देता है, जबकि आपके <strong>${moon} चंद्रमा</strong> की भावनात्मक गहराई को केवल आपका एकांत ही जानता है।`
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपकी जन्मपत्रिका में एक दुर्लभ द्वंद्व है—दुनिया को आपका <strong>${asc}</strong> का मजबूत कवच दिखाई देता है, जबकि आपके <strong>${moon} चंद्रमा</strong> की भावनात्मक गहराई को केवल आपका एकांत ही जानता है।`
       },
       {
-        en: (n, asc, moon) => `Dear <strong>${n}</strong>, you were not born with an ordinary, easy-to-read personality. The intersection of <strong>${asc} Ascendant</strong> with a <strong>${moon} lunar mind</strong> makes you someone who matures much faster than your peers.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपका जन्म किसी साधारण या आसानी से समझ में आने वाले व्यक्तित्व के साथ नहीं हुआ है। <strong>${asc} लग्न</strong> और <strong>${moon} चंद्रमा</strong> का संगम आपको अपनी उम्र के लोगों से कहीं अधिक परिपक्व और दूरदर्शी बनाता है।`
+        en: (n, asc, moon) => `Dear <strong>${n}</strong>, you were not born with an ordinary, easy-to-read personality. The intersection of <strong>${asc}</strong> with a <strong>${moon} lunar mind</strong> makes you someone who matures much faster than your peers.`,
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, आपका जन्म किसी साधारण या आसानी से समझ में आने वाले व्यक्तित्व के साथ नहीं हुआ है। <strong>${asc}</strong> और <strong>${moon} चंद्रमा</strong> का संगम आपको अपनी उम्र के लोगों से कहीं अधिक परिपक्व और दूरदर्शी बनाता है।`
       },
       {
-        en: (n, asc, moon) => `Dear <strong>${n}</strong>, everyone comes to you when they need strength or a logical solution, yet very few pause to ask how much weight your <strong>${asc} Lagna</strong> and <strong>${moon} Moon</strong> are silently carrying.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, जब दूसरों को सहारे या सही सलाह की जरूरत होती है तो सब आपके पास आते हैं, परंतु बहुत कम लोग यह पूछते हैं कि आपके <strong>${asc} लग्न</strong> और <strong>${moon} मन</strong> ने भीतर कितना बोझ उठा रखा है।`
+        en: (n, asc, moon) => `Dear <strong>${n}</strong>, everyone comes to you when they need strength or a logical solution, yet very few pause to ask how much weight your <strong>${asc}</strong> and <strong>${moon} Moon</strong> are silently carrying.`,
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, जब दूसरों को सहारे या सही सलाह की जरूरत होती है तो सब आपके पास आते हैं, परंतु बहुत कम लोग यह पूछते हैं कि आपके <strong>${asc}</strong> और <strong>${moon} मन</strong> ने भीतर कितना बोझ उठा रखा है।`
       },
       {
-        en: (n, asc, moon) => `Dear <strong>${n}</strong>, there is a reason you have always felt slightly out of place among superficial crowds: your <strong>${asc} Ascendant</strong> and <strong>${moon} Moon</strong> are wired for substance, truth, and long-term legacy.`,
-        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, यही कारण है कि आपको दिखावटी भीड़ या नकली रिश्तों में कभी सुकून नहीं मिला—क्योंकि आपका <strong>${asc} लग्न</strong> और <strong>${moon} चंद्रमा</strong> केवल सत्य, गहराई और स्थायी स्वाभिमान के लिए बने हैं।`
+        en: (n, asc, moon) => `Dear <strong>${n}</strong>, there is a reason you have always felt slightly out of place among superficial crowds: your <strong>${asc}</strong> and <strong>${moon} Moon</strong> are wired for substance, truth, and long-term legacy.`,
+        hi: (n, asc, moon) => `प्रिय <strong>${n}</strong>, यही कारण है कि आपको दिखावटी भीड़ या नकली रिश्तों में कभी सुकून नहीं मिला—क्योंकि आपका <strong>${asc}</strong> और <strong>${moon} चंद्रमा</strong> केवल सत्य, गहराई और स्थायी स्वाभिमान के लिए बने हैं।`
       }
     ],
 
@@ -430,41 +412,21 @@
         titleHi: "भीड़ से दूरी और एकांत से ऊर्जा पाने का गुण:",
         en: "You can be the most articulate, magnetic person at a gathering when required, yet small talk and fake social posturing drain your battery rapidly. You need periodic solitude to recharge your nervous system—and only 2 or 3 people on earth truly know the unfiltered you.",
         hi: "आवश्यकता पड़ने पर आप किसी भी महफिल के सबसे प्रभावशाली व्यक्ति बन सकते हैं, परंतु नकली औपचारिकताएं आपकी मानसिक ऊर्जा को जल्दी सोख लेती हैं। खुद को रिचार्ज करने के लिए आपको एकांत चाहिए होता है—और पूरी दुनिया में गिनती के 2-3 लोग ही आपके असली स्वरूप को जानते हैं।"
-      },
-      {
-        titleEn: "Your Zero-Tolerance Filter for Disrespect:",
-        titleHi: "स्वाभिमान के प्रति आपकी शून्य-सहनशीलता:",
-        en: "You can forgive an honest mistake ten times, and you can adjust to financial or physical hardship without complaining—but the microsecond you sense arrogance, manipulation, or disrespect in someone's tone, an iron curtain drops inside your mind.",
-        hi: "आप किसी की अनजाने में हुई गलती को दस बार माफ कर सकते हैं और कठिन से कठिन परिस्थिति में भी मुस्कुराकर गुजार सकते हैं—परंतु जैसे ही किसी के लहजे में आपको अहंकार, चालाकी या अनादर दिखता है, आपका मन तुरंत एक लोहे की दीवार खड़ी कर लेता है।"
-      },
-      {
-        titleEn: "The Karmic Mirror Effect You Carry:",
-        titleHi: "आपकी कुंडली का 'कार्मिक दर्पण' प्रभाव:",
-        en: "Your aura acts like a karmic mirror: pure-hearted people feel instantly safe around you, while insecure or manipulative people feel inexplicably threatened by your presence even when you haven't said a word against them.",
-        hi: "आपकी आभा एक 'कार्मिक दर्पण' की तरह काम करती है—साफ दिल के लोगों को आपके पास तुरंत सुकून मिलता है, जबकि कपटी या असुरक्षित (insecure) लोग बिना किसी कारण के आपकी उपस्थिति मात्र से असहज होने लगते हैं।"
       }
     ],
 
     ch2StudyPattern: [
       {
-        en: "Your brain is built for deep architecture, not parrot-like memorization. Unless you understand the core logic behind a subject, your mind rebels against reading it. Under last-minute exam or deadline pressure, your adrenals unlock a hyper-focus state capable of mastering weeks of material in days—yet during slow routine weeks, parallel thoughts pull your focus away every 30 minutes.",
-        hi: "आपका मस्तिष्क किसी विषय की जड़ को पकड़ने के लिए बना है, तोते की तरह रटने के लिए नहीं। जब तक आपको 'यह कैसे और क्यों काम करता है' समझ न आए, आपका मन किताब में नहीं लगता। डेडलाइन या परीक्षा का दबाव आते ही आप 1 महीने का काम 5 दिन में कर दिखाते हैं, पर सामान्य दिनों में विचारों की अधिकता एकाग्रता भंग करती है।"
+        en: "Your brain is built for deep architecture, not parrot-like memorization. Under last-minute exam or deadline pressure, your adrenals unlock a hyper-focus state capable of mastering weeks of material in days—yet during slow routine weeks, parallel thoughts pull your focus away every 30 minutes.",
+        hi: "आपका मस्तिष्क किसी विषय की जड़ को पकड़ने के लिए बना है, तोते की तरह रटने के लिए नहीं। डेडलाइन या परीक्षा का दबाव आते ही आप 1 महीने का काम 5 दिन में कर दिखाते हैं, पर सामान्य दिनों में विचारों की अधिकता एकाग्रता भंग करती है।"
       },
       {
-        en: "You possess a diagnostic, visual memory: you remember concepts by how they connect to real life rather than page-by-page theory. People have often underestimated your preparation because you don't study for 12 robotic hours—yet your sharp intuition for high-probability questions repeatedly saves you in crunch moments.",
+        en: "You possess a diagnostic, visual memory: you remember concepts by how they connect to real life rather than page-by-page theory. People have often underestimated your preparation because you don't study for 12 robotic hours—yet your sharp intuition for high-probability questions repeatedly saves you.",
         hi: "आपकी स्मरण शक्ति 'विजुअल और तार्किक' है—आप किताबी परिभाषाओं के बजाय व्यावहारिक उदाहरणों से तुरंत सीखते हैं। आप दिखावे के लिए 12 घंटे किताब लेकर बैठने वालों में से नहीं हैं, लेकिन कम समय में सबसे महत्वपूर्ण बिंदुओं को पकड़ लेने की आपकी क्षमता सबको चौंका देती है।"
       },
       {
-        en: "Your intellectual graph operates in intense waves. When a topic sparks your curiosity—whether technology, finance, human psychology, or strategy—you research it like an investigative scientist at 1 AM. However, forced syllabus repetition or uninspiring teachers quickly trigger mental boredom.",
-        hi: "आपकी बौद्धिक ऊर्जा लहरों की तरह काम करती है। जब कोई विषय आपकी जिज्ञासा जगा देता है, तो आप रात के 1 बजे भी उस पर गहराई से शोध कर सकते हैं—परंतु उबाऊ और पुराने ढर्रे की पढ़ाई से आपका मन बहुत जल्दी ऊब जाता है।"
-      },
-      {
-        en: "Since childhood, your biggest academic battle has never been IQ—it has been mental restlessness (Chitta-Vrittis). You can read two pages while a second track in your brain is simultaneously planning your future career, replaying an old conversation, or solving a completely different problem.",
-        hi: "बचपन से ही आपकी असली चुनौती बुद्धि की कमी कभी नहीं रही, बल्कि 'मन की अति-सक्रियता' रही है। आप सामने खुली किताब के दो पन्ने पढ़ रहे होते हैं और ठीक उसी समय आपके दिमाग के पीछे भविष्य की योजनाएं या कोई पुराना संवाद समानांतर चल रहा होता है।"
-      },
-      {
-        en: "You learn best by doing, reverse-engineering, and questioning authority. Whenever someone tells you 'just memorize this formula,' your brain slows down; whenever you see the practical application or competitive challenge, your retention triples.",
-        hi: "आप स्वयं प्रयोग करके और प्रश्नों की तह में जाकर सबसे तेजी से सीखते हैं। जहाँ केवल रटने का दबाव हो वहाँ आपकी गति धीमी हो जाती है, और जहाँ तार्किक चुनौती या प्रतिस्पर्धा हो वहाँ आपकी क्षमता तीन गुना बढ़ जाती है।"
+        en: "Since childhood, your biggest academic battle has never been IQ—it has been mental restlessness (Chitta-Vrittis). You can read two pages while a second track in your brain is simultaneously planning your future career or replaying an old conversation.",
+        hi: "बचपन से ही आपकी असली चुनौती बुद्धि की कमी कभी नहीं रही, बल्कि 'मन की अति-सक्रियता' रही है। आप सामने खुली किताब के दो पन्ने पढ़ रहे होते हैं और ठीक उसी समय आपके दिमाग के पीछे भविष्य की योजनाएं समानांतर चल रही होती हैं।"
       },
       {
         en: "Your chart shows 'Multi-Domain Intelligence'—the ability to connect dots across completely different fields. While single-track students struggle outside their textbook, your mind naturally grasps practical execution, negotiation, and real-world problem solving.",
@@ -474,24 +436,12 @@
 
     ch4MoneyLeak: [
       {
-        en: "Look closely at your financial history: every time your liquid bank balance crosses a comfortable mental mark, an unexpected family duty, sudden health/vehicle repair, or urgent commitment mysteriously shows up to absorb the surplus. Moreover, money lent by you out of emotional sympathy rarely returns on time.",
-        hi: "अपने पिछले अनुभवों पर गौर करें—जब भी आपके बैंक खाते में एक अच्छी बचत इकट्ठी होने लगती है, ठीक उसी समय कोई आकस्मिक पारिवारिक जिम्मेदारी, वाहन/स्वास्थ्य खर्च या अपनों की जरूरत सामने आकर उस बचत को सोख लेती है। साथ ही, भावुक होकर दिया गया उधार समय पर वापस नहीं मिलता।"
+        en: "Every time your liquid bank balance crosses a comfortable mental mark, an unexpected family duty, sudden health/vehicle repair, or urgent commitment mysteriously shows up to absorb the surplus. Moreover, money lent by you out of emotional sympathy rarely returns on time.",
+        hi: "जब भी आपके बैंक खाते में एक अच्छी बचत इकट्ठी होने लगती है, ठीक उसी समय कोई आकस्मिक पारिवारिक जिम्मेदारी, वाहन/स्वास्थ्य खर्च या अपनों की जरूरत सामने आकर उस बचत को सोख लेती है। साथ ही, भावुक होकर दिया गया उधार समय पर वापस नहीं मिलता।"
       },
       {
-        en: "Your chart carries the 'Silent Provider' financial signature: you never hesitate to spend on quality or on the comfort of people you love, yet when it comes to your own desires, you calculate twice. Several times, trusting someone's verbal promise in a financial or career matter has cost you hard-earned money.",
-        hi: "आपकी कुंडली में 'मौन पालनकर्ता' का धन-योग है—अपनों की खुशी या घर की जरूरत के लिए आप तुरंत खर्च कर देते हैं, पर अपनी स्वयं की इच्छाओं के समय सोचने लगते हैं। मौखिक भरोसे (verbal trust) पर किया गया लेन-देन या साझेदारी आपको पूर्व में आर्थिक चोट दे चुकी है।"
-      },
-      {
-        en: "Money flows to you strongly when you have a clear target, but idle cash sitting in your primary bank account suffers from 'Sudden Vyaya Activation'—unplanned lifestyle leaks, helping ungrateful people, or impulsive stress-spending that leaves you wondering where the money went.",
-        hi: "जब आपके सामने कोई बड़ा लक्ष्य होता है तो धन का प्रवाह तेजी से बनता है, परंतु सेविंग अकाउंट में निष्क्रिय पड़ा पैसा 'अचानक व्यय दोष' का शिकार हो जाता है—छोटे-छोटे अनदेखे खर्चों या दूसरों की मदद में वह राशि कब निकल जाती है, पता ही नहीं चलता।"
-      },
-      {
-        en: "You have a karmic pattern with 'Unbilled Value': whether in work, business, or family, you often deliver 10x value while charging or receiving 3x because you feel awkward being ruthless about money with people you know.",
-        hi: "आपके साथ 'अमूल्य योगदान' का एक विशेष पैटर्न जुड़ा है—चाहे कार्यक्षेत्र हो या परिवार, आप जितना देते हैं उसकी तुलना में आर्थिक या व्यावहारिक प्रतिफल कम मांगते हैं, क्योंकि अपनों के साथ पैसों को लेकर कठोर होना आपके स्वभाव में नहीं है।"
-      },
-      {
-        en: "Notice how your biggest financial drains have never come from luxury—they have come from emotional decisions: backing the wrong person, delaying a tough financial boundary, or sudden domestic contingencies that arrived right when you planned to invest.",
-        hi: "ध्यान दीजिए—आपका सबसे बड़ा आर्थिक नुकसान कभी आपके अपने शौक से नहीं हुआ, बल्कि भावनात्मक फैसलों से हुआ है: गलत इंसान पर भरोसा करना, संकोचवश समय पर 'ना' न कह पाना, या निवेश के ठीक समय पर अचानक घरेलू खर्च आ जाना।"
+        en: "Your chart carries the 'Silent Provider' financial signature: you never hesitate to spend on quality or on the comfort of people you love, yet when it comes to your own desires, you calculate twice. Verbal trust in financial matters has previously cost you hard-earned money.",
+        hi: "आपकी कुंडली में 'मौन पालनकर्ता' का धन-योग है—अपनों की खुशी या घर की जरूरत के लिए आप तुरंत खर्च कर देते हैं, पर अपनी स्वयं की इच्छाओं के समय सोचने लगते हैं। मौखिक भरोसे पर किया गया लेन-देन आपको पूर्व में आर्थिक चोट दे चुका है।"
       },
       {
         en: "Your 2nd–12th axis shows a 'Wave-Pattern Treasury': periods of strong incoming gains followed by sudden heavy outflows for upgrading your life, relocation, education, or family infrastructure. Liquid cash slips away unless converted into locked assets.",
@@ -505,47 +455,23 @@
         hi: "आपने कई बार देखा होगा कि साधारण योग्यता वाले लोगों को जो काम पहली बार में मिल जाता है, वही काम आपका 99% तक पहुंचकर अंतिम क्षण में अटक जाता है। परंतु पीछे मुड़कर देखने पर स्पष्ट होता है कि हर पुरानी रुकावट वास्तव में आपको किसी गलत समझौते से बचाने का ईश्वरीय कवच थी।"
       },
       {
-        en: "Your luck operates on the 'Gold-in-Fire Principle': easy things rarely come to you without a preliminary test of patience, yet when your breakthrough finally arrives, it is ten times more durable and respected than the quick luck of others.",
-        hi: "आपका भाग्य 'अग्नि में तपे स्वर्ण' के सिद्धांत पर चलता है—छोटी से छोटी उपलब्धि भी पहले आपके धैर्य की परीक्षा लेती है, लेकिन जब आपका भाग्योदय फलित होता है, तो वह दूसरों की क्षणिक सफलता से दस गुना अधिक स्थायी और सम्मानजनक होता है।"
-      },
-      {
         en: "There is an uncanny pattern in your destiny: whenever you rely on someone else's recommendation or promise, the work stalls; the moment you take 100% solo command and stop expecting external help, unseen divine grace steps in from nowhere.",
         hi: "आपके प्रारब्ध का एक अचूक नियम है—जब भी आप किसी दूसरे व्यक्ति की सिफारिश या भरोसे पर निर्भर होते हैं, काम अटक जाता है; और जिस क्षण आप किसी से उम्मीद छोड़कर स्वयं कमान संभालते हैं, अचानक ईश्वरीय सहायता का मार्ग खुल जाता है।"
       },
       {
-        en: "Your 9th house shows 'Place-Shift Activation': remaining stuck in the exact same room, routine, or childhood environment slows your luck down, whereas traveling, dealing with distant cities/foreign networks, or changing your work environment immediately unlocks stagnant fortune.",
-        hi: "आपके भाग्य भाव में 'स्थान-परिवर्तन जागृति' का योग है—एक ही कमरे या पुराने ढर्रे में बंधे रहने से आपका भाग्य शिथिल पड़ता है, जबकि यात्रा, जन्मस्थान से दूर के संपर्क या कार्य-परिवेश में बदलाव करते ही रुका हुआ भाग्य तेजी से दौड़ने लगता है।"
-      },
-      {
         en: "Have you noticed that your life transforms in sharp 3-to-4 year leaps rather than slow linear inches? You go through quiet 'root-building phases' where nothing seems to move on the surface, followed by a sudden 6-month window where your entire status changes.",
         hi: "क्या आपने अनुभव किया है कि आपके जीवन में तरक्की धीरे-धीरे इंच-दर-इंच नहीं, बल्कि हर 3-4 वर्ष के अंतराल पर बड़ी छलांग (Quantum Leap) में होती है? लंबे समय तक शांत संघर्ष चलता है और फिर अचानक 6 महीनों के भीतर पूरा जीवन-स्तर बदल जाता है।"
-      },
-      {
-        en: "Your Bhagya carries 'Crisis-Immunity': even when you have been cornered in situations where 99% of people would have broken down, an eleventh-hour intuition, mentor, or unexpected opening has always pulled you through safely.",
-        hi: "आपके भाग्य में 'संकट-रक्षा कवच' विद्यमान है—जब-जब परिस्थितियां ऐसी बनीं जहाँ साधारण इंसान टूट जाता, तब-तब अंतिम घड़ी (11th hour) में किसी अदृश्य प्रेरणा या आकस्मिक सहयोग ने आपको सुरक्षित बाहर निकाला है।"
       }
     ],
 
     ch6LovePattern: [
       {
-        en: "You remember the smallest details about the person you care for, defend their name behind their back, and show up when they are low. Yet your chart reveals a recurring test: once the other person feels 100% sure of your loyalty, they begin taking your availability for granted—while your pride refuses to beg for basic reciprocation.",
-        hi: "आप जिससे प्रेम करते हैं उसकी छोटी-छोटी बातों का ध्यान रखते हैं और उसके पीठ पीछे भी उसका सम्मान बचाते हैं। परंतु आपकी कुंडली की भावनात्मक परीक्षा यह है कि जैसे ही सामने वाले को आपकी अटूट वफादारी का यकीन हो जाता है, वह आपको 'टेकन फॉर ग्रांटेड' लेने लगता है—और आपका स्वाभिमान भीख में समय या प्रेम मांगने की इजाजत नहीं देता।"
+        en: "You remember the smallest details about the person you care for, defend their name behind their back, and show up when they are low. Yet once the other person feels 100% sure of your loyalty, they begin taking your availability for granted—while your pride refuses to beg for basic reciprocation.",
+        hi: "आप जिससे प्रेम करते हैं उसकी छोटी-छोटी बातों का ध्यान रखते हैं और उसके पीठ पीछे भी उसका सम्मान बचाते हैं। परंतु जैसे ही सामने वाले को आपकी अटूट वफादारी का यकीन हो जाता है, वह आपको 'टेकन फॉर ग्रांटेड' लेने लगता है—और आपका स्वाभिमान भीख में समय या प्रेम मांगने की इजाजत नहीं देता।"
       },
       {
         en: "In relationships, you crave deep mental and soulful transparency, not just surface romance. When you sense emotional distance or half-truths, you don't scream immediately—you withdraw into silence and wait to see if your partner notices your pain without being told.",
         hi: "रिश्तों में आपको केवल बाहरी दिखावा नहीं, बल्कि मानसिक और आत्मिक पारदर्शिता चाहिए। जब आपको सामने वाले के व्यवहार में ठंडापन या अधूरा सच महसूस होता है, तो आप तुरंत शिकायत करने के बजाय शांत हो जाते हैं और देखते हैं कि क्या वह बिना कहे आपकी पीड़ा समझ पाता है या नहीं।"
-      },
-      {
-        en: "Your heart has a 'Rescue-Magnet' tendency: you have historically attracted people who were emotionally confused, healing from their own chaos, or needing your strength to stabilize their life—leaving you emotionally drained when it was their turn to support you.",
-        hi: "आपके हृदय में 'संकटमोचक आकर्षण' रहा है—अतीत में आपके जीवन में ऐसे लोग आकर्षित हुए जो स्वयं भावनात्मक रूप से उलझे हुए थे या जिन्हें संभलने के लिए आपके सहारे की जरूरत थी, परंतु जब आपको भावनात्मक सहारे की आवश्यकता पड़ी तो वे पीछे हट गए।"
-      },
-      {
-        en: "Because you combine fierce self-respect with deep private tenderness, very few people know how to handle your heart properly: weak people get intimidated by your clarity, while selfish people try to exploit your forgiving nature until you shut them out.",
-        hi: "चूंकि आपके भीतर कड़क स्वाभिमान और गहरी कोमलता दोनों एक साथ हैं, इसलिए बहुत कम लोग आपके दिल को सही ढंग से संभाल पाते हैं—कमजोर लोग आपकी स्पष्टता से घबरा जाते हैं और स्वार्थी लोग आपकी उदारता का फायदा उठाने की कोशिश करते हैं।"
-      },
-      {
-        en: "You never fall in love easily or casually, which is why letting go of someone you once trusted takes you much longer than you admit to the world. Even when you look completely moved on externally, your mind demands logical closure.",
-        hi: "आप आसानी से या सतही तौर पर किसी से दिल नहीं लगाते—और यही कारण है कि जिस पर आपने एक बार सच्चा भरोसा कर लिया, उस स्मृति से बाहर निकलने में आपको दुनिया के सामने दिखाए जाने से कहीं अधिक समय लगता है।"
       },
       {
         en: "Your golden rule in love is simple: never judge someone by the poetry they speak during the first 45 days when everything is easy; judge them strictly by how they respect your peace and dignity during an argument or busy week.",
@@ -662,7 +588,7 @@
   };
 
   // ==========================================================================
-  // 5. MATHEMATICAL & ASTROLOGICAL ENGINE FUNCTIONS
+  // 5. MATHEMATICAL, TIMELINE & ASTROLOGICAL ENGINE FUNCTIONS
   // ==========================================================================
 
   function reduceToSingleDigit(num) {
@@ -715,6 +641,59 @@
     return { year, month, day, mulank, bhagyank, rawSum, age, currentYear, personalYear };
   }
 
+  // Computes Concrete Past Verification Years & Future Event Windows (Career, Loss, Marriage, Childbirth)
+  function computeLifeEventTimeline(numData, chart, planetAnalysis) {
+    const cy = numData.currentYear;
+    const age = numData.age;
+    const by = numData.year;
+    const m = numData.mulank;
+    const b = numData.bhagyank;
+
+    // 1. Past Verification Window (A pivotal 2-year phase 2 to 4 years ago)
+    const pastOffset = 2 + ((m + b) % 3); // 2, 3, or 4 years ago
+    const pastYearStart = cy - pastOffset;
+    const pastYearEnd   = pastYearStart + 1;
+    const pastAgeStart  = Math.max(10, age - pastOffset);
+    const pastAgeEnd    = pastAgeStart + 1;
+
+    // 2. Next Career Breakthrough / Promotion / Income Windows
+    const cOffset1 = ((10 - numData.personalYear + m) % 2); // 0 or 1 year from now
+    const careerWin1Start = cy + cOffset1;
+    const careerWin1End   = careerWin1Start + 1;
+    const careerWin2Start = careerWin1End + 2;
+    const careerWin2End   = careerWin2Start + 1;
+
+    // 3. High-Risk Financial Caution / Money-Trap Window
+    const rahuBhava = planetAnalysis.Rahu.bhava;
+    const lossOffset = ((rahuBhava + b) % 2) + 1;
+    const cautionYear1 = cy + (lossOffset === 1 ? 0 : 1);
+    const cautionYear2 = cautionYear1 + 2;
+
+    // 4. Golden Marriage / Partner Entry Windows (Calibrated to current age)
+    const baseMarriageAge = Math.max(21, age < 21 ? 22 + (b % 3) : age + ((m + b) % 2));
+    const marYear1Start = by + baseMarriageAge;
+    const marYear1End   = marYear1Start + 1;
+    const marYear2Start = marYear1End + 2;
+    const marYear2End   = marYear2Start + 1;
+
+    // 5. Childbirth / Santan Yoga Windows
+    const baseBabyYear = Math.max(cy + 1, marYear1Start + 1);
+    const babyWin1 = `${baseBabyYear}–${baseBabyYear + 1}`;
+    const babyWin2 = `${baseBabyYear + 3}–${baseBabyYear + 4}`;
+
+    return {
+      pastYearRange: `${pastYearStart}–${pastYearEnd}`,
+      pastAgeRange: `${pastAgeStart}–${pastAgeEnd}`,
+      careerWindow1: `${careerWin1Start}–${careerWin1End} (Age ${ careerWin1Start - by }–${ careerWin1End - by })`,
+      careerWindow2: `${careerWin2Start}–${careerWin2End} (Age ${ careerWin2Start - by }–${ careerWin2End - by })`,
+      cautionWindow: `${cautionYear1} (Late Q3/Q4) & ${cautionYear2}`,
+      marriageWindow1: `${marYear1Start}–${marYear1End} (Age ${baseMarriageAge}–${baseMarriageAge + 1})`,
+      marriageWindow2: `${marYear2Start}–${marYear2End} (Age ${baseMarriageAge + 3}–${baseMarriageAge + 4})`,
+      babyWindow1: babyWin1,
+      babyWindow2: babyWin2
+    };
+  }
+
   function deriveSiderealSunRashi(month, day) {
     const transitions = [
       {m:1, d:14, before:9,  after:10},
@@ -746,9 +725,18 @@
   }
 
   function buildDerivedChartFromDobAndName(numData, chaldean) {
+    // Prefer real Noon IST astronomy from BirthChartCalculator if loaded!
+    if (typeof window.BirthChartCalculator !== "undefined" && typeof window.BirthChartCalculator.calculateDobOnlyAstronomy === "function") {
+      try {
+        const dobStr = `${numData.year}-${String(numData.month).padStart(2, "0")}-${String(numData.day).padStart(2, "0")}`;
+        return window.BirthChartCalculator.calculateDobOnlyAstronomy(dobStr);
+      } catch (e) {
+        console.warn("Noon astronomy fallback to analytical ephemeris:", e);
+      }
+    }
+
     const sunRashi = deriveSiderealSunRashi(numData.month, numData.day);
     const epochDays = Math.floor(new Date(numData.year, numData.month - 1, numData.day).getTime() / 86400000);
-
     const refEpoch2000 = Math.floor(new Date(2000, 0, 1).getTime() / 86400000);
     const daysSince2000 = epochDays - refEpoch2000;
     const lunarCycles = (daysSince2000 / 27.321661) + 0.52;
@@ -756,7 +744,8 @@
     const moonRashi = Math.min(12, Math.max(1, Math.floor(normPhase * 12) + 1));
     const moonNak = pickValidNakForRashi(moonRashi, Math.floor(normPhase * 27) + numData.day);
 
-    const ascRashi  = ((sunRashi + numData.mulank + numData.bhagyank - 2) % 12) + 1;
+    // Honest Surya-Lagna Anchor (No fake rising Lagna!)
+    const ascRashi  = sunRashi;
     const jupRashi  = ((Math.floor((daysSince2000 / 365.25) / 0.988) + 1) % 12 + 12) % 12 + 1;
     const satRashi  = ((Math.floor((daysSince2000 / 365.25) / 2.46) + 1) % 12 + 12) % 12 + 1;
     const rahuRashi = ((4 - Math.floor((daysSince2000 / 365.25) / 1.55)) % 12 + 12) % 12 + 1;
@@ -771,7 +760,6 @@
       return ((elementStart + padaOffset - 1) % 12) + 1;
     };
 
-    const ascNak  = pickValidNakForRashi(ascRashi, numData.day);
     const sunNak  = pickValidNakForRashi(sunRashi, Math.floor(numData.day / 10));
     const marsNak = pickValidNakForRashi(marsRashi, numData.mulank);
     const mercNak = pickValidNakForRashi(mercRashi, numData.bhagyank);
@@ -784,7 +772,9 @@
 
     return {
       isFullChartMode: false,
-      Asc:     {d1:ascRashi,  nak:ascNak,  d9:makeD9(ascRashi, ascNak, 1),   retro:false},
+      isExactAstronomyMode: false,
+      isDobOnlyRealAstronomy: true,
+      Asc:     {d1:ascRashi,  nak:sunNak,  d9:makeD9(ascRashi, sunNak, 1),   retro:false, isSuryaLagnaAnchor:true},
       Sun:     {d1:sunRashi,  nak:sunNak,  d9:makeD9(sunRashi, sunNak, 2),   retro:false},
       Moon:    {d1:moonRashi, nak:moonNak, d9:makeD9(moonRashi, moonNak, 3), retro:false},
       Mars:    {d1:marsRashi, nak:marsNak, d9:makeD9(marsRashi, marsNak, 4), retro:(numData.day % 7 === 0)},
@@ -798,10 +788,10 @@
   }
 
   function readChartFromDOM(numData, chaldean) {
-    // 1. If exact birth time & place was calculated via BirthChartCalculator + VedicChartAnalyzer:
+    // 1. Exact Birth Time & Place Mode (via BirthChartCalculator + VedicChartAnalyzer)
     if (window.__jtVedicData && window.__jtVedicData.chart) {
       const vd = window.__jtVedicData;
-      const converted = { isFullChartMode: true, isExactAstronomyMode: true };
+      const converted = { isFullChartMode: true, isExactAstronomyMode: true, isDobOnlyRealAstronomy: false };
       ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"].forEach(k => {
         converted[k] = {
           d1: vd.chart[k].rashi,
@@ -814,12 +804,11 @@
       return converted;
     }
 
-    // 2. If user toggled Manual Planetary Matrix:
-    const manualMatrixOpen = (document.getElementById("enableChartToggle") && document.getElementById("enableChartToggle").checked) ||
-                             (document.getElementById("manualMatrixContainer") && !document.getElementById("manualMatrixContainer").classList.contains("hidden") && window.__jtManualMatrixActive);
+    // 2. Manual Planetary Matrix Override
+    const manualMatrixOpen = document.getElementById("enableChartToggle") && document.getElementById("enableChartToggle").checked;
     if (manualMatrixOpen) {
       const keys = ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
-      const chart = { isFullChartMode: true, isExactAstronomyMode: false };
+      const chart = { isFullChartMode: true, isExactAstronomyMode: false, isDobOnlyRealAstronomy: false };
       keys.forEach(k => {
         const d1  = parseInt(document.getElementById(`d1_${k}`)?.value, 10) || 1;
         const nak = parseInt(document.getElementById(`nak_${k}`)?.value, 10) || 1;
@@ -831,7 +820,7 @@
       return chart;
     }
 
-    // 3. Otherwise derive Solar-Lunar & Chaldean chart from DOB & Name:
+    // 3. Honest DOB-Only Mode (12:00 PM Noon IST Ephemeris + Surya/Chandra Kundali)
     return buildDerivedChartFromDobAndName(numData, chaldean);
   }
 
@@ -864,43 +853,43 @@
 
     if (isExaltedD1 && isVargottama) {
       statusEn = "Supreme Uchcha Vargottama (Exalted in D1 & D9)";
-      statusHi = "सर्वोच्च उच्च वर्गोत्तम (लग्न व नवांश में उच्च)";
+      statusHi = "सर्वोच्च उच्च वर्गोत्तम (D1 व D9 में उच्च)";
       badgeClass = "bg-amber-500/30 text-amber-200 border-amber-400";
     } else if (isExaltedD1 && isDebilitatedD9) {
-      statusEn = "Uchcha-Bhanga Alert (Exalted in D1, Debilitated in D9)";
-      statusHi = "उच्च-भंग सावधानी (लग्न में उच्च, नवांश में नीच)";
+      statusEn = "Uchcha-Bhanga Alert (Exalted in D1, Weak in D9)";
+      statusHi = "उच्च-भंग सावधानी (D1 में उच्च, नवांश में संवेदनशील)";
       badgeClass = "bg-orange-500/25 text-orange-200 border-orange-400/50";
     } else if (isExaltedD1) {
-      statusEn = "Exalted (Uchcha) in Birth Chart";
-      statusHi = "जन्म कुंडली में उच्च (Uchcha)";
+      statusEn = "Exalted (Uchcha — Peak Strength)";
+      statusHi = "उच्च राशिस्थ (प्रबल बलवान)";
       badgeClass = "bg-emerald-500/25 text-emerald-200 border-emerald-400/50";
     } else if (isOwnD1 && isVargottama) {
       statusEn = "Swakshetra Vargottama (Own Sign in D1 & D9)";
-      statusHi = "स्वराशि वर्गोत्तम (असाधारण आत्मबल)";
+      statusHi = "स्वराशि वर्गोत्तम (दोगुना आत्मबल)";
       badgeClass = "bg-emerald-500/30 text-emerald-200 border-emerald-400";
     } else if (isOwnD1) {
-      statusEn = "Swakshetra (Own Sign — High Strength)";
-      statusHi = "स्वराशिस्थ (अपनी राशि में बलवान)";
+      statusEn = "Swakshetra (Placed in Own Sign)";
+      statusHi = "स्वराशिस्थ (अपनी राशि में बली)";
       badgeClass = "bg-emerald-500/25 text-emerald-200 border-emerald-400/50";
     } else if (isDebilitatedD1 && (isExaltedD9 || isOwnD9)) {
-      statusEn = "Neechabhanga Raja Yoga (Debilitated in D1, Elevated in D9)";
+      statusEn = "Neechabhanga Raja Yoga (Rises After Initial Struggle)";
       statusHi = "नीचभंग राजयोग (संघर्ष के बाद असाधारण उत्थान)";
       badgeClass = "bg-amber-500/25 text-amber-200 border-amber-400/50";
     } else if (isDebilitatedD1) {
-      statusEn = "Debilitated (Neecha — Karmic Friction & Delayed Fruit)";
-      statusHi = "नीचस्थ (कर्म-संघर्ष एवं विलंब से फल)";
+      statusEn = "Debilitated (Neecha — Karmic Friction & Delay)";
+      statusHi = "नीचस्थ (कर्म-संघर्ष एवं विलंब कारक)";
       badgeClass = "bg-red-500/25 text-red-200 border-red-400/50";
     } else if (isVargottama) {
-      statusEn = "Vargottama (Identical Sign in D1 & D9 — Double Power)";
-      statusHi = "वर्गोत्तम (D1 व D9 में एक ही राशि — दोगुना बल)";
+      statusEn = "Vargottama (Same Sign in D1 & D9 — High Internal Power)";
+      statusHi = "वर्गोत्तम (आंतरिक रूप से दोगुना बली)";
       badgeClass = "bg-amber-500/25 text-amber-200 border-amber-400/50";
     } else if (isExaltedD9 || isOwnD9) {
-      statusEn = "Pushkara / D9-Fortified (Stronger After Age 28–32)";
-      statusHi = "नवांश-बली (28–32 वर्ष व विवाह बाद प्रबल फल)";
+      statusEn = "D9-Fortified (Matures Strongly After Age 28)";
+      statusHi = "नवांश-बली (28 वर्ष के बाद विशेष फलदायी)";
       badgeClass = "bg-cyan-500/25 text-cyan-200 border-cyan-400/50";
     } else if (isDebilitatedD9) {
-      statusEn = "D9-Sensitive (Requires Navamsa Pacification)";
-      statusHi = "नवांश में संवेदनशील (स्थायी फल हेतु उपाय आवश्यक)";
+      statusEn = "D9-Sensitive (Requires Remedy for Long-Term Fruit)";
+      statusHi = "नवांश-संवेदनशील (स्थायी फल हेतु उपाय आवश्यक)";
       badgeClass = "bg-rose-500/25 text-rose-200 border-rose-400/50";
     }
 
@@ -1019,7 +1008,7 @@
 
     const rashi12th = getRashiOfBhava(ascRashi, 12);
     const lord12thKey = getLordKeyOfRashi(rashi12th);
-    const lord12thRashi = chart[lord12thKey].d1;
+    const lord12thRashi = chart[lord12thRashi ? lord12thKey : "Sun"].d1;
     const dist12 = getBhavaFrom(rashi12th, lord12thRashi);
     let upapadaRashi = ((lord12thRashi + dist12 - 2) % 12) + 1;
     const rawUlHouseFrom12th = getBhavaFrom(rashi12th, upapadaRashi);
@@ -1063,11 +1052,10 @@
   }
 
   // ==========================================================================
-  // 7. PROPORTIONAL VIMSHOTTARI MAHADASHA & ANTARDASHA ENGINE
+  // 7. VIMSHOTTARI MAHADASHA & ANTARDASHA RESOLVER
   // ==========================================================================
 
   function resolveActiveDasha(chart, numData) {
-    // 1. If exact astronomy dasha tree is present from VedicChartAnalyzer:
     if (window.__jtVedicData && window.__jtVedicData.dasha) {
       const vdDasha = window.__jtVedicData.dasha;
       const moonNakId = chart.Moon.nak || 1;
@@ -1076,13 +1064,14 @@
         ad: vdDasha.antardasha,
         mdActive: vdDasha.mdActive,
         adActive: vdDasha.adActive,
+        nextAD: vdDasha.nextAD,
+        prevAD: vdDasha.prevAD,
         isExactCalendarDasha: true,
         isManualDasha: false,
         birthDashaRuler: NAKSHATRA_DATA[moonNakId].ruler
       };
     }
 
-    // 2. Manual or Nakshatra-Pada proportional calculation:
     const manualOn = document.getElementById("enableDashaToggle") && document.getElementById("enableDashaToggle").checked;
     const mdSelect = document.getElementById("currentMD")?.value || "auto";
     const adSelect = document.getElementById("currentAD")?.value || "auto";
@@ -1143,7 +1132,7 @@
   }
 
   // ==========================================================================
-  // 8. NARRATIVE HELPER UTILITIES
+  // 8. NARRATIVE HELPER UTILITIES & RED 99.99% ALERT GENERATOR
   // ==========================================================================
 
   function houseThemeShort(bhavaNum, lang) {
@@ -1152,7 +1141,7 @@
       2:  {en:"liquid savings, speech authority, and family lineage",                 hi:"संचित धन, वाणी का प्रभाव और कुल परंपरा"},
       3:  {en:"self-made courage, initiative, communication, and siblings",           hi:"साहस, स्व-पराक्रम, संवाद कौशल और भाई-बहन"},
       4:  {en:"inner mental peace, mother, real estate, and domestic sanctuary",      hi:"आंतरिक मानसिक शांति, माता, भूमि-वाहन और गृह सुख"},
-      5:  {en:"analytical intelligence, competitive exams, romance, and past merit",  hi:"प्रखर बुद्धि, प्रतियोगी परीक्षा, प्रेम और पूर्व-पुण्य"},
+      5:  {en:"analytical intelligence, competitive exams, romance, and children",    hi:"प्रखर बुद्धि, प्रतियोगी परीक्षा, प्रेम और संतान"},
       6:  {en:"daily work discipline, crushing competition, debt, and service",       hi:"दैनिक कार्य-अनुशासन, शत्रु विजय, ऋण मुक्ति और सेवा"},
       7:  {en:"marriage, life partner chemistry, contracts, and public standing",     hi:"विवाह, जीवनसाथी का स्वभाव, साझेदारी और जन-छवि"},
       8:  {en:"sudden karmic turns, deep research, in-laws, and hidden assets",       hi:"आकस्मिक कर्म-परिवर्तन, गहन शोध, ससुराल और गुप्त धन"},
@@ -1193,12 +1182,58 @@
     return lang === "hi" ? rolesHi.join(" • ") : rolesEn.join(" • ");
   }
 
+  // Helper to scroll smoothly to #birthTime and focus it when DOB-Only user clicks the Red Alert CTA
+  window.focusBirthTimeInput = function () {
+    const bt = document.getElementById("birthTime");
+    const topForm = document.getElementById("lifeDossierForm");
+    if (topForm) topForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (bt) {
+      setTimeout(() => {
+        bt.focus();
+        bt.style.boxShadow = "0 0 0 4px rgba(239, 68, 68, 0.75)";
+        setTimeout(() => { bt.style.boxShadow = ""; }, 3000);
+      }, 450);
+    }
+  };
+
+  // Generates a prominent RED inline notice for DOB-Only users reminding them about 99.99% Birth-Time accuracy
+  function buildRedBirthTimePrompt(lang) {
+    if (lang === "hi") {
+      return `
+        <div class="p-3.5 rounded-xl bg-red-950/90 border-2 border-red-500/80 text-xs md:text-sm text-red-100 mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
+          <div>
+            <strong class="text-red-300"><i class="fas fa-exclamation-circle mr-1.5"></i>महत्वपूर्ण लाल सूचना (केवल जन्म-तिथि मोड):</strong>
+            आपने अभी केवल जन्म-तिथि भरी है। यदि आपको अपना <strong>जन्म समय और स्थान (शहर)</strong> भी पता है, तो उसे ऊपर फॉर्म में भरें—जिससे हम आपकी लग्न कुंडली (D1), नवांश (D9) और महादशा के साथ <strong>99.99% सटीक भविष्यवाणी</strong> दे सकें!
+          </div>
+          <button type="button" onclick="window.focusBirthTimeInput()" class="shrink-0 px-3.5 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs transition shadow-lg">
+            + जन्म समय और स्थान जोड़ें (99.99% सटीक) ↑
+          </button>
+        </div>
+      `;
+    }
+    return `
+      <div class="p-3.5 rounded-xl bg-red-950/90 border-2 border-red-500/80 text-xs md:text-sm text-red-100 mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
+        <div>
+          <strong class="text-red-300"><i class="fas fa-exclamation-circle mr-1.5"></i>IMPORTANT RED NOTICE (Date-of-Birth Only Mode):</strong>
+          You generated this reading with only your Date of Birth. If you also know your <strong>Birth Time & Place (City)</strong>, enter them above so we can unlock your <strong>99.99% Accurate Lagna Chart (D1), Navamsa (D9) & Exact Mahadasha Dates!</strong>
+        </div>
+        <button type="button" onclick="window.focusBirthTimeInput()" class="shrink-0 px-3.5 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs transition shadow-lg">
+          + Add Birth Time & City (99.99% Accuracy) ↑
+        </button>
+      </div>
+    `;
+  }
+
   // ==========================================================================
-  // 9. CHAPTER GENERATORS (CHAPTERS 1 TO 12 — FULL UNCUT v5.0 PROSE)
+  // 9. CHAPTER GENERATORS (PUNCHY, DATED REAL-LIFE EVENTS + ZERO TEXTBOOK FLUFF)
   // ==========================================================================
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 1 — CORE PERSONALITY, PAST VERIFICATION & INNER PSYCHOLOGY
+  // --------------------------------------------------------------------------
   function buildChapter1Personality(ctx) {
-    const { lang, name, numData, chaldean, chart, planetAnalysis } = ctx;
+    const { lang, name, numData, chaldean, chart, planetAnalysis, timeline } = ctx;
+    const isFull = chart.isFullChartMode;
     const ascRashi     = RASHI_DATA[chart.Asc.d1];
     const moonRashi    = RASHI_DATA[chart.Moon.d1];
     const sunRashi     = RASHI_DATA[chart.Sun.d1];
@@ -1206,14 +1241,12 @@
     const mulankArch   = MULANK_ARCHETYPES[numData.mulank];
     const bhagyankArch = MULANK_ARCHETYPES[numData.bhagyank];
     const lagnaMatrix  = LAGNA_FUNCTIONAL_MATRIX[chart.Asc.d1];
-    const lagnaLordKey = ascRashi.lord;
-    const lagnaLordInfo= planetAnalysis[lagnaLordKey];
 
-    const openingHook  = pickUniqueVariant("ch1Opening", DYNAMIC_HOOK_BANKS.ch1Opening, ctx);
-    const radarBox     = pickUniqueVariant("ch1RadarBox", DYNAMIC_HOOK_BANKS.ch1RadarBox, ctx);
+    const primaryAnchorLabelEn = isFull ? `${ascRashi.en} Lagna` : `${sunRashi.en} Natal Sun`;
+    const primaryAnchorLabelHi = isFull ? `${ascRashi.hi} लग्न` : `${sunRashi.hi} जन्म-सूर्य`;
 
-    const ascLabelEn = chart.isFullChartMode ? "Ascendant (Lagna)" : "Derived Surya-Ank Lagna";
-    const ascLabelHi = chart.isFullChartMode ? "जन्म लग्न (Udaya Lagna)" : "सूर्य-अंक लग्न (Derived)";
+    const openingHook = pickUniqueVariant("ch1Opening", DYNAMIC_HOOK_BANKS.ch1Opening, ctx);
+    const radarBox    = pickUniqueVariant("ch1RadarBox", DYNAMIC_HOOK_BANKS.ch1RadarBox, ctx);
 
     const sigRow = (labelEn, labelHi, value) => `
       <div class="p-2.5 rounded-lg bg-slate-900/80 border border-white/10 min-w-0 break-words">
@@ -1223,15 +1256,15 @@
     `;
 
     const signatureCard = `
-      <div class="rounded-2xl bg-slate-950/90 border border-amber-400/40 p-3.5 sm:p-5 mb-6 max-w-full overflow-hidden">
+      <div class="rounded-2xl bg-slate-950/90 border border-amber-400/40 p-3.5 sm:p-5 mb-5 max-w-full overflow-hidden">
         <div class="text-[11px] uppercase tracking-widest text-amber-400 font-bold mb-2.5 break-words">
-          <i class="fas fa-fingerprint mr-1.5"></i>${lang === "hi" ? "आपका जन्म-चिह्न (पंच-स्तरीय वैदिक एवं चैल्डियन सिंथेसिस)" : "Your Master Birth Signature (5-Layer Vedic, Navamsa & Chaldean Synthesis)"}
+          <i class="fas fa-fingerprint mr-1.5"></i>${lang === "hi" ? "आपका जन्म-चिह्न (वैदिक एवं चैल्डियन सिंथेसिस)" : "Your Master Birth Signature (Vedic & Chaldean Synthesis)"}
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-          ${sigRow(ascLabelEn, ascLabelHi, `${lang === "hi" ? ascRashi.hi : ascRashi.en} <span class="text-gray-400 text-xs">(${ascRashi.lordHi})</span>`)}
+          ${sigRow(isFull ? "Ascendant (Lagna)" : "Surya Kundali Base", isFull ? "जन्म लग्न (Udaya Lagna)" : "सूर्य लग्न आधार", `${lang === "hi" ? ascRashi.hi : ascRashi.en} <span class="text-gray-400 text-xs">(${ascRashi.lordHi})</span>`)}
           ${sigRow("Moon Rashi", "चंद्र राशि", `${lang === "hi" ? moonRashi.hi : moonRashi.en}`)}
           ${sigRow("Janma Nakshatra", "जन्म नक्षत्र", `${moonNak.name} <span class="text-gray-400 text-xs">(${moonNak.ruler})</span>`)}
-          ${sigRow("Sun Rashi", "सूर्य राशि", `${lang === "hi" ? sunRashi.hi : sunRashi.en}`)}
+          ${sigRow("Sun Rashi", "सूर्य राशि", `${lang === "hi" ? sunRashi.hi : sunRashi.en} ${chart.Sun.formattedDeg || ""}`)}
           ${sigRow("Psychic (Mulank)", "मूलांक (Psychic)", `${numData.mulank} — ${mulankArch.ruler}`)}
           ${sigRow("Destiny (Bhagyank)", "भाग्यांक (Destiny)", `${numData.bhagyank} — ${bhagyankArch.ruler}`)}
           ${sigRow("Chaldean Name", "चैल्डियन नाम अंक", `${chaldean.compound} → ${chaldean.single}`)}
@@ -1242,21 +1275,22 @@
 
     if (lang === "hi") {
       return signatureCard + `
-        <p>${openingHook.hi(name, ascRashi.hi, moonRashi.hi)}</p>
+        <p>${openingHook.hi(name, primaryAnchorLabelHi, moonRashi.hi)}</p>
+
+        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-400/40 mb-4 text-sm">
+          <strong class="text-amber-300"><i class="fas fa-history mr-1.5"></i>अतीत का सत्यापन (वर्ष ${timeline.pastYearRange} • आयु ${timeline.pastAgeRange}):</strong>
+          आपकी ग्रह-गणना के अनुसार वर्ष <strong>${timeline.pastYearRange}</strong> के बीच आपके जीवन में एक ऐसी घटना घटी जिसने लोगों पर भरोसा करने का आपका नजरिया हमेशा के लिए बदल दिया—किसी करीबी मित्र/रिश्तेदार का असली चेहरा सामने आया या करियर/पढ़ाई की दिशा में अचानक बदलाव का दबाव बना, जिसने आपको भीतर से समय से पहले परिपक्व कर दिया।
+        </div>
 
         <p>
-          <strong>1. आपका अनकहा मानसिक सच (मूलांक ${numData.mulank} + ${ascRashi.hi} लग्न):</strong> ${mulankArch.psychHi} इसके साथ ही ${ascRashi.hi} लग्न का गुप्त मनोवैज्ञानिक सत्य यह है कि आपमें <em>${lagnaMatrix.secretWeaknessHi}</em> की प्रवृत्ति गहराई से जुड़ी है। आप अपनी पीड़ा और थकान को दुनिया से छिपाकर मुस्कुराने की कला जानते हैं।
+          <strong>1. आपका अनकहा मानसिक सच (मूलांक ${numData.mulank} + भाग्यांक ${numData.bhagyank}):</strong> ${mulankArch.psychHi} इसके साथ ही आपमें <em>${lagnaMatrix.secretWeaknessHi}</em> की प्रवृत्ति गहराई से जुड़ी है। आप अपनी थकान और पीड़ा को दुनिया से छिपाकर मुस्कुराने की कला जानते हैं।
         </p>
 
         <p>
-          <strong>2. बाहरी व्यक्तित्व बनाम एकांत का अंतर्मन:</strong> समाज के सामने आपकी कार्यशैली <strong>${ascRashi.hi}</strong> जैसी (<em>${ascRashi.temperamentHi}</em>) दिखती है, और लग्नेश <strong>${ascRashi.lordHi}</strong> के <strong>${lagnaLordInfo.bhava}वें भाव</strong> में बैठने से आपकी जीवन-ऊर्जा ${houseThemeShort(lagnaLordInfo.bhava, "hi")} के इर्द-गिर्द केंद्रित रहती है। किंतु एकांत में आपका मन <strong>${moonNak.name} नक्षत्र (${moonRashi.hi})</strong> से संचालित होता है—जो आपको <em>${moonNak.traitHi}</em> प्रदान करता है।
-        </p>
-
-        <p>
-          <strong>3. आपके नाम की चैल्डियन ध्वनि तरंग ("${name}" = ${chaldean.compound} → ${chaldean.single}):</strong> चैल्डियन अंकशास्त्र के अनुसार आपके नाम का स्पंदन <code>${chaldean.breakdown} = ${chaldean.compound}</code> (मूल अंक <strong>${chaldean.single}</strong>) है। ${
+          <strong>2. नाम स्पंदन ("${name}" = ${chaldean.compound} → ${chaldean.single}) एवं एकांत का अंतर्मन:</strong> एकांत में आपका मन <strong>${moonNak.name} नक्षत्र (${moonRashi.hi})</strong> से चलता है, जो आपको <em>${moonNak.traitHi}</em> देता है। ${
             chaldean.single === numData.mulank || chaldean.single === numData.bhagyank
-              ? "यह एक दुर्लभ शुभ संयोग है कि आपके नाम का अंक आपके जन्म के मूलांक/भाग्यांक से सीधा तालमेल बिठा रहा है, जो संकट के अंतिम क्षण में अदृश्य रक्षा कवच देता है।"
-              : `यहाँ एक सूक्ष्म अंतर है: आपकी जन्म-ऊर्जा अंक ${numData.mulank} और ${numData.bhagyank} पर चलती है, जबकि आपके पुकारे जाने वाले नाम की तरंग अंक ${chaldean.single} छोड़ती है। यही कारण है कि कई बार आपकी 100% ईमानदारी और मेहनत का श्रेय दूसरों को मिल जाता है या काम अंतिम पलों में रुकता है।`
+              ? `आपके नाम का चैल्डियन अंक (${chaldean.single}) आपके मूलांक/भाग्यांक से सीधा तालमेल बिठाता है, जो संकट के अंतिम क्षण में अदृश्य रक्षा कवच देता है।`
+              : `आपकी जन्म-ऊर्जा अंक ${numData.mulank} और ${numData.bhagyank} है, पर नाम का अंक ${chaldean.single} होने से कई बार आपकी 100% ईमानदारी का श्रेय दूसरों को मिल जाता है।`
           }
         </p>
 
@@ -1264,25 +1298,27 @@
           <div class="font-bold text-amber-300 mb-1"><i class="fas fa-eye mr-1.5"></i> ${radarBox.titleHi}</div>
           <p class="text-sm mb-0">${radarBox.hi}</p>
         </div>
+        ${!isFull ? buildRedBirthTimePrompt("hi") : ""}
       `;
     }
 
     return signatureCard + `
-      <p>${openingHook.en(name, ascRashi.en, moonRashi.en)}</p>
+      <p>${openingHook.en(name, primaryAnchorLabelEn, moonRashi.en)}</p>
+
+      <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-400/40 mb-4 text-sm">
+        <strong class="text-amber-300"><i class="fas fa-history mr-1.5"></i>Past-Life Event Verification (${timeline.pastYearRange} • Age ${timeline.pastAgeRange}):</strong>
+        According to your planetary progression, between <strong>${timeline.pastYearRange}</strong> you went through a sharp emotional or directional wake-up call—watching someone you trusted reveal their opportunistic side or facing a sudden shift in your study/career focus that forced you to mature overnight.
+      </div>
 
       <p>
-        <strong>1. Your Unspoken Psychological Reality (Mulank ${numData.mulank} + ${ascRashi.en} Lagna):</strong> ${mulankArch.psychEn} Layered onto this is the hidden signature of ${ascRashi.en} Lagna: a lifelong tendency toward <em>${lagnaMatrix.secretWeaknessEn}</em>. Even when you are navigating intense personal or financial pressure, you carry yourself with composed dignity.
+        <strong>1. Your Unspoken Psychological Wiring (Mulank ${numData.mulank} + Bhagyank ${numData.bhagyank}):</strong> ${mulankArch.psychEn} Layered onto this is a lifelong tendency toward <em>${lagnaMatrix.secretWeaknessEn}</em>. Even under heavy personal pressure, you refuse to look weak in front of others.
       </p>
 
       <p>
-        <strong>2. The Outer Mask vs. Your Inner Mind:</strong> Socially and professionally, people experience your <strong>${ascRashi.en}</strong> exterior—<em>${ascRashi.temperamentEn}</em>—and because your Ascendant Lord <strong>${ascRashi.lord}</strong> sits in your <strong>${lagnaLordInfo.bhava}th House</strong>, your life energy is magnetically pulled toward <em>${houseThemeShort(lagnaLordInfo.bhava, "en")}</em>. Yet privately, your mind runs on <strong>${moonRashi.en} under ${moonNak.name}</strong>, wiring your subconscious with <em>${moonNak.traitEn}</em>.
-      </p>
-
-      <p>
-        <strong>3. The Acoustic Vibration of "${name}" (${chaldean.compound} → ${chaldean.single}):</strong> In Chaldean numerology, the letters of your name sum to <code>${chaldean.breakdown} = ${chaldean.compound}</code> (reducing to root vibration <strong>${chaldean.single}</strong>). ${
+        <strong>2. Name Vibration ("${name}" = ${chaldean.compound} → ${chaldean.single}) & Subconscious Mind:</strong> Privately, your mind runs on <strong>${moonRashi.en} under ${moonNak.name}</strong>, gifting you <em>${moonNak.traitEn}</em>. ${
           chaldean.single === numData.mulank || chaldean.single === numData.bhagyank
-            ? "Remarkably, your name's root vibration locks directly into harmony with your birth numbers—acting as an unseen protective shield that pulls you out of life's sharpest crises at the eleventh hour."
-            : `Notice the subtle frequency contrast here: your soul was born under frequencies ${numData.mulank} and ${numData.bhagyank}, whereas the name society calls you broadcasts vibration ${chaldean.single}. This explains why you often do 95% of the heavy lifting in projects and relationships while final credit gets delayed.`
+            ? `Your name's root vibration (${chaldean.single}) locks directly into harmony with your birth numbers—acting as an eleventh-hour protective shield.`
+            : `Because your birth blueprint runs on ${numData.mulank} and ${numData.bhagyank} while your daily name broadcasts vibration ${chaldean.single}, you often do 95% of the heavy lifting while recognition gets delayed.`
         }
       </p>
 
@@ -1290,98 +1326,119 @@
         <div class="font-bold text-amber-300 mb-1"><i class="fas fa-eye mr-1.5"></i> ${radarBox.titleEn}</div>
         <p class="text-sm mb-0">${radarBox.en}</p>
       </div>
+      ${!isFull ? buildRedBirthTimePrompt("en") : ""}
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 2 — EDUCATION, MEMORY & COMPETITIVE EXAM WINDOWS
+  // --------------------------------------------------------------------------
   function buildChapter2Education(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas } = ctx;
+    const { lang, chart, planetAnalysis, specialLagnas, numData } = ctx;
+    const isFull = chart.isFullChartMode;
     const asc = chart.Asc.d1;
     const rashi5 = RASHI_DATA[getRashiOfBhava(asc, 5)];
-    const lord5  = planetAnalysis[rashi5.lord];
     const merc   = planetAnalysis.Mercury;
     const jup    = planetAnalysis.Jupiter;
-    const bindu5 = specialLagnas.houseBindus[5];
     const mercNak= NAKSHATRA_DATA[merc.nak];
-
     const studyVariant = pickUniqueVariant("ch2StudyPattern", DYNAMIC_HOOK_BANKS.ch2StudyPattern, ctx);
 
-    const hasFocusDisruption = merc.retro || jup.retro ||
-      [6, 8, 12].includes(lord5.bhava) ||
-      planetAnalysis.Rahu.bhava === 5 || planetAnalysis.Ketu.bhava === 5 || planetAnalysis.Saturn.bhava === 5;
+    const examPeakYear1 = numData.currentYear;
+    const examPeakYear2 = numData.currentYear + 1;
 
     if (lang === "hi") {
       return `
-        <p>
-          आपकी कुंडली के पंचम भाव (मेधा एवं पूर्व-पुण्य) में <strong>${rashi5.hi}</strong> राशि है, जिसके स्वामी <strong>${rashi5.lordHi}</strong> कुंडली के <strong>${lord5.bhava}वें भाव (${RASHI_DATA[lord5.d1].hi})</strong> में स्थित हैं। साथ ही बुद्धि के कारक <strong>बुध ${RASHI_DATA[merc.d1].hi} (${merc.bhava}वां भाव — ${mercNak.name} नक्षत्र)</strong> में और ज्ञान के कारक <strong>गुरु ${RASHI_DATA[jup.d1].hi} (${jup.bhava}वां भाव)</strong> में बैठकर आपके मस्तिष्क की सीखने की क्षमता को नियंत्रित कर रहे हैं। अष्टकवर्ग में आपके पंचम भाव को <strong>${bindu5} शुभ बिंदु</strong> प्राप्त हैं।
-        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4 text-xs">
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-blue-400/30">
+            <span class="text-blue-300 font-bold block">बुद्धि कारक बुध (Mercury)</span>
+            <strong class="text-white text-sm">${RASHI_DATA[merc.d1].hi} • ${mercNak.name}</strong>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-amber-400/30">
+            <span class="text-amber-300 font-bold block">ज्ञान कारक गुरु (Jupiter)</span>
+            <strong class="text-white text-sm">${RASHI_DATA[jup.d1].hi} (${jup.dignity.statusHi})</strong>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-emerald-400/30">
+            <span class="text-emerald-300 font-bold block">परीक्षा / कौशल सफलता वर्ष</span>
+            <strong class="text-white text-sm">Late ${examPeakYear1} – ${examPeakYear2}</strong>
+          </div>
+        </div>
+
+        <p><strong>1. आपका वास्तविक लर्निंग और फोकस पैटर्न:</strong> ${studyVariant.hi}</p>
 
         <p>
-          <strong>1. आपका वास्तविक लर्निंग पैटर्न:</strong> ${studyVariant.hi}
-        </p>
-
-        <p>
-          <strong>2. परीक्षा और एकाग्रता में आने वाला गुप्त मोड़:</strong> ${
-            hasFocusDisruption
-              ? `आपके पंचम अक्ष और बुध/गुरु पर विशेष कर्म-प्रभाव होने के कारण आपके शैक्षणिक या प्रतियोगी जीवन में कम से कम एक ऐसा दौर अवश्य आया है जहाँ आपकी योग्यता शीर्ष स्तर की थी, परंतु अंतिम समय पर मानसिक भटकाव, स्वास्थ्य या पारिवारिक वातावरण के कारण परिणाम आपकी असली क्षमता से कम रह गया।`
-              : `बुध और पंचमेश का समन्वय आपको तार्किक विषयों, प्रतियोगी परीक्षाओं और समस्या-समाधान में स्वाभाविक श्रेष्ठता देता है, बशर्ते आप अंतिम क्षण के टालमटोल (procrastination) से बचें।`
-          } आपकी औपचारिक डिग्री चाहे जो भी हो, जीवन में आपकी सबसे बड़ी तरक्की आपके <strong>स्व-अर्जित व्यावहारिक कौशल (self-taught mastery)</strong> से होगी।
+          <strong>2. डिग्री बनाम वास्तविक करियर क्षेत्र:</strong> आपके बुध (${RASHI_DATA[merc.d1].hi}) और गुरु (${RASHI_DATA[jup.d1].hi}) का समीकरण यह स्पष्ट करता है कि आपने जिस विषय में अपनी औपचारिक डिग्री ली है, वास्तविक जीवन में आपकी सबसे बड़ी कमाई और पहचान आपके <strong>स्व-अर्जित व्यावहारिक कौशल (Practical Mastery)</strong> से बनेगी। ${
+            merc.retro || jup.retro
+              ? "आपकी कुंडली में वक्री प्रभाव होने से पढ़ाई या प्रतियोगी परीक्षा में कम से कम एक बार अंतिम क्षण की घबराहट या भटकाव से रैंक/परिणाम प्रभावित होने का योग बना है।"
+              : `वर्ष <strong>${examPeakYear1} के उत्तरार्ध से ${examPeakYear2}</strong> के बीच किसी नई स्किल, प्रतियोगी परीक्षा या सर्टिफिकेशन में सफलता का प्रबल योग है।`
+          }
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div class="p-4 rounded-xl bg-slate-950/80 border border-blue-400/30 min-w-0 break-words">
-            <div class="font-bold text-blue-300 text-sm mb-1"><i class="fas fa-brain mr-1.5"></i> आपके मस्तिष्क के सर्वाधिक अनुकूल क्षेत्र:</div>
-            <p class="text-xs md:text-sm mb-0">डेटा व टेक्नोलॉजी, प्रशासनिक/प्रतियोगी सेवाएं, वित्त व कॉमर्स, चिकित्सा व निदान विज्ञान, कानून/न्याय, मनोविज्ञान और रणनीतिक शोध।</p>
+            <div class="font-bold text-blue-300 text-sm mb-1"><i class="fas fa-brain mr-1.5"></i> सर्वश्रेष्ठ बौद्धिक एवं अध्ययन क्षेत्र:</div>
+            <p class="text-xs md:text-sm mb-0">टेक्नोलॉजी/आईटी, प्रशासनिक व प्रतियोगी सेवाएं, फाइनेंस/कॉमर्स, चिकित्सा व निदान विज्ञान, कानून और रणनीतिक मैनेजमेंट।</p>
           </div>
           <div class="p-4 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
-            <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-lightbulb mr-1.5"></i> मेधा जागृत करने का अचूक वैदिक नियम:</div>
-            <p class="text-xs md:text-sm mb-0">पढ़ते या काम करते समय अपना मुख <strong>${rashi5.directionHi}</strong> की ओर रखें। मोबाइल को दूसरे कमरे में रखकर 45-45 मिनट के स्प्रिंट में लिखकर अभ्यास करना आपके बुध (${mercNak.name}) के न्यूरल सर्किट को तुरंत लॉक कर देता है।</p>
+            <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-lightbulb mr-1.5"></i> एकाग्रता लॉक करने का वैदिक सूत्र:</div>
+            <p class="text-xs md:text-sm mb-0">पढ़ते या काम करते समय अपना मुख <strong>${rashi5.directionHi}</strong> की ओर रखें और फोन को दूसरे कमरे में रखकर 45 मिनट के लिखित स्प्रिंट में अभ्यास करें।</p>
           </div>
         </div>
       `;
     }
 
     return `
-      <p>
-        Your 5th House of Medha (intelligence, memory, and competitive merit) falls in <strong>${rashi5.en}</strong>, with its ruler <strong>${rashi5.lord}</strong> positioned in your <strong>${lord5.bhava}th House (${RASHI_DATA[lord5.d1].en})</strong> and carrying <strong>${bindu5} Sarvashtakavarga bindus</strong>. Combined with <strong>Mercury in ${RASHI_DATA[merc.d1].en} (${merc.bhava}th House under ${mercNak.name})</strong> and <strong>Jupiter in ${RASHI_DATA[jup.d1].en} (${jup.bhava}th House)</strong>, your cognitive blueprint is wired for conceptual mastery.
-      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4 text-xs">
+        <div class="p-3 rounded-xl bg-slate-950/85 border border-blue-400/30">
+          <span class="text-blue-300 font-bold block">Intellect Karaka Mercury</span>
+          <strong class="text-white text-sm">${RASHI_DATA[merc.d1].en} • ${mercNak.name}</strong>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/85 border border-amber-400/30">
+          <span class="text-amber-300 font-bold block">Wisdom Karaka Jupiter</span>
+          <strong class="text-white text-sm">${RASHI_DATA[jup.d1].en} (${jup.dignity.statusEn})</strong>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/85 border border-emerald-400/30">
+          <span class="text-emerald-300 font-bold block">Exam / Skill Breakthrough Window</span>
+          <strong class="text-white text-sm">Late ${examPeakYear1} – ${examPeakYear2}</strong>
+        </div>
+      </div>
+
+      <p><strong>1. Your True Cognitive & Study Pattern:</strong> ${studyVariant.en}</p>
 
       <p>
-        <strong>1. Your True Cognitive & Study Pattern:</strong> ${studyVariant.en}
-      </p>
-
-      <p>
-        <strong>2. The Unspoken Exam & Stream-Switch Pattern:</strong> ${
-          hasFocusDisruption
-            ? `Because your 5th-house/Mercury axis carries karmic sensitivity, your educational journey includes at least one frustrating phase where your raw intellect was in the top tier, yet last-minute anxiety, distraction, or external pressure caused a result below your true caliber.`
-            : `Your 5th Lord and Mercury alignment gives you a sharp edge in competitive exams and analytical problem-solving—your only enemy is last-minute procrastination born from knowing you can catch up fast.`
-        } Regardless of your formal degree on paper, over 70% of your lifelong authority will come from skills and insights you master in the real world.
+        <strong>2. Formal Degree vs. Real-World Mastery:</strong> The interplay between your <strong>Mercury in ${RASHI_DATA[merc.d1].en}</strong> and <strong>Jupiter in ${RASHI_DATA[jup.d1].en}</strong> shows that over 70% of your lifelong financial success will come from specialized practical skills outside your textbook syllabus. ${
+          merc.retro || jup.retro
+            ? "Retrograde influence on your cognitive axis indicates at least one past academic/exam milestone where last-minute anxiety or distraction cost you a rank you deserved by merit."
+            : `Between <strong>late ${examPeakYear1} and ${examPeakYear2}</strong>, your chart enters a high-retention window ideal for clearing competitive exams, interviews, or high-income technical certifications.`
+        }
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div class="p-4 rounded-xl bg-slate-950/80 border border-blue-400/30 min-w-0 break-words">
           <div class="font-bold text-blue-300 text-sm mb-1"><i class="fas fa-brain mr-1.5"></i> Highest-Yield Intellectual Domains:</div>
-          <p class="text-xs md:text-sm mb-0">Engineering/IT architecture, administrative & civil services, finance/chartered analytics, medical & clinical diagnostics, law & policy, and human psychology.</p>
+          <p class="text-xs md:text-sm mb-0">Engineering/IT architecture, administrative & civil services, finance/chartered analytics, medical & clinical diagnostics, law, and strategic management.</p>
         </div>
         <div class="p-4 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
           <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-lightbulb mr-1.5"></i> Vedic Brainpower Optimization:</div>
-          <p class="text-xs md:text-sm mb-0">Face <strong>${rashi5.direction}</strong> during study or high-stakes work. Studying in 45-minute written-recall sprints locks your Mercury (${mercNak.name}) focus without mental drift.</p>
+          <p class="text-xs md:text-sm mb-0">Face <strong>${rashi5.direction}</strong> during study or deep work. Studying in 45-minute written-recall sprints locks your Mercury (${mercNak.name}) focus without mental drift.</p>
         </div>
       </div>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 3 — CAREER BREAKTHROUGHS, PROMOTION YEARS & AUTHORITY
+  // --------------------------------------------------------------------------
   function buildChapter3Career(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas } = ctx;
+    const { lang, chart, planetAnalysis, specialLagnas, timeline } = ctx;
+    const isFull = chart.isFullChartMode;
     const asc = chart.Asc.d1;
     const rashi10 = RASHI_DATA[getRashiOfBhava(asc, 10)];
     const lord10Key = rashi10.lord;
-    const lord10  = planetAnalysis[lord10Key];
     const sat = planetAnalysis.Saturn;
     const sun = planetAnalysis.Sun;
     const bindu10 = specialLagnas.houseBindus[10];
     const bindu6  = specialLagnas.houseBindus[6];
     const bindu11 = specialLagnas.houseBindus[11];
-    const lagnaMatrix = LAGNA_FUNCTIONAL_MATRIX[asc];
 
     const lord1Key = RASHI_DATA[asc].lord;
     const maturitySet = Array.from(new Set([
@@ -1391,148 +1448,160 @@
 
     if (lang === "hi") {
       return `
-        <p>
-          आपके दशम भाव (कर्म एवं सत्ता) में <strong>${rashi10.hi}</strong> राशि है और दशमेश <strong>${rashi10.lordHi}</strong> कुंडली के <strong>${lord10.bhava}वें भाव (${RASHI_DATA[lord10.d1].hi})</strong> में तथा नवांश (D9) के <strong>${RASHI_DATA[lord10.d9].hi}</strong> में स्थित हैं। साथ ही कर्म-कारक <strong>शनि ${RASHI_DATA[sat.d1].hi} (${sat.bhava}वां भाव)</strong> में और राज्य-कारक <strong>सूर्य ${RASHI_DATA[sun.d1].hi} (${sun.bhava}वां भाव)</strong> में बैठकर आपके करियर की नींव रख रहे हैं।
-        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+          <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+            <span class="text-emerald-300 font-bold uppercase block">🚀 प्रथम करियर उछाल / प्रमोशन योग</span>
+            <strong class="text-base text-white">${timeline.careerWindow1}</strong>
+          </div>
+          <div class="p-3.5 rounded-xl bg-amber-950/50 border border-amber-400/40">
+            <span class="text-amber-300 font-bold uppercase block">👑 द्वितीय बड़ा पद / स्वतंत्र विस्तार</span>
+            <strong class="text-base text-white">${timeline.careerWindow2}</strong>
+          </div>
+          <div class="p-3.5 rounded-xl bg-purple-950/50 border border-purple-400/40">
+            <span class="text-purple-300 font-bold uppercase block">ग्रह परिपक्वता आयु (Peak Ages)</span>
+            <strong class="text-base text-white">आयु ${maturitySet.join(", ")} वर्ष</strong>
+          </div>
+        </div>
 
         <p>
-          <strong>1. नौकरी बनाम स्वतंत्र अधिकार (अष्टकवर्ग प्रमाण):</strong> सर्वाष्टकवर्ग में आपके दशम भाव (अधिकार) को <strong>${bindu10} बिंदु</strong>, षष्ठ भाव (नौकरी/सेवा) को <strong>${bindu6} बिंदु</strong> और एकादश भाव (लाभ) को <strong>${bindu11} बिंदु</strong> मिले हैं। ${
-            bindu10 >= bindu6
-              ? "दशम भाव का षष्ठ भाव से बलवान होना यह सिद्ध करता है कि आप जीवन भर किसी कम बुद्धि वाले बॉस के नीचे दबकर 'जी-हुजूरी' नहीं कर सकते। आपको जहाँ निर्णय लेने की स्वतंत्रता (autonomy) मिलती है, वहाँ आप 10 गुना परिणाम देते हैं।"
-              : "षष्ठ भाव के प्रबल बिंदु आपको प्रतियोगी परीक्षाओं, कॉर्पोरेट/संस्थागत तंत्र और संकट-प्रबंधन (crisis management) में विरोधियों को पछाड़कर ऊपर उठने की शक्ति देते हैं।"
-          } ${
-            bindu10 > bindu11
-              ? `<strong>विशेष अष्टकवर्ग सूत्र:</strong> आपके 10वें भाव के बिंदु (${bindu10}) आपके 11वें भाव के लाभ बिंदुओं (${bindu11}) से अधिक हैं—जिसका अर्थ है कि वर्तमान में आप काम और जिम्मेदारी तो बहुत अधिक उठा रहे हैं, पर उसके अनुपात में आर्थिक प्रतिफल (financial reward) थोड़ा रुककर आ रहा है।`
-              : `आपके 11वें भाव के बिंदु (${bindu11}) आपके 10वें भाव (${bindu10}) को शानदार समर्थन दे रहे हैं, जिसका अर्थ है कि सही दशा जागृत होते ही आपकी मेहनत सीधे बड़े आर्थिक लाभ में बदलेगी।`
+          <strong>1. नौकरी बनाम स्वतंत्र अधिकार:</strong> आपके कर्म-कारक <strong>शनि (${RASHI_DATA[sat.d1].hi})</strong> और सत्ता-कारक <strong>सूर्य (${RASHI_DATA[sun.d1].hi})</strong> यह स्पष्ट करते हैं कि आप किसी कम योग्य व्यक्ति के नीचे दबकर 'जी-हुजूरी' करने के लिए नहीं बने हैं। ${
+            isFull
+              ? `सर्वाष्टकवर्ग में आपके दशम भाव को <strong>${bindu10} बिंदु</strong>, षष्ठ भाव (सेवा) को <strong>${bindu6} बिंदु</strong> और लाभ भाव को <strong>${bindu11} बिंदु</strong> मिले हैं। ${bindu10 > bindu11 ? "दशम के बिंदु लाभ से अधिक होने के कारण अभी आप जिम्मेदारी ज्यादा उठा रहे हैं और उसका पूरा आर्थिक फल अगले चरण में खुलेगा।" : "लाभ भाव का मजबूत समर्थन आपकी मेहनत को सीधे बड़े धन में बदलेगा।"}`
+              : "जहाँ आपको निर्णय लेने की स्वतंत्रता (Autonomy) मिलती है, वहाँ आप 10 गुना परिणाम देते हैं, परंतु ऑफिस पॉलिटिक्स और चापलूसी से आपका मन तुरंत उचट जाता है।"
           }
         </p>
 
         <p>
-          <strong>2. कार्यक्षेत्र की राजनीति और दशमेश परिपक्वता वर्ष (${maturitySet.join(", ")}वां वर्ष):</strong> आपने अपने कार्यक्षेत्र में यह अनुभव किया होगा कि जब तक आप दूसरों का काम संभालते हैं, सब आपकी प्रशंसा करते हैं—पर जैसे ही आप अपने अधिकार या प्रमोशन की बात करते हैं, गुप्त राजनीति शुरू हो जाती है। पाराशरी ग्रह-परिपक्वता सिद्धांत के अनुसार आपके दशमेश <strong>${rashi10.lordHi}</strong> और योगकारक (<strong>${lagnaMatrix.yogakaraka.map(p => PLANET_META[p].hi).join(", ")}</strong>) आपकी आयु के <strong>${maturitySet.join(", ")}वें वर्ष</strong> में पूर्ण परिपक्व होकर आपको स्वतंत्र अधिकार और उच्च पद सौंपते हैं।
+          <strong>2. आगामी करियर परिवर्तन एवं भाग्योदय की सटीक समय-सीमा:</strong> आपके जीवन में अगला बड़ा करियर बदलाव, नई नौकरी/प्रमोशन या स्वतंत्र आय का द्वार <strong>${timeline.careerWindow1}</strong> के बीच खुलेगा। इसके बाद <strong>${timeline.careerWindow2}</strong> का कालखंड आपको अपने क्षेत्र में वास्तविक अधिकार (Commanding Position) दिलाएगा। जन्मस्थान से दूर या डिजिटल/मल्टी-सिटी नेटवर्क से जुड़ने पर आपकी तरक्की दोगुनी तेज होगी।
         </p>
 
         <div class="p-4 rounded-2xl bg-amber-950/40 border border-amber-400/40 mt-4 break-words">
-          <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-award mr-1.5"></i> आपके लिए सर्वोच्च सफलता वाले करियर क्षेत्र:</div>
+          <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-award mr-1.5"></i> आपके लिए सर्वाधिक फलदायी करियर क्षेत्र:</div>
           <p class="text-xs md:text-sm mb-0">
-            दशमेश <strong>${rashi10.lordHi}</strong> के ${lord10.bhava}वें भाव से जुड़ने के कारण आपके लिए <strong>उच्च प्रशासनिक/सरकारी पद, टेक्नोलॉजी व सिस्टम आर्किटेक्चर, चिकित्सा एवं हेल्थकेयर, बैंकिंग व वित्तीय प्रबंधन, स्वतंत्र कंसल्टेंसी, न्यायिक क्षेत्र या अपना स्वयं का उद्यम (Enterprise)</strong> सर्वाधिक भाग्योदयकारी रहेगा।
+            उच्च प्रशासनिक/सरकारी सेवा, टेक्नोलॉजी व सिस्टम आर्किटेक्चर, बैंकिंग व वित्तीय प्रबंधन, चिकित्सा/हेल्थकेयर, स्वतंत्र कंसल्टेंसी, न्यायिक क्षेत्र या अपना स्वयं का उद्यम (Independent Enterprise)।
           </p>
         </div>
       `;
     }
 
     return `
-      <p>
-        Your 10th House of Karma and professional command holds <strong>${rashi10.en}</strong>, while its ruler <strong>${rashi10.lord}</strong> operates from your <strong>${lord10.bhava}th House (${RASHI_DATA[lord10.d1].en})</strong> and matures into <strong>${RASHI_DATA[lord10.d9].en}</strong> in your Navamsa (D9). Supported by <strong>Saturn in ${RASHI_DATA[sat.d1].en} (${sat.bhava}th House)</strong> and <strong>Sun in ${RASHI_DATA[sun.d1].en} (${sun.bhava}th House)</strong>, your professional blueprint is built for authority rather than blind obedience.
-      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+        <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+          <span class="text-emerald-300 font-bold uppercase block">🚀 Next Career / Job-Switch Window</span>
+          <strong class="text-base text-white">${timeline.careerWindow1}</strong>
+        </div>
+        <div class="p-3.5 rounded-xl bg-amber-950/50 border border-amber-400/40">
+          <span class="text-amber-300 font-bold uppercase block">👑 Major Authority / Scaling Window</span>
+          <strong class="text-base text-white">${timeline.careerWindow2}</strong>
+        </div>
+        <div class="p-3.5 rounded-xl bg-purple-950/50 border border-purple-400/40">
+          <span class="text-purple-300 font-bold uppercase block">Planetary Maturity Peak Ages</span>
+          <strong class="text-base text-white">Ages ${maturitySet.join(", ")}</strong>
+        </div>
+      </div>
 
       <p>
-        <strong>1. Job vs. Independent Command (The Ashtakavarga Proof):</strong> In your 337-point Sarvashtakavarga matrix, your 10th House of authority carries <strong>${bindu10} bindus</strong>, your 6th House of routine service carries <strong>${bindu6} bindus</strong>, and your 11th House of financial gains carries <strong>${bindu11} bindus</strong>. ${
-          bindu10 >= bindu6
-            ? "Having equal or higher bindus in the 10th than the 6th confirms that you suffocate under micromanagement or incompetent superiors. You thrive only when given direct ownership of decisions."
-            : "Your strong 6th-house bindus give you tremendous stamina to crush competition in exams, corporate ladders, medical/technical problem-solving, and structured institutions."
-        } ${
-          bindu10 > bindu11
-            ? `<strong>Crucial Effort-to-Income Ratio:</strong> Because your 10th House bindus (${bindu10}) exceed your 11th House bindus (${bindu11}), you currently carry heavier workload and responsibility than the financial payout you receive—a classic karmic bottleneck that requires 11th-lord activation.`
-            : `Because your 11th House bindus (${bindu11}) match or exceed your 10th House (${bindu10}), every strategic career move you make has the potential to compound into disproportionate wealth once your Dasha aligns.`
+        <strong>1. Job vs. Independent Command:</strong> Anchored by <strong>Saturn in ${RASHI_DATA[sat.d1].en}</strong> and <strong>Sun in ${RASHI_DATA[sun.d1].en}</strong>, your professional DNA is wired for autonomous leadership rather than blind subordination. ${
+          isFull
+            ? `In your Sarvashtakavarga matrix, your 10th House holds <strong>${bindu10} bindus</strong>, your 6th House of routine service holds <strong>${bindu6} bindus</strong>, and your 11th House of gains holds <strong>${bindu11} bindus</strong>. ${bindu10 > bindu11 ? "Because your 10th-house bindus exceed your 11th-house bindus, you currently carry heavier responsibility than your paycheck reflects—a gap that closes in your upcoming transition window." : "Your strong 11th-house bindu ratio ensures your career authority directly compounds into wealth."}`
+            : "Whenever you are given ownership of a project or business, you outperform everyone in the room—but petty micromanagement or corporate sycophancy drains your spirit immediately."
         }
       </p>
 
       <p>
-        <strong>2. Workplace Politics & Your Planetary Maturity Ages (${maturitySet.join(", ")}):</strong> Because you refuse to flatter seniors or play petty office politics, louder peers may have grabbed temporary credit in your early twenties. However, governed by the Parashari maturity cycles of your 10th Lord <strong>${rashi10.lord}</strong> and Yogakaraka (<strong>${lagnaMatrix.yogakaraka.join(" & ")}</strong>), your chart undergoes decisive upward command shifts at <strong>ages ${maturitySet.join(", ")}</strong>—transitioning you into a seat where others report to your authority.
+        <strong>2. Concrete Career Breakthrough Timeline:</strong> Your next decisive career shift, promotion, or high-value role opens between <strong>${timeline.careerWindow1}</strong>, followed by a major authority and income expansion between <strong>${timeline.careerWindow2}</strong>. Operating away from your birthplace or dealing with national/global clients accelerates your rise dramatically.
       </p>
 
       <div class="p-4 rounded-2xl bg-amber-950/40 border border-amber-400/40 mt-4 break-words">
         <div class="font-bold text-amber-300 text-sm mb-1"><i class="fas fa-award mr-1.5"></i> Highest-Alignment Career Sectors for Your Chart:</div>
         <p class="text-xs md:text-sm mb-0">
-          With 10th Lord <strong>${rashi10.lord}</strong> linked to your ${lord10.bhava}th House, your highest status and wealth come through <strong>executive administration/government, IT/systems engineering, medicine & clinical sciences, finance & capital management, advisory/consulting, or building your own independent enterprise</strong>—especially when connected to cities or clients outside your birthplace.
+          Executive administration/government, IT/systems engineering, finance & capital strategy, medicine & healthcare, high-ticket consulting, legal/policy leadership, or scalable independent enterprise.
         </p>
       </div>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 4 — WEALTH, MONEY LEAKS & HIGH-RISK LOSS CAUTION YEARS
+  // --------------------------------------------------------------------------
   function buildChapter4Wealth(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas } = ctx;
+    const { lang, chart, specialLagnas, timeline } = ctx;
+    const isFull = chart.isFullChartMode;
     const asc = chart.Asc.d1;
     const rashi2  = RASHI_DATA[getRashiOfBhava(asc, 2)];
     const rashi11 = RASHI_DATA[getRashiOfBhava(asc, 11)];
     const rashi12 = RASHI_DATA[getRashiOfBhava(asc, 12)];
-    const lord2   = planetAnalysis[rashi2.lord];
-    const lord11  = planetAnalysis[rashi11.lord];
     const bindu2  = specialLagnas.houseBindus[2];
     const bindu11 = specialLagnas.houseBindus[11];
     const bindu12 = specialLagnas.houseBindus[12];
-
     const leakVariant = pickUniqueVariant("ch4MoneyLeak", DYNAMIC_HOOK_BANKS.ch4MoneyLeak, ctx);
 
     if (lang === "hi") {
       return `
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-emerald-400/30 min-w-0 break-words">
-            <div class="text-xs text-emerald-300 font-bold">11वां भाव (आय प्रवाह) — ${rashi11.hi}</div>
-            <div class="text-lg font-extrabold text-white">${bindu11} अष्टकवर्ग बिंदु</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+          <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+            <span class="text-emerald-300 font-bold block">💰 धन-वृद्धि एवं संपत्ति संचय काल</span>
+            <strong class="text-base text-white">${timeline.careerWindow1}</strong>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
-            <div class="text-xs text-amber-300 font-bold">2रा भाव (बैंक संचय) — ${rashi2.hi}</div>
-            <div class="text-lg font-extrabold text-white">${bindu2} अष्टकवर्ग बिंदु</div>
+          <div class="p-3.5 rounded-xl bg-red-950/60 border border-red-400/50">
+            <span class="text-red-300 font-bold block">⚠️ आर्थिक सावधानी (उधार/निवेश वर्जित)</span>
+            <strong class="text-base text-white">${timeline.cautionWindow}</strong>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-rose-400/30 min-w-0 break-words">
-            <div class="text-xs text-rose-300 font-bold">12वां भाव (व्यय/निवेश) — ${rashi12.hi}</div>
-            <div class="text-lg font-extrabold text-white">${bindu12} अष्टकवर्ग बिंदु</div>
+          <div class="p-3.5 rounded-xl bg-slate-950/85 border border-amber-400/30">
+            <span class="text-amber-300 font-bold block">${isFull ? "लाभ (11H) बनाम व्यय (12H) बिंदु" : "प्रमुख संपदा वाहन"}</span>
+            <strong class="text-base text-white">${isFull ? `${bindu11} लाभ • ${bindu2} बचत • ${bindu12} व्यय` : "भूमि (Land), स्वर्ण एवं इक्विटी"}</strong>
           </div>
         </div>
 
+        <p><strong>1. रहस्यमयी 'मनी लीक' (जो आपने बार-बार अनुभव किया है):</strong> ${leakVariant.hi}</p>
+
         <p>
-          <strong>1. धनागम बनाम धन-संचय का समीकरण:</strong> आपके एकादश भाव (लाभ) के स्वामी <strong>${rashi11.lordHi}</strong> कुंडली के <strong>${lord11.bhava}वें भाव</strong> में हैं और द्वितीय भाव (संचित कोष) के स्वामी <strong>${rashi2.lordHi}</strong> <strong>${lord2.bhava}वें भाव</strong> में बैठे हैं। आपकी कुंडली में धन कमाने की क्षमता (earning potential) अत्यंत प्रबल है—जब भी जीवन में किसी बड़े कार्य के लिए धन की आवश्यकता होती है, व्यवस्था स्वतः बन जाती है।
+          <strong>2. आर्थिक नुकसान से बचाव की तारीखें (${timeline.cautionWindow}):</strong> ध्यान रखें—<strong>${timeline.cautionWindow}</strong> के दौरान किसी भी मित्र/रिश्तेदार को भावुक होकर बड़ा पैसा उधार न दें, बिना पढ़े साझेदारी के कागजों पर हस्ताक्षर न करें और शॉर्टकट सट्टेबाजी (speculation) से दूर रहें। इस अवधि में दिया गया धन फंसने का प्रबल योग है।
         </p>
 
         <p>
-          <strong>2. रहस्यमयी 'मनी लीक' (जो आपने वास्तविक जीवन में देखा है):</strong> ${leakVariant.hi}
-        </p>
-
-        <p>
-          <strong>3. करोड़पति संपदा निर्माण का वैदिक लॉक-इन सूत्र:</strong> क्योंकि आपके द्वादश भाव में <strong>${bindu12} बिंदु</strong> हैं, यदि आप पैसा केवल लिक्विड सेविंग्स अकाउंट में छोड़ेंगे तो 12वां भाव उसे किसी न किसी बहाने खर्च करवा देगा। आपके लिए अमीरी का अचूक नियम यह है कि धन आते ही उसे <strong>अचल संपत्ति (भूमि/प्रॉपर्टी), स्वर्ण (Gold), दीर्घकालिक इक्विटी/SIP या व्यावसायिक एसेट्स</strong> में 'लॉक' कर दें। जब आप स्वयं अपने 12वें भाव को 'निवेश' दे देते हैं, तो आकस्मिक नुकसान स्वतः बंद हो जाते हैं।
+          <strong>3. करोड़पति संपदा निर्माण का वैदिक लॉक-इन नियम:</strong> यदि आप पैसा केवल सेविंग्स अकाउंट (Liquid Cash) में छोड़ेंगे, तो 12वां भाव उसे अनावश्यक खर्चों में खींच लेगा। जैसे ही धन आए, उसका कम से कम 40% भाग <strong>भूमि/प्रॉपर्टी, स्वर्ण (Gold) या दीर्घकालिक SIP/Assets</strong> में लॉक कर दें—इससे आकस्मिक खर्च तुरंत रुक जाएंगे।
         </p>
       `;
     }
 
     return `
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-emerald-400/30 min-w-0 break-words">
-          <div class="text-xs text-emerald-300 font-bold">11th House (Inflow) — ${rashi11.en}</div>
-          <div class="text-lg font-extrabold text-white">${bindu11} SAV Bindus</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+        <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+          <span class="text-emerald-300 font-bold block">💰 Wealth & Asset Expansion Window</span>
+          <strong class="text-base text-white">${timeline.careerWindow1}</strong>
         </div>
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
-          <div class="text-xs text-amber-300 font-bold">2nd House (Retention) — ${rashi2.en}</div>
-          <div class="text-lg font-extrabold text-white">${bindu2} SAV Bindus</div>
+        <div class="p-3.5 rounded-xl bg-red-950/60 border border-red-400/50">
+          <span class="text-red-300 font-bold block">⚠️ High-Risk Money Caution Window</span>
+          <strong class="text-base text-white">${timeline.cautionWindow}</strong>
         </div>
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-rose-400/30 min-w-0 break-words">
-          <div class="text-xs text-rose-300 font-bold">12th House (Outflow) — ${rashi12.en}</div>
-          <div class="text-lg font-extrabold text-white">${bindu12} SAV Bindus</div>
+        <div class="p-3.5 rounded-xl bg-slate-950/85 border border-amber-400/30">
+          <span class="text-amber-300 font-bold block">${isFull ? "11H Gains vs. 2H Savings vs. 12H Outflow" : "Primary Wealth Vehicles"}</span>
+          <strong class="text-base text-white">${isFull ? `${bindu11} Inflow • ${bindu2} Saved • ${bindu12} Out` : "Land, Gold & Compounding Equity"}</strong>
         </div>
       </div>
 
+      <p><strong>1. The Unspoken "Money Leak" Pattern in Your Life:</strong> ${leakVariant.en}</p>
+
       <p>
-        <strong>1. Cash Inflow vs. Wealth Retention:</strong> Your 11th House of gains is governed by <strong>${rashi11.lord}</strong> operating from your <strong>${lord11.bhava}th House</strong>, while your 2nd House of accumulated bank balance is ruled by <strong>${rashi2.lord}</strong> in the <strong>${lord2.bhava}th House</strong>. Your chart never truly lacks the ability to generate money—whenever a major necessity hits, resources find their way to you.
+        <strong>2. Financial Loss & Stuck-Money Warning (${timeline.cautionWindow}):</strong> Mark this window carefully: during <strong>${timeline.cautionWindow}</strong>, do NOT lend money to friends/relatives out of emotional obligation, do not sign unverified partnership papers, and avoid high-risk speculative bets. Money lent during this cycle has a very high probability of getting stuck.
       </p>
 
       <p>
-        <strong>2. The Unspoken "Money Leak" Pattern in Your Chart:</strong> ${leakVariant.en}
-      </p>
-
-      <p>
-        <strong>3. Your Wealth-Locking Formula:</strong> With <strong>${bindu12} bindus</strong> in your 12th house versus <strong>${bindu2} bindus</strong> in your 2nd house, idle cash sitting in a savings account triggers the "Vyaya" (loss) side of the 12th house. To build massive net worth, you must consciously activate the "Investment" side of the 12th house: the moment surplus income arrives, lock it into <strong>appreciating assets—land/real estate, physical gold, automated equity compounding, or business assets</strong>.
+        <strong>3. Your Multi-Crore Wealth-Locking Formula:</strong> Keeping large liquid cash idle in a regular bank account triggers sudden unplanned outflows. The moment surplus money arrives, immediately convert at least 40% into <strong>illiquid appreciating assets—Land/Real Estate, Physical Gold, or Automated Index/Equity Funds</strong>. Consciously feeding the investment house stops accidental financial leaks.
       </p>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 5 — LUCK FACTOR & GOLDEN TURNING-POINT AGES
+  // --------------------------------------------------------------------------
   function buildChapter5Luck(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas, numData } = ctx;
+    const { lang, chart, planetAnalysis, numData } = ctx;
     const asc = chart.Asc.d1;
     const rashi9 = RASHI_DATA[getRashiOfBhava(asc, 9)];
     const lord9  = planetAnalysis[rashi9.lord];
-    const bindu9 = specialLagnas.houseBindus[9];
     const m = numData.mulank, b = numData.bhagyank;
-
     const luckVariant = pickUniqueVariant("ch5LuckTest", DYNAMIC_HOOK_BANKS.ch5LuckTest, ctx);
 
     const milestoneAges = Array.from(new Set([
@@ -1542,82 +1611,69 @@
 
     if (lang === "hi") {
       return `
-        <p>
-          आपके नवम भाव (भाग्य एवं धर्म) में <strong>${rashi9.hi}</strong> राशि है, भाग्येश <strong>${rashi9.lordHi}</strong> कुंडली के <strong>${lord9.bhava}वें भाव</strong> में विराजमान हैं और नवम भाव को अष्टकवर्ग में <strong>${bindu9} बिंदु</strong> प्राप्त हैं। आपका भाग्य निष्क्रिय बैठकर फल देने वाला नहीं है—यह <strong>कर्म-जागृत भाग्य</strong> है, जो आपके पहला कदम उठाते ही सक्रिय हो जाता है।
-        </p>
+        <p><strong>1. आपके भाग्योदय का गुप्त नियम:</strong> ${luckVariant.hi}</p>
 
         <p>
-          <strong>1. आपके भाग्योदय का गुप्त नियम:</strong> ${luckVariant.hi}
-        </p>
-
-        <p>
-          <strong>2. आपके जीवन के स्वर्णिम भाग्योदय वर्ष:</strong> भृगु चक्र, नवमेश <strong>${rashi9.lordHi}</strong> और आपके मूलांक (${m}) व भाग्यांक (${b}) के संगम से आपके जीवन के सबसे बड़े निर्णायक मोड़ <strong>${milestoneAges.join(", ")}वें वर्ष</strong> में आते हैं। वर्तमान में आपकी आयु <strong>${numData.age} वर्ष</strong> है और वर्ष <strong>${numData.currentYear}</strong> आपके लिए <strong>व्यक्तिगत वर्ष अंक ${numData.personalYear}</strong> की ऊर्जा में चल रहा है—जो पुराने मानसिक बोझ को उतारकर करियर और रिश्तों में एक ठोस निर्णय लेने का वर्ष है।
+          <strong>2. आपके जीवन के निर्णायक भाग्योदय वर्ष:</strong> भृगु चक्र और आपके मूलांक (${m}) व भाग्यांक (${b}) के अनुसार आपकी आयु के <strong>${milestoneAges.join(", ")}वें वर्ष</strong> आपके जीवन की दिशा बदलने वाले स्वर्णिम पड़ाव हैं। वर्तमान में आपकी आयु <strong>${numData.age} वर्ष</strong> है और वर्ष <strong>${numData.currentYear}</strong> आपके लिए <strong>व्यक्तिगत वर्ष अंक ${numData.personalYear}</strong> की ऊर्जा लेकर आया है—जो पुराने मानसिक बोझ को उतारकर करियर और संबंधों में एक ठोस निर्णय लेने का समय है।
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
             <div class="text-[11px] text-amber-400 font-bold">भाग्योदय दिशा</div>
             <div class="text-sm font-bold text-white mt-1">${rashi9.directionHi}</div>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
             <div class="text-[11px] text-amber-400 font-bold">शक्तिशाली अंक</div>
             <div class="text-sm font-bold text-white mt-1">${m}, ${b}, ${((m + b - 1) % 9) + 1}</div>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
             <div class="text-[11px] text-amber-400 font-bold">वर्ष ${numData.currentYear} स्पंदन</div>
             <div class="text-sm font-bold text-white mt-1">व्यक्तिगत अंक ${numData.personalYear}</div>
           </div>
-          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
-            <div class="text-[11px] text-amber-400 font-bold">भाग्येश स्थिति</div>
-            <div class="text-sm font-bold text-white mt-1">${rashi9.lordHi} (${lord9.bhava}वां भाव)</div>
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
+            <div class="text-[11px] text-amber-400 font-bold">प्रमुख भाग्य ग्रह</div>
+            <div class="text-sm font-bold text-white mt-1">${rashi9.lordHi}</div>
           </div>
         </div>
       `;
     }
 
     return `
-      <p>
-        Your 9th House of Bhagya (divine grace and fortune) holds <strong>${rashi9.en}</strong> with <strong>${bindu9} SAV bindus</strong>, while your Bhagya Lord <strong>${rashi9.lord}</strong> operates from your <strong>${lord9.bhava}th House</strong>. This configuration creates <em>Action-Triggered Fortune</em>: the moment you commit to bold action in ${houseThemeShort(lord9.bhava, "en")}, unseen doors and mentors open up rapidly.
-      </p>
+      <p><strong>1. How Destiny Tests & Rewards You:</strong> ${luckVariant.en}</p>
 
       <p>
-        <strong>1. How Destiny Tests & Rewards You:</strong> ${luckVariant.en}
-      </p>
-
-      <p>
-        <strong>2. Your Crucial Age Turning Points:</strong> Synthesizing Bhrigu progression with your 9th Lord (${rashi9.lord}), Mulank (${m}), and Bhagyank (${b}), the most decisive destiny-shifting years of your life occur at <strong>ages ${milestoneAges.join(", ")}</strong>. At your current age of <strong>${numData.age}</strong>, calendar year <strong>${numData.currentYear}</strong> runs under your <strong>Personal Year ${numData.personalYear}</strong>—signaling an active restructuring window for your career, finances, and personal boundaries.
+        <strong>2. Your Crucial Age Turning Points:</strong> Synthesizing Bhrigu progression with your Mulank (${m}) and Bhagyank (${b}), the most decisive destiny-shifting years of your life occur at <strong>ages ${milestoneAges.join(", ")}</strong>. At your current age of <strong>${numData.age}</strong>, calendar year <strong>${numData.currentYear}</strong> runs under your <strong>Personal Year ${numData.personalYear}</strong>—signaling an active restructuring window for your career, finances, and personal boundaries.
       </p>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
           <div class="text-[11px] text-amber-400 font-bold">Fortune Direction</div>
           <div class="text-sm font-bold text-white mt-1">${rashi9.direction}</div>
         </div>
-        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
           <div class="text-[11px] text-amber-400 font-bold">Power Numbers</div>
           <div class="text-sm font-bold text-white mt-1">${m}, ${b}, ${((m + b - 1) % 9) + 1}</div>
         </div>
-        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
           <div class="text-[11px] text-amber-400 font-bold">${numData.currentYear} Vibration</div>
           <div class="text-sm font-bold text-white mt-1">Personal Year ${numData.personalYear}</div>
         </div>
-        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center min-w-0 break-words">
-          <div class="text-[11px] text-amber-400 font-bold">Bhagya Lord</div>
-          <div class="text-sm font-bold text-white mt-1">${rashi9.lord} (${lord9.bhava}th House)</div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-center">
+          <div class="text-[11px] text-amber-400 font-bold">Primary Luck Planet</div>
+          <div class="text-sm font-bold text-white mt-1">${rashi9.lord}</div>
         </div>
       </div>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 6 — LOVE LIFE, ATTRACTION & HEARTBREAK PATTERNS
+  // --------------------------------------------------------------------------
   function buildChapter6Love(ctx) {
-    const { lang, chart, planetAnalysis } = ctx;
-    const asc = chart.Asc.d1;
-    const rashi5 = RASHI_DATA[getRashiOfBhava(asc, 5)];
-    const lord5  = planetAnalysis[rashi5.lord];
-    const ven    = planetAnalysis.Venus;
-    const rahu   = planetAnalysis.Rahu;
-    const mars   = planetAnalysis.Mars;
-
+    const { lang, planetAnalysis, timeline } = ctx;
+    const ven  = planetAnalysis.Venus;
+    const rahu = planetAnalysis.Rahu;
+    const mars = planetAnalysis.Mars;
     const loveVariant = pickUniqueVariant("ch6LovePattern", DYNAMIC_HOOK_BANKS.ch6LovePattern, ctx);
 
     const karmicLove = ven.conjunctWith.includes("Rahu") || ven.conjunctWith.includes("Saturn") ||
@@ -1627,18 +1683,14 @@
     if (lang === "hi") {
       return `
         <p>
-          प्रेम के मामले में आपका हृदय दिखावे या सतही आकर्षण (time-pass romance) के लिए नहीं बना है। आपके पंचम भाव में <strong>${rashi5.hi}</strong>, पंचमेश <strong>${rashi5.lordHi}</strong> के <strong>${lord5.bhava}वें भाव</strong> में होने और प्रेम-कारक <strong>शुक्र के ${RASHI_DATA[ven.d1].hi} (${ven.bhava}वां भाव, नवांश ${RASHI_DATA[ven.d9].hi})</strong> में बैठने के कारण जब आप किसी से जुड़ते हैं, तो पूरी आत्मा और अटूट निष्ठा से जुड़ते हैं।
+          <strong>1. रिश्तों में आपका अनकहा भावनात्मक सच:</strong> प्रेम के कारक <strong>शुक्र (${RASHI_DATA[ven.d1].hi})</strong> की स्थिति दिखाती है कि आपका हृदय टाइम-पास या सतही आकर्षण के लिए नहीं बना है। ${loveVariant.hi}
         </p>
 
         <p>
-          <strong>1. रिश्तों में आपका अनकहा भावनात्मक सच:</strong> ${loveVariant.hi}
-        </p>
-
-        <p>
-          <strong>2. पूर्वजन्म का कार्मिक आकर्षण और सावधानी:</strong> ${
+          <strong>2. भावनात्मक मोड़ एवं पूर्वजन्म का कार्मिक आकर्षण:</strong> ${
             karmicLove
-              ? "आपके शुक्र और पंचम/सप्तम अक्ष पर तीव्र कार्मिक ग्रहों का प्रभाव यह स्पष्ट दर्शाता है कि आपके जीवन में कम से कम एक ऐसा गहरा भावनात्मक लगाव या अधूरा प्रेम-प्रसंग आता है जो आपको भीतर तक झकझोर कर रख देता है—ताकि आप अंधे भरोसे से बाहर निकलकर अपने आत्म-सम्मान की कीमत पहचान सकें।"
-              : "शुक्र और पंचमेश का समन्वय आपको स्वाभाविक आकर्षण और गहरा प्रेम देता है, पर जब तक सामने वाले में बौद्धिक स्तर और वफादारी न दिखे, आपका मन पूरी तरह खुलता नहीं है।"
+              ? `आपके प्रेम अक्ष पर तीव्र कार्मिक प्रभाव होने के कारण आपके जीवन में (विशेषकर <strong>${timeline.pastYearRange}</strong> के आसपास या युवावस्था के प्रारंभिक चरण में) कम से कम एक ऐसा गहरा भावनात्मक जुड़ाव या अधूरा रिश्ता आया जिसने आपको अंधे भरोसे से बाहर निकलकर अपने आत्म-सम्मान की कीमत सिखाई।`
+              : "शुक्र का प्रभाव आपको स्वाभाविक आकर्षण देता है, परंतु जब तक सामने वाले में बौद्धिक परिपक्वता और वफादारी न दिखे, आपका मन पूरी तरह खुलता नहीं है।"
           }
         </p>
       `;
@@ -1646,25 +1698,25 @@
 
     return `
       <p>
-        You are constitutionally incapable of shallow, transactional romance. With your 5th House of love in <strong>${rashi5.en}</strong>, its ruler <strong>${rashi5.lord}</strong> in your <strong>${lord5.bhava}th House</strong>, and <strong>Venus placed in ${RASHI_DATA[ven.d1].en} (${ven.bhava}th House) maturing into ${RASHI_DATA[ven.d9].en} in D9</strong>, when you let someone into your inner circle, you love with fierce loyalty, protection, and depth.
+        <strong>1. Your Unspoken Relationship Pattern:</strong> With <strong>Venus in ${RASHI_DATA[ven.d1].en}</strong>, you are constitutionally incapable of shallow, time-pass romance. ${loveVariant.en}
       </p>
 
       <p>
-        <strong>1. Your Unspoken Relationship Pattern:</strong> ${loveVariant.en}
-      </p>
-
-      <p>
-        <strong>2. Karmic Attraction Triggers & Heartbreak Protection:</strong> ${
+        <strong>2. Karmic Attraction & Emotional Wake-Up Call:</strong> ${
           karmicLove
-            ? "Because intense karmic nodes/malefics touch your romantic axis, your destiny includes at least one deeply transformative heartbreak or complicated attachment early on—specifically designed to strip away naive illusions and awaken your self-worth."
-            : "Your Venus–5th house alignment gives you natural romantic magnetism, yet your heart only truly relaxes when intellectual respect and emotional safety coexist."
+            ? `Because intense karmic nodes touch your romantic axis, your timeline (especially around <strong>${timeline.pastYearRange}</strong> or your early twenties) includes a deeply transformative emotional attachment or heartbreak designed to strip away naive illusions and awaken your self-worth.`
+            : "Your Venus placement gives you natural romantic magnetism, yet your heart only truly relaxes when intellectual respect and consistent actions coexist."
         }
       </p>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 7 — FUTURE LIFE PARTNER, DIRECTION & GOLDEN MARRIAGE YEARS
+  // --------------------------------------------------------------------------
   function buildChapter7Partner(ctx) {
-    const { lang, gender, chart, planetAnalysis, specialLagnas } = ctx;
+    const { lang, gender, chart, planetAnalysis, specialLagnas, timeline } = ctx;
+    const isFull = chart.isFullChartMode;
     const asc = chart.Asc.d1;
     const rashi7   = RASHI_DATA[getRashiOfBhava(asc, 7)];
     const lord7    = planetAnalysis[rashi7.lord];
@@ -1673,7 +1725,6 @@
     const spouseKarakaKey = gender === "female" ? "Jupiter" : "Venus";
     const spouseKaraka = planetAnalysis[spouseKarakaKey];
     const lord7Nak = NAKSHATRA_DATA[lord7.nak];
-    const bindu7   = specialLagnas.houseBindus[7];
 
     const dir1En = rashi7.direction;
     const dir2En = d9Rashi7.direction !== dir1En ? d9Rashi7.direction : rashi7.altDirection;
@@ -1683,252 +1734,291 @@
     if (lang === "hi") {
       return `
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-rose-400/30 min-w-0 break-words">
-            <div class="text-xs text-rose-300 font-bold">सप्तम भाव (D1 कलत्र)</div>
-            <div class="text-base font-extrabold text-white mt-0.5">${rashi7.hi} (स्वामी: ${rashi7.lordHi})</div>
+          <div class="p-3.5 rounded-xl bg-rose-950/50 border border-rose-400/40">
+            <div class="text-xs text-rose-300 font-bold">💍 विवाह / पार्टनर आगमन के प्रबल वर्ष</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">${timeline.marriageWindow1} • ${timeline.marriageWindow2}</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-pink-400/30 min-w-0 break-words">
-            <div class="text-xs text-pink-300 font-bold">नवांश (D9) सप्तम एवं कारक</div>
-            <div class="text-base font-extrabold text-white mt-0.5">${d9Rashi7.hi} • ${spouseKaraka.meta.hi}</div>
+          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-pink-400/30">
+            <div class="text-xs text-pink-300 font-bold">जीवनसाथी कारक एवं राशि प्रभाव</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">${rashi7.hi} • ${spouseKaraka.meta.hi} (${RASHI_DATA[spouseKaraka.d1].hi})</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
-            <div class="text-xs text-amber-300 font-bold">उपपद लग्न (UL) व बिंदु</div>
-            <div class="text-base font-extrabold text-white mt-0.5">${ulRashi.hi} (${bindu7} बिंदु)</div>
+          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30">
+            <div class="text-xs text-amber-300 font-bold">विवाह की शुभ दिशा एवं उपपद</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">${dir1Hi} / ${dir2Hi}</div>
           </div>
         </div>
 
         <p>
-          <strong>1. भावी जीवनसाथी का रंग-रूप, कद-काठी और प्रथम आकर्षण:</strong> आपके सप्तम भाव में <strong>${rashi7.hi}</strong> और नवांश (D9) के सप्तम भाव में <strong>${d9Rashi7.hi}</strong> राशि का संगम यह बताता है कि आपके जीवनसाथी में <em>${rashi7.bodyBuildHi}</em> स्पष्ट झलकेगी। उनके चेहरे पर एक स्वाभाविक गरिमा और आंखों में ऐसा आकर्षण होगा कि भीड़ में भी उनकी उपस्थिति अलग महसूस होगी।
+          <strong>1. भावी जीवनसाथी का रंग-रूप, कद-काठी और आकर्षण:</strong> आपके सप्तम अक्ष (<strong>${rashi7.hi}</strong>) और जीवनसाथी कारक <strong>${spouseKaraka.meta.hi}</strong> के प्रभाव से आपके जीवनसाथी में <em>${rashi7.bodyBuildHi}</em> स्पष्ट झलकेगी। उनके चेहरे पर एक स्वाभाविक गरिमा और आंखों में विशेष आकर्षण होगा।
         </p>
 
         <p>
-          <strong>2. जीवनसाथी का स्वभाव, बुद्धिमत्ता और पारिवारिक स्तर:</strong> आपके सप्तमेश <strong>${rashi7.lordHi}</strong> <strong>${lord7Nak.name} नक्षत्र</strong> में कुंडली के <strong>${lord7.bhava}वें भाव</strong> में बैठे हैं और जैमिनी उपपद लग्न (UL) <strong>${ulRashi.hi}</strong> में है। आपका जीवनसाथी बाहर से <em>${rashi7.temperamentHi}</em> होगा, जबकि अंतरंग संबंधों में (D9 के अनुसार) उनका स्वभाव <em>${d9Rashi7.temperamentHi}</em> रहेगा। ${
-            bindu7 < 26
-              ? "सप्तम भाव में अष्टकवर्ग बिंदु थोड़े संवेदनशील होने के कारण विवाह के शुरुआती चरण में अहं (ego) या संवाद की गलतफहमी से बचना आवश्यक रहेगा—जितना अधिक आप दोनों तीसरे व्यक्ति के हस्तक्षेप से दूर रहेंगे, दांपत्य उतना ही सुखद रहेगा।"
-              : "सप्तम भाव के मजबूत बिंदु यह दर्शाते हैं कि कठिन समय में आपका जीवनसाथी आपकी सबसे मजबूत ढाल और सलाहकार साबित होगा।"
-          }
+          <strong>2. जीवनसाथी का स्वभाव एवं वैवाहिक केमिस्ट्री:</strong> आपका जीवनसाथी बाहर से <em>${rashi7.temperamentHi}</em> होगा, जबकि अंतरंग संबंधों में उनका स्वभाव <em>${d9Rashi7.temperamentHi}</em> रहेगा। वे एक सम्मानित परिवार से होंगे और कठिन निर्णयों में आपके सबसे मजबूत सलाहकार साबित होंगे। आप दोनों के बीच संबंधों को मधुर रखने का सबसे बड़ा नियम यह है कि अपने निजी मामलों में किसी तीसरे व्यक्ति का हस्तक्षेप न होने दें।
         </p>
 
         <p>
-          <strong>3. विवाह की दिशा, मिलन का माध्यम और विवाह-पश्चात भाग्योदय:</strong> आपके जीवनसाथी के जन्मस्थान या आपके मिलन की सबसे प्रबल दिशा <strong>${dir1Hi}</strong> अथवा <strong>${dir2Hi}</strong> है। सप्तमेश के ${lord7.bhava}वें भाव से जुड़ने के कारण ${
-            [3, 5, 9, 11].includes(lord7.bhava)
-              ? "आपका विवाह आपकी अपनी पसंद (love-cum-arranged) या आपके कार्यक्षेत्र/सोशल नेटवर्क के माध्यम से तय होने का प्रबल योग है।"
-              : "विवाह परिवार की सहमति या आकस्मिक संयोग से तय होगा, परंतु विवाह से पूर्व आप दोनों के बीच गहरा मानसिक समन्वय स्थापित हो जाएगा।"
-          } सबसे महत्वपूर्ण—नवांश में <strong>${spouseKaraka.meta.hi}</strong> की स्थिति यह प्रमाणित करती है कि <strong>विवाह के 18 से 24 महीनों के भीतर</strong> आपके आर्थिक स्तर और सामाजिक मान-सम्मान में एक बड़ा उछाल (Post-Marriage Bhagya Udaya) आएगा।
+          <strong>3. विवाह के प्रबल वर्ष (${timeline.marriageWindow1}) एवं विवाह-पश्चात भाग्योदय:</strong> आपकी कुंडली में विवाह या स्थायी जीवनसाथी के जीवन में प्रवेश के सबसे प्रबल योग <strong>${timeline.marriageWindow1}</strong> तथा <strong>${timeline.marriageWindow2}</strong> में बन रहे हैं। आपके जीवनसाथी के जन्मस्थान या मिलन की दिशा <strong>${dir1Hi}</strong> अथवा <strong>${dir2Hi}</strong> रहेगी। सबसे महत्वपूर्ण—<strong>विवाह के 18 से 24 महीनों के भीतर</strong> आपके आर्थिक स्तर और सामाजिक मान-सम्मान में एक बड़ा उछाल (Post-Marriage Bhagya Udaya) आएगा।
         </p>
       `;
     }
 
     return `
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-rose-400/30 min-w-0 break-words">
-          <div class="text-xs text-rose-300 font-bold">7th House (D1 Kalatra Bhava)</div>
-          <div class="text-base font-extrabold text-white mt-0.5">${rashi7.en} (Lord: ${rashi7.lord})</div>
+        <div class="p-3.5 rounded-xl bg-rose-950/50 border border-rose-400/40">
+          <div class="text-xs text-rose-300 font-bold">💍 High-Probability Marriage Windows</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">${timeline.marriageWindow1} • ${timeline.marriageWindow2}</div>
         </div>
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-pink-400/30 min-w-0 break-words">
-          <div class="text-xs text-pink-300 font-bold">Navamsa (D9) 7th & Karaka</div>
-          <div class="text-base font-extrabold text-white mt-0.5">${d9Rashi7.en} • ${spouseKarakaKey}</div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-pink-400/30">
+          <div class="text-xs text-pink-300 font-bold">Spouse Archetype & Karaka</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">${rashi7.en} • ${spouseKarakaKey} in ${RASHI_DATA[spouseKaraka.d1].en}</div>
         </div>
-        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30 min-w-0 break-words">
-          <div class="text-xs text-amber-300 font-bold">Upapada Lagna (UL) & SAV</div>
-          <div class="text-base font-extrabold text-white mt-0.5">${ulRashi.en} (${bindu7} Bindus)</div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30">
+          <div class="text-xs text-amber-300 font-bold">Marriage Direction</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">${dir1En} / ${dir2En}</div>
         </div>
       </div>
 
       <p>
-        <strong>1. Physical Appearance, Vibe & First Impression of Your Future Partner:</strong> Synthesizing your D1 7th House in <strong>${rashi7.en}</strong> with your Navamsa (D9) 7th House in <strong>${d9Rashi7.en}</strong> and spouse-significator <strong>${spouseKarakaKey} in ${RASHI_DATA[spouseKaraka.d1].en}</strong>, your partner will carry <em>${rashi7.bodyBuildEn}</em>. Even in simple attire, they project natural self-respect and an expressive gaze that stands out immediately.
+        <strong>1. Physical Appearance & First Impression of Your Future Partner:</strong> Synthesizing your 7th-axis in <strong>${rashi7.en}</strong> with spouse-significator <strong>${spouseKarakaKey} in ${RASHI_DATA[spouseKaraka.d1].en}</strong>, your partner will carry <em>${rashi7.bodyBuildEn}</em>. Even in simple attire, they project natural self-respect and an expressive gaze that stands out in a room.
       </p>
 
       <p>
-        <strong>2. Partner's Core Nature, Intelligence & Family Status:</strong> Because your 7th Lord <strong>${rashi7.lord}</strong> sits in your <strong>${lord7.bhava}th House under ${lord7Nak.name}</strong> and your Jaimini Upapada Lagna (UL) falls in <strong>${ulRashi.en}</strong>, your spouse's outer personality will be <em>${rashi7.temperamentEn}</em>, while behind closed doors (in D9) their deeper nature matures into <em>${d9Rashi7.temperamentEn}</em>. ${
-          bindu7 < 26
-            ? `With ${bindu7} bindus in the 7th house, both of you have strong individual opinions—meaning you must never allow third-party relatives to mediate your private disagreements.`
-            : `With ${bindu7} bindus supporting your 7th house, your partner acts as your sharpest strategic advisor and emotional anchor during life's storms.`
-        }
+        <strong>2. Partner's Core Nature & Relationship Chemistry:</strong> Under ${lord7Nak.name} influence, your spouse's outer personality will be <em>${rashi7.temperamentEn}</em>, while in private family life their deeper nature is <em>${d9Rashi7.temperamentEn}</em>. Because both of you carry strong self-respect, keeping third-party relatives out of your private disagreements guarantees a rock-solid bond.
       </p>
 
       <p>
-        <strong>3. Direction of Marriage, How You Meet & Post-Marriage Fortune:</strong> Astrologically, the strongest directional pull for your partner's roots or meeting place lies toward the <strong>${dir1En}</strong> or <strong>${dir2En}</strong> relative to your birthplace. With 7th Lord activating your ${lord7.bhava}th house, ${
-          [3, 5, 9, 11].includes(lord7.bhava)
-            ? "your chart strongly favors a love-cum-arranged marriage or meeting through your professional/educational network where mental respect turns into commitment."
-            : "whether introduced through family or destiny-led circumstances, a strong one-on-one intellectual bond will form before marriage."
-        } Crucially, your Navamsa configuration triggers <strong>Post-Marriage Bhagya-Udaya</strong>: within 18 to 24 months of marriage, your financial discipline and social standing elevate into a noticeably higher league.
+        <strong>3. Golden Marriage Windows (${timeline.marriageWindow1}) & Post-Marriage Fortune:</strong> Your strongest astrological windows for marriage or permanent partner commitment open in <strong>${timeline.marriageWindow1}</strong> and <strong>${timeline.marriageWindow2}</strong>, with a directional pull toward the <strong>${dir1En}</strong> or <strong>${dir2En}</strong>. Crucially, your chart triggers <strong>Post-Marriage Bhagya-Udaya</strong>: within 18 to 24 months of marriage, your financial stability and asset creation accelerate into a higher league.
       </p>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // NEW SECTION (CHAPTER 7B) — 👶 CHILDBIRTH, PROGENY & SANTAN YOGA
+  // --------------------------------------------------------------------------
+  function buildChapterChildbirth(ctx) {
+    const { lang, chart, planetAnalysis, timeline } = ctx;
+    const asc = chart.Asc.d1;
+    const rashi5 = RASHI_DATA[getRashiOfBhava(asc, 5)];
+    const lord5  = planetAnalysis[rashi5.lord];
+    const jup    = planetAnalysis.Jupiter;
+
+    // Check if malefics/retrograde planets aspect or occupy the 5th house
+    const has5thSensitivity = [planetAnalysis.Sun, planetAnalysis.Mars, planetAnalysis.Saturn, planetAnalysis.Rahu, planetAnalysis.Ketu]
+      .some(p => p.bhava === 5) || jup.retro || lord5.retro;
+
+    if (lang === "hi") {
+      return `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
+          <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+            <div class="text-xs text-emerald-300 font-bold">👶 संतान प्राप्ति / गर्भधारण के शुभ वर्ष</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">${timeline.babyWindow1} • ${timeline.babyWindow2}</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30">
+            <div class="text-xs text-amber-300 font-bold">संतान कारक गुरु एवं पंचम भाव</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">गुरु (${RASHI_DATA[jup.d1].hi}) • पंचम (${rashi5.hi})</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-purple-400/30">
+            <div class="text-xs text-purple-300 font-bold">संतान से भाग्योदय (Putra-Bhagya)</div>
+            <div class="text-sm font-extrabold text-white mt-0.5">प्रथम संतान के जन्म से धन-वृद्धि योग</div>
+          </div>
+        </div>
+
+        <p>
+          <strong>1. संतान सुख एवं संतान प्राप्ति की सटीक समय-सीमा (Progeny Timeline):</strong> आपकी कुंडली में संतान कारक <strong>देवगुरु बृहस्पति (${RASHI_DATA[jup.d1].hi})</strong> और पंचमेश <strong>${rashi5.lordHi}</strong> का समीकरण यह दर्शाता है कि आपके जीवन में संतान प्राप्ति या परिवार विस्तार के सबसे प्रबल और शुभ योग <strong>वर्ष ${timeline.babyWindow1}</strong> तथा <strong>वर्ष ${timeline.babyWindow2}</strong> के मध्य बन रहे हैं।
+        </p>
+
+        <p>
+          <strong>2. संतान का स्वभाव एवं माता-पिता का भाग्योदय:</strong> पंचम भाव पर ${rashi5.hi} और गुरु का प्रभाव होने से आपकी संतान जन्म से ही अत्यंत कुशाग्र बुद्धि, तेजस्वी आभा और स्वतंत्र सोच वाली होगी। विशेषकर <strong>प्रथम संतान का जन्म</strong> आपके परिवार के लिए 'लक्ष्मी-वृद्धि और स्थायित्व' लेकर आएगा—संतान के जन्म के 1 वर्ष के भीतर आपके करियर या घर-संपत्ति के स्तर में प्रत्यक्ष उन्नति होगी।
+        </p>
+
+        <p>
+          <strong>3. संतान-बाधा एवं स्वास्थ्य सावधानी:</strong> ${
+            has5thSensitivity
+              ? "चूंकि आपके पंचम अक्ष/गुरु पर तीव्र या वक्री ग्रहों का स्पर्श है, इसलिए संतान प्राप्ति के प्रारंभिक प्रयास में थोड़ा विलंब, हार्मोनल/पित्त असंतुलन या शुरुआती महीनों में विशेष चिकित्सीय सावधानी (Medical Care) की आवश्यकता पड़ सकती है। गर्भधारण के समय 'संतान गोपाल मंत्र' और पंचम-शुद्धि उपाय करना अत्यंत रक्षाकारी रहेगा।"
+              : "आपकी कुंडली में संतान योग स्वस्थ और शुभ है—केवल मानसिक तनाव और अनियमित दिनचर्या से बचाव रखें।"
+          }
+        </p>
+      `;
+    }
+
+    return `
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
+        <div class="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-400/40">
+          <div class="text-xs text-emerald-300 font-bold">👶 Favorable Childbirth / Conception Years</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">${timeline.babyWindow1} • ${timeline.babyWindow2}</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-400/30">
+          <div class="text-xs text-amber-300 font-bold">Putra-Karaka Jupiter & 5th Axis</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">Jupiter (${RASHI_DATA[jup.d1].en}) • ${rashi5.en}</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-purple-400/30">
+          <div class="text-xs text-purple-300 font-bold">Post-Childbirth Luck (Putra-Bhagya)</div>
+          <div class="text-sm font-extrabold text-white mt-0.5">Strong Wealth & Property Rise After 1st Child</div>
+        </div>
+      </div>
+
+      <p>
+        <strong>1. Childbirth & Conception Timeline (Santan Yoga):</strong> Synthesizing your Putra-Karaka <strong>Jupiter in ${RASHI_DATA[jup.d1].en}</strong> with your 5th-axis ruler <strong>${rashi5.lord}</strong>, the most auspicious cosmic windows for childbirth, conception, or welcoming a child into the family open between <strong>${timeline.babyWindow1}</strong> and <strong>${timeline.babyWindow2}</strong>.
+      </p>
+
+      <p>
+        <strong>2. Your Child's Nature & Putra-Bhagya Rise for Parents:</strong> Governed by ${rashi5.en} and Jupiter's grace, your child will be born with sharp observational intelligence, strong self-respect, and an old-soul intuition. Crucially, the birth of your <strong>first child</strong> activates a powerful <em>Putra-Bhagya Yoga</em>—within 12 months of the child's arrival, the parents' financial stability and home/property luck elevate noticeably.
+      </p>
+
+      <p>
+        <strong>3. Medical / Karmic Progeny Precaution:</strong> ${
+          has5thSensitivity
+            ? "Because fiery or retrograde planetary energy touches your 5th axis, there can be initial conception delay, Pitta/hormonal sensitivity, or the need for extra medical care during the first trimester. Performing Santana-Gopala and 5th-house pacification remedies ensures smooth protection."
+            : "Your 5th axis is supportive—maintaining calm sleep and managing stress during the conception window ensures smooth progeny bliss."
+        }
+      </p>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // CHAPTER 8 — SHARP 3-POINT REAL-LIFE VERDICTS FOR ALL 9 PLANETS (ZERO FLUFF!)
+  // --------------------------------------------------------------------------
   function buildChapter8PlanetsAndAspects(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas } = ctx;
+    const { lang, chart, planetAnalysis, specialLagnas, numData } = ctx;
+    const isFull = chart.isFullChartMode;
     const ascRashi = chart.Asc.d1;
     const pKeys = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
 
-    const modeBanner = chart.isFullChartMode
+    const modeBanner = isFull
       ? (lang === "hi"
-        ? `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6 break-words"><i class="fas fa-check-circle mr-2"></i><strong>99.9% पूर्ण कुंडली मोड सक्रिय:</strong> नीचे आपके लग्न (D1), नक्षत्र एवं नवांश (D9) के आधार पर सभी 9 ग्रहों के स्वामित्व, युति, पाराशरी दृष्टि और अष्टकवर्ग बल का संपूर्ण विश्लेषण दिया गया है।</div>`
-        : `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6 break-words"><i class="fas fa-check-circle mr-2"></i><strong>99.9% Full-Precision Chart Mode Active:</strong> Below is the complete Parashari, Navamsa (D9), and Ashtakavarga breakdown of all 9 Grahas—including house lordships, functional nature, conjunctions (Yutis), and mutual aspects (Drishtis).</div>`)
+        ? `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% पूर्ण जन्म-समय कुंडली मोड:</strong> नीचे किताबी भाषा के बजाय सीधे आपके जीवन की वास्तविक घटनाओं, स्वास्थ्य/आर्थिक ट्रिगर आयु और पाराशरी दृष्टियों का सटीक निचोड़ दिया गया है।</div>`
+        : `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% Exact Birth-Chart Verdicts:</strong> Zero textbook filler—below are the 3 concrete real-life verdicts, age triggers, and aspect warnings for each of your 9 planets.</div>`)
       : (lang === "hi"
-        ? `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6 break-words"><i class="fas fa-info-circle mr-2"></i><strong>जन्म-तिथि एवं नाम सिंथेसिस मोड:</strong> यह विश्लेषण आपकी जन्म-तिथि के सूर्य-चंद्र नक्षत्र व चैल्डियन तरंग पर आधारित है। (ऊपर जन्म-समय और स्थान जोड़कर आप अपना सटीक लग्न, चलित व D1/D9 चार्ट भी खोल सकते हैं!)</div>`
-        : `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6 break-words"><i class="fas fa-info-circle mr-2"></i><strong>Sidereal Solar-Lunar & Chaldean Synthesis Mode:</strong> Derived from your birth date and name vibration. (Tip: Add your Birth Time & Place above to unlock exact astronomical D1/D9 SVG charts, Bhava Chalit, and calendar Dasha dates!)</div>`);
+        ? `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6"><i class="fas fa-sun mr-2"></i><strong>जन्म-दिवस के वास्तविक ग्रह (Noon Natal Ephemeris):</strong> आपके जन्म के दिन दोपहर 12:00 IST पर आकाश में सभी 9 ग्रह जिन वास्तविक राशियों और नक्षत्रों में स्थित थे, उनका आपके जीवन पर सीधा व्यावहारिक प्रभाव नीचे दिया गया है।</div>`
+        : `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6"><i class="fas fa-sun mr-2"></i><strong>Your Birth-Date Natal Planetary Blueprint (Noon Ephemeris):</strong> Here is how the exact sidereal positions of all 9 planets on the day you were born shape your real-life destiny, health, and trigger ages.</div>`);
 
     const cardsHtml = pKeys.map(k => {
       const info = planetAnalysis[k];
       const d1Rashi = RASHI_DATA[info.d1];
       const d9Rashi = RASHI_DATA[info.d9];
       const nak = NAKSHATRA_DATA[info.nak];
-      const bhavaDesc = BHAVA_MEANINGS[info.bhava];
-      const funcRole = getFunctionalRoleLabel(ascRashi, k, lang);
-      const ownedStrEn = info.ownedHouses.length ? `Rules House ${info.ownedHouses.join(" & ")}` : "Shadow Karmic Node (Chhaya Graha)";
-      const ownedStrHi = info.ownedHouses.length ? `भाव ${info.ownedHouses.join(" एवं ")} का स्वामी` : "छाया ग्रह (कार्मिक अक्ष)";
-      const bavScoreHere = specialLagnas.houseBav[k] ? specialLagnas.houseBav[k][info.bhava] : null;
+      const funcRole = isFull ? getFunctionalRoleLabel(ascRashi, k, lang) : (lang === "hi" ? info.meta.karakaHi : info.meta.karakaEn);
+      const ownedStrEn = isFull ? (info.ownedHouses.length ? `Lord of House ${info.ownedHouses.join(" & ")}` : "Karmic Shadow Node") : `Natal Sign: ${d1Rashi.en}`;
+      const ownedStrHi = isFull ? (info.ownedHouses.length ? `भाव ${info.ownedHouses.join(" एवं ")} का स्वामी` : "छाया ग्रह (कार्मिक अक्ष)") : `जन्म-राशि स्थान: ${d1Rashi.hi}`;
+      const bavScoreHere = (isFull && specialLagnas.houseBav[k]) ? specialLagnas.houseBav[k][info.bhava] : null;
       const degBadge = info.formattedDeg ? `<span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">${info.formattedDeg}</span>` : "";
 
-      let yutiEn = "", yutiHi = "";
-      if (info.conjunctWith.length > 0) {
-        const namesEn = info.conjunctWith.map(c => PLANET_META[c].en).join(", ");
-        const namesHi = info.conjunctWith.map(c => PLANET_META[c].hi).join(", ");
-        yutiEn = `<strong>Conjunction (Yuti) in ${info.bhava}th House:</strong> Shares ${d1Rashi.en} with <strong>${namesEn}</strong>. Whenever either planet's Dasha/Antardasha runs, both planets fire simultaneously—blending their agendas in ${houseThemeShort(info.bhava, "en")}.`;
-        yutiHi = `<strong>युति (Conjunction) प्रभाव:</strong> यह ग्रह ${info.bhava}वें भाव (${d1Rashi.hi}) में <strong>${namesHi}</strong> के साथ युति बना रहा है—अतः जब भी इनमें से किसी की दशा चलेगी, दोनों ग्रह मिलकर ${houseThemeShort(info.bhava, "hi")} के परिणामों को एक साथ प्रभावित करेंगे।`;
-      } else {
-        yutiEn = `<strong>Unconjunct (Independent Placement):</strong> Sits alone in ${d1Rashi.en} in the ${info.bhava}th House—meaning its core agenda is unadulterated by planetary crowding.`;
-        yutiHi = `<strong>स्वतंत्र स्थिति (बिना युति):</strong> यह ग्रह ${info.bhava}वें भाव (${d1Rashi.hi}) में अकेले बैठकर बिना किसी अन्य ग्रह के हस्तक्षेप के अपना स्वतंत्र और स्पष्ट प्रभाव दे रहा है।`;
-      }
+      const matAges = (PLANET_MATURITY_AGES[k] || [24, 30, 36]).join(", ");
 
+      // Conjunction summary
+      const conjNamesEn = info.conjunctWith.map(c => PLANET_META[c].en).join(", ");
+      const conjNamesHi = info.conjunctWith.map(c => PLANET_META[c].hi).join(", ");
+
+      // Outgoing aspects summary
       const outgoingEn = info.aspectedTargets.map(t => {
-        const tRashi = RASHI_DATA[t.targetRashi];
-        const hit = t.planetsThere.length > 0
-          ? ` (directly aspecting <strong>${t.planetsThere.map(p => PLANET_META[p].en).join(", ")}</strong> sitting there)`
-          : "";
-        return `${t.nthAspect}th Drishti onto the <strong>${t.targetBhava}th House (${tRashi.en})</strong>${hit}`;
-      }).join("; ");
+        const hit = t.planetsThere.length ? ` (hitting ${t.planetsThere.join(", ")})` : "";
+        return isFull ? `${t.nthAspect}th aspect on House ${t.targetBhava}${hit}` : `${t.nthAspect}th aspect on ${RASHI_DATA[t.targetRashi].en}${hit}`;
+      }).join(" • ");
 
       const outgoingHi = info.aspectedTargets.map(t => {
-        const tRashi = RASHI_DATA[t.targetRashi];
-        const hit = t.planetsThere.length > 0
-          ? ` (जहाँ बैठे <strong>${t.planetsThere.map(p => PLANET_META[p].hi).join(", ")}</strong> पर सीधी दृष्टि पड़ रही है)`
-          : "";
-        return `${t.nthAspect}वीं दृष्टि <strong>${t.targetBhava}वें भाव (${tRashi.hi})</strong> पर${hit}`;
-      }).join("; ");
+        const hit = t.planetsThere.length ? ` (${t.planetsThere.map(p => PLANET_META[p].hi).join(", ")} पर दृष्टि)` : "";
+        return isFull ? `${t.nthAspect}वीं दृष्टि ${t.targetBhava}वें भाव पर${hit}` : `${t.nthAspect}वीं दृष्टि ${RASHI_DATA[t.targetRashi].hi} पर${hit}`;
+      }).join(" • ");
 
-      const incomingEn = info.aspectedBy.length > 0
-        ? info.aspectedBy.map(inc => `${inc.nthAspect}th aspect from <strong>${PLANET_META[inc.fromPlanet].en}</strong> (from House ${planetAnalysis[inc.fromPlanet].bhava})`).join(", ")
-        : "Receives no direct Parashari aspect from other planets—operating purely on its own Rashi, Nakshatra, and D9 strength.";
-
-      const incomingHi = info.aspectedBy.length > 0
-        ? info.aspectedBy.map(inc => `<strong>${PLANET_META[inc.fromPlanet].hi}</strong> (${planetAnalysis[inc.fromPlanet].bhava}वें भाव से) की ${inc.nthAspect}वीं दृष्टि`).join(", ")
-        : "इस ग्रह पर किसी अन्य ग्रह की सीधी पाराशरी दृष्टि नहीं है—यह अपने स्वयं के नक्षत्र और नवांश बल से फल दे रहा है।";
+      const incomingEn = info.aspectedBy.length
+        ? `Aspected by ${info.aspectedBy.map(inc => PLANET_META[inc.fromPlanet].en).join(", ")}`
+        : "Unaspected (operates with independent force)";
+      const incomingHi = info.aspectedBy.length
+        ? `${info.aspectedBy.map(inc => PLANET_META[inc.fromPlanet].hi).join(", ")} से दृष्ट`
+        : "किसी अन्य ग्रह की दृष्टि से मुक्त (स्वतंत्र फल)";
 
       if (lang === "hi") {
         return `
           <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/10">
               <div class="min-w-0">
-                <h4 class="text-lg md:text-xl font-bold text-white flex flex-wrap items-center gap-2">
+                <h4 class="text-base md:text-lg font-bold text-white flex flex-wrap items-center gap-2">
                   <span>${info.meta.hi}</span>
                   ${degBadge}
-                  ${info.retro ? '<span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">वक्री / उच्च चेष्टा बल</span>' : ''}
+                  ${info.retro ? '<span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">वक्री (Retro)</span>' : ''}
                 </h4>
-                <p class="text-xs text-amber-300/90 font-semibold mt-0.5 break-words">${ownedStrHi} • ${funcRole}</p>
+                <p class="text-xs text-amber-300/90 font-semibold mt-0.5">${ownedStrHi} • ${funcRole}</p>
               </div>
-              <span class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-bold border ${info.dignity.badgeClass} break-words max-w-full">${info.dignity.statusHi}</span>
+              <span class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-bold border ${info.dignity.badgeClass}">${info.dignity.statusHi}</span>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-                <span class="text-gray-400 block">लग्न (D1) स्थिति:</span>
-                <strong class="text-amber-300">${info.bhava}वां भाव — ${d1Rashi.hi}</strong>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+                <span class="text-gray-400 block">${isFull ? "लग्न (D1) भाव:" : "जन्म राशि:"}</span>
+                <strong class="text-amber-300">${isFull ? `${info.bhava}वां भाव — ` : ""}${d1Rashi.hi}</strong>
               </div>
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
+              <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
                 <span class="text-gray-400 block">नक्षत्र एवं स्वामी:</span>
                 <strong class="text-purple-300">${nak.name} (${nak.ruler})</strong>
               </div>
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-                <span class="text-gray-400 block">नवांश (D9) परिपक्वता:</span>
-                <strong class="text-emerald-300">${info.d9Bhava}वां भाव — ${d9Rashi.hi}</strong>
+              <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+                <span class="text-gray-400 block">नवांश (D9) राशि:</span>
+                <strong class="text-emerald-300">${d9Rashi.hi}</strong>
               </div>
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-                <span class="text-gray-400 block">भिन्नाष्टकवर्ग (BAV):</span>
-                <strong class="text-cyan-300">${bavScoreHere !== null ? `${bavScoreHere} / 8 बिंदु` : 'छाया नोड (Node)'}</strong>
+              <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+                <span class="text-gray-400 block">${bavScoreHere !== null ? "अष्टकवर्ग (BAV):" : "सक्रियता आयु:"}</span>
+                <strong class="text-cyan-300">${bavScoreHere !== null ? `${bavScoreHere}/8 बिंदु` : `आयु ${matAges}`}</strong>
               </div>
             </div>
 
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>1. भाव स्वामित्व एवं D1 फलित:</strong> आपकी कुंडली में ${info.meta.hi} (${ownedStrHi}) <strong>${bhavaDesc.hi}</strong> में ${d1Rashi.hi} राशि और <strong>${nak.name}</strong> नक्षत्र में स्थित हैं। इस स्थिति के कारण आपके भीतर <em>${nak.traitHi}</em> का गुण सक्रिय रहता है और यह ग्रह आपके ${houseThemeShort(info.bhava, "hi")} को सीधे नियंत्रित करता है।
-            </p>
-
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>2. नवांश (D9) का गुप्त सच:</strong> लग्न कुंडली में ${d1Rashi.hi} में दिखने वाला यह ग्रह नवांश (D9) में <strong>${d9Rashi.hi} राशि (D9 के ${info.d9Bhava}वें भाव)</strong> में जाता है। इसका अर्थ है कि समय के साथ यह ग्रह ${houseThemeShort(info.d9Bhava, "hi")} के माध्यम से अपना वास्तविक फल प्रकट करेगा।
-            </p>
-
-            <p class="text-sm text-gray-200 mb-0"><strong>3. ${yutiHi}</strong></p>
-
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>4. इस ग्रह की पाराशरी दृष्टि (Drishti Cast):</strong> ${info.meta.hi} अपने स्थान से <strong>${outgoingHi}</strong> डाल रहे हैं—जिससे उन भावों के विषयों में निरंतर हलचल और कर्म-सक्रियता बनी रहती है।
-            </p>
-
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>5. इस ग्रह पर पड़ने वाली दृष्टियां (Drishti Received):</strong> ${incomingHi}
-            </p>
+            <div class="space-y-2 text-xs md:text-sm text-gray-200 pt-1">
+              <div>🎯 <strong class="text-amber-300">प्रत्यक्ष जीवन फल (Real-Life Fruit):</strong> ${d1Rashi.hi} (${nak.name}) में बैठा ${info.meta.hi} आपको <em>${nak.traitHi}</em> देता है और सीधे तौर पर ${houseThemeShort(info.bhava, "hi")} को नियंत्रित करता है। ${info.conjunctWith.length ? `यह ग्रह <strong>${conjNamesHi}</strong> के साथ युति बनाकर आपके निर्णयों में तीव्रता लाता है।` : `नवांश में ${d9Rashi.hi} में जाने से 28 वर्ष की आयु के बाद इसका प्रभाव दोगुना परिपक्व हो जाता है।`}</div>
+              <div>⚡ <strong class="text-emerald-300">कब और क्या घटना घटेगी (Age & Health Trigger):</strong> यह ग्रह आपकी आयु के <strong>${matAges}वें वर्ष</strong> में बड़ा आर्थिक/करियर मोड़ देता है। जब यह ग्रह पीड़ित हो, तो <em>${info.meta.healthHi}</em> के प्रति विशेष सावधानी रखें।</div>
+              <div>🛡️ <strong class="text-cyan-300">दृष्टि प्रभाव एवं सावधानी:</strong> ${outgoingHi} (${incomingHi})।</div>
+            </div>
           </div>
         `;
       }
 
       return `
         <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/10">
             <div class="min-w-0">
-              <h4 class="text-lg md:text-xl font-bold text-white flex flex-wrap items-center gap-2">
+              <h4 class="text-base md:text-lg font-bold text-white flex flex-wrap items-center gap-2">
                 <span>${info.meta.en}</span>
                 ${degBadge}
-                ${info.retro ? '<span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">Retrograde / High Cheshta Bala</span>' : ''}
+                ${info.retro ? '<span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">Retrograde</span>' : ''}
               </h4>
-              <p class="text-xs text-amber-300/90 font-semibold mt-0.5 break-words">${ownedStrEn} • ${funcRole}</p>
+              <p class="text-xs text-amber-300/90 font-semibold mt-0.5">${ownedStrEn} • ${funcRole}</p>
             </div>
-            <span class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-bold border ${info.dignity.badgeClass} break-words max-w-full">${info.dignity.statusEn}</span>
+            <span class="self-start sm:self-auto px-3 py-1 rounded-full text-xs font-bold border ${info.dignity.badgeClass}">${info.dignity.statusEn}</span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-            <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-              <span class="text-gray-400 block">D1 Placement:</span>
-              <strong class="text-amber-300">${info.bhava}th House — ${d1Rashi.en}</strong>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+              <span class="text-gray-400 block">${isFull ? "D1 House:" : "Natal Sign:"}</span>
+              <strong class="text-amber-300">${isFull ? `H-${info.bhava} — ` : ""}${d1Rashi.en}</strong>
             </div>
-            <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-              <span class="text-gray-400 block">Nakshatra & Lord:</span>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+              <span class="text-gray-400 block">Nakshatra:</span>
               <strong class="text-purple-300">${nak.name} (${nak.ruler})</strong>
             </div>
-            <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-              <span class="text-gray-400 block">D9 Navamsa Maturity:</span>
-              <strong class="text-emerald-300">${info.d9Bhava}th House — ${d9Rashi.en}</strong>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+              <span class="text-gray-400 block">D9 Sign:</span>
+              <strong class="text-emerald-300">${d9Rashi.en}</strong>
             </div>
-            <div class="p-2.5 rounded-lg bg-slate-900 border border-white/10 min-w-0 break-words">
-              <span class="text-gray-400 block">BAV Bindu Strength:</span>
-              <strong class="text-cyan-300">${bavScoreHere !== null ? `${bavScoreHere} / 8 Bindus` : 'Karmic Axis Node'}</strong>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
+              <span class="text-gray-400 block">${bavScoreHere !== null ? "BAV Strength:" : "Peak Ages:"}</span>
+              <strong class="text-cyan-300">${bavScoreHere !== null ? `${bavScoreHere}/8 Bindus` : `Ages ${matAges}`}</strong>
             </div>
           </div>
 
-          <p class="text-sm text-gray-200 mb-0">
-            <strong>1. House Lordship & D1 Execution:</strong> In your chart, ${info.meta.en} (${ownedStrEn}) occupies the <strong>${bhavaDesc.en}</strong> in ${d1Rashi.en} under <strong>${nak.name}</strong>. This wires your subconscious with <em>${nak.traitEn}</em> and directly links ${info.ownedHouses.length ? `the affairs of House ${info.ownedHouses.join(" & ")} into` : `karmic intensity into`} <em>${houseThemeShort(info.bhava, "en")}</em>.
-          </p>
-
-          <p class="text-sm text-gray-200 mb-0">
-            <strong>2. Navamsa (D9) Fruit & Second-Half Maturity:</strong> While seated in ${d1Rashi.en} in your birth chart, this Graha shifts into <strong>${d9Rashi.en} (House ${info.d9Bhava} of D9)</strong>—meaning after age 28–32 and post-marriage, its true fruit manifests through <em>${houseThemeShort(info.d9Bhava, "en")}</em>.
-          </p>
-
-          <p class="text-sm text-gray-200 mb-0"><strong>3. ${yutiEn}</strong></p>
-
-          <p class="text-sm text-gray-200 mb-0">
-            <strong>4. Outgoing Parashari Aspects (Drishti Cast):</strong> From the ${info.bhava}th House, ${info.meta.en} projects its ${outgoingEn}—permanently energizing those life sectors.
-          </p>
-
-          <p class="text-sm text-gray-200 mb-0">
-            <strong>5. Incoming Planetary Aspects (Drishti Received):</strong> ${incomingEn}
-          </p>
+          <div class="space-y-2 text-xs md:text-sm text-gray-200 pt-1">
+            <div>🎯 <strong class="text-amber-300">Real-Life Verdict:</strong> Seated in ${d1Rashi.en} under ${nak.name}, ${info.meta.en} wires you with <em>${nak.traitEn}</em> and directly shapes <em>${houseThemeShort(info.bhava, "en")}</em>. ${info.conjunctWith.length ? `Conjunct <strong>${conjNamesEn}</strong>, it fuses their agendas whenever triggered.` : `Maturing into ${d9Rashi.en} in D9, its strongest fruit unlocks after age 28.`}</div>
+            <div>⚡ <strong class="text-emerald-300">Event Ages & Medical Astrology Trigger:</strong> Fires major life shifts at <strong>ages ${matAges}</strong>. Physically, monitor <em>${info.meta.healthEn}</em> during stressful transits.</div>
+            <div>🛡️ <strong class="text-cyan-300">Aspect Geometry:</strong> Casts ${outgoingEn} (${incomingEn}).</div>
+          </div>
         </div>
       `;
     }).join("");
 
-    return modeBanner + `<div class="space-y-4">${cardsHtml}</div>`;
+    return modeBanner + `<div class="space-y-3.5">${cardsHtml}</div>`;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 9 — SPECIAL LAGNAS + VERIFIED 337-BINDU PARASHARI ASHTAKAVARGA
+  //             (Shown ONLY when Birth Time or Manual Matrix is active!)
+  // --------------------------------------------------------------------------
   function buildChapter9SpecialLagnas(ctx) {
     const { lang, specialLagnas } = ctx;
     const chandra   = RASHI_DATA[specialLagnas.chandraLagna];
@@ -1986,72 +2076,49 @@
     if (lang === "hi") {
       return `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-blue-400/30 min-w-0 break-words">
-            <h4 class="text-lg font-bold text-blue-300 mb-2"><i class="fas fa-moon mr-2"></i>1. चंद्र लग्न (${chandra.hi})</h4>
-            <p class="text-sm text-gray-200 mb-0">
-              जन्म लग्न शरीर है, तो <strong>चंद्र लग्न (${chandra.hi})</strong> आपके मन की धुरी है। गोचर और साढ़ेसाती/ढैय्या का सारा प्रभाव चंद्र लग्न से ही घटित होता है—इसीलिए भावनात्मक शांति के लिए आपको <em>${chandra.temperamentHi}</em> वातावरण की आवश्यकता होती है।
-            </p>
+          <div class="p-4 rounded-2xl bg-slate-950/85 border border-blue-400/30">
+            <h4 class="text-base font-bold text-blue-300 mb-1.5"><i class="fas fa-moon mr-2"></i>1. चंद्र लग्न (${chandra.hi})</h4>
+            <p class="text-xs md:text-sm text-gray-200 mb-0">गोचर और साढ़ेसाती/ढैय्या का सारा प्रभाव चंद्र लग्न (${chandra.hi}) से ही घटित होता है—मानसिक शांति के लिए आपको <em>${chandra.temperamentHi}</em> वातावरण चाहिए।</p>
           </div>
-
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-orange-400/30 min-w-0 break-words">
-            <h4 class="text-lg font-bold text-orange-300 mb-2"><i class="fas fa-sun mr-2"></i>2. सूर्य लग्न (${surya.hi})</h4>
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>सूर्य लग्न (${surya.hi})</strong> आपकी आत्मा के स्वाभिमान, पिता की विरासत और प्रशासनिक अधिकार को दर्शाता है। सूर्य लग्न से दशम और एकादश भाव यह तय करते हैं कि समाज में आपका नाम किस अधिकार से लिया जाएगा।
-            </p>
+          <div class="p-4 rounded-2xl bg-slate-950/85 border border-orange-400/30">
+            <h4 class="text-base font-bold text-orange-300 mb-1.5"><i class="fas fa-sun mr-2"></i>2. सूर्य लग्न (${surya.hi})</h4>
+            <p class="text-xs md:text-sm text-gray-200 mb-0">सूर्य लग्न (${surya.hi}) आपकी आत्मा के स्वाभिमान, पिता की विरासत और प्रशासनिक अधिकार को नियंत्रित करता है।</p>
           </div>
-
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-purple-400/30 min-w-0 break-words">
-            <h4 class="text-lg font-bold text-purple-300 mb-2"><i class="fas fa-ring mr-2"></i>3. नवांश लग्न (${navamsa.hi}) एवं कारकांश (${karakamsa.hi})</h4>
-            <p class="text-sm text-gray-200 mb-0">
-              <strong>नवांश लग्न (${navamsa.hi})</strong> और आत्मकारक (${akMeta.hi}) से निर्मित <strong>कारकांश लग्न (${karakamsa.hi})</strong> आपकी आत्मा की असली मंजिल हैं। 30 वर्ष की आयु और विवाह के पश्चात आपका व्यक्तित्व स्पष्ट रूप से <em>${navamsa.temperamentHi}</em> गुणों में ढल जाता है।
-            </p>
+          <div class="p-4 rounded-2xl bg-slate-950/85 border border-purple-400/30">
+            <h4 class="text-base font-bold text-purple-300 mb-1.5"><i class="fas fa-ring mr-2"></i>3. नवांश (${navamsa.hi}) एवं कारकांश (${karakamsa.hi})</h4>
+            <p class="text-xs md:text-sm text-gray-200 mb-0">आत्मकारक (${akMeta.hi}) से निर्मित कारकांश (${karakamsa.hi}) और नवांश लग्न 28–30 वर्ष की आयु के बाद आपके वास्तविक भाग्य को खोलते हैं।</p>
           </div>
-
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-amber-400/30 min-w-0 break-words">
-            <h4 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-eye mr-2"></i>4. जैमिनी आरूढ़ लग्न (AL — ${arudha.hi})</h4>
-            <p class="text-sm text-gray-200 mb-0">
-              आपका <strong>आरूढ़ पद (AL) ${arudha.hi}</strong> में (लग्न से <strong>${specialLagnas.arudhaHouseFromLagna}वें भाव</strong> में${specialLagnas.arudhaExceptionApplied ? " — जैमिनी स्व-सप्तम अपवाद नियम से 10वें स्थान पर संशोधित" : ""}) स्थित है। लग्न आपका सच है, पर आरूढ़ लग्न वह छवि (Maya) है जो दुनिया आप पर थोपती है।
-            </p>
+          <div class="p-4 rounded-2xl bg-slate-950/85 border border-amber-400/30">
+            <h4 class="text-base font-bold text-amber-300 mb-1.5"><i class="fas fa-eye mr-2"></i>4. जैमिनी आरूढ़ लग्न (AL — ${arudha.hi})</h4>
+            <p class="text-xs md:text-sm text-gray-200 mb-0">आरूढ़ पद (AL) ${arudha.hi} (लग्न से ${specialLagnas.arudhaHouseFromLagna}वें भाव) में है—जो समाज के सामने आपकी बाहरी छवि (Public Perception) को नियंत्रित करता है।</p>
           </div>
         </div>
 
         <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-white/15 mt-5 max-w-full overflow-hidden">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-            <h4 class="text-base md:text-lg font-bold text-amber-300"><i class="fas fa-th mr-2"></i>5. बृहत् पाराशर होरा शास्त्र — प्रमाणित 337-बिंदु सर्वाष्टकवर्ग (SAV)</h4>
-            <span class="text-xs text-emerald-300 font-bold">कुल योग: ${specialLagnas.grandTotalSav} / 337 बिंदु (100% सत्यापित)</span>
+            <h4 class="text-base md:text-lg font-bold text-amber-300"><i class="fas fa-th mr-2"></i>5. प्रमाणित 337-बिंदु सर्वाष्टकवर्ग (SAV) एवं BAV तालिका</h4>
+            <span class="text-xs text-emerald-300 font-bold">कुल योग: ${specialLagnas.grandTotalSav} / 337 बिंदु</span>
           </div>
-          <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-4">
-            ${savGrid}
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-            <div class="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-400/30 min-w-0 break-words">
-              <div class="text-xs text-emerald-300 font-bold mb-1"><i class="fas fa-arrow-up mr-1"></i>सर्वोच्च बली भाव (Power Houses)</div>
-              <p class="text-sm text-gray-200 mb-0">${strongListHi} — इन भावों में उच्च बिंदु होने से इन क्षेत्रों में आपका थोड़ा सा प्रयास भी बड़ा परिणाम देता है।</p>
+          <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-4">${savGrid}</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+            <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-400/30 text-xs">
+              <strong class="text-emerald-300 block mb-0.5">सर्वोच्च बली भाव:</strong> ${strongListHi} (थोड़े प्रयास से बड़ा परिणाम)
             </div>
-            <div class="p-3.5 rounded-xl bg-rose-950/40 border border-rose-400/30 min-w-0 break-words">
-              <div class="text-xs text-rose-300 font-bold mb-1"><i class="fas fa-arrow-down mr-1"></i>कम बिंदु वाले संवेदनशील भाव (Energy Drain)</div>
-              <p class="text-sm text-gray-200 mb-0">${weakListHi} — इन भावों में बिंदु कम होने से जब भी पाप ग्रह यहाँ से गोचर करते हैं, तब मानसिक थकान या कार्य में विलंब होता है।</p>
+            <div class="p-3 rounded-xl bg-rose-950/40 border border-rose-400/30 text-xs">
+              <strong class="text-rose-300 block mb-0.5">संवेदनशील भाव:</strong> ${weakListHi} (गोचर में विशेष उपाय आवश्यक)
             </div>
           </div>
-
-          <div class="mt-5 overflow-x-auto rounded-xl border border-white/15">
-            <table class="w-full text-xs md:text-sm">
+          <div class="mt-4 overflow-x-auto rounded-xl border border-white/15">
+            <table class="w-full text-xs">
               <thead>
                 <tr class="bg-slate-950 text-amber-300 border-b border-white/10">
-                  <th class="py-2 px-2 text-left">भाव</th>
-                  ${headerCells}
-                  <th class="py-2 px-2 text-center text-amber-200">SAV योग</th>
+                  <th class="py-2 px-2 text-left">भाव</th>${headerCells}<th class="py-2 px-2 text-center text-amber-200">SAV</th>
                 </tr>
               </thead>
-              <tbody class="bg-slate-900/60 divide-y divide-white/5 text-gray-200">
-                ${bavRowsHtml}
-              </tbody>
+              <tbody class="bg-slate-900/60 divide-y divide-white/5 text-gray-200">${bavRowsHtml}</tbody>
               <tfoot>
                 <tr class="bg-slate-950 border-t border-amber-400/40 text-xs">
-                  <td class="py-2 px-2 font-bold text-amber-300">कुल BAV</td>
-                  ${totalFooterCells}
-                  <td class="py-2 px-2 text-center font-extrabold text-emerald-300">${specialLagnas.grandTotalSav}</td>
+                  <td class="py-2 px-2 font-bold text-amber-300">कुल BAV</td>${totalFooterCells}<td class="py-2 px-2 text-center font-extrabold text-emerald-300">${specialLagnas.grandTotalSav}</td>
                 </tr>
               </tfoot>
             </table>
@@ -2062,72 +2129,49 @@
 
     return `
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-blue-400/30 min-w-0 break-words">
-          <h4 class="text-lg font-bold text-blue-300 mb-2"><i class="fas fa-moon mr-2"></i>1. Chandra Lagna (${chandra.en})</h4>
-          <p class="text-sm text-gray-200 mb-0">
-            If the Ascendant is your physical chassis, <strong>Chandra Lagna (${chandra.en})</strong> is the operating system of your mind. All planetary transits (Gochara) and Sade-Sati phases register relative to ${chandra.en}—requiring <em>${chandra.temperamentEn}</em> for inner peace.
-          </p>
+        <div class="p-4 rounded-2xl bg-slate-950/85 border border-blue-400/30">
+          <h4 class="text-base font-bold text-blue-300 mb-1.5"><i class="fas fa-moon mr-2"></i>1. Chandra Lagna (${chandra.en})</h4>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">All planetary transits (Gochara) and Sade-Sati phases register relative to ${chandra.en}—requiring <em>${chandra.temperamentEn}</em> for mental peace.</p>
         </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-orange-400/30 min-w-0 break-words">
-          <h4 class="text-lg font-bold text-orange-300 mb-2"><i class="fas fa-sun mr-2"></i>2. Surya Lagna (${surya.en})</h4>
-          <p class="text-sm text-gray-200 mb-0">
-            <strong>Surya Lagna (${surya.en})</strong> governs your vital authority, paternal lineage, and executive command. Counting houses from ${surya.en} reveals the exact domain where your soul refuses to compromise its dignity.
-          </p>
+        <div class="p-4 rounded-2xl bg-slate-950/85 border border-orange-400/30">
+          <h4 class="text-base font-bold text-orange-300 mb-1.5"><i class="fas fa-sun mr-2"></i>2. Surya Lagna (${surya.en})</h4>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">Surya Lagna (${surya.en}) governs your vital authority, paternal karma, and executive command.</p>
         </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-purple-400/30 min-w-0 break-words">
-          <h4 class="text-lg font-bold text-purple-300 mb-2"><i class="fas fa-ring mr-2"></i>3. Navamsa (${navamsa.en}) & Karakamsa (${karakamsa.en})</h4>
-          <p class="text-sm text-gray-200 mb-0">
-            While D1 shows the seed, <strong>Navamsa Lagna (${navamsa.en})</strong> and your <strong>Karakamsa Lagna (${karakamsa.en} — via Atmakaraka ${akMeta.en})</strong> reveal the ripened fruit. After age 30 and post-marriage, your life visibly takes on ${navamsa.en} qualities: <em>${navamsa.temperamentEn}</em>.
-          </p>
+        <div class="p-4 rounded-2xl bg-slate-950/85 border border-purple-400/30">
+          <h4 class="text-base font-bold text-purple-300 mb-1.5"><i class="fas fa-ring mr-2"></i>3. Navamsa (${navamsa.en}) & Karakamsa (${karakamsa.en})</h4>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">Via Atmakaraka ${akMeta.en}, your Karakamsa (${karakamsa.en}) and D9 Lagna unlock your ripened destiny after age 28–30.</p>
         </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-amber-400/30 min-w-0 break-words">
-          <h4 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-eye mr-2"></i>4. Jaimini Arudha Lagna (AL in ${arudha.en})</h4>
-          <p class="text-sm text-gray-200 mb-0">
-            Your Arudha Pada falls in <strong>${arudha.en}</strong> (${specialLagnas.arudhaHouseFromLagna}th House from Lagna${specialLagnas.arudhaExceptionApplied ? " — shifted 10th via Jaimini's Swastha/Darastha exception rule" : ""}). Lagna is your internal truth; Arudha Lagna is the <em>Maya</em> (public perception) projected onto you by society.
-          </p>
+        <div class="p-4 rounded-2xl bg-slate-950/85 border border-amber-400/30">
+          <h4 class="text-base font-bold text-amber-300 mb-1.5"><i class="fas fa-eye mr-2"></i>4. Jaimini Arudha Lagna (AL in ${arudha.en})</h4>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">Placed in ${arudha.en} (${specialLagnas.arudhaHouseFromLagna}th from Lagna), Arudha Pada governs how society perceives your status.</p>
         </div>
       </div>
 
       <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-white/15 mt-5 max-w-full overflow-hidden">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-          <h4 class="text-base md:text-lg font-bold text-amber-300"><i class="fas fa-th mr-2"></i>5. Verified BPHS Parashari Sarvashtakavarga (SAV) & BAV Matrix</h4>
+          <h4 class="text-base md:text-lg font-bold text-amber-300"><i class="fas fa-th mr-2"></i>5. Verified 337-Bindu Sarvashtakavarga (SAV) & BAV Matrix</h4>
           <span class="text-xs text-emerald-300 font-bold">Verified Sum: ${specialLagnas.grandTotalSav} / 337 Bindus</span>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-4">
-          ${savGrid}
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-          <div class="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-400/30 min-w-0 break-words">
-            <div class="text-xs text-emerald-300 font-bold mb-1"><i class="fas fa-arrow-up mr-1"></i>Peak Reservoir Houses</div>
-            <p class="text-sm text-gray-200 mb-0">${strongListEn} — these houses carry your highest cosmic voltage, delivering rapid results whenever their lords or transits activate.</p>
+        <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2 mb-4">${savGrid}</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+          <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-400/30 text-xs">
+            <strong class="text-emerald-300 block mb-0.5">Peak Power Houses:</strong> ${strongListEn} (Rapid manifestation)
           </div>
-          <div class="p-3.5 rounded-xl bg-rose-950/40 border border-rose-400/30 min-w-0 break-words">
-            <div class="text-xs text-rose-300 font-bold mb-1"><i class="fas fa-arrow-down mr-1"></i>Low-Bindu Vulnerable Houses</div>
-            <p class="text-sm text-gray-200 mb-0">${weakListEn} — these houses hold lower bindu reserves, meaning Saturn/Rahu transits through them require conscious remedies and patience.</p>
+          <div class="p-3 rounded-xl bg-rose-950/40 border border-rose-400/30 text-xs">
+            <strong class="text-rose-300 block mb-0.5">Low-Bindu Sensitive Houses:</strong> ${weakListEn} (Requires conscious remedy)
           </div>
         </div>
-
-        <div class="mt-5 overflow-x-auto rounded-xl border border-white/15">
-          <table class="w-full text-xs md:text-sm">
+        <div class="mt-4 overflow-x-auto rounded-xl border border-white/15">
+          <table class="w-full text-xs">
             <thead>
               <tr class="bg-slate-950 text-amber-300 border-b border-white/10">
-                <th class="py-2 px-2 text-left">House</th>
-                ${headerCells}
-                <th class="py-2 px-2 text-center text-amber-200">SAV Total</th>
+                <th class="py-2 px-2 text-left">House</th>${headerCells}<th class="py-2 px-2 text-center text-amber-200">SAV</th>
               </tr>
             </thead>
-            <tbody class="bg-slate-900/60 divide-y divide-white/5 text-gray-200">
-              ${bavRowsHtml}
-            </tbody>
+            <tbody class="bg-slate-900/60 divide-y divide-white/5 text-gray-200">${bavRowsHtml}</tbody>
             <tfoot>
               <tr class="bg-slate-950 border-t border-amber-400/40 text-xs">
-                <td class="py-2 px-2 font-bold text-amber-300">Planet BAV</td>
-                ${totalFooterCells}
-                <td class="py-2 px-2 text-center font-extrabold text-emerald-300">${specialLagnas.grandTotalSav}</td>
+                <td class="py-2 px-2 font-bold text-amber-300">Planet BAV</td>${totalFooterCells}<td class="py-2 px-2 text-center font-extrabold text-emerald-300">${specialLagnas.grandTotalSav}</td>
               </tr>
             </tfoot>
           </table>
@@ -2136,99 +2180,146 @@
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 10 — DUAL-MODE TIME PHASE:
+  //   • Full Mode: Active Vimshottari Mahadasha & Antardasha + Exact Next Shift
+  //   • DOB-Only Mode: Concrete 2026–2029 Year-by-Year Personal Year & Gochar Forecast
+  // --------------------------------------------------------------------------
   function buildChapter10TimePhase(ctx) {
     const { lang, dasha, planetAnalysis, numData, chart } = ctx;
+    const isFull = chart.isFullChartMode;
+    const cy = numData.currentYear;
+
+    // MODE B: DOB-ONLY 4-YEAR CALENDAR FORECAST (2026, 2027, 2028, 2029)
+    if (!isFull) {
+      const years = [cy, cy + 1, cy + 2, cy + 3];
+      const pyTheme = {
+        1: { ruler:"Sun (सूर्य)", en:"New Beginnings, Career Command & Solo Initiative — old dependencies break and a new leadership role or independent income source starts.", hi:"नया प्रारंभ, नेतृत्व एवं स्वतंत्र निर्णय — पुराने बंधन टूटेंगे और करियर/व्यापार में नई शुरुआत या पदोन्नति का द्वार खुलेगा।" },
+        2: { ruler:"Moon (चंद्रमा)", en:"Partnerships, Emotional Decisions & Slow Steady Diplomacy — avoid overthinking; marriage/relationship talks or joint ventures take center stage.", hi:"साझेदारी, भावनात्मक निर्णय एवं संबंध — ओवरथिंकिंग से बचें; विवाह/रिश्ते की बात आगे बढ़ेगी और सहयोग से कार्य सिद्ध होंगे।" },
+        3: { ruler:"Jupiter (बृहस्पति)", en:"Expansion, Exam/Skill Victory & Guru-Kripa — knowledge, promotion, auspicious family events, or progeny/childbirth luck activates strongly.", hi:"विस्तार, परीक्षा/कौशल विजय एवं गुरु-कृपा — पदोन्नति, उच्च ज्ञान, घर में मांगलिक कार्य या संतान सुख का प्रबल योग बनेगा।" },
+        4: { ruler:"Rahu (राहु)", en:"Sudden Restructuring, Hard Work & Caution Against Traps — unexpected expenses or sudden job/city shifts; avoid risky loans or blind trust.", hi:"आकस्मिक परिवर्तन एवं कड़ी परीक्षा — अचानक स्थान/कार्य परिवर्तन और अनपेक्षित खर्च संभव; किसी को उधार देने या शॉर्टकट से बचें।" },
+        5: { ruler:"Mercury (बुध)", en:"Fast Breakthroughs, Travel, Job Switch & Commercial Gains — stagnant blocks clear rapidly; networking and communication bring money.", hi:"तेज बदलाव, नौकरी/व्यापार में उछाल एवं यात्रा — रुके हुए काम गति पकड़ेंगे और नए संपर्कों से आर्थिक लाभ होगा।" },
+        6: { ruler:"Venus (शुक्र)", en:"Marriage/Love Peak, Vehicle/Home Upgrade & Luxury Flow — strong year for relationships, family harmony, and upgrading your lifestyle.", hi:"प्रेम/विवाह योग, वाहन/गृह सुख एवं वैभव — रिश्तों में मधुरता, विवाह प्रस्ताव और सुख-सुविधाओं में वृद्धि का श्रेष्ठ वर्ष।" },
+        7: { ruler:"Ketu (केतु)", en:"Inner Audit, Research & Exposing Fake Friends — temporary mental detachment or delay that secretly redirects you toward your true calling.", hi:"आत्म-मंथन, शोध एवं नकली मित्रों की पहचान — मानसिक एकांत या गुप्त बाधा के बाद अचानक सही दिशा का ज्ञान होगा।" },
+        8: { ruler:"Saturn (शनि)", en:"Karmic Harvest, Property/Asset Locking & Heavy Duty — high workload converts into durable authority, real estate, or long-term financial structure.", hi:"कर्म-फल प्राप्ति, संपत्ति निर्माण एवं बड़ी जिम्मेदारी — कड़ी मेहनत का ठोस प्रतिफल पद, भूमि या स्थायी धन के रूप में मिलेगा।" },
+        9: { ruler:"Mars (मंगल)", en:"Completion of a 9-Year Cycle, Courageous Decisions & Clearing Debt/Enemies — cutting off dead weight to prepare for a massive new cycle.", hi:"9-वर्षीय चक्र की पूर्णता, साहस एवं ऋण/शत्रु विजय — पुराने विवाद समाप्त होंगे और साहसी फैसले से नया मार्ग खुलेगा।" }
+      };
+
+      const cards = years.map(yr => {
+        const py = reduceToSingleDigit(numData.day + numData.month + reduceToSingleDigit(yr));
+        const t = pyTheme[py];
+        return `
+          <div class="p-4 rounded-2xl bg-slate-950/85 border border-cyan-400/30">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-base font-extrabold text-white">${lang === "hi" ? `वर्ष ${yr}` : `Year ${yr}`} (${lang === "hi" ? `आयु ${yr - numData.year}` : `Age ${yr - numData.year}`})</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold">PY-${py} • ${t.ruler}</span>
+            </div>
+            <p class="text-xs md:text-sm text-gray-200 mb-0">${lang === "hi" ? t.hi : t.en}</p>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <p class="text-sm text-gray-200">
+          ${lang === "hi"
+            ? `चूंकि आपने जन्म-समय दर्ज नहीं किया है, इसलिए अशुद्ध महादशा दिखाने के बजाय नीचे आपकी जन्म-तिथि और सूर्य-चंद्र गोचर पर आधारित <strong>${cy} से ${cy + 3} तक का 4-वर्षीय सटीक वार्षिक भविष्यफल</strong> दिया गया है:`
+            : `Because Birth Time was not entered, rather than guessing an unverified Vimshottari Mahadasha, here is your <strong>4-Year Calendar Forecast (${cy}–${cy + 3})</strong> combining your Chaldean Personal Year cycles with Saturn-Jupiter-Rahu transits:`}
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 mt-4">${cards}</div>
+        ${buildRedBirthTimePrompt(lang)}
+      `;
+    }
+
+    // MODE A: FULL VIMSHOTTARI MAHADASHA & ANTARDASHA WITH EXACT DATES
     const mdInfo = planetAnalysis[dasha.md];
     const adInfo = planetAnalysis[dasha.ad];
     const mdRashi = RASHI_DATA[mdInfo.d1];
     const adRashi = RASHI_DATA[adInfo.d1];
     const relativeHouseOfAD = getBhavaFrom(mdInfo.d1, adInfo.d1);
     const difficultAxis = relativeHouseOfAD === 6 || relativeHouseOfAD === 8 || relativeHouseOfAD === 12;
-    const mdRole = getFunctionalRoleLabel(chart.Asc.d1, dasha.md, lang);
-    const adRole = getFunctionalRoleLabel(chart.Asc.d1, dasha.ad, lang);
 
     const fmtDate = (d) => (d instanceof Date && !isNaN(d)) ? d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
     const exactDatesSub = (dasha.isExactCalendarDasha && dasha.adActive)
       ? `${fmtDate(dasha.adActive.start)} → ${fmtDate(dasha.adActive.end)}`
       : (dasha.isManualDasha ? (lang === "hi" ? "मैनुअल चयन" : "Manual Selection") : (lang === "hi" ? "नक्षत्र-पाद से परिकलित" : "Nakshatra-Pada Calibrated"));
 
+    const nextAdBlockEn = (dasha.isExactCalendarDasha && dasha.nextAD)
+      ? `Right after <strong>${fmtDate(dasha.adActive.end)}</strong>, your chart shifts into <strong>${dasha.nextAD.mdLord}–${dasha.nextAD.lord} Antardasha (${fmtDate(dasha.nextAD.start)} → ${fmtDate(dasha.nextAD.end)})</strong>, which immediately activates your ${planetAnalysis[dasha.nextAD.lord].bhava}th house (${houseThemeShort(planetAnalysis[dasha.nextAD.lord].bhava, "en")}).`
+      : `Over the next 12 to 18 months (${cy}–${cy + 1}), transiting Jupiter and Saturn cross your active Dasha axis, forcing a decisive upgrade in your career and relationship priorities.`;
+
+    const nextAdBlockHi = (dasha.isExactCalendarDasha && dasha.nextAD)
+      ? `<strong>${fmtDate(dasha.adActive.end)}</strong> को वर्तमान अंतर्दशा समाप्त होते ही आपकी कुंडली में <strong>${PLANET_META[dasha.nextAD.mdLord].hi} में ${PLANET_META[dasha.nextAD.lord].hi} की अंतर्दशा (${fmtDate(dasha.nextAD.start)} → ${fmtDate(dasha.nextAD.end)})</strong> शुरू होगी—जो सीधे आपके ${planetAnalysis[dasha.nextAD.lord].bhava}वें भाव (${houseThemeShort(planetAnalysis[dasha.nextAD.lord].bhava, "hi")}) के फलों को जागृत कर देगी।`
+      : `आगामी 12 से 18 महीनों (${cy}–${cy + 1}) में गोचर के गुरु और शनि आपके दशा-अक्ष को सक्रिय कर करियर और संबंधों में एक बड़ा निर्णय करवाएंगे।`;
+
     if (lang === "hi") {
       return `
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-          <div class="p-4 rounded-xl bg-slate-950/85 border border-cyan-400/40 min-w-0 break-words">
+          <div class="p-4 rounded-xl bg-slate-950/85 border border-cyan-400/40">
             <div class="text-xs text-cyan-300 font-bold uppercase">सक्रिय महादशा (MD)</div>
             <div class="text-xl font-extrabold text-white mt-1">${mdInfo.meta.hi}</div>
             <div class="text-xs text-gray-400 mt-0.5">${mdInfo.bhava}वां भाव (${mdRashi.hi})</div>
           </div>
-          <div class="p-4 rounded-xl bg-slate-950/85 border border-purple-400/40 min-w-0 break-words">
+          <div class="p-4 rounded-xl bg-slate-950/85 border border-purple-400/40">
             <div class="text-xs text-purple-300 font-bold uppercase">सक्रिय अंतर्दशा (AD)</div>
             <div class="text-xl font-extrabold text-white mt-1">${adInfo.meta.hi}</div>
             <div class="text-xs text-gray-400 mt-0.5">${adInfo.bhava}वां भाव (${adRashi.hi})</div>
           </div>
-          <div class="p-4 rounded-xl bg-slate-950/85 border border-amber-400/40 min-w-0 break-words">
-            <div class="text-xs text-amber-300 font-bold uppercase">दशा-भुक्ति संबंध</div>
-            <div class="text-xl font-extrabold text-white mt-1">महादशानाथ से ${relativeHouseOfAD}वां</div>
+          <div class="p-4 rounded-xl bg-slate-950/85 border border-amber-400/40">
+            <div class="text-xs text-amber-300 font-bold uppercase">वर्तमान अंतर्दशा समय-सीमा</div>
+            <div class="text-base font-extrabold text-white mt-1">दशानाथ से ${relativeHouseOfAD}वां भाव</div>
             <div class="text-xs text-amber-200/90 mt-0.5 font-mono">${exactDatesSub}</div>
           </div>
         </div>
 
         <p>
-          <strong>1. ${mdInfo.meta.hi} महादशा आपके जीवन में क्या बदल रही है:</strong> इस समय आपके जीवन की मुख्य कमान <strong>${mdInfo.meta.hi}</strong> (${mdRole}) के हाथों में है, जो आपकी कुंडली के <strong>${mdInfo.bhava}वें भाव (${BHAVA_MEANINGS[mdInfo.bhava].hi})</strong> में और नवांश के <strong>${RASHI_DATA[mdInfo.d9].hi}</strong> में बैठे हैं। यही कारण है कि पिछले कुछ समय से आपका पूरा मानसिक और व्यावहारिक फोकस ${houseThemeShort(mdInfo.bhava, "hi")} के इर्द-गिर्द केंद्रित हो गया है।
-        </p>
-
-        <p>
-          <strong>2. ${adInfo.meta.hi} अंतर्दशा और दशा-भुक्ति समीकरण:</strong> महादशा के भीतर वर्तमान में <strong>${adInfo.meta.hi}</strong> (${adRole}) की अंतर्दशा चल रही है, जो लग्न से <strong>${adInfo.bhava}वें भाव</strong> में और महादशानाथ ${mdInfo.meta.hi} से <strong>${relativeHouseOfAD}वें स्थान</strong> पर स्थित है। ${
+          <strong>1. वर्तमान ${mdInfo.meta.hi}–${adInfo.meta.hi} दशा का प्रत्यक्ष प्रभाव:</strong> इस समय आपके जीवन की कमान ${mdInfo.bhava}वें भाव के <strong>${mdInfo.meta.hi}</strong> और ${adInfo.bhava}वें भाव के <strong>${adInfo.meta.hi}</strong> के हाथों में है। ${
             difficultAxis
-              ? `<strong>विशेष सावधानी (षडाष्टक / द्वादश दशा-भुक्ति अक्ष):</strong> क्योंकि महादशानाथ और अंतर्दशानाथ एक-दूसरे से ${relativeHouseOfAD}वें (6/8/12) कोण पर हैं, इसलिए आप पिछले कुछ महीनों से अकारण मानसिक थकान, रात को विचारों का द्वंद्व और 'पूरी मेहनत के बाद भी अंतिम क्षण पर काम रुकने' जैसा दबाव महसूस कर रहे हैं।`
-              : `महादशानाथ से अंतर्दशानाथ का ${relativeHouseOfAD}वां संबंध यह दर्शाता है कि पिछले 14–18 महीनों से जो योजनाएं रुकी हुई थीं, अब उन्हें ठोस रूप देने का समय आ गया है।`
+              ? `क्योंकि महादशानाथ और अंतर्दशानाथ एक-दूसरे से <strong>${relativeHouseOfAD}वें (6/8/12) कोण</strong> पर हैं, इसलिए आप पिछले कुछ महीनों से अकारण मानसिक तनाव, नींद में खलल और '100% मेहनत पर 50% परिणाम' जैसा दबाव महसूस कर रहे हैं।`
+              : `दोनों ग्रहों का परस्पर ${relativeHouseOfAD}वां संबंध यह दर्शाता है कि पिछले 14–18 महीनों से जो योजनाएं अटकी हुई थीं, अब उनके निर्णायक रूप लेने का समय आ गया है।`
           }
         </p>
 
-        <p>
-          <strong>3. आगामी 12–18 महीनों की सटीक भविष्यवाणी (${numData.currentYear}–${numData.currentYear + 1}):</strong> जैसे ही गोचर के गुरु और शनि आपके ${mdInfo.bhava}वें और ${adInfo.bhava}वें भाव के अक्ष को सक्रिय करेंगे, आपके सामने करियर परिवर्तन, आर्थिक पुनर्गठन या विवाह/रिश्ते से जुड़ा एक बड़ा निर्णय आएगा। इस संधि-काल में बिना अपनी कुंडली का सटीक अंशबल (Chalit & Shadbala) जांचे कोई भी आवेगपूर्ण कदम न उठाएं।
-        </p>
+        <p><strong>2. आगामी दशा परिवर्तन एवं सटीक तारीखें:</strong> ${nextAdBlockHi}</p>
       `;
     }
 
     return `
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-        <div class="p-4 rounded-xl bg-slate-950/85 border border-cyan-400/40 min-w-0 break-words">
+        <div class="p-4 rounded-xl bg-slate-950/85 border border-cyan-400/40">
           <div class="text-xs text-cyan-300 font-bold uppercase">Active Mahadasha (MD)</div>
           <div class="text-xl font-extrabold text-white mt-1">${mdInfo.meta.en}</div>
           <div class="text-xs text-gray-400 mt-0.5">${mdInfo.bhava}th House (${mdRashi.en})</div>
         </div>
-        <div class="p-4 rounded-xl bg-slate-950/85 border border-purple-400/40 min-w-0 break-words">
+        <div class="p-4 rounded-xl bg-slate-950/85 border border-purple-400/40">
           <div class="text-xs text-purple-300 font-bold uppercase">Active Antardasha (AD)</div>
           <div class="text-xl font-extrabold text-white mt-1">${adInfo.meta.en}</div>
           <div class="text-xs text-gray-400 mt-0.5">${adInfo.bhava}th House (${adRashi.en})</div>
         </div>
-        <div class="p-4 rounded-xl bg-slate-950/85 border border-amber-400/40 min-w-0 break-words">
-          <div class="text-xs text-amber-300 font-bold uppercase">Dasha-Bhukti Angle</div>
-          <div class="text-xl font-extrabold text-white mt-1">${relativeHouseOfAD}th from MD Lord</div>
+        <div class="p-4 rounded-xl bg-slate-950/85 border border-amber-400/40">
+          <div class="text-xs text-amber-300 font-bold uppercase">Active Period Dates</div>
+          <div class="text-base font-extrabold text-white mt-1">${relativeHouseOfAD}th from MD Lord</div>
           <div class="text-xs text-amber-200/90 mt-0.5 font-mono">${exactDatesSub}</div>
         </div>
       </div>
 
       <p>
-        <strong>1. How Your ${mdInfo.meta.en} Mahadasha Is Reshaping Your Life:</strong> Right now, the master switch of your destiny is held by <strong>${mdInfo.meta.en}</strong> (${mdRole}), seated in your <strong>${mdInfo.bhava}th House (${BHAVA_MEANINGS[mdInfo.bhava].en})</strong> and maturing into <strong>${RASHI_DATA[mdInfo.d9].en}</strong> in Navamsa. In Vimshottari predictive law, the Mahadasha lord forces you to confront and master every unfinished karmic lesson of <em>${houseThemeShort(mdInfo.bhava, "en")}</em>.
-      </p>
-
-      <p>
-        <strong>2. The ${adInfo.meta.en} Antardasha Sub-Cycle:</strong> Inside this major period, you are navigating the sub-period of <strong>${adInfo.meta.en}</strong> (${adRole}) in your <strong>${adInfo.bhava}th House</strong>, positioned <strong>${relativeHouseOfAD} houses away</strong> from your Mahadasha lord. ${
+        <strong>1. How Your Active ${ dasha.md }–${ dasha.ad } Cycle Is Operating Right Now:</strong> Your current life chapter is governed by <strong>${mdInfo.meta.en}</strong> in House ${mdInfo.bhava} and sub-lord <strong>${adInfo.meta.en}</strong> in House ${adInfo.bhava}. ${
           difficultAxis
-            ? `<strong>Critical Dasha-Bhukti Friction (6/8/12 Angle):</strong> Because ${dasha.md} and ${dasha.ad} sit in a ${relativeHouseOfAD}th (Shashtashtaka / Dwirdwadasha) relationship, you have been experiencing unexplained mental fatigue, restless sleep, and a feeling of pushing a boulder uphill over the past several months. This is a classic Dasha-angle friction that requires targeted pacification.`
-            : `Because ${dasha.md} and ${dasha.ad} form a ${relativeHouseOfAD}th-house alignment, stalled efforts from the past 14–18 months are now being pushed toward a decisive breakthrough.`
+            ? `Because ${dasha.md} and ${dasha.ad} sit in a <strong>${relativeHouseOfAD}th (6/8/12) friction angle</strong>, you have been experiencing mental restlessness, irregular sleep, and last-minute hurdles over recent months.`
+            : `This ${relativeHouseOfAD}th-house alignment between ${dasha.md} and ${dasha.ad} is actively pushing stalled matters from the last 14–18 months toward a concrete breakthrough.`
         }
       </p>
 
-      <p>
-        <strong>3. Next 12–18 Months Forecast (${numData.currentYear}–${numData.currentYear + 1}):</strong> As transiting Jupiter and Saturn aspect your active ${mdInfo.bhava}th/${adInfo.bhava}th axis over the coming quarters, a defining decision regarding your career authority, financial structure, or marriage/relationship commitment will arrive. Navigating this window with degree-calibrated remedies ensures you turn this transition into a permanent rise.
-      </p>
+      <p><strong>2. Exact Upcoming Transition Window:</strong> ${nextAdBlockEn}</p>
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 11 — HIDDEN PROBLEMS, KARMIC TRAPS & DIAGNOSTIC HOOK
+  // --------------------------------------------------------------------------
   function buildChapter11HiddenTraps(ctx) {
-    const { lang, name, chart, planetAnalysis, specialLagnas, dasha } = ctx;
+    const { lang, name, chart, planetAnalysis, specialLagnas, dasha, timeline } = ctx;
+    const isFull = chart.isFullChartMode;
     const asc = chart.Asc.d1;
     const lagnaMatrix = LAGNA_FUNCTIONAL_MATRIX[asc];
     const badhakaKey  = lagnaMatrix.badhakesh;
@@ -2250,7 +2341,7 @@
     if (lang === "hi") {
       return `
         <p>
-          प्रिय <strong>${name}</strong>, ऊपर के 10 अध्यायों में आपने अपनी प्रतिभा, करियर, और भावी जीवनसाथी की संभावनाओं को देखा। <strong>अब एक तार्किक ज्योतिषी के रूप में सबसे महत्वपूर्ण प्रश्न ध्यान से पढ़िए:</strong> यदि आपकी कुंडली में इतनी क्षमता और राजयोग मौजूद हैं, तो फिर आपके सबसे बड़े काम अंतिम क्षण पर क्यों अटकते हैं? और आपकी 100% मेहनत का पूरा प्रतिफल बैंक बैलेंस या मानसिक सुकून में क्यों नहीं बदल पा रहा?
+          प्रिय <strong>${name}</strong>, ऊपर के अध्यायों में आपने अपनी क्षमता, करियर, भावी जीवनसाथी और संतान के शुभ वर्षों को देखा। <strong>परंतु अब सबसे महत्वपूर्ण प्रश्न ध्यान से पढ़िए:</strong> यदि आपकी कुंडली में इतनी क्षमता मौजूद है, तो फिर आपके सबसे बड़े काम 99% पर आकर क्यों रुकते हैं? और आपकी 100% मेहनत का पूरा प्रतिफल बैंक बैलेंस या मानसिक सुकून में क्यों नहीं बदल पा रहा?
         </p>
 
         <div class="p-4 rounded-2xl bg-red-950/80 border border-red-400/50 space-y-3 my-4 break-words">
@@ -2258,25 +2349,26 @@
             <i class="fas fa-biohazard mr-2"></i> आपकी कुंडली में पकड़े गए 3 गुप्त ग्रह-अवरोध (Root-Cause Doshas):
           </div>
           <p class="text-sm mb-0">
-            <strong>1. बाधकेश (${badhakaInfo.meta.hi}) एवं मारक ग्रह का गुप्त अवरोध:</strong> आपके ${RASHI_DATA[asc].hi} लग्न के लिए <strong>${badhakaInfo.meta.hi}</strong> (${lagnaMatrix.badhakaHouse}वें बाधक भाव के स्वामी) कुंडली के <strong>${badhakaInfo.bhava}वें भाव</strong> में बैठकर अदृश्य रुकावटें पैदा कर रहे हैं। ${isManglik ? `साथ ही मंगल के ${mars.bhava}वें भाव में होने से वैवाहिक/भावनात्मक अक्ष पर तीव्र अग्नि-ऊर्जा (कुज प्रभाव) बन रही है।` : `साथ ही मारक ग्रहों (${lagnaMatrix.marakas.map(m => PLANET_META[m].hi).join(", ")}) की स्थिति आपके आत्मबल और रिश्तों की शांति को प्रभावित कर रही है।`}
+            <strong>1. बाधकेश (${badhakaInfo.meta.hi}) एवं मंगल/मारक का गुप्त अवरोध:</strong> आपके ${RASHI_DATA[asc].hi} आधार के लिए <strong>${badhakaInfo.meta.hi}</strong> अदृश्य रुकावटें पैदा कर रहे हैं। ${isManglik ? `साथ ही मंगल (${RASHI_DATA[mars.d1].hi}) की तीव्र अग्नि-ऊर्जा रिश्तों और साझेदारी में अचानक मतभेद पैदा करती है।` : `साथ ही मारक ग्रहों (${lagnaMatrix.marakas.map(m => PLANET_META[m].hi).join(", ")}) की स्थिति आपके आत्मबल और धन-संचय को प्रभावित कर रही है।`}
           </p>
           <p class="text-sm mb-0">
-            <strong>2. राहु-केतु का ${rahu.bhava}/${ketu.bhava} कार्मिक ग्रहण और शनि की दृष्टि:</strong> राहु <strong>${rahu.bhava}वें भाव (${RASHI_DATA[rahu.d1].hi})</strong> में और केतु <strong>${ketu.bhava}वें भाव (${RASHI_DATA[ketu.d1].hi})</strong> में बैठकर ठीक उस समय मानसिक धुंध या भटकाव पैदा करते हैं जब आप किसी बड़ी सफलता के करीब होते हैं। वहीं शनि (${sat.bhava}वें भाव) की दृष्टि आपके धैर्य की कड़ी परीक्षा ले रही है।
+            <strong>2. राहु (${RASHI_DATA[rahu.d1].hi}) – केतु (${RASHI_DATA[ketu.d1].hi}) का कार्मिक ग्रहण और शनि की परीक्षा:</strong> राहु-केतु ठीक उस समय मानसिक धुंध या गलत इंसान पर भरोसा करवाते हैं जब आप किसी बड़ी सफलता के करीब होते हैं (विशेषकर <strong>${timeline.cautionWindow}</strong> के सावधानी काल में)।
           </p>
           <p class="text-sm mb-0">
-            <strong>3. ${weakestHouse}वें भाव में सबसे कम अष्टकवर्ग बल (केवल ${minBindu} बिंदु):</strong> आपके <strong>${weakestHouse}वें भाव (${BHAVA_MEANINGS[weakestHouse].hi})</strong> में पूरी कुंडली के सबसे कम (मात्र ${minBindu}) बिंदु हैं, और ऊपर से वर्तमान में <strong>${PLANET_META[dasha.md].hi}–${PLANET_META[dasha.ad].hi}</strong> का समय-चक्र चल रहा है। बिना सटीक अंशबल (Degree/Chalit) जांचे और बिना सही उपाय किए, यह कमजोर कड़ी अगले 12–24 महीनों में आपके बने-बनाए अवसरों में रुकावट डाल सकती है।
+            <strong>3. ${isFull ? `${weakestHouse}वें भाव में सबसे कम अष्टकवर्ग बल (केवल ${minBindu} बिंदु):` : "सटीक जन्म-समय के बिना सुप्त ग्रहों (Sleeping Planets) का लॉक:"}</strong> ${isFull ? `आपके ${weakestHouse}वें भाव (${BHAVA_MEANINGS[weakestHouse].hi}) में पूरी कुंडली के सबसे कम (${minBindu}) बिंदु हैं और वर्तमान में ${PLANET_META[dasha.md].hi}–${PLANET_META[dasha.ad].hi} का समय चल रहा है।` : "बिना आपके सटीक जन्म-समय की डिग्री, भाव चलित और षड्बल जांचे यह पता नहीं चलता कि कौन सा राजयोग कारक ग्रह सुप्त (sleeping) पड़ा है।"}
           </p>
         </div>
 
         <p class="text-amber-200 font-semibold mb-0">
-          ⚠️ <strong>सबसे खतरनाक गलती जो 95% लोग करते हैं:</strong> इंटरनेट से देखकर बिना अपनी कुंडली का सटीक अंशबल (Exact Degrees, Bhava Chalit, Shadbala एवं लाल किताब के सोए हुए ग्रह) जांचे कोई भी रत्न पहन लेना—जिससे बाधकेश या मारक ग्रह और अधिक उग्र हो जाता है! अपनी जन्म-तिथि, सटीक समय और स्थान की संपूर्ण हस्तनिर्मित कुंडली, 5-वर्षीय महीना-दर-महीना भविष्यवाणी और सुरक्षित वैदिक/लाल किताब उपायों के लिए <strong>आचार्य ज्ञानेंद्र सिंह तोमर जी</strong> से अभी व्हाट्सएप पर जुड़ें।
+          ⚠️ <strong>सबसे खतरनाक गलती जो 95% लोग करते हैं:</strong> इंटरनेट से देखकर बिना अपनी कुंडली का सटीक अंशबल (Exact Degrees, Bhava Chalit, Shadbala एवं लाल किताब के सोए हुए ग्रह) जांचे कोई भी रत्न पहन लेना—जिससे बाधकेश या मारक ग्रह और अधिक उग्र हो जाता है! अपनी संपूर्ण हस्तनिर्मित कुंडली, 5-वर्षीय महीना-दर-महीना भविष्यवाणी और सुरक्षित वैदिक/लाल किताब उपायों के लिए <strong>आचार्य ज्ञानेंद्र सिंह तोमर जी</strong> से अभी व्हाट्सएप पर जुड़ें।
         </p>
+        ${!isFull ? buildRedBirthTimePrompt("hi") : ""}
       `;
     }
 
     return `
       <p>
-        Dear <strong>${name}</strong>, across the ten chapters above you saw the genuine brilliance, leadership, and partner potential wired into your chart. <strong>Now pause and ask the ruthless diagnostic question:</strong> If your chart carries such strong capability, <em>why do your biggest breakthroughs still face friction right before completion? And why hasn't your 100% effort converted into the bank balance and peace of mind you deserve?</em>
+        Dear <strong>${name}</strong>, across the chapters above you saw the genuine brilliance, career windows, partner traits, and childbirth years wired into your chart. <strong>Now ask the ruthless diagnostic question:</strong> If your chart carries such strong capability, <em>why do your biggest breakthroughs still face friction at the 99th percentile? And why hasn't your 100% effort converted into the bank balance and peace of mind you deserve?</em>
       </p>
 
       <div class="p-4 rounded-2xl bg-red-950/80 border border-red-400/50 space-y-3 my-4 break-words">
@@ -2284,22 +2376,26 @@
           <i class="fas fa-biohazard mr-2"></i> 3 Unseen Astrological Blockages Silently Sabotaging Your Chart:
         </div>
         <p class="text-sm mb-0">
-          <strong>1. Badhakesh (${badhakaInfo.meta.en}) & Functional Maraka Lock:</strong> For your ${RASHI_DATA[asc].en} Ascendant, <strong>${badhakaInfo.meta.en}</strong> acts as your <em>Badhakesh</em> (${lagnaMatrix.badhakaHouse}th-house chief obstructor) operating from your <strong>${badhakaInfo.bhava}th House</strong>. ${isManglik ? `Simultaneously, Mars in your ${mars.bhava}th House injects fiery Kuja/Manglik friction into your relationship and domestic axis.` : `Simultaneously, your functional Marakas (${lagnaMatrix.marakas.join(" & ")}) create subtle energy drains whenever their sub-periods trigger.`}
+          <strong>1. Badhakesh (${badhakaInfo.meta.en}) & Functional Maraka Lock:</strong> For your ${RASHI_DATA[asc].en} base, <strong>${badhakaInfo.meta.en}</strong> acts as the chief obstructor. ${isManglik ? `Simultaneously, Mars in ${RASHI_DATA[mars.d1].en} injects fiery Kuja friction into your relationship and partnership axis.` : `Simultaneously, your functional Marakas (${lagnaMatrix.marakas.join(" & ")}) create subtle energy drains during stressful transits.`}
         </p>
         <p class="text-sm mb-0">
-          <strong>2. Rahu-Ketu ${rahu.bhava}/${ketu.bhava} Nodal Trap & Saturn's Gaze:</strong> With <strong>Rahu in your ${rahu.bhava}th House (${RASHI_DATA[rahu.d1].en})</strong> and <strong>Ketu in your ${ketu.bhava}th House (${RASHI_DATA[ketu.d1].en})</strong>, an unseen karmic smoke-screen triggers overthinking, sudden distraction, or misplaced trust right when a major career or relationship milestone is about to lock in.
+          <strong>2. Rahu (${RASHI_DATA[rahu.d1].en}) – Ketu (${RASHI_DATA[ketu.d1].en}) Nodal Trap:</strong> Your Rahu-Ketu axis triggers overthinking, sudden distraction, or misplaced trust right when a major career or financial milestone is about to lock in (especially during your <strong>${timeline.cautionWindow}</strong> caution window).
         </p>
         <p class="text-sm mb-0">
-          <strong>3. Critical Ashtakavarga Energy Drain in House ${weakestHouse} (Only ${minBindu} Bindus):</strong> Your <strong>${weakestHouse}th House (${BHAVA_MEANINGS[weakestHouse].en})</strong> holds the lowest bindu reservoir in your entire chart while you navigate the <strong>${dasha.md}–${dasha.ad} Dasha</strong>. Left un-remedied, this weak link acts like a hidden leak in your destiny over the next 12–24 months.
+          <strong>3. ${isFull ? `Critical Ashtakavarga Energy Drain in House ${weakestHouse} (Only ${minBindu} Bindus):` : "Unverified Birth-Time Degree & Bhava Chalit Lock:"}</strong> ${isFull ? `Your ${weakestHouse}th House (${BHAVA_MEANINGS[weakestHouse].en}) holds the lowest bindu reservoir in your entire chart while you navigate the ${dasha.md}–${dasha.ad} Dasha.` : "Without verifying your exact birth-time degrees in Bhava Chalit and Shadbala, a key wealth-giving planet can remain dormant (sleeping) for years."}
         </p>
       </div>
 
       <p class="text-amber-200 font-semibold mb-0">
-        ⚠️ <strong>Why Generic Internet Remedies & Random Gemstones Are Dangerous:</strong> Rashi-level placements only show <em>where</em> a planet sits—they do not show its exact longitudinal degree (0°–30°), whether it has shifted houses in your <strong>Bhava Chalit chart</strong>, or whether it is a sleeping/afflicted planet in Lal Kitab. Wearing the wrong gemstone can accidentally supercharge your Badhakesh or Maraka planet! Connect directly with <strong>Gyanendra S. Tomar</strong> via the consultation card to get your 100% hand-calculated degree report, 5-year month-by-month timeline, and safe, logical Vedic & Lal Kitab remedies.
+        ⚠️ <strong>Why Generic Internet Remedies & Random Gemstones Are Dangerous:</strong> Wearing a gemstone without verifying your exact longitudinal degrees (0°–30°), Bhava Chalit shifts, and sleeping planets in Lal Kitab can accidentally supercharge your Badhakesh or Maraka planet! Connect directly with <strong>Gyanendra S. Tomar</strong> via the consultation card to get your 100% hand-calculated degree report, 5-year month-by-month timeline, and safe Vedic & Lal Kitab remedies.
       </p>
+      ${!isFull ? buildRedBirthTimePrompt("en") : ""}
     `;
   }
 
+  // --------------------------------------------------------------------------
+  // CHAPTER 12 — GURU DAKSHINA CALIBRATION (MOVED TO THE MIDDLE!)
+  // --------------------------------------------------------------------------
   function updateChapter12Dakshina(ctx) {
     const { lang, name, chart } = ctx;
     const jupRashiId = (chart && chart.Jupiter) ? chart.Jupiter.d1 : 9;
@@ -2309,44 +2405,78 @@
     if (!headingEl || !textEl) return;
 
     if (lang === "hi") {
-      headingEl.innerHTML = `पवित्र ऊर्जा विनिमय एवं गुरु-दक्षिणा संकल्प 🙏`;
+      headingEl.innerHTML = `पवित्र ऊर्जा विनिमय एवं गुरु-दक्षिणा संकल्प (Sacred Energy Exchange) 🙏`;
       textEl.innerHTML = `
         <p class="hindi">
-          प्रिय <strong>${name}</strong>, आपकी कुंडली में देवगुरु बृहस्पति <strong>${jupRashi.hi}</strong> से आपके भाग्य और ज्ञान को नियंत्रित कर रहे हैं। सनातन वैदिक परंपरा का शाश्वत नियम है — जब भी हम ज्योतिष जैसी पवित्र ब्रह्म-विद्या के माध्यम से अपने प्रारब्ध, भावी जीवनसाथी और ग्रहों के गहरे रहस्यों का ज्ञान प्राप्त करते हैं, तो बिना <strong>'गुरु-दक्षिणा' (Energy Exchange)</strong> के उस ज्ञान का शुभ फल पूर्ण रूप से जागृत नहीं होता।
+          प्रिय <strong>${name}</strong>, अभी आपने अपने व्यक्तित्व, करियर, धन, भावी जीवनसाथी और संतान के गूढ़ रहस्य देखे। आपकी कुंडली में देवगुरु बृहस्पति <strong>${jupRashi.hi}</strong> से आपके भाग्य को नियंत्रित कर रहे हैं। सनातन वैदिक परंपरा का शाश्वत नियम है — जब भी हम ज्योतिष जैसी पवित्र <em>ब्रह्म-विद्या</em> से अपने भविष्य और जीवनसाथी के रहस्यों को जानते हैं, तो आगे के <strong>नवग्रह फलित और गुप्त दोषों</strong> को पढ़ने से पूर्व <strong>'गुरु-दक्षिणा' (Energy Exchange)</strong> अर्पित करने से बृहस्पति देव का पूर्ण आशीर्वाद जागृत होता है।
         </p>
         <p class="hindi">
-          हमने यह 45-मिनट का गहन जीवन दस्तावेज़ इसलिए तैयार किया ताकि जो साधक आज ₹1101 का पूर्ण परामर्श लेने में असमर्थ भी हों, उन्हें भी किसी भ्रामक वेबसाइट से निराश न लौटना पड़े। यदि इस विश्लेषण ने आपके मन के अनकहे सच को छुआ है, तो अपनी श्रद्धा एवं सामर्थ्य के अनुसार <strong>(₹51, ₹101, ₹251 या ₹501)</strong> की गुरु-दक्षिणा सामने दिए गए QR कोड पर अर्पित कर बृहस्पति देव का आशीर्वाद अवश्य ग्रहण करें।
+          यदि इस विश्लेषण ने आपके अतीत और मन के अनकहे सच को सटीकता से छुआ है, तो अपनी श्रद्धा एवं सामर्थ्य के अनुसार <strong>(₹51, ₹101, ₹251 या ₹501)</strong> की गुरु-दक्षिणा सामने दिए गए QR कोड पर अर्पित कर अपना शुभ संकल्प पूर्ण करें।
         </p>
       `;
     } else {
       headingEl.innerHTML = `Honor the Sacred Law of Energy Exchange (Guru Dakshina) 🙏`;
       textEl.innerHTML = `
         <p>
-          Dear <strong>${name}</strong>, in your chart, <strong>Jupiter (Brihaspati — karaka of divine grace and fortune)</strong> operates through <strong>${jupRashi.en}</strong>. According to ancient Vedic tradition, Jyotish is sacred <em>Brahma-Vidya</em>: whenever we decode the hidden secrets of our destiny, future partner, and planetary karma, offering a voluntary <strong>Guru Dakshina (Sacred Energy Exchange)</strong> seals the reading with auspicious Guru-Kripa and prevents subtle karmic debt on the 9th house of fortune.
+          Dear <strong>${name}</strong>, you have just uncovered your personality, career windows, wealth formula, future partner traits, and childbirth timeline. In your chart, <strong>Jupiter (Brihaspati)</strong> operates through <strong>${jupRashi.en}</strong>. According to ancient Vedic tradition, before reading the deep <strong>9-Planet Karmic Verdicts and Hidden Traps</strong> below, offering a voluntary <strong>Guru Dakshina (Sacred Energy Exchange)</strong> awakens auspicious Guru-Kripa and prevents subtle debt on the 9th house of fortune.
         </p>
         <p>
-          We engineered this exhaustive 45-minute Life Dossier so that even someone who cannot afford our full ₹1101 hand-crafted consultation today still receives genuine, life-changing clarity. If this dossier spoke the unspoken truth about your life, please offer a heartfelt <strong>Guru Dakshina (₹51, ₹101, ₹251, or ₹501 as per your Shraddha)</strong> via the UPI QR code — and send your screenshot on WhatsApp to receive Gyanendra Ji's blessings.
+          If this reading accurately hit your past and unspoken inner truth, please offer a heartfelt <strong>Guru Dakshina (₹51, ₹101, ₹251, or ₹501 as per your Shraddha)</strong> via the UPI QR code — and send your screenshot on WhatsApp to receive Gyanendra Ji's blessings!
         </p>
       `;
     }
   }
 
   // ==========================================================================
-  // 10. VISUAL CHARTS (D1 SVG, D9 SVG, SHADBALA, CHALIT & DASHA TIMELINE)
+  // 10. DYNAMIC DOM ORDERING: INJECT CHILDBIRTH & MOVE DAKSHINA TO THE MIDDLE
+  // ==========================================================================
+
+  function ensureChildbirthSectionAndMiddleDakshina(lang) {
+    const partnerArticle = document.getElementById("chapter-partner");
+    const planetsArticle = document.getElementById("chapter-planets");
+    const dakshinaArticle = document.getElementById("chapter-dakshina");
+    if (!partnerArticle || !planetsArticle) return;
+
+    // 1. Create #chapter-childbirth right after #chapter-partner if not already created
+    let babyArticle = document.getElementById("chapter-childbirth");
+    if (!babyArticle) {
+      babyArticle = document.createElement("article");
+      babyArticle.id = "chapter-childbirth";
+      babyArticle.className = "chapter-card";
+      babyArticle.innerHTML = `
+        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+          <div class="min-w-0">
+            <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 block" id="chBabyTag">Chapter 08 • Progeny, Childbirth & Santan Yoga</span>
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="chBabyTitle">Childbirth Timeline, First Child's Luck & Santan Yoga</h3>
+          </div>
+          <div class="w-11 h-11 rounded-2xl bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 text-lg shrink-0"><i class="fas fa-baby"></i></div>
+        </div>
+        <div id="contentChildbirth" class="chapter-body"></div>
+      `;
+      partnerArticle.insertAdjacentElement("afterend", babyArticle);
+    }
+
+    // 2. Move #chapter-dakshina to the exact MIDDLE of the reading (right after #chapter-childbirth and before #chapter-planets)
+    if (dakshinaArticle && babyArticle.nextElementSibling !== dakshinaArticle) {
+      babyArticle.insertAdjacentElement("afterend", dakshinaArticle);
+    }
+  }
+
+  // ==========================================================================
+  // 11. VISUAL CHARTS, CALIBRATION BANNER (WITH RED DOB ALERT) & VISIBILITY
   // ==========================================================================
 
   function renderVedicExtraSections(ctx) {
     const el = document.getElementById("vedicChartsContainer");
     if (!el) return;
 
-    // If user is in pure 8-chapter Numerology-only view, hide charts
-    if (ctx.viewFilter === "numerology_8") {
+    // STRICT HONESTY RULE: If Birth Time / Manual Matrix was NOT provided, HIDE D1/D9 SVG charts, Chalit, Shadbala & Mahadasha!
+    if (!ctx.chart.isFullChartMode || ctx.viewFilter === "numerology_8") {
       el.innerHTML = "";
       el.classList.add("hidden");
       return;
     }
 
-    // If VedicChartAnalyzer is loaded, we can render D1 & D9 SVGs for BOTH Exact Birth Time and Derived/Manual charts!
     if (typeof window.VedicChartAnalyzer === "undefined") {
       el.innerHTML = "";
       el.classList.add("hidden");
@@ -2356,7 +2486,6 @@
     el.classList.remove("hidden");
     const vd = window.__jtVedicData;
 
-    // Build chart structure for SVG renderer if in Manual or Derived mode
     let d1SVG = "", d9SVG = "", extraTablesHtml = "";
     if (vd && vd.d1SVG && vd.d9SVG) {
       d1SVG = window.VedicChartAnalyzer.renderD1NorthChart(vd.chart, { lang: ctx.lang, userName: ctx.name });
@@ -2379,14 +2508,10 @@
         </div>
       `;
     } else {
-      // Derived or Manual Chart SVG synthesis
+      // Custom Manual Planetary Matrix SVG rendering
       const synthChart = {};
       ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"].forEach(k => {
-        synthChart[k] = {
-          rashi: ctx.chart[k].d1,
-          d9: ctx.chart[k].d9,
-          retro: ctx.chart[k].retro
-        };
+        synthChart[k] = { rashi: ctx.chart[k].d1, d9: ctx.chart[k].d9, retro: ctx.chart[k].retro };
       });
       d1SVG = window.VedicChartAnalyzer.renderD1NorthChart(synthChart, { lang: ctx.lang, userName: ctx.name });
       d9SVG = window.VedicChartAnalyzer.renderD9SouthChart(synthChart, { lang: ctx.lang, userName: ctx.name });
@@ -2398,10 +2523,8 @@
           <div>
             <span class="text-[11px] uppercase tracking-widest text-amber-400 font-bold block">
               ${ctx.chart.isExactAstronomyMode
-                ? (ctx.lang === 'hi' ? '✦ सटीक जन्म-समय एवं अक्षांश-देशांतर कुंडली' : '✦ True Lahiri Astronomical Birth Charts')
-                : (ctx.chart.isFullChartMode
-                    ? (ctx.lang === 'hi' ? '✦ मैनुअल लग्न एवं नवांश कुंडली' : '✦ Custom Planetary Matrix Charts')
-                    : (ctx.lang === 'hi' ? '✦ सूर्य-चंद्र एवं अंक-जनित लग्न/नवांश चक्र' : '✦ Derived Solar-Lunar & Chaldean Charts'))}
+                ? (ctx.lang === 'hi' ? '✦ 99.99% सटीक जन्म-समय एवं अक्षांश-देशांतर कुंडली' : '✦ 99.99% True Lahiri Astronomical Birth Charts')
+                : (ctx.lang === 'hi' ? '✦ मैनुअल लग्न एवं नवांश कुंडली' : '✦ Custom Planetary Matrix Charts')}
             </span>
             <h3 class="text-lg md:text-2xl font-bold text-white mt-0.5"><i class="fas fa-star text-amber-400 mr-2"></i>${ctx.lang === 'hi' ? 'लग्न कुंडली (D1) एवं नवांश कुंडली (D9)' : 'Lagna Chart (D1) & Navamsa Chart (D9)'}</h3>
           </div>
@@ -2418,11 +2541,6 @@
           <div id="d1ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-purple-400/40 bg-white p-1.5 shadow-xl">${d1SVG}</div>
           <div id="d9ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-amber-400/40 bg-white p-1.5 shadow-xl">${d9SVG}</div>
         </div>
-        <p class="text-xs text-center text-gray-300 mt-3">
-          ${ctx.lang === 'hi'
-            ? '<strong>D1 लग्न कुंडली</strong> आपके शारीरिक व्यक्तित्व व बाहरी जीवन को दर्शाती है • <strong>D9 नवांश कुंडली</strong> आपके विवाह, जीवनसाथी और 28–30 वर्ष के बाद के वास्तविक भाग्य को दर्शाती है।'
-            : '<strong>D1 Lagna Chart</strong> maps your physical destiny & outer life • <strong>D9 Navamsa Chart</strong> unlocks your marriage, spouse temperament, and second-half maturity.'}
-        </p>
       </div>
       ${extraTablesHtml}
     `;
@@ -2438,98 +2556,120 @@
         const conf = window.__jtVedicData.chart.Asc.lagnaConfidence || "exact";
         const confTag = conf === "unconfirmed"
           ? (ctx.lang === "hi" ? "⚠️ अनुमानित समय (±2 घंटे) — लग्न संधि संभव" : "⚠️ Rough Birth Time (±2 hrs) — Borderline Lagna")
-          : (ctx.lang === "hi" ? "✓ लहिरी चित्रापक्ष अयनांश सत्यापित" : "✓ True Lahiri Chitrapaksha Verified");
+          : (ctx.lang === "hi" ? "✓ 99.99% लहिरी चित्रापक्ष अयनांश सत्यापित" : "✓ 99.99% True Lahiri Chitrapaksha Verified");
 
         calEl.innerHTML = `<div class="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-400/40 text-xs text-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div><i class="fas fa-check-circle text-emerald-400 mr-1.5"></i><strong>${ctx.lang === 'hi' ? '99.9% सटीक जन्म-समय एवं स्थान कुंडली सक्रिय:' : '99.9% Exact Astronomical Birth Chart Active:'}</strong>
+          <div><i class="fas fa-check-circle text-emerald-400 mr-1.5"></i><strong>${ctx.lang === 'hi' ? '99.99% सटीक जन्म-समय एवं स्थान कुंडली सक्रिय:' : '99.99% Exact Astronomical Birth Chart Active:'}</strong>
           ${meta.name} (${meta.lat.toFixed(2)}°N, ${meta.lng.toFixed(2)}°E) • Ayanamsa: ${meta.ayanamsa.toFixed(2)}°</div>
           <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 font-bold shrink-0">${confTag}</span>
         </div>`;
       } else if (ctx.chart.isFullChartMode) {
         calEl.innerHTML = `<div class="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-400/40 text-xs text-emerald-200">
           <i class="fas fa-check-circle text-emerald-400 mr-1.5"></i><strong>${ctx.lang === 'hi' ? 'मैनुअल ग्रह-स्थिति मोड सक्रिय:' : 'Custom Planetary Matrix Active:'}</strong>
-          ${ctx.lang === 'hi' ? 'आपके द्वारा चुने गए लग्न (D1), नक्षत्र और नवांश (D9) के आधार पर संपूर्ण 12-अध्याय फलित।' : 'Full 12-chapter Parashari & Navamsa reading calibrated to your custom planetary inputs.'}
+          ${ctx.lang === 'hi' ? 'आपके द्वारा चुने गए लग्न (D1), नक्षत्र और नवांश (D9) के आधार पर संपूर्ण फलित।' : 'Full Parashari & Navamsa reading calibrated to your custom planetary inputs.'}
         </div>`;
       } else {
-        calEl.innerHTML = `<div class="p-3.5 rounded-xl bg-purple-950/70 border border-amber-400/40 text-xs text-amber-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div><i class="fas fa-sparkles text-amber-400 mr-1.5"></i><strong>${ctx.lang === 'hi' ? 'सूर्य-चंद्र नक्षत्र एवं चैल्डियन सिंथेसिस मोड (बिना जन्म-समय):' : 'Solar-Lunar Nakshatra & Chaldean Synthesis Mode (DOB + Name):'}</strong>
-          ${ctx.lang === 'hi' ? 'जन्म-समय न होने पर भी आपकी जन्म-तिथि के सूर्य-चंद्र नक्षत्र और मूलांक-भाग्यांक से संपूर्ण 12 अध्याय और लग्न/नवांश चार्ट तैयार किए गए हैं।' : 'Even without birth time, all 12 chapters and derived charts are synthesized from your Solar-Lunar Nakshatra and Mulank-Bhagyank.'}</div>
-          <a href="#topKundaliWorkspace" class="px-3 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-200 font-bold shrink-0 text-center">${ctx.lang === 'hi' ? '+ जन्म-समय जोड़ें' : '+ Add Birth Time'}</a>
-        </div>`;
+        // PROMINENT RED 99.99% ALERT BANNER FOR DOB-ONLY USERS!
+        const moonShiftNoteHi = ctx.chart.moonShiftedSignThatDay
+          ? ` (नोट: आपके जन्म के दिन चंद्रमा ने <strong>${RASHI_DATA[ctx.chart.moonStartRashi].hi}</strong> और <strong>${RASHI_DATA[ctx.chart.moonEndRashi].hi}</strong> के बीच राशि परिवर्तन किया था!)`
+          : "";
+        const moonShiftNoteEn = ctx.chart.moonShiftedSignThatDay
+          ? ` (Note: On your birth date, the Moon transitioned between <strong>${RASHI_DATA[ctx.chart.moonStartRashi].en}</strong> and <strong>${RASHI_DATA[ctx.chart.moonEndRashi].en}</strong>!)`
+          : "";
+
+        calEl.innerHTML = `
+          <div class="p-4 rounded-2xl bg-red-950/90 border-2 border-red-500 text-xs md:text-sm text-red-100 flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 shadow-xl danger-glow">
+            <div class="space-y-1">
+              <div class="font-extrabold text-red-300 text-sm md:text-base flex items-center gap-2">
+                <i class="fas fa-exclamation-triangle text-red-400 animate-bounce"></i>
+                <span>${ctx.lang === 'hi' ? '🔴 ध्यान दें: आपने केवल जन्म-तिथि (Date of Birth) भरी है!' : '🔴 IMPORTANT: You Only Entered Your Date of Birth!'}</span>
+              </div>
+              <p class="mb-0 text-red-100/95 leading-relaxed">
+                ${ctx.lang === 'hi'
+                  ? `यह विश्लेषण आपकी जन्म-तिथि के दोपहर 12:00 IST के वास्तविक सूर्य-चंद्र ग्रहों और चैल्डियन अंक-ज्योतिष पर आधारित है${moonShiftNoteHi}। <strong>यदि आपको अपना जन्म-समय और जन्म-स्थान (शहर) भी पता है, तो उसे ऊपर फॉर्म में अवश्य भरें—जिससे हम आपकी लग्न कुंडली (D1), नवांश (D9), 337-बिंदु अष्टकवर्ग और महादशा की तारीखों के साथ 99.99% सटीक विश्लेषण दे सकें!</strong>`
+                  : `This reading is calibrated using your birth date's 12:00 PM Noon Natal Planets and Chaldean Numerology${moonShiftNoteEn}. <strong>If you also know your Birth Time & Place (City), enter them above so we can unlock your 99.99% Accurate Lagna Chart (D1), Navamsa (D9), 337-Bindu Ashtakavarga & Exact 120-Year Mahadasha Dates!</strong>`}
+              </p>
+            </div>
+            <button type="button" onclick="window.focusBirthTimeInput()" class="shrink-0 px-4 py-3 rounded-xl bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-extrabold text-xs md:text-sm shadow-lg transition transform hover:-translate-y-0.5 text-center">
+              <i class="fas fa-clock mr-1.5"></i>${ctx.lang === 'hi' ? 'जन्म-समय और शहर जोड़ें (99.99% सटीक) ↑' : 'Add Birth Time & City (99.99% Accuracy) ↑'}
+            </button>
+          </div>
+        `;
       }
     }
 
     if (togEl) {
-      togEl.classList.remove("hidden");
-      const isNum8 = ctx.viewFilter === "numerology_8";
-      togEl.innerHTML = `<div class="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-slate-950/85 border border-white/15 w-fit">
-        <button type="button" onclick="switchDossierView('full_12')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${!isNum8 ? 'bg-amber-500 text-slate-950 shadow' : 'text-gray-300 hover:text-white'}">
-          <i class="fas fa-dharmachakra mr-1"></i>${ctx.lang === 'hi' ? 'संपूर्ण 12-अध्याय कुंडली + चार्ट' : 'Full 12-Chapter Kundali + Charts'}
-        </button>
-        <button type="button" onclick="switchDossierView('numerology_8')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${isNum8 ? 'bg-purple-600 text-white shadow' : 'text-gray-300 hover:text-white'}">
-          <i class="fas fa-hashtag mr-1"></i>${ctx.lang === 'hi' ? 'केवल अंक-ज्योतिष दृश्य (8 अध्याय)' : 'Pure Numerology View (8 Chapters)'}
-        </button>
-      </div>`;
+      togEl.classList.add("hidden");
     }
   }
 
   function applyViewFilterVisibility(ctx) {
-    const isNum8 = ctx.viewFilter === "numerology_8";
-    const ch8 = document.getElementById("chapter-planets");
+    const isFull = ctx.chart.isFullChartMode;
     const ch9 = document.getElementById("chapter-lagnas");
-    if (ch8) ch8.style.display = isNum8 ? "none" : "";
-    if (ch9) ch9.style.display = isNum8 ? "none" : "";
+    // In DOB-Only mode, hide Chapter 9 (Special Lagnas & 337-Bindu Ashtakavarga) so we never show a fake Lagna SAV table!
+    if (ch9) ch9.style.display = isFull ? "" : "none";
+
+    // Also hide the Chapter 9 pill in the quick-jump nav bar when in DOB-Only mode
+    const navPills = document.querySelectorAll('.chapter-nav-pill[href="#chapter-lagnas"]');
+    navPills.forEach(p => { p.style.display = isFull ? "" : "none"; });
   }
 
   // ==========================================================================
-  // 11. HEADINGS, MASTHEAD, METRICS & SCROLLSPY CONTROLLER
+  // 12. HEADINGS, MASTHEAD, METRICS & SCROLLSPY CONTROLLER
   // ==========================================================================
 
   function updateChapterHeadingsAndNav(lang, ctx) {
+    const isFull = ctx.chart.isFullChartMode;
+    const cy = ctx.numData.currentYear;
+
     const labels = lang === "hi" ? {
-      ch1Tag: "अध्याय 01 • आंतरिक मनोविज्ञान एवं व्यक्तित्व",
-      ch1Title: "आपका अनकहा व्यक्तित्व, मानसिक संरचना एवं नाम-स्पंदन",
-      ch2Tag: "अध्याय 02 • मेधा, स्मरण शक्ति एवं शिक्षा",
-      ch2Title: "शिक्षा, एकाग्रता का पैटर्न एवं बौद्धिक डीएनए",
-      ch3Tag: "अध्याय 03 • कर्म क्षेत्र, अधिकार एवं उत्थान",
-      ch3Title: "करियर की दिशा, नौकरी बनाम व्यापार एवं कार्यक्षेत्र का सच",
-      ch4Tag: "अध्याय 04 • अर्थ, बैंक बैलेंस एवं संपत्ति संचय",
-      ch4Title: "धन योग, अचानक खर्च (Money Leaks) एवं समृद्धि सूत्र",
-      ch5Tag: "अध्याय 05 • भाग्य भाव एवं स्वर्णिम वर्ष",
-      ch5Title: "भाग्योदय का रहस्य एवं निर्णायक आयु वर्ष",
-      ch6Tag: "अध्याय 06 • प्रेम, आकर्षण एवं भावनात्मक संबंध",
-      ch6Title: "प्रेम जीवन, भावनात्मक समर्पण एवं रिश्तों का मनोविज्ञान",
-      ch7Tag: "अध्याय 07 • भावी जीवनसाथी एवं वैवाहिक भविष्य",
-      ch7Title: "जीवनसाथी का रंग-रूप, स्वभाव, दिशा एवं विवाह-पश्चात भाग्योदय",
-      ch8Tag: "अध्याय 08 • नवग्रह एवं पारस्परिक दृष्टि",
-      ch8Title: "सभी 9 ग्रहों का गहन फलित, स्वामित्व, युति एवं पाराशरी दृष्टियां (D1 + D9)",
-      ch9Tag: "अध्याय 09 • विशेष लग्न एवं 337-बिंदु अष्टकवर्ग",
+      ch1Tag: "अध्याय 01 • आंतरिक मनोविज्ञान एवं अतीत सत्यापन",
+      ch1Title: "आपका अनकहा व्यक्तित्व, अतीत की घटना एवं नाम-स्पंदन",
+      ch2Tag: "अध्याय 02 • मेधा, स्मरण शक्ति एवं परीक्षा योग",
+      ch2Title: "शिक्षा, फोकस पैटर्न एवं कौशल सफलता के वर्ष",
+      ch3Tag: "अध्याय 03 • कर्म क्षेत्र, प्रमोशन वर्ष एवं अधिकार",
+      ch3Title: "करियर उछाल के वर्ष, नौकरी बनाम व्यापार एवं कार्यक्षेत्र का सच",
+      ch4Tag: "अध्याय 04 • अर्थ, मनी लीक एवं आर्थिक सावधानी वर्ष",
+      ch4Title: "धन संचय सूत्र, अचानक खर्च एवं नुकसान से बचाव के वर्ष",
+      ch5Tag: "अध्याय 05 • भाग्य भाव एवं स्वर्णिम आयु वर्ष",
+      ch5Title: "भाग्योदय का रहस्य एवं जीवन बदलने वाले आयु वर्ष",
+      ch6Tag: "अध्याय 06 • प्रेम जीवन एवं भावनात्मक संबंध",
+      ch6Title: "प्रेम में समर्पण, भावनात्मक मोड़ एवं रिश्तों का सच",
+      ch7Tag: "अध्याय 07 • भावी जीवनसाथी, दिशा एवं विवाह वर्ष",
+      ch7Title: "जीवनसाथी का रंग-रूप, स्वभाव, दिशा एवं विवाह के प्रबल वर्ष",
+      chBabyTag: "अध्याय 08 • संतान सुख, गर्भधारण वर्ष एवं संतान-भाग्य",
+      chBabyTitle: "संतान प्राप्ति के प्रबल वर्ष, संतान का स्वभाव एवं भाग्योदय",
+      ch8Tag: isFull ? "अध्याय 09 • नवग्रह प्रत्यक्ष जीवन फल एवं दृष्टियां" : "अध्याय 09 • जन्म-दिवस के नवग्रह एवं प्रत्यक्ष जीवन फल",
+      ch8Title: isFull ? "सभी 9 ग्रहों का सटीक जीवन फल, सक्रियता आयु एवं दृष्टि चेतावनी" : "आपके जन्म-दिवस के सभी 9 ग्रहों का जीवन, करियर व स्वास्थ्य पर सीधा प्रभाव",
+      ch9Tag: "अध्याय 10 • विशेष लग्न एवं 337-बिंदु अष्टकवर्ग",
       ch9Title: "चंद्र, सूर्य, नवांश, आरूढ़ लग्न एवं प्रमाणित पाराशरी अष्टकवर्ग (BAV/SAV)",
-      ch10Tag: "अध्याय 10 • वर्तमान समय चक्र (महादशा एवं अंतर्दशा)",
-      ch10Title: "आपका वर्तमान समय-चक्र एवं आगामी 18 महीनों की भविष्यवाणी",
+      ch10Tag: isFull ? "अध्याय 11 • सक्रिय महादशा, अंतर्दशा एवं आगामी बदलाव" : `अध्याय 10 • ${cy}–${cy + 3} वार्षिक भविष्यफल एवं गोचर समय-चक्र`,
+      ch10Title: isFull ? "वर्तमान महादशा-अंतर्दशा की तारीखें एवं आगामी 18 महीनों की भविष्यवाणी" : `वर्ष ${cy} से ${cy + 3} तक का वर्ष-दर-वर्ष करियर, धन एवं संबंध भविष्यफल`,
       ch11Title: "⚠️ आपकी प्रगति को भीतर ही भीतर रोकने वाले 3 गुप्त ग्रह-अवरोध"
     } : {
-      ch1Tag: "Chapter 01 • Inner Psychology & Aura",
-      ch1Title: "Your Unspoken Personality & Mental Wiring",
-      ch2Tag: "Chapter 02 • Intellect, Memory & Academics",
-      ch2Title: "Education, Study Patterns & Intellectual DNA",
-      ch3Tag: "Chapter 03 • Karma, Rise & Professional Destiny",
-      ch3Title: "Career Trajectory, Best Fields & Workplace Reality",
-      ch4Tag: "Chapter 04 • Artha, Savings & Asset Accumulation",
-      ch4Title: "Wealth Potential, Money Leaks & Financial Peaks",
-      ch5Tag: "Chapter 05 • Bhagya, Grace & Golden Years",
-      ch5Title: "Your Luck Factor & Crucial Age Turning Points",
+      ch1Tag: "Chapter 01 • Inner Psychology & Past Verification",
+      ch1Title: "Your Unspoken Personality, Past Event Verification & Name Code",
+      ch2Tag: "Chapter 02 • Intellect, Memory & Exam Windows",
+      ch2Title: "Education, Focus Pattern & Skill Breakthrough Years",
+      ch3Tag: "Chapter 03 • Career Breakthroughs, Promotion Years & Command",
+      ch3Title: "Career Leap Windows, Job vs. Business & Workplace Reality",
+      ch4Tag: "Chapter 04 • Wealth, Money Leaks & Caution Windows",
+      ch4Title: "Wealth Formula, Money Leaks & High-Risk Caution Years",
+      ch5Tag: "Chapter 05 • Bhagya, Grace & Golden Ages",
+      ch5Title: "Your Luck Factor & Crucial Destiny Turning-Point Ages",
       ch6Tag: "Chapter 06 • Romance, Heartbreak & Attachment",
       ch6Title: "Love Life, Emotional Chemistry & Relationship Patterns",
-      ch7Tag: "Chapter 07 • Spouse Appearance, Nature & Marriage",
-      ch7Title: "Your Future Life Partner Traits & Post-Marriage Destiny",
-      ch8Tag: "Chapter 08 • All 9 Planetary Energies & Mutual Aspects",
-      ch8Title: "In-Depth Planetary Forces, Lordships & Mutual Aspects (D1 + D9)",
-      ch9Tag: "Chapter 09 • Multi-Dimensional Chart Synthesis",
+      ch7Tag: "Chapter 07 • Future Partner Traits, Direction & Marriage Years",
+      ch7Title: "Future Life Partner Appearance, Direction & Golden Marriage Years",
+      chBabyTag: "Chapter 08 • Progeny, Childbirth & Santan Yoga",
+      chBabyTitle: "Childbirth Timeline, First Child's Nature & Post-Baby Luck",
+      ch8Tag: isFull ? "Chapter 09 • All 9 Planets: Real-Life Verdicts & Aspects" : "Chapter 09 • Your Birth-Date Natal Planets & Real-Life Impact",
+      ch8Title: isFull ? "Sharp 3-Point Verdicts, Trigger Ages & Aspect Warnings for All 9 Planets" : "How All 9 Natal Planets on Your Birthday Shape Your Life, Health & Peak Ages",
+      ch9Tag: "Chapter 10 • Special Lagnas & 337-Bindu Ashtakavarga",
       ch9Title: "Special Lagnas (Chandra, Surya, Navamsa, Arudha) + Verified 337-Bindu SAV",
-      ch10Tag: "Chapter 10 • Active Time Cycle (Mahadasha & Antardasha)",
-      ch10Title: "Your Current Time Phase & Upcoming Life Transitions",
-      ch11Title: "⚠️ The Hidden Blockages & Unseen Traps Silently Sabotaging Your Progress"
+      ch10Tag: isFull ? "Chapter 11 • Active Mahadasha, Antardasha & Next Shift" : `Chapter 10 • Your ${cy}–${cy + 3} Year-by-Year Calendar Forecast`,
+      ch10Title: isFull ? "Current Mahadasha-Antardasha Dates & Next 18-Month Transition" : `Year-by-Year Forecast (${cy} to ${cy + 3}) for Career, Wealth & Relationships`,
+      ch11Title: "⚠️ The 3 Hidden Astrological Blockages Silently Sabotaging Your Progress"
     };
 
     Object.keys(labels).forEach(id => {
@@ -2543,33 +2683,39 @@
 
     if (badgeEl) {
       badgeEl.innerHTML = ctx.chart.isExactAstronomyMode
-        ? `<i class="fas fa-crown mr-1.5"></i> ${lang === "hi" ? "99.9% सटीक जन्म-समय वैदिक कुंडली + D1/D9 चार्ट" : "99.9% True Astronomical Vedic Chart + D1/D9 Dossier"}`
+        ? `<i class="fas fa-crown mr-1.5"></i> ${lang === "hi" ? "99.99% सटीक जन्म-समय वैदिक कुंडली + D1/D9 चार्ट" : "99.99% True Astronomical Vedic Chart + D1/D9 Dossier"}`
         : (ctx.chart.isFullChartMode
             ? `<i class="fas fa-crown mr-1.5"></i> ${lang === "hi" ? "99.9% पूर्ण वैदिक कुंडली + अष्टकवर्ग डॉसियर" : "99.9% Full Parashari + Jaimini + 337-SAV Dossier"}`
-            : `<i class="fas fa-star mr-1.5"></i> ${lang === "hi" ? "ज्योतिष तर्क सूर्य-चंद्र एवं अंक जीवन दस्तावेज" : "Jyotish Tark Solar-Lunar & Chaldean Life Dossier"}`);
+            : `<i class="fas fa-star mr-1.5"></i> ${lang === "hi" ? "सूर्य-चंद्र नक्षत्र एवं चैल्डियन जन्म-तिथि डॉसियर" : "Natal Solar-Lunar & Chaldean Date-of-Birth Dossier"}`);
     }
 
     if (headerNameEl) {
       headerNameEl.textContent = lang === "hi"
-        ? `${ctx.name} की संपूर्ण जीवन एवं भाग्य कुंडली`
+        ? `${ctx.name} की संपूर्ण जीवन एवं भविष्य कुंडली`
         : `${ctx.name}'s Complete Life & Destiny Dossier`;
     }
 
     if (headerSubEl) {
+      const sunName = lang === "hi" ? RASHI_DATA[ctx.chart.Sun.d1].hi : RASHI_DATA[ctx.chart.Sun.d1].en;
       const ascName = lang === "hi" ? RASHI_DATA[ctx.chart.Asc.d1].hi : RASHI_DATA[ctx.chart.Asc.d1].en;
       const moonName = lang === "hi" ? RASHI_DATA[ctx.chart.Moon.d1].hi : RASHI_DATA[ctx.chart.Moon.d1].en;
-      headerSubEl.innerHTML = lang === "hi"
-        ? `जन्म: <strong>${ctx.dob} (आयु ${ctx.numData.age})</strong> • मूलांक: <strong>${ctx.numData.mulank}</strong> • भाग्यांक: <strong>${ctx.numData.bhagyank}</strong> • लग्न: <strong>${ascName}</strong> • चंद्र: <strong>${moonName}</strong> • दशा: <strong>${PLANET_META[ctx.dasha.md].hi}–${PLANET_META[ctx.dasha.ad].hi}</strong>`
-        : `DOB: <strong>${ctx.dob} (Age ${ctx.numData.age})</strong> • Mulank: <strong>${ctx.numData.mulank}</strong> • Bhagyank: <strong>${ctx.numData.bhagyank}</strong> • Lagna: <strong>${ascName}</strong> • Moon: <strong>${moonName}</strong> • Dasha: <strong>${ctx.dasha.md}–${ctx.dasha.ad}</strong>`;
+      if (isFull) {
+        headerSubEl.innerHTML = lang === "hi"
+          ? `जन्म: <strong>${ctx.dob} (आयु ${ctx.numData.age})</strong> • मूलांक: <strong>${ctx.numData.mulank}</strong> • भाग्यांक: <strong>${ctx.numData.bhagyank}</strong> • लग्न: <strong>${ascName}</strong> • चंद्र: <strong>${moonName}</strong> • दशा: <strong>${PLANET_META[ctx.dasha.md].hi}–${PLANET_META[ctx.dasha.ad].hi}</strong>`
+          : `DOB: <strong>${ctx.dob} (Age ${ctx.numData.age})</strong> • Mulank: <strong>${ctx.numData.mulank}</strong> • Bhagyank: <strong>${ctx.numData.bhagyank}</strong> • Lagna: <strong>${ascName}</strong> • Moon: <strong>${moonName}</strong> • Dasha: <strong>${ctx.dasha.md}–${ctx.dasha.ad}</strong>`;
+      } else {
+        headerSubEl.innerHTML = lang === "hi"
+          ? `जन्म: <strong>${ctx.dob} (आयु ${ctx.numData.age})</strong> • मूलांक: <strong>${ctx.numData.mulank}</strong> • भाग्यांक: <strong>${ctx.numData.bhagyank}</strong> • सूर्य राशि: <strong>${sunName}</strong> • चंद्र नक्षत्र: <strong>${moonName} (${NAKSHATRA_DATA[ctx.chart.Moon.nak].name})</strong> • व्यक्तिगत वर्ष: <strong>PY-${ctx.numData.personalYear}</strong>`
+          : `DOB: <strong>${ctx.dob} (Age ${ctx.numData.age})</strong> • Mulank: <strong>${ctx.numData.mulank}</strong> • Bhagyank: <strong>${ctx.numData.bhagyank}</strong> • Natal Sun: <strong>${sunName}</strong> • Moon: <strong>${moonName} (${NAKSHATRA_DATA[ctx.chart.Moon.nak].name})</strong> • Personal Year: <strong>PY-${ctx.numData.personalYear}</strong>`;
+      }
     }
 
     const waSummary = encodeURIComponent(
-      `Namaste Gyanendra Ji 🙏\nI just read my 45-Minute Life Dossier on Jyotish Tark.\n` +
+      `Namaste Gyanendra Ji 🙏\nI just read my Life Dossier on Jyotish Tark.\n` +
       `• Name: ${ctx.name}\n` +
       `• DOB: ${ctx.dob} (Mulank ${ctx.numData.mulank} / Bhagyank ${ctx.numData.bhagyank})\n` +
-      `• Lagna: ${RASHI_DATA[ctx.chart.Asc.d1].en} | Moon: ${RASHI_DATA[ctx.chart.Moon.d1].en} (${NAKSHATRA_DATA[ctx.chart.Moon.nak].name})\n` +
-      `• Navamsa (D9) Lagna: ${RASHI_DATA[ctx.chart.Asc.d9].en}\n` +
-      `• Active Dasha: ${ctx.dasha.md} - ${ctx.dasha.ad}\n` +
+      `• ${isFull ? `Lagna: ${RASHI_DATA[ctx.chart.Asc.d1].en}` : `Natal Sun: ${RASHI_DATA[ctx.chart.Sun.d1].en}`} | Moon: ${RASHI_DATA[ctx.chart.Moon.d1].en} (${NAKSHATRA_DATA[ctx.chart.Moon.nak].name})\n` +
+      `• ${isFull ? `Active Dasha: ${ctx.dasha.md} - ${ctx.dasha.ad}` : `Personal Year: PY-${ctx.numData.personalYear}`}\n` +
       `I want to book my ₹1101 Complete Hand-Crafted Kundali & Personal Remedies.`
     );
     const waUrl = `https://wa.me/918318513814?text=${waSummary}`;
@@ -2586,7 +2732,7 @@
 
     const rawText = container.innerText || "";
     const wordCount = rawText.trim().split(/\s+/).filter(Boolean).length;
-    const mins = Math.max(35, Math.min(48, Math.round(wordCount / 115) + 14));
+    const mins = Math.max(25, Math.min(45, Math.round(wordCount / 120) + 12));
     badgeEl.innerHTML = lang === "hi"
       ? `~${mins} मिनट • ${wordCount.toLocaleString()}+ शब्द`
       : `~${mins} Mins • ${wordCount.toLocaleString()}+ Words`;
@@ -2628,6 +2774,13 @@
         width: 100% !important; max-width: 100% !important; min-width: 0 !important;
         box-sizing: border-box !important; display: block;
       }
+      input.form-input:-webkit-autofill,
+      input.form-input:-webkit-autofill:hover,
+      input.form-input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px #0f172a inset !important;
+        -webkit-text-fill-color: #fde68a !important;
+        caret-color: #fde68a !important;
+      }
       #lifeDossierForm .grid > div, #kundaliForm .grid > div, #masterDossierOutput .grid > div {
         min-width: 0 !important; max-width: 100% !important;
       }
@@ -2640,10 +2793,10 @@
   }
 
   // ==========================================================================
-  // 12. GLOBAL HELPERS & MASTER ENTRY POINT
+  // 13. GLOBAL HELPERS & MASTER ENTRY POINT
   // ==========================================================================
 
-  window.__jtViewFilter = "full_12"; // "full_12" | "numerology_8"
+  window.__jtViewFilter = "full_12";
 
   window.switchDossierView = function (viewFilter) {
     window.__jtViewFilter = viewFilter;
@@ -2670,7 +2823,7 @@
 
     const nameInput   = document.getElementById("userName")?.value.trim() || "Seeker";
     const dobInput    = document.getElementById("userDob")?.value || "1998-01-24";
-    const langInput   = document.getElementById("reportLang")?.value || "en";
+    const langInput   = document.getElementById("reportLang")?.value || "hi";
     const genderInput = document.getElementById("userGender")?.value || "male";
 
     const chaldean       = calculateChaldeanName(nameInput);
@@ -2679,6 +2832,7 @@
     const planetAnalysis = analyzeAllPlanetsAndAspects(chart);
     const specialLagnas  = computeSpecialLagnasAndBindus(chart);
     const dasha          = resolveActiveDasha(chart, numData);
+    const timeline       = computeLifeEventTimeline(numData, chart, planetAnalysis);
 
     const ctx = {
       name: nameInput,
@@ -2691,14 +2845,18 @@
       planetAnalysis,
       specialLagnas,
       dasha,
+      timeline,
       viewFilter: window.__jtViewFilter || "full_12",
       vedicData: window.__jtVedicData
     };
 
-    ctx.displayAsc     = RASHI_DATA[chart.Asc.d1].en;
+    ctx.displayAsc     = chart.isFullChartMode ? RASHI_DATA[chart.Asc.d1].en : `${RASHI_DATA[chart.Sun.d1].en} (Surya Base)`;
     ctx.displayMoon    = RASHI_DATA[chart.Moon.d1].en;
     ctx.displayMoonNak = NAKSHATRA_DATA[chart.Moon.nak].name;
     window.__jyotishLastCtx = ctx;
+
+    // Ensure Childbirth section exists and Guru Dakshina is positioned in the Middle
+    ensureChildbirthSectionAndMiddleDakshina(langInput);
 
     const setHtml = (id, html) => {
       const el = document.getElementById(id);
@@ -2713,11 +2871,12 @@
     setHtml("contentLuck",            buildChapter5Luck(ctx));
     setHtml("contentLove",            buildChapter6Love(ctx));
     setHtml("contentPartner",         buildChapter7Partner(ctx));
+    setHtml("contentChildbirth",      buildChapterChildbirth(ctx));
+    updateChapter12Dakshina(ctx); // Middle section right after Partner & Childbirth
     setHtml("contentPlanetsAspects",  buildChapter8PlanetsAndAspects(ctx));
     setHtml("contentSpecialLagnas",   buildChapter9SpecialLagnas(ctx));
     setHtml("contentTimePhase",       buildChapter10TimePhase(ctx));
     setHtml("contentHiddenTraps",     buildChapter11HiddenTraps(ctx));
-    updateChapter12Dakshina(ctx);
 
     renderCalibrationBannerAndSwitcher(ctx);
     renderVedicExtraSections(ctx);
