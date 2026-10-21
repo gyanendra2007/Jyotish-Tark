@@ -7,14 +7,14 @@
   <title>Free Vedic Tarot Card Reading (English & हिंदी) | Yes/No Timing & Partner Feelings | Jyotish Tark</title>
   <link rel="canonical" href="https://jyotishtark.in/tarot.html" />
   <meta name="description" content="Free 78-Card Vedic Tarot Reading in Hindi & English by Jyotish Tark. Check Yes/No Tarot with exact timing, Partner's Unspoken 2 AM Feelings, Career & Wealth Breakthrough, and Evil Eye/Aura Scan.">
-  <meta name="keywords" content="free tarot card reading in hindi, yes or no tarot with timing, partner current feelings tarot, love tarot reading online, career tarot prediction, vedic tarot reading, jyotish tark tarot, फ्री टैरो कार्ड रीडिंग हिंदी में, हाँ या ना टैरो, पार्टनर के दिल की बात टैरो, ज्योतिष तर्क टैरो">
+  <meta name="keywords" content="free tarot card reading in hindi, yes or no tarot with timing, partner current feelings tarot, love tarot reading online, career tarot prediction, vedic tarot reading, pick a card tarot hindi, jyotish tark tarot, फ्री टैरो कार्ड रीडिंग हिंदी में, हाँ या ना टैरो, पार्टनर के दिल की बात टैरो, ज्योतिष तर्क टैरो">
   <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
   <!-- Open Graph / WhatsApp / Social Preview -->
   <meta property="og:title" content="Free Vedic-Tarot Oracle (English & हिंदी) | Yes/No, Partner Feelings & Destiny | Jyotish Tark">
   <meta property="og:description" content="Pick 3 cards from the 78-Card Mystic Deck to decode your Yes/No probability, exact timing, partner's secret thoughts, and planetary karma.">
-  <meta property="og:image" content="https://jyotishtark.in/tarot.jpg">
+  <meta property="og:image" content="https://jyotishtark.in/sample.png">
   <meta property="og:url" content="https://jyotishtark.in/tarot.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Jyotish Tark">
@@ -23,8 +23,8 @@
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free 78-Card Vedic Tarot Reading (Yes/No & Partner Feelings) | Jyotish Tark">
-  <meta name="twitter:description" content="Pick 3 cards to reveal your Yes/No probability %, exact timing, and partner's unspoken thoughts in Hindi & English.">
-  <meta name="twitter:image" content="https://jyotishtark.in/tarot.jpg">
+  <meta name="twitter:description" content="Touch 3 cards to reveal your 0–100% Yes/No probability, timing, and partner's unspoken 2 AM feelings.">
+  <meta name="twitter:image" content="https://jyotishtark.in/sample.png">
 
   <!-- GOOGLE SEO STRUCTURED DATA (BreadcrumbList + WebApplication + FAQPage) -->
   <script type="application/ld+json">
@@ -90,6 +90,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "हाँ! ज्योतिष तर्क के इस निःशुल्क टैरो टूल में आप हिंदी या अंग्रेजी भाषा चुनकर अपने प्रश्न का हाँ/ना प्रतिशत, कार्य पूरा होने का सटीक समय और अपने पार्टनर के मन की अनकही भावनाएं तुरंत जान सकते हैं।"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between Upright (सीधा) and Reversed (उल्टा) Tarot Cards?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An Upright card indicates that the planetary energy of the card is flowing freely and externally, while a Reversed card indicates an internalized lesson, temporary delay, or karmic block that requires patience or a strategy shift."
             }
           }
         ]
@@ -197,9 +205,7 @@
     }
 
     .dropdown-content:hover,
-    .dropdown:hover .dropdown-content {
-      display: block !important;
-    }
+    .dropdown:hover .dropdown-content { display: block !important; }
 
     .dropdown::after {
       content: '';
@@ -215,6 +221,7 @@
     .dropdown-content a {
       display: flex;
       align-items: center;
+      gap: 10px;
       padding: 14px 20px;
       color: white;
       text-decoration: none;
@@ -494,6 +501,12 @@
       justify-content: space-between;
     }
 
+    /* CSS Compatibility Fixes for FontAwesome Icons in tarot-engine.js */
+    .fa-hand-Sparkles::before { content: "\f65d"; }
+    .fa-phoenix-framework::before { content: "\f06d"; }
+    .fa-planet-ringed::before { content: "\f0ac"; }
+    .fa-lantern::before { content: "\f0eb"; }
+
     .danger-glow { animation: dangerPulse 3s infinite; }
 
     @keyframes dangerPulse {
@@ -588,10 +601,7 @@
     }
 
     .footer-links a { transition: all 0.3s ease; }
-    .footer-links a:hover {
-      color: var(--secondary);
-      padding-left: 5px;
-    }
+    .footer-links a:hover { color: var(--secondary); padding-left: 5px; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -617,9 +627,9 @@
             Calculator <i class="fas fa-chevron-down ml-1.5 text-xs"></i>
           </button>
           <div class="dropdown-content">
-            <a href="kundali-form.html"><i class="fas fa-star text-amber-400 mr-2"></i>Free Kundali Dossier</a>
-            <a href="numerology.html"><i class="fas fa-calculator text-purple-400 mr-2"></i>Numerology Report</a>
-            <a href="tarot.html"><i class="fas fa-clover text-pink-400 mr-2"></i>Tarot Reading</a>
+            <a href="kundali-form.html"><i class="fas fa-star text-amber-400"></i> Free Kundali Dossier</a>
+            <a href="numerology.html"><i class="fas fa-calculator text-purple-400"></i> Numerology Report</a>
+            <a href="tarot.html"><i class="fas fa-clover text-pink-400"></i> Tarot Reading</a>
           </div>
         </div>
         <a href="panchang.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">Panchang</a>
@@ -650,7 +660,7 @@
           <i class="fas fa-chevron-down text-xs"></i>
         </div>
         <div class="mobile-dropdown-content">
-          <a href="kundali-form.html" class="flex items-center py-2.5 px-4 text-white"><i class="fas fa-star mr-3 text-amber-400"></i>Free 45-Min Kundali Dossier</a>
+          <a href="kundali-form.html" class="flex items-center py-2.5 px-4 text-white"><i class="fas fa-star mr-3 text-amber-400"></i>Free Kundali Dossier</a>
           <a href="numerology.html" class="flex items-center py-2.5 px-4 text-white"><i class="fas fa-calculator mr-3"></i>Numerology Report</a>
           <a href="tarot.html" class="flex items-center py-2.5 px-4 text-amber-300 font-bold"><i class="fas fa-clover mr-3"></i>Tarot Reading</a>
         </div>
@@ -678,7 +688,7 @@
     <ol class="flex items-center space-x-2">
       <li><a href="https://jyotishtark.in/" class="hover:text-amber-300">Home</a></li>
       <li><span>/</span></li>
-      <li class="text-amber-300 font-medium">78-Card Vedic Tarot & Yes/No Oracle</li>
+      <li class="text-amber-300 font-medium">Free 78-Card Vedic Tarot Reading</li>
     </ol>
   </nav>
 
@@ -716,7 +726,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-900/65 p-4 md:p-5 rounded-2xl border border-white/10">
           <div>
             <label for="tarotUserName" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-signature text-amber-400 mr-1"></i>Your Name (आपका नाम)
+              <i class="fas fa-signature text-amber-400 mr-1"></i>Your Name (नाम)
             </label>
             <input type="text" id="tarotUserName" class="form-input" placeholder="e.g., Priya Sharma">
           </div>
@@ -740,9 +750,9 @@
 
           <div>
             <label for="tarotUserQuestion" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-comment-dots text-amber-400 mr-1"></i>Your Question / Partner's Name (Optional)
+              <i class="fas fa-comment-dots text-amber-400 mr-1"></i>Your Question / Person's Name (Optional)
             </label>
-            <input type="text" id="tarotUserQuestion" class="form-input" placeholder="e.g., क्या हमारा विवाह होगा? / Career">
+            <input type="text" id="tarotUserQuestion" class="form-input" placeholder="मन का प्रश्न या पार्टनर का नाम...">
           </div>
         </div>
       </div>
@@ -811,7 +821,7 @@
           </button>
         </div>
 
-        <p id="activeSpreadModeSubtitle" class="text-xs md:text-sm text-amber-200/90 mt-3 text-center bg-slate-950/60 py-2 px-4 rounded-xl border border-white/10 hindi">
+        <p id="activeSpreadModeSubtitle" class="text-xs md:text-sm text-amber-200/90 mt-3 text-center bg-slate-950/60 py-2 px-4 rounded-xl border border-white/10">
           आपके प्रश्न की सफलता का प्रतिशत (0–100%), गुप्त शर्त और कार्य पूर्ण होने का सटीक समय।
         </p>
       </div>
@@ -927,23 +937,49 @@
           <!-- Populated by tarot-engine.js -->
         </div>
 
+        <!-- NEW VIRAL SHARE & ACTION BAR -->
+        <div class="p-4 md:p-5 rounded-2xl bg-slate-900/95 border border-emerald-500/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-center sm:text-left">
+            <h4 class="font-bold text-white text-sm md:text-base hindi">✨ क्या यह टैरो भविष्यवाणी आपके मन की स्थिति से मेल खाती है?</h4>
+            <p class="text-xs text-gray-300 hindi">अपने कार्ड्स का परिणाम WhatsApp पर शेयर करें या अपनी 45-मिनट की संपूर्ण जन्म-कुंडली अभी चेक करें:</p>
+          </div>
+          <div class="flex flex-wrap justify-center gap-2.5 shrink-0">
+            <button type="button" onclick="shareTarotReadingOnWhatsApp()" class="px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-xs md:text-sm flex items-center gap-2 shadow-lg transition">
+              <i class="fab fa-whatsapp text-base"></i> Share My Tarot Cards
+            </button>
+            <button type="button" onclick="launchKundaliFromTarot()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs md:text-sm flex items-center gap-2 shadow-lg transition">
+              <i class="fas fa-star"></i> Open My 45-Min Kundali →
+            </button>
+          </div>
+        </div>
+
         <!-- 2. Detailed 3-Card Position Breakdown -->
         <div id="threeCardDetailedCards" class="space-y-5">
           <!-- Populated by tarot-engine.js -->
         </div>
 
-        <!-- 3. Critical Vedic-Tarot Root-Cause Hook (Funnels to Free 45-Min Kundali, Rudraksha & ₹1101 Consultation) -->
+        <!-- 3. Critical Vedic-Tarot Root-Cause Hook -->
         <div id="tarotKarmicDiagnosticBox" class="danger-glow rounded-3xl bg-gradient-to-br from-red-950/90 via-slate-950 to-purple-950/90 p-6 md:p-8 border-2 border-red-500/70 shadow-2xl">
           <!-- Populated by tarot-engine.js -->
         </div>
 
-        <!-- Viral Share & Draw Again Action Bar -->
-        <div class="flex flex-wrap justify-center gap-4 pt-2">
-          <button type="button" onclick="shareTarotReadingOnWhatsApp()" class="bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3.5 rounded-full shadow-lg flex items-center gap-2 transition text-sm">
-            <i class="fab fa-whatsapp text-lg"></i> Share My 3-Card Tarot Reading on WhatsApp
-          </button>
+        <!-- NEW: Energized Rudraksha Aura Shield Banner -->
+        <div class="p-5 rounded-2xl bg-slate-950/90 border border-amber-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1 text-center sm:text-left">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/20 px-3 py-0.5 rounded-full">
+              <i class="fas fa-shield-alt mr-1"></i> Vedic Aura & Graha Shield
+            </span>
+            <h4 class="text-lg font-bold text-white hindi">नकारात्मक स्पंदन, बुरी नज़र और ग्रह-अवरोध से रक्षा हेतु अभिमंत्रित रुद्राक्ष</h4>
+            <p class="text-xs text-gray-300 hindi">अपने कार्ड्स में आए उग्र ग्रहों और मानसिक तनाव को शांत करने के लिए 100% लैब-प्रमाणित नेपाली रुद्राक्ष (₹499 से शुरू) धारण करें।</p>
+          </div>
+          <a href="rudraksha.html" class="shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-extrabold text-xs md:text-sm shadow-lg transition">
+            <i class="fas fa-gem mr-1.5"></i> सिद्ध रुद्राक्ष चुनें →
+          </a>
+        </div>
 
-          <button type="button" onclick="resetTarotDeckAndSpread(true)" class="secondary-button text-sm">
+        <!-- Draw Again Button -->
+        <div class="text-center pt-2">
+          <button type="button" onclick="resetTarotDeckAndSpread(true)" class="secondary-button">
             <i class="fas fa-redo mr-2"></i> Shuffle Deck & Ask Another Question
           </button>
         </div>
@@ -972,14 +1008,14 @@
         </div>
       </div>
 
-      <!-- Contextual Internal Links Silo -->
-      <div class="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-        <span class="text-sm font-semibold text-amber-300 hindi"><i class="fas fa-compass mr-1.5"></i>संबंधित वैदिक टूल्स एवं लेख:</span>
-        <div class="flex flex-wrap gap-2.5 text-xs md:text-sm">
-          <a href="kundali-form.html" class="bg-amber-500/20 border border-amber-400/40 text-amber-300 px-4 py-2 rounded-full font-bold transition">🌌 Free 45-Min Kundali Dossier</a>
-          <a href="numerology.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition">🔢 Chaldean Name & Mulank Calculator</a>
-          <a href="evil-eye-science-aura.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition hindi">🧿 बुरी नज़र (Evil Eye) और ऑरा विज्ञान</a>
-          <a href="rudraksha.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition hindi">📿 अभिमंत्रित रुद्राक्ष कवच</a>
+      <!-- Contextual Internal Silo Links -->
+      <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <span class="text-xs md:text-sm font-semibold text-amber-300 hindi"><i class="fas fa-link mr-1.5"></i>संबंधित ज्योतिष एवं मेडिकल साइंस लेख:</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="evil-eye-science-aura.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🧿 बुरी नज़र (Evil Eye) का विज्ञान</a>
+          <a href="nadi-dosha-blood-group.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🧬 नाड़ी दोष और ब्लड ग्रुप</a>
+          <a href="numerology.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🔢 चैल्डियन अंक ज्योतिष</a>
+          <a href="kundali-milan.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">💍 कुंडली मिलान और जीवनसाथी</a>
         </div>
       </div>
     </section>
@@ -1049,9 +1085,9 @@
         <div>
           <h4 class="font-semibold text-amber-300 mb-4">Services & Store</h4>
           <ul class="space-y-2.5 footer-links text-sm">
-            <li><a href="kundali-form.html" class="text-gray-300">Order Hand-Made Kundali (₹1101)</a></li>
+            <li><a href="kundali-form.html" class="text-gray-300">Get Your Kundali</a></li>
+            <li><a href="numerology.html" class="text-gray-300">Numerology Report</a></li>
             <li><a href="rudraksha.html" class="text-gray-300">Buy Lab-Certified Rudraksha</a></li>
-            <li><a href="durga-saptashati-hindi-pdf.html" class="text-gray-300">Free Durga Saptashati PDF</a></li>
             <li><a href="blog.html" class="text-gray-300">Medical Astrology Blogs</a></li>
             <li><a href="contact.html" class="text-gray-300">Consult Astrologer</a></li>
           </ul>
@@ -1079,7 +1115,10 @@
     </div>
   </footer>
 
-  <!-- Navigation & WhatsApp UI Script -->
+  <!--EXTERNAL 78-CARD VEDIC-TAROT FUSION ENGINE -->
+  <script src="tarot-engine.js"></script>
+
+  <!-- Navigation, Mystical Card Chime, WhatsApp Viral Share & Kundali Bridge -->
   <script>
     document.getElementById('menuToggle').addEventListener('click', function() {
       const mobileNav = document.getElementById('mobileNav');
@@ -1104,9 +1143,74 @@
         whatsappPopup.style.display = 'none';
       }
     });
-  </script>
 
-  <!-- EXTERNAL 78-CARD VEDIC-TAROT FUSION ENGINE -->
-  <script src="tarot-engine.js"></script>
+    // Subtle Web Audio API Chime & Haptic Vibration when picking Tarot cards
+    function playMysticCardChime() {
+      if (navigator.vibrate) navigator.vibrate(30);
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(528, ctx.currentTime); // 528Hz Solfeggio chime
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.24);
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const origSelectCard = window.selectCardFromMysticFan;
+      if (typeof origSelectCard === 'function') {
+        window.selectCardFromMysticFan = function(fanIdx, btnEl) {
+          playMysticCardChime();
+          origSelectCard(fanIdx, btnEl);
+        };
+      }
+    });
+
+    // Viral Share Function for 3-Card Tarot Reading
+    function shareTarotReadingOnWhatsApp() {
+      const name = document.getElementById('tarotUserName')?.value.trim() || 'मैंने';
+      const c1 = document.getElementById('slotCardTitle_1')?.textContent || 'Card 1';
+      const c2 = document.getElementById('slotCardTitle_2')?.textContent || 'Card 2';
+      const c3 = document.getElementById('slotCardTitle_3')?.textContent || 'Card 3';
+      const probEl = document.querySelector('#oracleVerdictContainer .text-4xl');
+      const prob = probEl ? probEl.textContent.trim() : '';
+
+      const msg =
+        `🃏 *${name} ने अभी Jyotish Tark पर 78-Card Vedic Tarot से अपनी भविष्यवाणी और Yes/No प्रतिशत चेक किया!* ✨\n\n` +
+        `🔮 *मेरे 3 दिव्य कार्ड्स:*\n` +
+        `1️⃣ ${c1}\n2️⃣ ${c2}\n3️⃣ ${c3}\n` +
+        (prob ? `⚡ *सफलता संभावना (Cosmic Probability):* ${prob}\n\n` : '\n') +
+        `आप भी अपने मन का प्रश्न, पार्टनर के दिल की अनकही बात या करियर का सटीक समय *100% FREE* में यहाँ चेक करें 👇\n` +
+        `https://jyotishtark.in/tarot.html`;
+
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Bridge user's Name & DOB straight to kundali-form.html
+    function launchKundaliFromTarot() {
+      const name = document.getElementById('tarotUserName')?.value.trim() || 'Seeker';
+      const dob  = document.getElementById('tarotUserDob')?.value || '';
+      const lang = document.getElementById('tarotLang')?.value || 'hi';
+
+      if (dob) {
+        localStorage.setItem('jt_prefill_dossier', JSON.stringify({
+          name: name,
+          dob: dob,
+          lang: lang,
+          autoRun: true
+        }));
+        window.location.href = `kundali-form.html?name=${encodeURIComponent(name)}&dob=${encodeURIComponent(dob)}&lang=${encodeURIComponent(lang)}&autorun=1`;
+      } else {
+        window.location.href = 'kundali-form.html';
+      }
+    }
+  </script>
 </body>
 </html>
