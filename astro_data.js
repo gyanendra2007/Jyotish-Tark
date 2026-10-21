@@ -1,4 +1,5 @@
-// astro_data.js - Full October 2026 Panchang & Ephemeris Engine for Jyotish Tark (Lucknow)
+// astro_data.js - Complete Ephemeris & Panchang Engine (October & November 2026 + Dynamic Fallback)
+// Location: Lucknow, Uttar Pradesh, India (26.8467° N, 80.9462° E) • Jyotish Tark
 
 const RASHI_LIST = [
     "मेष (Aries)", "वृषभ (Taurus)", "मिथुन (Gemini)", "कर्क (Cancer)", 
@@ -16,7 +17,7 @@ const NAKSHATRA_LIST = [
     "पूर्वाभाद्रपद (Purva Bhadrapada)", "उत्तराभाद्रपद (Uttara Bhadrapada)", "रेवती (Revati)"
 ];
 
-// Weekday Rules (0=Sun ... 6=Sat) for Lucknow
+// Weekday Rules (0=Sun ... 6=Sat) for Lucknow with Standardized Timing Intervals
 const WEEKDAY_META = [
     {
         hi: "रविवार", en: "Sunday", planet: "सूर्य (Sun)",
@@ -63,8 +64,8 @@ const WEEKDAY_META = [
         rahu: ["10:27", "11:53", "10:27 AM - 11:53 AM"],
         yama: ["14:45", "16:11", "02:45 PM - 04:11 PM"],
         gulika: ["07:35", "09:01", "07:35 AM - 09:01 AM"],
-        disha: "पश्चिम (West) - जौ या दही खाकर प्रस्थान करें",
-        remedy: "मां लक्ष्मी को सफेद मिठाई या खीर का भोग लगाएं और स्वच्छ वस्त्र पहनें।"
+        disha: "पश्चिम (West) - जौ या राई खाकर प्रस्थान करें",
+        remedy: "मां लक्ष्मी को सफेद मिठाई या खीर का भोग लगाएं और इत्र का प्रयोग करें।"
     },
     {
         hi: "शनिवार", en: "Saturday", planet: "शनि (Saturn)",
@@ -76,8 +77,7 @@ const WEEKDAY_META = [
     }
 ];
 
-// Compact 31-Day Ephemeris for October 2026 (Lucknow)
-// Format: [day, dow(0-6), paksha, masa, tithi, nakIdx, nakName, yoga, karana, moonIdx, sunrise, sunset, moonrise, festival, isRiktaOrBhadra]
+// Ephemeris Raw Matrix: October 2026 (Days 1–31)
 const OCT_2026_RAW = [
     [1, 4, "कृष्ण पक्ष", "आश्विन", "षष्ठी (08:40 PM तक), उपरांत सप्तमी", 3, "रोहिणी (09:12 PM तक)", "व्यतीपात", "गर / वणिज", 1, "06:00 AM", "05:54 PM", "09:52 PM", "षष्ठी श्राद्ध, रोहिणी व्रत", false],
     [2, 5, "कृष्ण पक्ष", "आश्विन", "सप्तमी (07:25 PM तक), उपरांत अष्टमी", 4, "मृगशिरा (08:30 PM तक)", "वरीयान", "विष्टि (भद्रा सुबह)", 1, "06:00 AM", "05:53 PM", "10:44 PM", "सप्तमी श्राद्ध, गांधी जयंती", true],
@@ -112,111 +112,258 @@ const OCT_2026_RAW = [
     [31, 6, "कृष्ण पक्ष", "कार्तिक", "षष्ठी (07:02 PM तक)", 5, "आर्द्रा (10:12 AM तक), उपरांत पुनर्वसु", "शिव", "तैतिल / गर", 2, "06:17 AM", "05:25 PM", "10:04 PM", "स्कन्द षष्ठी (कार्तिक कृष्ण)", false]
 ];
 
-// Build full ASTRO_DATABASE dynamically for all 31 days
+// Ephemeris Raw Matrix: November 2026 (Days 1–30, Lucknow)
+const NOV_2026_RAW = [
+    [1, 0, "कृष्ण पक्ष", "कार्तिक", "सप्तमी (05:10 PM तक), उपरांत अष्टमी", 6, "पुनर्वसु (09:02 AM तक), उपरांत पुष्य", "सिद्ध", "गर / वणिज", 3, "06:18 AM", "05:24 PM", "11:05 PM", "अहोई अष्टमी व्रत (राधाष्टमी अहोई)", false],
+    [2, 1, "कृष्ण पक्ष", "कार्तिक", "अष्टमी (03:32 PM तक), उपरांत नवमी", 7, "पुष्य (08:10 AM तक), उपरांत आश्लेषा", "साध्य", "विष्टि / बव", 3, "06:19 AM", "05:23 PM", "12:07 AM (3 Nov)", "अष्टमी श्राद्ध पूर्ति, कालाष्टमी", false],
+    [3, 2, "कृष्ण पक्ष", "कार्तिक", "नवमी (02:12 PM तक), उपरांत दशमी", 8, "आश्लेषा (07:35 AM तक), उपरांत मघा", "शुभ", "बालव / कौलव", 4, "06:19 AM", "05:23 PM", "01:08 AM (4 Nov)", "कार्तिक नवमी", false],
+    [4, 3, "कृष्ण पक्ष", "कार्तिक", "दशमी (01:10 PM तक), उपरांत एकादशी", 9, "मघा (07:20 AM तक), उपरांत पूर्वाफाल्गुनी", "शुक्ल", "तैतिल / गर", 4, "06:20 AM", "05:22 PM", "02:08 AM (5 Nov)", "रमा एकादशी व्रत नियम", false],
+    [5, 4, "कृष्ण पक्ष", "कार्तिक", "एकादशी (12:30 PM तक), उपरांत द्वादशी", 10, "पूर्वाफाल्गुनी (07:30 AM तक), उपरांत उत्तराफाल्गुनी", "ब्रह्म", "वणिज / विष्टि", 5, "06:21 AM", "05:21 PM", "03:07 AM (6 Nov)", "रमा एकादशी व्रत (श्री हरि विष्णु पूजन)", false],
+    [6, 5, "कृष्ण पक्ष", "कार्तिक", "द्वादशी (12:15 PM तक), उपरांत त्रयोदशी", 11, "उत्तराफाल्गुनी (08:05 AM तक), उपरांत हस्त", "इन्द्र", "बव / बालव", 5, "06:21 AM", "05:21 PM", "04:06 AM (7 Nov)", "गोवत्स द्वादशी (बछ बारस), शुक्र प्रदोष", false],
+    [7, 6, "कृष्ण पक्ष", "कार्तिक", "त्रयोदशी (12:32 PM तक), उपरांत चतुर्दशी", 12, "हस्त (09:05 AM तक), उपरांत चित्रा", "वैधृति", "कौलव / तैतिल", 5, "06:22 AM", "05:20 PM", "05:07 AM (8 Nov)", "धनतेरस (धनत्रयोदशी), यम दीपदान", false],
+    [8, 0, "कृष्ण पक्ष", "कार्तिक", "चतुर्दशी (01:20 PM तक), उपरांत अमावस्या", 13, "चित्रा (10:30 AM तक), उपरांत स्वाति", "विष्कम्भ", "गर / वणिज", 6, "06:23 AM", "05:19 PM", "06:10 PM", "दीपावली (महालक्ष्मी पूजन), नरक चतुर्दशी (हनुमान पूजा)", false],
+    [9, 1, "शुक्ल पक्ष", "कार्तिक", "प्रतिपदा (02:40 PM तक), उपरांत द्वितीया", 14, "स्वाति (12:18 PM तक), उपरांत विशाखा", "प्रीति", "विष्टि / बव", 6, "06:24 AM", "05:19 PM", "07:05 PM", "गोवर्धन पूजा, अन्नकूट महोत्सव, बलि प्रतिपदा", false],
+    [10, 2, "शुक्ल पक्ष", "कार्तिक", "द्वितीया (04:22 PM तक), उपरांत तृतीया", 15, "विशाखा (02:25 PM तक), उपरांत अनुराधा", "आयुष्मान", "बालव / कौलव", 7, "06:24 AM", "05:18 PM", "08:02 PM", "भाई दूज (यम द्वितीया), चित्रगुप्त पूजा", false],
+    [11, 3, "शुक्ल पक्ष", "कार्तिक", "तृतीया (06:20 PM तक), उपरांत चतुर्थी", 16, "अनुराधा (04:45 PM तक), उपरांत ज्येष्ठा", "सौभाग्य", "तैतिल / गर", 7, "06:25 AM", "05:18 PM", "09:00 PM", "कार्तिक शुक्ल तृतीया", false],
+    [12, 4, "शुक्ल पक्ष", "कार्तिक", "चतुर्थी (08:25 PM तक), उपरांत पंचमी", 17, "ज्येष्ठा (07:15 PM तक), उपरांत मूल", "शोभन", "वणिज / विष्टि", 7, "06:26 AM", "05:17 PM", "09:58 PM", "विनायक चतुर्थी, छठ पूजा नहाय-खाय", true],
+    [13, 5, "शुक्ल पक्ष", "कार्तिक", "पंचमी (10:30 PM तक), उपरांत षष्ठी", 18, "मूल (09:40 PM तक), उपरांत पूर्वाषाढ़ा", "अतिगण्ड", "बव / बालव", 8, "06:27 AM", "05:17 PM", "10:55 PM", "लाभ पंचमी, ज्ञान पंचमी, छठ पूजा खरना", false],
+    [14, 6, "शुक्ल पक्ष", "कार्तिक", "षष्ठी (12:25 AM 15 Nov तक)", 19, "पूर्वाषाढ़ा (11:50 PM तक)", "सुकर्मा", "कौलव / तैतिल", 8, "06:27 AM", "05:16 PM", "11:51 PM", "छठ पूजा (सायंकालीन अर्घ्य - सूर्य षष्ठी)", false],
+    [15, 0, "शुक्ल पक्ष", "कार्तिक", "सप्तमी (01:55 AM 16 Nov तक)", 20, "उत्तराषाढ़ा (पूरे दिन)", "धृति", "गर / वणिज", 9, "06:28 AM", "05:16 PM", "12:44 PM", "छठ पूजा (प्रातःकालीन अर्घ्य पारण), भानु सप्तमी", false],
+    [16, 1, "शुक्ल पक्ष", "कार्तिक", "अष्टमी (02:50 AM 17 Nov तक)", 20, "उत्तराषाढ़ा (01:35 AM तक), उपरांत श्रवण", "शूल", "विष्टि / बव", 9, "06:29 AM", "05:15 PM", "01:33 PM", "गोपाष्टमी (गौ माता पूजन), वृश्चिक संक्रांति", false],
+    [17, 2, "शुक्ल पक्ष", "कार्तिक", "नवमी (03:10 AM 18 Nov तक)", 21, "श्रवण (02:40 AM तक), उपरांत धनिष्ठा", "गण्ड", "बालव / कौलव", 9, "06:30 AM", "05:15 PM", "02:18 PM", "आंवला नवमी (अक्षय नवमी), कुष्मांड नवमी", false],
+    [18, 3, "शुक्ल पक्ष", "कार्तिक", "दशमी (02:50 AM 19 Nov तक)", 22, "धनिष्ठा (03:05 AM तक), उपरांत शतभिषा", "वृद्धि", "तैतिल / गर", 10, "06:30 AM", "05:14 PM", "02:59 PM", "कार्तिक शुक्ल दशमी", false],
+    [19, 4, "शुक्ल पक्ष", "कार्तिक", "एकादशी (01:55 AM 20 Nov तक)", 23, "शतभिषा (02:50 AM तक), उपरांत पूर्वाभाद्रपद", "ध्रुव", "वणिज / विष्टि", 10, "06:31 AM", "05:14 PM", "03:38 PM", "देवउठनी एकादशी (प्रबोधिनी एकादशी), भीष्म पंचक प्रारंभ", false],
+    [20, 5, "शुक्ल पक्ष", "कार्तिक", "द्वादशी (12:30 AM 21 Nov तक)", 24, "पूर्वाभाद्रपद (02:05 AM तक), उपरांत उत्तराभाद्रपद", "व्याघात", "बव / बालव", 10, "06:32 AM", "05:14 PM", "04:16 PM", "तुलसी विवाह, योगेश्वर द्वादशी, शुक्र प्रदोष", false],
+    [21, 6, "शुक्ल पक्ष", "कार्तिक", "त्रयोदशी (10:35 PM तक), उपरांत चतुर्दशी", 25, "उत्तराभाद्रपद (12:55 AM तक), उपरांत रेवती", "हर्षण", "कौलव / तैतिल", 11, "06:33 AM", "05:13 PM", "04:54 PM", "वैकुंठ चतुर्दशी व्रत प्रारंभ, शनि प्रदोष", false],
+    [22, 0, "शुक्ल पक्ष", "कार्तिक", "चतुर्दशी (08:20 PM तक), उपरांत पूर्णिमा", 26, "रेवती (11:25 PM तक), उपरांत अश्विनी", "वज्र", "गर / वणिज", 11, "06:33 AM", "05:13 PM", "05:35 PM", "वैकुंठ चतुर्दशी (हरिहर मिलन), मणिकर्णिका स्नान", false],
+    [23, 1, "शुक्ल पक्ष", "कार्तिक", "पूर्णिमा (05:50 PM तक), उपरांत प्रतिपदा", 0, "अश्विनी (09:40 PM तक), उपरांत भरणी", "सिद्धि", "विष्टि / बव", 0, "06:34 AM", "05:13 PM", "06:19 PM", "कार्तिक पूर्णिमा, देव दीपावली, गुरु नानक जयंती", false],
+    [24, 2, "कृष्ण पक्ष", "मार्गशीर्ष", "प्रतिपदा (03:15 PM तक), उपरांत द्वितीया", 1, "भरणी (07:45 PM तक), उपरांत कृत्तिका", "व्यतीपात", "बालव / कौलव", 0, "06:35 AM", "05:13 PM", "07:08 PM", "मार्गशीर्ष (अगहन) मास प्रारंभ", false],
+    [25, 3, "कृष्ण पक्ष", "मार्गशीर्ष", "द्वितीया (12:40 PM तक), उपरांत तृतीया", 2, "कृत्तिका (05:48 PM तक), उपरांत रोहिणी", "वरीयान", "तैतिल / गर", 1, "06:36 AM", "05:12 PM", "08:00 PM", "रोहिणी व्रत, अशून्य शयन", false],
+    [26, 4, "कृष्ण पक्ष", "मार्गशीर्ष", "तृतीया (10:15 AM तक), उपरांत चतुर्थी", 3, "रोहिणी (03:55 PM तक), उपरांत मृगशिरा", "परिघ", "वणिज / विष्टि", 1, "06:37 AM", "05:12 PM", "08:55 PM", "संकष्टी चतुर्थी (गणाधिप संकष्टी)", false],
+    [27, 5, "कृष्ण पक्ष", "मार्गशीर्ष", "चतुर्थी (08:02 AM तक), उपरांत पंचमी", 4, "मृगशिरा (02:15 PM तक), उपरांत आर्द्रा", "शिव", "बव / बालव", 2, "06:37 AM", "05:12 PM", "09:53 PM", "कार्तिक/मार्गशीर्ष संक्रमण", false],
+    [28, 6, "कृष्ण पक्ष", "मार्गशीर्ष", "षष्ठी (04:35 AM 29 Nov तक)", 5, "आर्द्रा (12:55 PM तक), उपरांत पुनर्वसु", "सिद्ध", "कौलव / तैतिल", 2, "06:38 AM", "05:12 PM", "10:52 PM", "चंपा षष्ठी (मार्गशीर्ष कृष्ण)", false],
+    [29, 0, "कृष्ण पक्ष", "मार्गशीर्ष", "सप्तमी (03:25 AM 30 Nov तक)", 6, "पुनर्वसु (12:00 PM तक), उपरांत पुष्य", "साध्य", "गर / वणिज", 2, "06:39 AM", "05:12 PM", "11:51 PM", "भानु सप्तमी (मार्गशीर्ष)", false],
+    [30, 1, "कृष्ण पक्ष", "मार्गशीर्ष", "अष्टमी (02:40 AM 1 Dec तक)", 7, "पुष्य (11:32 AM तक), उपरांत आश्लेषा", "शुभ", "विष्टि / बव", 3, "06:40 AM", "05:12 PM", "चंद्रोदय (00:51 AM 1 Dec)", "कालभैरव जयंती (भैरवाष्टमी)", false]
+];
+
+// Combine October & November into the Primary High-Precision Database
 const ASTRO_DATABASE = {};
 
-OCT_2026_RAW.forEach(row => {
-    const [day, dow, paksha, masa, tithi, nakIdx, nakName, yoga, karana, moonIdx, sunrise, sunset, moonrise, festival, isCautionDay] = row;
-    const dateKey = `2026-10-${String(day).padStart(2, '0')}`;
+function compileRawRecords(records, yearMonthPrefix) {
+    records.forEach(row => {
+        const [day, dow, paksha, masa, tithi, nakIdx, nakName, yoga, karana, moonIdx, sunrise, sunset, moonrise, festival, isCautionDay] = row;
+        const dateKey = `${yearMonthPrefix}-${String(day).padStart(2, '0')}`;
+        const wMeta = WEEKDAY_META[dow];
+
+        const charaOrShubhNak = [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 25, 26].includes(nakIdx);
+        const baseScore = isCautionDay ? 52 : (charaOrShubhNak ? 88 : 74);
+        const statusType = baseScore >= 75 ? "good" : (baseScore >= 55 ? "caution" : "bad");
+
+        const sunSignStr = (yearMonthPrefix === "2026-10")
+            ? (day < 17 ? "कन्या (Virgo)" : "तुला (Libra)")
+            : (day < 16 ? "तुला (Libra)" : "वृश्चिक (Scorpio)");
+
+        ASTRO_DATABASE[dateKey] = {
+            dateHindi: `${wMeta.hi}, ${day} ${yearMonthPrefix === "2026-10" ? "अक्टूबर" : "नवंबर"} 2026`,
+            dateEnglish: `${day} ${yearMonthPrefix === "2026-10" ? "October" : "November"} 2026`,
+            festival: festival,
+            moonSignIndex: moonIdx,
+            nakshatraIndex: nakIdx,
+            panchang: {
+                tithi: `${paksha.split(' ')[0]} ${tithi}`,
+                nakshatra: nakName,
+                yoga: `${yoga} योग`,
+                karana: karana,
+                paksha: paksha,
+                masa: `${masa} मास`,
+                sunrise: sunrise,
+                sunset: sunset,
+                moonrise: moonrise,
+                moonset: "प्रातः/मध्यरात्रि (स्थानीय गणना)",
+                moonSign: RASHI_LIST[moonIdx],
+                sunSign: sunSignStr,
+                brahmaMuhurat: "04:38 AM - 05:26 AM",
+                abhijitMuhurat: dow === 3 ? "बुधवार को अभिजित वर्जित (11:32 AM सामान्य)" : "11:32 AM - 12:18 PM",
+                amritKaal: "08:20 AM - 10:00 AM",
+                godhuliMuhurat: "05:20 PM - 05:44 PM",
+                rahuKaal: wMeta.rahu[2],
+                yamaganda: wMeta.yama[2],
+                gulikaKaal: wMeta.gulika[2],
+                varjyam: "रात्रि 08:45 PM - 10:25 PM",
+                dishaShool: wMeta.disha
+            },
+            liveWindows: {
+                abhijit: { start: "11:32", end: "12:18", label: "अभिजीत मुहूर्त (Best for Important Work)" },
+                amrit: { start: "08:20", end: "10:00", label: "अमृत काल (Shubh Spiritual & Business Window)" },
+                rahu: { start: wMeta.rahu[0], end: wMeta.rahu[1], label: "राहु काल (Avoid Starting New Work)" },
+                yamaganda: { start: wMeta.yama[0], end: wMeta.yama[1], label: "यमगंड (Avoid Financial Risk)" }
+            },
+            activities: {
+                vehicle: {
+                    status: statusType,
+                    score: `${Math.min(98, baseScore + 4)}%`,
+                    title: isCautionDay ? "सावधानी रखें (Check Muhurat)" : "वाहन/गैजेट खरीद हेतु अनुकूल",
+                    desc: `आज ${nakName} नक्षत्र और ${wMeta.hi} का संयोग है। राहु काल (${wMeta.rahu[2]}) को छोड़कर शुभ चौघड़िया या अमृत काल (08:20 AM - 10:00 AM) में खरीदारी करें।`
+                },
+                finance: {
+                    status: dow === 2 || isCautionDay ? "caution" : "good",
+                    score: dow === 2 ? "45%" : `${baseScore}%`,
+                    title: dow === 2 ? "मंगलवार को कर्ज लेने से बचें" : "निवेश व धन लेन-देन हेतु शुभ",
+                    desc: dow === 2 
+                        ? "मंगलवार के दिन नया कर्ज लेना वर्जित है, किंतु पुराना ऋण चुकाने के लिए आज का दिन सर्वश्रेष्ठ है।" 
+                        : `आज ${RASHI_LIST[moonIdx]} के चंद्रमा में वित्तीय योजनाएं और बैंकिंग कार्य 11:32 AM के बाद करना लाभप्रद रहेगा।`
+                },
+                travel: {
+                    status: isCautionDay ? "caution" : "good",
+                    score: `${baseScore + 2}%`,
+                    title: "दिशा शूल का ध्यान रखकर यात्रा करें",
+                    desc: `आज ${wMeta.disha}। यात्रा से पूर्व यह उपाय अवश्य करें और राहु काल (${wMeta.rahu[2]}) में प्रस्थान न करें।`
+                },
+                property: {
+                    status: statusType,
+                    score: `${baseScore}%`,
+                    title: isCautionDay ? "केवल कागजी समीक्षा करें" : "प्रॉपर्टी व गृह कार्यों हेतु उत्तम",
+                    desc: `आज ${yoga} योग और ${nakName} के प्रभाव में भूमि/मकान संबंधी चर्चा और वास्तु कार्य संपन्न किए जा सकते हैं।`
+                },
+                career: {
+                    status: "good",
+                    score: `${Math.min(96, baseScore + 8)}%`,
+                    title: "करियर, शिक्षा व मीटिंग्स हेतु श्रेष्ठ",
+                    desc: `${wMeta.hi} (${wMeta.planet}) के प्रभाव से आज कार्यक्षेत्र में वरिष्ठों से संवाद और नए प्रोजेक्ट की रूपरेखा बनाने में सफलता मिलेगी।`
+                },
+                medical: {
+                    status: (dow === 2 || dow === 6 || isCautionDay) ? "bad" : "good",
+                    score: (dow === 2 || dow === 6 || isCautionDay) ? "35%" : "80%",
+                    title: (dow === 2 || dow === 6 || isCautionDay) ? "आज बाल/नाखून काटना टालें" : "स्वास्थ्य व ग्रूमिंग हेतु अनुकूल",
+                    desc: (dow === 2 || dow === 6 || isCautionDay)
+                        ? "आज की तिथि/वार के अनुसार बाल कटवाना, शेविंग या वैकल्पिक कॉस्मेटिक प्रक्रियाएं टालना शास्त्रोक्त रूप से हितकर है।"
+                        : "नियमित स्वास्थ्य जांच, आयुर्वेदिक उपचार और ग्रूमिंग के लिए आज का दिन अनुकूल है।"
+                }
+            },
+            guidance: [
+                {
+                    icon: "🕉️",
+                    title: festival,
+                    text: `आज ${day} ${yearMonthPrefix === "2026-10" ? "अक्टूबर" : "नवंबर"} 2026 को ${festival} का विशेष महत्व है। आज चंद्रमा ${RASHI_LIST[moonIdx]} राशि और ${nakName} नक्षत्र में गोचर कर रहे हैं।`
+                },
+                {
+                    icon: "🪐",
+                    title: `${wMeta.hi} एवं अष्टकवर्ग सूत्र`,
+                    text: `आज का दिन ${wMeta.planet} द्वारा शासित है। चंद्रमा के ${RASHI_LIST[moonIdx]} में होने से कर्म और भावनाओं में संतुलन रखें। लाल किताब उपाय: ${wMeta.remedy}`
+                },
+                {
+                    icon: "⏳",
+                    title: "राहु काल एवं मुहूर्त चेतावनी",
+                    text: `आज राहु काल ${wMeta.rahu[2]} तक रहेगा। इस अवधि में कोई भी नया वित्तीय अनुबंध या शुभ कार्य प्रारंभ न करें। श्रेष्ठ समय: 08:20 AM - 10:00 AM।`
+                }
+            ]
+        };
+    });
+}
+
+// Compile October & November 2026 Database
+compileRawRecords(OCT_2026_RAW, "2026-10");
+compileRawRecords(NOV_2026_RAW, "2026-11");
+
+// ============================================================================
+// DYNAMIC ASTRONOMICAL FALLBACK ENGINE (For December 2026 & Beyond)
+// Prevents the site from crashing or freezing on old dates if database is not updated.
+// ============================================================================
+
+function generateDynamicAstroFallback(dateKey) {
+    const parts = dateKey.split('-').map(Number);
+    const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+    const dow = dateObj.getDay();
     const wMeta = WEEKDAY_META[dow];
 
-    const charaOrShubhNak = [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 25, 26].includes(nakIdx);
-    const baseScore = isCautionDay ? 52 : (charaOrShubhNak ? 88 : 74);
-    const statusType = baseScore >= 75 ? "good" : (baseScore >= 55 ? "caution" : "bad");
+    const refEpoch2000 = Math.floor(new Date(2000, 0, 1).getTime() / 86400000);
+    const epochDays = Math.floor(dateObj.getTime() / 86400000);
+    const daysSince2000 = epochDays - refEpoch2000;
 
-    ASTRO_DATABASE[dateKey] = {
-        dateHindi: `${wMeta.hi}, ${day} अक्टूबर 2026`,
-        dateEnglish: `${day} October 2026`,
-        festival: festival,
+    // Approximate Lunar Position & Nakshatra (~27.32166 days per revolution)
+    const lunarCycles = (daysSince2000 / 27.321661) + 0.52;
+    const normPhase = ((lunarCycles % 1) + 1) % 1;
+    const moonIdx = Math.floor(normPhase * 12) % 12;
+    const nakIdx = Math.floor(normPhase * 27) % 27;
+
+    // Approximate Tithi (~29.530588 days Synodic cycle)
+    const synodicCycles = (daysSince2000 / 29.530588) + 0.18;
+    const synodicPhase = ((synodicCycles % 1) + 1) % 1;
+    const tithiNum = Math.floor(synodicPhase * 30) + 1;
+    const paksha = tithiNum <= 15 ? "शुक्ल पक्ष" : "कृष्ण पक्ष";
+    const tithiName = tithiNum <= 15 ? `तिथि ${tithiNum}` : `तिथि ${tithiNum - 15}`;
+
+    // Approximate Solar Ingress
+    const month = parts[1];
+    const day = parts[2];
+    const sunIdx = (month + (day >= 15 ? 0 : -1) + 9) % 12;
+
+    const baseScore = 75;
+    const nakName = NAKSHATRA_LIST[nakIdx];
+
+    return {
+        dateHindi: `${wMeta.hi}, ${day} ${parts[0]}-${parts[1]}`,
+        dateEnglish: `${day}/${month}/${parts[0]}`,
+        festival: "दैनिक वैदिक गोचर",
         moonSignIndex: moonIdx,
         nakshatraIndex: nakIdx,
         panchang: {
-            tithi: `${paksha.split(' ')[0]} ${tithi}`,
+            tithi: `${paksha} (${tithiName})`,
             nakshatra: nakName,
-            yoga: `${yoga} योग`,
-            karana: karana,
+            yoga: "सिद्धि योग",
+            karana: "बव / बालव",
             paksha: paksha,
-            masa: `${masa} मास`,
-            sunrise: sunrise,
-            sunset: sunset,
-            moonrise: moonrise,
-            moonset: "प्रातः/मध्यरात्रि (स्थानीय गणना)",
+            masa: "सौर मास",
+            sunrise: "06:30 AM",
+            sunset: "05:25 PM",
+            moonrise: "06:15 PM",
+            moonset: "06:45 AM",
             moonSign: RASHI_LIST[moonIdx],
-            sunSign: day < 17 ? "कन्या (Virgo)" : "तुला (Libra)",
-            brahmaMuhurat: "04:32 AM - 05:20 AM",
-            abhijitMuhurat: dow === 3 ? "बुधवार को अभिजित वर्जित (11:30 AM सामान्य)" : "11:29 AM - 12:15 PM",
-            amritKaal: "08:15 AM - 09:55 AM",
-            godhuliMuhurat: "05:32 PM - 05:56 PM",
+            sunSign: RASHI_LIST[sunIdx],
+            brahmaMuhurat: "04:45 AM - 05:35 AM",
+            abhijitMuhurat: dow === 3 ? "बुधवार को अभिजित वर्जित" : "11:35 AM - 12:20 PM",
+            amritKaal: "08:30 AM - 10:10 AM",
+            godhuliMuhurat: "05:15 PM - 05:40 PM",
             rahuKaal: wMeta.rahu[2],
             yamaganda: wMeta.yama[2],
             gulikaKaal: wMeta.gulika[2],
-            varjyam: "रात्रि 08:40 PM - 10:20 PM",
+            varjyam: "रात्रि 09:10 PM - 10:45 PM",
             dishaShool: wMeta.disha
         },
         liveWindows: {
-            abhijit: { start: "11:29", end: "12:15", label: "अभिजीत मुहूर्त (Best for Important Work)" },
-            amrit: { start: "08:15", end: "09:55", label: "अमृत काल (Shubh Spiritual & Business Window)" },
-            rahu: { start: wMeta.rahu[0], end: wMeta.rahu[1], label: "राहु काल (Avoid Starting New Work)" },
-            yamaganda: { start: wMeta.yama[0], end: wMeta.yama[1], label: "यमगंड (Avoid Financial Risk)" }
+            abhijit: { start: "11:35", end: "12:20", label: "अभिजीत मुहूर्त" },
+            amrit: { start: "08:30", end: "10:10", label: "अमृत काल" },
+            rahu: { start: wMeta.rahu[0], end: wMeta.rahu[1], label: "राहु काल" },
+            yamaganda: { start: wMeta.yama[0], end: wMeta.yama[1], label: "यमगंड" }
         },
         activities: {
-            vehicle: {
-                status: statusType,
-                score: `${Math.min(98, baseScore + 4)}%`,
-                title: isCautionDay ? "सावधानी रखें (Check Muhurat)" : "वाहन/गैजेट खरीद हेतु अनुकूल",
-                desc: `आज ${nakName} नक्षत्र और ${wMeta.hi} का संयोग है। राहु काल (${wMeta.rahu[2]}) को छोड़कर शुभ चौघड़िया या अमृत काल (08:15 AM - 09:55 AM) में खरीदारी करें।`
-            },
-            finance: {
-                status: dow === 2 || isCautionDay ? "caution" : "good",
-                score: dow === 2 ? "45%" : `${baseScore}%`,
-                title: dow === 2 ? "मंगलवार को कर्ज लेने से बचें" : "निवेश व धन लेन-देन हेतु शुभ",
-                desc: dow === 2 
-                    ? "मंगलवार के दिन नया कर्ज लेना वर्जित है, किंतु पुराना ऋण चुकाने के लिए आज का दिन सर्वश्रेष्ठ है।" 
-                    : `आज ${RASHI_LIST[moonIdx]} के चंद्रमा में वित्तीय योजनाएं और बैंकिंग कार्य 11:29 AM के बाद करना लाभप्रद रहेगा।`
-            },
-            travel: {
-                status: isCautionDay ? "caution" : "good",
-                score: `${baseScore + 2}%`,
-                title: "दिशा शूल का ध्यान रखकर यात्रा करें",
-                desc: `आज ${wMeta.disha}। यात्रा से पूर्व यह उपाय अवश्य करें और राहु काल (${wMeta.rahu[2]}) में प्रस्थान न करें।`
-            },
-            property: {
-                status: statusType,
-                score: `${baseScore}%`,
-                title: isCautionDay ? "केवल कागजी समीक्षा करें" : "प्रॉपर्टी व गृह कार्यों हेतु उत्तम",
-                desc: `आज ${yoga} योग और ${nakName} के प्रभाव में भूमि/मकान संबंधी चर्चा और वास्तु कार्य संपन्न किए जा सकते हैं।`
-            },
-            career: {
-                status: "good",
-                score: `${Math.min(96, baseScore + 8)}%`,
-                title: "करियर, शिक्षा व मीटिंग्स हेतु श्रेष्ठ",
-                desc: `${wMeta.hi} (${wMeta.planet}) के प्रभाव से आज कार्यक्षेत्र में वरिष्ठों से संवाद और नए प्रोजेक्ट की रूपरेखा बनाने में सफलता मिलेगी।`
-            },
-            medical: {
-                status: (dow === 2 || dow === 6 || isCautionDay) ? "bad" : "good",
-                score: (dow === 2 || dow === 6 || isCautionDay) ? "35%" : "80%",
-                title: (dow === 2 || dow === 6 || isCautionDay) ? "आज बाल/नाखून काटना टालें" : "स्वास्थ्य व ग्रूमिंग हेतु अनुकूल",
-                desc: (dow === 2 || dow === 6 || isCautionDay)
-                    ? "आज की तिथि/वार के अनुसार बाल कटवाना, शेविंग या वैकल्पिक कॉस्मेटिक प्रक्रियाएं टालना शास्त्रोक्त रूप से हितकर है।"
-                    : "नियमित स्वास्थ्य जांच, आयुर्वेदिक उपचार और ग्रूमिंग के लिए आज का दिन अनुकूल है।"
-            }
+            vehicle: { status: "good", score: "80%", title: "शुभ चौघड़िया में खरीदारी करें", desc: `आज ${nakName} में राहु काल छोड़कर कार्य करें।` },
+            finance: { status: "good", score: "78%", title: "वित्तीय लेन-देन हेतु अनुकूल", desc: `अभिजीत या अमृत काल में लेन-देन लाभप्रद रहेगा।` },
+            travel: { status: "good", score: "76%", title: "दिशा शूल का ध्यान रखें", desc: `आज ${wMeta.disha}।` },
+            property: { status: "good", score: "75%", title: "प्रॉपर्टी कार्य हेतु सामान्य", desc: `कागजी समीक्षा के लिए दिन अनुकूल है।` },
+            career: { status: "good", score: "82%", title: "करियर व मीटिंग्स हेतु श्रेष्ठ", desc: `${wMeta.hi} के प्रभाव से कार्यों में गति आएगी।` },
+            medical: { status: "good", score: "75%", title: "स्वास्थ्य दिनचर्या बनाए रखें", desc: `नियमित योग व ध्यान करें।` }
         },
         guidance: [
-            {
-                icon: "🕉️",
-                title: festival,
-                text: `आज ${day} अक्टूबर 2026 को ${festival} का विशेष महत्व है। आज चंद्रमा ${RASHI_LIST[moonIdx]} राशि और ${nakName} नक्षत्र में गोचर कर रहे हैं।`
-            },
-            {
-                icon: "🪐",
-                title: `${wMeta.hi} एवं अष्टकवर्ग सूत्र`,
-                text: `आज का दिन ${wMeta.planet} द्वारा शासित है। चंद्रमा के ${RASHI_LIST[moonIdx]} में होने से कर्म और भावनाओं में संतुलन रखें। लाल किताब उपाय: ${wMeta.remedy}`
-            },
-            {
-                icon: "⏳",
-                title: "राहु काल एवं मुहूर्त चेतावनी",
-                text: `आज राहु काल ${wMeta.rahu[2]} तक रहेगा। इस अवधि में कोई भी नया वित्तीय अनुबंध या शुभ कार्य प्रारंभ न करें। श्रेष्ठ समय: 08:15 AM - 09:55 AM।`
-            }
+            { icon: "🕉️", title: "दैनिक वैदिक पंचांग", text: `आज चंद्रमा ${RASHI_LIST[moonIdx]} में गोचर कर रहे हैं।` },
+            { icon: "🪐", title: `${wMeta.hi} एवं ग्रह प्रभाव`, text: `आज का दिन ${wMeta.planet} द्वारा शासित है। उपाय: ${wMeta.remedy}` },
+            { icon: "⏳", title: "मुहूर्त सावधानी", text: `राहु काल (${wMeta.rahu[2]}) में नए कार्यों से बचें।` }
         ]
     };
+}
+
+// Proxy wrapper so any date accessed automatically resolves without returning undefined
+const ASTRO_DATA_PROXY = new Proxy(ASTRO_DATABASE, {
+    get: function(target, prop) {
+        if (typeof prop === "string" && /^\d{4}-\d{2}-\d{2}$/.test(prop)) {
+            if (!target[prop]) {
+                target[prop] = generateDynamicAstroFallback(prop);
+            }
+            return target[prop];
+        }
+        return target[prop];
+    }
 });
+
+// Export database globally
+window.ASTRO_DATABASE = ASTRO_DATA_PROXY;
