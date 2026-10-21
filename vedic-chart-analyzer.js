@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * JYOTISH TARK — VEDIC CHART ANALYZER & SVG RENDERER (Engine 4)
- * File: vedic-chart-analyzer.js • v6.5 (True North/South SVG & Midpoint Chalit)
+ * File: vedic-chart-analyzer.js • v7.0 (Zero-Overlap PDF Accordion & SVG Edition)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
  * ============================================================================
  * Consumes exact sidereal longitudes from birth-chart-calculator.js
@@ -11,6 +11,7 @@
  * - Midpoint Bhava Chalit (ascLon ± 15°) with House-Shift Detection
  * - Shadbala-Lite Planetary Strength Meter (0–100%)
  * - Full 120-Year Vimshottari Mahadasha & Antardasha Calendar Timeline
+ *   (Built with html2canvas-safe <div> accordions so PDF export never overlaps!)
  * ============================================================================
  */
 
@@ -73,14 +74,12 @@
       const lord = VIMSHOTTARI_ORDER[(startIdx + i) % 9];
       const fullYears = VIMSHOTTARI_YEARS[lord];
 
-      // For the birth Mahadasha (i === 0), its theoretical start was before birth
       const theoreticalMdStartMs = (i === 0)
         ? birthTimeMs - (elapsedYearsAtBirth * 365.2425 * 86400000)
         : cursorMs;
       const mdEndMs = theoreticalMdStartMs + (fullYears * 365.2425 * 86400000);
       const effectiveMdStartMs = (i === 0) ? birthTimeMs : theoreticalMdStartMs;
 
-      // Compute all 9 Antardashas using full Mahadasha years, clipped to birth date
       const adSeq = [];
       let adCursorMs = theoreticalMdStartMs;
       const mdLordIdx = VIMSHOTTARI_ORDER.indexOf(lord);
@@ -93,6 +92,7 @@
         if (adEndMs > birthTimeMs) {
           adSeq.push({
             lord: adLord,
+            mdLord: lord,
             start: new Date(Math.max(birthTimeMs, adCursorMs)),
             end: new Date(adEndMs)
           });
@@ -113,19 +113,46 @@
     }
 
     const now = new Date();
-    let activeMD = mdSeq[0];
-    for (const md of mdSeq) {
-      if (now >= md.start && now <= md.end) {
-        activeMD = md;
+    let activeMdIdx = 0;
+    for (let i = 0; i < mdSeq.length; i++) {
+      if (now >= mdSeq[i].start && now <= mdSeq[i].end) {
+        activeMdIdx = i;
         break;
       }
     }
-    let activeAD = activeMD.antardashas[0] || { lord: activeMD.lord, start: activeMD.start, end: activeMD.end };
-    for (const ad of activeMD.antardashas) {
+    const activeMD = mdSeq[activeMdIdx];
+    const nextMD = mdSeq[(activeMdIdx + 1) % mdSeq.length];
+
+    let activeAdIdx = 0;
+    for (let j = 0; j < activeMD.antardashas.length; j++) {
+      const ad = activeMD.antardashas[j];
       if (now >= ad.start && now <= ad.end) {
-        activeAD = ad;
+        activeAdIdx = j;
         break;
       }
+    }
+    const activeAD = activeMD.antardashas[activeAdIdx] || {
+      lord: activeMD.lord,
+      mdLord: activeMD.lord,
+      start: activeMD.start,
+      end: activeMD.end
+    };
+
+    // Determine Next Antardasha (for exact upcoming transition prediction)
+    let nextAD = null;
+    if (activeAdIdx + 1 < activeMD.antardashas.length) {
+      nextAD = activeMD.antardashas[activeAdIdx + 1];
+    } else if (nextMD && nextMD.antardashas.length > 0) {
+      nextAD = nextMD.antardashas[0];
+    }
+
+    // Determine Previous Antardasha (for past-verification hook)
+    let prevAD = null;
+    if (activeAdIdx > 0) {
+      prevAD = activeMD.antardashas[activeAdIdx - 1];
+    } else if (activeMdIdx > 0) {
+      const prevMdObj = mdSeq[activeMdIdx - 1];
+      prevAD = prevMdObj.antardashas[prevMdObj.antardashas.length - 1] || null;
     }
 
     return {
@@ -133,6 +160,9 @@
       antardasha: activeAD.lord,
       mdActive: activeMD,
       adActive: activeAD,
+      nextMD: nextMD ? nextMD.lord : activeMD.lord,
+      nextAD,
+      prevAD,
       fullSeq: mdSeq
     };
   }
@@ -144,8 +174,6 @@
     const ascLon = chart.Asc.longitude || 0;
     const ascRashi = chart.Asc.rashi || 1;
 
-    // Each Bhava h (1..12) has its midpoint at ascLon + (h-1)*30°
-    // Bhava Sandhi (start) = midpoint - 15°, end = midpoint + 15°
     const cusps = [];
     for (let h = 0; h < 12; h++) {
       const mid = ((ascLon + h * 30) % 360 + 360) % 360;
@@ -214,7 +242,6 @@
       const d9 = chart[p].d9;
       const houseFromAsc = ((rashi - ascSign + 12) % 12) + 1;
 
-      // 1. Sthana Bala (D1 + D9 Dignity & Vargottama)
       if (EXALTED[p] === rashi) score += 26;
       else if (DEBILITATED[p] === rashi) score -= 24;
       else if ((OWN_SIGNS[p] || []).includes(rashi)) score += 18;
@@ -222,14 +249,12 @@
       if (EXALTED[p] === d9 || (OWN_SIGNS[p] || []).includes(d9)) score += 10;
       else if (DEBILITATED[p] === d9) score -= 8;
 
-      if (rashi === d9) score += 9; // Vargottama bonus
+      if (rashi === d9) score += 9;
 
-      // 2. Digbala (Directional Strength)
       if (DIGBALA_HOUSE[p] === houseFromAsc) score += 12;
       else if ([1, 4, 7, 10].includes(houseFromAsc)) score += 6;
       else if ([5, 9].includes(houseFromAsc)) score += 5;
 
-      // 3. Cheshta Bala (Retrograde Boost)
       if (chart[p].retro) score += 8;
 
       scores[p] = Math.max(18, Math.min(99, Math.round(score)));
@@ -246,18 +271,16 @@
     const userName = opts?.userName || "";
     const ascRashi = chart.Asc.rashi || 1;
     const S = 520;
-    const M = 16; // Outer margin
+    const M = 16;
     const W = S - 2 * M;
     const cx = S / 2;
     const cy = S / 2;
 
-    // House Rashi numbers (1..12 counter-clockwise starting from top diamond)
     const houseRashis = {};
     for (let h = 1; h <= 12; h++) {
       houseRashis[h] = ((ascRashi + h - 2) % 12) + 1;
     }
 
-    // Group planets by house
     const planetsByHouse = {};
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     planets.forEach(p => {
@@ -267,23 +290,19 @@
       planetsByHouse[h].push(p);
     });
 
-    // Exact Geometric Centers for all 12 North Indian Compartments
-    // Corners: TL(16,16), TR(504,16), BR(504,504), BL(16,504)
-    // Midpoints: TM(260,16), RM(504,260), BM(260,504), LM(16,260)
-    // Inner Quarter Intersections: Q_TL(138,138), Q_TR(382,138), Q_BR(382,382), Q_BL(138,382)
     const houseCoords = {
-      1:  { rx: 260, ry: 222, px: 260, py: 120 }, // Top Central Diamond (Lagna)
-      2:  { rx: 138, ry: 112, px: 138, py: 52  }, // Top-Left Upper Triangle
-      3:  { rx: 112, ry: 138, px: 56,  py: 130 }, // Left-Top Outer Triangle
-      4:  { rx: 222, ry: 260, px: 130, py: 252 }, // Left Central Diamond
-      5:  { rx: 112, ry: 382, px: 56,  py: 374 }, // Left-Bottom Outer Triangle
-      6:  { rx: 138, ry: 408, px: 138, py: 454 }, // Bottom-Left Lower Triangle
-      7:  { rx: 260, ry: 298, px: 260, py: 382 }, // Bottom Central Diamond
-      8:  { rx: 382, ry: 408, px: 382, py: 454 }, // Bottom-Right Lower Triangle
-      9:  { rx: 408, ry: 382, px: 462, py: 374 }, // Right-Bottom Outer Triangle
-      10: { rx: 298, ry: 260, px: 390, py: 252 }, // Right Central Diamond
-      11: { rx: 408, ry: 138, px: 462, py: 130 }, // Right-Top Outer Triangle
-      12: { rx: 382, ry: 112, px: 382, py: 52  }  // Top-Right Upper Triangle
+      1:  { rx: 260, ry: 222, px: 260, py: 120 },
+      2:  { rx: 138, ry: 112, px: 138, py: 52  },
+      3:  { rx: 112, ry: 138, px: 56,  py: 130 },
+      4:  { rx: 222, ry: 260, px: 130, py: 252 },
+      5:  { rx: 112, ry: 382, px: 56,  py: 374 },
+      6:  { rx: 138, ry: 408, px: 138, py: 454 },
+      7:  { rx: 260, ry: 298, px: 260, py: 382 },
+      8:  { rx: 382, ry: 408, px: 382, py: 454 },
+      9:  { rx: 408, ry: 382, px: 462, py: 374 },
+      10: { rx: 298, ry: 260, px: 390, py: 252 },
+      11: { rx: 408, ry: 138, px: 462, py: 130 },
+      12: { rx: 382, ry: 112, px: 382, py: 52  }
     };
 
     const houseElements = Object.keys(houseCoords).map(hStr => {
@@ -299,22 +318,22 @@
         return `${pName} ${deg}${rMark}`;
       });
 
-      // Arrange up to 2 planets per line if crowded
       const lines = [];
       for (let i = 0; i < labels.length; i += 2) {
         lines.push(labels.slice(i, i + 2).join("  "));
       }
 
-      const startY = py - ((lines.length - 1) * 7);
+      const fontSize = lines.length >= 3 ? 9.5 : 11;
+      const lineStep = lines.length >= 3 ? 12 : 14;
+      const startY = py - ((lines.length - 1) * (lineStep / 2));
 
       return `
         <g>
-          <!-- Rashi Number Badge -->
           <circle cx="${rx}" cy="${ry - 4}" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
           <text x="${rx}" y="${ry}" font-size="10" fill="#92400e" text-anchor="middle" font-weight="800">${rashiNum}</text>
           ${h === 1 ? `<text x="${px}" y="${py - 28}" font-size="10" fill="#7e22ce" text-anchor="middle" font-weight="800">${lang === "hi" ? "लग्न (Asc)" : "LAGNA"}</text>` : ""}
           ${lines.map((ln, idx) => `
-            <text x="${px}" y="${startY + idx * 14}" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="700">${ln}</text>
+            <text x="${px}" y="${startY + idx * lineStep}" font-size="${fontSize}" fill="#0f172a" text-anchor="middle" font-weight="700">${ln}</text>
           `).join("")}
         </g>
       `;
@@ -328,16 +347,11 @@
             <stop offset="100%" style="stop-color:#faf5ff;stop-opacity:1" />
           </linearGradient>
         </defs>
-        <!-- Outer Square Background -->
         <rect x="${M}" y="${M}" width="${W}" height="${W}" fill="url(#d1BgGrad)" stroke="#7e22ce" stroke-width="3" rx="6"/>
-        <!-- 2 Corner-to-Corner Diagonals -->
         <line x1="${M}" y1="${M}" x2="${S - M}" y2="${S - M}" stroke="#9333ea" stroke-width="1.8"/>
         <line x1="${S - M}" y1="${M}" x2="${M}" y2="${S - M}" stroke="#9333ea" stroke-width="1.8"/>
-        <!-- Inner Midpoint Diamond -->
         <polygon points="${cx},${M} ${S - M},${cy} ${cx},${S - M} ${M},${cy}" fill="none" stroke="#d97706" stroke-width="2.2"/>
-        <!-- House Contents -->
         ${houseElements}
-        <!-- Bottom Watermark Bar -->
         <text x="${M + 8}" y="${S - 4}" font-size="9" fill="#6b21a8" font-weight="700">JYOTISH TARK • D1 LAGNA CHART (* = Retrograde)</text>
         <text x="${S - M - 8}" y="${S - 4}" font-size="9" fill="#6b7280" text-anchor="end">${userName.substring(0, 26)}</text>
       </svg>
@@ -370,7 +384,6 @@
       d9PlanetsByRashi[d9R].push(p);
     });
     const ascD9 = chart.Asc.d9 || 1;
-
     const rashiNames = lang === "hi" ? RASHI_NAMES_HI : RASHI_NAMES_EN;
 
     const cellsHtml = Object.keys(layout).map(rStr => {
@@ -427,14 +440,14 @@
       const pLabel = lang === "hi" ? `${PLANET_HI[p]} (${PLANET_SHORT[p]})` : `${p} (${PLANET_SHORT[p]})`;
       const isSame = !d.shifted;
       return `<tr class="hover:bg-white/5">
-        <td class="py-2 px-3 font-bold text-white">${pLabel}</td>
-        <td class="py-2 px-3 text-center text-purple-200 font-mono">${d.degStr || "—"}</td>
-        <td class="py-2 px-3 text-center text-gray-300">${lang === "hi" ? `भाव ${d.rashiBhava}` : `House ${d.rashiBhava}`}</td>
-        <td class="py-2 px-3 text-center font-bold text-amber-300">${lang === "hi" ? `भाव ${d.bhava}` : `House ${d.bhava}`}</td>
-        <td class="py-2 px-3 text-center font-semibold ${isSame ? 'text-emerald-300' : 'text-rose-300'}">
+        <td class="py-2 px-3 font-bold text-white whitespace-nowrap">${pLabel}</td>
+        <td class="py-2 px-3 text-center text-purple-200 font-mono whitespace-nowrap">${d.degStr || "—"}</td>
+        <td class="py-2 px-3 text-center text-gray-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.rashiBhava}` : `House ${d.rashiBhava}`}</td>
+        <td class="py-2 px-3 text-center font-bold text-amber-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.bhava}` : `House ${d.bhava}`}</td>
+        <td class="py-2 px-3 text-center font-semibold whitespace-nowrap ${isSame ? 'text-emerald-300' : 'text-rose-300'}">
           ${isSame
             ? (lang === "hi" ? "✓ स्थिर (Same House)" : "✓ Unshifted (Full Fruit)")
-            : (lang === "hi" ? `⇄ भाव ${d.bhava} में स्थानांतरित` : `⇄ Shifted to H-${d.bhava}`)}
+            : (lang === "hi" ? `⇄ भाव ${d.bhava} में फलित` : `⇄ Shifted to H-${d.bhava}`)}
         </td>
       </tr>`;
     }).join("");
@@ -470,7 +483,7 @@
                   : "from-rose-500 to-red-400";
       const label = lang === "hi" ? `${PLANET_HI[p]} (${PLANET_SHORT[p]})` : `${p}`;
       return `<div class="flex items-center gap-3 mb-2.5">
-        <span class="text-xs font-bold text-white w-20 shrink-0">${label}</span>
+        <span class="text-xs font-bold text-white w-24 shrink-0">${label}</span>
         <div class="flex-1 bg-slate-900 rounded-full h-3.5 overflow-hidden border border-white/10">
           <div class="bg-gradient-to-r ${color} h-full rounded-full" style="width:${v}%"></div>
         </div>
@@ -480,10 +493,26 @@
   }
 
   // ========================================================================
-  // 8. VIMSHOTTARI DASHA ACCORDION TIMELINE (Expandable 9 Mahadashas)
+  // 8. ZERO-OVERLAP <div> ACCORDION VIMSHOTTARI DASHA TIMELINE
+  //    (Replaces <details>/<summary> so html2canvas PDF export never overlaps!)
   // ========================================================================
+  window.toggleJtDashaCard = function (idx) {
+    const bodyEl = document.getElementById(`jt-dasha-body-${idx}`);
+    const iconEl = document.getElementById(`jt-dasha-icon-${idx}`);
+    if (!bodyEl) return;
+    const isHidden = bodyEl.classList.contains("hidden");
+    if (isHidden) {
+      bodyEl.classList.remove("hidden");
+      if (iconEl) iconEl.style.transform = "rotate(90deg)";
+    } else {
+      bodyEl.classList.add("hidden");
+      if (iconEl) iconEl.style.transform = "rotate(0deg)";
+    }
+  };
+
   function renderDashaTimeline(dashaTree, lang) {
     const fmt = (d) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
     const mdItems = dashaTree.fullSeq.map((md, idx) => {
       const isActive = (md === dashaTree.mdActive);
       const borderClass = isActive ? "bg-amber-500/15 border-amber-400" : "bg-slate-900/60 border-white/10";
@@ -491,26 +520,29 @@
 
       const adRows = md.antardashas.map(ad => {
         const adActive = isActive && (ad === dashaTree.adActive);
-        return `<div class="flex justify-between items-center text-xs py-1.5 px-2 rounded ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/40' : 'text-gray-300 hover:bg-white/5'}">
-          <span>${adActive ? '▸ ' : ''}${md.lord} – ${ad.lord} ${adActive ? (lang === 'hi' ? '(वर्तमान में सक्रिय)' : '(ACTIVE NOW)') : ''}</span>
-          <span class="font-mono text-[11px]">${fmt(ad.start)} → ${fmt(ad.end)}</span>
+        const adTitle = lang === "hi"
+          ? `${PLANET_HI[md.lord]} – ${PLANET_HI[ad.lord]} (${md.lord}-${ad.lord})`
+          : `${md.lord} – ${ad.lord}`;
+        return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs py-2 px-3 rounded-lg gap-1 ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/50' : 'text-gray-300 bg-slate-950/40'}">
+          <span>${adActive ? '▸ ' : ''}${adTitle} ${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
+          <span class="font-mono text-[11px] text-purple-200 shrink-0">${fmt(ad.start)} → ${fmt(ad.end)}</span>
         </div>`;
       }).join("");
 
       return `
-        <details class="rounded-xl border ${borderClass} p-3.5 transition" ${isActive ? "open" : ""}>
-          <summary class="flex flex-wrap justify-between items-center cursor-pointer list-none gap-2">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-chevron-right text-xs text-amber-400"></i>
+        <div class="rounded-xl border ${borderClass} p-3.5 transition">
+          <div onclick="window.toggleJtDashaCard(${idx})" class="flex flex-wrap justify-between items-center cursor-pointer gap-2 select-none">
+            <div class="flex items-center gap-2.5">
+              <i id="jt-dasha-icon-${idx}" class="fas fa-chevron-right text-xs text-amber-400 transition-transform duration-200" style="transform:${isActive ? 'rotate(90deg)' : 'rotate(0deg)'}"></i>
               <span class="font-bold text-sm text-white">${mdTitle}</span>
-              ${isActive ? `<span class="px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-[10px]">${lang === "hi" ? "सक्रिय महादशा" : "ACTIVE MD"}</span>` : ""}
+              ${isActive ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-[10px]">${lang === "hi" ? "सक्रिय महादशा" : "ACTIVE MD"}</span>` : ""}
             </div>
             <span class="text-xs font-mono text-purple-200">${fmt(md.start)} → ${fmt(md.end)}</span>
-          </summary>
-          <div class="mt-3 pt-2.5 border-t border-white/10 space-y-1">
+          </div>
+          <div id="jt-dasha-body-${idx}" class="${isActive ? '' : 'hidden'} mt-3 pt-3 border-t border-white/10 space-y-1.5">
             ${adRows}
           </div>
-        </details>
+        </div>
       `;
     }).join("");
 
