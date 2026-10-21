@@ -140,19 +140,49 @@
       display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
     }
     .secondary-button:hover { background: var(--secondary); color: #0f172a; transform: translateY(-2px); }
+
+    /* MOBILE-HARDENED FORM INPUTS (Fixes iOS/Android Date & Time Box Overflow) */
     .form-input {
-      background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #fde68a; border-radius: 12px; padding: 0.75rem 0.95rem; width: 100%;
-      transition: all 0.25s ease; font-weight: 500; font-size: 16px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fde68a;
+      border-radius: 12px;
+      padding: 0.75rem 0.95rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      display: block;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 16px;
     }
-    @media (min-width: 768px) { .form-input { font-size: 0.92rem; padding: 0.68rem 0.9rem; } }
+    input[type="date"].form-input,
+    input[type="time"].form-input {
+      -webkit-appearance: none;
+      appearance: none;
+      min-height: 48px;
+      line-height: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .form-input { font-size: 0.92rem; padding: 0.68rem 0.9rem; }
+    }
     .form-input:focus { outline: none; border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25); background: rgba(15, 23, 42, 1); }
     .form-input::placeholder { color: rgba(255, 255, 255, 0.45); }
     .form-input option { background: #0f172a; color: #f3f4f6; padding: 10px; }
     .form-label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #e5e7eb; font-size: 0.9rem; }
+
+    /* Strict Grid Child Containment so nothing pushes outside mobile screen */
+    #lifeDossierForm .grid > div,
+    #kundaliForm .grid > div,
+    #masterDossierOutput .grid > div {
+      min-width: 0;
+      max-width: 100%;
+    }
+
     @media (max-width: 767px) {
       .planet-matrix-table thead { display: none; }
-      .planet-matrix-table, .planet-matrix-table tbody, .planet-matrix-table tr, .planet-matrix-table td { display: block; width: 100%; }
+      .planet-matrix-table, .planet-matrix-table tbody, .planet-matrix-table tr, .planet-matrix-table td { display: block; width: 100%; box-sizing: border-box; }
       .planet-matrix-table tr.planet-row-card {
         background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(245, 158, 11, 0.28);
         border-radius: 16px; margin-bottom: 14px; padding: 14px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
@@ -162,24 +192,53 @@
       .mobile-field-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #fbbf24; margin-bottom: 4px; }
     }
     @media (min-width: 768px) { .mobile-field-label { display: none; } }
+
     .mode-tab { transition: all 0.3s ease; }
     .mode-tab.active {
       background: linear-gradient(135deg, rgba(126, 34, 206, 0.9), rgba(219, 39, 119, 0.85));
       border-color: #f59e0b; color: white; box-shadow: 0 10px 30px rgba(126, 34, 206, 0.45);
     }
+
+    /* MOBILE-HARDENED CHAPTER CARDS (Zero Text/Badge Overflow) */
     .chapter-card {
       background: linear-gradient(180deg, rgba(30, 41, 59, 0.82) 0%, rgba(15, 23, 42, 0.95) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px; padding: 1.5rem;
-      position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     }
     @media (min-width: 768px) { .chapter-card { padding: 2.25rem; } }
     .chapter-card::before {
       content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
       background: linear-gradient(to bottom, var(--secondary), var(--primary), var(--accent));
     }
-    .chapter-body { font-size: 1.02rem; line-height: 1.88; color: #e2e8f0; }
+    .chapter-body {
+      font-size: 1.02rem;
+      line-height: 1.88;
+      color: #e2e8f0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .chapter-body p { margin-bottom: 1.2rem; }
     .chapter-body strong { color: #fde68a; }
+    .chapter-body code {
+      display: inline-block;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      color: #fde68a;
+      font-size: 0.85em;
+    }
     .chapter-nav-pill {
       white-space: nowrap; padding: 0.55rem 1.1rem; border-radius: 9999px; font-size: 0.82rem;
       font-weight: 600; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.15);
@@ -419,21 +478,21 @@
     <div class="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 mb-6 md:mb-8 no-print">
       <button type="button" id="tabInstantDossier" onclick="switchWorkspaceMode('instant')" class="mode-tab active flex-1 max-w-lg py-3.5 px-5 rounded-2xl border border-amber-400/50 glass-card flex items-center gap-3.5 text-left">
         <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0 text-amber-300 text-xl"><i class="fas fa-book-reader"></i></div>
-        <div>
+        <div class="min-w-0">
           <div class="font-bold text-sm md:text-lg text-white">Generate Instant 45-Min Life Dossier</div>
           <div class="text-[11px] md:text-xs text-purple-200">Read & Download PDF on Yourself, Partner, Career & Dasha</div>
         </div>
       </button>
       <button type="button" id="tabManualOrder" onclick="switchWorkspaceMode('manual')" class="mode-tab flex-1 max-w-lg py-3.5 px-5 rounded-2xl border border-white/15 glass-card flex items-center gap-3.5 text-left text-gray-300 hover:text-white">
         <div class="w-11 h-11 rounded-xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center shrink-0 text-purple-300 text-xl"><i class="fas fa-scroll"></i></div>
-        <div>
+        <div class="min-w-0">
           <div class="font-bold text-sm md:text-lg">Order 100% Hand-Crafted PDF Report (₹1101)</div>
           <div class="text-[11px] md:text-xs text-gray-400">Submit Birth Time & Place for Personal Consultation by Gyanendra Ji</div>
         </div>
       </button>
     </div>
 
-    <div id="instantWorkspaceContainer" class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border border-purple-500/30">
+    <div id="instantWorkspaceContainer" class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border border-purple-500/30 overflow-hidden">
       
       <form id="lifeDossierForm" onsubmit="if(typeof generateCompleteLifeDossier === 'function'){ generateCompleteLifeDossier(event); } else { event.preventDefault(); }" class="space-y-6 md:space-y-8 no-print">
         
@@ -447,17 +506,17 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-900/60 p-4 md:p-6 rounded-2xl border border-white/10">
-            <div>
+            <div class="min-w-0">
               <label for="userName" class="form-label"><i class="fas fa-signature text-amber-400 mr-1.5"></i>Your Full Name <span class="text-red-400">*</span></label>
               <input type="text" id="userName" name="userName" class="form-input" placeholder="e.g., Aditya Pratap Singh" required>
               <p class="text-[11px] text-gray-400 mt-1">Exact name you use in daily life</p>
             </div>
-            <div>
+            <div class="min-w-0">
               <label for="userDob" class="form-label"><i class="fas fa-calendar-alt text-amber-400 mr-1.5"></i>Date of Birth <span class="text-red-400">*</span></label>
               <input type="date" id="userDob" name="userDob" class="form-input" required>
               <p class="text-[11px] text-gray-400 mt-1">Decodes your core life milestones</p>
             </div>
-            <div>
+            <div class="min-w-0">
               <label for="reportLang" class="form-label"><i class="fas fa-language text-amber-400 mr-1.5"></i>Select Language / भाषा <span class="text-red-400">*</span></label>
               <select id="reportLang" name="reportLang" class="form-input font-semibold" required>
                 <option value="en">🇬🇧 English (45-Min Deep Reading)</option>
@@ -465,7 +524,7 @@
               </select>
               <p class="text-[11px] text-gray-400 mt-1">Switch anytime—auto-translates live</p>
             </div>
-            <div>
+            <div class="min-w-0">
               <label for="userGender" class="form-label"><i class="fas fa-venus-mars text-amber-400 mr-1.5"></i>Gender <span class="text-red-400">*</span></label>
               <select id="userGender" name="userGender" class="form-input" required>
                 <option value="male">Male (पुरुष)</option>
@@ -479,7 +538,7 @@
 
         <div class="rounded-2xl border border-amber-400/30 bg-gradient-to-r from-purple-950/50 via-slate-900/80 to-amber-950/30 p-4 sm:p-5 md:p-6 transition-all">
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="space-y-1">
+            <div class="space-y-1 min-w-0">
               <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase"><i class="fas fa-star"></i> Recommended for 99.9% Precision</div>
               <h3 class="text-base sm:text-lg md:text-xl font-bold text-white">Add Your Chart Details (Lagna, Planets, Nakshatra & Navamsa)</h3>
               <p class="text-xs md:text-sm text-gray-300 max-w-3xl">
@@ -489,7 +548,7 @@
             <label for="enableChartToggle" class="w-full md:w-auto flex items-center justify-between md:justify-start cursor-pointer shrink-0 bg-slate-950/90 px-4 py-3 rounded-xl border border-amber-400/50 hover:border-amber-300 transition shadow-lg">
               <input type="checkbox" id="enableChartToggle" class="sr-only" onchange="toggleChartDetailsPanel(this.checked)">
               <div class="flex items-center">
-                <div id="chartToggleIndicator" class="w-12 h-6 bg-gray-700 rounded-full relative transition duration-300 mr-3">
+                <div id="chartToggleIndicator" class="w-12 h-6 bg-gray-700 rounded-full relative transition duration-300 mr-3 shrink-0">
                   <div id="chartToggleDot" class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition duration-300 shadow"></div>
                 </div>
                 <span class="text-sm font-bold text-amber-300" id="chartToggleText">Tap to Enter Planets (99.9% Mode)</span>
@@ -499,7 +558,7 @@
 
           <div id="planetaryInputPanel" class="hidden mt-5 pt-5 border-t border-white/15 space-y-5">
             <div class="p-4 rounded-xl bg-slate-950/90 border border-purple-400/30 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-              <div class="text-xs md:text-sm text-gray-300 space-y-1">
+              <div class="text-xs md:text-sm text-gray-300 space-y-1 min-w-0">
                 <div class="font-bold text-amber-300 text-sm"><i class="fas fa-mobile-alt mr-1.5"></i>Easy Mobile Input Tip (Takes 30 Seconds):</div>
                 <p>1. Open <a href="https://www.prokerala.com/astrology/birth-chart/" target="_blank" rel="noopener" class="text-amber-400 underline hover:text-amber-300 font-semibold">Prokerala Birth Chart</a> or <a href="https://www.astrosage.com/kundli/" target="_blank" rel="noopener" class="text-amber-400 underline hover:text-amber-300 font-semibold">AstroSage</a> and check your <strong>Lagna (D1)</strong> & <strong>Navamsa (D9)</strong> signs.</p>
                 <p>2. When you pick a planet's D1 Rashi below, our smart filter <strong>automatically narrows the Nakshatra list to the exact 3 stars inside that Rashi</strong>, and auto-syncs Ketu 180° opposite Rahu!</p>
@@ -514,7 +573,7 @@
               </div>
             </div>
 
-            <div class="rounded-2xl md:border md:border-white/20 md:shadow-2xl">
+            <div class="rounded-2xl md:border md:border-white/20 md:shadow-2xl overflow-x-auto">
               <table class="w-full text-left border-collapse planet-matrix-table">
                 <thead>
                   <tr class="bg-slate-950 text-amber-300 text-xs uppercase tracking-wider border-b border-white/20">
@@ -533,7 +592,7 @@
 
         <div class="rounded-2xl border border-purple-400/30 bg-slate-900/75 p-4 sm:p-5 md:p-6 transition-all">
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="space-y-1">
+            <div class="space-y-1 min-w-0">
               <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold uppercase"><i class="fas fa-hourglass-half"></i> Current Time Phase Calibration</div>
               <h3 class="text-base sm:text-lg md:text-xl font-bold text-white">Add Your Active Mahadasha & Antardasha (Optional)</h3>
               <p class="text-xs md:text-sm text-gray-300 max-w-3xl">
@@ -543,7 +602,7 @@
             <label for="enableDashaToggle" class="w-full md:w-auto flex items-center justify-between md:justify-start cursor-pointer shrink-0 bg-slate-950/90 px-4 py-3 rounded-xl border border-purple-400/50 hover:border-purple-300 transition shadow-lg">
               <input type="checkbox" id="enableDashaToggle" class="sr-only" onchange="toggleDashaDetailsPanel(this.checked)">
               <div class="flex items-center">
-                <div id="dashaToggleIndicator" class="w-12 h-6 bg-gray-700 rounded-full relative transition duration-300 mr-3">
+                <div id="dashaToggleIndicator" class="w-12 h-6 bg-gray-700 rounded-full relative transition duration-300 mr-3 shrink-0">
                   <div id="dashaToggleDot" class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition duration-300 shadow"></div>
                 </div>
                 <span class="text-sm font-bold text-purple-300" id="dashaToggleText">Select Dasha Manually</span>
@@ -553,7 +612,7 @@
 
           <div id="dashaInputPanel" class="hidden mt-5 pt-5 border-t border-white/15">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
-              <div>
+              <div class="min-w-0">
                 <label for="currentMD" class="form-label"><i class="fas fa-sun text-amber-400 mr-1.5"></i>Current Major Period — Mahadasha (महादशा)</label>
                 <select id="currentMD" class="form-input">
                   <option value="auto">✨ Auto-Calculate from My Birth Details</option>
@@ -568,7 +627,7 @@
                   <option value="Venus">Venus Mahadasha (शुक्र महादशा - 20 Years)</option>
                 </select>
               </div>
-              <div>
+              <div class="min-w-0">
                 <label for="currentAD" class="form-label"><i class="fas fa-clock text-purple-400 mr-1.5"></i>Current Sub-Period — Antardasha (अंतर्दशा)</label>
                 <select id="currentAD" class="form-input">
                   <option value="auto">✨ Auto-Calculate Sub-Period</option>
@@ -588,7 +647,7 @@
         </div>
 
         <div class="text-center pt-2">
-          <button type="submit" class="primary-button w-full md:w-auto text-base sm:text-lg md:text-xl px-8 sm:px-12 py-4 shadow-2xl">
+          <button type="submit" class="primary-button w-full md:w-auto text-base sm:text-lg md:text-xl px-6 sm:px-12 py-4 shadow-2xl">
             <i class="fas fa-key mr-2.5"></i> Reveal My 45-Minute Life & Destiny Dossier
           </button>
           <p class="text-xs text-gray-400 mt-3">
@@ -597,14 +656,14 @@
         </div>
       </form>
 
-      <div id="masterDossierOutput" class="hidden mt-10 pt-8 border-t-2 border-amber-500/40 space-y-8 md:space-y-10">
+      <div id="masterDossierOutput" class="hidden mt-10 pt-8 border-t-2 border-amber-500/40 space-y-8 md:space-y-10 max-w-full overflow-hidden">
 
-        <div class="rounded-3xl bg-gradient-to-r from-purple-950 via-slate-900 to-amber-950 p-5 sm:p-6 md:p-10 border border-amber-400/50 shadow-2xl">
+        <div class="rounded-3xl bg-gradient-to-r from-purple-950 via-slate-900 to-amber-950 p-4 sm:p-6 md:p-10 border border-amber-400/50 shadow-2xl max-w-full overflow-hidden">
           <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5">
-            <div class="space-y-2">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest" id="dossierBadgeMode">Jyotish Tark Confidential Life Dossier</div>
-              <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold text-white" id="dossierHeaderName">Personal Destiny Blueprint</h2>
-              <p class="text-xs sm:text-sm md:text-base text-purple-200" id="dossierHeaderSubtext"></p>
+            <div class="space-y-2 min-w-0 max-w-full">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest break-words" id="dossierBadgeMode">Jyotish Tark Confidential Life Dossier</div>
+              <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold text-white break-words" id="dossierHeaderName">Personal Destiny Blueprint</h2>
+              <p class="text-xs sm:text-sm md:text-base text-purple-200 break-words" id="dossierHeaderSubtext"></p>
             </div>
 
             <!-- Action Buttons — includes Download PDF, Viral WhatsApp Share, and Print -->
@@ -639,11 +698,11 @@
             </div>
           </div>
 
-          <!-- NEW VIRAL HOOK: YouTube LIVE Priority Token Bar (Connects @jyotishtark YouTube Live with Website) -->
+          <!-- YouTube LIVE Priority Token Bar -->
           <div id="youtubeLiveTokenBar" class="mt-5 p-3.5 rounded-2xl bg-slate-950/90 border border-red-500/40 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-            <div class="flex items-center gap-3 text-center sm:text-left">
+            <div class="flex items-center gap-3 text-center sm:text-left min-w-0">
               <span class="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0 hidden sm:inline-block"></span>
-              <div class="text-xs md:text-sm">
+              <div class="text-xs md:text-sm break-words">
                 <span class="font-extrabold text-red-400 uppercase tracking-wider">🔴 YouTube LIVE Priority Token:</span>
                 <strong id="ytLiveCodeDisplay" class="text-amber-300 ml-1.5 font-mono text-sm">#JT-LIVE</strong>
                 <span class="text-gray-300 block sm:inline sm:ml-2 hindi">यूट्यूब लाइव (@jyotishtark) में अपना प्रश्न पूछने के लिए यह कोड कॉपी कर चैट में पेस्ट करें!</span>
@@ -674,10 +733,10 @@
         </div>
 
         <article id="chapter-personality" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch1Tag">Chapter 01 • Inner Psychology & Aura</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch1Title">Your Unspoken Personality & Mental Wiring</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch1Tag">Chapter 01 • Inner Psychology & Aura</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch1Title">Your Unspoken Personality & Mental Wiring</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-purple-600/30 border border-purple-400/40 flex items-center justify-center text-amber-300 text-lg shrink-0"><i class="fas fa-fingerprint"></i></div>
           </div>
@@ -685,10 +744,10 @@
         </article>
 
         <article id="chapter-education" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch2Tag">Chapter 02 • Intellect, Memory & Academics</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch2Title">Education, Study Patterns & Intellectual DNA</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch2Tag">Chapter 02 • Intellect, Memory & Academics</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch2Title">Education, Study Patterns & Intellectual DNA</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-blue-600/30 border border-blue-400/40 flex items-center justify-center text-blue-300 text-lg shrink-0"><i class="fas fa-graduation-cap"></i></div>
           </div>
@@ -696,10 +755,10 @@
         </article>
 
         <article id="chapter-career" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch3Tag">Chapter 03 • Karma, Rise & Professional Destiny</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch3Title">Career Trajectory, Best Fields & Workplace Reality</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch3Tag">Chapter 03 • Karma, Rise & Professional Destiny</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch3Title">Career Trajectory, Best Fields & Workplace Reality</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-amber-600/30 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg shrink-0"><i class="fas fa-briefcase"></i></div>
           </div>
@@ -707,10 +766,10 @@
         </article>
 
         <article id="chapter-wealth" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch4Tag">Chapter 04 • Artha, Savings & Asset Accumulation</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch4Title">Wealth Potential, Money Leaks & Financial Peaks</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch4Tag">Chapter 04 • Artha, Savings & Asset Accumulation</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch4Title">Wealth Potential, Money Leaks & Financial Peaks</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 text-lg shrink-0"><i class="fas fa-coins"></i></div>
           </div>
@@ -718,10 +777,10 @@
         </article>
 
         <article id="chapter-luck" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch5Tag">Chapter 05 • Bhagya, Grace & Golden Years</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch5Title">Your Luck Factor & Crucial Age Turning Points</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch5Tag">Chapter 05 • Bhagya, Grace & Golden Years</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch5Title">Your Luck Factor & Crucial Age Turning Points</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-yellow-600/30 border border-yellow-400/40 flex items-center justify-center text-yellow-300 text-lg shrink-0"><i class="fas fa-compass"></i></div>
           </div>
@@ -729,10 +788,10 @@
         </article>
 
         <article id="chapter-love" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-pink-400" id="ch6Tag">Chapter 06 • Romance, Heartbreak & Attachment</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch6Title">Love Life, Emotional Chemistry & Relationship Patterns</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-pink-400 block" id="ch6Tag">Chapter 06 • Romance, Heartbreak & Attachment</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch6Title">Love Life, Emotional Chemistry & Relationship Patterns</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-pink-600/30 border border-pink-400/40 flex items-center justify-center text-pink-300 text-lg shrink-0"><i class="fas fa-heart"></i></div>
           </div>
@@ -740,10 +799,10 @@
         </article>
 
         <article id="chapter-partner" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-pink-400" id="ch7Tag">Chapter 07 • Spouse Appearance, Nature & Marriage</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch7Title">Your Future Life Partner Traits & Post-Marriage Destiny</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-pink-400 block" id="ch7Tag">Chapter 07 • Spouse Appearance, Nature & Marriage</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch7Title">Your Future Life Partner Traits & Post-Marriage Destiny</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-rose-600/30 border border-rose-400/40 flex items-center justify-center text-rose-300 text-lg shrink-0"><i class="fas fa-ring"></i></div>
           </div>
@@ -751,10 +810,10 @@
 
           <!-- Viral Share Hook Inside Chapter 7 (Future Partner Prediction) -->
           <div class="mt-6 pt-4 border-t border-pink-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 bg-pink-950/30 p-4 rounded-2xl no-print">
-            <div class="text-xs md:text-sm text-pink-100 hindi">
+            <div class="text-xs md:text-sm text-pink-100 hindi min-w-0 break-words">
               <i class="fas fa-heart text-pink-400 mr-1.5"></i><strong>अपने पार्टनर या मित्र की कुंडली भी चेक करें!</strong> क्या आप यह भविष्यवाणी अपने पार्टनर/दोस्तों को WhatsApp पर भेजना चाहते हैं?
             </div>
-            <div class="flex gap-2 shrink-0">
+            <div class="flex flex-wrap gap-2 shrink-0">
               <button type="button" onclick="shareMyDossierOnWhatsApp()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow">
                 <i class="fab fa-whatsapp"></i> Share Partner Prediction
               </button>
@@ -766,10 +825,10 @@
         </article>
 
         <article id="chapter-planets" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch8Tag">Chapter 08 • All 9 Planetary Energies & Mutual Aspects</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch8Title">In-Depth Planetary Forces & How They Aspect Each Other</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch8Tag">Chapter 08 • All 9 Planetary Energies & Mutual Aspects</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch8Title">In-Depth Planetary Forces & How They Aspect Each Other</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-indigo-600/30 border border-indigo-400/40 flex items-center justify-center text-indigo-300 text-lg shrink-0"><i class="fas fa-globe"></i></div>
           </div>
@@ -777,10 +836,10 @@
         </article>
 
         <article id="chapter-lagnas" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch9Tag">Chapter 09 • Multi-Dimensional Chart Synthesis</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch9Title">Special Derived Blueprints (Chandra, Surya, Navamsa, Arudha & 337-Bindu SAV)</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch9Tag">Chapter 09 • Multi-Dimensional Chart Synthesis</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch9Title">Special Derived Blueprints (Chandra, Surya, Navamsa, Arudha & 337-Bindu SAV)</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-purple-600/30 border border-purple-400/40 flex items-center justify-center text-purple-300 text-lg shrink-0"><i class="fas fa-layer-group"></i></div>
           </div>
@@ -788,31 +847,31 @@
         </article>
 
         <article id="chapter-timephase" class="chapter-card">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400" id="ch10Tag">Chapter 10 • Active Time Cycle (Mahadasha & Antardasha)</span>
-              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1" id="ch10Title">Your Current Time Phase & Upcoming Life Transitions</h3>
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block" id="ch10Tag">Chapter 10 • Active Time Cycle (Mahadasha & Antardasha)</span>
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mt-1 break-words" id="ch10Title">Your Current Time Phase & Upcoming Life Transitions</h3>
             </div>
             <div class="w-11 h-11 rounded-2xl bg-cyan-600/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 text-lg shrink-0"><i class="fas fa-hourglass-start"></i></div>
           </div>
           <div id="contentTimePhase" class="chapter-body"></div>
         </article>
 
-        <article id="chapter-traps" class="danger-glow rounded-3xl bg-gradient-to-br from-red-950/95 via-slate-950 to-purple-950/95 p-5 sm:p-6 md:p-10 border-2 border-red-500/75 relative overflow-hidden">
+        <article id="chapter-traps" class="danger-glow rounded-3xl bg-gradient-to-br from-red-950/95 via-slate-950 to-purple-950/95 p-4 sm:p-6 md:p-10 border-2 border-red-500/75 relative overflow-hidden max-w-full">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div class="lg:col-span-8 space-y-5">
+            <div class="lg:col-span-8 space-y-5 min-w-0">
               <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 border border-red-400 text-red-300 text-xs md:text-sm font-bold uppercase tracking-wider"><i class="fas fa-exclamation-triangle animate-bounce"></i> Chapter 11 • Critical Root-Cause Diagnostic Alert</div>
-              <h3 class="text-2xl md:text-4xl font-bold text-white leading-tight" id="ch11Title">⚠️ The Hidden Blockages & Unseen Traps Silently Sabotaging Your Progress</h3>
+              <h3 class="text-2xl md:text-4xl font-bold text-white leading-tight break-words" id="ch11Title">⚠️ The Hidden Blockages & Unseen Traps Silently Sabotaging Your Progress</h3>
               <div id="contentHiddenTraps" class="chapter-body text-gray-200 space-y-4"></div>
 
-              <!-- Dynamic Rudraksha Remedy Card (Automatically Calibrated to User's Dasha/Chart) -->
-              <div id="dynamicRudrakshaCard" class="mt-6 p-5 rounded-2xl bg-slate-900/95 border border-amber-400/50 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
-                <div class="space-y-1 text-center sm:text-left">
-                  <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full">
+              <!-- Dynamic Rudraksha Remedy Card -->
+              <div id="dynamicRudrakshaCard" class="mt-6 p-4 sm:p-5 rounded-2xl bg-slate-900/95 border border-amber-400/50 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+                <div class="space-y-1 text-center sm:text-left min-w-0">
+                  <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full inline-block">
                     <i class="fas fa-gem mr-1"></i> Safe Bio-Magnetic Vedic Remedy (बिना साइड-इफेक्ट का सुरक्षा कवच)
                   </span>
-                  <h4 id="rudraRecHeading" class="text-lg font-bold text-white hindi mt-1">आपकी दशा व ग्रह-बाधा निवारण हेतु अभिमंत्रित रुद्राक्ष</h4>
-                  <p id="rudraRecSub" class="text-xs text-gray-300 hindi">रत्न पहनने से पहले लैब-प्रमाणित और वैदिक मंत्रों से अभिमंत्रित रुद्राक्ष धारण कर अपने बाधकेश और महादशा को शांत करें।</p>
+                  <h4 id="rudraRecHeading" class="text-lg font-bold text-white hindi mt-1 break-words">आपकी दशा व ग्रह-बाधा निवारण हेतु अभिमंत्रित रुद्राक्ष</h4>
+                  <p id="rudraRecSub" class="text-xs text-gray-300 hindi break-words">रत्न पहनने से पहले लैब-प्रमाणित और वैदिक मंत्रों से अभिमंत्रित रुद्राक्ष धारण कर अपने बाधकेश और महादशा को शांत करें।</p>
                 </div>
                 <a id="rudraRecLink" href="rudraksha.html" class="shrink-0 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:opacity-95 text-slate-950 font-extrabold text-xs md:text-sm shadow-lg transition flex items-center gap-2">
                   <i class="fas fa-shopping-bag"></i> <span id="rudraRecBtnText">सिद्ध रुद्राक्ष देखें (₹499 से)</span>
@@ -820,17 +879,17 @@
               </div>
             </div>
 
-            <div class="lg:col-span-4 bg-slate-950/95 p-6 md:p-7 rounded-2xl border-2 border-amber-400/60 shadow-2xl space-y-5 lg:sticky lg:top-28">
+            <div class="lg:col-span-4 bg-slate-950/95 p-5 sm:p-6 md:p-7 rounded-2xl border-2 border-amber-400/60 shadow-2xl space-y-5 lg:sticky lg:top-28 min-w-0">
               <div class="text-center border-b border-white/10 pb-4">
                 <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">Personal Remedy & Dasha Solution</span>
                 <h4 class="text-xl font-bold text-white mt-2">Complete Hand-Crafted Kundali & Remedy Consultation</h4>
                 <div class="text-3xl font-extrabold text-amber-400 mt-2">₹1101 <span class="text-sm font-normal text-gray-400 line-through">₹2100</span></div>
               </div>
               <ul class="text-xs md:text-sm space-y-2.5 text-gray-200">
-                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1"></i><span><strong>Exact Degree & Shadbala Verification:</strong> Pinpoints which planet is secretly sleeping or afflicted in Bhava Chalit.</span></li>
-                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1"></i><span><strong>5-Year Month-by-Month Timeline:</strong> Exact marriage, exam, job-switch & wealth dates.</span></li>
-                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1"></i><span><strong>Safe Lal Kitab & Vedic Remedies:</strong> Practical, logical remedies by <strong>Gyanendra S. Tomar</strong>.</span></li>
-                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1"></i><span><strong>1-on-1 WhatsApp / Call Guidance:</strong> Discuss your personal questions directly.</span></li>
+                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1 shrink-0"></i><span><strong>Exact Degree & Shadbala Verification:</strong> Pinpoints which planet is secretly sleeping or afflicted in Bhava Chalit.</span></li>
+                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1 shrink-0"></i><span><strong>5-Year Month-by-Month Timeline:</strong> Exact marriage, exam, job-switch & wealth dates.</span></li>
+                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1 shrink-0"></i><span><strong>Safe Lal Kitab & Vedic Remedies:</strong> Practical, logical remedies by <strong>Gyanendra S. Tomar</strong>.</span></li>
+                <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1 shrink-0"></i><span><strong>1-on-1 WhatsApp / Call Guidance:</strong> Discuss your personal questions directly.</span></li>
               </ul>
               <a id="urgentConsultWhatsappBtn" href="https://wa.me/918318513814" target="_blank" class="w-full py-4 px-5 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-base shadow-xl flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5"><i class="fab fa-whatsapp text-xl"></i> Contact Gyanendra Ji Now</a>
               <button type="button" onclick="switchWorkspaceMode('manual')" class="w-full py-3 px-4 rounded-xl border border-amber-400/50 text-amber-300 hover:bg-amber-400/10 text-xs font-bold transition no-print">Or Submit Birth Time & Place in Form</button>
@@ -838,12 +897,12 @@
           </div>
         </article>
 
-        <article id="chapter-dakshina" class="glass-card rounded-3xl p-5 sm:p-6 md:p-10 border-2 border-amber-400/50 bg-gradient-to-r from-amber-950/40 via-slate-900/95 to-purple-950/40">
+        <article id="chapter-dakshina" class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border-2 border-amber-400/50 bg-gradient-to-r from-amber-950/40 via-slate-900/95 to-purple-950/40 max-w-full overflow-hidden">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div class="lg:col-span-8 space-y-4">
+            <div class="lg:col-span-8 space-y-4 min-w-0">
               <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider"><i class="fas fa-om"></i> Chapter 12 • Sacred Vedic Tradition (गुरु-दक्षिणा एवं ऊर्जा विनिमय)</div>
-              <h3 class="text-2xl md:text-3xl font-bold text-white" id="dakshinaHeading">Honor the Sacred Law of Energy Exchange (Guru Dakshina) 🙏</h3>
-              <div id="contentDakshinaText" class="space-y-3 text-gray-200 text-sm md:text-base leading-relaxed">
+              <h3 class="text-2xl md:text-3xl font-bold text-white break-words" id="dakshinaHeading">Honor the Sacred Law of Energy Exchange (Guru Dakshina) 🙏</h3>
+              <div id="contentDakshinaText" class="space-y-3 text-gray-200 text-sm md:text-base leading-relaxed break-words">
                 <p class="hindi"><strong>वैदिक ज्योतिष शास्त्र का नियम:</strong> ज्योतिष एक पवित्र <em>ब्रह्म-विद्या</em> है। शास्त्रों के अनुसार जब भी हम अपने जीवन, प्रारब्ध, भविष्य के जीवनसाथी या ग्रहों के गहरे रहस्यों को जानते हैं, तो बिना <strong>'गुरु-दक्षिणा' (Energy Exchange)</strong> के उस ज्ञान का पूर्ण शुभ फल जागृत नहीं होता।</p>
                 <p>We built this exhaustive 45-minute Life Dossier so that even if someone cannot afford a full ₹1101 consultation today, they never leave empty-handed. If this reading touched your heart and gave you clarity, please offer a voluntary <strong>Guru Dakshina (₹51, ₹101, ₹251, or ₹501 as per your Shraddha)</strong> via the QR code. Your support keeps this platform free!</p>
               </div>
@@ -853,20 +912,20 @@
                 <span class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-xs text-amber-200 font-bold">✨ ₹1101 — Complete Hand-Made Kundali + Remedies</span>
               </div>
             </div>
-            <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
+            <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900 min-w-0">
               <div class="text-xs font-extrabold uppercase tracking-wider text-purple-800 mb-2 text-center">Scan with Any UPI App (GPay / PhonePe / Paytm)</div>
-              <div class="w-52 h-52 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
+              <div class="w-52 h-52 max-w-full rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
                 <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place qr-code.png in root folder</strong><br>UPI / WhatsApp:<br>+91 8318513814</div>';">
               </div>
-              <p class="text-sm font-bold text-slate-900 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
-              <p class="text-xs text-gray-500 mb-3">WhatsApp & UPI: +91 8318513814</p>
+              <p class="text-sm font-bold text-slate-900 mt-3 text-center">Gyanendra Singh Tomar • Jyotish Tark</p>
+              <p class="text-xs text-gray-500 mb-3 text-center">WhatsApp & UPI: +91 8318513814</p>
               <a href="https://wa.me/918318513814?text=Namaste%20Gyanendra%20Ji,%20I%20read%20my%20complete%20Life%20Dossier%20on%20Jyotish%20Tark%20and%20have%20offered%20Guru%20Dakshina.%20Here%20is%20my%20screenshot:" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold text-center transition"><i class="fab fa-whatsapp mr-1.5"></i> Send Dakshina Screenshot on WhatsApp</a>
             </div>
           </div>
         </article>
 
-        <div class="p-5 rounded-2xl bg-slate-900/95 border border-amber-400/40 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
-          <div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/95 border border-amber-400/40 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+          <div class="min-w-0">
             <h4 class="font-bold text-white text-base">Want to read or share this 45-Minute Dossier offline on your phone?</h4>
             <p class="text-xs text-gray-300">Download a fully branded PDF, share on WhatsApp, or use browser Print for vector quality.</p>
           </div>
@@ -886,19 +945,19 @@
       </div>
     </div>
 
-    <div id="manualWorkspaceContainer" class="hidden glass-card rounded-3xl p-6 md:p-10 max-w-4xl mx-auto border border-amber-400/40 no-print">
+    <div id="manualWorkspaceContainer" class="hidden glass-card rounded-3xl p-4 sm:p-6 md:p-10 max-w-4xl mx-auto border border-amber-400/40 no-print overflow-hidden">
       <div class="text-center mb-8">
         <span class="px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">100% Hand-Calculated by Gyanendra S. Tomar</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Book Your Complete Hand-Made Kundali</h2>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-2">Book Your Complete Hand-Made Kundali</h2>
         <p class="text-gray-300 mt-2 text-sm md:text-base">Provide your exact birth date, time, and place below. Our team will calculate your exact degrees, divisional charts, and prepare your comprehensive PDF report with personal remedies.</p>
       </div>
       <form id="kundaliForm" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div class="min-w-0">
             <label for="name" class="form-label">Full Name <span class="text-red-400">*</span></label>
             <input type="text" id="name" name="name" class="form-input" placeholder="Your Full Name" required>
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="gender" class="form-label">Gender <span class="text-red-400">*</span></label>
             <select id="gender" name="gender" class="form-input" required>
               <option value="">Select Gender</option>
@@ -909,21 +968,21 @@
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div class="min-w-0">
             <label for="dob" class="form-label">Date of Birth <span class="text-red-400">*</span></label>
             <input type="date" id="dob" name="dob" class="form-input" required>
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="tob" class="form-label">Time of Birth <span class="text-red-400">*</span></label>
             <input type="time" id="tob" name="tob" class="form-input" required>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div class="min-w-0">
             <label for="pob" class="form-label">Place of Birth <span class="text-red-400">*</span></label>
             <input type="text" id="pob" name="pob" class="form-input" placeholder="City, State, Country" required>
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="maritalStatus" class="form-label">Marital Status <span class="text-red-400">*</span></label>
             <select id="maritalStatus" name="maritalStatus" class="form-input" required>
               <option value="">Select Status</option>
@@ -934,26 +993,26 @@
             </select>
           </div>
         </div>
-        <div>
+        <div class="min-w-0">
           <label for="occupation" class="form-label">Occupation</label>
           <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Your Profession or Field of Study">
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div class="min-w-0">
             <label for="email" class="form-label">Email Address <span class="text-red-400">*</span></label>
             <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
           </div>
-          <div>
+          <div class="min-w-0">
             <label for="phone" class="form-label">Phone / WhatsApp Number <span class="text-red-400">*</span></label>
             <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 9876543210" required>
           </div>
         </div>
-        <div>
+        <div class="min-w-0">
           <label for="questions" class="form-label">Specific Questions or Concerns</label>
           <textarea id="questions" name="questions" class="form-input h-32" placeholder="Any specific areas you want us to focus on (career, marriage, future partner, health, etc.)"></textarea>
         </div>
         <div class="flex items-center">
-          <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
+          <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded shrink-0" required>
           <label for="consent" class="ml-2 block text-sm text-gray-300">I agree to the <a href="privacy-policy.html" class="text-purple-400 hover:text-purple-300">privacy policy</a> and understand that I will be contacted for payment confirmation.</label>
         </div>
         <button type="submit" class="primary-button w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Kundali Details</button>
@@ -1067,7 +1126,7 @@
     </div>
   </div>
 
-  <!-- Footer (Synchronized with All Policy & Sitemap Pages) -->
+  <!-- Footer -->
   <footer class="glass-card text-center py-12 mt-12 no-print">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-center space-x-6 mb-8 text-2xl">
@@ -1312,14 +1371,12 @@
       const ctx = window.__jyotishLastCtx;
       if (!ctx) return;
 
-      // 1. Update YouTube Live Token
       const shortAsc = (ctx.displayAsc || "Lagna").split(" ")[0].toUpperCase();
       const shortMoon = (ctx.displayMoon || "Moon").split(" ")[0].toUpperCase();
       const tokenCode = `#JT-${shortAsc.slice(0,3)}-${shortMoon.slice(0,3)}-M${ctx.numData.mulank}B${ctx.numData.bhagyank}`;
       const tokenEl = document.getElementById('ytLiveCodeDisplay');
       if (tokenEl) tokenEl.textContent = tokenCode;
 
-      // 2. Calibrate Dynamic Rudraksha Recommendation Card by Active Mahadasha
       const rudraMap = {
         Saturn:  { name: "सप्तमुखी रुद्राक्ष (7 Mukhi)", price: "₹1,999", id: "prod-7", desc: "शनि महादशा, साढ़ेसाती और कर्ज/हड्डियों के दर्द से रक्षा हेतु महालक्ष्मी स्वरूप सप्तमुखी रुद्राक्ष सर्वोत्तम है।" },
         Rahu:    { name: "आठ मुखी रुद्राक्ष (8 Mukhi)",  price: "₹3,999", id: "prod-8", desc: "राहु महादशा और कार्य की आकस्मिक बाधाओं को दूर करने हेतु गणेश स्वरूप आठ मुखी रुद्राक्ष धारण करें।" },
@@ -1565,7 +1622,7 @@
           if (btn) {
             btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Building (${idx + 1}/${sections.length})...`;
           }
-          await new Promise(r => setTimeout(r, 35)); // Yield to mobile garbage collector
+          await new Promise(r => setTimeout(r, 35));
 
           let canvas;
           try {
@@ -1609,7 +1666,6 @@
               const sliceH_mm = (sliceH * contentW) / canvas.width;
               pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.90), 'JPEG', mL, mT, contentW, sliceH_mm);
 
-              // Release slice canvas memory immediately on mobile
               sliceCanvas.width = 0;
               sliceCanvas.height = 0;
 
@@ -1619,7 +1675,6 @@
             }
           }
 
-          // Release section canvas memory immediately
           canvas.width = 0;
           canvas.height = 0;
         }
@@ -1709,11 +1764,11 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderPlanetaryRowsInForm();
 
-      // Hook into generateCompleteLifeDossier so our YouTube Live Token & Rudraksha Matcher update automatically
+      // Hook into generateCompleteLifeDossier while preserving (ev, opts) so in-place language switching works smoothly
       const origGen = window.generateCompleteLifeDossier;
       if (typeof origGen === 'function') {
-        window.generateCompleteLifeDossier = function(ev) {
-          origGen(ev);
+        window.generateCompleteLifeDossier = function(ev, opts) {
+          origGen(ev, opts);
           refreshViralWidgetsFromCtx();
         };
       }
