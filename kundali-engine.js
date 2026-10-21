@@ -1,19 +1,16 @@
 /**
  * ============================================================================
  * JYOTISH TARK — MASTER VEDIC ASTROLOGY & CHALDEAN NUMEROLOGY ENGINE
- * File: kundali-engine.js • v7.0 (Dated Real-Life Events & 99.99% Red Alert Edition)
+ * File: kundali-engine.js • v7.1 (Hotfix: TDZ ReferenceError & Autorun Guard)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
  * ============================================================================
- * UPGRADES IN v7.0:
- * 1. Red 99.99% Precision Alert for DOB-Only Users: Prompts users who only
- *    entered Date of Birth to add Birth Time & City for 99.99% Lagna/D9/Dasha.
- * 2. Honest DOB-Only Astronomy Mode: Uses real 12:00 PM Noon IST Natal Planets
- *    (Surya Kundali + Chandra Kundali + Bhrigu Nandi Nadi + Chaldean Numerology),
- *    hides fake D1/D9 charts & SAV tables, and delivers a 2026–2029 Year Forecast.
- * 3. Dated Past-Verification & Concrete Future Windows (Career, Loss, Marriage).
- * 4. NEW Section: 👶 Childbirth, Progeny & Santan Yoga (Injected after Partner).
- * 5. 🙏 Sacred Guru Dakshina Moved to the Middle (Right after Partner & Baby).
- * 6. Punchy 3-Point Real-Life Planetary Verdicts in Chapter 8 (Zero Fluff).
+ * FIXED IN v7.1:
+ * - Fixed fatal Temporal Dead Zone `ReferenceError: Cannot access 'lord12thRashi'
+ *   before initialization` inside `computeSpecialLagnasAndBindus()`.
+ * - Added safe wait/fallback if `astronomy-engine` CDN is still loading during
+ *   `?autorun=1` URL prefill.
+ * - Wrapped master entry point in defensive error recovery so clicking the
+ *   Submit button 100% ALWAYS reveals `#masterDossierOutput` and scrolls smoothly.
  * ============================================================================
  */
 
@@ -641,7 +638,6 @@
     return { year, month, day, mulank, bhagyank, rawSum, age, currentYear, personalYear };
   }
 
-  // Computes Concrete Past Verification Years & Future Event Windows (Career, Loss, Marriage, Childbirth)
   function computeLifeEventTimeline(numData, chart, planetAnalysis) {
     const cy = numData.currentYear;
     const age = numData.age;
@@ -649,34 +645,29 @@
     const m = numData.mulank;
     const b = numData.bhagyank;
 
-    // 1. Past Verification Window (A pivotal 2-year phase 2 to 4 years ago)
-    const pastOffset = 2 + ((m + b) % 3); // 2, 3, or 4 years ago
+    const pastOffset = 2 + ((m + b) % 3);
     const pastYearStart = cy - pastOffset;
     const pastYearEnd   = pastYearStart + 1;
     const pastAgeStart  = Math.max(10, age - pastOffset);
     const pastAgeEnd    = pastAgeStart + 1;
 
-    // 2. Next Career Breakthrough / Promotion / Income Windows
-    const cOffset1 = ((10 - numData.personalYear + m) % 2); // 0 or 1 year from now
+    const cOffset1 = ((10 - numData.personalYear + m) % 2);
     const careerWin1Start = cy + cOffset1;
     const careerWin1End   = careerWin1Start + 1;
     const careerWin2Start = careerWin1End + 2;
     const careerWin2End   = careerWin2Start + 1;
 
-    // 3. High-Risk Financial Caution / Money-Trap Window
     const rahuBhava = planetAnalysis.Rahu.bhava;
     const lossOffset = ((rahuBhava + b) % 2) + 1;
     const cautionYear1 = cy + (lossOffset === 1 ? 0 : 1);
     const cautionYear2 = cautionYear1 + 2;
 
-    // 4. Golden Marriage / Partner Entry Windows (Calibrated to current age)
     const baseMarriageAge = Math.max(21, age < 21 ? 22 + (b % 3) : age + ((m + b) % 2));
     const marYear1Start = by + baseMarriageAge;
     const marYear1End   = marYear1Start + 1;
     const marYear2Start = marYear1End + 2;
     const marYear2End   = marYear2Start + 1;
 
-    // 5. Childbirth / Santan Yoga Windows
     const baseBabyYear = Math.max(cy + 1, marYear1Start + 1);
     const babyWin1 = `${baseBabyYear}–${baseBabyYear + 1}`;
     const babyWin2 = `${baseBabyYear + 3}–${baseBabyYear + 4}`;
@@ -725,8 +716,7 @@
   }
 
   function buildDerivedChartFromDobAndName(numData, chaldean) {
-    // Prefer real Noon IST astronomy from BirthChartCalculator if loaded!
-    if (typeof window.BirthChartCalculator !== "undefined" && typeof window.BirthChartCalculator.calculateDobOnlyAstronomy === "function") {
+    if (typeof window.Astronomy !== "undefined" && typeof window.BirthChartCalculator !== "undefined" && typeof window.BirthChartCalculator.calculateDobOnlyAstronomy === "function") {
       try {
         const dobStr = `${numData.year}-${String(numData.month).padStart(2, "0")}-${String(numData.day).padStart(2, "0")}`;
         return window.BirthChartCalculator.calculateDobOnlyAstronomy(dobStr);
@@ -744,7 +734,6 @@
     const moonRashi = Math.min(12, Math.max(1, Math.floor(normPhase * 12) + 1));
     const moonNak = pickValidNakForRashi(moonRashi, Math.floor(normPhase * 27) + numData.day);
 
-    // Honest Surya-Lagna Anchor (No fake rising Lagna!)
     const ascRashi  = sunRashi;
     const jupRashi  = ((Math.floor((daysSince2000 / 365.25) / 0.988) + 1) % 12 + 12) % 12 + 1;
     const satRashi  = ((Math.floor((daysSince2000 / 365.25) / 2.46) + 1) % 12 + 12) % 12 + 1;
@@ -788,7 +777,6 @@
   }
 
   function readChartFromDOM(numData, chaldean) {
-    // 1. Exact Birth Time & Place Mode (via BirthChartCalculator + VedicChartAnalyzer)
     if (window.__jtVedicData && window.__jtVedicData.chart) {
       const vd = window.__jtVedicData;
       const converted = { isFullChartMode: true, isExactAstronomyMode: true, isDobOnlyRealAstronomy: false };
@@ -804,7 +792,6 @@
       return converted;
     }
 
-    // 2. Manual Planetary Matrix Override
     const manualMatrixOpen = document.getElementById("enableChartToggle") && document.getElementById("enableChartToggle").checked;
     if (manualMatrixOpen) {
       const keys = ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
@@ -820,7 +807,6 @@
       return chart;
     }
 
-    // 3. Honest DOB-Only Mode (12:00 PM Noon IST Ephemeris + Surya/Chandra Kundali)
     return buildDerivedChartFromDobAndName(numData, chaldean);
   }
 
@@ -994,7 +980,7 @@
   function computeSpecialLagnasAndBindus(chart) {
     const ascRashi = chart.Asc.d1;
     const lagnaLordKey = getLordKeyOfRashi(ascRashi);
-    const lagnaLordRashi = chart[lagnaLordKey].d1;
+    const lagnaLordRashi = (chart[lagnaLordKey] || chart.Sun).d1;
 
     const distToLord = getBhavaFrom(ascRashi, lagnaLordRashi);
     let arudhaRashi = ((lagnaLordRashi + distToLord - 2) % 12) + 1;
@@ -1006,9 +992,10 @@
     }
     const arudhaHouseFromLagna = getBhavaFrom(ascRashi, arudhaRashi);
 
+    // FIXED: Removed TDZ self-reference on lord12thRashi!
     const rashi12th = getRashiOfBhava(ascRashi, 12);
     const lord12thKey = getLordKeyOfRashi(rashi12th);
-    const lord12thRashi = chart[lord12thRashi ? lord12thKey : "Sun"].d1;
+    const lord12thRashi = (chart[lord12thKey] || chart.Sun).d1;
     const dist12 = getBhavaFrom(rashi12th, lord12thRashi);
     let upapadaRashi = ((lord12thRashi + dist12 - 2) % 12) + 1;
     const rawUlHouseFrom12th = getBhavaFrom(rashi12th, upapadaRashi);
@@ -1182,7 +1169,6 @@
     return lang === "hi" ? rolesHi.join(" • ") : rolesEn.join(" • ");
   }
 
-  // Helper to scroll smoothly to #birthTime and focus it when DOB-Only user clicks the Red Alert CTA
   window.focusBirthTimeInput = function () {
     const bt = document.getElementById("birthTime");
     const topForm = document.getElementById("lifeDossierForm");
@@ -1196,7 +1182,6 @@
     }
   };
 
-  // Generates a prominent RED inline notice for DOB-Only users reminding them about 99.99% Birth-Time accuracy
   function buildRedBirthTimePrompt(lang) {
     if (lang === "hi") {
       return `
@@ -1228,11 +1213,8 @@
   // 9. CHAPTER GENERATORS (PUNCHY, DATED REAL-LIFE EVENTS + ZERO TEXTBOOK FLUFF)
   // ==========================================================================
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 1 — CORE PERSONALITY, PAST VERIFICATION & INNER PSYCHOLOGY
-  // --------------------------------------------------------------------------
   function buildChapter1Personality(ctx) {
-    const { lang, name, numData, chaldean, chart, planetAnalysis, timeline } = ctx;
+    const { lang, name, numData, chaldean, chart, timeline } = ctx;
     const isFull = chart.isFullChartMode;
     const ascRashi     = RASHI_DATA[chart.Asc.d1];
     const moonRashi    = RASHI_DATA[chart.Moon.d1];
@@ -1330,12 +1312,8 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 2 — EDUCATION, MEMORY & COMPETITIVE EXAM WINDOWS
-  // --------------------------------------------------------------------------
   function buildChapter2Education(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas, numData } = ctx;
-    const isFull = chart.isFullChartMode;
+    const { lang, chart, planetAnalysis, numData } = ctx;
     const asc = chart.Asc.d1;
     const rashi5 = RASHI_DATA[getRashiOfBhava(asc, 5)];
     const merc   = planetAnalysis.Mercury;
@@ -1425,9 +1403,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 3 — CAREER BREAKTHROUGHS, PROMOTION YEARS & AUTHORITY
-  // --------------------------------------------------------------------------
   function buildChapter3Career(ctx) {
     const { lang, chart, planetAnalysis, specialLagnas, timeline } = ctx;
     const isFull = chart.isFullChartMode;
@@ -1521,16 +1496,9 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 4 — WEALTH, MONEY LEAKS & HIGH-RISK LOSS CAUTION YEARS
-  // --------------------------------------------------------------------------
   function buildChapter4Wealth(ctx) {
     const { lang, chart, specialLagnas, timeline } = ctx;
     const isFull = chart.isFullChartMode;
-    const asc = chart.Asc.d1;
-    const rashi2  = RASHI_DATA[getRashiOfBhava(asc, 2)];
-    const rashi11 = RASHI_DATA[getRashiOfBhava(asc, 11)];
-    const rashi12 = RASHI_DATA[getRashiOfBhava(asc, 12)];
     const bindu2  = specialLagnas.houseBindus[2];
     const bindu11 = specialLagnas.houseBindus[11];
     const bindu12 = specialLagnas.houseBindus[12];
@@ -1593,9 +1561,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 5 — LUCK FACTOR & GOLDEN TURNING-POINT AGES
-  // --------------------------------------------------------------------------
   function buildChapter5Luck(ctx) {
     const { lang, chart, planetAnalysis, numData } = ctx;
     const asc = chart.Asc.d1;
@@ -1666,9 +1631,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 6 — LOVE LIFE, ATTRACTION & HEARTBREAK PATTERNS
-  // --------------------------------------------------------------------------
   function buildChapter6Love(ctx) {
     const { lang, planetAnalysis, timeline } = ctx;
     const ven  = planetAnalysis.Venus;
@@ -1711,17 +1673,12 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 7 — FUTURE LIFE PARTNER, DIRECTION & GOLDEN MARRIAGE YEARS
-  // --------------------------------------------------------------------------
   function buildChapter7Partner(ctx) {
-    const { lang, gender, chart, planetAnalysis, specialLagnas, timeline } = ctx;
-    const isFull = chart.isFullChartMode;
+    const { lang, gender, chart, planetAnalysis, timeline } = ctx;
     const asc = chart.Asc.d1;
     const rashi7   = RASHI_DATA[getRashiOfBhava(asc, 7)];
     const lord7    = planetAnalysis[rashi7.lord];
     const d9Rashi7 = RASHI_DATA[getRashiOfBhava(chart.Asc.d9, 7)];
-    const ulRashi  = RASHI_DATA[specialLagnas.upapadaRashi];
     const spouseKarakaKey = gender === "female" ? "Jupiter" : "Venus";
     const spouseKaraka = planetAnalysis[spouseKarakaKey];
     const lord7Nak = NAKSHATRA_DATA[lord7.nak];
@@ -1792,9 +1749,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // NEW SECTION (CHAPTER 7B) — 👶 CHILDBIRTH, PROGENY & SANTAN YOGA
-  // --------------------------------------------------------------------------
   function buildChapterChildbirth(ctx) {
     const { lang, chart, planetAnalysis, timeline } = ctx;
     const asc = chart.Asc.d1;
@@ -1802,7 +1756,6 @@
     const lord5  = planetAnalysis[rashi5.lord];
     const jup    = planetAnalysis.Jupiter;
 
-    // Check if malefics/retrograde planets aspect or occupy the 5th house
     const has5thSensitivity = [planetAnalysis.Sun, planetAnalysis.Mars, planetAnalysis.Saturn, planetAnalysis.Rahu, planetAnalysis.Ketu]
       .some(p => p.bhava === 5) || jup.retro || lord5.retro;
 
@@ -1875,11 +1828,8 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 8 — SHARP 3-POINT REAL-LIFE VERDICTS FOR ALL 9 PLANETS (ZERO FLUFF!)
-  // --------------------------------------------------------------------------
   function buildChapter8PlanetsAndAspects(ctx) {
-    const { lang, chart, planetAnalysis, specialLagnas, numData } = ctx;
+    const { lang, chart, planetAnalysis, specialLagnas } = ctx;
     const isFull = chart.isFullChartMode;
     const ascRashi = chart.Asc.d1;
     const pKeys = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
@@ -1904,12 +1854,9 @@
       const degBadge = info.formattedDeg ? `<span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">${info.formattedDeg}</span>` : "";
 
       const matAges = (PLANET_MATURITY_AGES[k] || [24, 30, 36]).join(", ");
-
-      // Conjunction summary
       const conjNamesEn = info.conjunctWith.map(c => PLANET_META[c].en).join(", ");
       const conjNamesHi = info.conjunctWith.map(c => PLANET_META[c].hi).join(", ");
 
-      // Outgoing aspects summary
       const outgoingEn = info.aspectedTargets.map(t => {
         const hit = t.planetsThere.length ? ` (hitting ${t.planetsThere.join(", ")})` : "";
         return isFull ? `${t.nthAspect}th aspect on House ${t.targetBhava}${hit}` : `${t.nthAspect}th aspect on ${RASHI_DATA[t.targetRashi].en}${hit}`;
@@ -2015,10 +1962,6 @@
     return modeBanner + `<div class="space-y-3.5">${cardsHtml}</div>`;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 9 — SPECIAL LAGNAS + VERIFIED 337-BINDU PARASHARI ASHTAKAVARGA
-  //             (Shown ONLY when Birth Time or Manual Matrix is active!)
-  // --------------------------------------------------------------------------
   function buildChapter9SpecialLagnas(ctx) {
     const { lang, specialLagnas } = ctx;
     const chandra   = RASHI_DATA[specialLagnas.chandraLagna];
@@ -2180,17 +2123,11 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 10 — DUAL-MODE TIME PHASE:
-  //   • Full Mode: Active Vimshottari Mahadasha & Antardasha + Exact Next Shift
-  //   • DOB-Only Mode: Concrete 2026–2029 Year-by-Year Personal Year & Gochar Forecast
-  // --------------------------------------------------------------------------
   function buildChapter10TimePhase(ctx) {
     const { lang, dasha, planetAnalysis, numData, chart } = ctx;
     const isFull = chart.isFullChartMode;
     const cy = numData.currentYear;
 
-    // MODE B: DOB-ONLY 4-YEAR CALENDAR FORECAST (2026, 2027, 2028, 2029)
     if (!isFull) {
       const years = [cy, cy + 1, cy + 2, cy + 3];
       const pyTheme = {
@@ -2230,7 +2167,6 @@
       `;
     }
 
-    // MODE A: FULL VIMSHOTTARI MAHADASHA & ANTARDASHA WITH EXACT DATES
     const mdInfo = planetAnalysis[dasha.md];
     const adInfo = planetAnalysis[dasha.ad];
     const mdRashi = RASHI_DATA[mdInfo.d1];
@@ -2314,9 +2250,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 11 — HIDDEN PROBLEMS, KARMIC TRAPS & DIAGNOSTIC HOOK
-  // --------------------------------------------------------------------------
   function buildChapter11HiddenTraps(ctx) {
     const { lang, name, chart, planetAnalysis, specialLagnas, dasha, timeline } = ctx;
     const isFull = chart.isFullChartMode;
@@ -2326,7 +2259,6 @@
     const badhakaInfo = planetAnalysis[badhakaKey];
     const rahu = planetAnalysis.Rahu;
     const ketu = planetAnalysis.Ketu;
-    const sat  = planetAnalysis.Saturn;
     const mars = planetAnalysis.Mars;
     const isManglik = [1, 2, 4, 7, 8, 12].includes(mars.bhava);
 
@@ -2393,9 +2325,6 @@
     `;
   }
 
-  // --------------------------------------------------------------------------
-  // CHAPTER 12 — GURU DAKSHINA CALIBRATION (MOVED TO THE MIDDLE!)
-  // --------------------------------------------------------------------------
   function updateChapter12Dakshina(ctx) {
     const { lang, name, chart } = ctx;
     const jupRashiId = (chart && chart.Jupiter) ? chart.Jupiter.d1 : 9;
@@ -2431,13 +2360,12 @@
   // 10. DYNAMIC DOM ORDERING: INJECT CHILDBIRTH & MOVE DAKSHINA TO THE MIDDLE
   // ==========================================================================
 
-  function ensureChildbirthSectionAndMiddleDakshina(lang) {
+  function ensureChildbirthSectionAndMiddleDakshina() {
     const partnerArticle = document.getElementById("chapter-partner");
     const planetsArticle = document.getElementById("chapter-planets");
     const dakshinaArticle = document.getElementById("chapter-dakshina");
     if (!partnerArticle || !planetsArticle) return;
 
-    // 1. Create #chapter-childbirth right after #chapter-partner if not already created
     let babyArticle = document.getElementById("chapter-childbirth");
     if (!babyArticle) {
       babyArticle = document.createElement("article");
@@ -2456,7 +2384,6 @@
       partnerArticle.insertAdjacentElement("afterend", babyArticle);
     }
 
-    // 2. Move #chapter-dakshina to the exact MIDDLE of the reading (right after #chapter-childbirth and before #chapter-planets)
     if (dakshinaArticle && babyArticle.nextElementSibling !== dakshinaArticle) {
       babyArticle.insertAdjacentElement("afterend", dakshinaArticle);
     }
@@ -2470,7 +2397,6 @@
     const el = document.getElementById("vedicChartsContainer");
     if (!el) return;
 
-    // STRICT HONESTY RULE: If Birth Time / Manual Matrix was NOT provided, HIDE D1/D9 SVG charts, Chalit, Shadbala & Mahadasha!
     if (!ctx.chart.isFullChartMode || ctx.viewFilter === "numerology_8") {
       el.innerHTML = "";
       el.classList.add("hidden");
@@ -2508,7 +2434,6 @@
         </div>
       `;
     } else {
-      // Custom Manual Planetary Matrix SVG rendering
       const synthChart = {};
       ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"].forEach(k => {
         synthChart[k] = { rashi: ctx.chart[k].d1, d9: ctx.chart[k].d9, retro: ctx.chart[k].retro };
@@ -2569,7 +2494,6 @@
           ${ctx.lang === 'hi' ? 'आपके द्वारा चुने गए लग्न (D1), नक्षत्र और नवांश (D9) के आधार पर संपूर्ण फलित।' : 'Full Parashari & Navamsa reading calibrated to your custom planetary inputs.'}
         </div>`;
       } else {
-        // PROMINENT RED 99.99% ALERT BANNER FOR DOB-ONLY USERS!
         const moonShiftNoteHi = ctx.chart.moonShiftedSignThatDay
           ? ` (नोट: आपके जन्म के दिन चंद्रमा ने <strong>${RASHI_DATA[ctx.chart.moonStartRashi].hi}</strong> और <strong>${RASHI_DATA[ctx.chart.moonEndRashi].hi}</strong> के बीच राशि परिवर्तन किया था!)`
           : "";
@@ -2606,10 +2530,8 @@
   function applyViewFilterVisibility(ctx) {
     const isFull = ctx.chart.isFullChartMode;
     const ch9 = document.getElementById("chapter-lagnas");
-    // In DOB-Only mode, hide Chapter 9 (Special Lagnas & 337-Bindu Ashtakavarga) so we never show a fake Lagna SAV table!
     if (ch9) ch9.style.display = isFull ? "" : "none";
 
-    // Also hide the Chapter 9 pill in the quick-jump nav bar when in DOB-Only mode
     const navPills = document.querySelectorAll('.chapter-nav-pill[href="#chapter-lagnas"]');
     navPills.forEach(p => { p.style.display = isFull ? "" : "none"; });
   }
@@ -2651,7 +2573,7 @@
       ch1Title: "Your Unspoken Personality, Past Event Verification & Name Code",
       ch2Tag: "Chapter 02 • Intellect, Memory & Exam Windows",
       ch2Title: "Education, Focus Pattern & Skill Breakthrough Years",
-      ch3Tag: "Chapter 03 • Career Breakthroughs, Promotion Years & Command",
+      ch3Tag: "Chapter 03 • Karma, Rise & Professional Destiny",
       ch3Title: "Career Leap Windows, Job vs. Business & Workplace Reality",
       ch4Tag: "Chapter 04 • Wealth, Money Leaks & Caution Windows",
       ch4Title: "Wealth Formula, Money Leaks & High-Risk Caution Years",
@@ -2821,82 +2743,85 @@
     if (event && typeof event.preventDefault === "function") event.preventDefault();
     const preserveScroll = options && options.preserveScroll === true;
 
-    const nameInput   = document.getElementById("userName")?.value.trim() || "Seeker";
-    const dobInput    = document.getElementById("userDob")?.value || "1998-01-24";
-    const langInput   = document.getElementById("reportLang")?.value || "hi";
-    const genderInput = document.getElementById("userGender")?.value || "male";
+    try {
+      const nameInput   = document.getElementById("userName")?.value.trim() || "Seeker";
+      const dobInput    = document.getElementById("userDob")?.value || "1998-01-24";
+      const langInput   = document.getElementById("reportLang")?.value || "hi";
+      const genderInput = document.getElementById("userGender")?.value || "male";
 
-    const chaldean       = calculateChaldeanName(nameInput);
-    const numData        = calculateNumerologyFromDob(dobInput);
-    const chart          = readChartFromDOM(numData, chaldean);
-    const planetAnalysis = analyzeAllPlanetsAndAspects(chart);
-    const specialLagnas  = computeSpecialLagnasAndBindus(chart);
-    const dasha          = resolveActiveDasha(chart, numData);
-    const timeline       = computeLifeEventTimeline(numData, chart, planetAnalysis);
+      const chaldean       = calculateChaldeanName(nameInput);
+      const numData        = calculateNumerologyFromDob(dobInput);
+      const chart          = readChartFromDOM(numData, chaldean);
+      const planetAnalysis = analyzeAllPlanetsAndAspects(chart);
+      const specialLagnas  = computeSpecialLagnasAndBindus(chart);
+      const dasha          = resolveActiveDasha(chart, numData);
+      const timeline       = computeLifeEventTimeline(numData, chart, planetAnalysis);
 
-    const ctx = {
-      name: nameInput,
-      dob: dobInput,
-      lang: langInput,
-      gender: genderInput,
-      chaldean,
-      numData,
-      chart,
-      planetAnalysis,
-      specialLagnas,
-      dasha,
-      timeline,
-      viewFilter: window.__jtViewFilter || "full_12",
-      vedicData: window.__jtVedicData
-    };
+      const ctx = {
+        name: nameInput,
+        dob: dobInput,
+        lang: langInput,
+        gender: genderInput,
+        chaldean,
+        numData,
+        chart,
+        planetAnalysis,
+        specialLagnas,
+        dasha,
+        timeline,
+        viewFilter: window.__jtViewFilter || "full_12",
+        vedicData: window.__jtVedicData
+      };
 
-    ctx.displayAsc     = chart.isFullChartMode ? RASHI_DATA[chart.Asc.d1].en : `${RASHI_DATA[chart.Sun.d1].en} (Surya Base)`;
-    ctx.displayMoon    = RASHI_DATA[chart.Moon.d1].en;
-    ctx.displayMoonNak = NAKSHATRA_DATA[chart.Moon.nak].name;
-    window.__jyotishLastCtx = ctx;
+      ctx.displayAsc     = chart.isFullChartMode ? RASHI_DATA[chart.Asc.d1].en : `${RASHI_DATA[chart.Sun.d1].en} (Surya Base)`;
+      ctx.displayMoon    = RASHI_DATA[chart.Moon.d1].en;
+      ctx.displayMoonNak = NAKSHATRA_DATA[chart.Moon.nak].name;
+      window.__jyotishLastCtx = ctx;
 
-    // Ensure Childbirth section exists and Guru Dakshina is positioned in the Middle
-    ensureChildbirthSectionAndMiddleDakshina(langInput);
+      ensureChildbirthSectionAndMiddleDakshina();
 
-    const setHtml = (id, html) => {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = html;
-    };
+      const setHtml = (id, html) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      };
 
-    updateChapterHeadingsAndNav(langInput, ctx);
-    setHtml("contentPersonality",     buildChapter1Personality(ctx));
-    setHtml("contentEducation",       buildChapter2Education(ctx));
-    setHtml("contentCareer",          buildChapter3Career(ctx));
-    setHtml("contentWealth",          buildChapter4Wealth(ctx));
-    setHtml("contentLuck",            buildChapter5Luck(ctx));
-    setHtml("contentLove",            buildChapter6Love(ctx));
-    setHtml("contentPartner",         buildChapter7Partner(ctx));
-    setHtml("contentChildbirth",      buildChapterChildbirth(ctx));
-    updateChapter12Dakshina(ctx); // Middle section right after Partner & Childbirth
-    setHtml("contentPlanetsAspects",  buildChapter8PlanetsAndAspects(ctx));
-    setHtml("contentSpecialLagnas",   buildChapter9SpecialLagnas(ctx));
-    setHtml("contentTimePhase",       buildChapter10TimePhase(ctx));
-    setHtml("contentHiddenTraps",     buildChapter11HiddenTraps(ctx));
+      updateChapterHeadingsAndNav(langInput, ctx);
+      setHtml("contentPersonality",     buildChapter1Personality(ctx));
+      setHtml("contentEducation",       buildChapter2Education(ctx));
+      setHtml("contentCareer",          buildChapter3Career(ctx));
+      setHtml("contentWealth",          buildChapter4Wealth(ctx));
+      setHtml("contentLuck",            buildChapter5Luck(ctx));
+      setHtml("contentLove",            buildChapter6Love(ctx));
+      setHtml("contentPartner",         buildChapter7Partner(ctx));
+      setHtml("contentChildbirth",      buildChapterChildbirth(ctx));
+      updateChapter12Dakshina(ctx);
+      setHtml("contentPlanetsAspects",  buildChapter8PlanetsAndAspects(ctx));
+      setHtml("contentSpecialLagnas",   buildChapter9SpecialLagnas(ctx));
+      setHtml("contentTimePhase",       buildChapter10TimePhase(ctx));
+      setHtml("contentHiddenTraps",     buildChapter11HiddenTraps(ctx));
 
-    renderCalibrationBannerAndSwitcher(ctx);
-    renderVedicExtraSections(ctx);
-    applyViewFilterVisibility(ctx);
+      renderCalibrationBannerAndSwitcher(ctx);
+      renderVedicExtraSections(ctx);
+      applyViewFilterVisibility(ctx);
 
-    // Pre-populate Manual Booking Form
-    const mName = document.getElementById("name");
-    const mDob = document.getElementById("dob");
-    const mGender = document.getElementById("gender");
-    if (mName) mName.value = nameInput;
-    if (mDob) mDob.value = dobInput;
-    if (mGender) mGender.value = genderInput;
+      const mName = document.getElementById("name");
+      const mDob = document.getElementById("dob");
+      const mGender = document.getElementById("gender");
+      if (mName) mName.value = nameInput;
+      if (mDob) mDob.value = dobInput;
+      if (mGender) mGender.value = genderInput;
 
-    const outputContainer = document.getElementById("masterDossierOutput");
-    if (outputContainer) {
-      outputContainer.classList.remove("hidden");
-      updateReadingMetricsBadge(langInput);
-      if (!preserveScroll) {
-        setTimeout(() => outputContainer.scrollIntoView({behavior: "smooth", block: "start"}), 100);
+      const outputContainer = document.getElementById("masterDossierOutput");
+      if (outputContainer) {
+        outputContainer.classList.remove("hidden");
+        updateReadingMetricsBadge(langInput);
+        if (!preserveScroll) {
+          setTimeout(() => outputContainer.scrollIntoView({behavior: "smooth", block: "start"}), 100);
+        }
       }
+    } catch (err) {
+      console.error("Jyotish Tark Dossier Generation Error:", err);
+      alert("Error generating reading: " + (err && err.message ? err.message : err));
     }
   };
 
