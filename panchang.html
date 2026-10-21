@@ -1,26 +1,130 @@
+<!-- panchang.html -->
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" class="scroll-smooth">
 <head> 
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="dynamic-title">Daily Panchang October 2026 | Hindu Calendar | Jyotish Tark</title>
+    <title id="dynamic-title">Daily Panchang October & November 2026 | Hindu Calendar & Live Muhurat | Jyotish Tark</title>
     <link rel="canonical" href="https://jyotishtark.in/panchang.html" />
-    <meta name="description" id="dynamic-desc" content="Get complete October 2026 Live Panchang for Lucknow - Tithi, Nakshatra, Tara Bala Personal Luck Calculator, Live Muhurat Radar, and WhatsApp Status Card.">
-    <meta name="keywords" content="october 2026 panchang, lucknow panchang, navratri 2026 panchang, dussehra 2026 muhurat, karwa chauth 2026 panchang, tara bala calculator, jyotish tark">
+    <meta name="description" id="dynamic-desc" content="Complete Daily Vedic Panchang for Lucknow — Tithi, Nakshatra, Shubh Muhurat, Rahu Kaal, Tara Bala & Chandra Bala Luck Calculator, Live Cosmic Radar, and 1-Click WhatsApp Status Card.">
+    <meta name="keywords" content="daily panchang, aaj ka panchang, october 2026 panchang, november 2026 panchang, lucknow panchang, tithi, nakshatra, choghadiya, shubh muhurat, rahu kaal today, tara bala calculator, diwali 2026 panchang, chhath puja muhurat, jyotish tark panchang">
     <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="google-adsense-account" content="ca-pub-2888883494422573">
+
+    <!-- Open Graph / WhatsApp Preview -->
     <meta property="og:title" id="dynamic-og-title" content="Live Daily Panchang & Personal Muhurat Calculator | Jyotish Tark">
-    <meta property="og:description" content="Check your personal Tara Bala luck score today, Live Shubh/Ashubh Muhurat countdown, and October 2026 Panchang for Lucknow.">
-    <meta property="og:image" content="https://jyotishtark.in/logo.png">
+    <meta property="og:description" content="Check your personal Tara Bala score, live Shubh Muhurat countdown, and authentic Vedic Panchang for Lucknow.">
+    <meta property="og:image" content="https://jyotishtark.in/sample.png">
     <meta property="og:url" content="https://jyotishtark.in/panchang.html">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Jyotish Tark">
+    <meta property="og:locale" content="hi_IN">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Daily Panchang, Live Muhurat Radar & Tara Bala | Jyotish Tark">
+    <meta name="twitter:description" content="Real-time Shubh Muhurat, Rahu Kaal countdown, and daily astrological guidance for Lucknow.">
+    <meta name="twitter:image" content="https://jyotishtark.in/sample.png">
+
+    <!-- JSON-LD Structured Data (BreadcrumbList, WebPage, WebApplication & FAQPage) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://jyotishtark.in/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Daily Vedic Panchang & Live Muhurat",
+              "item": "https://jyotishtark.in/panchang.html"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://jyotishtark.in/panchang.html",
+          "url": "https://jyotishtark.in/panchang.html",
+          "name": "Daily Vedic Panchang & Live Muhurat Calculator | Jyotish Tark",
+          "description": "Complete Daily Vedic Panchang for Lucknow — Tithi, Nakshatra, Shubh Muhurat, Rahu Kaal, Tara Bala & Chandra Bala Luck Calculator, Live Cosmic Radar.",
+          "inLanguage": ["hi", "en"],
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://jyotishtark.in/#website"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Jyotish Tark",
+            "url": "https://jyotishtark.in/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://jyotishtark.in/logo.png"
+            }
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Jyotish Tark Live Panchang & Tara Bala Radar",
+          "url": "https://jyotishtark.in/panchang.html",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "All",
+          "inLanguage": ["hi", "en"],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "पंचांग के पांच मुख्य अंग कौन से हैं?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "पंचांग के पांच मूल अंग होते हैं: तिथि (Tithi), वार (Weekday), नक्षत्र (Nakshatra), योग (Yoga) और करण (Karana)। इन पांचों के सूक्ष्म काल-संयोग से ही किसी भी मुहूर्त का शुभ अथवा अशुभ फल निर्धारित होता है।"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "तारा बल (Tara Bala) और चंद्र बल (Chandra Bala) क्या है?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "चंद्र बल यह दर्शाता है कि आज चंद्रमा आपकी जन्म राशि से किस भाव में गोचर कर रहा है। तारा बल आपके जन्म नक्षत्र से आज के नक्षत्र की दूरी के आधार पर नौ तारों (जन्म, संपत, विपत, क्षेम, प्रत्यक, साधन, नैधन, मित्र, परम मित्र) की अनुकूलता बताता है।"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "राहु काल में कौन से कार्य वर्जित हैं?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "राहु काल प्रत्येक दिन लगभग 90 मिनट की अशुभ अवधि होती है। इस समय कोई भी नया व्यवसाय, यात्रा, गृह प्रवेश, महत्वपूर्ण अनुबंध पर हस्ताक्षर या धन निवेश प्रारंभ नहीं करना चाहिए।"
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- html2canvas for 1-Click WhatsApp Status Card Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #7e22ce;
@@ -37,26 +141,26 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #f3f4f6;
             background-attachment: fixed;
+            overflow-x: hidden;
         }
         
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display', 'Hind', serif;
             font-weight: 700;
         }
-        
-        .cosmic-bg {
-            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-            position: relative;
+
+        .hindi {
+            font-family: 'Hind', sans-serif;
         }
         
-        .cosmic-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(126, 34, 206, 0.85) 0%, rgba(30, 41, 59, 0.92) 100%);
+        /* Zero-Latency Pure CSS Nebula Hero Background */
+        .cosmic-bg {
+            background: 
+                radial-gradient(circle at 20% 25%, rgba(236, 72, 153, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(88, 28, 135, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.14);
         }
         
         .glass-card {
@@ -92,8 +196,8 @@
         }
         
         .panchang-item:last-child { border-bottom: none; }
-        .panchang-label { font-weight: 600; color: var(--secondary); white-space: nowrap; }
-        .panchang-value { font-weight: 500; text-align: right; }
+        .panchang-label { font-weight: 600; color: var(--secondary); white-space: nowrap; font-size: 0.9rem; }
+        .panchang-value { font-weight: 500; text-align: right; font-size: 0.9rem; color: #f8fafc; }
         .auspicious { color: #10b981; }
         .inauspicious { color: #ef4444; }
         
@@ -170,7 +274,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--secondary);
+            background: var(--secondary, #f59e0b);
             transition: width 0.3s ease;
         }
         .nav-link:hover::after { width: 100%; }
@@ -183,7 +287,7 @@
             left: 0;
             background: rgba(30, 41, 59, 0.98);
             backdrop-filter: blur(20px);
-            min-width: 220px;
+            min-width: 240px;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             z-index: 1000;
@@ -192,16 +296,24 @@
             margin-top: 10px;
         }
         .dropdown:hover .dropdown-content { display: block; }
+        .dropdown::after {
+            content: ''; position: absolute; bottom: -15px; left: 0; width: 100%; height: 20px; background: transparent; z-index: 999;
+        }
         .dropdown-content a {
             display: flex;
             align-items: center;
-            padding: 12px 18px;
+            gap: 10px;
+            padding: 14px 20px;
             color: white;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 500;
         }
-        .dropdown-content a:hover { background: rgba(126, 34, 206, 0.3); padding-left: 22px; }
+        .dropdown-content a:hover { 
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2)); 
+            padding-left: 24px; 
+        }
 
         .mobile-dropdown-content {
             display: none;
@@ -214,6 +326,24 @@
         .mobile-dropdown.active .mobile-dropdown-content { display: block; }
         .mobile-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; cursor: pointer; }
 
+        .primary-button {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(126, 34, 206, 0.5);
+        }
+
         .whatsapp-float {
             position: fixed;
             width: 60px;
@@ -223,6 +353,7 @@
             background-color: #25d366;
             color: #FFF;
             border-radius: 50px;
+            text-align: center;
             font-size: 30px;
             box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
             z-index: 100;
@@ -231,32 +362,86 @@
             justify-content: center;
             transition: all 0.3s ease;
             border: 3px solid white;
+            cursor: pointer;
         }
         .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
+
+        .whatsapp-popup {
+            position: fixed;
+            bottom: 110px;
+            right: 40px;
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            z-index: 99;
+            overflow: hidden;
+            display: none;
+            border: 1px solid #e0e0e0;
+        }
+        .whatsapp-header {
+            background: linear-gradient(135deg, #075E54, #128C7E);
+            color: white;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .whatsapp-header img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 2px solid white;
+        }
+        .whatsapp-body { padding: 18px; color: #4a4a4a; }
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        .whatsapp-option:hover { background: #f8f9fa; border-color: #25d366; }
+        .whatsapp-option i { margin-right: 12px; font-size: 22px; color: #25d366; width: 24px; text-align: center; }
+
+        .footer-links a { transition: all 0.3s ease; }
+        .footer-links a:hover { color: var(--secondary); padding-left: 5px; }
+
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 52px; height: 52px; bottom: 20px; right: 20px; font-size: 26px; }
+            .whatsapp-popup { bottom: 82px; right: 20px; width: 290px; }
+        }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <!-- Navigation -->
+    <!-- Navigation Header -->
     <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
         <div class="flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3">
+            <a href="https://jyotishtark.in/" class="flex items-center space-x-3">
                 <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
+                    <img src="logo.png" alt="Jyotish Tark Logo" width="48" height="48" class="h-full w-full object-cover">
                 </div>
                 <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
             </a>
 
-            <nav class="hidden md:flex space-x-6 font-medium">
-                <a href="index.html" class="nav-link text-white hover:text-amber-300 transition">Home</a>
-                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition">Kundali</a>
+            <nav class="hidden md:flex space-x-6 font-medium items-center">
+                <a href="https://jyotishtark.in/" class="nav-link text-white hover:text-amber-300 transition">Home</a>
+                <a href="kundali-form.html" class="nav-link text-white hover:text-amber-300 transition flex items-center">
+                    <span class="px-2 py-0.5 text-[10px] bg-amber-500 text-slate-950 font-extrabold rounded-full mr-1.5">FREE</span>
+                    Kundali
+                </a>
                 <div class="dropdown">
-                    <a href="#" class="nav-link text-white hover:text-amber-300 transition flex items-center">
-                        Calculator <i class="fas fa-chevron-down ml-2 text-xs"></i>
-                    </a>
+                    <button type="button" class="nav-link text-white hover:text-amber-300 transition flex items-center font-medium">
+                        Calculator <i class="fas fa-chevron-down ml-1.5 text-xs"></i>
+                    </button>
                     <div class="dropdown-content">
-                        <a href="numerology.html"><i class="fas fa-calculator mr-2"></i> Numerology Report</a>
-                        <a href="tarot.html"><i class="fas fa-clover mr-2"></i> Tarot Reading</a>
+                        <a href="kundali-form.html"><i class="fas fa-star text-amber-400"></i> Free Kundali & Life Dossier</a>
+                        <a href="numerology.html"><i class="fas fa-calculator text-purple-400"></i> Numerology Report</a>
+                        <a href="tarot.html"><i class="fas fa-clover text-pink-400"></i> Tarot Reading</a>
                     </div>
                 </div>
                 <a href="panchang.html" class="nav-link text-amber-300 font-semibold transition">Panchang</a>
@@ -273,22 +458,23 @@
 
         <!-- Mobile Nav -->
         <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-            <a href="index.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
+            <a href="https://jyotishtark.in/" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
                 <i class="fas fa-home w-6 mr-2"></i>Home
             </a>
             <a href="kundali-form.html" class="block px-4 py-3 rounded text-white hover:bg-purple-700 transition flex items-center">
-                <i class="fas fa-star w-6 mr-2"></i>Kundali
+                <i class="fas fa-star w-6 mr-2"></i>Free Kundali & Life Dossier
             </a>
             <div class="mobile-dropdown">
-                <div class="mobile-dropdown-toggle block px-4 py-3 rounded text-white hover:bg-purple-700 transition cursor-pointer">
+                <div class="mobile-dropdown-toggle px-4 py-3 rounded text-white hover:bg-purple-700 transition">
                     <div class="flex items-center">
                         <i class="fas fa-calculator w-6 mr-2"></i><span>Calculator</span>
                     </div>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down text-xs"></i>
                 </div>
                 <div class="mobile-dropdown-content">
-                    <a href="numerology.html" class="block py-2 px-4 text-white"><i class="fas fa-calculator mr-2"></i> Numerology Report</a>
-                    <a href="tarot.html" class="block py-2 px-4 text-white"><i class="fas fa-clover mr-2"></i> Tarot Reading</a>
+                    <a href="kundali-form.html" class="block py-2 px-4 text-white"><i class="fas fa-star mr-2 text-amber-400"></i> Free Kundali Dossier</a>
+                    <a href="numerology.html" class="block py-2 px-4 text-white"><i class="fas fa-calculator mr-2 text-purple-400"></i> Numerology Report</a>
+                    <a href="tarot.html" class="block py-2 px-4 text-white"><i class="fas fa-clover mr-2 text-pink-400"></i> Tarot Reading</a>
                 </div>
             </div>
             <a href="panchang.html" class="block px-4 py-3 rounded bg-purple-800 text-amber-300 font-semibold transition flex items-center">
@@ -309,13 +495,56 @@
         </nav>
     </header>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/918318513814" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <!-- WhatsApp Floating Button & Modal -->
+    <a class="whatsapp-float" id="whatsappButton" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- VIRAL FEATURE #1: LIVE MUHURAT RADAR & COUNTDOWN BAR -->
-    <section class="max-w-6xl mx-4 md:mx-auto mt-6">
+    <div class="whatsapp-popup" id="whatsappPopup">
+        <div class="whatsapp-header">
+            <img src="logo.png" alt="Jyotish Tark" width="48" height="48">
+            <div>
+                <h3 class="font-bold text-lg">Jyotish Tark</h3>
+                <p class="text-sm opacity-90">Typically replies within minutes</p>
+            </div>
+        </div>
+        <div class="whatsapp-body">
+            <p class="mb-4 text-gray-600 text-center">Hello! How can we help you today?</p>
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20have%20a%20question%20regarding%20today\'s%20muhurat%20and%20panchang.', '_blank');">
+                <i class="fas fa-comment"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Muhurat Inquiry</h4>
+                    <p class="text-sm text-gray-600">Ask about auspicious timings</p>
+                </div>
+            </div>
+            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
+                <i class="fas fa-phone"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Call Astrologer</h4>
+                    <p class="text-sm text-gray-600">Speak directly with our team</p>
+                </div>
+            </div>
+            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20hand-crafted%20Kundali%20consultation', '_blank');">
+                <i class="fas fa-calendar-check"></i>
+                <div>
+                    <h4 class="font-semibold text-gray-800">Book Consultation</h4>
+                    <p class="text-sm text-gray-600">Schedule personal Kundali session</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 mt-6 text-sm text-gray-400">
+        <ol class="flex items-center space-x-2">
+            <li><a href="https://jyotishtark.in/" class="hover:text-amber-300">Home</a></li>
+            <li><span>/</span></li>
+            <li class="text-amber-300 font-medium">Daily Vedic Panchang & Live Muhurat</li>
+        </ol>
+    </nav>
+
+    <!-- LIVE MUHURAT RADAR & COUNTDOWN BAR -->
+    <section class="max-w-6xl mx-4 md:mx-auto mt-4">
         <div id="live-radar-box" class="radar-neutral rounded-2xl p-4 md:px-8 md:py-5 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-500">
             <div class="flex items-center space-x-4">
                 <div class="relative flex items-center justify-center">
@@ -339,25 +568,25 @@
         </div>
     </section>
 
-    <!-- Hero, Date Switcher & Audio/WhatsApp Viral Action Buttons -->
+    <!-- Hero, Date Switcher & Action Buttons -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-6 p-6 md:p-10 text-center relative overflow-hidden">
         <div class="relative z-10">
             <span class="px-4 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-semibold inline-block mb-3">
-                <i class="fas fa-location-dot mr-1"></i> लखनऊ (Lucknow, UP) • अक्टूबर 2026
+                <i class="fas fa-location-dot mr-1"></i> लखनऊ (Lucknow, UP) • दैनिक पंचांग
             </span>
             <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">
-                दैनिक वैदिक पंचांग
+                दैनिक वैदिक पंचांग एवं शुभ मुहूर्त
             </h1>
             <p id="hero-date-subtitle" class="text-2xl md:text-3xl text-amber-300 font-bold mb-6">
                 Loading Date...
             </p>
 
-            <!-- Time-Travel Date Switcher Controls (1 Oct to 31 Oct 2026) -->
+            <!-- Time-Travel Date Switcher (Oct & Nov 2026 Seamless Engine) -->
             <div class="flex flex-wrap items-center justify-center gap-3 bg-slate-900/75 p-3 rounded-2xl max-w-2xl mx-auto border border-white/15 mb-6">
                 <button onclick="shiftDate(-1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
                     <i class="fas fa-chevron-left mr-2"></i> पिछला दिन
                 </button>
-                <button onclick="goToToday()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-sm transition shadow-lg">
+                <button onclick="goToToday()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition shadow-lg">
                     आज (Today)
                 </button>
                 <button onclick="shiftDate(1)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-purple-700 text-white text-sm font-medium transition flex items-center">
@@ -365,11 +594,11 @@
                 </button>
                 <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-xl border border-gray-600">
                     <i class="fas fa-calendar-alt text-amber-300 mr-2 text-sm"></i>
-                    <input type="date" id="datePicker" min="2026-10-01" max="2026-10-31" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
+                    <input type="date" id="datePicker" min="2026-10-01" max="2026-11-30" onchange="onDatePickerChange(this.value)" class="bg-transparent text-white text-sm focus:outline-none cursor-pointer" />
                 </div>
             </div>
 
-            <!-- VIRAL FEATURES #4 & #5: AUDIO PANCHANG + WHATSAPP STATUS GENERATOR -->
+            <!-- Audio Panchang & WhatsApp Status Generator Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <button onclick="speakPanchang()" id="audioBtn" class="px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold text-sm shadow-lg transition flex items-center gap-2">
                     <i class="fas fa-volume-high text-lg"></i> <span>आज का पंचांग सुनें (30 Sec Audio)</span>
@@ -381,7 +610,32 @@
         </div>
     </section>
 
-    <!-- VIRAL FEATURE #2: PERSONAL CHANDRA & TARA BALA CALCULATOR -->
+    <!-- Cross-Linking Conversion Bridge: Kundali & Rashifal Banner -->
+    <section class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="glass-card p-5 rounded-2xl border-l-4 border-amber-400 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="space-y-1">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">
+                    <i class="fas fa-star mr-1"></i> व्यक्तिगत जन्म कुंडली एवं गोचर
+                </span>
+                <h3 class="text-lg md:text-xl font-bold text-white">
+                    क्या आप जानते हैं कि आज का गोचर आपकी व्यक्तिगत कुंडली में कौन सा भाव सक्रिय कर रहा है?
+                </h3>
+                <p class="text-xs md:text-sm text-gray-300">
+                    पंचांग सामान्य मुहूर्त बताता है, जबकि आपकी लग्न कुंडली और महादशा आपके व्यक्तिगत लाभ का निर्धारण करती है।
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-2.5 shrink-0">
+                <a href="rashifal.html" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold text-xs border border-amber-400/30 transition flex items-center gap-1.5">
+                    <i class="fas fa-sun"></i> आज का राशिफल देखें
+                </a>
+                <a href="kundali-form.html" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-95 text-white font-bold text-xs shadow-lg transition flex items-center gap-1.5">
+                    <i class="fas fa-scroll"></i> फ्री 45-Min कुंडली डॉसियर →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERSONAL CHANDRA & TARA BALA CALCULATOR -->
     <section class="max-w-6xl mx-auto px-4 mt-8">
         <div class="glass-card rounded-2xl p-6 md:p-8 border-l-4 border-purple-500">
             <div class="mb-6">
@@ -392,25 +646,25 @@
                     आज का तारा बल और चंद्र बल (Your Personal Day Score)
                 </h2>
                 <p class="text-gray-300 text-sm mt-1">
-                    अपनी जन्म राशि और नक्षत्र चुनें—हमारा सिस्टम आपकी पसंद याद रखेगा और प्रतिदिन आपका व्यक्तिगत कॉस्मिक स्कोर दिखाएगा:
+                    अपनी जन्म राशि और जन्म नक्षत्र चुनें — हमारा सिस्टम आपकी पसंद याद रखेगा और प्रतिदिन आपका व्यक्तिगत कॉस्मिक स्कोर दिखाएगा:
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div>
                     <label class="block text-xs font-semibold text-amber-300 uppercase mb-2">1. आपकी जन्म राशि (Moon Sign)</label>
-                    <select id="userRashiSelect" onchange="calculatePersonalLuck()" class="w-full bg-slate-900/90 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400">
+                    <select id="userRashiSelect" onchange="calculatePersonalLuck()" class="w-full bg-slate-900/90 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400 text-sm">
                         <option value="">-- अपनी राशि चुनें --</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-amber-300 uppercase mb-2">2. आपका जन्म नक्षत्र (Birth Star)</label>
-                    <select id="userNakshatraSelect" onchange="calculatePersonalLuck()" class="w-full bg-slate-900/90 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400">
+                    <select id="userNakshatraSelect" onchange="calculatePersonalLuck()" class="w-full bg-slate-900/90 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400 text-sm">
                         <option value="">-- अपना नक्षत्र चुनें (Optional) --</option>
                     </select>
                 </div>
                 <div>
-                    <button onclick="calculatePersonalLuck()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition">
+                    <button onclick="calculatePersonalLuck()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition text-sm">
                         <i class="fas fa-bolt mr-2"></i> अपना आज का भाग्य जांचें
                     </button>
                 </div>
@@ -434,14 +688,14 @@
         </div>
     </section>
 
-    <!-- VIRAL FEATURE #3: INTERACTIVE "WHAT DO YOU WANT TO DO TODAY?" FILTER -->
+    <!-- INTERACTIVE "WHAT DO YOU WANT TO DO TODAY?" FILTER -->
     <section class="max-w-6xl mx-auto px-4 mt-8">
         <div class="glass-card rounded-2xl p-6 md:p-8 text-center">
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
                 आज आप क्या करना चाहते हैं? (Instant Muhurat Checker)
             </h2>
             <p class="text-gray-300 text-sm mb-6">
-                किसी भी कार्य पर क्लिक करें और जानें कि चयनित तिथि, वार और नक्षत्र उसके लिए शुभ हैं या नहीं:
+                किसी भी कार्य पर क्लिक करें और जानें कि चयनित तिथि, वार और नक्षत्र उसके लिए शास्त्र सम्मत शुभ हैं या नहीं:
             </p>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
@@ -624,7 +878,7 @@
         </div>
     </section>
 
-    <!-- VIRAL FEATURE #4: WHATSAPP STATUS SHAREABLE GRAPHIC CARD PREVIEW -->
+    <!-- WHATSAPP STATUS SHAREABLE GRAPHIC CARD PREVIEW -->
     <section class="max-w-4xl mx-auto px-4 py-8">
         <div class="text-center mb-4">
             <span class="text-xs uppercase tracking-widest text-amber-300 font-bold">📲 Daily Viral Share Card</span>
@@ -675,18 +929,67 @@
             </button>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer class="glass-card text-center py-10 mt-12 max-w-7xl mx-auto rounded-t-lg">
-        <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
+
+    <!-- Comprehensive Synchronized 4-Column Master Footer -->
+    <footer class="glass-card text-center py-12 mt-12 max-w-7xl mx-auto rounded-t-2xl">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8 text-2xl">
+                <a href="https://www.facebook.com/jyotishtark" target="_blank" rel="noopener" aria-label="Facebook" class="text-white hover:text-amber-300 transition"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/jyotishtark/" target="_blank" rel="noopener" aria-label="Instagram" class="text-white hover:text-amber-300 transition"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@jyotishtark" target="_blank" rel="noopener" aria-label="YouTube" class="text-white hover:text-amber-300 transition"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/918318513814" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-white hover:text-amber-300 transition"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5 footer-links text-sm">
+                        <li><a href="https://jyotishtark.in/" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Free 45-Min Kundali Dossier</a></li>
+                        <li><a href="numerology.html" class="text-gray-300 hover:text-white transition">Chaldean Numerology</a></li>
+                        <li><a href="tarot.html" class="text-gray-300 hover:text-white transition">Tarot Reading</a></li>
+                        <li><a href="panchang.html" class="text-amber-300 font-semibold transition">Daily Panchang</a></li>
+                        <li><a href="rashifal.html" class="text-gray-300 hover:text-white transition">Daily Rashifal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Services & Store</h4>
+                    <ul class="space-y-2.5 footer-links text-sm">
+                        <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Order Hand-Made Kundali (₹1101)</a></li>
+                        <li><a href="rudraksha.html" class="text-gray-300 hover:text-white transition">Buy Lab-Certified Rudraksha</a></li>
+                        <li><a href="blog.html" class="text-gray-300 hover:text-white transition">Medical Astrology Blogs</a></li>
+                        <li><a href="kundali-milan.html" class="text-gray-300 hover:text-white transition">Kundali Milan (Matchmaking)</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition">Consult Astrologer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Information & Policies</h4>
+                    <ul class="space-y-2.5 footer-links text-sm">
+                        <li><a href="about.html" class="text-gray-300 hover:text-white transition">About Us</a></li>
+                        <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition">Disclaimer</a></li>
+                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-gray-300 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="shipping-and-delivery.html" class="text-gray-300 hover:text-white transition">Shipping & Delivery</a></li>
+                        <li><a href="cancellation.html" class="text-gray-300 hover:text-white transition">Cancellation & Refund</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-envelope mr-2 text-amber-400"></i> jyotishtark@gmail.com</p>
+                    <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-phone-alt mr-2 text-amber-400"></i> +91 8318513814</p>
+                    <p class="text-gray-300 mb-3 text-sm"><i class="fab fa-whatsapp mr-2 text-green-400"></i> +91 8318513814</p>
+                    <p class="text-gray-300 text-sm"><i class="fas fa-map-marker-alt mr-2 text-amber-400"></i> Lucknow, Uttar Pradesh, India</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
+        </div>
     </footer>
 
-    <!-- Load Full October 2026 Database -->
+    <!-- Load October & November 2026 Database with Fallback Engine -->
     <script src="astro_data.js"></script>
 
-    <!-- Smart Panchang Engine -->
+    <!-- Smart Panchang UI Engine -->
     <script>
-        // Mobile Menu Toggle
+        // Mobile Menu & WhatsApp Popup Handlers
         document.getElementById('menuToggle').addEventListener('click', function() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('hidden');
@@ -699,6 +1002,19 @@
                 this.closest('.mobile-dropdown').classList.toggle('active');
             });
         });
+
+        const whatsappButton = document.getElementById('whatsappButton');
+        const whatsappPopup = document.getElementById('whatsappPopup');
+        if (whatsappButton && whatsappPopup) {
+            whatsappButton.addEventListener('click', function() {
+                whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', function(event) {
+                if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
+                    whatsappPopup.style.display = 'none';
+                }
+            });
+        }
 
         function initPersonalSelectors() {
             const rashiSel = document.getElementById('userRashiSelect');
@@ -736,15 +1052,13 @@
         let currentActivityKey = "vehicle";
 
         function renderPanchang(dateKey) {
-            const availableKeys = Object.keys(ASTRO_DATABASE).sort();
-            if (!ASTRO_DATABASE[dateKey]) {
-                dateKey = availableKeys.includes(formatDateKey(new Date())) 
-                    ? formatDateKey(new Date()) 
-                    : "2026-10-19";
+            // Resolve using Proxy Database
+            if (!window.ASTRO_DATABASE || !window.ASTRO_DATABASE[dateKey]) {
+                dateKey = formatDateKey(new Date());
             }
             currentDateKey = dateKey;
 
-            const dayData = ASTRO_DATABASE[dateKey];
+            const dayData = window.ASTRO_DATABASE[dateKey];
             const p = dayData.panchang;
 
             document.getElementById('datePicker').value = dateKey;
@@ -801,7 +1115,7 @@
             }
         }
 
-        // VIRAL FEATURE #4: DOWNLOAD WHATSAPP STATUS CARD AS PNG
+        // DOWNLOAD WHATSAPP STATUS CARD AS PNG
         function downloadStatusCard() {
             const cardEl = document.getElementById('whatsapp-card-capture');
             html2canvas(cardEl, { scale: 2, backgroundColor: "#0f172a" }).then(canvas => {
@@ -812,14 +1126,14 @@
             });
         }
 
-        // VIRAL FEATURE #5: 30-SECOND HINDI AUDIO PANCHANG
+        // 30-SECOND HINDI AUDIO PANCHANG
         function speakPanchang() {
             if (!('speechSynthesis' in window)) {
                 alert("आपके ब्राउज़र में ऑडियो सपोर्ट उपलब्ध नहीं है।");
                 return;
             }
             window.speechSynthesis.cancel();
-            const dayData = ASTRO_DATABASE[currentDateKey];
+            const dayData = window.ASTRO_DATABASE[currentDateKey];
             const p = dayData.panchang;
             const script = `नमस्कार, ज्योतिष तर्क के दैनिक पंचांग में आपका स्वागत है। आज ${dayData.dateHindi} है। आज का विशेष पर्व ${dayData.festival} है। आज की तिथि ${p.tithi} है, तथा नक्षत्र ${p.nakshatra} है। आज चंद्रमा ${p.moonSign} राशि में गोचर कर रहे हैं। आज का शुभ अमृत काल ${p.amritKaal} तक रहेगा, और राहु काल ${p.rahuKaal} तक रहेगा। राहु काल में नए कार्य प्रारंभ न करें। आपका दिन मंगलमय हो!`;
             
@@ -842,7 +1156,7 @@
             localStorage.setItem('jt_user_rashi', rashiVal);
             localStorage.setItem('jt_user_nak', nakVal);
 
-            const dayData = ASTRO_DATABASE[currentDateKey];
+            const dayData = window.ASTRO_DATABASE[currentDateKey];
             const userRashiIdx = parseInt(rashiVal, 10);
             const transitMoonIdx = dayData.moonSignIndex;
 
@@ -860,12 +1174,12 @@
                 remedyText = `💡 <strong>व्यक्तिगत मुहूर्त सलाह:</strong> अपने महत्वपूर्ण कार्य <strong>${dayData.panchang.amritKaal}</strong> (अमृत काल) में प्रारंभ करें।`;
             } else if (ashtamaOrBadHouses.includes(houseFromMoon)) {
                 score -= 20;
-                chandraSummary = `🔴 <strong>चंद्र बल कमजोर (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। अष्टम/द्वादश या चतुर्थ चंद्रमा के कारण आज बड़े जोखिम और विवाद से बचें।`;
+                chandraSummary = `🔴 <strong>चंद्र बल कमजोर (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। अष्टम/द्वादश या चतुर्थ चंद्रमा के कारण आज बड़े वित्तीय जोखिम और विवाद से बचें।`;
                 remedyText = `💡 <strong>लाल किताब रक्षा उपाय:</strong> आज घर से निकलने से पहले माथे पर <strong>सफेद चंदन या दही का तिलक</strong> लगाएं और <em>"ॐ नमः शिवाय"</em> का जप करें।`;
             } else {
                 score += 10;
-                chandraSummary = `🟡 <strong>चंद्र बल मध्यम (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। परिश्रम के अनुपात में परिणाम मिलेंगे।`;
-                remedyText = `💡 <strong>आज का उपाय:</strong> किसी भी महत्वपूर्ण मीटिंग से पहले थोड़ा सा गुड़ या मिश्री खाकर पानी पिएं।`;
+                chandraSummary = `🟡 <strong>चंद्र बल मध्यम (${houseFromMoon}वां भाव):</strong> आज चंद्रमा आपकी राशि से <strong>${houseFromMoon}वें भाव</strong> में हैं। परिश्रम के अनुपात में सामान्य परिणाम मिलेंगे।`;
+                remedyText = `💡 <strong>आज का उपाय:</strong> किसी भी महत्वपूर्ण मीटिंग से पहले थोड़ा सा गुड़ या मिश्री खाकर जल पिएं।`;
             }
 
             let taraSummary = "";
@@ -877,12 +1191,12 @@
 
                 const taraNames = {
                     1: { name: "जन्म तारा (Janma)", good: false, bonus: -5, desc: "शारीरिक थकान या अति-संवेदनशीलता से बचें।" },
-                    2: { name: "संपत तारा (Sampat)", good: true, bonus: 15, desc: "धन, समृद्धि और संसाधनों की प्राप्ति के लिए श्रेष्ठ!" },
-                    3: { name: "विपत तारा (Vipat)", good: false, bonus: -15, desc: "जोखिम भरे निवेश और अनावश्यक बहस से दूर रहें।" },
+                    2: { name: "संपत तारा (Sampat)", good: true, bonus: 15, desc: "धन, समृद्धि और नए संसाधनों की प्राप्ति के लिए श्रेष्ठ!" },
+                    3: { name: "विपत तारा (Vipat)", good: false, bonus: -15, desc: "जोखिम भरे निवेश और अनावश्यक विवाद से दूर रहें।" },
                     4: { name: "क्षेम तारा (Kshema)", good: true, bonus: 15, desc: "सुरक्षा, स्वास्थ्य लाभ और मानसिक शांति के लिए उत्तम।" },
                     5: { name: "प्रत्यक तारा (Pratyak)", good: false, bonus: -10, desc: "कार्यों में थोड़ी देरी हो सकती है, धैर्य बनाए रखें।" },
                     6: { name: "साधन तारा (Sadhana)", good: true, bonus: 18, desc: "लक्ष्यों की सिद्धि और कठिन कार्य पूरे करने का समय!" },
-                    7: { name: "नैधन तारा (Naidhana)", good: false, bonus: -20, desc: "आज कोई नया बड़ा अनुबंध या यात्रा टालना हितकर है।" },
+                    7: { name: "नैधन तारा (Naidhana)", good: false, bonus: -20, desc: "आज कोई नया बड़ा अनुबंध या लंबी यात्रा टालना हितकर है।" },
                     8: { name: "मित्र तारा (Mitra)", good: true, bonus: 12, desc: "मित्रों और सहयोगियों से पूर्ण समर्थन मिलेगा।" },
                     0: { name: "परम मित्र तारा (Parama Mitra)", good: true, bonus: 18, desc: "उच्च अधिकारियों से लाभ और सर्वोत्तम सफलता का योग!" }
                 };
@@ -935,7 +1249,7 @@
                 property: "🏠", career: "💼", medical: "💇‍♂️"
             };
 
-            const dayData = ASTRO_DATABASE[currentDateKey];
+            const dayData = window.ASTRO_DATABASE[currentDateKey];
             if (!dayData || !dayData.activities || !dayData.activities[actKey]) return;
 
             const act = dayData.activities[actKey];
@@ -953,12 +1267,7 @@
         function shiftDate(days) {
             currentSelectedDate.setDate(currentSelectedDate.getDate() + days);
             const key = formatDateKey(currentSelectedDate);
-            if (ASTRO_DATABASE[key]) {
-                renderPanchang(key);
-            } else {
-                alert("अक्टूबर 2026 (1 अक्टूबर से 31 अक्टूबर) का संपूर्ण पंचांग उपलब्ध है।");
-                currentSelectedDate.setDate(currentSelectedDate.getDate() - days);
-            }
+            renderPanchang(key);
         }
 
         function goToToday() {
@@ -967,12 +1276,9 @@
         }
 
         function onDatePickerChange(val) {
-            if (ASTRO_DATABASE[val]) {
+            if (val) {
                 currentSelectedDate = new Date(val + "T00:00:00");
                 renderPanchang(val);
-            } else {
-                alert("कृपया अक्टूबर 2026 के भीतर की तिथि चुनें।");
-                document.getElementById('datePicker').value = currentDateKey;
             }
         }
 
@@ -997,7 +1303,7 @@
             document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-IN', { hour12: true });
 
             const todayKey = formatDateKey(now);
-            const todayData = ASTRO_DATABASE[todayKey] || ASTRO_DATABASE[currentDateKey];
+            const todayData = (window.ASTRO_DATABASE && window.ASTRO_DATABASE[todayKey]) ? window.ASTRO_DATABASE[todayKey] : window.ASTRO_DATABASE[currentDateKey];
             if (!todayData || !todayData.liveWindows) return;
 
             const w = todayData.liveWindows;
