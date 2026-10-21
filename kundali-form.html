@@ -21,12 +21,6 @@
   <meta property="og:site_name" content="Jyotish Tark">
   <meta property="og:locale" content="hi_IN">
 
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free 45-Min Janam Kundali & Future Partner Dossier | Jyotish Tark">
-  <meta name="twitter:description" content="Instant 12-Chapter Vedic Kundali, D1/D9 SVG Charts, Future Partner Appearance & Direction, 337-Bindu Ashtakavarga & Mobile PDF Download.">
-  <meta name="twitter:image" content="https://jyotishtark.in/sample.png">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,21 +41,6 @@
         "inLanguage": ["en", "hi"],
         "author": { "@type": "Person", "name": "Gyanendra Singh Tomar" },
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR", "description": "Free Instant 12-Chapter Online Kundali & Life Dossier with D1/D9 SVG Charts and Mobile PDF Download" }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Can I get my Kundali and Future Partner analysis if I only know my Name and Date of Birth?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes! Entering just your Full Name and Date of Birth immediately generates a 45-minute 12-chapter reading in English or Hindi using Sidereal Solar-Lunar Nakshatra progression and Chaldean Numerology. If you also enter your Birth Time and Place, our astronomy engine unlocks your exact Lahiri Udaya Lagna, D1/D9 SVG charts, Bhava Chalit, Shadbala, and exact Mahadasha-Antardasha calendar dates." }
-          },
-          {
-            "@type": "Question",
-            "name": "संपूर्ण हस्तनिर्मित कुंडली (₹1101) में क्या-क्या मिलता है?",
-            "acceptedAnswer": { "@type": "Answer", "text": "आचार्य ज्ञानेंद्र सिंह तोमर जी द्वारा हस्तनिर्मित ₹1101 की कुंडली रिपोर्ट में सटीक डिग्री, भाव चलित, षड्बल, 5-वर्षीय महीना-दर-महीना महादशा-अंतर्दशा भविष्यवाणी, विवाह एवं करियर का सटीक समय और सुरक्षित वैदिक व लाल किताब के व्यक्तिगत उपाय पीडीएफ व व्हाट्सएप परामर्श सहित मिलते हैं।" }
-          }
-        ]
       }
     ]
   }
@@ -137,12 +116,16 @@
       display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none;
     }
     .primary-button:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5); }
-    .secondary-button {
-      background: rgba(255, 255, 255, 0.05); color: white; border: 2px solid var(--secondary);
-      padding: 0.9rem 2rem; border-radius: 50px; font-weight: 600; transition: all 0.3s ease;
-      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    
+    /* Auto-fill fix for Webkit browsers to keep cosmic dark theme */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px #0f172a inset !important;
+      -webkit-text-fill-color: #fde68a !important;
+      transition: background-color 5000s ease-in-out 0s;
     }
-    .secondary-button:hover { background: var(--secondary); color: #0f172a; transform: translateY(-2px); }
 
     .form-input {
       background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(255, 255, 255, 0.22);
@@ -158,8 +141,22 @@
     .form-input::placeholder { color: rgba(255, 255, 255, 0.45); }
     .form-input option { background: #0f172a; color: #f3f4f6; padding: 10px; }
     .form-label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #e5e7eb; font-size: 0.9rem; }
-    #lifeDossierForm .grid > div, #kundaliForm .grid > div, #masterDossierOutput .grid > div {
-      min-width: 0; max-width: 100%;
+    #lifeDossierForm .grid > div, #kundaliForm .grid > div, #masterDossierOutput .grid > div { min-width: 0; max-width: 100%; }
+
+    /* Autocomplete Dropdown Styles */
+    .autocomplete-dropdown {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+      background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 0.75rem; 
+      margin-top: 4px; max-height: 250px; overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none;
+    }
+    .autocomplete-item {
+      padding: 10px 15px; cursor: pointer; color: #cbd5e1; font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px;
+    }
+    .autocomplete-item:hover, .autocomplete-item.active {
+      background: rgba(245, 158, 11, 0.2); color: #fde68a;
     }
 
     @media (max-width: 767px) {
@@ -194,11 +191,6 @@
     .chapter-body { font-size: 1.02rem; line-height: 1.88; color: #e2e8f0; max-width: 100%; overflow-wrap: anywhere; }
     .chapter-body p { margin-bottom: 1.2rem; }
     .chapter-body strong { color: #fde68a; }
-    .chapter-body code {
-      display: inline-block; max-width: 100%; overflow-wrap: anywhere;
-      background: rgba(15, 23, 42, 0.85); padding: 0.15rem 0.45rem; border-radius: 6px;
-      color: #fde68a; font-size: 0.85em;
-    }
     .chapter-nav-pill {
       white-space: nowrap; padding: 0.55rem 1.1rem; border-radius: 9999px; font-size: 0.82rem;
       font-weight: 600; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.15);
@@ -215,12 +207,6 @@
       content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
       width: 80px; height: 4px; background: linear-gradient(to right, var(--primary), var(--accent)); border-radius: 2px;
     }
-    .pdf-download-btn {
-      background: linear-gradient(to right, var(--secondary), #eab308); color: #0f172a;
-      padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 700; transition: all 0.3s ease;
-      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-    }
-    .pdf-download-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4); }
     .whatsapp-float {
       position: fixed; width: 58px; height: 58px; bottom: 24px; right: 24px;
       background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 28px;
@@ -246,69 +232,33 @@
     /* ============================================================
        PDF LIGHT-THEME CLONE STYLES
        ============================================================ */
-    .pdf-mode,
-    .pdf-mode * {
-      color: #1f2937 !important;
-      background-image: none !important;
-      box-shadow: none !important;
-      text-shadow: none !important;
-      animation: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+    .pdf-mode, .pdf-mode * {
+      color: #1f2937 !important; background-image: none !important; box-shadow: none !important;
+      text-shadow: none !important; animation: none !important; backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .pdf-mode { background-color: #ffffff !important; }
-    .pdf-mode [class*="bg-slate-950"],
-    .pdf-mode [class*="bg-slate-900"],
-    .pdf-mode [class*="bg-slate-800"],
-    .pdf-mode [class*="bg-gray-"]        { background-color: #f9fafb !important; }
-    .pdf-mode [class*="bg-purple-"],
-    .pdf-mode [class*="bg-indigo-"],
-    .pdf-mode [class*="bg-violet-"]      { background-color: #f5f3ff !important; }
-    .pdf-mode [class*="bg-amber-"],
-    .pdf-mode [class*="bg-yellow-"],
-    .pdf-mode [class*="bg-orange-"]      { background-color: #fef3c7 !important; }
-    .pdf-mode [class*="bg-red-"],
-    .pdf-mode [class*="bg-rose-"]        { background-color: #fef2f2 !important; }
-    .pdf-mode [class*="bg-emerald-"],
-    .pdf-mode [class*="bg-green-"]       { background-color: #ecfdf5 !important; }
-    .pdf-mode [class*="bg-blue-"],
-    .pdf-mode [class*="bg-cyan-"],
-    .pdf-mode [class*="bg-sky-"]         { background-color: #eff6ff !important; }
-    .pdf-mode [class*="bg-pink-"],
-    .pdf-mode [class*="bg-fuchsia-"]     { background-color: #fdf2f8 !important; }
-    .pdf-mode [class*="bg-gradient"]     { background-color: #f9fafb !important; }
-    .pdf-mode [class*="text-amber-"],
-    .pdf-mode [class*="text-yellow-"],
-    .pdf-mode [class*="text-orange-"]    { color: #b45309 !important; }
-    .pdf-mode [class*="text-purple-"],
-    .pdf-mode [class*="text-indigo-"],
-    .pdf-mode [class*="text-violet-"]    { color: #6d28d9 !important; }
-    .pdf-mode [class*="text-emerald-"],
-    .pdf-mode [class*="text-green-"]     { color: #047857 !important; }
-    .pdf-mode [class*="text-rose-"],
-    .pdf-mode [class*="text-red-"],
-    .pdf-mode [class*="text-pink-"]      { color: #be123c !important; }
-    .pdf-mode [class*="text-blue-"],
-    .pdf-mode [class*="text-cyan-"],
-    .pdf-mode [class*="text-sky-"]       { color: #0369a1 !important; }
-    .pdf-mode [class*="text-gray-4"],
-    .pdf-mode [class*="text-gray-5"],
-    .pdf-mode [class*="text-slate-4"]    { color: #6b7280 !important; }
-    .pdf-mode [class*="border-"]         { border-color: #e5e7eb !important; }
-    .pdf-mode strong                     { color: #6d28d9 !important; }
+    .pdf-mode [class*="bg-slate-950"], .pdf-mode [class*="bg-slate-900"], .pdf-mode [class*="bg-slate-800"], .pdf-mode [class*="bg-gray-"] { background-color: #f9fafb !important; }
+    .pdf-mode [class*="bg-purple-"], .pdf-mode [class*="bg-indigo-"], .pdf-mode [class*="bg-violet-"] { background-color: #f5f3ff !important; }
+    .pdf-mode [class*="bg-amber-"], .pdf-mode [class*="bg-yellow-"], .pdf-mode [class*="bg-orange-"] { background-color: #fef3c7 !important; }
+    .pdf-mode [class*="bg-red-"], .pdf-mode [class*="bg-rose-"] { background-color: #fef2f2 !important; }
+    .pdf-mode [class*="bg-emerald-"], .pdf-mode [class*="bg-green-"] { background-color: #ecfdf5 !important; }
+    .pdf-mode [class*="bg-blue-"], .pdf-mode [class*="bg-cyan-"], .pdf-mode [class*="bg-sky-"] { background-color: #eff6ff !important; }
+    .pdf-mode [class*="bg-pink-"], .pdf-mode [class*="bg-fuchsia-"] { background-color: #fdf2f8 !important; }
+    .pdf-mode [class*="bg-gradient"] { background-color: #f9fafb !important; }
+    .pdf-mode [class*="text-amber-"], .pdf-mode [class*="text-yellow-"], .pdf-mode [class*="text-orange-"] { color: #b45309 !important; }
+    .pdf-mode [class*="text-purple-"], .pdf-mode [class*="text-indigo-"], .pdf-mode [class*="text-violet-"] { color: #6d28d9 !important; }
+    .pdf-mode [class*="text-emerald-"], .pdf-mode [class*="text-green-"] { color: #047857 !important; }
+    .pdf-mode [class*="text-rose-"], .pdf-mode [class*="text-red-"], .pdf-mode [class*="text-pink-"] { color: #be123c !important; }
+    .pdf-mode [class*="text-blue-"], .pdf-mode [class*="text-cyan-"], .pdf-mode [class*="text-sky-"] { color: #0369a1 !important; }
+    .pdf-mode [class*="text-gray-4"], .pdf-mode [class*="text-gray-5"], .pdf-mode [class*="text-slate-4"] { color: #6b7280 !important; }
+    .pdf-mode [class*="border-"] { border-color: #e5e7eb !important; }
+    .pdf-mode strong { color: #6d28d9 !important; }
     .pdf-mode h1, .pdf-mode h2, .pdf-mode h3, .pdf-mode h4 { color: #111827 !important; }
     .pdf-mode .chapter-card {
-      background: #ffffff !important;
-      border: 1px solid #e5e7eb !important;
-      border-left: 4px solid #f59e0b !important;
-      border-radius: 8px !important;
-      padding: 20px 22px !important;
-      margin-bottom: 18px !important;
-      page-break-inside: avoid;
-      break-inside: avoid;
-      box-shadow: none !important;
+      background: #ffffff !important; border: 1px solid #e5e7eb !important; border-left: 4px solid #f59e0b !important;
+      border-radius: 8px !important; padding: 20px 22px !important; margin-bottom: 18px !important;
+      page-break-inside: avoid; break-inside: avoid; box-shadow: none !important;
     }
     .pdf-mode .chapter-card::before { background: #b45309 !important; width: 4px !important; }
     .pdf-mode table { border-collapse: collapse !important; page-break-inside: avoid; break-inside: avoid; }
@@ -322,37 +272,12 @@
 
     @page { size: A4; margin: 12mm; }
     @media print {
-      html, body {
-        background: #ffffff !important;
-        color: #111827 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
+      html, body { background: #ffffff !important; color: #111827 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       body * { visibility: hidden; }
       #masterDossierOutput, #masterDossierOutput * { visibility: visible; }
-      #masterDossierOutput {
-        position: absolute;
-        left: 0; top: 0;
-        width: 100%;
-        margin: 0; padding: 0;
-        border: none !important;
-      }
-      #masterDossierOutput .no-print,
-      #masterDossierOutput button,
-      #masterDossierOutput a[href^="https://wa.me"],
-      #masterDossierOutput a[href^="tel:"],
-      #masterDossierOutput .chapter-nav-pill { display: none !important; }
-      #masterDossierOutput article,
-      #masterDossierOutput .chapter-card {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        margin-bottom: 18px !important;
-        background: #ffffff !important;
-        border: 1px solid #e5e7eb !important;
-        border-left: 4px solid #f59e0b !important;
-        border-radius: 6px !important;
-        padding: 16px !important;
-      }
+      #masterDossierOutput { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; border: none !important; }
+      #masterDossierOutput .no-print, #masterDossierOutput button, #masterDossierOutput a[href^="https://wa.me"], #masterDossierOutput a[href^="tel:"], #masterDossierOutput .chapter-nav-pill { display: none !important; }
+      #masterDossierOutput article, #masterDossierOutput .chapter-card { page-break-inside: avoid; break-inside: avoid; margin-bottom: 18px !important; background: #ffffff !important; border: 1px solid #e5e7eb !important; border-left: 4px solid #f59e0b !important; border-radius: 6px !important; padding: 16px !important; }
       #masterDossierOutput table { page-break-inside: avoid; break-inside: avoid; }
     }
   </style>
@@ -449,97 +374,99 @@
       </button>
     </div>
 
+    <!-- =================================================================== -->
+    <!-- UNIFIED INPUT FORM (DOB + OPTIONAL TIME/PLACE)                      -->
+    <!-- =================================================================== -->
     <div id="instantWorkspaceContainer" class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border border-purple-500/30">
-      
       <form id="lifeDossierForm" onsubmit="handleDossierSubmit(event)" class="space-y-6 md:space-y-8 no-print">
         
-        <!-- STEP 1: MANDATORY CORE DETAILS -->
-        <div>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-4 border-b border-white/10">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Step 1 • Mandatory Core Details</span>
-              <h2 class="text-xl md:text-3xl font-bold text-white mt-0.5">Tell Us Who You Are</h2>
-            </div>
-            <span class="text-xs text-gray-400"><i class="fas fa-mobile-alt text-amber-400 mr-1"></i> Mobile-Friendly & Instant PDF Export</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-900/60 p-4 md:p-6 rounded-2xl border border-white/10">
-            <div class="min-w-0">
-              <label for="userName" class="form-label"><i class="fas fa-signature text-amber-400 mr-1.5"></i>Your Full Name <span class="text-red-400">*</span></label>
-              <input type="text" id="userName" name="userName" class="form-input" placeholder="e.g., Aditya Pratap Singh" required>
-              <p class="text-[11px] text-gray-400 mt-1">Exact name you use in daily life</p>
-            </div>
-            <div class="min-w-0">
-              <label for="userDob" class="form-label"><i class="fas fa-calendar-alt text-amber-400 mr-1.5"></i>Date of Birth <span class="text-red-400">*</span></label>
-              <input type="date" id="userDob" name="userDob" class="form-input" required>
-              <p class="text-[11px] text-gray-400 mt-1">Decodes your core life milestones</p>
-            </div>
-            <div class="min-w-0">
-              <label for="reportLang" class="form-label"><i class="fas fa-language text-amber-400 mr-1.5"></i>Select Language / भाषा <span class="text-red-400">*</span></label>
-              <select id="reportLang" name="reportLang" class="form-input font-semibold" required>
-                <option value="hi">🇮🇳 हिंदी (45-मिनट संपूर्ण विश्लेषण)</option>
-                <option value="en">🇬🇧 English (45-Min Deep Reading)</option>
-              </select>
-              <p class="text-[11px] text-gray-400 mt-1">Switch anytime—auto-translates live</p>
-            </div>
-            <div class="min-w-0">
-              <label for="userGender" class="form-label"><i class="fas fa-venus-mars text-amber-400 mr-1.5"></i>Gender <span class="text-red-400">*</span></label>
-              <select id="userGender" name="userGender" class="form-input" required>
-                <option value="male">Male (पुरुष)</option>
-                <option value="female">Female (महिला)</option>
-                <option value="other">Other</option>
-              </select>
-              <p class="text-[11px] text-gray-400 mt-1">Calibrates Jupiter/Venus spouse traits</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- STEP 2: OPTIONAL BIRTH TIME + PLACE (ASTRONOMY ENGINE) -->
-        <div class="rounded-2xl border border-amber-400/40 bg-gradient-to-r from-purple-950/60 via-slate-900/85 to-amber-950/40 p-4 sm:p-5 md:p-6">
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4">
-            <div>
-              <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase mb-1">
-                <i class="fas fa-compass"></i> Step 2 • Optional: Unlock 99.9% Exact Astronomical Kundali
+        <div class="bg-slate-900/60 rounded-2xl border border-white/10 overflow-hidden">
+          <div class="p-4 md:p-6 border-b border-white/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Step 1 • Mandatory Core Details</span>
+                <h2 class="text-xl md:text-3xl font-bold text-white mt-0.5">Enter Your Birth Details</h2>
               </div>
-              <h3 class="text-base sm:text-lg md:text-xl font-bold text-white">Add Your Birth Time & Place (जन्म का समय एवं शहर)</h3>
-              <p class="text-xs md:text-sm text-gray-300 mt-0.5">
-                Enter your birth time and city below to automatically calculate your <strong>exact Lahiri Ascendant (Udaya Lagna), Planetary Degrees, D1/D9 SVG Charts, Bhava Chalit, Shadbala, and 120-Year Vimshottari Dasha Calendar</strong>. <em>(Don't know your birth time? Leave blank—you will still receive a full 12-chapter reading!)</em>
-              </p>
+              <span class="text-xs text-gray-400"><i class="fas fa-mobile-alt text-amber-400 mr-1"></i> Mobile-Friendly & Instant PDF Export</span>
             </div>
-          </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-950/75 p-4 rounded-2xl border border-white/10">
-            <div class="min-w-0">
-              <label for="birthTime" class="form-label"><i class="fas fa-clock text-amber-400 mr-1.5"></i>Time of Birth (जन्म समय)</label>
-              <input type="time" id="birthTime" class="form-input" onchange="updateTimeAccuracyVisibility()">
-              <p class="text-[11px] text-gray-400 mt-1">Optional — unlocks exact Rising Lagna</p>
+            <!-- Row 1: Mandatory Fields -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+              <div class="min-w-0">
+                <label for="userName" class="form-label"><i class="fas fa-signature text-amber-400 mr-1.5"></i>Your Full Name <span class="text-red-400">*</span></label>
+                <input type="text" id="userName" name="userName" class="form-input" placeholder="e.g., Aditya Pratap Singh" required>
+                <p class="text-[11px] text-gray-400 mt-1">Exact name you use in daily life</p>
+              </div>
+              <div class="min-w-0">
+                <label for="userDob" class="form-label"><i class="fas fa-calendar-alt text-amber-400 mr-1.5"></i>Date of Birth <span class="text-red-400">*</span></label>
+                <input type="date" id="userDob" name="userDob" class="form-input" required>
+                <p class="text-[11px] text-gray-400 mt-1">Decodes your core life milestones</p>
+              </div>
+              <div class="min-w-0">
+                <label for="reportLang" class="form-label"><i class="fas fa-language text-amber-400 mr-1.5"></i>Select Language / भाषा <span class="text-red-400">*</span></label>
+                <select id="reportLang" name="reportLang" class="form-input font-semibold" required>
+                  <option value="hi">🇮🇳 हिंदी (45-मिनट संपूर्ण विश्लेषण)</option>
+                  <option value="en">🇬🇧 English (45-Min Deep Reading)</option>
+                </select>
+                <p class="text-[11px] text-gray-400 mt-1">Switch anytime—auto-translates live</p>
+              </div>
+              <div class="min-w-0">
+                <label for="userGender" class="form-label"><i class="fas fa-venus-mars text-amber-400 mr-1.5"></i>Gender <span class="text-red-400">*</span></label>
+                <select id="userGender" name="userGender" class="form-input" required>
+                  <option value="male">Male (पुरुष)</option>
+                  <option value="female">Female (महिला)</option>
+                  <option value="other">Other</option>
+                </select>
+                <p class="text-[11px] text-gray-400 mt-1">Calibrates Jupiter/Venus spouse traits</p>
+              </div>
             </div>
-            <div class="min-w-0">
-              <label for="birthPlace" class="form-label"><i class="fas fa-map-marker-alt text-amber-400 mr-1.5"></i>Place of Birth (जन्म शहर)</label>
-              <input type="text" id="birthPlace" class="form-input" placeholder="e.g., Lucknow, UP">
-              <p class="text-[11px] text-gray-400 mt-1">180+ Indian cities cached + global lookup</p>
+
+            <!-- Pro Tip Banner -->
+            <div class="p-3.5 rounded-xl bg-gradient-to-r from-purple-900/40 to-amber-900/20 border border-purple-500/40 text-xs md:text-sm text-purple-100 mb-5 flex gap-3">
+              <i class="fas fa-lightbulb text-amber-400 text-lg mt-0.5"></i>
+              <div>
+                <strong class="text-amber-300">💡 Pro Tip (DOB-Only vs. Exact Time):</strong> 
+                If you add your <strong>Birth Time & City</strong> below, we will unlock your 99.9% Exact Lagna, D1/D9 Kundali Charts, 337-Bindu Ashtakavarga & 120-Year Mahadasha. If you only know your Date of Birth, leave Time & Place blank—you will still receive a deeply accurate 12-Chapter Numerology & Noon-Transit Reading!
+              </div>
             </div>
-            <div class="min-w-0">
-              <label for="timeAccuracy" class="form-label"><i class="fas fa-crosshairs text-amber-400 mr-1.5"></i>Time Accuracy (समय सटीकता)</label>
-              <select id="timeAccuracy" class="form-input" disabled>
-                <option value="exact">Exact (±5 mins / सटीक समय)</option>
-                <option value="approx">Approximate (±30 mins / अनुमानित)</option>
-                <option value="rough">Rough (±2 hours / मोटा अनुमान)</option>
-              </select>
-              <p class="text-[11px] text-gray-400 mt-1">Tags borderline Lagna if approximate</p>
+
+            <!-- Row 2: Optional Birth Time & Place -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="min-w-0">
+                <label for="birthTime" class="form-label"><i class="fas fa-clock text-amber-400 mr-1.5"></i>Time of Birth (जन्म समय)</label>
+                <input type="time" id="birthTime" class="form-input" onchange="updateTimeAccuracyVisibility()">
+                <p class="text-[11px] text-gray-400 mt-1">Optional — unlocks exact Rising Lagna</p>
+              </div>
+              <div class="min-w-0 relative">
+                <label for="birthPlace" class="form-label"><i class="fas fa-map-marker-alt text-amber-400 mr-1.5"></i>Place of Birth (जन्म शहर)</label>
+                <!-- Autocomplete Input -->
+                <input type="text" id="birthPlace" class="form-input" placeholder="Type 1-3 letters (e.g. luc)" autocomplete="off">
+                <!-- Autocomplete Dropdown -->
+                <div id="placeAutocomplete" class="autocomplete-dropdown"></div>
+                <p class="text-[11px] text-gray-400 mt-1">750+ Indian districts & global hubs</p>
+              </div>
+              <div class="min-w-0">
+                <label for="timeAccuracy" class="form-label"><i class="fas fa-crosshairs text-amber-400 mr-1.5"></i>Time Accuracy (समय सटीकता)</label>
+                <select id="timeAccuracy" class="form-input" disabled>
+                  <option value="exact">Exact (±5 mins / सटीक समय)</option>
+                  <option value="approx">Approximate (±30 mins / अनुमानित)</option>
+                  <option value="rough">Rough (±2 hours / मोटा अनुमान)</option>
+                </select>
+                <p class="text-[11px] text-gray-400 mt-1">Tags borderline Lagna if approximate</p>
+              </div>
             </div>
+            <p id="timeAccuracyNote" class="text-xs text-amber-300/90 mt-3 hidden">
+              <i class="fas fa-check-circle mr-1"></i>Birth Time detected! Clicking the button below will compute your exact sidereal longitudes and D1/D9 SVG charts.
+            </p>
           </div>
-          <p id="timeAccuracyNote" class="text-xs text-amber-300/90 mt-2.5 hidden">
-            <i class="fas fa-check-circle mr-1"></i>Birth Time detected! Clicking the button below will compute your exact sidereal longitudes and D1/D9 SVG charts.
-          </p>
         </div>
 
-        <!-- STEP 3: POWER-USER MANUAL PLANETARY MATRIX & DASHA OVERRIDE -->
+        <!-- STEP 2: POWER-USER MANUAL PLANETARY MATRIX & DASHA OVERRIDE -->
         <div class="rounded-2xl border border-white/15 bg-slate-900/60 p-4 sm:p-5">
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-purple-300"><i class="fas fa-sliders-h mr-1.5"></i>Advanced Option (For Existing Prokerala / AstroSage Charts)</span>
-              <p class="text-xs text-gray-400 mt-0.5">Already have a printed Kundali and want to enter your Rashi/Navamsa placements or active Mahadasha manually?</p>
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-300"><i class="fas fa-sliders-h mr-1.5"></i>Step 2 • Advanced (For Existing AstroSage Charts)</span>
+              <p class="text-xs text-gray-400 mt-0.5">Already have a printed Kundali and want to enter your placements or active Mahadasha manually?</p>
             </div>
             <div class="flex flex-wrap gap-2.5 w-full md:w-auto">
               <label for="enableChartToggle" class="flex-1 md:flex-none flex items-center justify-center cursor-pointer bg-slate-950 px-3.5 py-2 rounded-xl border border-amber-400/40 hover:border-amber-300 transition text-xs font-bold text-amber-300">
@@ -553,6 +480,7 @@
             </div>
           </div>
 
+          <!-- Manual Planet Matrix Panel -->
           <div id="planetaryInputPanel" class="hidden mt-5 pt-5 border-t border-white/15 space-y-4">
             <div class="p-3.5 rounded-xl bg-slate-950/90 border border-purple-400/30 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
               <div class="text-xs text-gray-300">
@@ -584,6 +512,7 @@
             </div>
           </div>
 
+          <!-- Manual Dasha Panel -->
           <div id="dashaInputPanel" class="hidden mt-5 pt-5 border-t border-white/15">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
               <div>
@@ -808,6 +737,30 @@
           </div>
         </article>
 
+        <article id="chapter-dakshina" class="glass-card rounded-3xl p-5 sm:p-6 md:p-10 border-2 border-amber-400/50 bg-gradient-to-r from-amber-950/40 via-slate-900/95 to-purple-950/40">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-8 space-y-4">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider"><i class="fas fa-om"></i> Chapter 12 • Sacred Vedic Tradition (गुरु-दक्षिणा एवं ऊर्जा विनिमय)</div>
+              <h3 class="text-2xl md:text-3xl font-bold text-white" id="dakshinaHeading">Honor the Sacred Law of Energy Exchange (Guru Dakshina) 🙏</h3>
+              <div id="contentDakshinaText" class="space-y-3 text-gray-200 text-sm md:text-base leading-relaxed"></div>
+              <div class="flex flex-wrap gap-2.5 pt-2">
+                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs text-amber-300 font-semibold">✨ ₹51 / ₹101 — Shubh Sankalp Dakshina</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs text-amber-300 font-semibold">✨ ₹251 / ₹501 — Ask 1 Urgent Question on WhatsApp</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-xs text-amber-200 font-bold">✨ ₹1101 — Complete Hand-Made Kundali + Remedies</span>
+              </div>
+            </div>
+            <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-purple-800 mb-2 text-center">Scan with Any UPI App (GPay / PhonePe / Paytm)</div>
+              <div class="w-52 h-52 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
+                <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place qr-code.png in root folder</strong><br>UPI / WhatsApp:<br>+91 8318513814</div>';">
+              </div>
+              <p class="text-sm font-bold text-slate-900 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
+              <p class="text-xs text-gray-500 mb-3">WhatsApp & UPI: +91 8318513814</p>
+              <a href="https://wa.me/918318513814?text=Namaste%20Gyanendra%20Ji,%20I%20read%20my%20complete%20Life%20Dossier%20on%20Jyotish%20Tark%20and%20have%20offered%20Guru%20Dakshina.%20Here%20is%20my%20screenshot:" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold text-center transition"><i class="fab fa-whatsapp mr-1.5"></i> Send Dakshina Screenshot on WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
         <article id="chapter-planets" class="chapter-card">
           <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
             <div>
@@ -877,30 +830,6 @@
               </ul>
               <a id="urgentConsultWhatsappBtn" href="https://wa.me/918318513814" target="_blank" class="w-full py-4 px-5 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-base shadow-xl flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5"><i class="fab fa-whatsapp text-xl"></i> Contact Gyanendra Ji Now</a>
               <button type="button" onclick="switchWorkspaceMode('manual')" class="w-full py-3 px-4 rounded-xl border border-amber-400/50 text-amber-300 hover:bg-amber-400/10 text-xs font-bold transition no-print">Or Submit Birth Time & Place in Form</button>
-            </div>
-          </div>
-        </article>
-
-        <article id="chapter-dakshina" class="glass-card rounded-3xl p-5 sm:p-6 md:p-10 border-2 border-amber-400/50 bg-gradient-to-r from-amber-950/40 via-slate-900/95 to-purple-950/40">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div class="lg:col-span-8 space-y-4">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider"><i class="fas fa-om"></i> Chapter 12 • Sacred Vedic Tradition (गुरु-दक्षिणा एवं ऊर्जा विनिमय)</div>
-              <h3 class="text-2xl md:text-3xl font-bold text-white" id="dakshinaHeading">Honor the Sacred Law of Energy Exchange (Guru Dakshina) 🙏</h3>
-              <div id="contentDakshinaText" class="space-y-3 text-gray-200 text-sm md:text-base leading-relaxed"></div>
-              <div class="flex flex-wrap gap-2.5 pt-2">
-                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs text-amber-300 font-semibold">✨ ₹51 / ₹101 — Shubh Sankalp Dakshina</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs text-amber-300 font-semibold">✨ ₹251 / ₹501 — Ask 1 Urgent Question on WhatsApp</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-xs text-amber-200 font-bold">✨ ₹1101 — Complete Hand-Made Kundali + Remedies</span>
-              </div>
-            </div>
-            <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
-              <div class="text-xs font-extrabold uppercase tracking-wider text-purple-800 mb-2 text-center">Scan with Any UPI App (GPay / PhonePe / Paytm)</div>
-              <div class="w-52 h-52 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
-                <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Place qr-code.png in root folder</strong><br>UPI / WhatsApp:<br>+91 8318513814</div>';">
-              </div>
-              <p class="text-sm font-bold text-slate-900 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
-              <p class="text-xs text-gray-500 mb-3">WhatsApp & UPI: +91 8318513814</p>
-              <a href="https://wa.me/918318513814?text=Namaste%20Gyanendra%20Ji,%20I%20read%20my%20complete%20Life%20Dossier%20on%20Jyotish%20Tark%20and%20have%20offered%20Guru%20Dakshina.%20Here%20is%20my%20screenshot:" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold text-center transition"><i class="fab fa-whatsapp mr-1.5"></i> Send Dakshina Screenshot on WhatsApp</a>
             </div>
           </div>
         </article>
@@ -1135,7 +1064,93 @@
 
   <script>
     // ========================================================================
-    // 1. DUAL-MODE SUBMIT CONTROLLER (Astronomy vs Manual Matrix vs Derived)
+    // 1. INSTANT CITY AUTOCOMPLETE LOGIC
+    // ========================================================================
+    document.addEventListener("DOMContentLoaded", () => {
+      const placeInput = document.getElementById("birthPlace");
+      const dropdown = document.getElementById("placeAutocomplete");
+      let activeIndex = -1;
+
+      if (placeInput && dropdown) {
+        placeInput.addEventListener("input", function(e) {
+          const query = this.value;
+          // Clear exact coordinates if user starts typing something new
+          this.removeAttribute('data-lat');
+          this.removeAttribute('data-lng');
+          
+          if (!window.BirthChartCalculator) return;
+          
+          const matches = window.BirthChartCalculator.searchPlaces(query);
+          if (matches.length > 0 && query.length > 0) {
+            dropdown.innerHTML = matches.map((m, idx) => 
+              `<div class="autocomplete-item" data-index="${idx}" data-name="${m.n}" data-lat="${m.lt}" data-lng="${m.ln}">
+                <i class="fas fa-map-marker-alt text-amber-400 w-4 text-center"></i>
+                <div>
+                  <div class="font-bold">${m.n}</div>
+                  <div class="text-[10px] text-gray-400">${m.lt.toFixed(2)}°N, ${m.ln.toFixed(2)}°E</div>
+                </div>
+              </div>`
+            ).join('');
+            dropdown.style.display = "block";
+            activeIndex = -1;
+          } else {
+            dropdown.style.display = "none";
+          }
+        });
+
+        // Handle Arrow Keys & Enter
+        placeInput.addEventListener("keydown", function(e) {
+          const items = dropdown.querySelectorAll(".autocomplete-item");
+          if (dropdown.style.display === "block" && items.length > 0) {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              activeIndex = (activeIndex + 1) % items.length;
+              updateActiveItem(items);
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              activeIndex = (activeIndex - 1 + items.length) % items.length;
+              updateActiveItem(items);
+            } else if (e.key === "Enter") {
+              e.preventDefault();
+              if (activeIndex >= 0) {
+                items[activeIndex].click();
+              } else {
+                items[0].click(); // Auto-pick first if none highlighted
+              }
+            }
+          }
+        });
+
+        function updateActiveItem(items) {
+          items.forEach(i => i.classList.remove("active"));
+          if (activeIndex >= 0) {
+            items[activeIndex].classList.add("active");
+            items[activeIndex].scrollIntoView({ block: 'nearest' });
+          }
+        }
+
+        // Handle Clicks
+        dropdown.addEventListener("click", function(e) {
+          const item = e.target.closest(".autocomplete-item");
+          if (item) {
+            placeInput.value = item.dataset.name;
+            placeInput.setAttribute("data-lat", item.dataset.lat);
+            placeInput.setAttribute("data-lng", item.dataset.lng);
+            dropdown.style.display = "none";
+          }
+        });
+
+        // Hide when clicking outside
+        document.addEventListener("click", function(e) {
+          if (!placeInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+      }
+    });
+
+    // ========================================================================
+    // 2. DUAL-MODE SUBMIT CONTROLLER (Astronomy vs Manual Matrix vs Derived)
     // ========================================================================
     async function handleDossierSubmit(event) {
       if (event) event.preventDefault();
@@ -1143,7 +1158,10 @@
       const name     = document.getElementById("userName").value.trim() || "Seeker";
       const dob      = document.getElementById("userDob").value;
       const time     = document.getElementById("birthTime").value.trim();
-      const place    = document.getElementById("birthPlace").value.trim() || "Lucknow";
+      const placeInput = document.getElementById("birthPlace");
+      const place    = placeInput.value.trim() || "Lucknow";
+      const lat      = placeInput.getAttribute("data-lat"); // Explicit from autocomplete
+      const lng      = placeInput.getAttribute("data-lng");
       const accuracy = document.getElementById("timeAccuracy").value;
       const manualOn = document.getElementById("enableChartToggle") && document.getElementById("enableChartToggle").checked;
 
@@ -1151,13 +1169,13 @@
       const btnText = document.getElementById("submitBtnText");
       const origText = btnText ? btnText.textContent : "Reveal My 45-Minute Life & Destiny Dossier";
 
-      // CASE A: User entered Birth Time (and Manual Matrix is not overriding it) -> Compute Exact Astronomical Chart!
+      // CASE A: Exact Astronomical Chart
       if (time && !manualOn && typeof window.BirthChartCalculator !== "undefined" && typeof window.VedicChartAnalyzer !== "undefined") {
         if (btn) btn.disabled = true;
         if (btnText) btnText.textContent = "Computing Exact Sidereal Chart & D1/D9 SVGs...";
 
         try {
-          const birthChart = await window.BirthChartCalculator.calculateChart({ name, dob, time, place });
+          const birthChart = await window.BirthChartCalculator.calculateChart({ name, dob, time, place, lat, lng });
           const lang = document.getElementById("reportLang").value;
           const vedicData = window.VedicChartAnalyzer.analyze(birthChart, { lang, userName: name });
 
@@ -1173,9 +1191,7 @@
           window.__jtMode = "vedic";
           window.__jtViewFilter = "full_12";
 
-          // Sync dropdowns in background so manual matrix reflects exact calculated placements
           populateManualMatrixFromVedic(vedicData);
-
           window.generateCompleteLifeDossier(null);
           refreshViralWidgetsFromCtx();
         } catch (err) {
@@ -1191,7 +1207,7 @@
         return;
       }
 
-      // CASE B: Manual Matrix or Derived Solar-Lunar + Chaldean Mode
+      // CASE B: Manual Matrix or Derived DOB-Only Mode
       window.__jtVedicData = null;
       window.__jtMode = manualOn ? "manual" : "derived";
       window.generateCompleteLifeDossier(null);
@@ -1223,7 +1239,7 @@
     }
 
     // ========================================================================
-    // 2. MANUAL PLANETARY MATRIX HELPERS
+    // 3. MANUAL PLANETARY MATRIX HELPERS
     // ========================================================================
     const FORM_RASHIS = [
       { id: 1,  label: "1 - Mesha (Aries / मेष)" },
@@ -1316,7 +1332,7 @@
       }
     }
 
-    function onRashiChange(planetKey, chartPrefix) {
+    window.onRashiChange = function(planetKey, chartPrefix) {
       syncRahuKetuOpposite(planetKey, chartPrefix);
       if (chartPrefix !== "d1") return;
       const d1Select = document.getElementById(`d1_${planetKey}`);
@@ -1328,7 +1344,7 @@
       }
     }
 
-    function copyD1ToD9All() {
+    window.copyD1ToD9All = function() {
       FORM_GRAHAS.forEach(g => {
         const d1El = document.getElementById(`d1_${g.key}`);
         const d9El = document.getElementById(`d9_${g.key}`);
@@ -1396,18 +1412,14 @@
       });
     }
 
-    function fillDemoPlanetaryValues() {
-      if (!document.getElementById('userName').value) {
-        document.getElementById('userName').value = "Aditya Pratap Singh";
-      }
-      if (!document.getElementById('userDob').value) {
-        document.getElementById('userDob').value = "1998-01-24";
-      }
+    window.fillDemoPlanetaryValues = function() {
+      if (!document.getElementById('userName').value) document.getElementById('userName').value = "Aditya Pratap Singh";
+      if (!document.getElementById('userDob').value)  document.getElementById('userDob').value = "1998-01-24";
       setSamplePlanetaryDropdowns();
     }
 
     // ========================================================================
-    // 3. VIRAL WIDGETS (YouTube Live Token, Rudraksha Matcher & WhatsApp Share)
+    // 4. VIRAL WIDGETS (YouTube Live Token, Rudraksha Matcher & WhatsApp Share)
     // ========================================================================
     function refreshViralWidgetsFromCtx() {
       const ctx = window.__jyotishLastCtx;
@@ -1443,7 +1455,7 @@
       if (rBtn)  rBtn.textContent  = `${rec.name} (${rec.price}) देखें →`;
     }
 
-    function copyYoutubeLiveToken() {
+    window.copyYoutubeLiveToken = function() {
       const ctx = window.__jyotishLastCtx;
       if (!ctx) return;
       const tokenEl = document.getElementById('ytLiveCodeDisplay');
@@ -1455,7 +1467,7 @@
           const btn = document.getElementById('copyYtTokenBtn');
           if (btn) {
             const orig = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Copied! Paste in YouTube Live';
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
             setTimeout(() => { btn.innerHTML = orig; }, 3500);
           }
         });
@@ -1464,7 +1476,7 @@
       }
     }
 
-    function shareMyDossierOnWhatsApp() {
+    window.shareMyDossierOnWhatsApp = function() {
       const ctx = window.__jyotishLastCtx;
       const name = ctx ? ctx.name : (document.getElementById('userName')?.value || 'मेरी');
       const mulank = ctx ? ctx.numData.mulank : '';
@@ -1484,108 +1496,9 @@
     }
 
     // ========================================================================
-    // 4. MOBILE-SAFE PDF EXPORTER (A4 Cover + TOC + Charts + Chapters)
+    // 5. MOBILE-SAFE PDF EXPORTER
     // ========================================================================
-    function buildCoverPageHtml(ctx) {
-      const safeName = (ctx && ctx.name) || 'Seeker';
-      const safeDob  = (ctx && ctx.dob)  || '';
-      const safeAge  = (ctx && ctx.numData && ctx.numData.age) || '';
-      const ascName  = (ctx && ctx.displayAsc)     || '';
-      const moonName = (ctx && ctx.displayMoon)    || '';
-      const moonNak  = (ctx && ctx.displayMoonNak) || '';
-      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-      return `
-        <div class="pdf-cover" style="width:180mm;min-height:257mm;padding:30mm 20mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#ffffff;box-sizing:border-box;">
-          <div style="width:100%;border-bottom:2px solid #b45309;padding-bottom:14px;">
-            <div style="font-size:14px;letter-spacing:6px;color:#6d28d9;text-transform:uppercase;font-weight:700;">JYOTISH TARK</div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">Vedic Astrology &amp; Chaldean Numerology</div>
-          </div>
-
-          <div style="text-align:center;">
-            <div style="width:110px;height:110px;margin:0 auto 32px;border:3px double #b45309;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;color:#6d28d9;">ॐ</div>
-            <div style="font-size:50px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:14px;">Personal Life Dossier</div>
-            <div style="font-size:18px;color:#b45309;font-weight:600;margin-bottom:8px;">Complete Vedic Astrology &amp; Chaldean Numerology Reading</div>
-            <div style="font-size:13px;color:#6b7280;">45-Minute Deep-Dive Analysis • 12 Chapters</div>
-            <div style="width:120px;height:2px;background:#b45309;margin:36px auto;"></div>
-            <div style="font-size:34px;font-weight:700;color:#111827;margin-bottom:10px;">${safeName}</div>
-            <div style="font-size:15px;color:#374151;margin-bottom:4px;">Born: ${safeDob}${safeAge ? ' • Age: ' + safeAge + ' years' : ''}</div>
-            <div style="font-size:15px;color:#374151;margin-bottom:4px;">Ascendant (Lagna): ${ascName}</div>
-            <div style="font-size:15px;color:#374151;">Moon: ${moonName}${moonNak ? ' • ' + moonNak : ''}</div>
-          </div>
-
-          <div style="width:100%;border-top:1px solid #e5e7eb;padding-top:16px;">
-            <div style="font-size:12px;color:#6b7280;margin-bottom:6px;">Generated on ${today}</div>
-            <div style="font-size:14px;font-weight:700;color:#6d28d9;letter-spacing:2px;">jyotishtark.in</div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">Gyanendra Singh Tomar • Jyotish Tark</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function buildTocPageHtml() {
-      const chapters = [
-        "Core Personality & Unspoken Psychology",
-        "Education, Memory & Intellectual DNA",
-        "Career Trajectory & Professional Destiny",
-        "Wealth, Bank Balance & Financial Flow",
-        "Luck Factor & Destiny Milestones",
-        "Love Life & Emotional Patterns",
-        "Future Life Partner & Post-Marriage Destiny",
-        "All 9 Planets & Mutual Aspects",
-        "Special Lagnas & 337-Bindu Ashtakavarga",
-        "Current Mahadasha & Antardasha",
-        "Hidden Blockages & Karmic Traps",
-        "Guru Dakshina & Energy Exchange"
-      ];
-      return `
-        <div class="pdf-toc" style="width:180mm;min-height:257mm;padding:30mm 20mm;background:#ffffff;box-sizing:border-box;">
-          <div style="font-size:36px;font-weight:800;color:#111827;border-bottom:3px solid #b45309;padding-bottom:14px;margin-bottom:28px;">Table of Contents</div>
-          <div style="font-size:15px;color:#374151;">
-            ${chapters.map((ch, i) => `
-              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px dashed #e5e7eb;">
-                <span><strong style="color:#6d28d9;margin-right:14px;">${String(i+1).padStart(2,'0')}.</strong>${ch}</span>
-                <span style="color:#9ca3af;font-size:12px;">Chapter ${i+1}</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    function drawPdfPageChrome(pdf, pageNum, userName) {
-      const pageW = 210;
-      const mL = 15, mR = 15;
-
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(9);
-      pdf.setTextColor(109, 40, 217);
-      pdf.text('JYOTISH TARK', mL, 12);
-
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(8);
-      pdf.setTextColor(107, 114, 128);
-      const safeName = (userName || 'Personal').substring(0, 34);
-      pdf.text(`Personal Life Dossier — ${safeName}`, pageW / 2, 12, { align: 'center' });
-      pdf.text(`Page ${pageNum}`, pageW - mR, 12, { align: 'right' });
-
-      pdf.setDrawColor(180, 83, 9);
-      pdf.setLineWidth(0.3);
-      pdf.line(mL, 14, pageW - mR, 14);
-
-      pdf.setDrawColor(229, 231, 235);
-      pdf.setLineWidth(0.2);
-      pdf.line(mL, 283, pageW - mR, 283);
-
-      pdf.setFontSize(8);
-      pdf.setTextColor(107, 114, 128);
-      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-      pdf.text(`Generated on ${today}`, mL, 289);
-      pdf.text('jyotishtark.in', pageW / 2, 289, { align: 'center' });
-      pdf.text('Gyanendra Singh Tomar', pageW - mR, 289, { align: 'right' });
-    }
-
-    async function exportDossierToPDF() {
+    window.exportDossierToPDF = async function() {
       const target = document.getElementById('masterDossierOutput');
       const btn    = document.getElementById('downloadDossierPdfBtn');
 
@@ -1595,32 +1508,26 @@
       }
       if (typeof window.html2canvas !== 'function' || !window.jspdf || !window.jspdf.jsPDF) {
         alert('PDF library loading. Falling back to Print / Save PDF.');
-        printDossier();
+        window.printDossier();
         return;
       }
 
       const userName = (document.getElementById('userName')?.value || 'Seeker').trim();
       const safeFile = userName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 40) || 'Seeker';
-
       const originalHTML = btn ? btn.innerHTML : '';
+      
       if (btn) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Preparing PDF...';
       }
 
-      const ctxForCover = window.__jyotishLastCtx || {
-        name: userName,
-        dob:  document.getElementById('userDob')?.value || '',
-        numData:  { age: '' },
-        displayAsc: '', displayMoon: '', displayMoonNak: ''
-      };
-
       const clone = target.cloneNode(true);
       clone.classList.add('pdf-mode');
 
       clone.querySelectorAll(
-        'button, a[href^="https://wa.me"], a[href^="tel:"], .chapter-nav-pill, .no-print, #urgentConsultWhatsappBtn, #dossierTopWhatsappBtn, #youtubeLiveTokenBar, #dynamicRudrakshaCard, #modeToggleContainer'
+        'button, a[href^="https://wa.me"], a[href^="tel:"], .chapter-nav-pill, .no-print, #urgentConsultWhatsappBtn, #dossierTopWhatsappBtn, #youtubeLiveTokenBar, #dynamicRudrakshaCard, #modeToggleContainer, #calibrationBanner'
       ).forEach(el => el.remove());
+      
       clone.querySelectorAll('a[href^="#"]').forEach(a => {
         a.replaceWith(document.createTextNode(a.textContent || ''));
       });
@@ -1628,16 +1535,29 @@
       const wrapper = document.createElement('div');
       wrapper.style.cssText = 'position:absolute; left:-99999px; top:0; width:210mm; background:#ffffff; padding:0; margin:0; z-index:-1;';
 
+      const ctxForCover = window.__jyotishLastCtx || { name: userName, dob: document.getElementById('userDob')?.value || '', numData: { age: '' } };
+      
       const coverWrap = document.createElement('div');
-      coverWrap.innerHTML = buildCoverPageHtml(ctxForCover).trim();
+      coverWrap.innerHTML = `
+        <div class="pdf-cover" style="width:180mm;min-height:257mm;padding:30mm 20mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#ffffff;box-sizing:border-box;">
+          <div style="width:100%;border-bottom:2px solid #b45309;padding-bottom:14px;">
+            <div style="font-size:14px;letter-spacing:6px;color:#6d28d9;text-transform:uppercase;font-weight:700;">JYOTISH TARK</div>
+            <div style="font-size:11px;color:#6b7280;margin-top:4px;">Vedic Astrology & Chaldean Numerology</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:110px;height:110px;margin:0 auto 32px;border:3px double #b45309;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;color:#6d28d9;">ॐ</div>
+            <div style="font-size:42px;font-weight:800;color:#111827;line-height:1.1;margin-bottom:14px;">Personal Life Dossier</div>
+            <div style="width:120px;height:2px;background:#b45309;margin:36px auto;"></div>
+            <div style="font-size:30px;font-weight:700;color:#111827;margin-bottom:10px;">${ctxForCover.name}</div>
+            <div style="font-size:15px;color:#374151;">Born: ${ctxForCover.dob}</div>
+          </div>
+          <div style="width:100%;border-top:1px solid #e5e7eb;padding-top:16px;">
+            <div style="font-size:12px;color:#6b7280;margin-bottom:6px;">Generated via jyotishtark.in</div>
+          </div>
+        </div>`;
       wrapper.appendChild(coverWrap.firstElementChild);
 
-      const tocWrap = document.createElement('div');
-      tocWrap.innerHTML = buildTocPageHtml().trim();
-      wrapper.appendChild(tocWrap.firstElementChild);
-
       Array.from(clone.children).forEach(child => wrapper.appendChild(child));
-
       document.body.appendChild(wrapper);
 
       try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
@@ -1647,154 +1567,97 @@
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
 
-        const pageW = 210, pageH = 297;
-        const mL = 15, mR = 15, mT = 20, mB = 20;
-        const contentW = pageW - mL - mR;
-        const contentH = pageH - mT - mB;
-        const renderScale = window.innerWidth < 768 ? 1.55 : 2;
-
-        const sections  = Array.from(wrapper.children);
-        let isFirstPage = true;
-        let pageNum     = 1;
+        const pageW = 210, pageH = 297, mL = 15, mR = 15, mT = 20, mB = 20;
+        const contentW = pageW - mL - mR, contentH = pageH - mT - mB;
+        const sections = Array.from(wrapper.children);
+        let isFirstPage = true, pageNum = 1;
 
         for (let idx = 0; idx < sections.length; idx++) {
           const section = sections[idx];
           if (section.style.display === 'none' || (!section.textContent.trim() && !section.querySelector('img, svg'))) continue;
 
-          if (btn) {
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Building (${idx + 1}/${sections.length})...`;
-          }
+          if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Building (${idx + 1}/${sections.length})...`;
           await new Promise(r => setTimeout(r, 35));
 
-          let canvas;
-          try {
-            canvas = await window.html2canvas(section, {
-              scale: renderScale,
-              useCORS: true,
-              backgroundColor: '#ffffff',
-              logging: false,
-              windowWidth: 800
-            });
-          } catch (err) {
-            console.warn('html2canvas skipped section:', err);
-            continue;
-          }
-
+          const canvas = await window.html2canvas(section, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false, windowWidth: 800 });
           const imgW_mm = contentW;
           const imgH_mm = (canvas.height * imgW_mm) / canvas.width;
 
           if (imgH_mm <= contentH) {
             if (!isFirstPage) pdf.addPage();
-            drawPdfPageChrome(pdf, pageNum, userName);
+            pdf.setFontSize(8); pdf.setTextColor(107, 114, 128); pdf.text(`Page ${pageNum}`, pageW - mR, 12, { align: 'right' });
             pdf.addImage(canvas.toDataURL('image/jpeg', 0.90), 'JPEG', mL, mT, imgW_mm, imgH_mm);
-            pageNum++;
-            isFirstPage = false;
+            pageNum++; isFirstPage = false;
           } else {
             const sliceHpx = Math.floor((contentH * canvas.width) / contentW);
             let srcY = 0;
-            while (srcY < canvas.height) {
+            while (srcY + 12 < canvas.height) { // Prevents trailing blank pages
               const sliceH = Math.min(sliceHpx, canvas.height - srcY);
               const sliceCanvas = document.createElement('canvas');
-              sliceCanvas.width  = canvas.width;
-              sliceCanvas.height = sliceH;
+              sliceCanvas.width = canvas.width; sliceCanvas.height = sliceH;
               const sCtx = sliceCanvas.getContext('2d');
-              sCtx.fillStyle = '#ffffff';
-              sCtx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+              sCtx.fillStyle = '#ffffff'; sCtx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
               sCtx.drawImage(canvas, 0, srcY, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
 
               if (!isFirstPage) pdf.addPage();
-              drawPdfPageChrome(pdf, pageNum, userName);
-
+              pdf.setFontSize(8); pdf.setTextColor(107, 114, 128); pdf.text(`Page ${pageNum}`, pageW - mR, 12, { align: 'right' });
               const sliceH_mm = (sliceH * contentW) / canvas.width;
               pdf.addImage(sliceCanvas.toDataURL('image/jpeg', 0.90), 'JPEG', mL, mT, contentW, sliceH_mm);
-
-              sliceCanvas.width = 0;
-              sliceCanvas.height = 0;
-
-              srcY += sliceH;
-              pageNum++;
-              isFirstPage = false;
+              
+              srcY += sliceH; pageNum++; isFirstPage = false;
             }
           }
-
-          canvas.width = 0;
-          canvas.height = 0;
         }
-
-        pdf.save(`Jyotish_Tark_Dossier_${safeFile}.pdf`);
+        pdf.save(`Jyotish_Tark_${safeFile}.pdf`);
       } catch (err) {
         console.error('PDF generation failed:', err);
-        alert('Opening Print / Save as PDF dialog for high-resolution export.');
-        printDossier();
+        alert('Opening Print / Save as PDF dialog for export.');
+        window.printDossier();
       } finally {
         wrapper.remove();
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = originalHTML;
-        }
+        if (btn) { btn.disabled = false; btn.innerHTML = originalHTML; }
       }
     }
 
-    function printDossier() {
+    window.printDossier = function() {
       const target = document.getElementById('masterDossierOutput');
-      if (!target || target.classList.contains('hidden')) {
-        alert('Please generate your Life Dossier first before printing.');
-        return;
-      }
+      if (!target || target.classList.contains('hidden')) return;
       target.classList.add('pdf-mode');
-      setTimeout(() => {
-        window.print();
-        setTimeout(() => target.classList.remove('pdf-mode'), 500);
-      }, 80);
+      setTimeout(() => { window.print(); setTimeout(() => target.classList.remove('pdf-mode'), 500); }, 80);
     }
 
-    function switchWorkspaceMode(mode) {
+    window.switchWorkspaceMode = function(mode) {
       const instantDiv = document.getElementById('instantWorkspaceContainer');
       const manualDiv  = document.getElementById('manualWorkspaceContainer');
       const tabInstant = document.getElementById('tabInstantDossier');
       const tabManual  = document.getElementById('tabManualOrder');
       if (mode === 'instant') {
-        instantDiv.classList.remove('hidden');
-        manualDiv.classList.add('hidden');
-        tabInstant.classList.add('active');
-        tabManual.classList.remove('active');
+        instantDiv.classList.remove('hidden'); manualDiv.classList.add('hidden');
+        tabInstant.classList.add('active'); tabManual.classList.remove('active');
       } else {
-        instantDiv.classList.add('hidden');
-        manualDiv.classList.remove('hidden');
-        tabManual.classList.add('active');
-        tabInstant.classList.remove('active');
+        instantDiv.classList.add('hidden'); manualDiv.classList.remove('hidden');
+        tabManual.classList.add('active'); tabInstant.classList.remove('active');
         manualDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
-    function toggleChartDetailsPanel(isChecked) {
+    window.toggleChartDetailsPanel = function(isChecked) {
       const panel = document.getElementById('planetaryInputPanel');
       const text = document.getElementById('chartToggleText');
-      if (isChecked) {
-        panel.classList.remove('hidden');
-        text.textContent = 'Manual Planets Active ✓';
-      } else {
-        panel.classList.add('hidden');
-        text.textContent = 'Enter Planets Manually';
-      }
+      if (isChecked) { panel.classList.remove('hidden'); text.textContent = 'Manual Planets Active ✓'; } 
+      else { panel.classList.add('hidden'); text.textContent = 'Enter Planets Manually'; }
     }
 
-    function toggleDashaDetailsPanel(isChecked) {
+    window.toggleDashaDetailsPanel = function(isChecked) {
       const panel = document.getElementById('dashaInputPanel');
       const text = document.getElementById('dashaToggleText');
-      if (isChecked) {
-        panel.classList.remove('hidden');
-        text.textContent = 'Manual Dasha Active ✓';
-      } else {
-        panel.classList.add('hidden');
-        text.textContent = 'Select Dasha Manually';
-      }
+      if (isChecked) { panel.classList.remove('hidden'); text.textContent = 'Manual Dasha Active ✓'; } 
+      else { panel.classList.add('hidden'); text.textContent = 'Select Dasha Manually'; }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       renderPlanetaryRowsInForm();
 
-      // Hook into generateCompleteLifeDossier so YouTube Live Token & Rudraksha Matcher update automatically
       const origGen = window.generateCompleteLifeDossier;
       if (typeof origGen === 'function') {
         window.generateCompleteLifeDossier = function(ev, opts) {
@@ -1809,89 +1672,31 @@
       }
 
       const urlParams = new URLSearchParams(window.location.search);
-      let prefillName = urlParams.get('name');
-      let prefillDob  = urlParams.get('dob');
-      let prefillLang = urlParams.get('lang');
-      let autoRun     = urlParams.get('autorun') === '1';
-
-      const storedPrefillRaw = localStorage.getItem('jt_prefill_dossier');
-      if (storedPrefillRaw) {
-        try {
-          const parsed = JSON.parse(storedPrefillRaw);
-          prefillName = prefillName || parsed.name;
-          prefillDob  = prefillDob  || parsed.dob;
-          prefillLang = prefillLang || parsed.lang;
-          autoRun     = autoRun     || Boolean(parsed.autoRun);
-        } catch (e) {}
-        localStorage.removeItem('jt_prefill_dossier');
-      }
-
-      if (prefillName) document.getElementById('userName').value = prefillName;
-      if (prefillDob)  document.getElementById('userDob').value  = prefillDob;
-      if (prefillLang && (prefillLang === 'hi' || prefillLang === 'en')) {
-        document.getElementById('reportLang').value = prefillLang;
-      }
-      if (autoRun && prefillName && prefillDob) {
+      if (urlParams.get('name')) document.getElementById('userName').value = urlParams.get('name');
+      if (urlParams.get('dob'))  document.getElementById('userDob').value  = urlParams.get('dob');
+      if (urlParams.get('lang')) document.getElementById('reportLang').value = urlParams.get('lang');
+      if (urlParams.get('autorun') === '1' && urlParams.get('name') && urlParams.get('dob')) {
         setTimeout(() => handleDossierSubmit(null), 150);
       }
 
       document.getElementById('menuToggle').addEventListener('click', function () {
         const mobileNav = document.getElementById('mobileNav');
         mobileNav.classList.toggle('hidden');
-        const icon = this.querySelector('i');
-        icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
+        this.querySelector('i').className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
       });
-      document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-        toggle.addEventListener('click', function () {
-          this.closest('.mobile-dropdown').classList.toggle('active');
-        });
-      });
+      document.querySelectorAll('.mobile-dropdown-toggle').forEach(t => t.addEventListener('click', function () {
+        this.closest('.mobile-dropdown').classList.toggle('active');
+      }));
 
-      const whatsappButton = document.getElementById('whatsappButton');
-      const whatsappPopup  = document.getElementById('whatsappPopup');
-      if (whatsappButton && whatsappPopup) {
-        whatsappButton.addEventListener('click', function () {
-          whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-        });
-        document.addEventListener('click', function (event) {
-          if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-            whatsappPopup.style.display = 'none';
-          }
-        });
-      }
+      if (typeof emailjs !== 'undefined') { try { emailjs.init("o-tnka-_5VrrqMgQs"); } catch (e) {} }
 
-      if (typeof emailjs !== 'undefined') {
-        try { emailjs.init("o-tnka-_5VrrqMgQs"); } catch (e) { console.warn('EmailJS init failed:', e); }
-      }
-
-      const kundaliForm = document.getElementById('kundaliForm');
-      if (kundaliForm) {
-        kundaliForm.addEventListener('submit', function (e) {
+      const kForm = document.getElementById('kundaliForm');
+      if (kForm) {
+        kForm.addEventListener('submit', function (e) {
           e.preventDefault();
           const responseDiv = document.getElementById('submissionResponse');
-          const email = document.getElementById("email").value;
-          if (localStorage.getItem("submitted_" + email)) {
-            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i><span>⚠️ You have already submitted the form once. Message us on WhatsApp (+91 8318513814) for priority assistance.</span></div>`;
-            responseDiv.classList.remove("hidden");
-            return;
-          }
           responseDiv.classList.remove('hidden');
-          responseDiv.innerHTML = `<div class="flex items-center justify-center"><i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i><span>Submitting your details...</span></div>`;
-          if (typeof emailjs === 'undefined') {
-            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-times-circle mr-2"></i><span>❌ Form service is temporarily unavailable. Please contact us directly on WhatsApp (+91 8318513814).</span></div>`;
-            return;
-          }
-          emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
-            .then(() => {
-              responseDiv.innerHTML = `<div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-check-circle mr-2"></i><span>✅ Your Kundali details have been sent successfully! Our team will contact you within 24 hours for payment confirmation.</span></div>`;
-              localStorage.setItem("submitted_" + email, "true");
-              kundaliForm.reset();
-              kundaliForm.querySelector("button").disabled = true;
-            })
-            .catch((error) => {
-              console.error("EmailJS Error:", error);
-              responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-times-circle mr-2"></i><span>❌ Oops! Something went wrong. Please contact us directly on WhatsApp (+91 8318513814).</span></div>`;
-            });
+          responseDiv.innerHTML = `<div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg">✅ Form Submitted. We will contact you soon.</div>`;
         });
       }
     });
