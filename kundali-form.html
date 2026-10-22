@@ -264,10 +264,14 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
     /* ============================================================
-       ROYAL VEDIC PRINT / PDF LIGHT-THEME STYLES (SVG-SAFE & A4-LOCKED)
+       ROYAL VEDIC PRINT / PDF LIGHT-THEME STYLES (100% CHROME PDF SAFE)
        ============================================================ */
-    .pdf-mode,
-    .pdf-mode *:not(svg):not(svg *) {
+    .pdf-mode {
+      background-color: #ffffff !important;
+      color: #1f2937 !important;
+      overflow: visible !important;
+    }
+    .pdf-mode *:not(svg):not(path):not(rect):not(circle):not(polygon):not(line):not(polyline):not(g):not(text):not(tspan) {
       color: #1f2937 !important;
       background-image: none !important;
       box-shadow: none !important;
@@ -278,7 +282,6 @@
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-    .pdf-mode { background-color: #ffffff !important; overflow: visible !important; }
     .pdf-mode [class*="bg-slate-950"],
     .pdf-mode [class*="bg-slate-900"],
     .pdf-mode [class*="bg-slate-800"],
@@ -320,9 +323,24 @@
     .pdf-mode strong                     { color: #6d28d9 !important; }
     .pdf-mode h1, .pdf-mode h2, .pdf-mode h3, .pdf-mode h4 { color: #111827 !important; }
 
+    /* Protect all SVG Kundali & Shadbala Graphics from any CSS overrides */
+    svg.jt-kundali-svg,
+    svg.jt-kundali-svg * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
     .pdf-keep-together {
       page-break-inside: avoid !important;
       break-inside: avoid !important;
+    }
+
+    /* Always keep active Mahadasha expanded in Print/PDF */
+    .pdf-mode .jt-active-dasha-body {
+      display: block !important;
     }
 
     .pdf-mode .chapter-card {
@@ -330,21 +348,22 @@
       border: 1.5px solid #d97706 !important;
       border-left: 6px solid #7e22ce !important;
       border-radius: 10px !important;
-      padding: 16px 20px !important;
-      margin-bottom: 16px !important;
+      padding: 14px 18px !important;
+      margin-bottom: 14px !important;
       page-break-inside: avoid;
       break-inside: avoid;
       box-shadow: none !important;
       overflow: visible !important;
     }
     .pdf-mode .chapter-card::before { background: #7e22ce !important; width: 5px !important; }
-    .pdf-mode table { border-collapse: collapse !important; page-break-inside: avoid; break-inside: avoid; }
-    .pdf-mode table thead { background: #fef3c7 !important; }
-    .pdf-mode table th, .pdf-mode table td { border: 1px solid #d97706 !important; padding: 5px 7px !important; }
-    .pdf-mode table tfoot tr { background: #f5f3ff !important; }
+    .pdf-mode table:not(.jt-chart-layout-table) { border-collapse: collapse !important; page-break-inside: avoid; break-inside: avoid; }
+    .pdf-mode table:not(.jt-chart-layout-table) thead { background: #fef3c7 !important; }
+    .pdf-mode table:not(.jt-chart-layout-table) th,
+    .pdf-mode table:not(.jt-chart-layout-table) td { border: 1px solid #d97706 !important; padding: 5px 7px !important; }
+    .pdf-mode table:not(.jt-chart-layout-table) tfoot tr { background: #f5f3ff !important; }
     .pdf-mode .danger-glow { animation: none !important; box-shadow: none !important; border-color: #dc2626 !important; }
     .pdf-mode [class*="sticky"] { position: static !important; }
-    .pdf-mode .chapter-body { font-size: 10.5pt; line-height: 1.68; color: #1f2937; }
+    .pdf-mode .chapter-body { font-size: 10.2pt; line-height: 1.65; color: #1f2937; }
     .pdf-mode .chapter-body p { margin-bottom: 8px; }
 
     @page { size: A4 portrait; margin: 10mm; }
@@ -352,25 +371,50 @@
       html, body {
         background: #ffffff !important;
         color: #111827 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         overflow: visible !important;
       }
-      body * { visibility: hidden; }
-      #masterDossierOutput, #masterDossierOutput * { visibility: visible; }
-      #masterDossierOutput {
-        position: absolute;
-        left: 0; top: 0;
-        width: 100%;
-        margin: 0; padding: 0;
-        border: none !important;
-        overflow: visible !important;
-      }
-      #masterDossierOutput .no-print,
+
+      /* CRITICAL FIX: Use display:none on everything outside the dossier so Page 1 starts at 0px! */
+      body > header,
+      body > section:not(#topKundaliWorkspace),
+      body > footer,
+      #whatsappButton,
+      #whatsappPopup,
+      #lifeDossierForm,
+      #manualWorkspaceContainer,
+      .no-print,
       #masterDossierOutput button,
       #masterDossierOutput a[href^="https://wa.me"],
       #masterDossierOutput a[href^="tel:"],
-      #masterDossierOutput .chapter-nav-pill { display: none !important; }
+      #masterDossierOutput .chapter-nav-pill {
+        display: none !important;
+      }
+
+      #topKundaliWorkspace,
+      #instantWorkspaceContainer {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      #masterDossierOutput {
+        position: static !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        overflow: visible !important;
+        display: block !important;
+      }
 
       #masterDossierOutput article,
       #masterDossierOutput .chapter-card,
@@ -379,10 +423,11 @@
         break-inside: avoid !important;
         overflow: visible !important;
       }
-      #masterDossierOutput .grid {
-        page-break-inside: avoid;
-        break-inside: avoid;
+
+      .jt-active-dasha-body {
+        display: block !important;
       }
+
       #d1ChartWrapper, #d9ChartWrapper {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
@@ -390,14 +435,6 @@
         background: #fffdf9 !important;
         overflow: visible !important;
         padding: 4px !important;
-      }
-      svg.jt-kundali-svg {
-        width: 100% !important;
-        max-height: 88mm !important;
-        height: auto !important;
-        overflow: visible !important;
-        display: block !important;
-        margin: 0 auto !important;
       }
     }
   </style>
@@ -1675,25 +1712,25 @@
       const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
       return `
-        <div class="pdf-cover pdf-keep-together" style="width:100%;height:218mm;max-height:220mm;padding:14mm 12mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#fffdf9;border:3px double #b45309;border-radius:12px;box-sizing:border-box;page-break-after:always;break-after:page;">
+        <div class="pdf-cover pdf-keep-together" style="width:100%;height:242mm;max-height:242mm;padding:14mm 12mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#fffdf9;border:3px double #b45309;border-radius:12px;box-sizing:border-box;page-break-after:always;break-after:page;margin:0;">
           <div style="width:100%;border-bottom:2px solid #b45309;padding-bottom:12px;">
             <div style="font-size:14px;letter-spacing:5px;color:#6d28d9;text-transform:uppercase;font-weight:800;">॥ श्री गणेशाय नमः • JYOTISH TARK ॥</div>
             <div style="font-size:11px;color:#6b7280;margin-top:4px;">Parashari Vedic Astrology, 337-Bindu Ashtakavarga &amp; Chaldean Numerology</div>
           </div>
 
-          <div style="text-align:center;padding:10px 0;">
-            <div style="width:82px;height:82px;margin:0 auto 16px;border:3px double #b45309;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;color:#6d28d9;background:#fef3c7;">ॐ</div>
-            <div style="font-size:34px;font-weight:800;color:#111827;line-height:1.2;margin-bottom:8px;">वृहद् जन्म कुंडली एवं जीवन दस्तावेज़</div>
+          <div style="text-align:center;padding:8px 0;">
+            <div style="width:80px;height:80px;margin:0 auto 14px;border:3px double #b45309;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;color:#6d28d9;background:#fef3c7;">ॐ</div>
+            <div style="font-size:32px;font-weight:800;color:#111827;line-height:1.2;margin-bottom:8px;">वृहद् जन्म कुंडली एवं जीवन दस्तावेज़</div>
             <div style="font-size:16px;color:#b45309;font-weight:700;margin-bottom:6px;">Personal Life &amp; Destiny Dossier (North-Indian D1 &amp; D9 Edition)</div>
             <div style="font-size:12px;color:#6b7280;">Panchang • Partner &amp; Progeny Yoga • All 9 Planets • Dasha &amp; Yearly Predictions</div>
-            <div style="width:110px;height:2px;background:#b45309;margin:18px auto;"></div>
-            <div style="font-size:28px;font-weight:800;color:#111827;margin-bottom:8px;">${safeName}</div>
+            <div style="width:110px;height:2px;background:#b45309;margin:16px auto;"></div>
+            <div style="font-size:26px;font-weight:800;color:#111827;margin-bottom:8px;">${safeName}</div>
             <div style="font-size:14px;color:#374151;margin-bottom:4px;"><strong>Born:</strong> ${safeDob}${safeAge ? ' • <strong>Age:</strong> ' + safeAge + ' years' : ''}</div>
             <div style="font-size:14px;color:#374151;margin-bottom:4px;"><strong>Lagna / Base:</strong> ${ascName}</div>
             <div style="font-size:14px;color:#374151;"><strong>Moon:</strong> ${moonName}${moonNak ? ' • ' + moonNak : ''}</div>
           </div>
 
-          <div style="width:100%;border-top:1px solid #d97706;padding-top:12px;">
+          <div style="width:100%;border-top:1px solid #d97706;padding-top:10px;">
             <div style="font-size:11px;color:#6b7280;margin-bottom:3px;">Generated on ${today}</div>
             <div style="font-size:13px;font-weight:800;color:#6d28d9;letter-spacing:2px;">jyotishtark.in</div>
             <div style="font-size:11px;color:#6b7280;margin-top:3px;">Acharya Gyanendra Singh Tomar • Jyotish Tark</div>
