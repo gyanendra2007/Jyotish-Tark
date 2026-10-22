@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * JYOTISH TARK — VEDIC CHART ANALYZER & TRADITIONAL NORTH-INDIAN SVG ENGINE
- * File: vedic-chart-analyzer.js • v10.0 (Print-Locked Vector D1/D9 + Exact Dasha)
+ * File: vedic-chart-analyzer.js • v11.0 (100% Print-Proof <path> Kundali + Bars)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
  * ============================================================================
  */
@@ -302,7 +302,7 @@
   }
 
   // ========================================================================
-  // 4 & 5. PRINT-LOCKED ROYAL NORTH-INDIAN KUNDALI SVG (FOR BOTH D1 & D9)
+  // 4 & 5. 100% PRINT-PROOF NORTH-INDIAN KUNDALI SVG (USING <path> VECTORS)
   // ========================================================================
   function renderRoyalNorthIndianChart(chart, opts) {
     const lang = opts?.lang || "en";
@@ -312,7 +312,6 @@
 
     const ascRashi = isD9 ? (chart.Asc.d9 || 1) : (chart.Asc.rashi || chart.Asc.d1 || 1);
 
-    // Pure geometry: 500 x 536 viewBox (Header: 32px, Square Box: 460x460, Footer: 24px)
     const W_SVG = 500;
     const H_SVG = 536;
     const X0 = 20;
@@ -323,8 +322,6 @@
     const CX = X0 + BOX / 2; // 250
     const CY = Y0 + BOX / 2; // 270
 
-    // Quarter intersection points of the North-Indian Kundali:
-    // Top-Left: (135, 155), Top-Right: (365, 155), Bottom-Right: (365, 385), Bottom-Left: (135, 385)
     const houseRashis = {};
     for (let h = 1; h <= 12; h++) {
       houseRashis[h] = ((ascRashi + h - 2) % 12) + 1;
@@ -339,19 +336,19 @@
       planetsByHouse[h].push(p);
     });
 
-    // Precision-calibrated coordinates for Rashi number (rx, ry) and Planet center (px, py)
+    // Coordinates for Rashi Number (rx, ry) and Planet Stack Center (px, py)
     const houseCoords = {
-      1:  { rx: 250, ry: 238, px: 250, py: 145, isDiamond: true  }, // H1: Top Central Diamond
+      1:  { rx: 250, ry: 242, px: 250, py: 145, isDiamond: true  }, // H1: Top Central Diamond
       2:  { rx: 135, ry: 132, px: 135, py: 74,  isDiamond: false }, // H2: Top-Left Upper Triangle
-      3:  { rx: 110, ry: 159, px: 58,  py: 155, isDiamond: false }, // H3: Left-Top Outer Triangle
+      3:  { rx: 106, ry: 159, px: 58,  py: 155, isDiamond: false }, // H3: Left-Top Outer Triangle
       4:  { rx: 218, ry: 274, px: 128, py: 270, isDiamond: true  }, // H4: Left Central Diamond
-      5:  { rx: 110, ry: 389, px: 58,  py: 385, isDiamond: false }, // H5: Left-Bottom Outer Triangle
-      6:  { rx: 135, ry: 416, px: 135, py: 468, isDiamond: false }, // H6: Bottom-Left Lower Triangle
-      7:  { rx: 250, ry: 310, px: 250, py: 400, isDiamond: true  }, // H7: Bottom Central Diamond
-      8:  { rx: 365, ry: 416, px: 365, py: 468, isDiamond: false }, // H8: Bottom-Right Lower Triangle
-      9:  { rx: 390, ry: 389, px: 442, py: 385, isDiamond: false }, // H9: Right-Bottom Outer Triangle
+      5:  { rx: 106, ry: 389, px: 58,  py: 385, isDiamond: false }, // H5: Left-Bottom Outer Triangle
+      6:  { rx: 135, ry: 418, px: 135, py: 468, isDiamond: false }, // H6: Bottom-Left Lower Triangle
+      7:  { rx: 250, ry: 308, px: 250, py: 400, isDiamond: true  }, // H7: Bottom Central Diamond
+      8:  { rx: 365, ry: 418, px: 365, py: 468, isDiamond: false }, // H8: Bottom-Right Lower Triangle
+      9:  { rx: 394, ry: 389, px: 442, py: 385, isDiamond: false }, // H9: Right-Bottom Outer Triangle
       10: { rx: 282, ry: 274, px: 372, py: 270, isDiamond: true  }, // H10: Right Central Diamond
-      11: { rx: 390, ry: 159, px: 442, py: 155, isDiamond: false }, // H11: Right-Top Outer Triangle
+      11: { rx: 394, ry: 159, px: 442, py: 155, isDiamond: false }, // H11: Right-Top Outer Triangle
       12: { rx: 365, ry: 132, px: 365, py: 74,  isDiamond: false }  // H12: Top-Right Upper Triangle
     };
 
@@ -359,6 +356,11 @@
       Sun: "#c2410c", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
       Jupiter: "#a16207", Venus: "#be185d", Saturn: "#312e81", Rahu: "#6b21a8", Ketu: "#334155"
     };
+
+    const primaryStroke = isD9 ? "#6b21a8" : "#9a3412";
+    const secondaryStroke = isD9 ? "#b45309" : "#7e22ce";
+    const chartBg = isD9 ? "#faf5ff" : "#fffbeb";
+    const rashiBadgeBg = isD9 ? "#f3e8ff" : "#fef3c7";
 
     const houseElements = Object.keys(houseCoords).map(hStr => {
       const h = parseInt(hStr, 10);
@@ -386,64 +388,63 @@
         lines.push(labels.slice(i, i + perLine));
       }
 
-      const fontSize = lines.length >= 3 ? 10.5 : (isDiamond ? 12.5 : 11.5);
-      const lineStep = lines.length >= 3 ? 13 : 16;
+      const fontSize = lines.length >= 3 ? 11 : (isDiamond ? 13 : 11.5);
+      const lineStep = lines.length >= 3 ? 13.5 : 16;
       const startY = py - ((lines.length - 1) * (lineStep / 2));
 
-      const rashiBadgeBg = isD9 ? "#f3e8ff" : "#fef3c7";
-      const rashiBadgeStroke = isD9 ? "#7e22ce" : "#d97706";
-      const rashiTextFill = isD9 ? "#581c87" : "#92400e";
-
       const lagnaHeader = (h === 1)
-        ? `<text x="${px}" y="${Y0 + 36}" font-size="10.5" fill="${isD9 ? '#6b21a8' : '#b45309'}" style="fill:${isD9 ? '#6b21a8' : '#b45309'} !important;" text-anchor="middle" font-weight="800">${isD9 ? (lang === "hi" ? "॥ नवांश लग्न ॥" : "॥ D9 LAGNA ॥") : (lang === "hi" ? "॥ जन्म लग्न ॥" : "॥ LAGNA (ASC) ॥")}</text>`
+        ? `<text x="${px}" y="${Y0 + 36}" font-size="11" fill="${primaryStroke}" text-anchor="middle" font-weight="800">${isD9 ? (lang === "hi" ? "॥ नवांश लग्न ॥" : "॥ D9 LAGNA ॥") : (lang === "hi" ? "॥ जन्म लग्न ॥" : "॥ LAGNA (ASC) ॥")}</text>`
         : "";
 
       return `
         <g>
-          <circle cx="${rx}" cy="${ry - 3.5}" r="10.5" fill="${rashiBadgeBg}" stroke="${rashiBadgeStroke}" stroke-width="1.3" style="fill:${rashiBadgeBg} !important;stroke:${rashiBadgeStroke} !important;"/>
-          <text x="${rx}" y="${ry}" font-size="10.5" fill="${rashiTextFill}" style="fill:${rashiTextFill} !important;" text-anchor="middle" font-weight="800">${rashiNum}</text>
+          <!-- Rashi Number Badge drawn as explicit <path> circle so print never drops it -->
+          <path d="M ${rx - 11},${ry - 4} a 11,11 0 1,0 22,0 a 11,11 0 1,0 -22,0" fill="${rashiBadgeBg}" stroke="${primaryStroke}" stroke-width="1.5"/>
+          <text x="${rx}" y="${ry}" font-size="11" fill="${primaryStroke}" text-anchor="middle" font-weight="800">${rashiNum}</text>
           ${lagnaHeader}
           ${lines.map((lnArr, idx) => `
             <text x="${px}" y="${startY + idx * lineStep}" font-size="${fontSize}" text-anchor="middle" font-weight="800">
-              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}" style="fill:${item.color} !important;">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
+              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
             </text>
           `).join("")}
         </g>
       `;
     }).join("");
 
-    const primaryStroke = isD9 ? "#6b21a8" : "#b45309";
-    const secondaryStroke = isD9 ? "#b45309" : "#7e22ce";
-    const chartBg = isD9 ? "#faf5ff" : "#fffbeb";
     const titleBanner = isD9
       ? (lang === "hi" ? `नवांश कुंडली (D9) — ${RASHI_NAMES_HI[ascRashi - 1]} नवांश` : `NAVAMSA CHART (D9) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`)
       : (lang === "hi" ? `जन्म लग्न कुंडली (D1) — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `LAGNA CHART (D1) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`);
 
-    return `
-      <svg class="jt-kundali-svg" viewBox="0 0 ${W_SVG} ${H_SVG}" width="${W_SVG}" height="${H_SVG}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;height:auto;aspect-ratio:500/536;display:block;margin:0 auto;background:#fffdf9;font-family:'Hind','Inter',sans-serif;">
-        <!-- Outer Card Frame -->
-        <rect x="2" y="2" width="${W_SVG - 4}" height="${H_SVG - 4}" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5" rx="10" style="fill:#fffdf9 !important;stroke:${primaryStroke} !important;"/>
-        <!-- Top Title Banner -->
-        <rect x="2" y="2" width="${W_SVG - 4}" height="30" fill="${primaryStroke}" rx="8" style="fill:${primaryStroke} !important;"/>
-        <text x="${CX}" y="21" font-size="12.5" fill="#ffffff" style="fill:#ffffff !important;" text-anchor="middle" font-weight="800" letter-spacing="0.5">ॐ JYOTISH TARK • ${titleBanner}</text>
+    // All Square Borders, Diagonals & Central Diamond encoded as explicit <path> vectors!
+    const outerSquarePath = `M ${X0} ${Y0} L ${X1} ${Y0} L ${X1} ${Y1} L ${X0} ${Y1} Z`;
+    const innerFramePath  = `M ${X0 + 4} ${Y0 + 4} L ${X1 - 4} ${Y0 + 4} L ${X1 - 4} ${Y1 - 4} L ${X0 + 4} ${Y1 - 4} Z`;
+    const diagonalsPath   = `M ${X0} ${Y0} L ${X1} ${Y1} M ${X1} ${Y0} L ${X0} ${Y1}`;
+    const diamondPath     = `M ${CX} ${Y0} L ${X1} ${CY} L ${CX} ${Y1} L ${X0} ${CY} Z`;
 
-        <!-- Main Kundali Square -->
-        <rect x="${X0}" y="${Y0}" width="${BOX}" height="${BOX}" fill="${chartBg}" stroke="${primaryStroke}" stroke-width="2.6" style="fill:${chartBg} !important;stroke:${primaryStroke} !important;"/>
-        <rect x="${X0 + 4}" y="${Y0 + 4}" width="${BOX - 8}" height="${BOX - 8}" fill="none" stroke="${secondaryStroke}" stroke-width="0.8" stroke-opacity="0.4"/>
+    return `
+      <svg class="jt-kundali-svg" viewBox="0 0 ${W_SVG} ${H_SVG}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;height:auto;display:block;margin:0 auto;background:#fffdf9;font-family:'Hind','Inter',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <!-- Outer Card Frame -->
+        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} ${H_SVG - 2} L 4 ${H_SVG - 2} Z" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5"/>
+        <!-- Top Title Banner -->
+        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} 32 L 4 32 Z" fill="${primaryStroke}"/>
+        <text x="${CX}" y="22" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="800">ॐ JYOTISH TARK • ${titleBanner}</text>
+
+        <!-- Main Kundali Square & Inner Double Border -->
+        <path d="${outerSquarePath}" fill="${chartBg}" stroke="${primaryStroke}" stroke-width="3"/>
+        <path d="${innerFramePath}" fill="none" stroke="${secondaryStroke}" stroke-width="1" stroke-opacity="0.5"/>
 
         <!-- 2 Corner-to-Corner Diagonals -->
-        <line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2" style="stroke:${primaryStroke} !important;"/>
-        <line x1="${X1}" y1="${Y0}" x2="${X0}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2" style="stroke:${primaryStroke} !important;"/>
+        <path d="${diagonalsPath}" fill="none" stroke="${primaryStroke}" stroke-width="2.2"/>
 
         <!-- Central Diamond (Connecting Midpoints of the 4 Sides) -->
-        <polygon points="${CX},${Y0} ${X1},${CY} ${CX},${Y1} ${X0},${CY}" fill="none" stroke="${secondaryStroke}" stroke-width="2.3" style="stroke:${secondaryStroke} !important;"/>
+        <path d="${diamondPath}" fill="none" stroke="${secondaryStroke}" stroke-width="2.5"/>
 
         <!-- House Numbers & Planets -->
         ${houseElements}
 
         <!-- Bottom Legend Bar -->
-        <text x="${X0}" y="${H_SVG - 12}" font-size="10" fill="#475569" style="fill:#475569 !important;" font-weight="700">${lang === "hi" ? "(व) = वक्री • ★ = वर्गोत्तम (D1=D9) • गोल अंक = राशि संख्या" : "* = Retrograde • ★ = Vargottama • Circle = Rashi No."}</text>
-        <text x="${X1}" y="${H_SVG - 12}" font-size="10" fill="${primaryStroke}" style="fill:${primaryStroke} !important;" text-anchor="end" font-weight="800">${userName.substring(0, 22)}</text>
+        <text x="${X0}" y="${H_SVG - 11}" font-size="10.5" fill="#334155" font-weight="700">${lang === "hi" ? "(व) = वक्री • ★ = वर्गोत्तम (D1=D9) • गोल अंक = राशि संख्या" : "* = Retrograde • ★ = Vargottama • Circle = Rashi No."}</text>
+        <text x="${X1}" y="${H_SVG - 11}" font-size="10.5" fill="${primaryStroke}" text-anchor="end" font-weight="800">${userName.substring(0, 22)}</text>
       </svg>
     `;
   }
@@ -495,7 +496,6 @@
 
     const avk = AVAKAHADA_BY_NAK[moonNak] || AVAKAHADA_BY_NAK[1];
 
-    // 2026 Transit (Gochara) Detector: Saturn in Meena (12), Rahu in Kumbha (11), Ketu in Simha (5)
     let shaniStatusHi = "साढ़ेसाती / ढैय्या से पूर्णतः मुक्त (Shani Transit Supportive)";
     let shaniStatusEn = "Free from Sade-Sati & Dhaiya (Supportive Saturn Transit)";
     let isSadeSatiOrDhaiya = false;
@@ -563,15 +563,15 @@
       : "bg-emerald-950/75 border-emerald-400/50 text-emerald-100";
 
     return `
-      <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6 mt-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-2.5 border-b border-white/10">
+      <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6 mt-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3.5 pb-2 border-b border-white/10">
           <h3 class="text-lg md:text-xl font-bold text-white">
             <i class="fas fa-om text-amber-400 mr-2"></i>${lang === "hi" ? "पंचांग, अवकहड़ा चक्र एवं 2026 शनि साढ़ेसाती स्थिति" : "Vedic Panchang, Avakahada Chakra & 2026 Saturn Transit Status"}
           </h3>
           <span class="text-xs text-purple-300 font-semibold">${lang === "hi" ? "चंद्र-सूर्य स्पष्ट अंशों से निर्मित" : "Computed from Exact Sun-Moon Longitudes"}</span>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-4">${gridHtml}</div>
-        <div class="p-3.5 rounded-xl border-2 ${sadeSatiAlertClass} text-xs md:text-sm font-bold flex items-center justify-between gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3.5">${gridHtml}</div>
+        <div class="p-3 rounded-xl border-2 ${sadeSatiAlertClass} text-xs md:text-sm font-bold flex items-center justify-between gap-3">
           <div>
             <span class="uppercase tracking-wider block text-[10px] opacity-80">${lang === "hi" ? "वर्ष 2026 गोचर (मीन के शनि एवं कुंभ-सिंह राहु-केतु) निदान:" : "2026 Live Transit (Saturn in Pisces & Rahu-Ketu Axis) Verdict:"}</span>
             <span>${lang === "hi" ? p.shaniStatusHi : p.shaniStatusEn}</span>
@@ -591,11 +591,11 @@
       const pLabel = lang === "hi" ? `${PLANET_HI[p]} (${PLANET_SHORT[p]})` : `${p} (${PLANET_SHORT[p]})`;
       const isSame = !d.shifted;
       return `<tr class="hover:bg-white/5">
-        <td class="py-2 px-3 font-bold text-white whitespace-nowrap">${pLabel}</td>
-        <td class="py-2 px-3 text-center text-purple-200 font-mono whitespace-nowrap">${d.degStr || "—"}</td>
-        <td class="py-2 px-3 text-center text-gray-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.rashiBhava}` : `House ${d.rashiBhava}`}</td>
-        <td class="py-2 px-3 text-center font-bold text-amber-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.bhava}` : `House ${d.bhava}`}</td>
-        <td class="py-2 px-3 text-center font-semibold whitespace-nowrap ${isSame ? 'text-emerald-300' : 'text-rose-300'}">
+        <td class="py-1.5 px-2.5 font-bold text-white whitespace-nowrap">${pLabel}</td>
+        <td class="py-1.5 px-2.5 text-center text-purple-200 font-mono whitespace-nowrap">${d.degStr || "—"}</td>
+        <td class="py-1.5 px-2.5 text-center text-gray-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.rashiBhava}` : `House ${d.rashiBhava}`}</td>
+        <td class="py-1.5 px-2.5 text-center font-bold text-amber-300 whitespace-nowrap">${lang === "hi" ? `भाव ${d.bhava}` : `House ${d.bhava}`}</td>
+        <td class="py-1.5 px-2.5 text-center font-semibold whitespace-nowrap ${isSame ? 'text-emerald-300' : 'text-rose-300'}">
           ${isSame
             ? (lang === "hi" ? "✓ स्थिर (Same House)" : "✓ Unshifted (Full Fruit)")
             : (lang === "hi" ? `⇄ भाव ${d.bhava} में फलित` : `⇄ Shifted to H-${d.bhava}`)}
@@ -608,11 +608,11 @@
         <table class="w-full text-xs md:text-sm">
           <thead class="bg-slate-950 text-amber-300 border-b border-white/10">
             <tr>
-              <th class="py-2.5 px-3 text-left">${lang === "hi" ? "ग्रह (Planet)" : "Planet"}</th>
-              <th class="py-2.5 px-3 text-center">${lang === "hi" ? "अंश (Degree)" : "Degree"}</th>
-              <th class="py-2.5 px-3 text-center">${lang === "hi" ? "लग्न भाव (D1)" : "Rashi House (D1)"}</th>
-              <th class="py-2.5 px-3 text-center">${lang === "hi" ? "चलित भाव (Chalit)" : "Chalit House"}</th>
-              <th class="py-2.5 px-3 text-center">${lang === "hi" ? "प्रभाव (Status)" : "Bhava Status"}</th>
+              <th class="py-2 px-2.5 text-left">${lang === "hi" ? "ग्रह (Planet)" : "Planet"}</th>
+              <th class="py-2 px-2.5 text-center">${lang === "hi" ? "अंश (Degree)" : "Degree"}</th>
+              <th class="py-2 px-2.5 text-center">${lang === "hi" ? "लग्न भाव (D1)" : "Rashi House (D1)"}</th>
+              <th class="py-2 px-2.5 text-center">${lang === "hi" ? "चलित भाव (Chalit)" : "Chalit House"}</th>
+              <th class="py-2 px-2.5 text-center">${lang === "hi" ? "प्रभाव (Status)" : "Bhava Status"}</th>
             </tr>
           </thead>
           <tbody class="bg-slate-900/60 divide-y divide-white/5">${rows}</tbody>
@@ -622,20 +622,21 @@
   }
 
   // ========================================================================
-  // 8. SHADBALA STRENGTH BARS RENDERER (INLINE SVG BARS FOR 100% PDF VISIBILITY)
+  // 8. SHADBALA STRENGTH BARS RENDERER (100% PRINT-PROOF BORDER+PATH BARS)
   // ========================================================================
   function renderShadbalaBars(scores, lang) {
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
     return planets.map(p => {
       const v = scores[p] || 50;
-      const fillHex = v >= 70 ? "#10b981" : v >= 55 ? "#d97706" : "#ef4444";
+      const fillHex = v >= 65 ? "#059669" : v >= 55 ? "#d97706" : "#dc2626";
       const label = lang === "hi" ? `${PLANET_HI[p]} (${PLANET_SHORT[p]})` : `${p}`;
+      const barW = Math.max(12, Math.min(200, Math.round(v * 2)));
       return `<div class="flex items-center gap-3 mb-2.5">
         <span class="text-xs font-bold text-white w-24 shrink-0">${label}</span>
         <div class="flex-1">
-          <svg class="jt-kundali-svg" viewBox="0 0 200 12" width="200" height="12" style="width:100%;height:12px;display:block;border-radius:6px;overflow:hidden;">
-            <rect x="0" y="0" width="200" height="12" rx="6" fill="#e2e8f0" style="fill:#e2e8f0 !important;"/>
-            <rect x="0" y="0" width="${Math.round(v * 2)}" height="12" rx="6" fill="${fillHex}" style="fill:${fillHex} !important;"/>
+          <svg class="jt-kundali-svg" viewBox="0 0 204 14" width="100%" height="14" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:14px;display:block;">
+            <path d="M 2 2 L 202 2 L 202 12 L 2 12 Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.2"/>
+            <path d="M 2 2 L ${barW + 2} 2 L ${barW + 2} 12 L 2 12 Z" fill="${fillHex}" stroke="${fillHex}" stroke-width="1"/>
           </svg>
         </div>
         <span class="text-xs font-extrabold text-amber-300 w-12 text-right">${v}%</span>
@@ -664,23 +665,23 @@
     const fmt = (d) => d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 
     const mdItems = dashaTree.fullSeq.map((md, idx) => {
-      const isActive = (md === dashaTree.mdActive);
+      const isActive = (md.lord === dashaTree.mahadasha);
       const borderClass = isActive ? "bg-amber-500/15 border-amber-400" : "bg-slate-900/60 border-white/10";
       const mdTitle = lang === "hi" ? `${PLANET_HI[md.lord]} महादशा (${md.lord})` : `${md.lord} Mahadasha`;
 
       const adRows = md.antardashas.map(ad => {
-        const adActive = isActive && (ad === dashaTree.adActive);
+        const adActive = isActive && (ad.lord === dashaTree.antardasha);
         const adTitle = lang === "hi"
           ? `${PLANET_HI[md.lord]} – ${PLANET_HI[ad.lord]} (${md.lord}-${ad.lord})`
           : `${md.lord} – ${ad.lord}`;
         return `<div class="flex flex-row justify-between items-center text-xs py-1.5 px-3 rounded-lg gap-2 ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/50' : 'text-gray-300 bg-slate-950/40'}">
-          <span class="truncate">${adActive ? '▸ ' : ''}${adTitle}${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
+          <span>${adActive ? '▸ ' : ''}${adTitle}${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
           <span class="font-mono text-[11px] text-purple-200 whitespace-nowrap shrink-0">${fmt(ad.start)} → ${fmt(ad.end)}</span>
         </div>`;
       }).join("");
 
       return `
-        <div class="pdf-keep-together rounded-xl border ${borderClass} p-3.5 transition">
+        <div class="pdf-keep-together rounded-xl border ${borderClass} p-3 transition">
           <div onclick="window.toggleJtDashaCard(${idx})" class="flex flex-row justify-between items-center cursor-pointer gap-2 select-none">
             <div class="flex items-center gap-2">
               <i id="jt-dasha-icon-${idx}" class="fas fa-chevron-right text-xs text-amber-400 transition-transform duration-200" style="transform:${isActive ? 'rotate(90deg)' : 'rotate(0deg)'}"></i>
@@ -688,7 +689,7 @@
             </div>
             <span class="text-xs font-mono text-purple-200 whitespace-nowrap shrink-0">${fmt(md.start)} → ${fmt(md.end)}</span>
           </div>
-          <div id="jt-dasha-body-${idx}" class="${isActive ? '' : 'hidden'} mt-2.5 pt-2.5 border-t border-white/10 space-y-1">
+          <div id="jt-dasha-body-${idx}" class="${isActive ? 'jt-active-dasha-body' : 'hidden'} mt-2.5 pt-2.5 border-t border-white/10 space-y-1">
             ${adRows}
           </div>
         </div>
