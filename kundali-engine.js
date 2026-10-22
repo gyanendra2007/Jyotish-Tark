@@ -109,7 +109,7 @@
     5: {
       yogakaraka: ["Mars"], benefics: ["Mars", "Sun", "Jupiter"],
       malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Saturn", "Venus"],
-      badhakaHouse: 9, badhakesh: "Mars",
+      badhakaHouse: 9, badhakesh: "Saturn", // Mars is Yogakaraka (4th & 9th Lord), so Saturn (6th & 7th Maraka/Enemy) acts as primary functional obstructor
       secretWeaknessEn: "fierce royal pride that refuses to ask for help even when bleeding internally, and feeling taken for granted by the very people you shelter",
       secretWeaknessHi: "अटूट राजसी स्वाभिमान जिसके कारण आप टूटने पर भी किसी से मदद नहीं मांगते, और जिन लोगों की आप रक्षा करते हैं उन्हीं से अपेक्षित सम्मान न मिलना"
     },
@@ -581,50 +581,104 @@
     return { year, month, day, mulank, bhagyank, rawSum, age, currentYear, personalYear };
   }
 
-  function computeLifeEventTimeline(numData, chart, planetAnalysis) {
+  function computeLifeEventTimeline(numData, chart, planetAnalysis, dasha) {
     const cy = numData.currentYear;
     const age = numData.age;
     const by = numData.year;
     const m = numData.mulank;
     const b = numData.bhagyank;
+    const asc = chart.Asc.d1;
 
+    const rashi10Lord = RASHI_DATA[getRashiOfBhava(asc, 10)].lord;
+    const rashi7Lord  = RASHI_DATA[getRashiOfBhava(asc, 7)].lord;
+    const rashi5Lord  = RASHI_DATA[getRashiOfBhava(asc, 5)].lord;
+
+    // 1. Past Verification Window (Age when Rahu/Ketu/Saturn or 8th-axis triggered)
     const pastOffset = 2 + ((m + b) % 3);
     const pastYearStart = cy - pastOffset;
     const pastYearEnd   = pastYearStart + 1;
-    const pastAgeStart  = Math.max(10, age - pastOffset);
+    const pastAgeStart  = Math.max(12, age - pastOffset);
     const pastAgeEnd    = pastAgeStart + 1;
 
-    const cOffset1 = ((10 - numData.personalYear + m) % 2);
-    const careerWin1Start = cy + cOffset1;
-    const careerWin1End   = careerWin1Start + 1;
-    const careerWin2Start = careerWin1End + 2;
-    const careerWin2End   = careerWin2Start + 1;
+    // Helper: Find upcoming Antardasha matching target planets between cy and cy + 6
+    const findBestAntardashaWindow = (targetPlanets, minYear, fallbackStartYear) => {
+      const vdDasha = window.__jtVedicData && window.__jtVedicData.dasha;
+      if (vdDasha && Array.isArray(vdDasha.fullSeq)) {
+        const allAds = [];
+        vdDasha.fullSeq.forEach(md => {
+          (md.antardashas || []).forEach(ad => allAds.push(ad));
+        });
+        const hit = allAds.find(ad => {
+          const sYr = ad.start.getFullYear();
+          const eYr = ad.end.getFullYear();
+          return eYr >= minYear && sYr <= minYear + 5 && targetPlanets.includes(ad.lord);
+        });
+        if (hit) {
+          const sY = Math.max(minYear, hit.start.getFullYear());
+          const eY = Math.max(sY + 1, Math.min(sY + 2, hit.end.getFullYear()));
+          const fmtM = (d) => d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+          return {
+            startYear: sY,
+            endYear: eY,
+            adLabel: `${hit.mdLord}–${hit.lord} (${fmtM(hit.start)} – ${fmtM(hit.end)})`,
+            label: `${sY}–${eY} (Age ${sY - by}–${eY - by})`
+          };
+        }
+      }
+      return {
+        startYear: fallbackStartYear,
+        endYear: fallbackStartYear + 1,
+        adLabel: null,
+        label: `${fallbackStartYear}–${fallbackStartYear + 1} (Age ${fallbackStartYear - by}–${fallbackStartYear + 1 - by})`
+      };
+    };
 
+    // 2. Career Breakthrough Windows (10th Lord, 11th Lord, Sun, Saturn, Jupiter, or planets in 10th/11th)
+    const planetsIn10or11 = Object.keys(planetAnalysis).filter(k => [10, 11, 1].includes(planetAnalysis[k].bhava));
+    const careerTargets = Array.from(new Set([rashi10Lord, "Sun", "Jupiter", "Mercury", ...planetsIn10or11]));
+    const cFallback1 = cy + ((10 - numData.personalYear + m) % 2);
+    const cWin1Obj = findBestAntardashaWindow(careerTargets, cy, cFallback1);
+    const cWin2Start = cWin1Obj.endYear + 2;
+
+    // 3. Marriage Windows (7th Lord, Venus, Jupiter, Mars if in 7th, or any planet in 7th/2nd)
+    const planetsIn7th = Object.keys(planetAnalysis).filter(k => [7, 2].includes(planetAnalysis[k].bhava));
+    const marriageTargets = Array.from(new Set([rashi7Lord, "Venus", "Jupiter", ...planetsIn7th]));
+    const minMarriageYear = Math.max(cy, by + 22); // Realistic minimum marriage age >= 22
+    // Find Chaldean Marriage Personal Year (PY 2, 3, 6, or 9)
+    let chaldeanMarYear = minMarriageYear;
+    for (let y = minMarriageYear; y <= minMarriageYear + 4; y++) {
+      const py = reduceToSingleDigit(numData.day + numData.month + reduceToSingleDigit(y));
+      if ([2, 3, 6, 9].includes(py)) { chaldeanMarYear = y; break; }
+    }
+    const mWin1Obj = findBestAntardashaWindow(marriageTargets, minMarriageYear, chaldeanMarYear);
+    const mWin2Start = mWin1Obj.endYear + 2;
+
+    // 4. Childbirth / Santan Windows (Strictly AFTER or at the end of Marriage Window 1!)
+    const planetsIn5th = Object.keys(planetAnalysis).filter(k => [5, 9].includes(planetAnalysis[k].bhava));
+    const babyTargets = Array.from(new Set([rashi5Lord, "Jupiter", "Moon", "Venus", ...planetsIn5th]));
+    const minBabyYear = Math.max(cy + 1, mWin1Obj.startYear + 1);
+    const bWin1Obj = findBestAntardashaWindow(babyTargets, minBabyYear, minBabyYear);
+    const bWin2Start = bWin1Obj.endYear + 2;
+
+    // 5. Financial Caution Window
     const rahuBhava = planetAnalysis.Rahu.bhava;
     const lossOffset = ((rahuBhava + b) % 2) + 1;
     const cautionYear1 = cy + (lossOffset === 1 ? 0 : 1);
     const cautionYear2 = cautionYear1 + 2;
 
-    const baseMarriageAge = Math.max(21, age < 21 ? 22 + (b % 3) : age + ((m + b) % 2));
-    const marYear1Start = by + baseMarriageAge;
-    const marYear1End   = marYear1Start + 1;
-    const marYear2Start = marYear1End + 2;
-    const marYear2End   = marYear2Start + 1;
-
-    const baseBabyYear = Math.max(cy + 1, marYear1Start + 1);
-    const babyWin1 = `${baseBabyYear}–${baseBabyYear + 1}`;
-    const babyWin2 = `${baseBabyYear + 3}–${baseBabyYear + 4}`;
-
     return {
       pastYearRange: `${pastYearStart}–${pastYearEnd}`,
       pastAgeRange: `${pastAgeStart}–${pastAgeEnd}`,
-      careerWindow1: `${careerWin1Start}–${careerWin1End} (Age ${ careerWin1Start - by }–${ careerWin1End - by })`,
-      careerWindow2: `${careerWin2Start}–${careerWin2End} (Age ${ careerWin2Start - by }–${ careerWin2End - by })`,
+      careerWindow1: cWin1Obj.label,
+      careerAdTrigger: cWin1Obj.adLabel,
+      careerWindow2: `${cWin2Start}–${cWin2Start + 1} (Age ${cWin2Start - by}–${cWin2Start + 1 - by})`,
       cautionWindow: `${cautionYear1} (Late Q3/Q4) & ${cautionYear2}`,
-      marriageWindow1: `${marYear1Start}–${marYear1End} (Age ${baseMarriageAge}–${baseMarriageAge + 1})`,
-      marriageWindow2: `${marYear2Start}–${marYear2End} (Age ${baseMarriageAge + 3}–${baseMarriageAge + 4})`,
-      babyWindow1: babyWin1,
-      babyWindow2: babyWin2
+      marriageWindow1: mWin1Obj.label,
+      marriageAdTrigger: mWin1Obj.adLabel,
+      marriageWindow2: `${mWin2Start}–${mWin2Start + 1} (Age ${mWin2Start - by}–${mWin2Start + 1 - by})`,
+      babyWindow1: bWin1Obj.label,
+      babyAdTrigger: bWin1Obj.adLabel,
+      babyWindow2: `${bWin2Start}–${bWin2Start + 1} (Age ${bWin2Start - by}–${bWin2Start + 1 - by})`
     };
   }
 
@@ -1788,12 +1842,12 @@
     const { lang, chart, planetAnalysis, specialLagnas } = ctx;
     const isFull = chart.isFullChartMode;
     const ascRashi = chart.Asc.d1;
-    const pKeys = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
+    const pKeys = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
 
     const modeBanner = isFull
       ? (lang === "hi"
-        ? `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% पूर्ण पाराशरी भाव-स्वामी एवं नवांश विश्लेषण:</strong> नीचे प्रत्येक ग्रह का स्वामित्व (Lordship), बैठने के भाव का सूत्र, नवांश परिपक्वता और पाराशरी दृष्टियों का सटीक निचोड़ दिया गया है।</div>`
-        : `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% Exact Parashari Lordship & Navamsa Synthesis:</strong> Below are the house-lordship rules, real-life verdicts, trigger ages, and aspect warnings for all 9 planets.</div>`)
+        ? `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% पूर्ण पाराशरी भाव-स्वामी एवं नवांश विश्लेषण:</strong> नीचे प्रत्येक ग्रह का स्वामित्व (Lordship), बैठने के भाव का सूत्र, नैसर्गिक परिपक्वता आयु, नवांश (D9) बल और पाराशरी दृष्टियों का सटीक निचोड़ दिया गया है।</div>`
+        : `<div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mb-6"><i class="fas fa-check-circle mr-2"></i><strong>99.9% Exact Parashari Lordship & Navamsa Synthesis:</strong> Below are the house-lordship rules, real-life verdicts, natural maturity ages, D9 dignity shifts, and aspect warnings for all 9 planets.</div>`)
       : (lang === "hi"
         ? `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6"><i class="fas fa-sun mr-2"></i><strong>जन्म-दिवस के वास्तविक ग्रह (Noon Natal Ephemeris):</strong> आपके जन्म के दिन दोपहर 12:00 IST पर आकाश में सभी 9 ग्रह जिन वास्तविक राशियों और नक्षत्रों में स्थित थे, उनका आपके जीवन पर सीधा व्यावहारिक प्रभाव नीचे दिया गया है।</div>`
         : `<div class="p-4 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mb-6"><i class="fas fa-sun mr-2"></i><strong>Your Birth-Date Natal Planetary Blueprint (Noon Ephemeris):</strong> Here is how the exact sidereal positions of all 9 planets on the day you were born shape your real-life destiny, health, and trigger ages.</div>`);
@@ -1809,7 +1863,9 @@
       const bavScoreHere = (isFull && specialLagnas.houseBav[k]) ? specialLagnas.houseBav[k][info.bhava] : null;
       const degBadge = info.formattedDeg ? `<span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">${info.formattedDeg}</span>` : "";
 
-      const matAges = (PLANET_MATURITY_AGES[k] || [24, 30, 36]).join(", ");
+      const ageList = PLANET_MATURITY_AGES[k] || [24, 30, 36];
+      const primaryMatAge = ageList[0];
+      const matAges = ageList.join(", ");
       const conjNamesEn = info.conjunctWith.map(c => PLANET_META[c].en).join(", ");
       const conjNamesHi = info.conjunctWith.map(c => PLANET_META[c].hi).join(", ");
 
@@ -1819,6 +1875,32 @@
       const lordshipSynthesisEn = (isFull && info.ownedHouses.length)
         ? `As ruler of <strong>House ${info.ownedHouses.join(" & ")}</strong> seated in <strong>House ${info.bhava}</strong>, Parashari sutra dictates <em>${BHAVA_IN_BHAVA_EFFECTS_EN[info.bhava]}</em>. `
         : "";
+
+      // Dynamic D9 & Conjunction Synthesis (No more repetitive hardcoded "Age 28" on every planet!)
+      let d9MaturityNoteHi = "";
+      let d9MaturityNoteEn = "";
+
+      if (info.dignity.isVargottama) {
+        d9MaturityNoteHi = `यह ग्रह <strong>वर्गोत्तम (${d1Rashi.hi})</strong> होने से जन्म से ही दोगुना आंतरिक आत्मबल रखता है और आपकी आयु के <strong>${primaryMatAge}वें वर्ष</strong> से सर्वोच्च फल देता है।`;
+        d9MaturityNoteEn = `Being <strong>Vargottama in ${d1Rashi.en}</strong>, it carries double internal strength from birth and unlocks peak results from <strong>age ${primaryMatAge}</strong> onward.`;
+      } else if (info.dignity.isExaltedD9 || info.dignity.isOwnD9) {
+        d9MaturityNoteHi = `नवांश (D9) में अपनी उच्च/स्वराशि <strong>${d9Rashi.hi}</strong> में जाने से आपकी आयु के <strong>${primaryMatAge}वें वर्ष (नैसर्गिक परिपक्वता आयु)</strong> के बाद इस ग्रह का राजयोग फल कई गुना बढ़ जाता है।`;
+        d9MaturityNoteEn = `Fortified in its exalted/own sign <strong>${d9Rashi.en}</strong> in Navamsa (D9), its capacity to deliver high-level results multiplies after its natural maturity age of <strong>${primaryMatAge}</strong>.`;
+      } else if (info.dignity.isDebilitatedD9) {
+        d9MaturityNoteHi = `नवांश (D9) में <strong>${d9Rashi.hi} (नीचस्थ)</strong> में जाने के कारण आपकी आयु के <strong>${primaryMatAge}वें वर्ष</strong> के आसपास यह ग्रह धैर्य की परीक्षा लेता है—स्थायी फल हेतु इसका वैदिक उपाय आवश्यक है।`;
+        d9MaturityNoteEn = `Moving into debilitated <strong>${d9Rashi.en}</strong> in Navamsa (D9), it tests your patience around <strong>age ${primaryMatAge}</strong> and requires conscious Vedic pacification for steady results.`;
+      } else {
+        d9MaturityNoteHi = `नवांश (D9) में <strong>${d9Rashi.hi} (${d9Rashi.lordHi} की राशि)</strong> में जाने से आपकी आयु के <strong>${primaryMatAge}वें वर्ष</strong> के बाद इसके फल में परिपक्वता और स्थायित्व आता है।`;
+        d9MaturityNoteEn = `Maturing into <strong>${d9Rashi.en} (ruled by ${d9Rashi.lord})</strong> in Navamsa (D9), its deeper karmic results stabilize after <strong>age ${primaryMatAge}</strong>.`;
+      }
+
+      const conjAndD9BlockHi = info.conjunctWith.length
+        ? `यह ग्रह <strong>${conjNamesHi}</strong> के साथ युति बनाकर आपके निर्णयों में तीव्रता लाता है। साथ ही, ${d9MaturityNoteHi}`
+        : d9MaturityNoteHi;
+
+      const conjAndD9BlockEn = info.conjunctWith.length
+        ? `Conjunct <strong>${conjNamesEn}</strong>, it fuses their agendas whenever triggered. Furthermore, ${d9MaturityNoteEn}`
+        : d9MaturityNoteEn;
 
       const outgoingEn = info.aspectedTargets.map(t => {
         const hit = t.planetsThere.length ? ` (hitting ${t.planetsThere.join(", ")})` : "";
@@ -1839,7 +1921,7 @@
 
       if (lang === "hi") {
         return `
-          <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
+          <div class="pdf-keep-together p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/10">
               <div class="min-w-0">
                 <h4 class="text-base md:text-lg font-bold text-white flex flex-wrap items-center gap-2">
@@ -1872,7 +1954,7 @@
             </div>
 
             <div class="space-y-2 text-xs md:text-sm text-gray-200 pt-1">
-              <div>🎯 <strong class="text-amber-300">पाराशरी सूत्र एवं प्रत्यक्ष जीवन फल:</strong> ${lordshipSynthesisHi}${d1Rashi.hi} (${nak.name}) में बैठा ${info.meta.hi} आपको <em>${nak.traitHi}</em> देता है और सीधे तौर पर ${houseThemeShort(info.bhava, "hi")} को नियंत्रित करता है। ${info.conjunctWith.length ? `यह ग्रह <strong>${conjNamesHi}</strong> के साथ युति बनाकर आपके निर्णयों में तीव्रता लाता है।` : `नवांश में ${d9Rashi.hi} में जाने से 28 वर्ष की आयु के बाद इसका प्रभाव दोगुना परिपक्व हो जाता है।`}</div>
+              <div>🎯 <strong class="text-amber-300">पाराशरी सूत्र एवं प्रत्यक्ष जीवन फल:</strong> ${lordshipSynthesisHi}${d1Rashi.hi} (${nak.name}) में बैठा ${info.meta.hi} आपको <em>${nak.traitHi}</em> देता है और सीधे तौर पर ${houseThemeShort(info.bhava, "hi")} को नियंत्रित करता है। ${conjAndD9BlockHi}</div>
               <div>⚡ <strong class="text-emerald-300">परिपक्वता आयु एवं चिकित्सा ज्योतिष (Medical Trigger):</strong> यह ग्रह आपकी आयु के <strong>${matAges}वें वर्ष</strong> में अपना पूर्ण प्रभाव दिखाता है। जब यह ग्रह पीड़ित हो, तो <em>${info.meta.healthHi}</em> के प्रति विशेष सावधानी रखें।</div>
               <div>🛡️ <strong class="text-cyan-300">दृष्टि प्रभाव एवं सावधानी:</strong> ${outgoingHi} (${incomingHi})।</div>
             </div>
@@ -1881,7 +1963,7 @@
       }
 
       return `
-        <div class="p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
+        <div class="pdf-keep-together p-4 sm:p-5 rounded-2xl bg-slate-950/85 border border-white/15 space-y-3 max-w-full overflow-hidden break-words">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/10">
             <div class="min-w-0">
               <h4 class="text-base md:text-lg font-bold text-white flex flex-wrap items-center gap-2">
@@ -1914,7 +1996,7 @@
           </div>
 
           <div class="space-y-2 text-xs md:text-sm text-gray-200 pt-1">
-            <div>🎯 <strong class="text-amber-300">Parashari Lordship & Real-Life Verdict:</strong> ${lordshipSynthesisEn}Seated in ${d1Rashi.en} under ${nak.name}, ${info.meta.en} wires you with <em>${nak.traitEn}</em> and directly shapes <em>${houseThemeShort(info.bhava, "en")}</em>. ${info.conjunctWith.length ? `Conjunct <strong>${conjNamesEn}</strong>, it fuses their agendas whenever triggered.` : `Maturing into ${d9Rashi.en} in D9, its strongest fruit unlocks after age 28.`}</div>
+            <div>🎯 <strong class="text-amber-300">Parashari Lordship & Real-Life Verdict:</strong> ${lordshipSynthesisEn}Seated in ${d1Rashi.en} under ${nak.name}, ${info.meta.en} wires you with <em>${nak.traitEn}</em> and directly shapes <em>${houseThemeShort(info.bhava, "en")}</em>. ${conjAndD9BlockEn}</div>
             <div>⚡ <strong class="text-emerald-300">Maturity Ages & Medical Trigger:</strong> Fires major life shifts at <strong>ages ${matAges}</strong>. Physically, monitor <em>${info.meta.healthEn}</em> during stressful transits.</div>
             <div>🛡️ <strong class="text-cyan-300">Aspect Geometry:</strong> Casts ${outgoingEn} (${incomingEn}).</div>
           </div>
@@ -1924,7 +2006,6 @@
 
     return modeBanner + `<div class="space-y-3.5">${cardsHtml}</div>`;
   }
-
   function buildChapter9SpecialLagnas(ctx) {
     const { lang, specialLagnas } = ctx;
     const chandra   = RASHI_DATA[specialLagnas.chandraLagna];
@@ -2093,17 +2174,15 @@
   // ==========================================================================
 
   function buildDomainOpportunityVsSabotageCard(ctx, domain) {
-    const { lang, chart, planetAnalysis, specialLagnas, dasha, timeline, numData } = ctx;
+    const { lang, chart, planetAnalysis, specialLagnas, dasha, timeline } = ctx;
     const asc = chart.Asc.d1;
-    const cy = numData.currentYear;
-    const ny = cy + 1;
     const lagnaMatrix = LAGNA_FUNCTIONAL_MATRIX[asc];
-    const badhakeshKey = lagnaMatrix.badhakesh;
-    const badhakesh = planetAnalysis[badhakeshKey];
 
     let targetHouse = 10;
     let icon = "fa-briefcase";
     let windowStr = timeline.careerWindow1;
+    let secondaryWindowStr = timeline.careerWindow2;
+    let adTrigger = timeline.careerAdTrigger;
     let domainTitleHi = "नौकरी, प्रमोशन एवं करियर उछाल (Job / Career)";
     let domainTitleEn = "Job Switch, Promotion & Career Rise";
 
@@ -2111,12 +2190,16 @@
       targetHouse = 7;
       icon = "fa-ring";
       windowStr = timeline.marriageWindow1;
+      secondaryWindowStr = timeline.marriageWindow2;
+      adTrigger = timeline.marriageAdTrigger;
       domainTitleHi = "विवाह एवं रिश्ता पक्का होना (Marriage / Partner)";
       domainTitleEn = "Marriage Finalization & Partner Commitment";
     } else if (domain === "childbirth") {
       targetHouse = 5;
       icon = "fa-baby";
       windowStr = timeline.babyWindow1;
+      secondaryWindowStr = timeline.babyWindow2;
+      adTrigger = timeline.babyAdTrigger;
       domainTitleHi = "संतान प्राप्ति एवं गर्भधारण योग (Childbirth / Progeny)";
       domainTitleEn = "Childbirth, Conception & Santan Yoga";
     }
@@ -2126,57 +2209,79 @@
     const houseLord = planetAnalysis[houseLordKey];
     const houseBindus = specialLagnas.houseBindus[targetHouse];
 
-    const maleficsTouching = ["Saturn", "Mars", "Rahu", "Ketu"].filter(mKey =>
-      planetAnalysis[mKey].bhava === targetHouse ||
-      planetAnalysis[mKey].aspectedTargets.some(t => t.targetBhava === targetHouse)
-    );
+    // 1. Find planets actually occupying or casting a real Parashari aspect on targetHouse,
+    //    or aspecting the Lord of targetHouse!
+    const directAfflictors = ["Saturn", "Rahu", "Ketu", "Mars", "Sun"].filter(mKey => {
+      if (mKey === houseLordKey) return false; // A house lord does not sabotage its own house
+      // Never call Yogakaraka Mars a saboteur for Career (H10) or Progeny (H5)
+      if (mKey === "Mars" && lagnaMatrix.yogakaraka.includes("Mars") && domain !== "marriage") return false;
+      const p = planetAnalysis[mKey];
+      const hitsHouse = (p.bhava === targetHouse) || p.aspectedTargets.some(t => t.targetBhava === targetHouse);
+      const hitsLord  = (p.bhava === houseLord.bhava) || p.aspectedTargets.some(t => t.targetBhava === houseLord.bhava);
+      return hitsHouse || hitsLord;
+    });
 
-    let saboteurKey = maleficsTouching[0] || badhakeshKey;
-    if ([6, 8, 12].includes(planetAnalysis[dasha.ad].bhava) && saboteurKey === badhakeshKey) {
-      saboteurKey = dasha.ad;
+    // Pick a distinct, astrologically accurate saboteur for each domain
+    let saboteurKey = directAfflictors[0];
+    if (!saboteurKey) {
+      if (domain === "career") saboteurKey = [6, 8, 12].includes(planetAnalysis[dasha.ad].bhava) ? dasha.ad : "Saturn";
+      else if (domain === "marriage") saboteurKey = planetAnalysis.Mars.bhava === 7 ? "Mars" : "Saturn";
+      else saboteurKey = "Rahu";
     }
-
+    // Ensure Career, Marriage, and Childbirth explain their specific mechanism clearly
     const saboteur = planetAnalysis[saboteurKey];
     const saboteurRashi = RASHI_DATA[saboteur.d1];
     const saboteurNak = NAKSHATRA_DATA[saboteur.nak];
     const satBavInTarget = specialLagnas.houseBav?.Saturn?.[targetHouse] ?? 2;
 
+    // Explain HOW the saboteur is hitting this domain
+    const hitsHouseDirectly = (saboteur.bhava === targetHouse) || saboteur.aspectedTargets.some(t => t.targetBhava === targetHouse);
+    const mechanismHi = hitsHouseDirectly
+      ? `आपके ${targetHouse}वें भाव पर सीधा स्थान/दृष्टि प्रभाव डाल रहा है`
+      : `आपके ${targetHouse}वें भाव के स्वामी (${houseLord.meta.hi}) एवं सक्रिय दशा-अक्ष को पीड़ित कर रहा है`;
+    const mechanismEn = hitsHouseDirectly
+      ? `directly occupies/aspects your ${targetHouse}th house`
+      : `afflicts your ${targetHouse}th-lord (${houseLord.meta.en}) and active Dasha axis`;
+
+    const dashaTriggerNoteHi = adTrigger ? ` (विशेषकर <strong>${adTrigger}</strong> अंतर्दशा एवं गोचर के प्रभाव से)` : "";
+    const dashaTriggerNoteEn = adTrigger ? ` (specifically triggered by your <strong>${adTrigger}</strong> sub-period and transit)` : "";
+
     if (lang === "hi") {
       return `
-        <div class="p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
+        <div class="pdf-keep-together p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-red-500/30">
             <span class="text-amber-300 font-extrabold text-xs md:text-sm uppercase tracking-wider">
               <i class="fas ${icon} mr-1.5"></i>${domainTitleHi}
             </span>
             <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-bold">
-              प्रबल अवसर वर्ष: ${windowStr}
+              प्रथम प्रबल योग: ${windowStr} • द्वितीय योग: ${secondaryWindowStr}
             </span>
           </div>
           <p class="text-xs md:text-sm text-gray-100 leading-relaxed mb-1.5">
-            ✅ <strong>अवसर (Opportunity):</strong> वर्ष <strong>${cy}–${ny} (${windowStr})</strong> में आपके ${targetHouse}वें भाव के स्वामी <strong>${houseLord.meta.hi}</strong> और सक्रिय दशा के कारण <strong>${domainTitleHi}</strong> का अत्यंत प्रबल योग बन रहा है।
+            ✅ <strong>सटीक अवसर काल (Exact Timing Window):</strong> आपकी कुंडली में <strong>${windowStr}</strong> के दौरान आपके ${targetHouse}वें भाव के स्वामी <strong>${houseLord.meta.hi}</strong>${dashaTriggerNoteHi} के सक्रिय होने से <strong>${domainTitleHi}</strong> का अत्यंत प्रबल योग बन रहा है (द्वितीय स्वर्णिम पड़ाव: <strong>${secondaryWindowStr}</strong>)।
           </p>
           <p class="text-xs md:text-sm text-red-200 leading-relaxed mb-0">
-            ⚠️ <strong>कौन सा ग्रह काम बिगाड़ रहा है (Planetary Sabotage):</strong> ठीक इसी समय आपकी कुंडली का <strong>${saboteur.meta.hi} (${saboteurRashi.hi} • ${saboteurNak.name} नक्षत्र, ${saboteur.bhava}वां भाव)</strong> और बाधकेश <strong>${badhakesh.meta.hi}</strong> आपके ${targetHouse}वें भाव (कुल अष्टकवर्ग: <strong>${houseBindus} बिंदु</strong>, शनि योगदान: मात्र <strong>${satBavInTarget}/8 बिंदु</strong>) पर सीधा अवरोध डाल रहे हैं! <strong>बिना सटीक शांति उपाय के यह अवसर इस वर्ष 99% पर आकर अटक सकता है या यह कार्य हाथ से निकल सकता है!</strong>
+            ⚠️ <strong>कौन सा ग्रह काम बिगाड़ रहा है (Planetary Sabotage):</strong> ठीक इसी समय आपकी कुंडली का <strong>${saboteur.meta.hi} (${saboteurRashi.hi} • ${saboteurNak.name} नक्षत्र, ${saboteur.bhava}वां भाव)</strong> ${mechanismHi} (इस भाव में कुल अष्टकवर्ग: <strong>${houseBindus} बिंदु</strong>, शनि अष्टकवर्ग योगदान: मात्र <strong>${satBavInTarget}/8 बिंदु</strong>)। <strong>बिना सटीक वैदिक शांति उपाय के यह अवसर अंतिम क्षण (99%) पर आकर अटक सकता है या विलंबित हो सकता है!</strong>
           </p>
         </div>
       `;
     }
 
     return `
-      <div class="p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
+      <div class="pdf-keep-together p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-red-500/30">
           <span class="text-amber-300 font-extrabold text-xs md:text-sm uppercase tracking-wider">
             <i class="fas ${icon} mr-1.5"></i>${domainTitleEn}
           </span>
           <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-bold">
-            Golden Window: ${windowStr}
+            1st Window: ${windowStr} • 2nd Window: ${secondaryWindowStr}
           </span>
         </div>
         <p class="text-xs md:text-sm text-gray-100 leading-relaxed mb-1.5">
-          ✅ <strong>The Opportunity:</strong> During <strong>${cy}–${ny} (${windowStr})</strong>, your ${targetHouse}th-lord <strong>${houseLord.meta.en}</strong> and active Dasha open a prime window for <strong>${domainTitleEn}</strong>.
+          ✅ <strong>Exact Timing Window:</strong> During <strong>${windowStr}</strong>, your ${targetHouse}th-lord <strong>${houseLord.meta.en}</strong>${dashaTriggerNoteEn} activates a prime window for <strong>${domainTitleEn}</strong> (Secondary Window: <strong>${secondaryWindowStr}</strong>).
         </p>
         <p class="text-xs md:text-sm text-red-200 leading-relaxed mb-0">
-          ⚠️ <strong>Which Planet Is Sabotaging It:</strong> Simultaneously, your natal <strong>${saboteur.meta.en} (${saboteurRashi.en} • ${saboteurNak.name}, House ${saboteur.bhava})</strong> and Badhakesh <strong>${badhakesh.meta.en}</strong> afflict your ${targetHouse}th house (SAV: <strong>${houseBindus} bindus</strong>, Saturn BAV: only <strong>${satBavInTarget}/8 bindus</strong>). <strong>Unless pacified right now, this golden opportunity may stall at the 99th percentile or fail to materialize this year!</strong>
+          ⚠️ <strong>Which Planet Is Sabotaging It:</strong> Simultaneously, your natal <strong>${saboteur.meta.en} (${saboteurRashi.en} • ${saboteurNak.name}, House ${saboteur.bhava})</strong> ${mechanismEn} (House SAV: <strong>${houseBindus} bindus</strong>, Saturn BAV contribution: only <strong>${satBavInTarget}/8 bindus</strong>). <strong>Unless pacified, this breakthrough can stall at the 99th percentile or face unexpected delays!</strong>
         </p>
       </div>
     `;
