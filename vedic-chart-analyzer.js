@@ -1,16 +1,8 @@
 /**
  * ============================================================================
  * JYOTISH TARK — VEDIC CHART ANALYZER & TRADITIONAL NORTH-INDIAN SVG ENGINE
- * File: vedic-chart-analyzer.js • v9.0 (Fixed viewBox/Polygon + Print-Safe SVG)
+ * File: vedic-chart-analyzer.js • v10.0 (Print-Locked Vector D1/D9 + Exact Dasha)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
- * ============================================================================
- * FIXED IN v9.0:
- * 1. Fixed fatal `viewBox="0 0 560 560"` and `<polygon points="...">` spacing
- *    typos that caused D1 & D9 diamond lines and lower houses to clip in PDF.
- * 2. Redesigned D1 & D9 into crisp, traditional North-Indian Vedic Kundali
- *    charts with high-contrast planet labels and traditional house Rashi numbers.
- * 3. Converted Shadbala progress bars to inline <svg> bars so browser Print /
- *    Save-as-PDF never strips their colors.
  * ============================================================================
  */
 
@@ -103,7 +95,7 @@
     const norm = ((moonSiderealLon % 360) + 360) % 360;
     const nakIdx = Math.min(26, Math.floor(norm / nakWidth));
     const posInNak = norm % nakWidth;
-    const fractionRemaining = Math.max(0.01, Math.min(1, 1 - (posInNak / nakWidth)));
+    const fractionRemaining = Math.max(0.005, Math.min(1, 1 - (posInNak / nakWidth)));
 
     const startLord = NAKSHATRA_LORDS[nakIdx % 9];
     const startIdx = VIMSHOTTARI_ORDER.indexOf(startLord);
@@ -310,8 +302,7 @@
   }
 
   // ========================================================================
-  // 4 & 5. AUTHENTIC TRADITIONAL NORTH-INDIAN KUNDALI SVG (FOR BOTH D1 & D9)
-  //        Fixed viewBox="0 0 540 540" & Polygon Points Spacing!
+  // 4 & 5. PRINT-LOCKED ROYAL NORTH-INDIAN KUNDALI SVG (FOR BOTH D1 & D9)
   // ========================================================================
   function renderRoyalNorthIndianChart(chart, opts) {
     const lang = opts?.lang || "en";
@@ -321,17 +312,19 @@
 
     const ascRashi = isD9 ? (chart.Asc.d9 || 1) : (chart.Asc.rashi || chart.Asc.d1 || 1);
 
-    // Canvas geometry: 540x565 (top header + 500x500 pure square Kundali + bottom legend)
-    const W_SVG = 540;
-    const H_SVG = 568;
+    // Pure geometry: 500 x 536 viewBox (Header: 32px, Square Box: 460x460, Footer: 24px)
+    const W_SVG = 500;
+    const H_SVG = 536;
     const X0 = 20;
-    const Y0 = 38;
-    const BOX = 500;
-    const X1 = X0 + BOX; // 520
-    const Y1 = Y0 + BOX; // 538
-    const CX = X0 + BOX / 2; // 270
-    const CY = Y0 + BOX / 2; // 288
+    const Y0 = 40;
+    const BOX = 460;
+    const X1 = X0 + BOX; // 480
+    const Y1 = Y0 + BOX; // 500
+    const CX = X0 + BOX / 2; // 250
+    const CY = Y0 + BOX / 2; // 270
 
+    // Quarter intersection points of the North-Indian Kundali:
+    // Top-Left: (135, 155), Top-Right: (365, 155), Bottom-Right: (365, 385), Bottom-Left: (135, 385)
     const houseRashis = {};
     for (let h = 1; h <= 12; h++) {
       houseRashis[h] = ((ascRashi + h - 2) % 12) + 1;
@@ -346,31 +339,30 @@
       planetsByHouse[h].push(p);
     });
 
-    // Exact Traditional North-Indian House Coordinates on a 500x500 Square (X0=20..520, Y0=38..538, Center=270,288)
-    //Quarter intersections: (145, 163), (395, 163), (395, 413), (145, 413)
+    // Precision-calibrated coordinates for Rashi number (rx, ry) and Planet center (px, py)
     const houseCoords = {
-      1:  { rx: 270, ry: 252, px: 270, py: 148 }, // House 1 (Top Central Diamond)
-      2:  { rx: 145, ry: 138, px: 145, py: 78  }, // House 2 (Top-Left Upper Triangle)
-      3:  { rx: 118, ry: 166, px: 65,  py: 163 }, // House 3 (Left-Top Outer Triangle)
-      4:  { rx: 234, ry: 292, px: 135, py: 288 }, // House 4 (Left Central Diamond)
-      5:  { rx: 118, ry: 416, px: 65,  py: 413 }, // House 5 (Left-Bottom Outer Triangle)
-      6:  { rx: 145, ry: 444, px: 145, py: 500 }, // House 6 (Bottom-Left Lower Triangle)
-      7:  { rx: 270, ry: 330, px: 270, py: 428 }, // House 7 (Bottom Central Diamond)
-      8:  { rx: 395, ry: 444, px: 395, py: 500 }, // House 8 (Bottom-Right Lower Triangle)
-      9:  { rx: 422, ry: 416, px: 475, py: 413 }, // House 9 (Right-Bottom Outer Triangle)
-      10: { rx: 306, ry: 292, px: 405, py: 288 }, // House 10 (Right Central Diamond)
-      11: { rx: 422, ry: 166, px: 475, py: 163 }, // House 11 (Right-Top Outer Triangle)
-      12: { rx: 395, ry: 138, px: 395, py: 78  }  // House 12 (Top-Right Upper Triangle)
+      1:  { rx: 250, ry: 238, px: 250, py: 145, isDiamond: true  }, // H1: Top Central Diamond
+      2:  { rx: 135, ry: 132, px: 135, py: 74,  isDiamond: false }, // H2: Top-Left Upper Triangle
+      3:  { rx: 110, ry: 159, px: 58,  py: 155, isDiamond: false }, // H3: Left-Top Outer Triangle
+      4:  { rx: 218, ry: 274, px: 128, py: 270, isDiamond: true  }, // H4: Left Central Diamond
+      5:  { rx: 110, ry: 389, px: 58,  py: 385, isDiamond: false }, // H5: Left-Bottom Outer Triangle
+      6:  { rx: 135, ry: 416, px: 135, py: 468, isDiamond: false }, // H6: Bottom-Left Lower Triangle
+      7:  { rx: 250, ry: 310, px: 250, py: 400, isDiamond: true  }, // H7: Bottom Central Diamond
+      8:  { rx: 365, ry: 416, px: 365, py: 468, isDiamond: false }, // H8: Bottom-Right Lower Triangle
+      9:  { rx: 390, ry: 389, px: 442, py: 385, isDiamond: false }, // H9: Right-Bottom Outer Triangle
+      10: { rx: 282, ry: 274, px: 372, py: 270, isDiamond: true  }, // H10: Right Central Diamond
+      11: { rx: 390, ry: 159, px: 442, py: 155, isDiamond: false }, // H11: Right-Top Outer Triangle
+      12: { rx: 365, ry: 132, px: 365, py: 74,  isDiamond: false }  // H12: Top-Right Upper Triangle
     };
 
     const PLANET_COLORS = {
-      Sun: "#b45309", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
-      Jupiter: "#a16207", Venus: "#be185d", Saturn: "#312e81", Rahu: "#581c87", Ketu: "#334155"
+      Sun: "#c2410c", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
+      Jupiter: "#a16207", Venus: "#be185d", Saturn: "#312e81", Rahu: "#6b21a8", Ketu: "#334155"
     };
 
     const houseElements = Object.keys(houseCoords).map(hStr => {
       const h = parseInt(hStr, 10);
-      const { rx, ry, px, py } = houseCoords[h];
+      const { rx, ry, px, py, isDiamond } = houseCoords[h];
       const rashiNum = houseRashis[h];
       const pList = planetsByHouse[h] || [];
 
@@ -379,33 +371,41 @@
         const d9R = chart[p].d9;
         const isVargottama = d1R && d9R && d1R === d9R;
         const deg = (!isD9 && chart[p].longitude !== undefined) ? Math.floor(chart[p].longitude % 30) + "°" : "";
-        const rMark = (chart[p].retro && p !== "Rahu" && p !== "Ketu") ? "*" : "";
+        const rMark = (chart[p].retro && p !== "Rahu" && p !== "Ketu") ? (lang === "hi" ? "(व)" : "*") : "";
         const vMark = isVargottama ? "★" : "";
         const pName = lang === "hi" ? PLANET_HI[p] : PLANET_SHORT[p];
-        return { text: `${pName}${deg ? " " + deg : ""}${rMark}${vMark}`, color: PLANET_COLORS[p] || "#111827" };
+        return {
+          text: `${pName}${deg ? " " + deg : ""}${rMark}${vMark}`,
+          color: PLANET_COLORS[p] || "#111827"
+        };
       });
 
-      // Group max 2 planets per line in diamonds, 1–2 in triangles
-      const isTriangle = [2, 3, 5, 6, 8, 9, 11, 12].includes(h);
-      const perLine = (isTriangle && labels.length > 2) ? 2 : (isTriangle ? 1 : 2);
+      const perLine = isDiamond ? 2 : (labels.length >= 3 ? 2 : 1);
       const lines = [];
       for (let i = 0; i < labels.length; i += perLine) {
         lines.push(labels.slice(i, i + perLine));
       }
 
-      const fontSize = lines.length >= 3 ? 11 : 13;
-      const lineStep = lines.length >= 3 ? 14 : 17;
+      const fontSize = lines.length >= 3 ? 10.5 : (isDiamond ? 12.5 : 11.5);
+      const lineStep = lines.length >= 3 ? 13 : 16;
       const startY = py - ((lines.length - 1) * (lineStep / 2));
+
+      const rashiBadgeBg = isD9 ? "#f3e8ff" : "#fef3c7";
+      const rashiBadgeStroke = isD9 ? "#7e22ce" : "#d97706";
+      const rashiTextFill = isD9 ? "#581c87" : "#92400e";
+
+      const lagnaHeader = (h === 1)
+        ? `<text x="${px}" y="${Y0 + 36}" font-size="10.5" fill="${isD9 ? '#6b21a8' : '#b45309'}" style="fill:${isD9 ? '#6b21a8' : '#b45309'} !important;" text-anchor="middle" font-weight="800">${isD9 ? (lang === "hi" ? "॥ नवांश लग्न ॥" : "॥ D9 LAGNA ॥") : (lang === "hi" ? "॥ जन्म लग्न ॥" : "॥ LAGNA (ASC) ॥")}</text>`
+        : "";
 
       return `
         <g>
-          <!-- Traditional Rashi Number Circle at House Apex -->
-          <circle cx="${rx}" cy="${ry - 4}" r="11" fill="${isD9 ? '#f3e8ff' : '#fef3c7'}" stroke="${isD9 ? '#7e22ce' : '#d97706'}" stroke-width="1.2"/>
-          <text x="${rx}" y="${ry}" font-size="11" fill="${isD9 ? '#581c87' : '#92400e'}" text-anchor="middle" font-weight="800">${rashiNum}</text>
-          ${h === 1 ? `<text x="${px}" y="${py - 34}" font-size="11" fill="${isD9 ? '#6b21a8' : '#b45309'}" text-anchor="middle" font-weight="800">${isD9 ? (lang === "hi" ? "नवांश लग्न (D9)" : "D9 LAGNA") : (lang === "hi" ? "लग्न (Asc)" : "LAGNA (ASC)")}</text>` : ""}
+          <circle cx="${rx}" cy="${ry - 3.5}" r="10.5" fill="${rashiBadgeBg}" stroke="${rashiBadgeStroke}" stroke-width="1.3" style="fill:${rashiBadgeBg} !important;stroke:${rashiBadgeStroke} !important;"/>
+          <text x="${rx}" y="${ry}" font-size="10.5" fill="${rashiTextFill}" style="fill:${rashiTextFill} !important;" text-anchor="middle" font-weight="800">${rashiNum}</text>
+          ${lagnaHeader}
           ${lines.map((lnArr, idx) => `
             <text x="${px}" y="${startY + idx * lineStep}" font-size="${fontSize}" text-anchor="middle" font-weight="800">
-              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
+              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}" style="fill:${item.color} !important;">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
             </text>
           `).join("")}
         </g>
@@ -413,36 +413,37 @@
     }).join("");
 
     const primaryStroke = isD9 ? "#6b21a8" : "#b45309";
-    const secondaryStroke = isD9 ? "#d97706" : "#7e22ce";
+    const secondaryStroke = isD9 ? "#b45309" : "#7e22ce";
+    const chartBg = isD9 ? "#faf5ff" : "#fffbeb";
     const titleBanner = isD9
-      ? (lang === "hi" ? `नवांश कुंडली (D9) — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `NAVAMSA CHART (D9) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`)
-      : (lang === "hi" ? `लग्न कुंडली (D1) — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `BIRTH CHART (D1) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`);
+      ? (lang === "hi" ? `नवांश कुंडली (D9) — ${RASHI_NAMES_HI[ascRashi - 1]} नवांश` : `NAVAMSA CHART (D9) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`)
+      : (lang === "hi" ? `जन्म लग्न कुंडली (D1) — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `LAGNA CHART (D1) — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`);
 
     return `
-      <svg viewBox="0 0 ${W_SVG} ${H_SVG}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:#fffdf9;font-family:'Inter','Hind',sans-serif;">
+      <svg class="jt-kundali-svg" viewBox="0 0 ${W_SVG} ${H_SVG}" width="${W_SVG}" height="${H_SVG}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;height:auto;aspect-ratio:500/536;display:block;margin:0 auto;background:#fffdf9;font-family:'Hind','Inter',sans-serif;">
         <!-- Outer Card Frame -->
-        <rect x="2" y="2" width="${W_SVG - 4}" height="${H_SVG - 4}" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5" rx="10"/>
+        <rect x="2" y="2" width="${W_SVG - 4}" height="${H_SVG - 4}" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5" rx="10" style="fill:#fffdf9 !important;stroke:${primaryStroke} !important;"/>
         <!-- Top Title Banner -->
-        <rect x="2" y="2" width="${W_SVG - 4}" height="28" fill="${primaryStroke}" rx="8"/>
-        <text x="${CX}" y="20" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="800" letter-spacing="0.8">ॐ JYOTISH TARK • ${titleBanner}</text>
+        <rect x="2" y="2" width="${W_SVG - 4}" height="30" fill="${primaryStroke}" rx="8" style="fill:${primaryStroke} !important;"/>
+        <text x="${CX}" y="21" font-size="12.5" fill="#ffffff" style="fill:#ffffff !important;" text-anchor="middle" font-weight="800" letter-spacing="0.5">ॐ JYOTISH TARK • ${titleBanner}</text>
 
         <!-- Main Kundali Square -->
-        <rect x="${X0}" y="${Y0}" width="${BOX}" height="${BOX}" fill="#fffbeb" stroke="${primaryStroke}" stroke-width="2.8"/>
-        <rect x="${X0 + 4}" y="${Y0 + 4}" width="${BOX - 8}" height="${BOX - 8}" fill="none" stroke="${secondaryStroke}" stroke-width="0.8" stroke-opacity="0.45"/>
+        <rect x="${X0}" y="${Y0}" width="${BOX}" height="${BOX}" fill="${chartBg}" stroke="${primaryStroke}" stroke-width="2.6" style="fill:${chartBg} !important;stroke:${primaryStroke} !important;"/>
+        <rect x="${X0 + 4}" y="${Y0 + 4}" width="${BOX - 8}" height="${BOX - 8}" fill="none" stroke="${secondaryStroke}" stroke-width="0.8" stroke-opacity="0.4"/>
 
         <!-- 2 Corner-to-Corner Diagonals -->
-        <line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2"/>
-        <line x1="${X1}" y1="${Y0}" x2="${X0}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2"/>
+        <line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2" style="stroke:${primaryStroke} !important;"/>
+        <line x1="${X1}" y1="${Y0}" x2="${X0}" y2="${Y1}" stroke="${primaryStroke}" stroke-width="2" style="stroke:${primaryStroke} !important;"/>
 
         <!-- Central Diamond (Connecting Midpoints of the 4 Sides) -->
-        <polygon points="${CX},${Y0} ${X1},${CY} ${CX},${Y1} ${X0},${CY}" fill="none" stroke="${secondaryStroke}" stroke-width="2.4"/>
+        <polygon points="${CX},${Y0} ${X1},${CY} ${CX},${Y1} ${X0},${CY}" fill="none" stroke="${secondaryStroke}" stroke-width="2.3" style="stroke:${secondaryStroke} !important;"/>
 
         <!-- House Numbers & Planets -->
         ${houseElements}
 
         <!-- Bottom Legend Bar -->
-        <text x="${X0}" y="${H_SVG - 10}" font-size="10" fill="#475569" font-weight="700">${lang === "hi" ? "* = वक्री (Retro) • ★ = वर्गोत्तम (D1=D9)" : "* = Retrograde • ★ = Vargottama (D1=D9)"}</text>
-        <text x="${X1}" y="${H_SVG - 10}" font-size="10" fill="${primaryStroke}" text-anchor="end" font-weight="800">${userName.substring(0, 26)}</text>
+        <text x="${X0}" y="${H_SVG - 12}" font-size="10" fill="#475569" style="fill:#475569 !important;" font-weight="700">${lang === "hi" ? "(व) = वक्री • ★ = वर्गोत्तम (D1=D9) • गोल अंक = राशि संख्या" : "* = Retrograde • ★ = Vargottama • Circle = Rashi No."}</text>
+        <text x="${X1}" y="${H_SVG - 12}" font-size="10" fill="${primaryStroke}" style="fill:${primaryStroke} !important;" text-anchor="end" font-weight="800">${userName.substring(0, 22)}</text>
       </svg>
     `;
   }
@@ -627,14 +628,14 @@
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
     return planets.map(p => {
       const v = scores[p] || 50;
-      const fillHex = v >= 70 ? "#10b981" : v >= 55 ? "#f59e0b" : "#ef4444";
+      const fillHex = v >= 70 ? "#10b981" : v >= 55 ? "#d97706" : "#ef4444";
       const label = lang === "hi" ? `${PLANET_HI[p]} (${PLANET_SHORT[p]})` : `${p}`;
       return `<div class="flex items-center gap-3 mb-2.5">
         <span class="text-xs font-bold text-white w-24 shrink-0">${label}</span>
         <div class="flex-1">
-          <svg viewBox="0 0 200 12" style="width:100%;height:12px;display:block;border-radius:6px;overflow:hidden;">
-            <rect x="0" y="0" width="200" height="12" rx="6" fill="#e2e8f0"/>
-            <rect x="0" y="0" width="${Math.round(v * 2)}" height="12" rx="6" fill="${fillHex}"/>
+          <svg class="jt-kundali-svg" viewBox="0 0 200 12" width="200" height="12" style="width:100%;height:12px;display:block;border-radius:6px;overflow:hidden;">
+            <rect x="0" y="0" width="200" height="12" rx="6" fill="#e2e8f0" style="fill:#e2e8f0 !important;"/>
+            <rect x="0" y="0" width="${Math.round(v * 2)}" height="12" rx="6" fill="${fillHex}" style="fill:${fillHex} !important;"/>
           </svg>
         </div>
         <span class="text-xs font-extrabold text-amber-300 w-12 text-right">${v}%</span>
@@ -660,7 +661,7 @@
   };
 
   function renderDashaTimeline(dashaTree, lang) {
-    const fmt = (d) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    const fmt = (d) => d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 
     const mdItems = dashaTree.fullSeq.map((md, idx) => {
       const isActive = (md === dashaTree.mdActive);
@@ -672,29 +673,29 @@
         const adTitle = lang === "hi"
           ? `${PLANET_HI[md.lord]} – ${PLANET_HI[ad.lord]} (${md.lord}-${ad.lord})`
           : `${md.lord} – ${ad.lord}`;
-        return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs py-2 px-3 rounded-lg gap-1 ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/50' : 'text-gray-300 bg-slate-950/40'}">
-          <span>${adActive ? '▸ ' : ''}${adTitle}${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
-          <span class="font-mono text-[11px] text-purple-200 shrink-0">${fmt(ad.start)} → ${fmt(ad.end)}</span>
+        return `<div class="flex flex-row justify-between items-center text-xs py-1.5 px-3 rounded-lg gap-2 ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/50' : 'text-gray-300 bg-slate-950/40'}">
+          <span class="truncate">${adActive ? '▸ ' : ''}${adTitle}${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
+          <span class="font-mono text-[11px] text-purple-200 whitespace-nowrap shrink-0">${fmt(ad.start)} → ${fmt(ad.end)}</span>
         </div>`;
       }).join("");
 
       return `
-        <div class="rounded-xl border ${borderClass} p-3.5 transition">
-          <div onclick="window.toggleJtDashaCard(${idx})" class="flex flex-wrap justify-between items-center cursor-pointer gap-2 select-none">
-            <div class="flex items-center gap-2.5">
+        <div class="pdf-keep-together rounded-xl border ${borderClass} p-3.5 transition">
+          <div onclick="window.toggleJtDashaCard(${idx})" class="flex flex-row justify-between items-center cursor-pointer gap-2 select-none">
+            <div class="flex items-center gap-2">
               <i id="jt-dasha-icon-${idx}" class="fas fa-chevron-right text-xs text-amber-400 transition-transform duration-200" style="transform:${isActive ? 'rotate(90deg)' : 'rotate(0deg)'}"></i>
-              <span class="font-bold text-sm text-white">${mdTitle}</span>${isActive ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-[10px]">${lang === "hi" ? "सक्रिय महादशा" : "ACTIVE MD"}</span>` : ""}
+              <span class="font-bold text-sm text-white">${mdTitle}</span>${isActive ? `<span class="px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-[10px]">${lang === "hi" ? "सक्रिय महादशा" : "ACTIVE MD"}</span>` : ""}
             </div>
-            <span class="text-xs font-mono text-purple-200">${fmt(md.start)} → ${fmt(md.end)}</span>
+            <span class="text-xs font-mono text-purple-200 whitespace-nowrap shrink-0">${fmt(md.start)} → ${fmt(md.end)}</span>
           </div>
-          <div id="jt-dasha-body-${idx}" class="${isActive ? '' : 'hidden'} mt-3 pt-3 border-t border-white/10 space-y-1.5">
+          <div id="jt-dasha-body-${idx}" class="${isActive ? '' : 'hidden'} mt-2.5 pt-2.5 border-t border-white/10 space-y-1">
             ${adRows}
           </div>
         </div>
       `;
     }).join("");
 
-    return `<div class="space-y-2.5">${mdItems}</div>`;
+    return `<div class="space-y-2">${mdItems}</div>`;
   }
 
   // ========================================================================
