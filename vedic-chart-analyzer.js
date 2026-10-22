@@ -1,7 +1,7 @@
 /**
  * ============================================================================
- * JYOTISH TARK — VEDIC CHART ANALYZER & ROYAL NORTH-INDIAN SVG ENGINE (v8.0)
- * File: vedic-chart-analyzer.js • v8.0 (Royal North Indian D1 & D9 + Panchang + 2026 Gochara)
+ * JYOTISH TARK — VEDIC CHART ANALYZER & ROYAL NORTH-INDIAN SVG ENGINE (v9.0)
+ * File: vedic-chart-analyzer.js • v9.0 (Fixed SVG ViewBox + Crisp North-Indian D1/D9)
  * Architect: Gyanendra Singh Tomar • Jyotish Tark
  * ============================================================================
  */
@@ -58,33 +58,33 @@
   ];
 
   const AVAKAHADA_BY_NAK = {
-    1:  { gana: "Deva (देव)",     yoni: "Ashwa (अश्व)",   nadi: "Adi (आदि / वात)",    varna: "Kshatriya" },
-    2:  { gana: "Manushya (मनुष्य)", yoni: "Gaja (गज)",     nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
-    3:  { gana: "Rakshasa (राक्षस)", yoni: "Mesha (मेष)",    nadi: "Antya (अंत्य / कफ)",   varna: "Brahmin" },
-    4:  { gana: "Manushya (मनुष्य)", yoni: "Sarpa (सर्प)",   nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
-    5:  { gana: "Deva (देव)",     yoni: "Sarpa (सर्प)",   nadi: "Madhya (मध्य / पित्त)", varna: "Vaishya" },
-    6:  { gana: "Manushya (मनुष्य)", yoni: "Shwana (श्वान)", nadi: "Adi (आदि / वात)",    varna: "Shudra" },
-    7:  { gana: "Deva (देव)",     yoni: "Marjara (मार्जार)", nadi: "Adi (आदि / वात)",  varna: "Vaishya" },
-    8:  { gana: "Deva (देव)",     yoni: "Mesha (मेष)",    nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
-    9:  { gana: "Rakshasa (राक्षस)", yoni: "Marjara (मार्जार)", nadi: "Antya (अंत्य / कफ)", varna: "Shudra" },
-    10: { gana: "Rakshasa (राक्षस)", yoni: "Mushaka (मूषक)", nadi: "Antya (अंत्य / कफ)",   varna: "Kshatriya" },
-    11: { gana: "Manushya (मनुष्य)", yoni: "Mushaka (मूषक)", nadi: "Madhya (मध्य / पित्त)", varna: "Brahmin" },
-    12: { gana: "Manushya (मनुष्य)", yoni: "Gau (गौ)",       nadi: "Adi (आदि / वात)",    varna: "Kshatriya" },
-    13: { gana: "Deva (देव)",     yoni: "Mahisha (महिष)", nadi: "Adi (आदि / वात)",    varna: "Vaishya" },
+    1:  { gana: "Deva (देव)",       yoni: "Ashwa (अश्व)",     nadi: "Adi (आदि / वात)",      varna: "Kshatriya" },
+    2:  { gana: "Manushya (मनुष्य)", yoni: "Gaja (गज)",       nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
+    3:  { gana: "Rakshasa (राक्षस)", yoni: "Mesha (मेष)",      nadi: "Antya (अंत्य / कफ)",   varna: "Brahmin" },
+    4:  { gana: "Manushya (मनुष्य)", yoni: "Sarpa (सर्प)",     nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
+    5:  { gana: "Deva (देव)",       yoni: "Sarpa (सर्प)",     nadi: "Madhya (मध्य / पित्त)", varna: "Vaishya" },
+    6:  { gana: "Manushya (मनुष्य)", yoni: "Shwana (श्वान)",   nadi: "Adi (आदि / वात)",      varna: "Shudra" },
+    7:  { gana: "Deva (देव)",       yoni: "Marjara (मार्जार)", nadi: "Adi (आदि / वात)",      varna: "Vaishya" },
+    8:  { gana: "Deva (देव)",       yoni: "Mesha (मेष)",      nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
+    9:  { gana: "Rakshasa (राक्षस)", yoni: "Marjara (मार्जार)", nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
+    10: { gana: "Rakshasa (राक्षस)", yoni: "Mushaka (मूषक)",   nadi: "Antya (अंत्य / कफ)",   varna: "Kshatriya" },
+    11: { gana: "Manushya (मनुष्य)", yoni: "Mushaka (मूषक)",   nadi: "Madhya (मध्य / पित्त)", varna: "Brahmin" },
+    12: { gana: "Manushya (मनुष्य)", yoni: "Gau (गौ)",         nadi: "Adi (आदि / वात)",      varna: "Kshatriya" },
+    13: { gana: "Deva (देव)",       yoni: "Mahisha (महिष)",   nadi: "Adi (आदि / वात)",      varna: "Vaishya" },
     14: { gana: "Rakshasa (राक्षस)", yoni: "Vyaghra (व्याघ्र)", nadi: "Madhya (मध्य / पित्त)", varna: "Vaishya" },
-    15: { gana: "Deva (देव)",     yoni: "Mahisha (महिष)", nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
-    16: { gana: "Rakshasa (राक्षस)", yoni: "Vyaghra (व्याघ्र)", nadi: "Antya (अंत्य / कफ)", varna: "Brahmin" },
-    17: { gana: "Deva (देव)",     yoni: "Mriga (मृग)",    nadi: "Madhya (मध्य / पित्त)", varna: "Shudra" },
-    18: { gana: "Rakshasa (राक्षस)", yoni: "Mriga (मृग)",    nadi: "Adi (आदि / वात)",    varna: "Brahmin" },
-    19: { gana: "Rakshasa (राक्षस)", yoni: "Shwana (श्वान)", nadi: "Adi (आदि / वात)",    varna: "Kshatriya" },
-    20: { gana: "Manushya (मनुष्य)", yoni: "Vanara (वानर)",  nadi: "Madhya (मध्य / पित्त)", varna: "Brahmin" },
-    21: { gana: "Manushya (मनुष्य)", yoni: "Nakula (नकुल)",  nadi: "Antya (अंत्य / कफ)",   varna: "Kshatriya" },
-    22: { gana: "Deva (देव)",     yoni: "Vanara (वानर)",  nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
-    23: { gana: "Rakshasa (राक्षस)", yoni: "Simha (सिंह)",   nadi: "Madhya (मध्य / पित्त)", varna: "Vaishya" },
-    24: { gana: "Rakshasa (राक्षस)", yoni: "Ashwa (अश्व)",   nadi: "Adi (आदि / वात)",    varna: "Shudra" },
-    25: { gana: "Manushya (मनुष्य)", yoni: "Simha (सिंह)",   nadi: "Adi (आदि / वात)",    varna: "Brahmin" },
-    26: { gana: "Manushya (मनुष्य)", yoni: "Gau (गौ)",       nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
-    27: { gana: "Deva (देव)",     yoni: "Gaja (गज)",      nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" }
+    15: { gana: "Deva (देव)",       yoni: "Mahisha (महिष)",   nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
+    16: { gana: "Rakshasa (राक्षस)", yoni: "Vyaghra (व्याघ्र)", nadi: "Antya (अंत्य / कफ)",   varna: "Brahmin" },
+    17: { gana: "Deva (देव)",       yoni: "Mriga (मृग)",      nadi: "Madhya (मध्य / पित्त)", varna: "Shudra" },
+    18: { gana: "Rakshasa (राक्षस)", yoni: "Mriga (मृग)",      nadi: "Adi (आदि / वात)",      varna: "Brahmin" },
+    19: { gana: "Rakshasa (राक्षस)", yoni: "Shwana (श्वान)",   nadi: "Adi (आदि / वात)",      varna: "Kshatriya" },
+    20: { gana: "Manushya (मनुष्य)", yoni: "Vanara (वानर)",    nadi: "Madhya (मध्य / पित्त)", varna: "Brahmin" },
+    21: { gana: "Manushya (मनुष्य)", yoni: "Nakula (नकुल)",    nadi: "Antya (अंत्य / कफ)",   varna: "Kshatriya" },
+    22: { gana: "Deva (देव)",       yoni: "Vanara (वानर)",    nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" },
+    23: { gana: "Rakshasa (राक्षस)", yoni: "Simha (सिंह)",     nadi: "Madhya (मध्य / पित्त)", varna: "Vaishya" },
+    24: { gana: "Rakshasa (राक्षस)", yoni: "Ashwa (अश्व)",     nadi: "Adi (आदि / वात)",      varna: "Shudra" },
+    25: { gana: "Manushya (मनुष्य)", yoni: "Simha (सिंह)",     nadi: "Adi (आदि / वात)",      varna: "Brahmin" },
+    26: { gana: "Manushya (मनुष्य)", yoni: "Gau (गौ)",         nadi: "Madhya (मध्य / पित्त)", varna: "Kshatriya" },
+    27: { gana: "Deva (देव)",       yoni: "Gaja (गज)",        nadi: "Antya (अंत्य / कफ)",   varna: "Shudra" }
   };
 
   // ========================================================================
@@ -302,7 +302,8 @@
   }
 
   // ========================================================================
-  // 4 & 5. ROYAL NORTH INDIAN DIAMOND SVG CHART (FOR BOTH D1 & D9!)
+  // 4 & 5. CLASSIC ROYAL NORTH-INDIAN DIAMOND SVG CHART (FOR BOTH D1 & D9)
+  //        Fixed viewBox="0 0 560 560" & polygon spaces so it never clips!
   // ========================================================================
   function renderRoyalNorthIndianChart(chart, opts) {
     const lang = opts?.lang || "en";
@@ -311,11 +312,14 @@
     const isD9 = chartType === "D9";
 
     const ascRashi = isD9 ? (chart.Asc.d9 || 1) : (chart.Asc.rashi || chart.Asc.d1 || 1);
-    const S = 560;
-    const M = 28;
-    const W = S - 2 * M;
-    const cx = S / 2;
-    const cy = S / 2;
+    const S = 540;
+    const M = 24;
+    const W = S - 2 * M; // 492
+    const cx = S / 2;    // 270
+    const cy = S / 2;    // 270
+    const topY = M + 14; // 38
+    const botY = S - M - 10; // 506
+    const midY = (topY + botY) / 2; // 272
 
     const houseRashis = {};
     for (let h = 1; h <= 12; h++) {
@@ -331,31 +335,33 @@
       planetsByHouse[h].push(p);
     });
 
+    // Clean, Non-Overlapping Coordinates for 540x540 North Indian Diamond Chart
+    // rx, ry = Rashi Number badge position near the inner vertex of each house
+    // px, py = Planet text block center inside the widest part of each house
     const houseCoords = {
-      1:  { rx: 280, ry: 236, px: 280, py: 138 },
-      2:  { rx: 155, ry: 120, px: 155, py: 66  },
-      3:  { rx: 120, ry: 155, px: 68,  py: 145 },
-      4:  { rx: 236, ry: 280, px: 145, py: 274 },
-      5:  { rx: 120, ry: 405, px: 68,  py: 398 },
-      6:  { rx: 155, ry: 440, px: 155, py: 486 },
-      7:  { rx: 280, ry: 324, px: 280, py: 416 },
-      8:  { rx: 405, ry: 440, px: 405, py: 486 },
-      9:  { rx: 440, ry: 405, px: 492, py: 398 },
-      10: { rx: 324, ry: 280, px: 415, py: 274 },
-      11: { rx: 440, ry: 155, px: 492, py: 145 },
-      12: { rx: 405, ry: 120, px: 405, py: 66  }
+      1:  { rx: 270, ry: 232, px: 270, py: 138 }, // Top Central Diamond (1st House)
+      2:  { rx: 152, ry: 122, px: 152, py: 68  }, // Top-Left Upper Triangle
+      3:  { rx: 118, ry: 155, px: 66,  py: 150 }, // Left-Top Outer Triangle
+      4:  { rx: 228, ry: 272, px: 138, py: 268 }, // Left Central Diamond (4th House)
+      5:  { rx: 118, ry: 389, px: 66,  py: 386 }, // Left-Bottom Outer Triangle
+      6:  { rx: 152, ry: 422, px: 152, py: 472 }, // Bottom-Left Lower Triangle
+      7:  { rx: 270, ry: 312, px: 270, py: 404 }, // Bottom Central Diamond (7th House)
+      8:  { rx: 388, ry: 422, px: 388, py: 472 }, // Bottom-Right Lower Triangle
+      9:  { rx: 422, ry: 389, px: 474, py: 386 }, // Right-Bottom Outer Triangle
+      10: { rx: 312, ry: 272, px: 402, py: 268 }, // Right Central Diamond (10th House)
+      11: { rx: 422, ry: 155, px: 474, py: 150 }, // Right-Top Outer Triangle
+      12: { rx: 388, ry: 122, px: 388, py: 68  }  // Top-Right Upper Triangle
     };
 
     const PLANET_COLORS = {
       Sun: "#c2410c", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
-      Jupiter: "#b45309", Venus: "#be185d", Saturn: "#312e81", Rahu: "#4c1d95", Ketu: "#334155"
+      Jupiter: "#b45309", Venus: "#be185d", Saturn: "#312e81", Rahu: "#581c87", Ketu: "#334155"
     };
 
     const houseElements = Object.keys(houseCoords).map(hStr => {
       const h = parseInt(hStr, 10);
       const { rx, ry, px, py } = houseCoords[h];
       const rashiNum = houseRashis[h];
-      const rashiShort = lang === "hi" ? RASHI_NAMES_HI[rashiNum - 1] : RASHI_NAMES_EN[rashiNum - 1].slice(0, 3).toUpperCase();
       const pList = planetsByHouse[h] || [];
 
       const labels = pList.map(p => {
@@ -366,25 +372,30 @@
         const rMark = (chart[p].retro && p !== "Rahu" && p !== "Ketu") ? (lang === "hi" ? "(व)" : "(R)") : "";
         const vMark = isVargottama ? "★" : "";
         const pName = lang === "hi" ? PLANET_HI[p] : PLANET_SHORT[p];
-        return { text: `${pName}${deg ? " " + deg : ""}${rMark}${vMark}`, color: PLANET_COLORS[p] || "#1e1b4b" };
+        return { text: `${pName}${deg ? " " + deg : ""}${rMark}${vMark}`, color: PLANET_COLORS[p] || "#0f172a" };
       });
 
+      const isCornerTriangle = [2, 3, 5, 6, 8, 9, 11, 12].includes(h);
+      const maxPerLine = isCornerTriangle ? 1 : 2;
       const lines = [];
-      for (let i = 0; i < labels.length; i += 2) {
-        lines.push(labels.slice(i, i + 2));
+      for (let i = 0; i < labels.length; i += maxPerLine) {
+        lines.push(labels.slice(i, i + maxPerLine));
       }
 
-      const fontSize = lines.length >= 3 ? 10.5 : 12;
-      const lineStep = lines.length >= 3 ? 14 : 16;
+      const fontSize = lines.length >= 3 ? 11 : 13;
+      const lineStep = lines.length >= 3 ? 14 : 17;
       const startY = py - ((lines.length - 1) * (lineStep / 2));
+
+      const ascRashiLabel = lang === "hi" ? RASHI_NAMES_HI[ascRashi - 1] : RASHI_NAMES_EN[ascRashi - 1];
 
       return `
         <g>
-          <rect x="${rx - 19}" y="${ry - 11}" width="38" height="16" rx="8" fill="${isD9 ? '#f3e8ff' : '#fef3c7'}" stroke="${isD9 ? '#7e22ce' : '#d97706'}" stroke-width="1.2"/>
-          <text x="${rx}" y="${ry + 1}" font-size="9.2" fill="${isD9 ? '#581c87' : '#92400e'}" text-anchor="middle" font-weight="800">${rashiNum}•${rashiShort}</text>${h === 1 ? `<text x="${px}" y="${py - 32}" font-size="10.5" fill="${isD9 ? '#6b21a8' : '#b45309'}" text-anchor="middle" font-weight="900" letter-spacing="0.8">${isD9 ? (lang === "hi" ? "॥ नवांश लग्न ॥" : "D9 ASC") : (lang === "hi" ? "॥ जन्म लग्न ॥" : "LAGNA (ASC)")}</text>` : ""}
+          <circle cx="${rx}" cy="${ry - 4}" r="11.5" fill="${isD9 ? '#f3e8ff' : '#fef3c7'}" stroke="${isD9 ? '#7e22ce' : '#d97706'}" stroke-width="1.4"/>
+          <text x="${rx}" y="${ry}" font-size="11" fill="${isD9 ? '#581c87' : '#92400e'}" text-anchor="middle" font-weight="800">${rashiNum}</text>
+          ${h === 1 ? `<text x="${px}" y="${py - 34}" font-size="11.5" fill="${isD9 ? '#6b21a8' : '#b45309'}" text-anchor="middle" font-weight="900">${isD9 ? (lang === "hi" ? `नवांश लग्न (${ascRashiLabel})` : `D9 ASC (${ascRashiLabel})`) : (lang === "hi" ? `लग्न (${ascRashiLabel})` : `LAGNA (${ascRashiLabel})`)}</text>` : ""}
           ${lines.map((lnArr, idx) => `
             <text x="${px}" y="${startY + idx * lineStep}" font-size="${fontSize}" text-anchor="middle" font-weight="800">
-              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}">${cIdx > 0 ? "   " : ""}${item.text}</tspan>`).join("")}
+              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
             </text>
           `).join("")}
         </g>
@@ -395,11 +406,11 @@
     const secondaryStroke = isD9 ? "#d97706" : "#7e22ce";
     const bgId = isD9 ? "d9RoyalGrad" : "d1RoyalGrad";
     const titleBanner = isD9
-      ? (lang === "hi" ? "नवांश कुंडली (D9 — उत्तर भारतीय)" : "NAVAMSA CHART (D9 — NORTH INDIAN)")
-      : (lang === "hi" ? "जन्म लग्न कुंडली (D1 — उत्तर भारतीय)" : "LAGNA CHART (D1 — NORTH INDIAN)");
+      ? (lang === "hi" ? "नवांश कुंडली (D9 — विवाह एवं भाग्य परिपक्वता चक्र)" : "NAVAMSA CHART (D9 — MARRIAGE & DESTINY FRUIT)")
+      : (lang === "hi" ? "जन्म लग्न कुंडली (D1 — मुख्य जन्म चक्र)" : "LAGNA CHART (D1 — MAIN BIRTH CHART)");
 
     return `
-      <svg viewBox="0 0 ${S}${S}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Inter','Hind',sans-serif;">
+      <svg viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font-family:'Inter','Hind',sans-serif;">
         <defs>
           <linearGradient id="${bgId}" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:${isD9 ? '#faf5ff' : '#fffbeb'};stop-opacity:1" />
@@ -407,29 +418,28 @@
             <stop offset="100%" style="stop-color:${isD9 ? '#fef3c7' : '#f3e8ff'};stop-opacity:1" />
           </linearGradient>
         </defs>
-        <rect x="4" y="4" width="${S - 8}" height="${S - 8}" fill="url(#${bgId})" stroke="${primaryStroke}" stroke-width="3" rx="12"/>
-        <rect x="4" y="4" width="${S - 8}" height="22" fill="${primaryStroke}" rx="10"/>
-        <text x="${cx}" y="19" font-size="10.5" fill="#ffffff" text-anchor="middle" font-weight="800" letter-spacing="1.2">ॐ JYOTISH TARK • ${titleBanner}</text>
+        <rect x="3" y="3" width="${S - 6}" height="${S - 6}" fill="url(#${bgId})" stroke="${primaryStroke}" stroke-width="3" rx="10"/>
+        <rect x="3" y="3" width="${S - 6}" height="24" fill="${primaryStroke}" rx="8"/>
+        <text x="${cx}" y="19" font-size="11.5" fill="#ffffff" text-anchor="middle" font-weight="800" letter-spacing="0.8">ॐ JYOTISH TARK • ${titleBanner}</text>
 
-        <rect x="${M}" y="${M + 6}" width="${W}" height="${W - 12}" fill="none" stroke="${primaryStroke}" stroke-width="2.5" rx="4"/>
-        <rect x="${M + 4}" y="${M + 10}" width="${W - 8}" height="${W - 20}" fill="none" stroke="${secondaryStroke}" stroke-width="0.9" stroke-dasharray="4,2"/>
+        <!-- Outer Kundali Square -->
+        <rect x="${M}" y="${topY}" width="${W}" height="${botY - topY}" fill="none" stroke="${primaryStroke}" stroke-width="2.6" rx="3"/>
 
-        <circle cx="${M}" cy="${M + 6}" r="4.5" fill="${secondaryStroke}"/>
-        <circle cx="${S - M}" cy="${M + 6}" r="4.5" fill="${secondaryStroke}"/>
-        <circle cx="${M}" cy="${S - M - 6}" r="4.5" fill="${secondaryStroke}"/>
-        <circle cx="${S - M}" cy="${S - M - 6}" r="4.5" fill="${secondaryStroke}"/>
+        <!-- 2 Corner-to-Corner Diagonals -->
+        <line x1="${M}" y1="${topY}" x2="${S - M}" y2="${botY}" stroke="${primaryStroke}" stroke-width="2"/>
+        <line x1="${S - M}" y1="${topY}" x2="${M}" y2="${botY}" stroke="${primaryStroke}" stroke-width="2"/>
 
-        <line x1="${M}" y1="${M + 6}" x2="${S - M}" y2="${S - M - 6}" stroke="${primaryStroke}" stroke-width="1.8"/>
-        <line x1="${S - M}" y1="${M + 6}" x2="${M}" y2="${S - M - 6}" stroke="${primaryStroke}" stroke-width="1.8"/>
-        <polygon points="${cx},${M + 6}${S - M},${cy}${cx},${S - M - 6}${M},${cy}" fill="none" stroke="${secondaryStroke}" stroke-width="2.4"/>
+        <!-- Inner Diamond Connecting Midpoints -->
+        <polygon points="${cx},${topY} ${S - M},${midY} ${cx},${botY} ${M},${midY}" fill="none" stroke="${secondaryStroke}" stroke-width="2.4"/>
 
-        <circle cx="${cx}" cy="${cy}" r="15" fill="#ffffff" stroke="${primaryStroke}" stroke-width="1.5"/>
-        <text x="${cx}" y="${cy + 5}" font-size="14" fill="${primaryStroke}" text-anchor="middle" font-weight="900">ॐ</text>
+        <!-- Center Sacred Om Emblem -->
+        <circle cx="${cx}" cy="${midY}" r="13" fill="#ffffff" stroke="${primaryStroke}" stroke-width="1.5"/>
+        <text x="${cx}" y="${midY + 4.5}" font-size="13" fill="${primaryStroke}" text-anchor="middle" font-weight="900">ॐ</text>
 
         ${houseElements}
 
-        <text x="${M}" y="${S - 9}" font-size="9.5" fill="#475569" font-weight="700">${lang === "hi" ? "(व) = वक्री • ★ = वर्गोत्तम (D1=D9)" : "(R) = Retrograde • ★ = Vargottama (D1=D9)"}</text>
-        <text x="${S - M}" y="${S - 9}" font-size="9.5" fill="${primaryStroke}" text-anchor="end" font-weight="800">${userName.substring(0, 28)}</text>
+        <text x="${M}" y="${S - 8}" font-size="10" fill="#475569" font-weight="700">${lang === "hi" ? "राशि अंक (1=मेष..12=मीन) • (व)=वक्री • ★=वर्गोत्तम" : "Sign Nos (1=Aries..12=Pisces) • (R)=Retro • ★=Vargottama"}</text>
+        <text x="${S - M}" y="${S - 8}" font-size="10" fill="${primaryStroke}" text-anchor="end" font-weight="800">${userName.substring(0, 26)}</text>
       </svg>
     `;
   }
@@ -454,12 +464,12 @@
     const moonPada = chart.Moon?.pada || 1;
 
     const diff = ((moonLon - sunLon) % 360 + 360) % 360;
-    const tithiIdx30 = Math.floor(diff / 12); // 0..29
+    const tithiIdx30 = Math.floor(diff / 12);
     const pakshaHi = tithiIdx30 < 15 ? "शुक्ल पक्ष (Shukla)" : "कृष्ण पक्ष (Krishna)";
     const pakshaEn = tithiIdx30 < 15 ? "Shukla Paksha (Waxing)" : "Krishna Paksha (Waning)";
     const tithi15Idx = tithiIdx30 % 15;
-    const tithiHi = `${pakshaHi} •${TITHI_NAMES_HI[tithi15Idx]}`;
-    const tithiEn = `${pakshaEn} •${TITHI_NAMES_EN[tithi15Idx]}`;
+    const tithiHi = `${pakshaHi} • ${TITHI_NAMES_HI[tithi15Idx]}`;
+    const tithiEn = `${pakshaEn} • ${TITHI_NAMES_EN[tithi15Idx]}`;
 
     const yogaLon = ((moonLon + sunLon) % 360 + 360) % 360;
     const yogaIdx = Math.min(26, Math.floor(yogaLon / (360 / 27)));
@@ -481,7 +491,6 @@
 
     const avk = AVAKAHADA_BY_NAK[moonNak] || AVAKAHADA_BY_NAK[1];
 
-    // 2026 Transit (Gochara) Detector: Saturn in Meena (12), Rahu in Kumbha (11), Ketu in Simha (5)
     let shaniStatusHi = "साढ़ेसाती / ढैय्या से पूर्णतः मुक्त (Shani Transit Supportive)";
     let shaniStatusEn = "Free from Sade-Sati & Dhaiya (Supportive Saturn Transit)";
     let isSadeSatiOrDhaiya = false;
@@ -549,7 +558,7 @@
       : "bg-emerald-950/75 border-emerald-400/50 text-emerald-100";
 
     return `
-      <div class="rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6 mt-6">
+      <div class="panchang-print-card rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6 mt-6" style="page-break-inside:avoid;break-inside:avoid;">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-2.5 border-b border-white/10">
           <h3 class="text-lg md:text-xl font-bold text-white">
             <i class="fas fa-om text-amber-400 mr-2"></i>${lang === "hi" ? "पंचांग, अवकहड़ा चक्र एवं 2026 शनि साढ़ेसाती स्थिति" : "Vedic Panchang, Avakahada Chakra & 2026 Saturn Transit Status"}
@@ -608,7 +617,7 @@
   }
 
   // ========================================================================
-  // 8. SHADBALA STRENGTH BARS RENDERER (Print-Safe Class Included)
+  // 8. SHADBALA STRENGTH BARS RENDERER
   // ========================================================================
   function renderShadbalaBars(scores, lang) {
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
@@ -657,22 +666,22 @@
       const adRows = md.antardashas.map(ad => {
         const adActive = isActive && (ad === dashaTree.adActive);
         const adTitle = lang === "hi"
-          ? `${PLANET_HI[md.lord]} –${PLANET_HI[ad.lord]} (${md.lord}-${ad.lord})`
-          : `${md.lord} –${ad.lord}`;
+          ? `${PLANET_HI[md.lord]} – ${PLANET_HI[ad.lord]} (${md.lord}-${ad.lord})`
+          : `${md.lord} – ${ad.lord}`;
         return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs py-2 px-3 rounded-lg gap-1 ${adActive ? 'bg-amber-500/25 text-amber-200 font-bold border border-amber-400/50' : 'text-gray-300 bg-slate-950/40'}">
           <span>${adActive ? '▸ ' : ''}${adTitle}${adActive ? (lang === 'hi' ? ' • वर्तमान में सक्रिय' : ' • ACTIVE NOW') : ''}</span>
-          <span class="font-mono text-[11px] text-purple-200 shrink-0">${fmt(ad.start)} →${fmt(ad.end)}</span>
+          <span class="font-mono text-[11px] text-purple-200 shrink-0">${fmt(ad.start)} → ${fmt(ad.end)}</span>
         </div>`;
       }).join("");
 
       return `
-        <div class="rounded-xl border ${borderClass} p-3.5 transition">
+        <div class="rounded-xl border ${borderClass} p-3.5 transition" style="page-break-inside:avoid;break-inside:avoid;">
           <div onclick="window.toggleJtDashaCard(${idx})" class="flex flex-wrap justify-between items-center cursor-pointer gap-2 select-none">
             <div class="flex items-center gap-2.5">
               <i id="jt-dasha-icon-${idx}" class="fas fa-chevron-right text-xs text-amber-400 transition-transform duration-200" style="transform:${isActive ? 'rotate(90deg)' : 'rotate(0deg)'}"></i>
               <span class="font-bold text-sm text-white">${mdTitle}</span>${isActive ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-[10px]">${lang === "hi" ? "सक्रिय महादशा" : "ACTIVE MD"}</span>` : ""}
             </div>
-            <span class="text-xs font-mono text-purple-200">${fmt(md.start)} →${fmt(md.end)}</span>
+            <span class="text-xs font-mono text-purple-200">${fmt(md.start)} → ${fmt(md.end)}</span>
           </div>
           <div id="jt-dasha-body-${idx}" class="${isActive ? '' : 'hidden'} mt-3 pt-3 border-t border-white/10 space-y-1.5">
             ${adRows}
