@@ -600,7 +600,7 @@
     const pastAgeStart  = Math.max(12, age - pastOffset);
     const pastAgeEnd    = pastAgeStart + 1;
 
-    // Helper: Find upcoming Antardasha matching target planets between cy and cy + 6
+    // Helper: Find upcoming Antardasha matching target planets within the next 3 years (cy to cy + 3)
     const findBestAntardashaWindow = (targetPlanets, minYear, fallbackStartYear) => {
       const vdDasha = window.__jtVedicData && window.__jtVedicData.dasha;
       if (vdDasha && Array.isArray(vdDasha.fullSeq)) {
@@ -611,7 +611,7 @@
         const hit = allAds.find(ad => {
           const sYr = ad.start.getFullYear();
           const eYr = ad.end.getFullYear();
-          return eYr >= minYear && sYr <= minYear + 5 && targetPlanets.includes(ad.lord);
+          return eYr >= minYear && sYr <= minYear + 3 && targetPlanets.includes(ad.lord);
         });
         if (hit) {
           const sY = Math.max(minYear, hit.start.getFullYear());
@@ -633,9 +633,15 @@
       };
     };
 
-    // 2. Career Breakthrough Windows (10th Lord, 11th Lord, Sun, Saturn, Jupiter, or planets in 10th/11th)
-    const planetsIn10or11 = Object.keys(planetAnalysis).filter(k => [10, 11, 1].includes(planetAnalysis[k].bhava));
-    const careerTargets = Array.from(new Set([rashi10Lord, "Sun", "Jupiter", "Mercury", ...planetsIn10or11]));
+    // 2. Career Breakthrough Windows (10th Lord, Yogakaraka, planets occupying OR aspecting 10th/11th, or 9th-house Bhagya planets)
+    const lagnaYogakarakas = (LAGNA_FUNCTIONAL_MATRIX[asc] && LAGNA_FUNCTIONAL_MATRIX[asc].yogakaraka) || [];
+    const planetsTouching10or11 = Object.keys(planetAnalysis).filter(k =>
+      [10, 11, 1, 9].includes(planetAnalysis[k].bhava) ||
+      planetAnalysis[k].aspectedTargets.some(t => t.targetBhava === 10)
+    );
+    const careerTargets = Array.from(new Set([
+      rashi10Lord, ...lagnaYogakarakas, ...planetsTouching10or11, "Sun", "Jupiter", "Mercury"
+    ]));
     const cFallback1 = cy + ((10 - numData.personalYear + m) % 2);
     const cWin1Obj = findBestAntardashaWindow(careerTargets, cy, cFallback1);
     const cWin2Start = cWin1Obj.endYear + 2;
@@ -2612,18 +2618,18 @@
         : "";
       extraTablesHtml = `
         ${panchangHtml}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          <div class="rounded-3xl bg-slate-950/90 border border-cyan-400/40 p-4 md:p-6">
-            <h3 class="text-lg md:text-xl font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${ctx.lang === 'hi' ? 'षड्बल ग्रह-बल (Planetary Strength)' : 'Shadbala Planetary Strength'}</h3>
+        <div class="pdf-keep-together grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+          <div class="rounded-3xl bg-slate-950/90 border border-cyan-400/40 p-4 md:p-5">
+            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${ctx.lang === 'hi' ? 'षड्बल ग्रह-बल (Planetary Strength)' : 'Shadbala Planetary Strength'}</h3>
             ${window.VedicChartAnalyzer.renderShadbalaBars(vd.shadbala, ctx.lang)}
           </div>
-          <div class="rounded-3xl bg-slate-950/90 border border-indigo-400/40 p-4 md:p-6">
-            <h3 class="text-lg md:text-xl font-bold text-white mb-3"><i class="fas fa-columns text-indigo-400 mr-2"></i>${ctx.lang === 'hi' ? 'भाव चलित तालिका (Bhava Chalit)' : 'Midpoint Bhava Chalit Table'}</h3>
+          <div class="rounded-3xl bg-slate-950/90 border border-indigo-400/40 p-4 md:p-5">
+            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-columns text-indigo-400 mr-2"></i>${ctx.lang === 'hi' ? 'भाव चलित तालिका (Bhava Chalit)' : 'Midpoint Bhava Chalit Table'}</h3>
             ${window.VedicChartAnalyzer.renderChalitTable(vd.chalit, ctx.lang)}
           </div>
         </div>
-        <div class="rounded-3xl bg-slate-950/90 border border-emerald-400/40 p-4 md:p-6 mt-6">
-          <h3 class="text-lg md:text-xl font-bold text-white mb-2"><i class="fas fa-hourglass-half text-emerald-400 mr-2"></i>${ctx.lang === 'hi' ? '120-वर्षीय विंशोत्तरी महादशा एवं अंतर्दशा सारणी' : '120-Year Vimshottari Mahadasha & Antardasha Calendar'}</h3>
+        <div class="rounded-3xl bg-slate-950/90 border border-emerald-400/40 p-4 md:p-5 mt-5">
+          <h3 class="text-base md:text-lg font-bold text-white mb-1.5"><i class="fas fa-hourglass-half text-emerald-400 mr-2"></i>${ctx.lang === 'hi' ? '120-वर्षीय विंशोत्तरी महादशा एवं अंतर्दशा सारणी' : '120-Year Vimshottari Mahadasha & Antardasha Calendar'}</h3>
           <p class="text-xs text-gray-400 mb-3">${ctx.lang === 'hi' ? 'किसी भी महादशा पर क्लिक करके उसके भीतर की सभी 9 अंतर्दशाओं की सटीक तारीखें देखें:' : 'Click any Mahadasha row below to expand its 9 Antardasha sub-periods with exact start & end dates:'}</p>
           ${window.VedicChartAnalyzer.renderDashaTimeline(vd.dasha, ctx.lang)}
         </div>
@@ -2638,26 +2644,25 @@
     }
 
     el.innerHTML = `
-      <div class="rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b border-white/10">
+      <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3 pb-2 border-b border-white/10">
           <div>
             <span class="text-[11px] uppercase tracking-widest text-amber-400 font-bold block">
               ${ctx.chart.isExactAstronomyMode
                 ? (ctx.lang === 'hi' ? '✦ 99.99% सटीक उत्तर-भारतीय लग्न एवं नवांश कुंडली' : '✦ 99.99% True Lahiri North-Indian Birth Charts')
                 : (ctx.lang === 'hi' ? '✦ उत्तर-भारतीय लग्न एवं नवांश कुंडली' : '✦ North-Indian D1 & D9 Charts')}
             </span>
-            <h3 class="text-lg md:text-2xl font-bold text-white mt-0.5"><i class="fas fa-star text-amber-400 mr-2"></i>${ctx.lang === 'hi' ? 'जन्म लग्न कुंडली (D1) एवं नवांश कुंडली (D9)' : 'Lagna Chart (D1) & Navamsa Chart (D9)'}</h3>
+            <h3 class="text-lg md:text-xl font-bold text-white mt-0.5"><i class="fas fa-star text-amber-400 mr-2"></i>${ctx.lang === 'hi' ? 'जन्म लग्न कुंडली (D1) एवं नवांश कुंडली (D9)' : 'Lagna Chart (D1) & Navamsa Chart (D9)'}</h3>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
-          <div id="d1ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-amber-500/50 bg-white p-1.5 shadow-xl">${d1SVG}</div>
-          <div id="d9ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-purple-500/50 bg-white p-1.5 shadow-xl">${d9SVG}</div>
+        <div class="grid grid-cols-2 gap-4 max-w-5xl mx-auto">
+          <div id="d1ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-amber-500/50 bg-white p-1 shadow-xl">${d1SVG}</div>
+          <div id="d9ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-purple-500/50 bg-white p-1 shadow-xl">${d9SVG}</div>
         </div>
       </div>
       ${extraTablesHtml}
     `;
   }
-
   function renderCalibrationBannerAndSwitcher(ctx) {
     const calEl = document.getElementById("calibrationBanner");
     const togEl = document.getElementById("modeToggleContainer");
