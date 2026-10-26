@@ -255,13 +255,13 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-   /* =====================================================================
-       PROFESSIONAL ROYAL VEDIC PRINT & PDF STYLESHEET (A4 HOROSCOPE DOSSIER)
+    /* =====================================================================
+       ROYAL VEDIC PRINT & PDF STYLESHEET (A4 HOROSCOPE DOSSIER v11.0)
        ===================================================================== */
     .pdf-mode,
     @media print {
       body, .pdf-mode {
-        background: #fffdf9 !important;
+        background: #fffdf8 !important;
         color: #1e293b !important;
         font-family: 'Hind', 'Inter', serif !important;
         overflow: visible !important;
@@ -296,7 +296,7 @@
     .pdf-mode .chapter-card {
       padding: 16px 20px !important;
       margin-bottom: 16px !important;
-      border-left: 5px solid #9a3412 !important;
+      border-left: 5px solid #7c2d12 !important;
       page-break-inside: auto !important;
     }
 
@@ -313,7 +313,6 @@
       color: #9a3412 !important;
     }
 
-    /* Clean Crisp Tables for Graha Spashta, Sripati Chalit & Ashtakavarga */
     .pdf-mode table {
       width: 100% !important;
       border-collapse: collapse !important;
@@ -323,7 +322,7 @@
     }
     .pdf-mode thead tr {
       background: #fef3c7 !important;
-      border-bottom: 2px solid #b45309 !important;
+      border-bottom: 2px solid #9a3412 !important;
     }
     .pdf-mode th {
       color: #7c2d12 !important;
@@ -344,7 +343,7 @@
     .pdf-mode tfoot tr td {
       background: #fef3c7 !important;
       font-weight: 800 !important;
-      border-top: 2px solid #b45309 !important;
+      border-top: 2px solid #9a3412 !important;
     }
 
     svg.jt-kundali-svg,
@@ -359,13 +358,8 @@
       page-break-inside: avoid !important;
       break-inside: avoid !important;
     }
-    .pdf-mode .jt-active-dasha-body {
-      display: block !important;
-    }
-    @page {
-      size: A4 portrait;
-      margin: 10mm;
-    }
+    .pdf-mode .jt-active-dasha-body { display: block !important; }
+    @page { size: A4 portrait; margin: 10mm; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -1238,10 +1232,14 @@
         </div>
       ` : planetTableHtml;
 
+      const chandraAndChalitHtml = (window.__jtClassicalHelpers && typeof window.__jtClassicalHelpers.renderChandraAndChalitSvgCharts === "function")
+        ? window.__jtClassicalHelpers.renderChandraAndChalitSvgCharts(ctx)
+        : "";
       container.innerHTML = `
         <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-5">
           ${chartsGridHtml}
         </div>
+        ${chandraAndChalitHtml}
         ${extraTablesHtml}
       `;
     }
@@ -1742,34 +1740,114 @@
       const safeName = (ctx && ctx.name) || 'Seeker';
       const safeDob  = (ctx && ctx.dob)  || '';
       const safeAge  = (ctx && ctx.numData && ctx.numData.age) || '';
-      const ascName  = (ctx && ctx.displayAsc)     || '';
+      const ascName  = (ctx && ctx.displayAsc)     || 'Chandra Anchor';
       const moonName = (ctx && ctx.displayMoon)    || '';
       const moonNak  = (ctx && ctx.displayMoonNak) || '';
-      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      const today    = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      const meta = (ctx && ctx.chart && ctx.chart.meta) || {};
+      const placeStr = meta.name || document.getElementById('birthPlace')?.value || 'India (IST)';
+      const timeStr  = meta.time || document.getElementById('birthTime')?.value  || '12:00 (Noon Ephemeris)';
+      const ayanStr  = meta.ayanamsa ? `${meta.ayanamsa.toFixed(2)}° (लहिरी चित्रापक्ष)` : 'लहिरी चित्रापक्ष (Lahiri)';
+      const ascDegStr = (ctx && ctx.chart && ctx.chart.Asc && (ctx.chart.Asc.formattedDMS || ctx.chart.Asc.formattedDeg)) || '';
+
+      const helpers = window.__jtClassicalHelpers || {};
+      const sunVara = (ctx && typeof helpers.computeSunriseSunsetAndVedicVara === 'function')
+        ? helpers.computeSunriseSunsetAndVedicVara(ctx)
+        : { sunriseStr: '06:05', sunsetStr: '17:45', vikramSamvat: 2083, shakaSamvat: 1948, vedicVaraHi: 'शुभ वार' };
+
+      const moonNakId = (ctx && ctx.chart && ctx.chart.Moon && ctx.chart.Moon.nak) || 1;
+      const moonPada  = (ctx && ctx.chart && ctx.chart.Moon && ctx.chart.Moon.pada) || 1;
+      const akshMap   = (helpers.NAKSHATRA_AKSHARAS && helpers.NAKSHATRA_AKSHARAS[moonNakId]) || { pada: ['अ','इ','उ','ए'], devataHi: 'अश्विनी कुमार' };
+      const syllable  = akshMap.pada[moonPada - 1] || akshMap.pada[0];
+
+      const fmtDate = (d) => (d instanceof Date && !isNaN(d)) ? d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+      const dashaMd = (ctx && ctx.dasha && ctx.dasha.md) ? `${ctx.dasha.md} महादशा • ${ctx.dasha.ad} अंतर्दशा` : 'नक्षत्र दशा क्रम';
+      const dashaPeriod = (ctx && ctx.dasha && ctx.dasha.adActive)
+        ? `${fmtDate(ctx.dasha.adActive.start)} से ${fmtDate(ctx.dasha.adActive.end)} तक`
+        : 'जन्म नक्षत्र आधारित';
 
       return `
-        <div class="pdf-cover pdf-keep-together" style="width:100%;height:242mm;max-height:242mm;padding:14mm 12mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#fffdf9;border:3px double #b45309;border-radius:12px;box-sizing:border-box;page-break-after:always;break-after:page;margin:0;">
-          <div style="width:100%;border-bottom:2px solid #b45309;padding-bottom:12px;">
-            <div style="font-size:14px;letter-spacing:5px;color:#6d28d9;text-transform:uppercase;font-weight:800;">॥ श्री गणेशाय नमः • JYOTISH TARK ॥</div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">Parashari Vedic Astrology, Divisional Vargas &amp; 337-Bindu Ashtakavarga</div>
+        <div class="pdf-cover pdf-keep-together" style="width:100%;min-height:262mm;padding:12mm 11mm;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;background:#fffdf8;border:3px double #9a3412;border-radius:14px;box-sizing:border-box;page-break-after:always;break-after:page;margin:0;">
+          
+          <!-- Top Sacred Header -->
+          <div style="width:100%;border-bottom:2px solid #b45309;padding-bottom:10px;">
+            <div style="font-size:13px;letter-spacing:3px;color:#7c2d12;font-weight:800;">॥ श्री गणेशाय नमः • ॐ आदित्याय सोमय मंगलाय बुधाय च ॥</div>
+            <div style="font-size:11px;color:#92400e;margin-top:3px;font-weight:700;">JYOTISH TARK • PARASHARI &amp; JAIMINI VEDIC HOROSCOPE DOSSIER</div>
           </div>
 
-          <div style="text-align:center;padding:8px 0;">
-            <div style="width:80px;height:80px;margin:0 auto 14px;border:3px double #b45309;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;color:#6d28d9;background:#fef3c7;">ॐ</div>
-            <div style="font-size:32px;font-weight:800;color:#111827;line-height:1.2;margin-bottom:8px;">वृहद् वैदिक जन्म कुंडली एवं जीवन दस्तावेज़</div>
-            <div style="font-size:16px;color:#b45309;font-weight:700;margin-bottom:6px;">Vedic Birth Chart &amp; Divisional Dossier (D1, D9, D10, D7)</div>
-            <div style="font-size:12px;color:#6b7280;">Panchang • Sripati Chalit • Shadbala • All 9 Planets • Vimshottari Dasha</div>
-            <div style="width:110px;height:2px;background:#b45309;margin:16px auto;"></div>
-            <div style="font-size:26px;font-weight:800;color:#111827;margin-bottom:8px;">${safeName}</div>
-            <div style="font-size:14px;color:#374151;margin-bottom:4px;"><strong>Born:</strong> ${safeDob}${safeAge ? ' • <strong>Age:</strong> ' + safeAge + ' years' : ''}</div>
-            <div style="font-size:14px;color:#374151;margin-bottom:4px;"><strong>Lagna / Base:</strong> ${ascName}</div>
-            <div style="font-size:14px;color:#374151;"><strong>Moon:</strong> ${moonName}${moonNak ? ' • ' + moonNak : ''}</div>
+          <!-- Lotus Om Mandala + Title + Native Name Banner -->
+          <div style="width:100%;margin:8px 0;">
+            <div style="width:76px;height:76px;margin:0 auto 10px;">
+              <svg class="jt-kundali-svg" viewBox="0 0 100 100" width="76" height="76" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" fill="#fef3c7" stroke="#9a3412" stroke-width="2.5"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3,2"/>
+                <circle cx="50" cy="50" r="24" fill="#7c2d12" stroke="#f59e0b" stroke-width="2"/>
+                <text x="50" y="59" font-size="26" fill="#fef3c7" text-anchor="middle" font-weight="800">ॐ</text>
+              </svg>
+            </div>
+            <div style="font-size:28px;font-weight:800;color:#7c2d12;line-height:1.15;">वृहद् वैदिक जन्म कुंडली</div>
+            <div style="font-size:12px;letter-spacing:2.5px;color:#b45309;font-weight:700;margin-top:2px;">JANAM KUNDALI • SHODASHVARGA &amp; DASHA DOSSIER</div>
+
+            <div style="margin:12px auto 0;padding:10px 16px;background:#fef3c7;border:1.5px solid #d97706;border-radius:10px;max-width:92%;">
+              <div style="font-size:10px;letter-spacing:2px;color:#92400e;font-weight:800;text-transform:uppercase;">जातक का नाम (Name of Native) • जन्म नामाक्षर: ${syllable}</div>
+              <div style="font-size:24px;font-weight:800;color:#111827;margin-top:2px;">${safeName}</div>
+            </div>
           </div>
 
-          <div style="width:100%;border-top:1px solid #d97706;padding-top:10px;">
-            <div style="font-size:11px;color:#6b7280;margin-bottom:3px;">Generated on ${today}</div>
-            <div style="font-size:13px;font-weight:800;color:#6d28d9;letter-spacing:2px;">jyotishtark.in</div>
-            <div style="font-size:11px;color:#6b7280;margin-top:3px;">Acharya Gyanendra Singh Tomar • Jyotish Tark</div>
+          <!-- 8-Cell Classical Astrological Identity Grid -->
+          <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left;margin:6px 0;">
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">जन्म तिथि एवं संवत् (Date of Birth)</div>
+              <div style="font-size:13px;font-weight:800;color:#111827;margin-top:2px;">${safeDob} ${safeAge ? `(आयु ${safeAge} वर्ष)` : ''}</div>
+              <div style="font-size:10.5px;color:#475569;">विक्रम संवत् ${sunVara.vikramSamvat} • शक ${sunVara.shakaSamvat} • पंचांग वार: ${sunVara.vedicVaraHi}</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">जन्म समय एवं सूर्योदय (Time &amp; Sunrise)</div>
+              <div style="font-size:13px;font-weight:800;color:#111827;margin-top:2px;">${timeStr} IST</div>
+              <div style="font-size:10.5px;color:#475569;">सूर्योदय: ${sunVara.sunriseStr} • सूर्यास्त: ${sunVara.sunsetStr}</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">जन्म स्थान (Place of Birth)</div>
+              <div style="font-size:13px;font-weight:800;color:#111827;margin-top:2px;">${placeStr}</div>
+              <div style="font-size:10.5px;color:#475569;">${meta.lat ? `${meta.lat.toFixed(2)}°N, ${meta.lng.toFixed(2)}°E • UTC+5:30` : 'भारतीय मानक समय (IST)'}</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">अयनांश एवं पद्धति (Ayanamsa &amp; System)</div>
+              <div style="font-size:13px;font-weight:800;color:#111827;margin-top:2px;">${ayanStr}</div>
+              <div style="font-size:10.5px;color:#475569;">पाराशरी निरयण एवं श्रीपति भाव-चलित पद्धति</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">उदय जन्म लग्न (Rising Ascendant)</div>
+              <div style="font-size:13px;font-weight:800;color:#7c2d12;margin-top:2px;">${ascName} ${ascDegStr ? `(${ascDegStr})` : ''}</div>
+              <div style="font-size:10.5px;color:#475569;">अयन: ${sunVara.ayanaHi || 'उत्तरायण'} • ऋतु: ${sunVara.rituHi || 'शरद'}</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">चंद्र राशि (Janma Rashi / Moon Sign)</div>
+              <div style="font-size:13px;font-weight:800;color:#7c2d12;margin-top:2px;">${moonName}</div>
+              <div style="font-size:10.5px;color:#475569;">जन्म नामाक्षर: '${syllable}' • देवता: ${akshMap.devataHi}</div>
+            </div>
+            <div style="padding:8px 12px;background:#ffffff;border:1px solid #d97706;border-radius:8px;">
+              <div style="font-size:9.5px;color:#92400e;font-weight:800;text-transform:uppercase;">जन्म नक्षत्र एवं चरण (Janma Nakshatra)</div>
+              <div style="font-size:13px;font-weight:800;color:#111827;margin-top:2px;">${moonNak} (चरण ${moonPada})</div>
+              <div style="font-size:10.5px;color:#475569;">नक्षत्र स्वामी: ${(ctx && ctx.dasha && ctx.dasha.birthDashaRuler) || 'केतु/बुध'}</div>
+            </div>
+            <div style="padding:8px 12px;background:#fef3c7;border:1.5px solid #b45309;border-radius:8px;">
+              <div style="font-size:9.5px;color:#7c2d12;font-weight:800;text-transform:uppercase;">वर्तमान सक्रिय दशा (Current Active Dasha)</div>
+              <div style="font-size:13px;font-weight:800;color:#7c2d12;margin-top:2px;">${dashaMd}</div>
+              <div style="font-size:10.5px;color:#92400e;font-weight:600;">अवधि: ${dashaPeriod}</div>
+            </div>
+          </div>
+
+          <!-- Navagraha Mangalacharan Shloka & Colophon -->
+          <div style="width:100%;border-top:2px solid #b45309;padding-top:8px;">
+            <div style="font-size:10.5px;color:#7c2d12;font-weight:700;font-style:italic;margin-bottom:6px;">
+              ॥ ब्रह्मा मुरारिस्त्रिपुरांतकारी भानुः शशी भूमिसुतो बुधश्च । गुरुश्च शुक्रः शनिराहुकेतवः कुर्वन्तु सर्वे मम सुप्रभातम् ॥
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#475569;border-top:1px dashed #d97706;padding-top:6px;">
+              <div><strong>निर्मित (Prepared By):</strong> आचार्य ज्ञानेन्द्र सिंह तोमर • <strong>Jyotish Tark (jyotishtark.in)</strong></div>
+              <div><strong>दिनांक:</strong> ${today}</div>
+            </div>
           </div>
         </div>
       `;
@@ -1788,7 +1866,7 @@
       if (btn) btn.disabled = true;
       if (label) label.textContent = 'Preparing Professional Kundali PDF...';
 
-      // Temporarily switch to ALL_4 Vargas so the printed Kundali includes D1, D9, D10 & D7
+      // Temporarily switch to ALL_4 Vargas so the printed Kundali includes D1, D9, D10, D7 + Chandra + Sripati Chalit
       const prevVargaPair = window.__jtVargaPair;
       if (typeof window.switchVargaView === 'function' && window.__jyotishLastCtx?.chart?.isFullChartMode) {
         window.switchVargaView('ALL_4');
@@ -1811,6 +1889,18 @@
         window.switchVargaView(prevVargaPair);
       }
 
+      const auspiciousColophonHtml = `
+        <div class="pdf-keep-together" style="margin-top:18px;padding:14px 18px;background:#fef3c7;border:2px double #9a3412;border-radius:12px;text-align:center;">
+          <div style="font-size:15px;font-weight:800;color:#7c2d12;">॥ शुभम् भवतु • कल्याणमस्तु ॥</div>
+          <div style="font-size:11.5px;color:#1e293b;margin-top:4px;">
+            श्री गणेश जी एवं देवाधिदेव महादेव की असीम कृपा से <strong>${ctxForCover.name}</strong> का जीवन दीर्घायु, यशस्वी, ज्ञानवान, स्वस्थ एवं समृद्ध हो — इसी पावन मंगल कामना के साथ।
+          </div>
+          <div style="font-size:11px;color:#92400e;font-weight:700;margin-top:6px;">
+            आचार्य ज्ञानेन्द्र सिंह तोमर • ज्योतिष तर्क (jyotishtark.in) • WhatsApp: +91 8318513814
+          </div>
+        </div>
+      `;
+
       const fullDocumentHtml = `
         <!DOCTYPE html>
         <html lang="${ctxForCover.lang || 'hi'}">
@@ -1822,10 +1912,11 @@
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
           <style>${document.querySelector('style').innerHTML}</style>
         </head>
-        <body class="pdf-mode" style="background:#fffdf9;color:#1e293b;padding:0;margin:0;">
+        <body class="pdf-mode" style="background:#fffdf8;color:#1e293b;padding:0;margin:0;">
           ${coverHtml}
-          <div style="padding:4mm 2mm;">
+          <div style="padding:2mm 0;">
             ${clone.outerHTML}
+            ${auspiciousColophonHtml}
           </div>
         </body>
         </html>
@@ -1858,7 +1949,6 @@
           printWin.document.open();
           printWin.document.write(fullDocumentHtml);
           printWin.document.close();
-          // Wait 950ms so Tailwind CDN and Google Fonts finish rendering before print dialog opens
           setTimeout(() => {
             printWin.focus();
             printWin.print();
