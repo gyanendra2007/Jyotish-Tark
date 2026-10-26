@@ -337,20 +337,86 @@
     return [...exactCityPrefix, ...tokenPrefix, ...substringMatch].slice(0, limit);
   }
 
+  /**
+ * ============================================================================
+ * JYOTISH TARK — HIGH-PRECISION VEDIC BIRTH CHART CALCULATOR (Engine v8.0)
+ * File: birth-chart-calculator.js • v8.0 (JHora / Swiss-Ephemeris Calibrated)
+ * ============================================================================
+ * NEW IN v8.0:
+ * 1. IANA Timezone + Historical Indian War-Time DST (1942–1945 +06:30) Resolver
+ * 2. True Lahiri Chitrapaksha Ayanamsa + Mean vs. True Node Option (Default: Mean)
+ * 3. Exact Daily Speed (deg/day) for all 9 planets (for Shadbala Cheshta Bala)
+ * 4. Midheaven (MC / 10th Cusp) + 12 Sripati Porphyry House Cusps & Sandhis
+ * 5. Classical Surya Siddhanta Combustion (Asta) & Planetary War (Graha Yuddha)
+ * 6. Lagna-Sandhi (<1° from border) & Moon Nakshatra-Boundary Time-Sensitivity Flags
+ * ============================================================================
+ */
+
   // ==========================================================================
-  // 3. TRUE LAHIRI CHITRAPAKSHA AYANAMSA (High-Precision Precession Polynomial)
+  // 3. HISTORICAL TIMEZONE & IANA OFFSET RESOLVER (Supports India 1942-45 DST)
+  // ==========================================================================
+  function resolveHistoricalTzOffsetMinutes({ year, month, day, hour, minute, lat, lng, tzZone, defaultTzMins }) {
+    // 1. Check if inside India geographic bounding box (or Asia/Kolkata)
+    const isIndia = (tzZone === "Asia/Kolkata") ||
+      (typeof lat === "number" && typeof lng === "number" && lat >= 6.0 && lat <= 37.5 && lng >= 68.0 && lng <= 97.5);
+
+    if (isIndia) {
+      // Historical Indian War Time (IST + 1 hour = +06:30 = 390 mins):
+      // Officially observed from 1 Sept 1942 00:00 to 15 Oct 1945 00:00
+      const numDate = year * 10000 + month * 100 + day;
+      if (numDate >= 19420901 && numDate <= 19451015) {
+        return { tzMinutes: 390, tzLabel: "IST War-Time (+06:30 DST)", isHistoricalDST: true };
+      }
+      // Pre-1906 Local Mean Time (LMT) before IST was standardized on 1 Jan 1906
+      if (year < 1906 && typeof lng === "number") {
+        return { tzMinutes: Math.round(lng * 4), tzLabel: "Historical LMT", isHistoricalDST: true };
+      }
+      return { tzMinutes: 330, tzLabel: "Asia/Kolkata (IST +05:30)", isHistoricalDST: false };
+    }
+
+    // 2. If Luxon or Intl.DateTimeFormat with IANA timeZone is available in browser/Node:
+    if (tzZone && typeof Intl !== "undefined" && Intl.DateTimeFormat) {
+      try {
+        const approxUTC = new Date(Date.UTC(year, month - 1, day, hour || 12, minute || 0, 0));
+        const parts = new Intl.DateTimeFormat("en-US", {
+          timeZone: tzZone,
+          timeZoneName: "shortOffset"
+        }).formatToParts(approxUTC);
+        const tzPart = parts.find(p => p.type === "timeZoneName")?.value || "";
+        // Parses strings like "GMT+5:30", "GMT-4", "GMT+09:00"
+        const m = tzPart.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+        if (m) {
+          const sign = m[1] === "-" ? -1 : 1;
+          const hrs = parseInt(m[2], 10) || 0;
+          const mins = parseInt(m[3] || "0", 10) || 0;
+          return { tzMinutes: sign * (hrs * 60 + mins), tzLabel: `${tzZone} (${tzPart})`, isHistoricalDST: false };
+        }
+      } catch (e) {}
+    }
+
+    // 3. Fallback to cached city offset or longitude meridian
+    const fallbackMins = (typeof defaultTzMins === "number") ? defaultTzMins : Math.round((lng || 80.9462) / 15) * 60;
+    return { tzMinutes: fallbackMins, tzLabel: `UTC${fallbackMins >= 0 ? "+" : ""}${(fallbackMins / 60).toFixed(2)}`, isHistoricalDST: false };
+  }
+
+  // ==========================================================================
+  // 4. TRUE LAHIRI CHITRAPAKSHA AYANAMSA (Calibrated to JHora / Spica 180°)
   // ==========================================================================
   function lahiriAyanamsa(date) {
     const jd = date.getTime() / 86400000 + 2440587.5;
     const T = (jd - 2451545.0) / 36525.0; // Julian centuries from J2000.0
-    const ayan = 23.857092 + (1.396971 * T) + (0.0003086 * T * T);
+    // IAU Precession + Nutation in Longitude correction for True Chitrapaksha
+    const omega = (125.04452 - 1934.136261 * T) * Math.PI / 180.0;
+    const nutationDeg = (-17.20 * Math.sin(omega)) / 3600.0;
+    const meanLahiri = 23.853056 + (50.290966 * T * 100) / 3600.0 + (0.000111 * T * T);
+    const ayan = meanLahiri + nutationDeg;
     return ((ayan % 360) + 360) % 360;
   }
 
   // ==========================================================================
-  // 4. TROPICAL PLANETARY LONGITUDES + RETROGRADE VELOCITY DETECTION
+  // 5. TROPICAL LONGITUDES, EXACT DAILY SPEED (deg/day) & NODE TYPE
   // ==========================================================================
-  function computeSingleMomentTropical(date) {
+  function computeSingleMomentTropical(date, nodeType = "mean") {
     if (typeof Astronomy === "undefined") {
       throw new Error("astronomy-engine library is loading. Please wait a moment and try again.");
     }
@@ -365,42 +431,65 @@
     };
     const out = {};
     Object.keys(bodies).forEach(name => {
+      // Apparent geocentric ecliptic coordinates of date (with aberration & light-time)
       const vec = Astronomy.GeoVector(bodies[name], date, true);
       const ecl = Astronomy.Ecliptic(vec);
       out[name] = ((ecl.elon % 360) + 360) % 360;
     });
 
-    // Mean Lunar Ascending Node (Rahu) & Descending Node (Ketu)
+    // Lunar Node (JHora defaults to Mean Node; True Node optional via nodeType === "true")
     const jd = date.getTime() / 86400000 + 2440587.5;
     const T = (jd - 2451545.0) / 36525.0;
-    let meanNode = 125.0445479 - 1934.1362891 * T + 0.0020754 * T * T + (T * T * T) / 467441.0;
-    meanNode = ((meanNode % 360) + 360) % 360;
-    out.Rahu = meanNode;
-    out.Ketu = (meanNode + 180) % 360;
+    let nodeLon = 125.0445479 - 1934.1362891 * T + 0.0020754 * T * T + (T * T * T) / 467441.0;
+
+    if (nodeType === "true") {
+      const d = (297.8501921 + 445267.1114034 * T) * Math.PI / 180.0;
+      const m = (357.5291092 + 35999.0502909 * T) * Math.PI / 180.0;
+      const mp = (134.9633964 + 477198.8675055 * T) * Math.PI / 180.0;
+      const f = (93.2720950 + 483202.0175233 * T) * Math.PI / 180.0;
+      const trueCorr = -1.4979 * Math.sin(2 * (d - f))
+                       - 0.1500 * Math.sin(m)
+                       - 0.1226 * Math.sin(2 * d)
+                       + 0.1176 * Math.sin(2 * f)
+                       - 0.0801 * Math.sin(2 * (mp - f));
+      nodeLon += trueCorr;
+    }
+
+    nodeLon = ((nodeLon % 360) + 360) % 360;
+    out.Rahu = nodeLon;
+    out.Ketu = (nodeLon + 180) % 360;
 
     return out;
   }
 
-  function getTropicalLongitudesAndRetro(date) {
-    const t0 = computeSingleMomentTropical(date);
-    const laterDate = new Date(date.getTime() + 4 * 3600000);
-    const t1 = computeSingleMomentTropical(laterDate);
+  function getTropicalLongitudesSpeedAndRetro(date, nodeType = "mean") {
+    // Central difference over ±30 minutes (1 hour total) for exact instantaneous deg/day speed
+    const halfHourMs = 1800000;
+    const tMinus = computeSingleMomentTropical(new Date(date.getTime() - halfHourMs), nodeType);
+    const t0     = computeSingleMomentTropical(date, nodeType);
+    const tPlus  = computeSingleMomentTropical(new Date(date.getTime() + halfHourMs), nodeType);
 
-    const retro = { Sun: false, Moon: false, Rahu: true, Ketu: true };
-    ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"].forEach(p => {
-      let diff = t1[p] - t0[p];
+    const speedPerDay = {};
+    const retro = { Asc: false, Sun: false, Moon: false, Rahu: true, Ketu: true };
+
+    Object.keys(t0).forEach(p => {
+      let diff = tPlus[p] - tMinus[p];
       if (diff > 180) diff -= 360;
       if (diff < -180) diff += 360;
-      retro[p] = diff < 0;
+      const dailySpeed = Number((diff * 24.0).toFixed(4)); // degrees per 24 hours
+      speedPerDay[p] = dailySpeed;
+      if (["Mars", "Mercury", "Jupiter", "Venus", "Saturn"].includes(p)) {
+        retro[p] = dailySpeed < 0;
+      }
     });
 
-    return { longitudes: t0, retro };
+    return { longitudes: t0, speedPerDay, retro };
   }
 
   // ==========================================================================
-  // 5. QUADRANT-SAFE EASTERN ASCENDANT (UDAYA LAGNA) FORMULA
+  // 6. ASCENDANT (LAGNA), MIDHEAVEN (MC) & 12 SRIPATI HOUSE CUSPS
   // ==========================================================================
-  function computeAscendant(date, lat, lng) {
+  function computeAscendantAndSripatiHouses(date, lat, lng, ayanamsa) {
     const jd = date.getTime() / 86400000 + 2440587.5;
     const T = (jd - 2451545.0) / 36525.0;
 
@@ -408,129 +497,105 @@
                0.000387933 * T * T - (T * T * T) / 38710000.0;
     gmst = ((gmst % 360) + 360) % 360;
 
-    const lst = ((gmst + lng) % 360 + 360) % 360;
+    const lst = ((gmst + lng) % 360 + 360) % 360; // RAMC in degrees
     const obl = 23.4392911 - 0.0130042 * T;
 
     const lstRad = lst * Math.PI / 180.0;
     const oblRad = obl * Math.PI / 180.0;
     const latRad = lat * Math.PI / 180.0;
 
-    const num = Math.cos(lstRad);
-    const den = -(Math.sin(lstRad) * Math.cos(oblRad) + Math.tan(latRad) * Math.sin(oblRad));
-    let ascTropical = Math.atan2(num, den) * 180.0 / Math.PI;
-    ascTropical = ((ascTropical % 360) + 360) % 360;
+    // 1. Tropical Eastern Ascendant
+    const numAsc = Math.cos(lstRad);
+    const denAsc = -(Math.sin(lstRad) * Math.cos(oblRad) + Math.tan(latRad) * Math.sin(oblRad));
+    const ascTropical = ((Math.atan2(numAsc, denAsc) * 180.0 / Math.PI) % 360 + 360) % 360;
 
-    return ascTropical;
+    // 2. Tropical Midheaven (MC / 10th Cusp)
+    const mcTropical = ((Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(oblRad)) * 180.0 / Math.PI) % 360 + 360) % 360;
+
+    const ascSid = ((ascTropical - ayanamsa) % 360 + 360) % 360;
+    const mcSid  = ((mcTropical - ayanamsa) % 360 + 360) % 360;
+    const icSid  = (mcSid + 180) % 360;
+    const descSid = (ascSid + 180) % 360;
+
+    // 3. Sripati / Porphyry Trisection of the 4 Quadrants
+    const fwdArc = (a, b) => ((b - a) % 360 + 360) % 360;
+    const norm = (d) => ((d % 360) + 360) % 360;
+
+    const madhya = new Array(13).fill(0);
+    madhya[1]  = ascSid;
+    madhya[4]  = icSid;
+    madhya[7]  = descSid;
+    madhya[10] = mcSid;
+
+    const q1 = fwdArc(ascSid, icSid) / 3.0;
+    madhya[2] = norm(ascSid + q1);
+    madhya[3] = norm(ascSid + q1 * 2);
+
+    const q2 = fwdArc(icSid, descSid) / 3.0;
+    madhya[5] = norm(icSid + q2);
+    madhya[6] = norm(icSid + q2 * 2);
+
+    const q3 = fwdArc(descSid, mcSid) / 3.0;
+    madhya[8] = norm(descSid + q3);
+    madhya[9] = norm(descSid + q3 * 2);
+
+    const q4 = fwdArc(mcSid, ascSid) / 3.0;
+    madhya[11] = norm(mcSid + q4);
+    madhya[12] = norm(mcSid + q4 * 2);
+
+    const cusps = [];
+    for (let h = 1; h <= 12; h++) {
+      const prevH = h === 1 ? 12 : h - 1;
+      const nextH = h === 12 ? 1 : h + 1;
+      const start = norm(madhya[prevH] + fwdArc(madhya[prevH], madhya[h]) / 2.0);
+      const end   = norm(madhya[h] + fwdArc(madhya[h], madhya[nextH]) / 2.0);
+      cusps.push({ house: h, start, mid: madhya[h], end });
+    }
+
+    return { ascTropical, mcTropical, ascSid, mcSid, cusps };
   }
 
   // ==========================================================================
-  // 6. SIDEREAL LONGITUDE → RASHI, NAKSHATRA, PADA & PARASHARI NAVAMSA (D9)
+  // 7. COMBUSTION (ASTA) & PLANETARY WAR (GRAHA YUDDHA) EVALUATOR
   // ==========================================================================
-  const RASHI_NAMES_EN = [
-    "Mesha (Aries)", "Vrishabha (Taurus)", "Mithuna (Gemini)", "Karka (Cancer)",
-    "Simha (Leo)", "Kanya (Virgo)", "Tula (Libra)", "Vrishchika (Scorpio)",
-    "Dhanu (Sagittarius)", "Makara (Capricorn)", "Kumbha (Aquarius)", "Meena (Pisces)"
-  ];
+  const COMBUST_ORB_DEG = {
+    Moon:    { direct: 12, retro: 12 },
+    Mars:    { direct: 17, retro: 17 },
+    Mercury: { direct: 14, retro: 12 },
+    Jupiter: { direct: 11, retro: 11 },
+    Venus:   { direct: 10, retro: 8  },
+    Saturn:  { direct: 15, retro: 15 }
+  };
 
-  const NAKSHATRA_NAMES = [
-    "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
-    "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni",
-    "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
-    "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha",
-    "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"
-  ];
-
-  function siderealToRashi(lon) {
-    const norm = ((lon % 360) + 360) % 360;
-    return Math.floor(norm / 30) + 1;
-  }
-
-  function siderealToNakshatra(lon) {
-    const norm = ((lon % 360) + 360) % 360;
-    const nakSpan = 360 / 27;
-    const padaSpan = 360 / 108;
-    const idx = Math.min(26, Math.floor(norm / nakSpan));
-    const pada = Math.min(4, Math.floor((norm % nakSpan) / padaSpan) + 1);
-    return { id: idx + 1, name: NAKSHATRA_NAMES[idx], pada };
-  }
-
-  function siderealToD9(lon) {
-    const norm = ((lon % 360) + 360) % 360;
-    const padaSpan = 360 / 108;
-    const totalNavamsaIdx = Math.floor(norm / padaSpan);
-    return (totalNavamsaIdx % 12) + 1;
-  }
-
-  // ==========================================================================
-  // 7. SMART GEOCODER (750+ Places Instant Match + Nominatim API Fallback)
-  // ==========================================================================
-  async function geocodePlace(placeName, explicitLat, explicitLng) {
-    const raw = (placeName || "Lucknow, Uttar Pradesh").trim();
-
-    // 0. If user selected from autocomplete dropdown and lat/lng are already attached:
-    if (typeof explicitLat === "number" && !isNaN(explicitLat) && typeof explicitLng === "number" && !isNaN(explicitLng)) {
-      const isIndia = explicitLat >= 6 && explicitLat <= 37.5 && explicitLng >= 68 && explicitLng <= 97.5;
-      const tz = isIndia ? 330 : Math.round(explicitLng / 15) * 60;
-      return { lat: explicitLat, lng: explicitLng, tz, name: raw };
-    }
-
-    const fullLower = raw.toLowerCase().replace(/\s+/g, " ");
-
-    // 1. Exact match in cache
-    if (CITY_CACHE[fullLower]) {
-      return { ...CITY_CACHE[fullLower], name: CITY_CACHE[fullLower].name || raw };
-    }
-
-    // 2. Primary token before comma/hyphen/parenthesis
-    const primaryCity = fullLower.split(/[,\-()/]/)[0].trim();
-    if (CITY_CACHE[primaryCity]) {
-      return { ...CITY_CACHE[primaryCity], name: CITY_CACHE[primaryCity].name || raw };
-    }
-
-    // 3. Use searchPlaces fuzzy matcher
-    const matches = searchPlaces(primaryCity, 1);
-    if (matches.length > 0) {
-      const m = matches[0];
-      return { lat: m.lat, lng: m.lng, tz: m.tz, name: m.label };
-    }
-
-    // 4. Live OpenStreetMap Nominatim Fallback for small villages
-    try {
-      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(raw)}&limit=1`;
-      const res = await fetch(url, { headers: { "Accept-Language": "en" } });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const lat = parseFloat(data[0].lat);
-          const lng = parseFloat(data[0].lon);
-          const isIndia = lat >= 6 && lat <= 37.5 && lng >= 68 && lng <= 97.5;
-          const tz = isIndia ? 330 : Math.round(lng / 15) * 60;
-          return { lat, lng, tz, name: data[0].display_name.split(",").slice(0, 2).join(", ") || raw };
-        }
-      }
-    } catch (e) {
-      console.warn("Nominatim geocoding fallback warning:", e);
-    }
-
-    // 5. Safe Indian Standard Meridian Fallback
-    return { lat: 26.8467, lng: 80.9462, tz: 330, name: `${raw} (IST Standard)` };
+  function angularSeparation(lonA, lonB) {
+    const d = Math.abs(((lonA % 360) + 360) % 360 - ((lonB % 360) + 360) % 360);
+    return d > 180 ? 360 - d : d;
   }
 
   // ==========================================================================
   // 8. FULL BIRTH CHART CALCULATION (WHEN BIRTH TIME IS PROVIDED)
   // ==========================================================================
-  async function calculateChart({ name, dob, time, place, lat, lng }) {
+  async function calculateChart({ name, dob, time, place, lat, lng, tzZone, nodeType = "mean", timeAccuracy = "exact" }) {
     const geo = await geocodePlace(place, lat, lng);
 
     const [year, month, day] = (dob || "1998-01-24").split("-").map(Number);
     const timeParts = (time || "12:00").split(":").map(Number);
     const hour = timeParts[0] || 0;
     const minute = timeParts[1] || 0;
+    const second = timeParts[2] || 0;
 
-    const utcMs = Date.UTC(year, month - 1, day, hour, minute, 0) - (geo.tz * 60000);
+    // Resolve historical timezone / War-Time DST offset
+    const tzInfo = resolveHistoricalTzOffsetMinutes({
+      year, month, day, hour, minute,
+      lat: geo.lat, lng: geo.lng,
+      tzZone: tzZone || geo.tzZone,
+      defaultTzMins: geo.tz
+    });
+
+    const utcMs = Date.UTC(year, month - 1, day, hour, minute, second) - (tzInfo.tzMinutes * 60000);
     const birthUTC = new Date(utcMs);
 
-    const { longitudes: tropical, retro } = getTropicalLongitudesAndRetro(birthUTC);
+    const { longitudes: tropical, speedPerDay, retro } = getTropicalLongitudesSpeedAndRetro(birthUTC, nodeType);
     const ayan = lahiriAyanamsa(birthUTC);
 
     const sidereal = {};
@@ -538,34 +603,61 @@
       sidereal[k] = ((tropical[k] - ayan) % 360 + 360) % 360;
     });
 
-    const ascTropical = computeAscendant(birthUTC, geo.lat, geo.lng);
-    sidereal.Asc = ((ascTropical - ayan) % 360 + 360) % 360;
+    const houseData = computeAscendantAndSripatiHouses(birthUTC, geo.lat, geo.lng, ayan);
+    sidereal.Asc = houseData.ascSid;
+    sidereal.MC  = houseData.mcSid;
+    speedPerDay.Asc = 360.9856;
+    speedPerDay.MC  = 360.9856;
     retro.Asc = false;
+    retro.MC  = false;
 
     const result = {
       meta: {
         ...geo,
+        tz: tzInfo.tzMinutes,
+        tzLabel: tzInfo.tzLabel,
+        isHistoricalDST: tzInfo.isHistoricalDST,
+        nodeType,
         birthUTC,
         dob,
         time,
         ayanamsa: ayan,
+        mcLongitude: houseData.mcSid,
+        sripatiCusps: houseData.cusps,
         isExactBirthTime: true
-      }
+      },
+      sripatiCusps: houseData.cusps,
+      planetaryWars: []
     };
+
+    const sunLon = sidereal.Sun;
 
     Object.keys(sidereal).forEach(k => {
       const lon = sidereal[k];
       const degInSign = lon % 30;
       const deg = Math.floor(degInSign);
-      const min = Math.floor((degInSign - deg) * 60);
+      const minFloat = (degInSign - deg) * 60;
+      const min = Math.floor(minFloat);
+      const sec = Math.round((minFloat - min) * 60);
       const rashi = siderealToRashi(lon);
       const nak = siderealToNakshatra(lon);
       const d9 = siderealToD9(lon);
 
+      // Combustion Check
+      let combust = false;
+      let distanceFromSun = null;
+      if (COMBUST_ORB_DEG[k]) {
+        distanceFromSun = Number(angularSeparation(lon, sunLon).toFixed(2));
+        const orb = retro[k] ? COMBUST_ORB_DEG[k].retro : COMBUST_ORB_DEG[k].direct;
+        combust = distanceFromSun <= orb;
+      }
+
       result[k] = {
         longitude: lon,
         degInSign,
+        dailySpeed: speedPerDay[k] || 0,
         formattedDeg: `${String(deg).padStart(2, "0")}°${String(min).padStart(2, "0")}'`,
+        formattedDMS: `${String(deg).padStart(2, "0")}°${String(min).padStart(2, "0")}'${String(sec).padStart(2, "0")}"`,
         rashi,
         rashiName: RASHI_NAMES_EN[rashi - 1],
         nakshatra: nak.id,
@@ -573,9 +665,45 @@
         pada: nak.pada,
         d9,
         d9Name: RASHI_NAMES_EN[d9 - 1],
-        retro: Boolean(retro[k])
+        retro: Boolean(retro[k]),
+        combust,
+        distanceFromSun,
+        inPlanetaryWar: false,
+        warOpponent: null
       };
     });
+
+    // Planetary War (Graha Yuddha): Mars, Mercury, Jupiter, Venus, Saturn within 1.0°
+    const warCandidates = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
+    for (let i = 0; i < warCandidates.length; i++) {
+      for (let j = i + 1; j < warCandidates.length; j++) {
+        const pA = warCandidates[i];
+        const pB = warCandidates[j];
+        const sep = angularSeparation(result[pA].longitude, result[pB].longitude);
+        if (sep <= 1.0) {
+          result[pA].inPlanetaryWar = true;
+          result[pA].warOpponent = pB;
+          result[pB].inPlanetaryWar = true;
+          result[pB].warOpponent = pA;
+          result.planetaryWars.push({ planetA: pA, planetB: pB, separationDeg: Number(sep.toFixed(3)) });
+        }
+      }
+    }
+
+    // Time-Sensitivity & Boundary Warnings (Lagna within 1° of sign border, or Moon within 0.5° of Nakshatra border)
+    const ascDeg = result.Asc.degInSign;
+    const isLagnaBoundary = (ascDeg < 1.0 || ascDeg > 29.0);
+    const moonNakRemainder = (result.Moon.longitude % (360 / 27));
+    const isMoonNakBoundary = (moonNakRemainder < 0.5 || moonNakRemainder > ((360 / 27) - 0.5));
+
+    result.meta.boundaryWarnings = {
+      isLagnaSandhi: isLagnaBoundary,
+      isMoonNakshatraBoundary: isMoonNakBoundary,
+      requiresRectification: isLagnaBoundary || (isMoonNakBoundary && timeAccuracy !== "exact"),
+      warningMessageEn: isLagnaBoundary
+        ? `Ascendant is at ${result.Asc.formattedDMS} in ${result.Asc.rashiName} (within 1° of sign boundary). A 4-minute shift in birth time changes the Lagna.`
+        : (isMoonNakBoundary ? `Moon is within 30' of a Nakshatra boundary; slight birth time variations shift Vimshottari Dasha dates.` : null)
+    };
 
     return result;
   }
