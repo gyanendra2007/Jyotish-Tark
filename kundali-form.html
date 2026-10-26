@@ -255,23 +255,98 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Server PDF / Print Styles */
-    .pdf-mode {
-      background-color: #ffffff !important;
-      color: #1f2937 !important;
-      overflow: visible !important;
+   /* =====================================================================
+       PROFESSIONAL ROYAL VEDIC PRINT & PDF STYLESHEET (A4 HOROSCOPE DOSSIER)
+       ===================================================================== */
+    .pdf-mode,
+    @media print {
+      body, .pdf-mode {
+        background: #fffdf9 !important;
+        color: #1e293b !important;
+        font-family: 'Hind', 'Inter', serif !important;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print, header, footer, #whatsappButton, #whatsappPopup, #chartControlsBar, #youtubeLiveTokenBar {
+        display: none !important;
+      }
     }
-    .pdf-mode *:not(svg):not(path):not(rect):not(circle):not(polygon):not(line):not(polyline):not(g):not(text):not(tspan) {
-      color: #1f2937 !important;
+
+    .pdf-mode [class*="bg-slate-"],
+    .pdf-mode [class*="bg-purple-"],
+    .pdf-mode [class*="bg-amber-9"],
+    .pdf-mode [class*="bg-emerald-9"],
+    .pdf-mode [class*="bg-rose-9"],
+    .pdf-mode [class*="bg-red-9"],
+    .pdf-mode [class*="bg-indigo-"],
+    .pdf-mode [class*="bg-cyan-"],
+    .pdf-mode .glass-card,
+    .pdf-mode .chapter-card {
+      background: #fffdf7 !important;
       background-image: none !important;
+      color: #1e293b !important;
+      border: 1.5px solid #d97706 !important;
+      border-radius: 12px !important;
       box-shadow: none !important;
-      text-shadow: none !important;
-      animation: none !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
+
+    .pdf-mode .chapter-card {
+      padding: 16px 20px !important;
+      margin-bottom: 16px !important;
+      border-left: 5px solid #9a3412 !important;
+      page-break-inside: auto !important;
+    }
+
+    .pdf-mode *:not(svg):not(path):not(rect):not(circle):not(polygon):not(line):not(polyline):not(g):not(text):not(tspan) {
+      color: #1e293b !important;
+      text-shadow: none !important;
+    }
+
+    .pdf-mode h1, .pdf-mode h2, .pdf-mode h3, .pdf-mode h4 {
+      color: #7c2d12 !important;
+    }
+
+    .pdf-mode strong, .pdf-mode b {
+      color: #9a3412 !important;
+    }
+
+    /* Clean Crisp Tables for Graha Spashta, Sripati Chalit & Ashtakavarga */
+    .pdf-mode table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      background: #ffffff !important;
+      font-size: 11px !important;
+      margin-top: 8px !important;
+    }
+    .pdf-mode thead tr {
+      background: #fef3c7 !important;
+      border-bottom: 2px solid #b45309 !important;
+    }
+    .pdf-mode th {
+      color: #7c2d12 !important;
+      font-weight: 800 !important;
+      padding: 7px 6px !important;
+      border: 1px solid #d97706 !important;
+      text-align: left;
+    }
+    .pdf-mode td {
+      color: #1e293b !important;
+      background: #ffffff !important;
+      padding: 6px 6px !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    .pdf-mode tbody tr:nth-child(even) td {
+      background: #fffbeb !important;
+    }
+    .pdf-mode tfoot tr td {
+      background: #fef3c7 !important;
+      font-weight: 800 !important;
+      border-top: 2px solid #b45309 !important;
+    }
+
     svg.jt-kundali-svg,
     svg.jt-kundali-svg * {
       -webkit-print-color-adjust: exact !important;
@@ -279,12 +354,18 @@
       visibility: visible !important;
       opacity: 1 !important;
     }
+
     .pdf-keep-together {
       page-break-inside: avoid !important;
       break-inside: avoid !important;
     }
-    .pdf-mode .jt-active-dasha-body { display: block !important; }
-    @page { size: A4 portrait; margin: 10mm; }
+    .pdf-mode .jt-active-dasha-body {
+      display: block !important;
+    }
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
   </style>
 </head>
 <body class="min-h-screen">
@@ -1697,7 +1778,7 @@
     async function downloadServerPdfDossier() {
       const target = document.getElementById('masterDossierOutput');
       if (!target || target.classList.contains('hidden')) {
-        alert('Please generate your Kundali Dossier first before downloading the PDF.');
+        alert('Please generate your Kundali Dossier first before downloading or printing the PDF.');
         return;
       }
 
@@ -1705,7 +1786,13 @@
       const label = document.getElementById('pdfBtnLabel');
       const origLabel = label ? label.textContent : 'Download Kundali PDF';
       if (btn) btn.disabled = true;
-      if (label) label.textContent = 'Generating Server PDF...';
+      if (label) label.textContent = 'Preparing Professional Kundali PDF...';
+
+      // Temporarily switch to ALL_4 Vargas so the printed Kundali includes D1, D9, D10 & D7
+      const prevVargaPair = window.__jtVargaPair;
+      if (typeof window.switchVargaView === 'function' && window.__jyotishLastCtx?.chart?.isFullChartMode) {
+        window.switchVargaView('ALL_4');
+      }
 
       const ctxForCover = window.__jyotishLastCtx || {
         name: document.getElementById('userName')?.value || 'Seeker',
@@ -1717,7 +1804,12 @@
       const coverHtml = buildCoverPageHtml(ctxForCover);
       const clone = target.cloneNode(true);
       clone.classList.add('pdf-mode');
-      clone.querySelectorAll('.no-print, button, a[href^="https://wa.me"], .chapter-nav-pill').forEach(el => el.remove());
+      clone.querySelectorAll('.no-print, button, a[href^="https://wa.me"], .chapter-nav-pill, #chartControlsBar, #youtubeLiveTokenBar').forEach(el => el.remove());
+
+      // Restore user's active varga view on screen
+      if (typeof window.switchVargaView === 'function' && prevVargaPair) {
+        window.switchVargaView(prevVargaPair);
+      }
 
       const fullDocumentHtml = `
         <!DOCTYPE html>
@@ -1727,11 +1819,14 @@
           <title>Kundali_${(ctxForCover.name || 'Report').replace(/\s+/g, '_')}</title>
           <script src="https://cdn.tailwindcss.com"><\/script>
           <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
           <style>${document.querySelector('style').innerHTML}</style>
         </head>
-        <body class="pdf-mode" style="background:#ffffff;color:#111827;padding:0;margin:0;">
+        <body class="pdf-mode" style="background:#fffdf9;color:#1e293b;padding:0;margin:0;">
           ${coverHtml}
-          ${clone.outerHTML}
+          <div style="padding:4mm 2mm;">
+            ${clone.outerHTML}
+          </div>
         </body>
         </html>
       `;
@@ -1758,16 +1853,16 @@
         a.remove();
         window.URL.revokeObjectURL(url);
       } catch (err) {
-        console.warn('Server PDF endpoint not running locally; opening clean PDF print view as fallback:', err);
         const printWin = window.open('', '_blank');
         if (printWin) {
           printWin.document.open();
           printWin.document.write(fullDocumentHtml);
           printWin.document.close();
-          printWin.onload = function () {
+          // Wait 950ms so Tailwind CDN and Google Fonts finish rendering before print dialog opens
+          setTimeout(() => {
             printWin.focus();
             printWin.print();
-          };
+          }, 950);
         }
       } finally {
         if (btn) btn.disabled = false;
