@@ -617,57 +617,44 @@
     return { year, month, day, mulank, bhagyank, rawSum, age, currentYear, personalYear };
   }
 
-  function computeLifeEventTimeline(numData, chart, planetAnalysis, dasha) {
-    const cy = numData.currentYear;
-    const age = numData.age;
-    const by = numData.year;
-    const m = numData.mulank;
-    const b = numData.bhagyank;
-    const asc = chart.Asc.d1;
+  function computeLifeEventTimeline(numData, chart, planetAnalysis, dasha, findings) {
+    const vdDasha = window.__jtVedicData && window.__jtVedicData.dasha;
 
-    const rashi10Lord = RASHI_DATA[getRashiOfBhava(asc, 10)].lord;
-    const rashi7Lord  = RASHI_DATA[getRashiOfBhava(asc, 7)].lord;
-    const rashi5Lord  = RASHI_DATA[getRashiOfBhava(asc, 5)].lord;
+    if (window.TimingEngine && chart.isFullChartMode && vdDasha) {
+      const domainWindows = window.TimingEngine.findDomainTimingWindows(
+        chart, vdDasha, findings, numData.year
+      );
 
-    // 1. Past Verification Window (Age when Rahu/Ketu/Saturn or 8th-axis triggered)
-    const pastOffset = 2 + ((m + b) % 3);
-    const pastYearStart = cy - pastOffset;
-    const pastYearEnd   = pastYearStart + 1;
-    const pastAgeStart  = Math.max(12, age - pastOffset);
-    const pastAgeEnd    = pastAgeStart + 1;
-
-    // Helper: Find upcoming Antardasha matching target planets within the next 3 years (cy to cy + 3)
-    const findBestAntardashaWindow = (targetPlanets, minYear, fallbackStartYear) => {
-      const vdDasha = window.__jtVedicData && window.__jtVedicData.dasha;
-      if (vdDasha && Array.isArray(vdDasha.fullSeq)) {
-        const allAds = [];
-        vdDasha.fullSeq.forEach(md => {
-          (md.antardashas || []).forEach(ad => allAds.push(ad));
-        });
-        const hit = allAds.find(ad => {
-          const sYr = ad.start.getFullYear();
-          const eYr = ad.end.getFullYear();
-          return eYr >= minYear && sYr <= minYear + 3 && targetPlanets.includes(ad.lord);
-        });
-        if (hit) {
-          const sY = Math.max(minYear, hit.start.getFullYear());
-          const eY = Math.max(sY + 1, Math.min(sY + 2, hit.end.getFullYear()));
-          const fmtM = (d) => d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
-          return {
-            startYear: sY,
-            endYear: eY,
-            adLabel: `${hit.mdLord}–${hit.lord} (${fmtM(hit.start)} – ${fmtM(hit.end)})`,
-            label: `${sY}–${eY} (Age ${sY - by}–${eY - by})`
-          };
-        }
+      // Past verification from actual previous Antardasha transition
+      let pastWindowLabel = null;
+      if (vdDasha.prevAD && vdDasha.prevAD.start && vdDasha.prevAD.end) {
+        const sYr = vdDasha.prevAD.start.getFullYear();
+        const eYr = vdDasha.prevAD.end.getFullYear();
+        pastWindowLabel = {
+          years: `${sYr}–${eYr}`,
+          ages: `${Math.max(1, sYr - numData.year)}–${Math.max(2, eYr - numData.year)}`,
+          periodLord: `${vdDasha.prevAD.mdLord}–${vdDasha.prevAD.lord}`
+        };
       }
+
       return {
-        startYear: fallbackStartYear,
-        endYear: fallbackStartYear + 1,
-        adLabel: null,
-        label: `${fallbackStartYear}–${fallbackStartYear + 1} (Age ${fallbackStartYear - by}–${fallbackStartYear + 1 - by})`
+        isExactTiming: true,
+        pastVerification: pastWindowLabel,
+        career: domainWindows.career,
+        marriage: domainWindows.marriage,
+        childbirth: domainWindows.childbirth
       };
+    }
+
+    // DOB-Only Mode: Return explicit unverified state (never invent fake year windows)
+    return {
+      isExactTiming: false,
+      pastVerification: null,
+      career:     { hasStrongWindow: false, status: "REQUIRES_BIRTH_TIME" },
+      marriage:   { hasStrongWindow: false, status: "REQUIRES_BIRTH_TIME" },
+      childbirth: { hasStrongWindow: false, status: "REQUIRES_BIRTH_TIME" }
     };
+  }
 
     // 2. Career Breakthrough Windows (10th Lord, Yogakaraka, planets occupying OR aspecting 10th/11th, or 9th-house Bhagya planets)
     const lagnaYogakarakas = (LAGNA_FUNCTIONAL_MATRIX[asc] && LAGNA_FUNCTIONAL_MATRIX[asc].yogakaraka) || [];
@@ -818,14 +805,26 @@
   function readChartFromDOM(numData, chaldean) {
     if (window.__jtVedicData && window.__jtVedicData.chart) {
       const vd = window.__jtVedicData;
-      const converted = { isFullChartMode: true, isExactAstronomyMode: true, isDobOnlyRealAstronomy: false };
+      const converted = {
+        isFullChartMode: true,
+        isExactAstronomyMode: true,
+        isDobOnlyRealAstronomy: false,
+        meta: vd.chart.meta || {}
+      };
       ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"].forEach(k => {
+        const src = vd.chart[k] || {};
         converted[k] = {
-          d1: vd.chart[k].rashi,
-          nak: vd.chart[k].nakshatra,
-          d9: vd.chart[k].d9,
-          retro: Boolean(vd.chart[k].retro),
-          formattedDeg: vd.chart[k].formattedDeg || ""
+          ...src, // Preserves longitude, degInSign, pada, d2..d60, combust, avastha, chalitHouse, dignityInfo
+          d1: src.rashi,
+          rashi: src.rashi,
+          nak: src.nakshatra,
+          nakshatra: src.nakshatra,
+          d9: src.d9,
+          d10: src.d10,
+          d7: src.d7,
+          retro: Boolean(src.retro),
+          combust: Boolean(src.combust),
+          formattedDeg: src.formattedDMS || src.formattedDeg || ""
         };
       });
       return converted;
@@ -835,20 +834,24 @@
     if (manualMatrixOpen) {
       const keys = ["Asc","Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
       const chart = { isFullChartMode: true, isExactAstronomyMode: false, isDobOnlyRealAstronomy: false };
-      keys.forEach(k => {
+      keys.forEach((k, idx) => {
         const d1  = parseInt(document.getElementById(`d1_${k}`)?.value, 10) || 1;
         const nak = parseInt(document.getElementById(`nak_${k}`)?.value, 10) || 1;
         const d9  = parseInt(document.getElementById(`d9_${k}`)?.value, 10) || 1;
         const retroEl = document.getElementById(`retro_${k}`);
         const retro = (k === "Rahu" || k === "Ketu") ? true : (retroEl ? retroEl.checked : false);
-        chart[k] = { d1, nak, d9, retro };
+        const approxDegInSign = 15 + (idx * 0.5);
+        chart[k] = {
+          d1, rashi: d1, nak, nakshatra: nak, d9, retro,
+          degInSign: approxDegInSign,
+          longitude: ((d1 - 1) * 30) + approxDegInSign
+        };
       });
       return chart;
     }
 
     return buildDerivedChartFromDobAndName(numData, chaldean);
   }
-
   function getBhavaFrom(refRashi, targetRashi) { return ((targetRashi - refRashi + 12) % 12) + 1; }
   function getRashiOfBhava(refRashi, bhavaNum) { return ((refRashi + bhavaNum - 2) % 12) + 1; }
   function getLordKeyOfRashi(rashiId) { return RASHI_DATA[rashiId].lord; }
@@ -1041,17 +1044,23 @@
       upapadaRashi = ((upapadaRashi + 9 - 1) % 12) + 1;
     }
 
-    const charaCandidates = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"];
+    // True Degree-Based Jaimini Chara Atmakaraka (7-Planet Scheme, or 8-Planet with optional Rahu)
+    const includeRahuInKaraka = false;
+    const charaCandidates = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
+    if (includeRahuInKaraka) charaCandidates.push("Rahu");
+
     let atmakarakaKey = "Sun";
-    let maxAdvancementScore = -1;
+    let maxDegInSign = -1;
+
     charaCandidates.forEach(pKey => {
-      const p = chart[pKey];
-      const validNaks = VALID_NAKS_FOR_RASHI[p.d1] || [1,2,3];
-      const nakIndexInRashi = Math.max(0, validNaks.indexOf(p.nak));
-      const d9Offset = ((p.d9 - p.d1 + 12) % 12);
-      const score = (nakIndexInRashi * 10) + d9Offset + (p.d1 === p.d9 ? 5 : 0);
-      if (score > maxAdvancementScore) {
-        maxAdvancementScore = score;
+      const p = chart[pKey] || {};
+      const rawDeg = (typeof p.degInSign === "number")
+        ? p.degInSign
+        : (typeof p.longitude === "number" ? (p.longitude % 30) : 15);
+      const effectiveDeg = (pKey === "Rahu") ? (30 - rawDeg) : rawDeg;
+
+      if (effectiveDeg > maxDegInSign) {
+        maxDegInSign = effectiveDeg;
         atmakarakaKey = pKey;
       }
     });
@@ -1081,79 +1090,58 @@
   // ==========================================================================
 
   function resolveActiveDasha(chart, numData) {
+    // 1. Exact Astronomical Birth-Time Mode
     if (window.__jtVedicData && window.__jtVedicData.dasha) {
       const vdDasha = window.__jtVedicData.dasha;
       const moonNakId = chart.Moon.nak || 1;
       return {
         md: vdDasha.mahadasha,
         ad: vdDasha.antardasha,
+        pd: vdDasha.pratyantardasha || vdDasha.antardasha,
         mdActive: vdDasha.mdActive,
         adActive: vdDasha.adActive,
+        pdActive: vdDasha.pdActive || null,
         nextAD: vdDasha.nextAD,
         prevAD: vdDasha.prevAD,
         isExactCalendarDasha: true,
         isManualDasha: false,
+        isDobOnlyUnverifiedDasha: false,
         birthDashaRuler: NAKSHATRA_DATA[moonNakId].ruler
       };
     }
 
+    // 2. Manual Dasha Override Mode
     const manualOn = document.getElementById("enableDashaToggle") && document.getElementById("enableDashaToggle").checked;
     const mdSelect = document.getElementById("currentMD")?.value || "auto";
     const adSelect = document.getElementById("currentAD")?.value || "auto";
-
-    const moonRashi = chart.Moon.d1 || 1;
     const moonNakId = chart.Moon.nak || 1;
     const birthDashaRuler = NAKSHATRA_DATA[moonNakId].ruler;
-    const startIdx = VIMSHOTTARI_ORDER.findIndex(v => v.lord === birthDashaRuler);
 
-    const rashiNaks = VALID_NAKS_FOR_RASHI[moonRashi] || [moonNakId];
-    const posInRashi = rashiNaks.indexOf(moonNakId);
-    let birthFractionRemaining = 0.55;
-    if (posInRashi === 0 && rashiNaks.length === 3) {
-      birthFractionRemaining = 0.68 - ((numData.day % 5) * 0.06);
-    } else if (posInRashi === 1) {
-      birthFractionRemaining = 0.82 - ((numData.day % 7) * 0.09);
-    } else if (posInRashi === 2) {
-      birthFractionRemaining = 0.88 - ((numData.day % 4) * 0.05);
+    if (manualOn && (mdSelect !== "auto" || adSelect !== "auto")) {
+      const chosenMD = mdSelect !== "auto" ? mdSelect : birthDashaRuler;
+      const chosenAD = adSelect !== "auto" ? adSelect : chosenMD;
+      return {
+        md: chosenMD,
+        ad: chosenAD,
+        nextMD: chosenMD,
+        isManualDasha: true,
+        isExactCalendarDasha: false,
+        isDobOnlyUnverifiedDasha: false,
+        birthDashaRuler
+      };
     }
 
-    let ageCursor = VIMSHOTTARI_ORDER[startIdx].years * birthFractionRemaining;
-    let currentIdx = startIdx;
-    let yearsIntoCurrentMD = numData.age;
-
-    if (numData.age <= ageCursor) {
-      yearsIntoCurrentMD = (VIMSHOTTARI_ORDER[startIdx].years * (1 - birthFractionRemaining)) + numData.age;
-    } else {
-      let remAge = numData.age - ageCursor;
-      currentIdx = (startIdx + 1) % 9;
-      while (remAge > VIMSHOTTARI_ORDER[currentIdx].years) {
-        remAge -= VIMSHOTTARI_ORDER[currentIdx].years;
-        currentIdx = (currentIdx + 1) % 9;
-      }
-      yearsIntoCurrentMD = remAge;
-    }
-
-    const autoMD = VIMSHOTTARI_ORDER[currentIdx].lord;
-    const mdTotalYears = VIMSHOTTARI_ORDER[currentIdx].years;
-
-    let accumulatedADYears = 0;
-    let autoAD = autoMD;
-    for (let i = 0; i < 9; i++) {
-      const adObj = VIMSHOTTARI_ORDER[(currentIdx + i) % 9];
-      const adDuration = (mdTotalYears * adObj.years) / 120;
-      if (yearsIntoCurrentMD <= accumulatedADYears + adDuration || i === 8) {
-        autoAD = adObj.lord;
-        break;
-      }
-      accumulatedADYears += adDuration;
-    }
-
-    const nextMD = VIMSHOTTARI_ORDER[(currentIdx + 1) % 9].lord;
-    const finalMD = (manualOn && mdSelect !== "auto") ? mdSelect : autoMD;
-    const finalAD = (manualOn && adSelect !== "auto") ? adSelect : autoAD;
-    const isManualDasha = Boolean(manualOn && (mdSelect !== "auto" || adSelect !== "auto"));
-
-    return { md:finalMD, ad:finalAD, nextMD, isManualDasha, isExactCalendarDasha: false, birthDashaRuler };
+    // 3. DOB-Only Mode: Do NOT fake birth fraction from day number!
+    return {
+      md: null,
+      ad: null,
+      nextMD: null,
+      isManualDasha: false,
+      isExactCalendarDasha: false,
+      isDobOnlyUnverifiedDasha: true,
+      birthDashaRuler,
+      noonMoonNakshatra: NAKSHATRA_DATA[moonNakId].name
+    };
   }
 
   // ==========================================================================
@@ -2216,115 +2204,68 @@
   // ==========================================================================
 
   function buildDomainOpportunityVsSabotageCard(ctx, domain) {
-    const { lang, chart, planetAnalysis, specialLagnas, dasha, timeline } = ctx;
-    const asc = chart.Asc.d1;
-    const lagnaMatrix = LAGNA_FUNCTIONAL_MATRIX[asc];
+    const { lang, chart, planetAnalysis, specialLagnas, timeline, findings } = ctx;
+    if (!chart.isFullChartMode || !findings || !findings.domainChecks) return "";
 
-    let targetHouse = 10;
-    let icon = "fa-briefcase";
-    let windowStr = timeline.careerWindow1;
-    let secondaryWindowStr = timeline.careerWindow2;
-    let adTrigger = timeline.careerAdTrigger;
-    let domainTitleHi = "नौकरी, प्रमोशन एवं करियर उछाल (Job / Career)";
-    let domainTitleEn = "Job Switch, Promotion & Career Rise";
+    const check = findings.domainChecks[domain];
+    const winObj = timeline[domain];
+    if (!check || !winObj) return "";
 
-    if (domain === "marriage") {
-      targetHouse = 7;
-      icon = "fa-ring";
-      windowStr = timeline.marriageWindow1;
-      secondaryWindowStr = timeline.marriageWindow2;
-      adTrigger = timeline.marriageAdTrigger;
-      domainTitleHi = "विवाह एवं रिश्ता पक्का होना (Marriage / Partner)";
-      domainTitleEn = "Marriage Finalization & Partner Commitment";
-    } else if (domain === "childbirth") {
-      targetHouse = 5;
-      icon = "fa-baby";
-      windowStr = timeline.babyWindow1;
-      secondaryWindowStr = timeline.babyWindow2;
-      adTrigger = timeline.babyAdTrigger;
-      domainTitleHi = "संतान प्राप्ति एवं गर्भधारण योग (Childbirth / Progeny)";
-      domainTitleEn = "Childbirth, Conception & Santan Yoga";
+    const titles = {
+      career:     { icon: "fa-briefcase", hi: "करियर एवं पदोन्नति (10th House & D10)", en: "Career & Authority (10th House & D10)" },
+      marriage:   { icon: "fa-ring",      hi: "विवाह एवं साझेदारी (7th House & D9)",    en: "Marriage & Partnership (7th House & D9)" },
+      childbirth: { icon: "fa-baby",      hi: "संतान योग (5th House & D7)",           en: "Progeny & Santan Yoga (5th House & D7)" }
+    }[domain];
+
+    const houseLord = planetAnalysis[check.lord];
+    const windowBadge = winObj.hasStrongWindow
+      ? (lang === "hi" ? winObj.labelHi : winObj.labelEn)
+      : (lang === "hi" ? "कोई तत्काल प्रबल दशा-गोचर खिड़की नहीं (समेकन चरण)" : "No Immediate Strong Window (Consolidation Phase)");
+
+    // Build Timing Paragraph
+    let timingHtml = "";
+    if (winObj.hasStrongWindow && winObj.primaryWindow) {
+      const pw = winObj.primaryWindow;
+      const reasons = (lang === "hi" ? pw.reasonsHi : pw.reasonsEn).join("; ");
+      timingHtml = lang === "hi"
+        ? `✅ <strong>दशा एवं गोचर समय-सीमा (${pw.periodStr}):</strong> आपकी कुंडली में <strong>${pw.adLabel}</strong> के दौरान (${reasons}) यह क्षेत्र प्रबल रूप से सक्रिय हो रहा है।`
+        : `✅ <strong>Dasha & Transit Window (${pw.periodStr}):</strong> Activated during <strong>${pw.adLabel}</strong> because ${reasons}.`;
+    } else {
+      timingHtml = lang === "hi"
+        ? `ℹ️ <strong>वर्तमान दशा स्थिति:</strong> आगामी 36 महीनों में इस भाव से संबंधित कोई उच्च-तीव्रता वाली अंतर्दशा और गुरु-शनि का डबल ट्रांजिट एक साथ नहीं बन रहा है—अतः यह समय जल्दबाजी के बजाय आधार मजबूत करने का है।`
+        : `ℹ️ <strong>Current Dasha Status:</strong> No high-intensity Antardasha and Jupiter-Saturn Double Transit converge on House ${check.house} over the immediate 36 months, marking this as a foundation and preparation phase.`;
     }
 
-    const houseRashiId = getRashiOfBhava(asc, targetHouse);
-    const houseLordKey = RASHI_DATA[houseRashiId].lord;
-    const houseLord = planetAnalysis[houseLordKey];
-    const houseBindus = specialLagnas.houseBindus[targetHouse];
-
-    // 1. Find planets actually occupying or casting a real Parashari aspect on targetHouse,
-    //    or aspecting the Lord of targetHouse!
-    const directAfflictors = ["Saturn", "Rahu", "Ketu", "Mars", "Sun"].filter(mKey => {
-      if (mKey === houseLordKey) return false; // A house lord does not sabotage its own house
-      // Never call Yogakaraka Mars a saboteur for Career (H10) or Progeny (H5)
-      if (mKey === "Mars" && lagnaMatrix.yogakaraka.includes("Mars") && domain !== "marriage") return false;
-      const p = planetAnalysis[mKey];
-      const hitsHouse = (p.bhava === targetHouse) || p.aspectedTargets.some(t => t.targetBhava === targetHouse);
-      const hitsLord  = (p.bhava === houseLord.bhava) || p.aspectedTargets.some(t => t.targetBhava === houseLord.bhava);
-      return hitsHouse || hitsLord;
-    });
-
-    // Pick a distinct, astrologically accurate saboteur for each domain
-    let saboteurKey = directAfflictors[0];
-    if (!saboteurKey) {
-      if (domain === "career") saboteurKey = [6, 8, 12].includes(planetAnalysis[dasha.ad].bhava) ? dasha.ad : "Saturn";
-      else if (domain === "marriage") saboteurKey = planetAnalysis.Mars.bhava === 7 ? "Mars" : "Saturn";
-      else saboteurKey = "Rahu";
-    }
-    // Ensure Career, Marriage, and Childbirth explain their specific mechanism clearly
-    const saboteur = planetAnalysis[saboteurKey];
-    const saboteurRashi = RASHI_DATA[saboteur.d1];
-    const saboteurNak = NAKSHATRA_DATA[saboteur.nak];
-    const satBavInTarget = specialLagnas.houseBav?.Saturn?.[targetHouse] ?? 2;
-
-    // Explain HOW the saboteur is hitting this domain
-    const hitsHouseDirectly = (saboteur.bhava === targetHouse) || saboteur.aspectedTargets.some(t => t.targetBhava === targetHouse);
-    const mechanismHi = hitsHouseDirectly
-      ? `आपके ${targetHouse}वें भाव पर सीधा स्थान/दृष्टि प्रभाव डाल रहा है`
-      : `आपके ${targetHouse}वें भाव के स्वामी (${houseLord.meta.hi}) एवं सक्रिय दशा-अक्ष को पीड़ित कर रहा है`;
-    const mechanismEn = hitsHouseDirectly
-      ? `directly occupies/aspects your ${targetHouse}th house`
-      : `afflicts your ${targetHouse}th-lord (${houseLord.meta.en}) and active Dasha axis`;
-
-    const dashaTriggerNoteHi = adTrigger ? ` (विशेषकर <strong>${adTrigger}</strong> अंतर्दशा एवं गोचर के प्रभाव से)` : "";
-    const dashaTriggerNoteEn = adTrigger ? ` (specifically triggered by your <strong>${adTrigger}</strong> sub-period and transit)` : "";
-
-    if (lang === "hi") {
-      return `
-        <div class="pdf-keep-together p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-red-500/30">
-            <span class="text-amber-300 font-extrabold text-xs md:text-sm uppercase tracking-wider">
-              <i class="fas ${icon} mr-1.5"></i>${domainTitleHi}
-            </span>
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-bold">
-              प्रथम प्रबल योग: ${windowStr} • द्वितीय योग: ${secondaryWindowStr}
-            </span>
-          </div>
-          <p class="text-xs md:text-sm text-gray-100 leading-relaxed mb-1.5">
-            ✅ <strong>सटीक अवसर काल (Exact Timing Window):</strong> आपकी कुंडली में <strong>${windowStr}</strong> के दौरान आपके ${targetHouse}वें भाव के स्वामी <strong>${houseLord.meta.hi}</strong>${dashaTriggerNoteHi} के सक्रिय होने से <strong>${domainTitleHi}</strong> का अत्यंत प्रबल योग बन रहा है (द्वितीय स्वर्णिम पड़ाव: <strong>${secondaryWindowStr}</strong>)।
-          </p>
-          <p class="text-xs md:text-sm text-red-200 leading-relaxed mb-0">
-            ⚠️ <strong>कौन सा ग्रह काम बिगाड़ रहा है (Planetary Sabotage):</strong> ठीक इसी समय आपकी कुंडली का <strong>${saboteur.meta.hi} (${saboteurRashi.hi} • ${saboteurNak.name} नक्षत्र, ${saboteur.bhava}वां भाव)</strong> ${mechanismHi} (इस भाव में कुल अष्टकवर्ग: <strong>${houseBindus} बिंदु</strong>, शनि अष्टकवर्ग योगदान: मात्र <strong>${satBavInTarget}/8 बिंदु</strong>)। <strong>बिना सटीक वैदिक शांति उपाय के यह अवसर अंतिम क्षण (99%) पर आकर अटक सकता है या विलंबित हो सकता है!</strong>
-          </p>
-        </div>
-      `;
+    // Build Affliction Paragraph ONLY if a real affliction exists!
+    let afflictionHtml = "";
+    if (check.primaryAfflictor) {
+      const aff = check.primaryAfflictor;
+      const affMeta = PLANET_META[aff.planet];
+      afflictionHtml = lang === "hi"
+        ? `<p class="text-xs md:text-sm text-amber-200 leading-relaxed mb-0 mt-2">⚠️ <strong>वास्तविक ग्रह-अवरोध (Verified Affliction):</strong> आपकी कुंडली में <strong>${affMeta.hi}</strong> ${aff.reasonHi} (सर्वाष्टकवर्ग: <strong>${check.savBindus} बिंदु</strong>), जो इस क्षेत्र में विलंब या अतिरिक्त संघर्ष उत्पन्न करता है।</p>`
+        : `<p class="text-xs md:text-sm text-amber-200 leading-relaxed mb-0 mt-2">⚠️ <strong>Verified Natal Affliction:</strong> Natal <strong>${affMeta.en}</strong> ${aff.reasonEn} (House SAV: <strong>${check.savBindus} bindus</strong>), creating friction that requires disciplined patience.</p>`;
+    } else if (check.lordInDusthana || check.lordCombust || check.lordDebilitated) {
+      const stateReasonHi = check.lordDebilitated ? "नीच राशि में है" : (check.lordCombust ? "सूर्य से अस्त है" : `${check.lordHouse}वें (दुस्थान) भाव में स्थित है`);
+      const stateReasonEn = check.lordDebilitated ? "is debilitated" : (check.lordCombust ? "is combust" : `is placed in Dusthana House ${check.lordHouse}`);
+      afflictionHtml = lang === "hi"
+        ? `<p class="text-xs md:text-sm text-amber-200 leading-relaxed mb-0 mt-2">⚠️ <strong>भावेश बल सावधानी:</strong> इस भाव पर किसी क्रूर ग्रह की सीधी मार नहीं है, परंतु भावेश <strong>${houseLord.meta.hi}</strong> स्वयं ${stateReasonHi}—अतः परिणाम धैर्य और निरंतर प्रयास के बाद ही परिपक्व होते हैं।</p>`
+        : `<p class="text-xs md:text-sm text-amber-200 leading-relaxed mb-0 mt-2">⚠️ <strong>House Lord Sensitivity:</strong> While free from external malefic aspects, your ${check.house}th lord <strong>${houseLord.meta.en}</strong> ${stateReasonEn}, requiring steady effort for full fruition.</p>`;
+    } else {
+      afflictionHtml = lang === "hi"
+        ? `<p class="text-xs md:text-sm text-emerald-300 leading-relaxed mb-0 mt-2">🛡️ <strong>अवरोध-मुक्त भाव (Clear & Protected):</strong> आपका ${check.house}वां भाव और उसके स्वामी <strong>${houseLord.meta.hi}</strong> किसी भी क्रूर ग्रह की सीधी पीड़ा से मुक्त हैं (${check.savBindus} SAV बिंदु)।</p>`
+        : `<p class="text-xs md:text-sm text-emerald-300 leading-relaxed mb-0 mt-2">🛡️ <strong>Unobstructed Axis:</strong> Your ${check.house}th house and its lord <strong>${houseLord.meta.en}</strong> are free from severe malefic affliction (${check.savBindus} SAV bindus).</p>`;
     }
 
     return `
-      <div class="pdf-keep-together p-4 rounded-2xl bg-gradient-to-r from-red-950/95 via-slate-950 to-amber-950/90 border-2 border-red-500/80 shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-red-500/30">
+      <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border ${check.hasRealAffliction ? 'border-amber-500/60' : 'border-emerald-500/50'} shadow-lg">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-white/10">
           <span class="text-amber-300 font-extrabold text-xs md:text-sm uppercase tracking-wider">
-            <i class="fas ${icon} mr-1.5"></i>${domainTitleEn}
+            <i class="fas ${titles.icon} mr-1.5"></i>${lang === "hi" ? titles.hi : titles.en}
           </span>
-          <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-bold">
-            1st Window: ${windowStr} • 2nd Window: ${secondaryWindowStr}
-          </span>
+          <span class="px-2.5 py-0.5 rounded-full bg-white/10 text-amber-200 text-xs font-bold">${windowBadge}</span>
         </div>
-        <p class="text-xs md:text-sm text-gray-100 leading-relaxed mb-1.5">
-          ✅ <strong>Exact Timing Window:</strong> During <strong>${windowStr}</strong>, your ${targetHouse}th-lord <strong>${houseLord.meta.en}</strong>${dashaTriggerNoteEn} activates a prime window for <strong>${domainTitleEn}</strong> (Secondary Window: <strong>${secondaryWindowStr}</strong>).
-        </p>
-        <p class="text-xs md:text-sm text-red-200 leading-relaxed mb-0">
-          ⚠️ <strong>Which Planet Is Sabotaging It:</strong> Simultaneously, your natal <strong>${saboteur.meta.en} (${saboteurRashi.en} • ${saboteurNak.name}, House ${saboteur.bhava})</strong> ${mechanismEn} (House SAV: <strong>${houseBindus} bindus</strong>, Saturn BAV contribution: only <strong>${satBavInTarget}/8 bindus</strong>). <strong>Unless pacified, this breakthrough can stall at the 99th percentile or face unexpected delays!</strong>
-        </p>
+        <p class="text-xs md:text-sm text-gray-100 leading-relaxed mb-0">${timingHtml}</p>
+        ${afflictionHtml}
       </div>
     `;
   }
@@ -2956,6 +2897,30 @@
     window.generateCompleteLifeDossier(null, { preserveScroll: true });
   };
 
+  // Strictly hides Lagna/House-dependent chapters when in Date-of-Birth-Only mode
+  function applyViewFilterVisibility(ctx) {
+    const isFull = Boolean(ctx.chart && ctx.chart.isFullChartMode);
+
+    // Chapters that require an exact Rising Lagna (Houses 2, 4, 5, 7, 10, SAV, Traps)
+    const lagnaRequiredChapters = [
+      "chapter-education",
+      "chapter-career",
+      "chapter-wealth",
+      "chapter-partner",
+      "chapter-childbirth",
+      "chapter-lagnas",
+      "chapter-traps"
+    ];
+
+    lagnaRequiredChapters.forEach(id => {
+      const articleEl = document.getElementById(id);
+      if (articleEl) articleEl.style.display = isFull ? "" : "none";
+
+      const navPills = document.querySelectorAll(`.chapter-nav-pill[href="#${id}"]`);
+      navPills.forEach(p => { p.style.display = isFull ? "" : "none"; });
+    });
+  }
+
   window.generateCompleteLifeDossier = function (event, options) {
     if (event && typeof event.preventDefault === "function") event.preventDefault();
     const preserveScroll = options && options.preserveScroll === true;
@@ -2971,8 +2936,17 @@
       const chart          = readChartFromDOM(numData, chaldean);
       const planetAnalysis = analyzeAllPlanetsAndAspects(chart);
       const specialLagnas  = computeSpecialLagnasAndBindus(chart);
-      const dasha          = resolveActiveDasha(chart, numData);
-      const timeline       = computeLifeEventTimeline(numData, chart, planetAnalysis);
+
+      // 1. Compute Structured Facts via FindingsEngine
+      const findings = (typeof window.FindingsEngine !== "undefined")
+        ? window.FindingsEngine.analyzeFindings(chart, specialLagnas.houseBindus)
+        : null;
+
+      // 2. Resolve Dasha (Never fake birth fraction in DOB-only mode)
+      const dasha = resolveActiveDasha(chart, numData);
+
+      // 3. Compute Dasha + Double-Transit Timeline (Zero numerology seeds)
+      const timeline = computeLifeEventTimeline(numData, chart, planetAnalysis, dasha, findings);
 
       const ctx = {
         name: nameInput,
@@ -2984,13 +2958,17 @@
         chart,
         planetAnalysis,
         specialLagnas,
+        findings,
         dasha,
         timeline,
         viewFilter: window.__jtViewFilter || "full_12",
         vedicData: window.__jtVedicData
       };
 
-      ctx.displayAsc     = chart.isFullChartMode ? RASHI_DATA[ctx.chart.Asc.d1].en : `${RASHI_DATA[ctx.chart.Sun.d1].en} (Surya Base)`;
+      // In DOB-only mode, display Moon Rashi & Natal Sun without pretending Sun is Udaya Lagna
+      ctx.displayAsc = chart.isFullChartMode
+        ? RASHI_DATA[ctx.chart.Asc.d1].en
+        : `${RASHI_DATA[ctx.chart.Moon.d1].en} Moon (DOB-Only Mode)`;
       ctx.displayMoon    = RASHI_DATA[ctx.chart.Moon.d1].en;
       ctx.displayMoonNak = NAKSHATRA_DATA[ctx.chart.Moon.nak].name;
       window.__jyotishLastCtx = ctx;
@@ -3003,29 +2981,44 @@
       };
 
       updateChapterHeadingsAndNav(langInput, ctx);
-      setHtml("contentPersonality",     buildChapter1Personality(ctx));
-      setHtml("contentEducation",       buildChapter2Education(ctx));
-      setHtml("contentCareer",          buildChapter3Career(ctx));
-      setHtml("contentWealth",          buildChapter4Wealth(ctx));
-      setHtml("contentLuck",            buildChapter5Luck(ctx));
-      setHtml("contentLove",            buildChapter6Love(ctx));
-      setHtml("contentPartner",         buildChapter7Partner(ctx));
-      setHtml("contentChildbirth",      buildChapterChildbirth(ctx));
+
+      // Use NarrativeRules if loaded; otherwise fall back to internal chapter builders
+      const NR = window.NarrativeRules;
+
+      setHtml("contentPersonality",    NR ? NR.renderChapter1Personality(ctx)    : buildChapter1Personality(ctx));
+      if (chart.isFullChartMode) {
+        setHtml("contentEducation",    NR ? NR.renderChapter2Education(ctx)      : buildChapter2Education(ctx));
+        setHtml("contentCareer",       NR ? NR.renderChapter3Career(ctx)         : buildChapter3Career(ctx));
+        setHtml("contentWealth",       NR ? NR.renderChapter4Wealth(ctx)         : buildChapter4Wealth(ctx));
+        setHtml("contentPartner",      NR ? NR.renderChapter7Partner(ctx)        : buildChapter7Partner(ctx));
+        setHtml("contentChildbirth",   NR ? NR.renderChapter8Childbirth(ctx)     : buildChapterChildbirth(ctx));
+        setHtml("contentSpecialLagnas",NR ? NR.renderChapter10SpecialLagnas(ctx) : buildChapter9SpecialLagnas(ctx));
+        setHtml("contentHiddenTraps",  NR ? NR.renderChapter12Diagnostic(ctx)    : buildChapter11HiddenTraps(ctx));
+      } else {
+        setHtml("contentEducation", "");
+        setHtml("contentCareer", "");
+        setHtml("contentWealth", "");
+        setHtml("contentPartner", "");
+        setHtml("contentChildbirth", "");
+        setHtml("contentSpecialLagnas", "");
+        setHtml("contentHiddenTraps", "");
+      }
+
+      setHtml("contentLuck",           NR ? NR.renderChapter5Luck(ctx)           : buildChapter5Luck(ctx));
+      setHtml("contentLove",           NR ? NR.renderChapter6Love(ctx)           : buildChapter6Love(ctx));
       updateChapter12Dakshina(ctx);
-      setHtml("contentPlanetsAspects",  buildChapter8PlanetsAndAspects(ctx));
-      setHtml("contentSpecialLagnas",   buildChapter9SpecialLagnas(ctx));
-      setHtml("contentTimePhase",       buildChapter10TimePhase(ctx));
-      setHtml("contentHiddenTraps",     buildChapter11HiddenTraps(ctx));
+      setHtml("contentPlanetsAspects", NR ? NR.renderChapter9Planets(ctx)        : buildChapter8PlanetsAndAspects(ctx));
+      setHtml("contentTimePhase",      NR ? NR.renderChapter11Timing(ctx)        : buildChapter10TimePhase(ctx));
 
       renderCalibrationBannerAndSwitcher(ctx);
       renderVedicExtraSections(ctx);
       applyViewFilterVisibility(ctx);
 
-      const mName = document.getElementById("name");
-      const mDob = document.getElementById("dob");
+      const mName   = document.getElementById("name");
+      const mDob    = document.getElementById("dob");
       const mGender = document.getElementById("gender");
-      if (mName) mName.value = nameInput;
-      if (mDob) mDob.value = dobInput;
+      if (mName)   mName.value   = nameInput;
+      if (mDob)    mDob.value    = dobInput;
       if (mGender) mGender.value = genderInput;
 
       const outputContainer = document.getElementById("masterDossierOutput");
@@ -3033,7 +3026,7 @@
         outputContainer.classList.remove("hidden");
         updateReadingMetricsBadge(langInput);
         if (!preserveScroll) {
-          setTimeout(() => outputContainer.scrollIntoView({behavior: "smooth", block: "start"}), 100);
+          setTimeout(() => outputContainer.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
         }
       }
     } catch (err) {
