@@ -573,6 +573,89 @@
   }
 
   // ==========================================================================
+  // 7B. SIDEREAL LONGITUDE → RASHI, NAKSHATRA, PADA, D9 & GEOCODER
+  // ==========================================================================
+  const RASHI_NAMES_EN = [
+    "Mesha (Aries)", "Vrishabha (Taurus)", "Mithuna (Gemini)", "Karka (Cancer)",
+    "Simha (Leo)", "Kanya (Virgo)", "Tula (Libra)", "Vrishchika (Scorpio)",
+    "Dhanu (Sagittarius)", "Makara (Capricorn)", "Kumbha (Aquarius)", "Meena (Pisces)"
+  ];
+
+  const NAKSHATRA_NAMES = [
+    "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
+    "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni",
+    "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
+    "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha",
+    "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"
+  ];
+
+  function siderealToRashi(lon) {
+    const norm = ((lon % 360) + 360) % 360;
+    return Math.floor(norm / 30) + 1;
+  }
+
+  function siderealToNakshatra(lon) {
+    const norm = ((lon % 360) + 360) % 360;
+    const nakSpan = 360 / 27;
+    const padaSpan = 360 / 108;
+    const idx = Math.min(26, Math.floor(norm / nakSpan));
+    const pada = Math.min(4, Math.floor((norm % nakSpan) / padaSpan) + 1);
+    return { id: idx + 1, name: NAKSHATRA_NAMES[idx], pada };
+  }
+
+  function siderealToD9(lon) {
+    const norm = ((lon % 360) + 360) % 360;
+    const padaSpan = 360 / 108;
+    const totalNavamsaIdx = Math.floor(norm / padaSpan);
+    return (totalNavamsaIdx % 12) + 1;
+  }
+
+  async function geocodePlace(placeName, explicitLat, explicitLng) {
+    const raw = (placeName || "Lucknow, Uttar Pradesh").trim();
+
+    if (typeof explicitLat === "number" && !isNaN(explicitLat) && typeof explicitLng === "number" && !isNaN(explicitLng)) {
+      const isIndia = explicitLat >= 6 && explicitLat <= 37.5 && explicitLng >= 68 && explicitLng <= 97.5;
+      const tz = isIndia ? 330 : Math.round(explicitLng / 15) * 60;
+      return { lat: explicitLat, lng: explicitLng, tz, name: raw };
+    }
+
+    const fullLower = raw.toLowerCase().replace(/\s+/g, " ");
+    if (CITY_CACHE[fullLower]) {
+      return { ...CITY_CACHE[fullLower], name: CITY_CACHE[fullLower].name || raw };
+    }
+
+    const primaryCity = fullLower.split(/[,\-()/]/)[0].trim();
+    if (CITY_CACHE[primaryCity]) {
+      return { ...CITY_CACHE[primaryCity], name: CITY_CACHE[primaryCity].name || raw };
+    }
+
+    const matches = searchPlaces(primaryCity, 1);
+    if (matches.length > 0) {
+      const m = matches[0];
+      return { lat: m.lat, lng: m.lng, tz: m.tz, name: m.label };
+    }
+
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(raw)}&limit=1`;
+      const res = await fetch(url, { headers: { "Accept-Language": "en" } });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lng = parseFloat(data[0].lon);
+          const isIndia = lat >= 6 && lat <= 37.5 && lng >= 68 && lng <= 97.5;
+          const tz = isIndia ? 330 : Math.round(lng / 15) * 60;
+          return { lat, lng, tz, name: data[0].display_name.split(",").slice(0, 2).join(", ") || raw };
+        }
+      }
+    } catch (e) {
+      console.warn("Nominatim geocoding fallback warning:", e);
+    }
+
+    return { lat: 26.8467, lng: 80.9462, tz: 330, name: `${raw} (IST Standard)` };
+  }
+
+  // ==========================================================================
   // 8. FULL BIRTH CHART CALCULATION (WHEN BIRTH TIME IS PROVIDED)
   // ==========================================================================
   async function calculateChart({ name, dob, time, place, lat, lng, tzZone, nodeType = "mean", timeAccuracy = "exact" }) {
@@ -584,7 +667,6 @@
     const minute = timeParts[1] || 0;
     const second = timeParts[2] || 0;
 
-    // Resolve historical timezone / War-Time DST offset
     const tzInfo = resolveHistoricalTzOffsetMinutes({
       year, month, day, hour, minute,
       lat: geo.lat, lng: geo.lng,
@@ -643,7 +725,6 @@
       const nak = siderealToNakshatra(lon);
       const d9 = siderealToD9(lon);
 
-      // Combustion Check
       let combust = false;
       let distanceFromSun = null;
       if (COMBUST_ORB_DEG[k]) {
@@ -673,7 +754,6 @@
       };
     });
 
-    // Planetary War (Graha Yuddha): Mars, Mercury, Jupiter, Venus, Saturn within 1.0°
     const warCandidates = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
     for (let i = 0; i < warCandidates.length; i++) {
       for (let j = i + 1; j < warCandidates.length; j++) {
@@ -690,7 +770,6 @@
       }
     }
 
-    // Time-Sensitivity & Boundary Warnings (Lagna within 1° of sign border, or Moon within 0.5° of Nakshatra border)
     const ascDeg = result.Asc.degInSign;
     const isLagnaBoundary = (ascDeg < 1.0 || ascDeg > 29.0);
     const moonNakRemainder = (result.Moon.longitude % (360 / 27));
@@ -710,21 +789,17 @@
 
   // ==========================================================================
   // 9. HONEST DOB-ONLY ASTRONOMICAL EPHEMERIS (12:00 PM NOON IST — NO FAKE LAGNA)
-  //    Calculates the 100% real Sidereal Rashi, Nakshatra & Retrograde state
-  //    of Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu & Ketu on that
-  //    exact date, and checks if Moon changed Rashi during those 24 hours!
   // ==========================================================================
   function calculateDobOnlyAstronomy(dob) {
     const [year, month, day] = (dob || "1998-01-24").split("-").map(Number);
-    // 12:00 PM Noon IST = 06:30 UTC
     const noonUTC = new Date(Date.UTC(year, month - 1, day, 6, 30, 0));
-    const startOfDayUTC = new Date(Date.UTC(year, month - 1, day - 1, 18, 30, 0)); // 00:00 IST
-    const endOfDayUTC   = new Date(Date.UTC(year, month - 1, day, 18, 29, 0));     // 23:59 IST
+    const startOfDayUTC = new Date(Date.UTC(year, month - 1, day - 1, 18, 30, 0));
+    const endOfDayUTC   = new Date(Date.UTC(year, month - 1, day, 18, 29, 0));
 
-    const { longitudes: tropicalNoon, retro } = getTropicalLongitudesAndRetro(noonUTC);
+    // Fixed: Calls getTropicalLongitudesSpeedAndRetro instead of deleted function
+    const { longitudes: tropicalNoon, speedPerDay, retro } = getTropicalLongitudesSpeedAndRetro(noonUTC, "mean");
     const ayan = lahiriAyanamsa(noonUTC);
 
-    // Check Moon at start and end of day in case Moon shifted signs that day
     const tropStart = computeSingleMomentTropical(startOfDayUTC);
     const tropEnd   = computeSingleMomentTropical(endOfDayUTC);
     const moonStartRashi = siderealToRashi(((tropStart.Moon - ayan) % 360 + 360) % 360);
@@ -740,6 +815,7 @@
       meta: { dob, ayanamsa: ayan }
     };
 
+    const sunLon = ((tropicalNoon.Sun - ayan) % 360 + 360) % 360;
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     planets.forEach(k => {
       const lon = ((tropicalNoon[k] - ayan) % 360 + 360) % 360;
@@ -750,9 +826,16 @@
       const nak = siderealToNakshatra(lon);
       const d9 = siderealToD9(lon);
 
+      let combust = false;
+      if (COMBUST_ORB_DEG[k]) {
+        const orb = retro[k] ? COMBUST_ORB_DEG[k].retro : COMBUST_ORB_DEG[k].direct;
+        combust = angularSeparation(lon, sunLon) <= orb;
+      }
+
       out[k] = {
         longitude: lon,
         degInSign,
+        dailySpeed: speedPerDay[k] || 0,
         formattedDeg: `${String(deg).padStart(2, "0")}°${String(min).padStart(2, "0")}'`,
         rashi,
         d1: rashi,
@@ -763,26 +846,26 @@
         pada: nak.pada,
         d9,
         d9Name: RASHI_NAMES_EN[d9 - 1],
-        retro: Boolean(retro[k])
+        retro: Boolean(retro[k]),
+        combust
       };
     });
 
-    // In Classical Vedic Surya Kundali (when birth time is unknown), houses are counted from Natal Sun (Surya Lagna)
     out.Asc = {
-      longitude: out.Sun.longitude,
-      degInSign: out.Sun.degInSign,
-      formattedDeg: out.Sun.formattedDeg,
-      rashi: out.Sun.rashi,
-      d1: out.Sun.rashi,
-      rashiName: out.Sun.rashiName,
-      nakshatra: out.Sun.nakshatra,
-      nak: out.Sun.nakshatra,
-      nakshatraName: out.Sun.nakshatraName,
-      pada: out.Sun.pada,
-      d9: out.Sun.d9,
-      d9Name: out.Sun.d9Name,
+      longitude: out.Moon.longitude,
+      degInSign: out.Moon.degInSign,
+      formattedDeg: out.Moon.formattedDeg,
+      rashi: out.Moon.rashi,
+      d1: out.Moon.rashi,
+      rashiName: out.Moon.rashiName,
+      nakshatra: out.Moon.nakshatra,
+      nak: out.Moon.nakshatra,
+      nakshatraName: out.Moon.nakshatraName,
+      pada: out.Moon.pada,
+      d9: out.Moon.d9,
+      d9Name: out.Moon.d9Name,
       retro: false,
-      isSuryaLagnaAnchor: true
+      isMoonAnchorInDobOnlyMode: true
     };
 
     return out;
@@ -796,11 +879,14 @@
     calculateDobOnlyAstronomy,
     geocodePlace,
     searchPlaces,
+    resolveHistoricalTzOffsetMinutes,
     ALL_PLACES_LIST,
     _internal: {
       lahiriAyanamsa,
       getTropicalLongitudes: computeSingleMomentTropical,
-      computeAscendant,
+      getTropicalLongitudesSpeedAndRetro,
+      computeAscendant: (date, lat, lng) => computeAscendantAndSripatiHouses(date, lat, lng, 0).ascTropical,
+      computeAscendantAndSripatiHouses,
       siderealToRashi,
       siderealToNakshatra,
       siderealToD9
