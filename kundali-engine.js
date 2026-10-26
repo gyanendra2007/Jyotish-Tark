@@ -1167,63 +1167,512 @@
   }
 
   // ==========================================================================
-  // 9. FALLBACK CHAPTER GENERATORS (USED WHEN NARRATIVE-RULES DEFERS)
+  // 9. DEEP BPHS + JAIMINI + CHALDEAN + SHADBALA CHAPTER GENERATORS (v10.0)
   // ==========================================================================
 
-  function buildChapter1Personality(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter1Personality === "function") {
-      return window.NarrativeRules.renderChapter1Personality(ctx);
+  const PLANET_REMEDIES = {
+    Sun: {
+      mantraHi: "ॐ घृणि सूर्याय नमः (प्रतिदिन प्रातः तांबे के लोटे से सूर्य को अर्घ्य दें एवं आदित्य हृदय स्तोत्र का पाठ करें)",
+      mantraEn: "Om Ghrini Suryaya Namah (Offer morning Arghya to the rising Sun in a copper vessel & recite Aditya Hridaya Stotra)",
+      danaHi: "रविवार को गुड़, गेहूं या तांबे का सात्विक दान एवं पिता/वरिष्ठों का सम्मान",
+      danaEn: "Donate jaggery, wheat, or copper on Sundays and honor paternal elders",
+      lifestyleHi: "प्रातः सूर्योदय के समय जागना, रीढ़ को सीधा रखकर प्राणायाम और वचन की प्रामाणिकता",
+      lifestyleEn: "Wake near sunrise, practice spinal-alignment pranayama, and maintain strict integrity of word"
+    },
+    Moon: {
+      mantraHi: "ॐ सों सोमाय नमः एवं 'ॐ नमः शिवाय' का रुद्राक्ष माला से नित्य 108 बार जाप (सोमवार को शिवलिंग पर दुग्ध-जल अभिषेक)",
+      mantraEn: "Om Som Somaya Namah & 108 daily repetitions of 'Om Namah Shivaya' (Abhishekam on Shiva Lingam on Mondays)",
+      danaHi: "सोमवार को चावल, मिश्री, दूध या श्वेत वस्त्र का दान एवं माता का आशीर्वाद",
+      danaEn: "Offer rice, milk, or white cloth on Mondays and seek your mother's blessings",
+      lifestyleHi: "चांदी के पात्र से जल ग्रहण करना, रात्रि 11 बजे के बाद स्क्रीन से दूरी और पूर्णिमा ध्यान",
+      lifestyleEn: "Drink water from a silver tumbler, avoid late-night screen overstimulation, and meditate on Purnima"
+    },
+    Mars: {
+      mantraHi: "ॐ क्रां क्रीं क्रौं सः भौमाय नमः एवं मंगलवार को श्री हनुमान चालीसा व बजरंग बाण का पाठ",
+      mantraEn: "Om Kram Kreem Kroum Sah Bhaumaya Namah & recitation of Hanuman Chalisa every Tuesday",
+      danaHi: "मंगलवार को लाल मसूर, गुड़ या हनुमान मंदिर में सिंदूर-चमेली तेल अर्पण",
+      danaEn: "Offer red lentils (Masoor), jaggery, or sindoor at a Hanuman temple on Tuesdays",
+      lifestyleHi: "नियमित शारीरिक व्यायाम, रक्तदान/सेवा और क्रोध में तत्काल प्रतिक्रिया न देना",
+      lifestyleEn: "Channel fiery Mars energy into daily physical workout and pause 10 seconds before reacting in anger"
+    },
+    Mercury: {
+      mantraHi: "ॐ बुं बुधाय नमः एवं बुधवार को श्री विष्णु सहस्रनाम या गणपति अथर्वशीर्ष का पाठ",
+      mantraEn: "Om Bum Budhaya Namah & Wednesday recitation of Vishnu Sahasranama or Ganapati Atharvashirsha",
+      danaHi: "बुधवार को गौशाला में हरा चारा, साबुत मूंग या विद्यार्थियों को पुस्तकें भेंट करना",
+      danaEn: "Feed green fodder to cows on Wednesdays or donate stationery/books to students",
+      lifestyleHi: "प्रातः हरी घास पर नंगे पांव चलना, अपने विचारों को डायरी में लिखना (Journaling) और वाणी संयम",
+      lifestyleEn: "Walk barefoot on morning grass, journal parallel thoughts to clear mental clutter, and speak measuredly"
+    },
+    Jupiter: {
+      mantraHi: "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः (गुरुवार को केसर/हल्दी का तिलक एवं केले के वृक्ष या विष्णु मंदिर में पूजन)",
+      mantraEn: "Om Gram Greem Groum Sah Gurave Namah (Apply saffron/turmeric tilak on Thursdays & worship Lord Vishnu)",
+      danaHi: "गुरुवार को चने की दाल, हल्दी, पीले फल या धार्मिक/शैक्षिक पुस्तकों का दान",
+      danaEn: "Donate yellow gram (chana dal), turmeric, bananas, or educational resources on Thursdays",
+      lifestyleHi: "अपने गुरु, शिक्षकों और धर्म का आदर तथा सात्विक आहार से लीवर/पाचन को स्वस्थ रखना",
+      lifestyleEn: "Maintain reverence toward mentors/teachers and keep liver metabolism clean through sattvic diet"
+    },
+    Venus: {
+      mantraHi: "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः एवं शुक्रवार को श्री सूक्त या कनकधारा स्तोत्र का पाठ",
+      mantraEn: "Om Dram Dreem Droum Sah Shukraya Namah & Friday recitation of Sri Suktam or Kanakadhara Stotra",
+      danaHi: "शुक्रवार को दही, खीर, इत्र, श्वेत मिठाई या कन्याओं/गौमाता की सेवा",
+      danaEn: "Offer curd, kheer, white sweets, or cow/kanya seva on Fridays",
+      lifestyleHi: "स्वच्छ सुगंधित वस्त्र पहनना, निवास के आग्नेय (South-East) कोण को सुव्यवस्थित रखना और जीवनसाथी का सम्मान",
+      lifestyleEn: "Keep personal grooming refined, maintain a clutter-free South-East corner, and honor your partner"
+    },
+    Saturn: {
+      mantraHi: "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः एवं शनिवार संध्या को पीपल के नीचे सरसों के तेल का दीपक व दशरथ कृत शनि स्तोत्र",
+      mantraEn: "Om Pram Preem Proum Sah Shanaishcharaya Namah & light a mustard-oil lamp under a Peepal tree on Saturday evenings",
+      danaHi: "शनिवार को काले तिल, उड़द, छाया-पात्र या श्रमिकों/असहाय जनों को भोजन व पादुका दान",
+      danaEn: "Donate black sesame, urad dal, or food/footwear to hardworking laborers on Saturdays",
+      lifestyleHi: "कठोर अनुशासन, समय की पाबंदी और अपने अधीन कार्य करने वाले कर्मचारियों के प्रति पूर्ण न्याय",
+      lifestyleEn: "Practice strict punctuality, long-term patience, and absolute fairness toward subordinates and workers"
+    },
+    Rahu: {
+      mantraHi: "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः एवं रात्रि में मां दुर्गा (दुर्गा सप्तशती कवच/अर्गला) या कालभैरव अष्टक का पाठ",
+      mantraEn: "Om Bhram Bhreem Bhroum Sah Rahave Namah & evening recitation of Durga Kavach or Kalabhairava Ashtakam",
+      danaHi: "शनिवार/बुधवार को सप्तधान्य, नारियल, नीले/धूसर वस्त्र का दान या पक्षियों को दाना डालना",
+      danaEn: "Offer seven grains (Saptadhanya) to birds or donate coconut/blankets to the needy",
+      lifestyleHi: "इलेक्ट्रॉनिक गैजेट्स का रात्रि में संयमित उपयोग, सट्टे/शॉर्टकट से बचाव और शयनकक्ष में कपूर जलाना",
+      lifestyleEn: "Avoid late-night digital dopamine loops, steer clear of speculative shortcuts, and diffuse camphor at dusk"
+    },
+    Ketu: {
+      mantraHi: "ॐ स्रां स्रीं स्रौं सः केतवे नमः एवं श्री गणपति संकटनाशन स्तोत्र का नित्य पाठ",
+      mantraEn: "Om Sram Sreem Sroum Sah Ketave Namah & daily recitation of Sankata Nashana Ganapati Stotra",
+      danaHi: "मंगलवार/गुरुवार को भगवान गणेश को दूर्वा अर्पण तथा श्वान (कुत्तों) को रोटी/दूध खिलाना",
+      danaEn: "Offer Durva grass to Lord Ganesha and feed stray dogs regularly",
+      lifestyleHi: "प्रतिदिन 15 मिनट मौन ध्यान (Meditation), आध्यात्मिक स्वाध्याय और अतीत के अपराध-बोध का त्याग",
+      lifestyleEn: "Practice 15 minutes of silent breath meditation daily and release past karmic guilt"
     }
-    return "";
+  };
+
+  function buildChapter1Personality(ctx) {
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter1Personality === "function")
+      ? window.NarrativeRules.renderChapter1Personality(ctx)
+      : "";
+
+    const { lang, name, chart, numData, chaldean, specialLagnas, planetAnalysis } = ctx;
+    const isFull = chart.isFullChartMode;
+    const ascR = chart.Asc.d1;
+    const moonR = chart.Moon.d1;
+    const sunR = chart.Sun.d1;
+    const ascData = RASHI_DATA[ascR];
+    const moonData = RASHI_DATA[moonR];
+    const sunData = RASHI_DATA[sunR];
+    const nakData = NAKSHATRA_DATA[chart.Moon.nak] || NAKSHATRA_DATA[1];
+    const mulankArch = MULANK_ARCHETYPES[numData.mulank] || MULANK_ARCHETYPES[1];
+    const bhagyankArch = MULANK_ARCHETYPES[numData.bhagyank] || MULANK_ARCHETYPES[1];
+    const lagnaMatrix = LAGNA_FUNCTIONAL_MATRIX[ascR] || LAGNA_FUNCTIONAL_MATRIX[1];
+
+    const hookOpening = pickUniqueVariant("ch1Opening", DYNAMIC_HOOK_BANKS.ch1Opening, ctx);
+    const radarBox = pickUniqueVariant("ch1RadarBox", DYNAMIC_HOOK_BANKS.ch1RadarBox, ctx);
+
+    const arudhaData = RASHI_DATA[specialLagnas.arudhaRashi];
+    const akKey = specialLagnas.atmakarakaKey;
+    const akMeta = PLANET_META[akKey];
+    const karakamsaData = RASHI_DATA[specialLagnas.karakamsaRashi];
+    const sav1 = specialLagnas.houseBindus[1] || 28;
+
+    if (lang === "hi") {
+      const openingP = hookOpening.hi ? `<p>${hookOpening.hi(name, isFull ? ascData.hi + " लग्न" : sunData.hi + " सूर्य", moonData.hi)}</p>` : "";
+      const bodyAndTemperamentP = isFull
+        ? `<p><strong>3. शारीरिक आभा, पंचमहाभूत तत्व (${ascData.elementHi} + ${moonData.elementHi}) एवं गुप्त मनोविज्ञान:</strong> आपकी लग्न राशि <strong>${ascData.hi} (${ascData.qualityHi})</strong> आपको <em>${ascData.bodyBuildHi}</em> और <em>${ascData.temperamentHi}</em> स्वभाव देती है, जबकि चंद्रमा की <strong>${moonData.hi}</strong> राशि आपके अंतर्मन में <em>${nakData.traitHi}</em> का संचार करती है। प्रथम भाव में <strong>${sav1} सर्वाष्टकवर्ग बिंदु</strong> होने से आप किसी भी संकट या मानसिक आघात के बाद स्वयं को पुनः खड़ा करने की असाधारण जीवटता रखते हैं। फिर भी, आपकी कुंडली का एक अनकहा संवेदनशील पक्ष है: <em>${lagnaMatrix.secretWeaknessHi}</em>।</p>`
+        : `<p><strong>2. चंद्र नक्षत्र (${nakData.name}) एवं सूर्य-चंद्र मनोविज्ञान:</strong> आपका चंद्रमा <strong>${nakData.name}</strong> नक्षत्र में होने से आपमें जन्मजात <em>${nakData.traitHi}</em> विद्यमान है, तथा सूर्य की <strong>${sunData.hi}</strong> राशि आपके बाहरी व्यक्तित्व को <em>${sunData.temperamentHi}</em> बनाती है।</p>`;
+
+      const arudhaAndSoulP = isFull
+        ? `<p><strong>4. जैमिनी आरूढ़ लग्न (AL — ${arudhaData.hi}) बनाम कारकांश आत्मा (${karakamsaData.hi}):</strong> समाज और बाहरी दुनिया आपको आपके <strong>आरूढ़ लग्न (${arudhaData.hi}, लग्न से ${specialLagnas.arudhaHouseFromLagna}वां भाव)</strong> के दर्पण से देखती है—अर्थात् लोगों को आपके व्यक्तित्व में ${arudhaData.lordHi} की कार्यशैली और गंभीरता दिखाई देती है। वहीं, सर्वोच्च अंशों वाले आपके आत्मकारक <strong>${akMeta.hi}</strong> नवांश में <strong>${karakamsaData.hi}</strong> में स्थित होकर आपकी आत्मा को सत्य, स्वाभिमान और उच्च कर्म-लक्ष्यों की ओर प्रेरित करते हैं।</p>`
+        : "";
+
+      const numerologySynthesisBox = `
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-purple-400/35 mt-4 space-y-2">
+          <div class="text-xs md:text-sm font-bold text-amber-300">
+            <i class="fas fa-fingerprint mr-1.5"></i>वैदिक एवं अंक-ज्योतिष समन्वय (मूलांक ${numData.mulank} • भाग्यांक ${numData.bhagyank} • नामांक ${chaldean.compound}/${chaldean.single}):
+          </div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${mulankArch.psychHi} इसके साथ ही आपका <strong>भाग्यांक ${numData.bhagyank} (${bhagyankArch.ruler})</strong> और कैल्डियन नाम-स्पंदन <strong>${chaldean.compound} → ${chaldean.single}</strong> (${chaldean.breakdown}) आपके जीवन के उत्तरार्ध में स्थायी नेतृत्व और स्व-अर्जित प्रतिष्ठा को बल देते हैं।</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-amber-300 mb-1">⚡ ${radarBox.titleHi}</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${radarBox.hi}</p>
+        </div>
+      `;
+
+      return openingP + baseHtml + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
+    }
+
+    const openingP = hookOpening.en ? `<p>${hookOpening.en(name, isFull ? ascData.en + " Ascendant" : sunData.en + " Sun", moonData.en)}</p>` : "";
+    const bodyAndTemperamentP = isFull
+      ? `<p><strong>3. Constitutional Aura, Elemental Polarity (${ascData.element} + ${moonData.element}) & Inner Psychology:</strong> Rising in <strong>${ascData.en} (${ascData.quality})</strong>, your outer presence projects <em>${ascData.bodyBuildEn}</em> and a temperament that is <em>${ascData.temperamentEn}</em>. Simultaneously, your <strong>${moonData.en} Moon</strong> in <strong>${nakData.name}</strong> infuses your inner mind with <em>${nakData.traitEn}</em>. With <strong>${sav1} Sarvashtakavarga bindus</strong> fortifying your 1st house, your physical and mental recovery power after setbacks is remarkably strong. Yet your chart carries a private emotional Achilles' heel: <em>${lagnaMatrix.secretWeaknessEn}</em>.</p>`
+      : `<p><strong>2. Janma Nakshatra (${nakData.name}) & Solar-Lunar Polarity:</strong> Your Moon in <strong>${nakData.name}</strong> imparts <em>${nakData.traitEn}</em>, while your <strong>${sunData.en} Sun</strong> shapes an outer temperament that is <em>${sunData.temperamentEn}</em>.</p>`;
+
+    const arudhaAndSoulP = isFull
+      ? `<p><strong>4. Jaimini Arudha Lagna (AL in ${arudhaData.en}) vs. Karakamsa Soul Axis (${karakamsaData.en}):</strong> While your true self is governed by ${ascData.en}, the external world perceives you through your <strong>Arudha Lagna in ${arudhaData.en} (${specialLagnas.arudhaHouseFromLagna}th from Lagna)</strong>. Meanwhile, your highest-degree Jaimini Atmakaraka <strong>${akMeta.en}</strong> places your Karakamsa in <strong>${karakamsaData.en}</strong> in D9, driving your soul toward authentic mastery and dharmic self-reliance.</p>`
+      : "";
+
+    const numerologySynthesisBox = `
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-purple-400/35 mt-4 space-y-2">
+        <div class="text-xs md:text-sm font-bold text-amber-300">
+          <i class="fas fa-fingerprint mr-1.5"></i>Vedic & Chaldean Vibrational Synthesis (Mulank ${numData.mulank} • Bhagyank ${numData.bhagyank} • Name ${chaldean.compound}/${chaldean.single}):
+        </div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${mulankArch.psychEn} Paired with your <strong>Destiny Number ${numData.bhagyank} (${bhagyankArch.ruler})</strong> and Chaldean name vibration <strong>${chaldean.compound} → ${chaldean.single}</strong> (${chaldean.breakdown}), your chart is wired for progressive authority as you mature.</p>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-amber-300 mb-1">⚡ ${radarBox.titleEn}</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${radarBox.en}</p>
+      </div>
+    `;
+
+    return openingP + baseHtml + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
   }
 
   function buildChapter2Education(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter2Education === "function") {
-      return window.NarrativeRules.renderChapter2Education(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter2Education === "function")
+      ? window.NarrativeRules.renderChapter2Education(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, findings, specialLagnas } = ctx;
+    const studyHook = pickUniqueVariant("ch2StudyPattern", DYNAMIC_HOOK_BANKS.ch2StudyPattern, ctx);
+    const edu = findings?.domainChecks?.education;
+    const lord5Key = edu ? edu.lord : RASHI_DATA[getRashiOfBhava(chart.Asc.d1, 5)].lord;
+    const lord5 = chart[lord5Key];
+    const merc = chart.Mercury;
+    const jup = chart.Jupiter;
+    const sav4 = specialLagnas.houseBindus[4] || 28;
+    const sav5 = specialLagnas.houseBindus[5] || 28;
+    const sav9 = specialLagnas.houseBindus[9] || 28;
+    const amkKey = findings?.charaKarakas?.amatyakaraka || "Mercury";
+
+    const fieldMapHi = {
+      Sun: "प्रशासनिक सेवा (Civil Services/PSC), राजनीति विज्ञान, चिकित्सा, प्रबंधन एवं नेतृत्व-प्रधान क्षेत्र",
+      Moon: "मनोविज्ञान, जनसंपर्क, रचनात्मक लेखन, मानव संसाधन (HR), चिकित्सा एवं परामर्श",
+      Mars: "इंजीनियरिंग, रक्षा/पुलिस सेवा, कंप्यूटर हार्डवेयर, शल्य-चिकित्सा (Surgery), सिविल/रियल एस्टेट एवं टेक्नोलॉजी",
+      Mercury: "सॉफ्टवेयर/IT, डेटा साइंस, वाणिज्य (CA/Finance), गणित, कानून, पत्रकारिता एवं व्यापार प्रबंधन",
+      Jupiter: "विधि (Law/Judiciary), शिक्षा, वित्त/बैंकिंग, दर्शन, उच्च प्रबंधन एवं नीति-निर्माण (Policy & Advisory)",
+      Venus: "डिजाइन, मीडिया, आर्किटेक्चर, लग्जरी/हॉस्पिटैलिटी, कला, डिजिटल क्रिएशन एवं कॉर्पोरेट ब्रांडिंग",
+      Saturn: "तकनीकी शोध, न्यायपालिका, सिविल/मैकेनिकल इंजीनियरिंग, डेटा आर्किटेक्चर, खनन एवं दीर्घकालिक प्रशासनिक विषय"
+    };
+    const fieldMapEn = {
+      Sun: "Public Administration (Civil Services/PSC), Executive Management, Political Science, Medicine, and Institutional Leadership",
+      Moon: "Psychology, Healthcare, Public Relations, Creative Media, Human Resources, and Counseling",
+      Mars: "Engineering, Defense/Uniformed Services, Systems Architecture, Surgery, Real Estate Infrastructure, and Applied Technology",
+      Mercury: "Software Engineering, Data Science, Chartered Accountancy/Finance, Commercial Law, Analytics, and Strategic Communication",
+      Jupiter: "Jurisprudence/Law, Banking & Macro-Finance, Academia, Advisory Consulting, Ethics, and Executive Strategy",
+      Venus: "Architecture, UI/UX & Product Design, Media Production, Luxury Commerce, Aesthetics, and Diplomatic Management",
+      Saturn: "Deep Technical Research, Judiciary, Core Engineering, Operations Systems, Compliance, and Long-Horizon Strategy"
+    };
+
+    const recommendedFieldsHi = fieldMapHi[lord5Key] || fieldMapHi.Mercury;
+    const recommendedFieldsEn = fieldMapEn[lord5Key] || fieldMapEn.Mercury;
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>3. चतुर्थ-पंचम-नवम शिक्षा त्रिकोण (4H: ${sav4} • 5H: ${sav5} • 9H: ${sav9} बिंदु) एवं अनुकूल विषय:</strong>
+          वैदिक ज्योतिष में चतुर्थ भाव (औपचारिक डिग्री), पंचम भाव (मूल प्रज्ञा) और नवम भाव (उच्च शोध व विशेषज्ञता) के समन्वय से शिक्षा की दिशा तय होती है। आपके पंचमेश <strong>${PLANET_META[lord5Key].hi}</strong> तथा अमात्यकारक <strong>${PLANET_META[amkKey].hi}</strong> के प्रभाव से आपके मस्तिष्क के लिए सर्वाधिक अनुकूल क्षेत्र हैं: <strong>${recommendedFieldsHi}</strong>।
+          ${merc.rashi === chart.Sun.rashi ? ` आपकी कुंडली में <strong>सूर्य-बुध का बुधादित्य योग</strong> भी सक्रिय है, जो जटिल अवधारणाओं को तेजी से समझने और समझाने की क्षमता देता है।` : ""}
+        </p>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-blue-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-blue-300 mb-1"><i class="fas fa-brain mr-1.5"></i>आपकी बौद्धिक कार्यशैली एवं प्रतियोगी परीक्षा सूत्र:</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${studyHook.hi} प्रतियोगी परीक्षाओं या साक्षात्कार में सफलता हेतु उत्तर-पूरब (ईशान) की ओर मुख करके अध्ययन करना और 45-45 मिनट के स्प्रिंट में पढ़ना आपके बुध-गुरु अक्ष को सर्वाधिक सक्रिय करता है।</p>
+        </div>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>3. The 4th–5th–9th Academic Triad (4H: ${sav4} • 5H: ${sav5} • 9H: ${sav9} Bindus) & Best-Fit Disciplines:</strong>
+        In Parashari analysis, the 4th house governs foundational schooling, the 5th governs analytical intelligence, and the 9th governs higher specialization. Guided by your 5th lord <strong>${lord5Key}</strong> and Jaimini Amatyakaraka <strong>${amkKey}</strong>, your intellect excels in: <strong>${recommendedFieldsEn}</strong>.
+        ${merc.rashi === chart.Sun.rashi ? ` Furthermore, the conjunction of Sun and Mercury forms <strong>Budhaditya Yoga</strong> in your chart, sharpening conceptual synthesis and articulation.` : ""}
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-blue-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-blue-300 mb-1"><i class="fas fa-brain mr-1.5"></i>Cognitive Learning Pattern & Competitive Exam Strategy:</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${studyHook.en} Studying in focused 45-minute problem-solving sprints facing East or North-East maximizes your Mercury-Jupiter retention axis.</p>
+      </div>
+    `;
   }
 
   function buildChapter3Career(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter3Career === "function") {
-      return window.NarrativeRules.renderChapter3Career(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter3Career === "function")
+      ? window.NarrativeRules.renderChapter3Career(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, findings, specialLagnas } = ctx;
+    const car = findings?.domainChecks?.career;
+    const lord10Key = car ? car.lord : RASHI_DATA[getRashiOfBhava(chart.Asc.d1, 10)].lord;
+    const lord10 = chart[lord10Key];
+    const amkKey = findings?.charaKarakas?.amatyakaraka || "Saturn";
+    const amkPlanet = chart[amkKey];
+    const sav6  = specialLagnas.houseBindus[6]  || 28;
+    const sav7  = specialLagnas.houseBindus[7]  || 28;
+    const sav10 = specialLagnas.houseBindus[10] || 28;
+    const sav11 = specialLagnas.houseBindus[11] || 28;
+    const ascData = RASHI_DATA[chart.Asc.d1];
+    const lord10RashiData = RASHI_DATA[lord10.rashi];
+
+    const isBizStronger = (sav7 + sav11 >= sav6 + 4) || [1, 3, 7, 11].includes(lord10.house);
+    const matAges10 = (PLANET_MATURITY_AGES[lord10Key] || [24, 30, 36]).join(", ");
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>3. नौकरी बनाम स्वतंत्र व्यवसाय/परामर्श एवं जैमिनी अमात्यकारक (${PLANET_META[amkKey].hi}):</strong>
+          आपकी कुंडली में द्वितीय सर्वोच्च अंशों वाला ग्रह <strong>${PLANET_META[amkKey].hi} (${amkPlanet.formattedDMS || amkPlanet.formattedDeg})</strong> आपका <strong>अमात्यकारक</strong> (करियर व पद का नैसर्गिक मंत्री) है, जो ${amkPlanet.house}वें भाव में स्थित है। सर्वाष्टकवर्ग में षष्ठ भाव (सेवा/नौकरी: <strong>${sav6} बिंदु</strong>), सप्तम भाव (स्वतंत्र व्यापार/साझेदारी: <strong>${sav7} बिंदु</strong>) और दशम भाव (सत्ता/कमांड: <strong>${sav10} बिंदु</strong>) का तुलनात्मक अध्ययन दर्शाता है कि ${
+            isBizStronger
+              ? `प्रारंभिक अनुभव के पश्चात आपके लिए स्वतंत्र नेतृत्व, कंसल्टेंसी, उद्यमिता या स्वायत्त अधिकार (Autonomous Command) वाला पद सर्वाधिक फलदायी रहेगा, जहां आपके निर्णयों पर किसी का अनावश्यक हस्तक्षेप न हो।`
+              : `संगठित संस्थान, उच्च प्रशासनिक तंत्र, कॉर्पोरेट लीडरशिप या तकनीकी विशेषज्ञता के माध्यम से सीढ़ी-दर-सीढ़ी शीर्ष पद तक पहुंचना आपके लिए अत्यंत सुरक्षित और राजयोगकारक है।`
+          }
+        </p>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-amber-300 mb-1"><i class="fas fa-compass mr-1.5"></i>भाग्योदय दिशा एवं कर्मेश परिपक्वता आयु (${matAges10} वर्ष):</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">आपके दशमेश <strong>${PLANET_META[lord10Key].hi}</strong> की नैसर्गिक परिपक्वता आयु <strong>${matAges10} वर्ष</strong> है—अर्थात् इन आयु-पड़ावों पर आपके करियर के स्तर और अधिकार में बड़ा उछाल आता है। कार्यक्षेत्र एवं भाग्योदय हेतु <strong>${lord10RashiData.directionHi}</strong> तथा <strong>${ascData.altDirectionHi}</strong> आपके लिए विशेष रूप से शुभ हैं।</p>
+        </div>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>3. Executive Service vs. Independent Enterprise & Jaimini Amatyakaraka (${amkKey}):</strong>
+        Your second-highest degree planet <strong>${amkKey} (${amkPlanet.formattedDMS || amkPlanet.formattedDeg})</strong> serves as your Jaimini <strong>Amatyakaraka</strong> in House ${amkPlanet.house}. Comparing your 6th house of structured service (<strong>${sav6} bindus</strong>), 7th house of independent trade (<strong>${sav7} bindus</strong>), and 10th house of command (<strong>${sav10} bindus</strong>) indicates that ${
+          isBizStronger
+            ? `while institutional roles build your initial foundation, your chart reaches its highest potential in autonomous command, advisory consulting, or independent enterprise where you control strategic decisions.`
+            : `structured institutional hierarchies, executive corporate management, public administration, or specialized technical leadership offer your most stable and prestigious ascent.`
+        }
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-amber-300 mb-1"><i class="fas fa-compass mr-1.5"></i>Career Maturity Milestones (Ages ${matAges10}) & Favorable Directions:</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">Because your 10th lord <strong>${lord10Key}</strong> matures at <strong>ages ${matAges10}</strong>, these years mark major inflection points in professional standing. Geographically and architecturally, <strong>${lord10RashiData.direction}</strong> and <strong>${ascData.altDirection}</strong> align strongly with your Karma axis.</p>
+      </div>
+    `;
   }
 
   function buildChapter4Wealth(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter4Wealth === "function") {
-      return window.NarrativeRules.renderChapter4Wealth(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter4Wealth === "function")
+      ? window.NarrativeRules.renderChapter4Wealth(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, specialLagnas } = ctx;
+    const moneyLeak = pickUniqueVariant("ch4MoneyLeak", DYNAMIC_HOOK_BANKS.ch4MoneyLeak, ctx);
+    const ascR = chart.Asc.d1;
+    const sign4 = getRashiOfBhava(ascR, 4);
+    const lord4Key = RASHI_DATA[sign4].lord;
+    const lord4 = chart[lord4Key];
+    const mars = chart.Mars;
+    const ven = chart.Venus;
+    const sav4 = specialLagnas.houseBindus[4] || 28;
+    const sav2 = specialLagnas.houseBindus[2] || 28;
+    const sav11 = specialLagnas.houseBindus[11] || 28;
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>3. भूमि-भवन, अचल संपत्ति एवं वाहन सुख (चतुर्थेश ${PLANET_META[lord4Key].hi} • भूमि-कारक मंगल • वाहन-कारक शुक्र):</strong>
+          आपकी कुंडली में चतुर्थ भाव (${RASHI_DATA[sign4].hi} — <strong>${sav4} SAV बिंदु</strong>) के स्वामी <strong>${PLANET_META[lord4Key].hi}</strong> ${lord4.house}वें भाव में स्थित हैं, जबकि भूमि-कारक मंगल ${mars.house}वें भाव (${RASHI_DATA[mars.rashi].hi}) और वाहन-कारक शुक्र ${ven.house}वें भाव (${RASHI_DATA[ven.rashi].hi}) में हैं। यह समीकरण स्पष्ट करता है कि तरल नकदी की तुलना में <strong>अचल संपत्ति (Real Estate/Land), स्वर्ण और दीर्घकालिक पूंजीगत निवेश</strong> आपके लिए कहीं अधिक फलदायी और स्थायी सिद्ध होते हैं।
+        </p>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-emerald-300 mb-1"><i class="fas fa-shield-alt mr-1.5"></i>कोष-रक्षा एवं धन-प्रबंधन का स्वर्णिम नियम:</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${moneyLeak.hi} अपनी आय का कम से कम 25–30% हिस्सा आते ही किसी लॉक-इन फंड या संपत्ति खाते में स्थानांतरित करें और भावनात्मक दबाव में बिना लिखा-पढ़ी के बड़ा उधार देने से बचें।</p>
+        </div>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>3. Real Estate, Landed Assets & Vehicles (4th Lord ${lord4Key} • Bhumi-Karaka Mars • Vahana-Karaka Venus):</strong>
+        Your 4th house of fixed assets (${RASHI_DATA[sign4].en} — <strong>${sav4} SAV bindus</strong>) is governed by <strong>${lord4Key}</strong> in House ${lord4.house}, with land-significator Mars in House ${mars.house} (${RASHI_DATA[mars.rashi].en}) and vehicle-significator Venus in House ${ven.house} (${RASHI_DATA[ven.rashi].en}). Your chart builds lasting net worth far more effectively through <strong>real estate, gold, and locked compounding instruments</strong> than through idle cash reserves.
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-emerald-300 mb-1"><i class="fas fa-shield-alt mr-1.5"></i>Treasury Protection & Capital Allocation Rule:</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${moneyLeak.en} Automatically route 25–30% of incoming gains into illiquid or locked asset buckets, and avoid unsecured emotional lending.</p>
+      </div>
+    `;
   }
 
   function buildChapter5Luck(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter5Luck === "function") {
-      return window.NarrativeRules.renderChapter5Luck(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter5Luck === "function")
+      ? window.NarrativeRules.renderChapter5Luck(ctx)
+      : "";
+
+    const { lang, chart, specialLagnas } = ctx;
+    const luckHook = pickUniqueVariant("ch5LuckTest", DYNAMIC_HOOK_BANKS.ch5LuckTest, ctx);
+    if (!chart.isFullChartMode) {
+      return baseHtml + `<div class="p-4 rounded-2xl bg-slate-900/90 border border-yellow-400/35 mt-3 text-xs md:text-sm text-gray-200">${lang === "hi" ? luckHook.hi : luckHook.en}</div>`;
     }
-    return "";
+
+    const ascR = chart.Asc.d1;
+    const sign5 = getRashiOfBhava(ascR, 5);
+    const sign9 = getRashiOfBhava(ascR, 9);
+    const lord5Key = RASHI_DATA[sign5].lord;
+    const lord9Key = RASHI_DATA[sign9].lord;
+    const sav9 = specialLagnas.houseBindus[9] || 28;
+    const matAges9 = (PLANET_MATURITY_AGES[lord9Key] || [24, 30, 36]).join(", ");
+
+    const ishtMapHi = {
+      Sun: "भगवान श्रीराम, सूर्य नारायण एवं गायत्री उपासना",
+      Moon: "भगवान आशुतोष शिव एवं मां पार्वती (गौरी-शंकर) की आराधना",
+      Mars: "संकटमोचन श्री हनुमान जी एवं कार्तिकेय/नरसिंह उपासना",
+      Mercury: "भगवान श्री हरि विष्णु (श्रीकृष्ण/नारायण) एवं विघ्नहर्ता श्री गणेश",
+      Jupiter: "देवगुरु बृहस्पति, भगवान श्री दत्तात्रेय/वामन एवं सद्गुरु तत्व",
+      Venus: "मां महालक्ष्मी, मां जगदंबा एवं ललिता त्रिपुरसुंदरी उपासना",
+      Saturn: "भगवान शिव (महाकाल), श्री हनुमान जी एवं कर्म-न्याय साधना",
+      Rahu: "मां दुर्गा एवं भगवान कालभैरव की उपासना",
+      Ketu: "भगवान श्री गणेश एवं मत्स्य/मोक्ष साधना"
+    };
+    const ishtMapEn = {
+      Sun: "Lord Sri Rama, Surya Narayana & Gayatri Sadhana",
+      Moon: "Lord Shiva (Somnath/Ashutosh) & Divine Mother Gauri",
+      Mars: "Lord Hanuman & Sri Kartikeya / Narasimha",
+      Mercury: "Lord Maha Vishnu (Sri Krishna/Narayana) & Lord Ganesha",
+      Jupiter: "Lord Dakshinamurti / Dattatreya, Brihaspati & Guru Tattva",
+      Venus: "Goddess Mahalakshmi & Lalita Tripurasundari",
+      Saturn: "Lord Shiva (Mahakala) & Lord Hanuman",
+      Rahu: "Goddess Durga & Lord Kalabhairava",
+      Ketu: "Lord Maha Ganapati & Liberation Sadhana"
+    };
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>2. पूर्वजन्म का प्रारब्ध (पंचमेश ${PLANET_META[lord5Key].hi}), धर्म-बल (${sav9} बिंदु) एवं इष्ट देव संकेत:</strong>
+          पाराशरी सिद्धांत के अनुसार पंचम भाव आपके पूर्वजन्म के संचित पुण्य (प्रारब्ध) और नवम भाव इस जन्म के भाग्योदय व गुरु-कृपा का केंद्र है। आपके पंचमेश <strong>${PLANET_META[lord5Key].hi}</strong> और भाग्येश <strong>${PLANET_META[lord9Key].hi}</strong> के अनुसार आपके जीवन में ईश्वरीय रक्षा-कवच को जागृत करने वाले आराध्य तत्व हैं: <strong>${ishtMapHi[lord5Key]}</strong> तथा <strong>${ishtMapHi[lord9Key]}</strong>। भाग्येश की परिपक्वता आयु <strong>(${matAges9} वर्ष)</strong> आपके भाग्योदय के सबसे महत्वपूर्ण मोड़ हैं।
+        </p>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-yellow-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-yellow-300 mb-1"><i class="fas fa-dharmachakra mr-1.5"></i>आपके प्रारब्ध एवं भाग्योदय का रहस्य:</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${luckHook.hi}</p>
+        </div>
+      `;
+    }
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>2. Purva-Punya Merit (5th Lord ${lord5Key}), 9th-House Reservoir (${sav9} Bindus) & Ishta Devata Alignment:</strong>
+        In Vedic tradition, the 5th house reflects past-life spiritual credit (Purva-Punya) while the 9th house governs present-life grace (Bhagya). Harmonizing your 5th lord <strong>${lord5Key}</strong> and 9th lord <strong>${lord9Key}</strong> points toward <strong>${ishtMapEn[lord5Key]}</strong> and <strong>${ishtMapEn[lord9Key]}</strong> as your primary spiritual anchors. Major fortune expansions align with your 9th lord's maturity milestones at <strong>ages ${matAges9}</strong>.
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-yellow-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-yellow-300 mb-1"><i class="fas fa-dharmachakra mr-1.5"></i>The Law of Destiny Activation in Your Chart:</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${luckHook.en}</p>
+      </div>
+    `;
   }
 
   function buildChapter6Love(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter6Love === "function") {
-      return window.NarrativeRules.renderChapter6Love(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter6Love === "function")
+      ? window.NarrativeRules.renderChapter6Love(ctx)
+      : "";
+
+    const { lang, chart } = ctx;
+    const loveHook = pickUniqueVariant("ch6LovePattern", DYNAMIC_HOOK_BANKS.ch6LovePattern, ctx);
+    const ven = chart.Venus;
+    const moon = chart.Moon;
+    const mars = chart.Mars;
+    const venD9Rashi = RASHI_DATA[ven.d9];
+    const moonD9Rashi = RASHI_DATA[moon.d9];
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>2. नवांश (D9) में शुक्र (${venD9Rashi.hi}) एवं चंद्र (${moonD9Rashi.hi}) का अंतरंग समीकरण:</strong>
+          बाहरी आकर्षण लग्न कुंडली से देखा जाता है, किंतु किसी रिश्ते के भीतर वास्तविक भावनात्मक सुख नवांश (D9) के शुक्र और चंद्रमा से तय होता है। नवांश में शुक्र का <strong>${venD9Rashi.hi}</strong> और चंद्रमा का <strong>${moonD9Rashi.hi}</strong> में होना दर्शाता है कि आप संबंधों में सतही दिखावे के बजाय बौद्धिक सम्मान, भावनात्मक सुरक्षा और पूर्ण पारदर्शिता खोजते हैं। मंगल की ${RASHI_DATA[mars.rashi].hi} में स्थिति आपके स्नेह में सुरक्षात्मक निष्ठा (Protective Loyalty) जोड़ती है।
+        </p>
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-pink-400/35 mt-3">
+          <div class="text-xs md:text-sm font-bold text-pink-300 mb-1"><i class="fas fa-heart mr-1.5"></i>संबंधों में आपका भावनात्मक मनोविज्ञान एवं स्वर्णिम नियम:</div>
+          <p class="text-xs md:text-sm text-gray-200 mb-0">${loveHook.hi}</p>
+        </div>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>2. Inner Navamsa (D9) Relational Matrix — Venus in ${venD9Rashi.en} & Moon in ${moonD9Rashi.en}:</strong>
+        While outer attraction is seen in D1, long-term emotional fulfillment is governed by the Navamsa placements of Venus and Moon. With D9 Venus in <strong>${venD9Rashi.en}</strong> and D9 Moon in <strong>${moonD9Rashi.en}</strong>, you require intellectual respect, emotional transparency, and fiercely loyal companionship rather than superficial romance.
+      </p>
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-pink-400/35 mt-3">
+        <div class="text-xs md:text-sm font-bold text-pink-300 mb-1"><i class="fas fa-heart mr-1.5"></i>Your Relational Psychology & Boundary Rule:</div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">${loveHook.en}</p>
+      </div>
+    `;
   }
 
   function buildChapter7Partner(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter7Partner === "function") {
-      return window.NarrativeRules.renderChapter7Partner(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter7Partner === "function")
+      ? window.NarrativeRules.renderChapter7Partner(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, findings, specialLagnas } = ctx;
+    const mar = findings?.domainChecks?.marriage;
+    const lord7Key = mar ? mar.lord : RASHI_DATA[getRashiOfBhava(chart.Asc.d1, 7)].lord;
+    const lord7 = chart[lord7Key];
+    const d9AscRashi = RASHI_DATA[chart.Asc.d9];
+    const lord7Rashi = RASHI_DATA[lord7.rashi];
+    const ulRashi = RASHI_DATA[specialLagnas.upapadaRashi];
+    const dkKey = findings?.charaKarakas?.darakaraka || "Venus";
+    const sav7 = specialLagnas.houseBindus[7] || 28;
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>3. जीवनसाथी का व्यक्तित्व, दिशा एवं विवाह पश्चात भाग्योदय (नवांश लग्न: ${d9AscRashi.hi} • सप्तम SAV: ${sav7} बिंदु):</strong>
+          आपकी नवांश कुंडली (D9) का उदय लग्न <strong>${d9AscRashi.hi}</strong> है तथा उपपद लग्न (UL) <strong>${ulRashi.hi}</strong> में है। सप्तमेश <strong>${PLANET_META[lord7Key].hi}</strong> और दाराकारक <strong>${PLANET_META[dkKey].hi}</strong> के संयुक्त प्रभाव से आपके जीवनसाथी का व्यक्तित्व <em>${ulRashi.temperamentHi}</em> एवं <em>${d9AscRashi.bodyBuildHi}</em> गुणों से युक्त होगा। सप्तमेश की राशि के अनुसार जीवनसाथी का संबंध या विवाह के पश्चात उन्नति की दिशा <strong>${lord7Rashi.directionHi} / ${ulRashi.altDirectionHi}</strong> की ओर प्रबल दिखती है।
+        </p>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>3. Spouse Archetype, Direction & Post-Marriage Fortune (D9 Ascendant: ${d9AscRashi.en} • 7H SAV: ${sav7} Bindus):</strong>
+        With your D9 Navamsa rising in <strong>${d9AscRashi.en}</strong> and Upapada Lagna (UL) in <strong>${ulRashi.en}</strong>, the synthesis of 7th lord <strong>${lord7Key}</strong> and Darakaraka <strong>${dkKey}</strong> points to a partner who is <em>${ulRashi.temperamentEn}</em> with <em>${d9AscRashi.bodyBuildEn}</em>. Geographically, the <strong>${lord7Rashi.direction} / ${ulRashi.altDirection}</strong> direction is strongly linked with your marital alliance.
+      </p>
+    `;
   }
 
   function buildChapterChildbirth(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter8Childbirth === "function") {
-      return window.NarrativeRules.renderChapter8Childbirth(ctx);
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter8Childbirth === "function")
+      ? window.NarrativeRules.renderChapter8Childbirth(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, specialLagnas, findings } = ctx;
+    const ch = findings?.domainChecks?.childbirth;
+    const lord5Key = ch ? ch.lord : RASHI_DATA[getRashiOfBhava(chart.Asc.d1, 5)].lord;
+    const lord5 = chart[lord5Key];
+    const d7Asc = chart.Asc.d7 || 1;
+    const d7AscData = RASHI_DATA[d7Asc];
+    const sign5InD7 = getRashiOfBhava(d7Asc, 5);
+    const lord5InD7Key = RASHI_DATA[sign5InD7].lord;
+    const sav5 = specialLagnas.houseBindus[5] || 28;
+    const sav9 = specialLagnas.houseBindus[9] || 28;
+    const jupBav5 = specialLagnas.houseBav?.Jupiter ? specialLagnas.houseBav.Jupiter[5] : 5;
+
+    if (lang === "hi") {
+      return `
+        ${baseHtml}
+        <p>
+          <strong>2. सप्तांश (D7) पंचमेश (${PLANET_META[lord5InD7Key].hi}), गुरु अष्टकवर्ग (${jupBav5}/8 बिंदु) एवं वंश-वृद्धि विश्लेषण:</strong>
+          आपकी सप्तांश कुंडली (D7) में <strong>${d7AscData.hi} लग्न</strong> उदित है और D7 के पंचम भाव (${RASHI_DATA[sign5InD7].hi}) के स्वामी <strong>${PLANET_META[lord5InD7Key].hi}</strong> हैं। लग्न कुंडली के पंचम भाव में <strong>${sav5} सर्वाष्टकवर्ग बिंदु</strong> (तथा भाग्य भाव में ${sav9} बिंदु) और संतान कारक गुरु के भिन्नाष्टकवर्ग में <strong>${jupBav5} बिंदु</strong> होने से आपकी संतान मेधावी, आत्मनिर्भर और परिवार के भाग्योदय में सहायक सिद्ध होगी।
+        </p>
+      `;
     }
-    return "";
+
+    return `
+      ${baseHtml}
+      <p>
+        <strong>2. Saptamsa (D7) 5th-Lord (${lord5InD7Key}), Jupiter BAV (${jupBav5}/8 Bindus) & Lineage Prosperity:</strong>
+        In your D7 Saptamsa chart (${d7AscData.en} Ascendant), the 5th house (${RASHI_DATA[sign5InD7].en}) is governed by <strong>${lord5InD7Key}</strong>. Supported by <strong>${sav5} bindus</strong> in your 5th house, <strong>${sav9} bindus</strong> in your 9th house, and <strong>${jupBav5} bindus</strong> in Jupiter's Bhinnashtakavarga, your progeny axis indicates bright, independent children who elevate family fortune.
+      </p>
+    `;
   }
 
   function buildChapter8PlanetsAndAspects(ctx) {
@@ -1748,10 +2197,64 @@
   }
 
   function buildChapter11HiddenTraps(ctx) {
-    if (window.NarrativeRules && typeof window.NarrativeRules.renderChapter12Diagnostic === "function") {
-      return window.NarrativeRules.renderChapter12Diagnostic(ctx);
-    }
-    return "";
+    const baseHtml = (window.NarrativeRules && typeof window.NarrativeRules.renderChapter12Diagnostic === "function")
+      ? window.NarrativeRules.renderChapter12Diagnostic(ctx)
+      : "";
+    if (!ctx.chart.isFullChartMode) return baseHtml;
+
+    const { lang, chart, dasha } = ctx;
+    const ascR = chart.Asc.d1;
+    const lagnaLordKey = RASHI_DATA[ascR].lord;
+    const matrix = LAGNA_FUNCTIONAL_MATRIX[ascR] || LAGNA_FUNCTIONAL_MATRIX[1];
+    const badhakeshKey = matrix.badhakesh;
+    const activeMdKey = (dasha && dasha.md) ? dasha.md : "Jupiter";
+    const activeAdKey = (dasha && dasha.ad) ? dasha.ad : lagnaLordKey;
+
+    const remKeys = Array.from(new Set([lagnaLordKey, activeMdKey, activeAdKey, badhakeshKey]));
+    const remCardsHtml = remKeys.map((pKey, idx) => {
+      const rem = PLANET_REMEDIES[pKey] || PLANET_REMEDIES.Jupiter;
+      const pMeta = PLANET_META[pKey];
+      const roleTagHi = pKey === lagnaLordKey ? "लग्नेश (जीवन-बल)"
+                      : pKey === activeMdKey  ? "सक्रिय महादशानाथ"
+                      : pKey === activeAdKey  ? "सक्रिय अंतर्दशानाथ"
+                      : `बाधकेश (${matrix.badhakaHouse}वेश शांति)`;
+      const roleTagEn = pKey === lagnaLordKey ? "Lagna Lord (Core Vitality)"
+                      : pKey === activeMdKey  ? "Active Mahadasha Lord"
+                      : pKey === activeAdKey  ? "Active Antardasha Lord"
+                      : `Badhakesh (${matrix.badhakaHouse}th Lord Pacification)`;
+
+      if (lang === "hi") {
+        return `
+          <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-amber-400/35 space-y-1.5">
+            <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-1.5">
+              <span class="font-bold text-amber-300 text-sm">${idx + 1}. ${pMeta.hi} — सात्विक वैदिक उपाय</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 text-[11px] font-bold">${roleTagHi}</span>
+            </div>
+            <div class="text-xs md:text-sm text-gray-200">🕉️ <strong>वैदिक मंत्र एवं उपासना:</strong> ${rem.mantraHi}</div>
+            <div class="text-xs md:text-sm text-gray-200">🌾 <strong>सात्विक दान एवं सेवा:</strong> ${rem.danaHi}</div>
+            <div class="text-xs md:text-sm text-gray-200">🌿 <strong>आचार एवं जीवनशैली सूत्र:</strong> ${rem.lifestyleHi}</div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-amber-400/35 space-y-1.5">
+          <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-1.5">
+            <span class="font-bold text-amber-300 text-sm">${idx + 1}. ${pMeta.en} — Classical Sattvic Remedy</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 text-[11px] font-bold">${roleTagEn}</span>
+          </div>
+          <div class="text-xs md:text-sm text-gray-200">🕉️ <strong>Vedic Mantra & Worship:</strong> ${rem.mantraEn}</div>
+          <div class="text-xs md:text-sm text-gray-200">🌾 <strong>Sattvic Dana (Charity):</strong> ${rem.danaEn}</div>
+          <div class="text-xs md:text-sm text-gray-200">🌿 <strong>Daily Dharmic Discipline:</strong> ${rem.lifestyleEn}</div>
+        </div>
+      `;
+    }).join("");
+
+    const headerTitle = lang === "hi"
+      ? `<h4 class="text-base md:text-lg font-bold text-amber-300 mt-5 mb-2.5"><i class="fas fa-praying-hands mr-2"></i>आपकी कुंडली एवं सक्रिय दशा के अनुसार व्यक्तिगत सात्विक वैदिक उपाय:</h4>`
+      : `<h4 class="text-base md:text-lg font-bold text-amber-300 mt-5 mb-2.5"><i class="fas fa-praying-hands mr-2"></i>Personalized Sattvic Vedic Remedies (Lagna Lord, Active Dasha & Badhakesh):</h4>`;
+
+    return `${baseHtml}${headerTitle}<div class="space-y-3">${remCardsHtml}</div>`;
   }
 
   function updateChapter12Dakshina(ctx) {
@@ -2196,15 +2699,15 @@
 
       const NR = window.NarrativeRules || {};
 
-      setHtml("contentPersonality", typeof NR.renderChapter1Personality === "function" ? NR.renderChapter1Personality(ctx) : buildChapter1Personality(ctx));
+      setHtml("contentPersonality", buildChapter1Personality(ctx));
       if (chart.isFullChartMode) {
-        setHtml("contentEducation",     typeof NR.renderChapter2Education === "function"      ? NR.renderChapter2Education(ctx)      : buildChapter2Education(ctx));
-        setHtml("contentCareer",        typeof NR.renderChapter3Career === "function"         ? NR.renderChapter3Career(ctx)         : buildChapter3Career(ctx));
-        setHtml("contentWealth",        typeof NR.renderChapter4Wealth === "function"         ? NR.renderChapter4Wealth(ctx)         : buildChapter4Wealth(ctx));
-        setHtml("contentPartner",       typeof NR.renderChapter7Partner === "function"        ? NR.renderChapter7Partner(ctx)        : buildChapter7Partner(ctx));
-        setHtml("contentChildbirth",    typeof NR.renderChapter8Childbirth === "function"     ? NR.renderChapter8Childbirth(ctx)     : buildChapterChildbirth(ctx));
+        setHtml("contentEducation",     buildChapter2Education(ctx));
+        setHtml("contentCareer",        buildChapter3Career(ctx));
+        setHtml("contentWealth",        buildChapter4Wealth(ctx));
+        setHtml("contentPartner",       buildChapter7Partner(ctx));
+        setHtml("contentChildbirth",    buildChapterChildbirth(ctx));
         setHtml("contentSpecialLagnas", typeof NR.renderChapter10SpecialLagnas === "function" ? NR.renderChapter10SpecialLagnas(ctx) : buildChapter9SpecialLagnas(ctx));
-        setHtml("contentHiddenTraps",   typeof NR.renderChapter12Diagnostic === "function"    ? NR.renderChapter12Diagnostic(ctx)    : buildChapter11HiddenTraps(ctx));
+        setHtml("contentHiddenTraps",   buildChapter11HiddenTraps(ctx));
       } else {
         setHtml("contentEducation", "");
         setHtml("contentCareer", "");
@@ -2215,8 +2718,8 @@
         setHtml("contentHiddenTraps", "");
       }
 
-      setHtml("contentLuck",           typeof NR.renderChapter5Luck === "function"    ? NR.renderChapter5Luck(ctx)    : buildChapter5Luck(ctx));
-      setHtml("contentLove",           typeof NR.renderChapter6Love === "function"    ? NR.renderChapter6Love(ctx)    : buildChapter6Love(ctx));
+      setHtml("contentLuck",           buildChapter5Luck(ctx));
+      setHtml("contentLove",           buildChapter6Love(ctx));
       updateChapter12Dakshina(ctx);
       setHtml("contentPlanetsAspects", typeof NR.renderChapter9Planets === "function" ? NR.renderChapter9Planets(ctx) : buildChapter8PlanetsAndAspects(ctx));
       setHtml("contentTimePhase",      typeof NR.renderChapter11Timing === "function" ? NR.renderChapter11Timing(ctx) : buildChapter10TimePhase(ctx));
