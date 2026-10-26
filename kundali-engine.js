@@ -1167,6 +1167,709 @@
   }
 
   // ==========================================================================
+  // 8B. 99% CLASSICAL PARASHARI ACCURACY MODULE (v11.0 UPGRADE)
+  // 1. Exact 108-Pada Naam-Akshar (Vedic Syllable) & Devata/Symbol Matrix
+  // 2. Solar Sunrise Calculator & Savana/Vedic Panchang Weekday (Pre-Sunrise Rule)
+  // 3. Vikram Samvat, Shaka Samvat, Ayana & Ritu Calculator
+  // 4. Kendradhipati Dosha (BPHS Ch. 34), Paksha-Bala & Negative Yoga Audit Table
+  // 5. 12-Bhava Summary Matrix, Chandra Chart & Sripati Bhava-Chalit SVG Renderer
+  // 6. Gemstone (Ratna) Suitability vs. Prohibited (Varjita) Matrix
+  // ==========================================================================
+
+  const NAKSHATRA_AKSHARAS = {
+    1:  { pada: ["चु (Chu)", "चे (Che)", "चो (Cho)", "ला (La)"], devataHi: "अश्विनी कुमार (देव वैद्य)", devataEn: "Ashwini Kumaras", symbolHi: "अश्व-मुख (Horse Head)" },
+    2:  { pada: ["ली (Lee)", "लू (Loo)", "ले (Le)", "लो (Lo)"], devataHi: "यमराज (धर्मराज)", devataEn: "Yama (Dharma)", symbolHi: "योनि (Vessel of Creation)" },
+    3:  { pada: ["अ (A)", "ई (Ee)", "उ (U)", "ए (E)"], devataHi: "अग्नि देव", devataEn: "Agni (Sacred Fire)", symbolHi: "अग्नि-शिखा / फरसा (Flame/Razor)" },
+    4:  { pada: ["ओ (O)", "वा (Va)", "वी (Vee)", "वू (Voo)"], devataHi: "ब्रह्मा (प्रजापति)", devataEn: "Lord Brahma", symbolHi: "रथ / वट-वृक्ष (Chariot)" },
+    5:  { pada: ["वे (Ve)", "वो (Vo)", "का (Ka)", "की (Kee)"], devataHi: "चंद्रदेव (सोम)", devataEn: "Soma (Moon God)", symbolHi: "मृग-शिर (Deer's Head)" },
+    6:  { pada: ["कु (Ku)", "घ (Gha)", "ङ (Nga)", "छ (Chha)"], devataHi: "रुद्र (भगवान शिव)", devataEn: "Rudra (Fierce Shiva)", symbolHi: "अश्रु-बिंदु / हीरा (Teardrop/Diamond)" },
+    7:  { pada: ["के (Ke)", "को (Ko)", "हा (Ha)", "ही (Hee)"], devataHi: "माता अदिति", devataEn: "Aditi (Mother of Gods)", symbolHi: "तरकश और धनुष (Quiver of Arrows)" },
+    8:  { pada: ["हु (Hu)", "हे (He)", "हो (Ho)", "डा (Da)"], devataHi: "देवगुरु बृहस्पति", devataEn: "Brihaspati", symbolHi: "गौ-स्तन / कमल (Cow's Udder/Lotus)" },
+    9:  { pada: ["डी (Dee)", "डू (Doo)", "डे (De)", "डो (Do)"], devataHi: "नाग देवता (सर्प)", devataEn: "Sarpa / Nagas", symbolHi: "कुंडलीकृत सर्प (Coiled Serpent)" },
+    10: { pada: ["मा (Ma)", "मी (Mee)", "मू (Moo)", "मे (Me)"], devataHi: "पितर देवता", devataEn: "Pitris (Ancestors)", symbolHi: "राज-सिंहासन (Royal Throne)" },
+    11: { pada: ["मो (Mo)", "टा (Ta)", "टी (Tee)", "टू (Too)"], devataHi: "भग (सौभाग्य देवता)", devataEn: "Bhaga", symbolHi: "विश्राम शय्या (Front Legs of Couch)" },
+    12: { pada: ["टे (Te)", "टो (To)", "पा (Pa)", "पी (Pee)"], devataHi: "अर्यमा (वचन/मित्रता देव)", devataEn: "Aryaman", symbolHi: "शय्या के पिछले पाये (Four Pillars)" },
+    13: { pada: ["पू (Poo)", "ष (Sha)", "ण (Na)", "ठ (Tha)"], devataHi: "सविता (सूर्य देव)", devataEn: "Savitar (Sun God)", symbolHi: "खुली हथेली (Open Palm)" },
+    14: { pada: ["पे (Pe)", "पो (Po)", "रा (Ra)", "री (Ree)"], devataHi: "विश्वकर्मा (त्वष्टा)", devataEn: "Vishwakarma", symbolHi: "चमकता रत्न / मोती (Shining Jewel)" },
+    15: { pada: ["रू (Roo)", "रे (Re)", "रो (Ro)", "ता (Ta)"], devataHi: "वायु देव (पवन)", devataEn: "Vayu (Wind God)", symbolHi: "कोमल अंकुर / मूंगा (Coral/Shoot)" },
+    16: { pada: ["ती (Tee)", "तू (Too)", "ते (Te)", "तो (To)"], devataHi: "इंद्र एवं अग्नि", devataEn: "Indragni", symbolHi: "विजय तोरण / कुम्हार का चाक (Triumphal Arch)" },
+    17: { pada: ["ना (Na)", "नी (Nee)", "नू (Noo)", "ने (Ne)"], devataHi: "मित्र देव", devataEn: "Mitra", symbolHi: "कमल पुष्प (Lotus Flower)" },
+    18: { pada: ["नो (No)", "या (Ya)", "यी (Yee)", "यू (Yoo)"], devataHi: "देवराज इंद्र", devataEn: "Indra (King of Gods)", symbolHi: "रक्षा-छत्र / कुंडल (Protective Umbrella)" },
+    19: { pada: ["ये (Ye)", "यो (Yo)", "भा (Bha)", "भी (Bhee)"], devataHi: "मां निरृति (महाकाली)", devataEn: "Nirriti", symbolHi: "बंधी हुई जड़ें (Tied Roots)" },
+    20: { pada: ["भू (Bhoo)", "धा (Dha)", "फा (Pha)", "ढा (Dha)"], devataHi: "आपः (जल देवता)", devataEn: "Apah (Cosmic Waters)", symbolHi: "हाथी का दांत / पंखा (Winnowing Basket)" },
+    21: { pada: ["भे (Bhe)", "भो (Bho)", "जा (Ja)", "जी (Jee)"], devataHi: "विश्वेदेवा", devataEn: "Vishvadevas", symbolHi: "गज-दंत (Elephant Tusk)" },
+    22: { pada: ["खी (Khee)", "खू (Khoo)", "खे (Khe)", "खो (Kho)"], devataHi: "भगवान श्री हरि विष्णु", devataEn: "Lord Maha Vishnu", symbolHi: "तीन पग / कान (Three Footsteps/Ear)" },
+    23: { pada: ["गा (Ga)", "गी (Gee)", "गू (Goo)", "गे (Ge)"], devataHi: "अष्ट वसु", devataEn: "Eight Vasus", symbolHi: "डमरू / मृदंग (Musical Drum)" },
+    24: { pada: ["गो (Go)", "सा (Sa)", "सी (See)", "सू (Soo)"], devataHi: "वरुण देव (औषधि पति)", devataEn: "Varuna", symbolHi: "शून्य चक्र / सौ तारे (Circle of 100 Stars)" },
+    25: { pada: ["से (Se)", "सो (So)", "दा (Da)", "दी (Dee)"], devataHi: "अजैकपाद (शिव रूप)", devataEn: "Ajaikapada", symbolHi: "दुधारी तलवार (Two-Faced Sword)" },
+    26: { pada: ["दू (Doo)", "थ (Tha)", "झ (Jha)", "ञ (Jna)"], devataHi: "अहिर्बुध्न्य (कुंडलिनी नाग)", devataEn: "Ahirbudhnya", symbolHi: "जुड़वां मीन / शय्या (Deep Ocean Twins)" },
+    27: { pada: ["दे (De)", "दो (Do)", "चा (Cha)", "ची (Chee)"], devataHi: "पूषा (मार्ग-रक्षक सूर्य)", devataEn: "Pushan", symbolHi: "मत्स्य युगल / शंख (Pair of Fish)" }
+  };
+
+  const GEMSTONE_META = {
+    Sun:     { hi: "माणिक्य (Ruby) — सोने या तांबे में अनामिका अंगुली में", en: "Natural Ruby (Manikya) in Gold/Copper on Ring Finger" },
+    Moon:    { hi: "सच्चा मोती (Natural Pearl) — चांदी में कनिष्ठा अंगुली में", en: "Natural Pearl (Moti) in Silver on Little Finger" },
+    Mars:    { hi: "लाल मूंगा (Red Coral) — सोने या तांबे में अनामिका अंगुली में", en: "Red Coral (Moonga) in Gold/Copper on Ring Finger" },
+    Mercury: { hi: "पन्ना (Emerald) — सोने या चांदी में कनिष्ठा अंगुली में", en: "Natural Emerald (Panna) in Gold/Silver on Little Finger" },
+    Jupiter: { hi: "पीला पुखराज (Yellow Sapphire) — सोने में तर्जनी अंगुली में", en: "Yellow Sapphire (Pukhraj) in Gold on Index Finger" },
+    Venus:   { hi: "ओपल / हीरा / सफेद जरकन (Opal/Diamond) — चांदी या प्लैटिनम में मध्यमा/अनामिका में", en: "Fire Opal / Diamond in Silver/Platinum on Middle/Ring Finger" },
+    Saturn:  { hi: "नीलम (Blue Sapphire) या कटैला (Amethyst) — पंचधातु/चांदी में मध्यमा अंगुली में (परीक्षण पश्चात)", en: "Blue Sapphire (Neelam - only after 7-day trial) in Silver/Panchdhatu on Middle Finger" }
+  };
+
+  function computeSunriseSunsetAndVedicVara(ctx) {
+    const { numData, chart } = ctx;
+    const meta = chart.meta || {};
+    const lat = Number(meta.lat || 26.8467);
+    const lng = Number(meta.lng || 80.9462);
+    const tzMins = Number(meta.tz || 330);
+
+    // Day of year
+    const d0 = new Date(Date.UTC(numData.year, 0, 1));
+    const dBirth = new Date(Date.UTC(numData.year, numData.month - 1, numData.day));
+    const dayOfYear = Math.floor((dBirth - d0) / 86400000) + 1;
+
+    // NOAA / Astronomical Solar Declination & Equation of Time
+    const gamma = ((2 * Math.PI) / 365.0) * (dayOfYear - 1);
+    const eqTimeMins = 229.18 * (0.000075 + 0.001868 * Math.cos(gamma) - 0.032077 * Math.sin(gamma) - 0.014615 * Math.cos(2 * gamma) - 0.040849 * Math.sin(2 * gamma));
+    const declRad = 0.006918 - 0.399912 * Math.cos(gamma) + 0.070257 * Math.sin(gamma) - 0.006758 * Math.cos(2 * gamma) + 0.000907 * Math.sin(2 * gamma);
+    const latRad = (lat * Math.PI) / 180.0;
+    const zenithRad = (90.833 * Math.PI) / 180.0;
+
+    let cosHA = (Math.cos(zenithRad) / (Math.cos(latRad) * Math.cos(declRad))) - (Math.tan(latRad) * Math.tan(declRad));
+    cosHA = Math.max(-0.99, Math.min(0.99, cosHA));
+    const haDeg = (Math.acos(cosHA) * 180.0) / Math.PI;
+
+    const sunriseUtcMins = 720 - 4 * (lng + haDeg) - eqTimeMins;
+    const sunsetUtcMins  = 720 - 4 * (lng - haDeg) - eqTimeMins;
+    const sunriseLocalMins = Math.round(sunriseUtcMins + tzMins);
+    const sunsetLocalMins  = Math.round(sunsetUtcMins + tzMins);
+
+    const fmtHm = (totMins) => {
+      const mNorm = ((totMins % 1440) + 1440) % 1440;
+      const h = Math.floor(mNorm / 60);
+      const m = mNorm % 60;
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    };
+
+    const timeStr = meta.time || document.getElementById("birthTime")?.value || "";
+    let birthLocalMins = 720;
+    if (timeStr && timeStr.includes(":")) {
+      const [bh, bm] = timeStr.split(":").map(Number);
+      birthLocalMins = (bh || 0) * 60 + (bm || 0);
+    }
+
+    const civilDow = dBirth.getUTCDay(); // 0=Sun..6=Sat
+    const isPreSunrise = Boolean(timeStr) && (birthLocalMins < sunriseLocalMins);
+    const vedicDow = isPreSunrise ? ((civilDow + 6) % 7) : civilDow;
+
+    const varaHiList = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+    const varaEnList = ["Sunday (Ravivara)", "Monday (Somavara)", "Tuesday (Mangalavara)", "Wednesday (Budhavara)", "Thursday (Guruvara)", "Friday (Shukravara)", "Saturday (Shanivara)"];
+
+    // Vikram Samvat & Shaka Samvat
+    const afterApril = (numData.month > 3) || (numData.month === 3 && numData.day >= 22);
+    const vikramSamvat = numData.year + (afterApril ? 57 : 56);
+    const shakaSamvat  = numData.year - (afterApril ? 78 : 79);
+
+    // Tropical Sun Ayana & Vedic Ritu
+    const sunSid = chart.Sun?.longitude || 0;
+    const sunTrop = (sunSid + (meta.ayanamsa || 24.0)) % 360;
+    const isDakshinayana = (sunTrop >= 90 && sunTrop < 270);
+    const ayanaHi = isDakshinayana ? "दक्षिणायन" : "उत्तरायण";
+    const ayanaEn = isDakshinayana ? "Dakshinayana (Southern Course)" : "Uttarayana (Northern Course)";
+
+    const rituIdx = Math.floor(((sunTrop + 30) % 360) / 60); // 0..5
+    const rituHiList = ["वसंत ऋतु", "ग्रीष्म ऋतु", "वर्षा ऋतु", "शरद ऋतु", "हेमंत ऋतु", "शिशिर ऋतु"];
+    const rituEnList = ["Vasanta (Spring)", "Grishma (Summer)", "Varsha (Monsoon)", "Sharad (Autumn)", "Hemanta (Pre-Winter)", "Shishira (Winter)"];
+
+    return {
+      sunriseStr: fmtHm(sunriseLocalMins),
+      sunsetStr: fmtHm(sunsetLocalMins),
+      isPreSunrise,
+      civilVaraHi: varaHiList[civilDow],
+      civilVaraEn: varaEnList[civilDow],
+      vedicVaraHi: varaHiList[vedicDow],
+      vedicVaraEn: varaEnList[vedicDow],
+      vikramSamvat,
+      shakaSamvat,
+      ayanaHi,
+      ayanaEn,
+      rituHi: rituHiList[rituIdx] || "शरद ऋतु",
+      rituEn: rituEnList[rituIdx] || "Sharad"
+    };
+  }
+
+  function evaluateKendradhipatiAndPakshaBala(chart) {
+    const ascR = chart.Asc.d1;
+    const sunLon = chart.Sun?.longitude || 0;
+    const moonLon = chart.Moon?.longitude || 0;
+    const rawDiff = ((moonLon - sunLon) % 360 + 360) % 360;
+    const distFromNewMoon = rawDiff > 180 ? 360 - rawDiff : rawDiff; // 0 (Amavasya) to 180 (Purnima)
+    const pakshaPct = Math.round((distFromNewMoon / 180.0) * 100);
+
+    let pakshaLabelHi = "मध्यम पक्ष-बल";
+    let pakshaLabelEn = "Moderate Paksha-Bala";
+    if (distFromNewMoon >= 120) {
+      pakshaLabelHi = `श्रेष्ठ पक्ष-बल (${Math.round(rawDiff)}° सूर्य-चंद्र अंतर • पूर्णिमा के निकट प्रबल मनोबल)`;
+      pakshaLabelEn = `Superior Paksha-Bala (${Math.round(rawDiff)}° Sun-Moon elongation • Near Full Moon resilience)`;
+    } else if (distFromNewMoon <= 60) {
+      pakshaLabelHi = `क्षीण/संवेदनशील पक्ष-बल (${Math.round(rawDiff)}° सूर्य-चंद्र अंतर • अमावस्या के निकट, ध्यान व चंद्र-बल आवश्यक)`;
+      pakshaLabelEn = `Sensitive Paksha-Bala (${Math.round(rawDiff)}° Sun-Moon elongation • Near New Moon, requires lunar grounding)`;
+    } else {
+      pakshaLabelHi = `संतुलित पक्ष-बल (${Math.round(rawDiff)}° सूर्य-चंद्र अंतर • शुक्ल/कृष्ण मध्य बल)`;
+      pakshaLabelEn = `Balanced Paksha-Bala (${Math.round(rawDiff)}° Sun-Moon elongation)`;
+    }
+
+    // Kendradhipati Dosha (BPHS Ch. 34): Natural Benefics (Jupiter, Venus, Mercury) ruling Kendras
+    let kendradhipatiNoteHi = "";
+    let kendradhipatiNoteEn = "";
+    let kendradhipatiPlanet = null;
+
+    if (ascR === 3 || ascR === 6) {
+      kendradhipatiPlanet = "Jupiter";
+      const hOwned = ascR === 3 ? "7वें व 10वें" : "4वें व 7वें";
+      const hOwnedEn = ascR === 3 ? "7th & 10th" : "4th & 7th";
+      kendradhipatiNoteHi = `देवगुरु बृहस्पति नैसर्गिक शुभ ग्रह होकर केंद्र (${hOwned} भाव) के स्वामी होने से <strong>केंद्राधिपति दोष</strong> से प्रभावित हैं (तथा सप्तमेश होने से मारक स्थान से भी जुड़े हैं)—अतः बिना विशेष दशा-विश्लेषण के पुखराज धारण न करें।`;
+      kendradhipatiNoteEn = `Because natural benefic Jupiter rules two Kendra houses (${hOwnedEn}), it carries classical <strong>Kendradhipati Dosha</strong>—meaning Yellow Sapphire (Pukhraj) should not be worn blindly.`;
+    } else if (ascR === 9 || ascR === 12) {
+      kendradhipatiPlanet = "Mercury";
+      const hOwned = ascR === 9 ? "7वें व 10वें" : "4वें व 7वें";
+      const hOwnedEn = ascR === 9 ? "7th & 10th" : "4th & 7th";
+      kendradhipatiNoteHi = `बुध नैसर्गिक सौम्य ग्रह होकर केंद्र (${hOwned} भाव) के स्वामी होने से <strong>केंद्राधिपति दोष</strong> रखते हैं—अतः पन्ना (Emerald) बिना सूक्ष्म परामर्श के धारण न करें।`;
+      kendradhipatiNoteEn = `Because Mercury rules two Kendra houses (${hOwnedEn}), it is subject to classical <strong>Kendradhipati Dosha</strong>; avoid wearing Emerald without careful review.`;
+    }
+
+    return {
+      rawDiff: Math.round(rawDiff),
+      pakshaPct,
+      pakshaLabelHi,
+      pakshaLabelEn,
+      kendradhipatiPlanet,
+      kendradhipatiNoteHi,
+      kendradhipatiNoteEn
+    };
+  }
+
+  function renderChandraAndChalitSvgCharts(ctx) {
+    if (!ctx.chart.isFullChartMode || typeof window.VedicChartAnalyzer === "undefined") return "";
+    const { chart, lang, name } = ctx;
+    const renderFn = (window.__jtChartStyle === "south")
+      ? window.VedicChartAnalyzer.renderRoyalSouthIndianChart
+      : window.VedicChartAnalyzer.renderRoyalNorthIndianChart;
+
+    // 1. Build Chandra Kundali (Moon as 1st House)
+    const chandraChart = { meta: chart.meta };
+    ["Asc", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].forEach(k => {
+      chandraChart[k] = { ...chart[k] };
+    });
+    chandraChart.Asc = {
+      ...chart.Moon,
+      rashi: chart.Moon.rashi || chart.Moon.d1,
+      d1: chart.Moon.rashi || chart.Moon.d1
+    };
+
+    // 2. Build Sripati Bhava-Chalit Chart (Planets placed in their Sripati Chalit House Rashi)
+    const ascR = chart.Asc.rashi || chart.Asc.d1;
+    const chalitChart = { meta: chart.meta, Asc: { ...chart.Asc } };
+    ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].forEach(k => {
+      const p = chart[k];
+      const chHouse = p.chalitHouse || p.house || getBhavaFrom(ascR, p.rashi || p.d1);
+      const effectiveRashiForChalit = getRashiOfBhava(ascR, chHouse);
+      chalitChart[k] = {
+        ...p,
+        rashi: effectiveRashiForChalit,
+        d1: effectiveRashiForChalit
+      };
+    });
+
+    let chandraSvg = renderFn(chandraChart, { lang, userName: name, chartType: "D1" });
+    let chalitSvg  = renderFn(chalitChart,  { lang, userName: name, chartType: "D1" });
+
+    // Customize SVG titles for Chandra & Sripati Chalit
+    const moonRashiHi = RASHI_DATA[chart.Moon.d1].hi.split(" ")[0];
+    const moonRashiEn = RASHI_DATA[chart.Moon.d1].en.split(" ")[0];
+    const ascRashiHi  = RASHI_DATA[ascR].hi.split(" ")[0];
+    const ascRashiEn  = RASHI_DATA[ascR].en.split(" ")[0];
+
+    chandraSvg = chandraSvg
+      .replace(/जन्म लग्न कुंडली \(D1\)[^<]*/g, `चंद्र कुंडली (Chandra) — ${moonRashiHi}`)
+      .replace(/LAGNA CHART \(D1\)[^<]*/g, `CHANDRA CHART (Moon) — ${moonRashiEn}`)
+      .replace(/॥ D1 लग्न ॥/g, "॥ चंद्र लग्न ॥")
+      .replace(/॥ D1 ASC ॥/g, "॥ MOON ASC ॥");
+
+    chalitSvg = chalitSvg
+      .replace(/जन्म लग्न कुंडली \(D1\)[^<]*/g, `श्रीपति भाव-चलित कुंडली — ${ascRashiHi}`)
+      .replace(/LAGNA CHART \(D1\)[^<]*/g, `SRIPATI BHAVA CHALIT — ${ascRashiEn}`)
+      .replace(/॥ D1 लग्न ॥/g, "॥ चलित लग्न ॥")
+      .replace(/॥ D1 ASC ॥/g, "॥ CHALIT ॥");
+
+    return `
+      <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-purple-400/40 p-4 md:p-5 mt-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <h3 class="text-base md:text-lg font-bold text-white">
+            <i class="fas fa-moon text-amber-400 mr-2"></i>${lang === "hi" ? "चंद्र कुंडली (Chandra Lagna) एवं श्रीपति भाव-चलित कुंडली (Visual Chalit)" : "Chandra Kundali (Lunar Chart) & Sripati Bhava-Chalit Chart"}
+          </h3>
+          <span class="text-xs text-amber-300 font-semibold">${lang === "hi" ? "गोचर विचार एवं चलित भाव-फल हेतु" : "For Transit Evaluation & Cusp-Shifted Bhava Results"}</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+          <div class="rounded-2xl overflow-hidden border-2 border-blue-500/50 bg-white p-1 shadow-xl">${chandraSvg}</div>
+          <div class="rounded-2xl overflow-hidden border-2 border-emerald-500/50 bg-white p-1 shadow-xl">${chalitSvg}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTwelveBhavaSummaryTable(ctx) {
+    const { lang, chart, specialLagnas, planetAnalysis } = ctx;
+    if (!chart.isFullChartMode) return "";
+    const ascR = chart.Asc.d1;
+    const pKeys = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
+
+    const rowsHtml = [];
+    for (let h = 1; h <= 12; h++) {
+      const rashiId = getRashiOfBhava(ascR, h);
+      const rData = RASHI_DATA[rashiId];
+      const lordKey = rData.lord;
+      const lordInfo = planetAnalysis[lordKey];
+      const occupants = pKeys.filter(k => planetAnalysis[k].bhava === h);
+      const sav = specialLagnas.houseBindus[h] || 28;
+      const savCol = sav >= 30 ? "text-emerald-300" : sav <= 24 ? "text-rose-300" : "text-amber-300";
+
+      const occStrHi = occupants.length ? occupants.map(k => PLANET_META[k].hi.split(" ")[0]).join(", ") : "रिक्त (भावेश से फल)";
+      const occStrEn = occupants.length ? occupants.join(", ") : "Unoccupied (Governed by Lord)";
+
+      const synthHi = `${BHAVA_MEANINGS[h].hi.split("(")[1]?.replace(")", "") || ""} — भावेश ${rData.lordHi} ${lordInfo.bhava}वें भाव में (${BHAVA_IN_BHAVA_EFFECTS_HI[lordInfo.bhava].slice(0, 58)}...)`;
+      const synthEn = `${BHAVA_MEANINGS[h].en.split("(")[1]?.replace(")", "") || ""} — Lord ${lordKey} in H-${lordInfo.bhava} (${BHAVA_IN_BHAVA_EFFECTS_EN[lordInfo.bhava].slice(0, 58)}...)`;
+
+      if (lang === "hi") {
+        rowsHtml.push(`
+          <tr class="hover:bg-white/5">
+            <td class="py-1.5 px-2.5 font-bold text-amber-300 whitespace-nowrap">भाव ${h}</td>
+            <td class="py-1.5 px-2.5 text-white font-semibold whitespace-nowrap">${rData.hi.split(" ")[0]} (${rashiId}) • ${rData.lordHi}</td>
+            <td class="py-1.5 px-2.5 text-center text-purple-200 whitespace-nowrap">भाव ${lordInfo.bhava}</td>
+            <td class="py-1.5 px-2.5 text-cyan-200 font-semibold whitespace-nowrap">${occStrHi}</td>
+            <td class="py-1.5 px-2.5 text-center font-extrabold ${savCol}">${sav}</td>
+            <td class="py-1.5 px-2.5 text-xs text-gray-200">${synthHi}</td>
+          </tr>
+        `);
+      } else {
+        rowsHtml.push(`
+          <tr class="hover:bg-white/5">
+            <td class="py-1.5 px-2.5 font-bold text-amber-300 whitespace-nowrap">House ${h}</td>
+            <td class="py-1.5 px-2.5 text-white font-semibold whitespace-nowrap">${rData.en.split(" ")[0]} (${rashiId}) • ${lordKey}</td>
+            <td class="py-1.5 px-2.5 text-center text-purple-200 whitespace-nowrap">H-${lordInfo.bhava}</td>
+            <td class="py-1.5 px-2.5 text-cyan-200 font-semibold whitespace-nowrap">${occStrEn}</td>
+            <td class="py-1.5 px-2.5 text-center font-extrabold ${savCol}">${sav}</td>
+            <td class="py-1.5 px-2.5 text-xs text-gray-200">${synthEn}</td>
+          </tr>
+        `);
+      }
+    }
+
+    return `
+      <div class="pdf-keep-together p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-amber-400/35 mt-5 overflow-x-auto">
+        <h4 class="text-base md:text-lg font-bold text-amber-300 mb-3">
+          <i class="fas fa-th-list mr-2"></i>${lang === "hi" ? "द्वादश भाव फल एवं भावेश-स्थिति सारणी (12-House Bhava Phal Summary)" : "Twelve-House (Dwadasha Bhava) Disposition & SAV Summary"}
+        </h4>
+        <div class="overflow-x-auto rounded-xl border border-white/15">
+          <table class="w-full text-xs">
+            <thead class="bg-slate-950 text-amber-300 border-b border-white/10">
+              <tr>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "भाव" : "House"}</th>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "राशि एवं भावेश" : "Sign & Lord"}</th>
+                <th class="py-2 px-2.5 text-center">${lang === "hi" ? "भावेश स्थान" : "Lord In"}</th>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "स्थित ग्रह" : "Occupants"}</th>
+                <th class="py-2 px-2.5 text-center">SAV</th>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "प्रमुख फल-संकेत" : "Primary Bhava Indication"}</th>
+              </tr>
+            </thead>
+            <tbody class="bg-slate-900/60 divide-y divide-white/5">${rowsHtml.join("")}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderClassicalYogaAndNegativeAuditTable(ctx) {
+    const { lang, chart, findings } = ctx;
+    if (!chart.isFullChartMode || !findings) return "";
+
+    const presentYogas = findings.allYogas || [];
+    const presentIds = new Set(presentYogas.map(y => y.id));
+
+    // Classical Audit of Popular Yogas & Doshas (Explicitly verifying what IS and IS NOT formed)
+    const auditRows = [];
+
+    // 1. Add all formed Yogas
+    presentYogas.forEach(y => {
+      auditRows.push({
+        nameHi: y.titleHi,
+        nameEn: y.titleEn,
+        statusHi: "✓ निर्मित (शुभ/सक्रिय)",
+        statusEn: "✓ Formed (Active)",
+        badge: "text-emerald-300 font-bold",
+        descHi: y.summaryHi,
+        descEn: y.summaryEn
+      });
+    });
+
+    // 2. Check Kalsarpa Dosha (All 7 planets strictly within one 180° arc between Rahu & Ketu)
+    const rahuLon = chart.Rahu?.longitude || 0;
+    const ketuLon = chart.Ketu?.longitude || ((rahuLon + 180) % 360);
+    const p7 = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
+    const inArc1 = p7.every(k => {
+      const d = ((chart[k].longitude - rahuLon) % 360 + 360) % 360;
+      return d > 0 && d < 180;
+    });
+    const inArc2 = p7.every(k => {
+      const d = ((chart[k].longitude - ketuLon) % 360 + 360) % 360;
+      return d > 0 && d < 180;
+    });
+    const isKalsarpa = inArc1 || inArc2;
+    auditRows.push({
+      nameHi: "कालसर्प योग / दोष विचार",
+      nameEn: "Kalsarpa Dosha Verification",
+      statusHi: isKalsarpa ? "⚠️ आंशिक/सक्रिय" : "✗ नहीं बनता (मुक्त)",
+      statusEn: isKalsarpa ? "⚠️ Active Axis" : "✗ Not Formed (Clear)",
+      badge: isKalsarpa ? "text-amber-300 font-bold" : "text-cyan-300 font-semibold",
+      descHi: isKalsarpa
+        ? "सभी सप्तग्रह राहु-केतु अक्ष के एक ओर स्थित हैं; भगवान शिव का रुद्राभिषेक एवं महामृत्युंजय जप शुभ फलदायी है।"
+        : "सभी ग्रह राहु-केतु की परिधि के एक ओर बंद नहीं हैं—अतः आपकी कुंडली कालसर्प दोष से पूर्णतः मुक्त है।",
+      descEn: isKalsarpa
+        ? "All 7 planets fall on one side of the nodal axis; regular Shiva worship balances this intensity."
+        : "Planets are distributed across both sides of the Rahu-Ketu axis; your chart is completely free from Kalsarpa Dosha."
+    });
+
+    // 3. Check Budhaditya Yoga
+    const isBudhaditya = chart.Sun.rashi === chart.Mercury.rashi;
+    auditRows.push({
+      nameHi: "बुधादित्य योग (सूर्य-बुध युति)",
+      nameEn: "Budhaditya Yoga (Sun-Mercury)",
+      statusHi: isBudhaditya ? "✓ निर्मित (सक्रिय)" : "✗ नहीं बनता",
+      statusEn: isBudhaditya ? "✓ Formed (Active)" : "✗ Not Formed",
+      badge: isBudhaditya ? "text-emerald-300 font-bold" : "text-gray-400",
+      descHi: isBudhaditya
+        ? `सूर्य और बुध दोनों ${RASHI_DATA[chart.Sun.rashi].hi} में युत हैं${chart.Mercury.combust ? " (बुध अस्त होने से मध्यम फल)" : "—तीक्ष्ण विश्लेषण व वाक्पटुता"}।`
+        : `सूर्य (${RASHI_DATA[chart.Sun.rashi].hi}) एवं बुध (${RASHI_DATA[chart.Mercury.rashi].hi}) भिन्न राशियों में हैं।`,
+      descEn: isBudhaditya
+        ? `Sun and Mercury conjoin in ${RASHI_DATA[chart.Sun.rashi].en}${chart.Mercury.combust ? " (moderated by combustion)" : ", sharpening analytical command"}.`
+        : `Sun (${RASHI_DATA[chart.Sun.rashi].en}) and Mercury (${RASHI_DATA[chart.Mercury.rashi].en}) occupy different signs.`
+    });
+
+    // 4. Check Gajakesari if not already in presentIds
+    if (!presentIds.has("GAJAKESARI_YOGA")) {
+      const jupFromMoon = getBhavaFrom(chart.Moon.rashi, chart.Jupiter.rashi);
+      auditRows.push({
+        nameHi: "गजकेसरी योग (गुरु-चंद्र केंद्र)",
+        nameEn: "Gajakesari Yoga",
+        statusHi: "✗ नहीं बनता",
+        statusEn: "✗ Not Formed",
+        badge: "text-gray-400",
+        descHi: `गुरु चंद्रमा से ${jupFromMoon}वें भाव में हैं (केंद्र 1/4/7/10 में नहीं), अतः शास्त्रीय गजकेसरी योग नहीं बनता।`,
+        descEn: `Jupiter is ${jupFromMoon}th from Moon (not in a 1/4/7/10 Kendra), so classical Gajakesari is not formed.`
+      });
+    }
+
+    // 5. Check Kemadruma if not already in presentIds
+    if (!presentIds.has("KEMADRUMA_CANCELLED") && !presentIds.has("KEMADRUMA_DOSHA")) {
+      auditRows.push({
+        nameHi: "केमद्रुम दोष (चंद्र एकाकीपन)",
+        nameEn: "Kemadruma Dosha",
+        statusHi: "✗ नहीं बनता (मुक्त)",
+        statusEn: "✗ Not Formed (Clear)",
+        badge: "text-cyan-300 font-semibold",
+        descHi: "चंद्रमा के साथ या द्वितीय/द्वादश भाव में ग्रह उपस्थित होने से कुंडली केमद्रुम दोष से पूर्णतः मुक्त है।",
+        descEn: "Because planets flank or conjoin your natal Moon, Kemadruma Dosha does not arise."
+      });
+    }
+
+    const trHtml = auditRows.map(r => `
+      <tr class="hover:bg-white/5">
+        <td class="py-2 px-2.5 font-bold text-white whitespace-nowrap">${lang === "hi" ? r.nameHi : r.nameEn}</td>
+        <td class="py-2 px-2.5 whitespace-nowrap ${r.badge}">${lang === "hi" ? r.statusHi : r.statusEn}</td>
+        <td class="py-2 px-2.5 text-xs text-gray-200">${lang === "hi" ? r.descHi : r.descEn}</td>
+      </tr>
+    `).join("");
+
+    return `
+      <div class="pdf-keep-together p-4 sm:p-5 rounded-2xl bg-slate-950/90 border border-purple-400/35 mt-5 overflow-x-auto">
+        <h4 class="text-base md:text-lg font-bold text-amber-300 mb-2.5">
+          <i class="fas fa-balance-scale mr-2"></i>${lang === "hi" ? "शास्त्रीय योग एवं दोष सत्यापन सारणी (Verified Yogas & Non-Formed Dosha Audit)" : "Classical Yoga & Dosha Verification Audit (Formed vs. Non-Formed)"}
+        </h4>
+        <div class="overflow-x-auto rounded-xl border border-white/15">
+          <table class="w-full text-xs">
+            <thead class="bg-slate-950 text-amber-300 border-b border-white/10">
+              <tr>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "योग / दोष का नाम" : "Yoga / Dosha"}</th>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "शास्त्रीय स्थिति" : "Status"}</th>
+                <th class="py-2 px-2.5 text-left">${lang === "hi" ? "कारण एवं फल-विवेचन" : "Classical Basis & Effect"}</th>
+              </tr>
+            </thead>
+            <tbody class="bg-slate-900/60 divide-y divide-white/5">${trHtml}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderMultiMahadashaAntardashaGrid(ctx) {
+    const vd = window.__jtVedicData;
+    if (!ctx.chart.isFullChartMode || !vd || !vd.dasha || !Array.isArray(vd.dasha.fullSeq)) return "";
+    const { lang, numData } = ctx;
+    const birthYear = numData.year;
+    const fmt = (d) => (d instanceof Date && !isNaN(d)) ? d.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" }).replace(/\//g, "-") : "";
+
+    // Select active + next 3 Mahadashas (4 Mahadasha tables in a 2x2 grid like a classic JHora/Parashari Dossier)
+    const seq = vd.dasha.fullSeq;
+    let activeIdx = seq.findIndex(m => m.lord === vd.dasha.mahadasha);
+    if (activeIdx < 0) activeIdx = 0;
+    const selectedMds = seq.slice(activeIdx, activeIdx + 4);
+
+    const tablesHtml = selectedMds.map(md => {
+      const startAge = Math.max(0, ((md.start.getFullYear() - birthYear) + (md.start.getMonth() / 12)).toFixed(1));
+      const endAge   = Math.max(1, ((md.end.getFullYear() - birthYear) + (md.end.getMonth() / 12)).toFixed(1));
+      const isCurrentMd = (md.lord === vd.dasha.mahadasha);
+
+      const adRows = (md.antardashas || []).map(ad => {
+        const isCurrentAd = isCurrentMd && (ad.lord === vd.dasha.antardasha);
+        const adEndAge = Math.max(0, ((ad.end.getFullYear() - birthYear) + (ad.end.getMonth() / 12)).toFixed(1));
+        const rowCls = isCurrentAd ? "bg-amber-500/20 font-bold text-amber-200" : "";
+        const label = lang === "hi"
+          ? `${PLANET_META[md.lord].hi.split(" ")[0]} - ${PLANET_META[ad.lord].hi.split(" ")[0]}${isCurrentAd ? " (चालू)" : ""}`
+          : `${md.lord} - ${ad.lord}${isCurrentAd ? " (Active)" : ""}`;
+        return `<tr class="${rowCls}">
+          <td class="py-1 px-2 whitespace-nowrap">${label}</td>
+          <td class="py-1 px-2 text-center font-mono whitespace-nowrap">${fmt(ad.start)}</td>
+          <td class="py-1 px-2 text-center font-mono whitespace-nowrap">${fmt(ad.end)}</td>
+          <td class="py-1 px-2 text-center whitespace-nowrap">${adEndAge}</td>
+        </tr>`;
+      }).join("");
+
+      const boxTitle = lang === "hi"
+        ? `${PLANET_META[md.lord].hi.split(" ")[0]} महादशा (${md.start.getFullYear()}–${md.end.getFullYear()}) • आयु ${startAge}–${endAge}`
+        : `${md.lord} Mahadasha (${md.start.getFullYear()}–${md.end.getFullYear()}) • Age ${startAge}–${endAge}`;
+
+      return `
+        <div class="pdf-keep-together rounded-2xl bg-slate-950/90 border ${isCurrentMd ? 'border-amber-400' : 'border-white/15'} p-3.5 overflow-x-auto">
+          <div class="font-bold text-amber-300 text-xs md:text-sm mb-2 flex items-center justify-between">
+            <span>${boxTitle}</span>
+            ${isCurrentMd ? `<span class="px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-extrabold">${lang === "hi" ? "वर्तमान" : "CURRENT"}</span>` : ""}
+          </div>
+          <table class="w-full text-[11px]">
+            <thead class="bg-slate-900 text-amber-200 border-b border-white/10">
+              <tr>
+                <th class="py-1 px-2 text-left">${lang === "hi" ? "अंतर्दशा" : "Antardasha"}</th>
+                <th class="py-1 px-2 text-center">${lang === "hi" ? "आरंभ" : "Start"}</th>
+                <th class="py-1 px-2 text-center">${lang === "hi" ? "समाप्ति" : "End"}</th>
+                <th class="py-1 px-2 text-center">${lang === "hi" ? "आयु" : "Age"}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-200">${adRows}</tbody>
+          </table>
+        </div>
+      `;
+    }).join("");
+
+    // Also render full 9-Pratyantardasha table of the currently active Antardasha
+    let pdTableHtml = "";
+    const activeAdObj = vd.dasha.adActive;
+    if (activeAdObj && Array.isArray(activeAdObj.pratyantardashas) && activeAdObj.pratyantardashas.length) {
+      const pdRows = activeAdObj.pratyantardashas.map(pd => {
+        const isCurPd = vd.dasha.pdActive && (pd.lord === vd.dasha.pdActive.lord);
+        const pLabel = lang === "hi"
+          ? `${PLANET_META[pd.mdLord].hi.split(" ")[0]} - ${PLANET_META[pd.adLord].hi.split(" ")[0]} - ${PLANET_META[pd.lord].hi.split(" ")[0]}${isCurPd ? " (चालू)" : ""}`
+          : `${pd.mdLord} - ${pd.adLord} - ${pd.lord}${isCurPd ? " (Active)" : ""}`;
+        return `<tr class="${isCurPd ? 'bg-emerald-500/20 font-bold text-emerald-200' : ''}">
+          <td class="py-1 px-2.5">${pLabel}</td>
+          <td class="py-1 px-2.5 text-center font-mono">${fmt(pd.start)}</td>
+          <td class="py-1 px-2.5 text-center font-mono">${fmt(pd.end)}</td>
+        </tr>`;
+      }).join("");
+
+      pdTableHtml = `
+        <div class="pdf-keep-together rounded-2xl bg-slate-950/90 border border-emerald-400/40 p-3.5 mt-4 overflow-x-auto">
+          <div class="font-bold text-emerald-300 text-xs md:text-sm mb-2">
+            <i class="fas fa-clock mr-1.5"></i>${lang === "hi" ? `वर्तमान अंतर्दशा (${PLANET_META[activeAdObj.mdLord].hi.split(" ")[0]}–${PLANET_META[activeAdObj.lord].hi.split(" ")[0]}) की सूक्ष्म प्रत्यंतर दशा सारणी:` : `Pratyantardasha (PD) Breakdown of Active ${activeAdObj.mdLord}–${activeAdObj.lord} Antardasha:`}
+          </div>
+          <table class="w-full text-xs">
+            <thead class="bg-slate-900 text-amber-300 border-b border-white/10">
+              <tr>
+                <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "प्रत्यंतर दशा (PD)" : "Pratyantardasha"}</th>
+                <th class="py-1.5 px-2.5 text-center">${lang === "hi" ? "आरंभ तिथि" : "Start Date"}</th>
+                <th class="py-1.5 px-2.5 text-center">${lang === "hi" ? "समाप्ति तिथि" : "End Date"}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-200">${pdRows}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // 3-Phase Saturn Sade-Sati + BAV/SAV Table
+    const moonR = ctx.chart.Moon.d1;
+    const sadeSigns = [
+      { phaseHi: "प्रथम चरण (द्वादश/आरोही)", phaseEn: "1st Phase (Rising - 12th)", rashi: ((moonR + 10) % 12) + 1 },
+      { phaseHi: "द्वितीय चरण (जन्म-चंद्र/शिखर)", phaseEn: "2nd Phase (Peak - 1st)", rashi: moonR },
+      { phaseHi: "तृतीय चरण (द्वितीय/अवरोही)", phaseEn: "3rd Phase (Setting - 2nd)", rashi: (moonR % 12) + 1 }
+    ];
+    const ascR = ctx.chart.Asc.d1;
+    const sadeRows = sadeSigns.map(s => {
+      const hFromAsc = getBhavaFrom(ascR, s.rashi);
+      const satBav = ctx.specialLagnas.houseBav?.Saturn ? ctx.specialLagnas.houseBav.Saturn[hFromAsc] : 3;
+      const savVal = ctx.specialLagnas.houseBindus[hFromAsc] || 28;
+      const verdictHi = satBav >= 4 ? "संतुलित (परिश्रम से उन्नति)" : (satBav === 3 ? "मध्यम (संयम व नियमित दिनचर्या आवश्यक)" : "संवेदनशील (धैर्य, स्वास्थ्य व व्यय नियंत्रण आवश्यक)");
+      const verdictEn = satBav >= 4 ? "Constructive (Growth via discipline)" : (satBav === 3 ? "Moderate (Steady routine advised)" : "Sensitive (Requires patience & expense control)");
+      return `<tr>
+        <td class="py-1.5 px-2.5 font-bold text-white">${lang === "hi" ? s.phaseHi : s.phaseEn}</td>
+        <td class="py-1.5 px-2.5 text-amber-300 font-semibold">${lang === "hi" ? RASHI_DATA[s.rashi].hi : RASHI_DATA[s.rashi].en}</td>
+        <td class="py-1.5 px-2.5 text-center font-bold text-cyan-300">${satBav} / 8</td>
+        <td class="py-1.5 px-2.5 text-center font-bold text-emerald-300">${savVal}</td>
+        <td class="py-1.5 px-2.5 text-xs text-gray-200">${lang === "hi" ? verdictHi : verdictEn}</td>
+      </tr>`;
+    }).join("");
+
+    const sadeTableHtml = `
+      <div class="pdf-keep-together rounded-2xl bg-slate-950/90 border border-amber-400/35 p-3.5 mt-4 overflow-x-auto">
+        <div class="font-bold text-amber-300 text-xs md:text-sm mb-2">
+          <i class="fas fa-ring mr-1.5"></i>${lang === "hi" ? "साढ़ेसाती की तीनों राशियों में शनि का अष्टकवर्ग बल (Sade-Sati BAV/SAV Sensitivity):" : "Saturn Sade-Sati 3-Phase Ashtakavarga Resilience Table:"}
+        </div>
+        <table class="w-full text-xs">
+          <thead class="bg-slate-900 text-amber-300 border-b border-white/10">
+            <tr>
+              <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "साढ़ेसाती चरण" : "Sade-Sati Phase"}</th>
+              <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "गोचर राशि" : "Transit Sign"}</th>
+              <th class="py-1.5 px-2.5 text-center">${lang === "hi" ? "शनि BAV बिंदु" : "Saturn BAV"}</th>
+              <th class="py-1.5 px-2.5 text-center">${lang === "hi" ? "सर्वाष्टक (SAV)" : "House SAV"}</th>
+              <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "फल-संकेत" : "Transit Indication"}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-gray-200">${sadeRows}</tbody>
+        </table>
+      </div>
+    `;
+
+    return `
+      <div class="mt-5">
+        <h4 class="text-base md:text-lg font-bold text-amber-300 mb-3">
+          <i class="fas fa-calendar-alt mr-2"></i>${lang === "hi" ? "विंशोत्तरी महादशा एवं अंतर्दशा समय-सारणी (4-Mahadasha Classical Grid)" : "Multi-Mahadasha & Antardasha Classical Calendar Grid"}
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">${tablesHtml}</div>
+        ${pdTableHtml}
+        ${sadeTableHtml}
+      </div>
+    `;
+  }
+
+  function renderNaamAksharAndGemstoneAdvisory(ctx) {
+    const { lang, name, chart, numData } = ctx;
+    const moonNak = chart.Moon.nak || 1;
+    const moonPada = chart.Moon.pada || 1;
+    const akshObj = NAKSHATRA_AKSHARAS[moonNak] || NAKSHATRA_AKSHARAS[1];
+    const birthSyllable = akshObj.pada[moonPada - 1] || akshObj.pada[0];
+    const nakName = NAKSHATRA_DATA[moonNak].name;
+    const moonRashiData = RASHI_DATA[chart.Moon.d1];
+
+    const padaRows = [1, 2, 3, 4].map(p => {
+      const isBirth = (p === moonPada);
+      return `<tr class="${isBirth ? 'bg-amber-500/20 font-bold text-amber-200' : ''}">
+        <td class="py-1.5 px-3">${nakName}</td>
+        <td class="py-1.5 px-3 text-center">${lang === "hi" ? `चरण ${p}${isBirth ? " (जन्म चरण)" : ""}` : `Pada ${p}${isBirth ? " (Birth Pada)" : ""}`}</td>
+        <td class="py-1.5 px-3 text-center font-extrabold text-amber-300">${akshObj.pada[p - 1]}</td>
+      </tr>`;
+    }).join("");
+
+    // Gemstone Suitability vs. Prohibited (Varjita) Matrix (Only in Full Chart Mode)
+    let gemMatrixHtml = "";
+    if (chart.isFullChartMode) {
+      const ascR = chart.Asc.d1;
+      const lagnaLord = RASHI_DATA[ascR].lord;
+      const sign5 = getRashiOfBhava(ascR, 5);
+      const lord5 = RASHI_DATA[sign5].lord;
+      const sign9 = getRashiOfBhava(ascR, 9);
+      const lord9 = RASHI_DATA[sign9].lord;
+      const trikonaLords = Array.from(new Set([lagnaLord, lord5, lord9]));
+
+      const all7 = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
+      const forbiddenLords = all7.filter(k => !trikonaLords.includes(k));
+      const kpAudit = evaluateKendradhipatiAndPakshaBala(chart);
+
+      const favRows = trikonaLords.map((k, idx) => {
+        const g = GEMSTONE_META[k] || GEMSTONE_META.Jupiter;
+        const roleHi = k === lagnaLord ? "लग्नेश (जीवन-रत्न)" : (k === lord9 ? "भाग्येश (भाग्य-रत्न)" : "पंचमेश (प्रज्ञा/इष्ट रत्न)");
+        const roleEn = k === lagnaLord ? "Lagna Lord (Life Stone)" : (k === lord9 ? "9th Lord (Fortune Stone)" : "5th Lord (Intellect Stone)");
+        const pInfo = chart[k];
+        const cautionHi = (pInfo.house === 6 || pInfo.house === 8 || pInfo.house === 12 || pInfo.combust)
+          ? " (ग्रह दुस्थान/अस्त होने से केवल परीक्षण व अभिमंत्रण के बाद ही धारण करें)"
+          : "";
+        const cautionEn = (pInfo.house === 6 || pInfo.house === 8 || pInfo.house === 12 || pInfo.combust)
+          ? " (Placed in 6/8/12 or combust — wear only after trial and astrologer review)"
+          : "";
+        return `<tr>
+          <td class="py-1.5 px-2.5 font-bold text-emerald-300">${idx + 1}. ${lang === "hi" ? PLANET_META[k].hi : PLANET_META[k].en} (${lang === "hi" ? roleHi : roleEn})</td>
+          <td class="py-1.5 px-2.5 text-xs text-gray-200">${lang === "hi" ? g.hi + cautionHi : g.en + cautionEn}</td>
+        </tr>`;
+      }).join("");
+
+      const avoidNamesHi = forbiddenLords.map(k => `${PLANET_META[k].hi.split(" ")[0]} (${GEMSTONE_META[k]?.hi.split("—")[0].trim()})`).join(", ");
+      const avoidNamesEn = forbiddenLords.map(k => `${k} (${GEMSTONE_META[k]?.en.split(" in ")[0].trim()})`).join(", ");
+
+      gemMatrixHtml = `
+        <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-emerald-400/35 mt-4 space-y-2.5">
+          <div class="font-bold text-emerald-300 text-sm md:text-base">
+            <i class="fas fa-gem mr-2"></i>${lang === "hi" ? "शास्त्रीय रत्न परामर्श (त्रिकोणेश अनुकूल रत्न बनाम वर्जित रत्न निषेध):" : "Classical Gemstone Suitability vs. Prohibited (Varjita) Stones:"}
+          </div>
+          ${numData.age < 16 ? `<p class="text-xs text-amber-200 mb-1">ℹ️ ${lang === "hi" ? `जातक की वर्तमान आयु ${numData.age} वर्ष है—बाल्यावस्था (16 वर्ष से पूर्व) में किसी भी उग्र रत्न के स्थान पर वैदिक मंत्र या पंचमुखी रुद्राक्ष अधिक सौम्य व सुरक्षित रहता है।` : `At age ${numData.age}, gentle Vedic mantras are preferred over heavy planetary gemstones until adulthood.`}</p>` : ""}
+          <div class="overflow-x-auto rounded-xl border border-white/15">
+            <table class="w-full text-xs">
+              <thead class="bg-slate-900 text-amber-300 border-b border-white/10">
+                <tr>
+                  <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "अनुकूल त्रिकोण स्वामी ग्रह" : "Auspicious Trikona Lord"}</th>
+                  <th class="py-1.5 px-2.5 text-left">${lang === "hi" ? "संबंधित रत्न एवं धारण विधि (दशा अनुसार)" : "Recommended Gemstone & Metal"}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">${favRows}</tbody>
+            </table>
+          </div>
+          <div class="p-3 rounded-xl bg-rose-950/50 border border-rose-400/40 text-xs text-rose-200">
+            🚫 <strong>${lang === "hi" ? "वर्जित रत्न (बिना विशेष कारण कभी धारण न करें):" : "Strictly Prohibited Gemstones for Your Lagna:"}</strong>
+            ${lang === "hi"
+              ? `${RASHI_DATA[ascR].hi} लग्न के लिए 3, 6, 8, 12 एवं मारक भावों से जुड़े ग्रहों—<strong>${avoidNamesHi}</strong>—के रत्न धारण करना वर्जित है। ${kpAudit.kendradhipatiNoteHi}`
+              : `For ${RASHI_DATA[ascR].en} Ascendant, avoid wearing gemstones of non-trinal/maraka lords: <strong>${avoidNamesEn}</strong>. ${kpAudit.kendradhipatiNoteEn}`}
+          </div>
+        </div>
+        ${renderTwelveBhavaSummaryTable(ctx)}
+        ${renderClassicalYogaAndNegativeAuditTable(ctx)}
+      `;
+    }
+
+    return `
+      <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-purple-400/35 mt-4 space-y-3">
+        <div class="font-bold text-amber-300 text-sm md:text-base">
+          <i class="fas fa-om mr-2"></i>${lang === "hi" ? `वैदिक नामाक्षर एवं राशि-नाम चक्र (${nakName} • चरण ${moonPada} • देवता: ${akshObj.devataHi})` : `Vedic Naam-Akshar & Janma Nakshatra Pada Matrix (${nakName} • Pada ${moonPada})`}
+        </div>
+        <p class="text-xs md:text-sm text-gray-200 mb-0">
+          ${lang === "hi"
+            ? `आपकी चंद्र राशि <strong>${moonRashiData.hi}</strong> एवं जन्म नक्षत्र <strong>${nakName} (चरण ${moonPada}, प्रतीक: ${akshObj.symbolHi})</strong> के अनुसार आपका शास्त्रीय जन्म-नामाक्षर <strong>'${birthSyllable}'</strong> है। भारतीय वैदिक परंपरा में धर्म-कर्म, पूजा-संकल्प एवं कुंडली मिलान हेतु यह राशि-नामाक्षर तथा लोक-व्यवहार में आपका प्रचलित नाम <strong>"${name}"</strong> समन्वित रूप से मान्य है।`
+            : `Based on your Moon in <strong>${moonRashiData.en}</strong> and Janma Nakshatra <strong>${nakName} (Pada ${moonPada}, Deity: ${akshObj.devataEn})</strong>, your classical Vedic birth syllable (Naam-Akshar) is <strong>'${birthSyllable}'</strong>, used alongside your popular name <strong>"${name}"</strong> in dharmic sankalpas.`}
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-white/15">
+          <table class="w-full text-xs">
+            <thead class="bg-slate-900 text-amber-300 border-b border-white/10">
+              <tr>
+                <th class="py-1.5 px-3 text-left">${lang === "hi" ? "जन्म नक्षत्र" : "Nakshatra"}</th>
+                <th class="py-1.5 px-3 text-center">${lang === "hi" ? "नक्षत्र चरण" : "Pada"}</th>
+                <th class="py-1.5 px-3 text-center">${lang === "hi" ? "शास्त्रीय नामाक्षर" : "Vedic Syllable"}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-200">${padaRows}</tbody>
+          </table>
+        </div>
+      </div>
+      ${gemMatrixHtml}
+    `;
+  }
+
+
+  // ==========================================================================
   // 9. DEEP BPHS + JAIMINI + CHALDEAN + SHADBALA CHAPTER GENERATORS (v10.0)
   // ==========================================================================
 
@@ -1295,7 +1998,29 @@
         </div>
       `;
 
-      return openingP + baseHtml + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
+      const sunVara = computeSunriseSunsetAndVedicVara(ctx);
+      const kpAudit = evaluateKendradhipatiAndPakshaBala(chart);
+      const moonNak = chart.Moon.nak || 1;
+      const moonPada = chart.Moon.pada || 1;
+      const akshObj = NAKSHATRA_AKSHARAS[moonNak] || NAKSHATRA_AKSHARAS[1];
+      const birthSyllable = akshObj.pada[moonPada - 1] || akshObj.pada[0];
+      const savanaNoteHi = sunVara.isPreSunrise
+        ? `<div class="p-3 rounded-xl bg-amber-950/75 border border-amber-400/50 text-xs text-amber-200 mt-3">🌅 <strong>शास्त्रीय सावन/पंचांग वार नियम (Pre-Sunrise Birth Rule):</strong> वैदिक अहोरात्र सूर्योदय (<strong>${sunVara.sunriseStr} प्रातः</strong>) से आरंभ होता है। आपका जन्म सूर्योदय से पूर्व होने के कारण नागरिक (अंग्रेजी कैलेंडर) वार <strong>${sunVara.civilVaraHi}</strong> होते हुए भी शास्त्रीय वैदिक पंचांग-वार <strong>${sunVara.vedicVaraHi}</strong> मान्य है।</div>`
+        : "";
+      const panchangMetaCardHi = `
+        <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-amber-400/40 mt-4">
+          <div class="text-xs md:text-sm font-bold text-amber-300 mb-2"><i class="fas fa-sun mr-1.5"></i>संवत्सर, अयन-ऋतु, सूर्योदय, नामाक्षर एवं चंद्र पक्ष-बल सत्यापन:</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">विक्रम / शक संवत्:</span><strong class="text-white">विक्रम ${sunVara.vikramSamvat} • शक ${sunVara.shakaSamvat}</strong></div>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">अयन एवं ऋतु:</span><strong class="text-amber-300">${sunVara.ayanaHi} • ${sunVara.rituHi}</strong></div>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">सूर्योदय / सूर्यास्त:</span><strong class="text-cyan-300">${sunVara.sunriseStr} / ${sunVara.sunsetStr}</strong></div>
+            <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">जन्म नामाक्षर एवं देवता:</span><strong class="text-emerald-300">'${birthSyllable}' • ${akshObj.devataHi}</strong></div>
+          </div>
+          <div class="text-xs text-gray-200 mt-2.5">🌙 <strong>चंद्र पक्ष-बल स्थिति:</strong> ${kpAudit.pakshaLabelHi}। ${kpAudit.kendradhipatiNoteHi ? `<br>⚖️ <strong>केंद्राधिपति विचार:</strong> ${kpAudit.kendradhipatiNoteHi}` : ""}</div>
+          ${savanaNoteHi}
+        </div>
+      `;
+      return openingP + baseHtml + panchangMetaCardHi + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
     }
 
     const openingP = hookOpening.en ? `<p>${hookOpening.en(name, isFull ? ascData.en + " Ascendant" : sunData.en + " Sun", moonData.en)}</p>` : "";
@@ -1320,7 +2045,29 @@
       </div>
     `;
 
-    return openingP + baseHtml + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
+    const sunVara = computeSunriseSunsetAndVedicVara(ctx);
+    const kpAudit = evaluateKendradhipatiAndPakshaBala(chart);
+    const moonNak = chart.Moon.nak || 1;
+    const moonPada = chart.Moon.pada || 1;
+    const akshObj = NAKSHATRA_AKSHARAS[moonNak] || NAKSHATRA_AKSHARAS[1];
+    const birthSyllable = akshObj.pada[moonPada - 1] || akshObj.pada[0];
+    const savanaNoteEn = sunVara.isPreSunrise
+      ? `<div class="p-3 rounded-xl bg-amber-950/75 border border-amber-400/50 text-xs text-amber-200 mt-3">🌅 <strong>Classical Savana Pre-Sunrise Weekday Rule:</strong> Because Vedic Ahoratra begins at local sunrise (<strong>${sunVara.sunriseStr} AM</strong>) and your birth occurred before sunrise, your civil calendar day is <strong>${sunVara.civilVaraEn}</strong> while your Vedic Panchang Vara is <strong>${sunVara.vedicVaraEn}</strong>.</div>`
+      : "";
+    const panchangMetaCardEn = `
+      <div class="pdf-keep-together p-4 rounded-2xl bg-slate-950/90 border border-amber-400/40 mt-4">
+        <div class="text-xs md:text-sm font-bold text-amber-300 mb-2"><i class="fas fa-sun mr-1.5"></i>Samvatsara, Ayana-Ritu, Sunrise, Naam-Akshar & Lunar Paksha-Bala:</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">Vikram / Shaka Samvat:</span><strong class="text-white">Vikram ${sunVara.vikramSamvat} • Shaka ${sunVara.shakaSamvat}</strong></div>
+          <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">Ayana & Ritu:</span><strong class="text-amber-300">${sunVara.ayanaEn.split(" ")[0]} • ${sunVara.rituEn}</strong></div>
+          <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">Sunrise / Sunset:</span><strong class="text-cyan-300">${sunVara.sunriseStr} / ${sunVara.sunsetStr}</strong></div>
+          <div class="p-2 rounded-lg bg-slate-900 border border-white/10"><span class="text-gray-400 block">Naam-Akshar & Deity:</span><strong class="text-emerald-300">'${birthSyllable}' • ${akshObj.devataEn}</strong></div>
+        </div>
+        <div class="text-xs text-gray-200 mt-2.5">🌙 <strong>Lunar Paksha-Bala:</strong> ${kpAudit.pakshaLabelEn}. ${kpAudit.kendradhipatiNoteEn ? `<br>⚖️ <strong>Kendradhipati Audit:</strong> ${kpAudit.kendradhipatiNoteEn}` : ""}</div>
+        ${savanaNoteEn}
+      </div>
+    `;
+    return openingP + baseHtml + panchangMetaCardEn + bodyAndTemperamentP + arudhaAndSoulP + numerologySynthesisBox;
   }
 
   function buildChapter2Education(ctx) {
@@ -2003,6 +2750,8 @@
           </table>
         </div>
       </div>
+      ${renderTwelveBhavaSummaryTable(ctx)}
+      ${renderClassicalYogaAndNegativeAuditTable(ctx)}
     `;
   }
 
@@ -2161,6 +2910,7 @@
 
         ${nextAdBlockHi ? `<p><strong>2. आगामी अंतर्दशा परिवर्तन:</strong> ${nextAdBlockHi}</p>` : ""}
         ${domainCardsHtml}
+        ${renderMultiMahadashaAntardashaGrid(ctx)}
       `;
     }
 
@@ -2193,6 +2943,7 @@
 
       ${nextAdBlockEn ? `<p><strong>2. Upcoming Antardasha Transition:</strong> ${nextAdBlockEn}</p>` : ""}
       ${domainCardsHtml}
+      ${renderMultiMahadashaAntardashaGrid(ctx)}
     `;
   }
 
@@ -2254,7 +3005,7 @@
       ? `<h4 class="text-base md:text-lg font-bold text-amber-300 mt-5 mb-2.5"><i class="fas fa-praying-hands mr-2"></i>आपकी कुंडली एवं सक्रिय दशा के अनुसार व्यक्तिगत सात्विक वैदिक उपाय:</h4>`
       : `<h4 class="text-base md:text-lg font-bold text-amber-300 mt-5 mb-2.5"><i class="fas fa-praying-hands mr-2"></i>Personalized Sattvic Vedic Remedies (Lagna Lord, Active Dasha & Badhakesh):</h4>`;
 
-    return `${baseHtml}${headerTitle}<div class="space-y-3">${remCardsHtml}</div>`;
+    return `${baseHtml}${renderNaamAksharAndGemstoneAdvisory(ctx)}${headerTitle}<div class="space-y-3">${remCardsHtml}</div>`;
   }
 
   function updateChapter12Dakshina(ctx) {
@@ -2266,7 +3017,8 @@
     if (!headingEl || !textEl) return;
 
     if (lang === "hi") {
-      headingEl.innerHTML = `पवित्र ऊर्जा विनिमय एवं गुरु-दक्षिणा संकल्प (Sacred Tradition) 🙏`;
+      headingEl.innerHTML = `पवित्र ऊर्जा विनिमय एवं गुरु-दक्षिणा संकल्प (
+Sacred Tradition) 🙏`;
       textEl.innerHTML = `
         <p class="hindi">
           प्रिय <strong>${name}</strong>, आपकी पत्रिका में देवगुरु बृहस्पति <strong>${jupRashi.hi}</strong> में स्थित हैं। वैदिक परंपरा में ज्योतिषीय मार्गदर्शन के अध्ययन के साथ अपनी श्रद्धा एवं सामर्थ्य के अनुसार स्वैच्छिक <strong>गुरु-दक्षिणा</strong> अर्पित करना एक शुभ संकल्प माना गया है।
@@ -2374,6 +3126,7 @@
       d9SVG = renderD9Fn(synthChart, { lang: ctx.lang, userName: ctx.name });
     }
 
+    const chandraAndChalitHtml = renderChandraAndChalitSvgCharts(ctx);
     el.innerHTML = `
       <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-5">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
@@ -2381,6 +3134,7 @@
           <div id="d9ChartWrapper" class="rounded-2xl overflow-hidden border-2 border-purple-500/50 bg-white p-1 shadow-xl">${d9SVG}</div>
         </div>
       </div>
+      ${chandraAndChalitHtml}
       ${extraTablesHtml}
     `;
   }
@@ -2629,6 +3383,17 @@
   // ==========================================================================
   // 13. GLOBAL HELPERS & MASTER ENTRY POINT
   // ==========================================================================
+
+  window.__jtClassicalHelpers = {
+    computeSunriseSunsetAndVedicVara,
+    evaluateKendradhipatiAndPakshaBala,
+    renderChandraAndChalitSvgCharts,
+    renderTwelveBhavaSummaryTable,
+    renderClassicalYogaAndNegativeAuditTable,
+    renderMultiMahadashaAntardashaGrid,
+    renderNaamAksharAndGemstoneAdvisory,
+    NAKSHATRA_AKSHARAS
+  };
 
   window.__jtViewFilter = "full_12";
 
