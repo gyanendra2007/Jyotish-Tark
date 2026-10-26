@@ -78,86 +78,122 @@
   };
 
   const LAGNA_FUNCTIONAL_MATRIX = {
-    1: {
-      yogakaraka: ["Sun", "Jupiter"], benefics: ["Sun", "Moon", "Mars", "Jupiter"],
-      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Venus", "Saturn"],
+    1: { // Mesha (Movable -> 11th Badhaka)
+      yogakaraka: [],
+      benefics: ["Sun", "Moon", "Mars", "Jupiter"],
+      neutrals: [],
+      malefics: ["Mercury", "Venus", "Saturn"],
+      marakas: ["Venus", "Saturn"],
       badhakaHouse: 11, badhakesh: "Saturn",
       secretWeaknessEn: "impulsive trust, sudden bursts of righteous anger that fade within minutes, and fighting everyone else's battles while hiding your own exhaustion",
       secretWeaknessHi: "आवेग में आकर भरोसा करना, क्षणिक क्रोध जिसके बाद आपको स्वयं ग्लानि होती है, और अपनी थकान छिपाकर दूसरों की जिम्मेदारियां अपने सिर ले लेना"
     },
-    2: {
-      yogakaraka: ["Saturn"], benefics: ["Saturn", "Mercury", "Venus", "Sun"],
-      malefics: ["Jupiter", "Moon", "Mars"], marakas: ["Mars", "Jupiter"],
+    2: { // Vrishabha (Fixed -> 9th Badhaka)
+      yogakaraka: ["Saturn"],
+      benefics: ["Saturn", "Sun", "Mercury"],
+      neutrals: ["Mars"],
+      malefics: ["Jupiter", "Venus", "Moon"],
+      marakas: ["Mars", "Jupiter", "Venus"],
       badhakaHouse: 9, badhakesh: "Saturn",
       secretWeaknessEn: "silent stubbornness, holding onto past emotional wounds for years without speaking, and sacrificing personal desires to keep family stability intact",
       secretWeaknessHi: "भीतर ही भीतर पुरानी बातों को वर्षों तक दबाए रखना, जिद्दी स्वाभिमान और परिवार की स्थिरता के लिए अपनी इच्छाओं का चुपचाप त्याग करना"
     },
-    3: {
-      yogakaraka: ["Venus"], benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Sun"], marakas: ["Mars", "Jupiter"],
+    3: { // Mithuna (Dual -> 7th Badhaka)
+      yogakaraka: [],
+      benefics: ["Venus"],
+      neutrals: ["Mercury", "Saturn", "Moon"],
+      malefics: ["Mars", "Jupiter", "Sun"],
+      marakas: ["Mars", "Jupiter"],
       badhakaHouse: 7, badhakesh: "Jupiter",
       secretWeaknessEn: "two parallel tracks of thought running 24/7 in your head, late-night mental replay of conversations, and feeling intellectually lonely even in a room full of people",
       secretWeaknessHi: "दिमाग में 24 घंटे दो समानांतर विचारों का चलना, रात्रि में अत्यधिक ओवरथिंकिंग और भीड़ में भी अपने बौद्धिक स्तर का साथी न मिल पाने का एकाकीपन"
     },
-    4: {
-      yogakaraka: ["Mars"], benefics: ["Mars", "Jupiter", "Moon"],
-      malefics: ["Venus", "Mercury", "Saturn"], marakas: ["Saturn", "Mercury"],
+    4: { // Karka (Movable -> 11th Badhaka)
+      yogakaraka: ["Mars"],
+      benefics: ["Moon", "Mars", "Jupiter"],
+      neutrals: ["Sun"],
+      malefics: ["Venus", "Mercury", "Saturn"],
+      marakas: ["Saturn", "Venus", "Mercury"],
       badhakaHouse: 11, badhakesh: "Venus",
       secretWeaknessEn: "absorbing the emotional stress of people around you like a sponge, giving 100% loyalty to those who return 30%, and silent internal mood tides",
       secretWeaknessHi: "दूसरों के दुख और तनाव को अपने भीतर सोख लेना, उन लोगों को 100% वफादारी देना जो बदले में 30% भी नहीं लौटाते, और अचानक मन का उदास हो जाना"
     },
-    5: {
-      yogakaraka: ["Mars"], benefics: ["Mars", "Sun", "Jupiter"],
-      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Saturn", "Venus"],
-      badhakaHouse: 9, badhakesh: "Saturn", // Mars is Yogakaraka (4th & 9th Lord), so Saturn (6th & 7th Maraka/Enemy) acts as primary functional obstructor
+    5: { // Simha (Fixed -> 9th Badhaka)
+      yogakaraka: ["Mars"],
+      benefics: ["Sun", "Mars", "Jupiter"],
+      neutrals: ["Moon"],
+      malefics: ["Mercury", "Venus", "Saturn"],
+      marakas: ["Saturn", "Venus", "Mercury"],
+      badhakaHouse: 9, badhakesh: "Mars", // Fixed: 9th Lord Mars is Badhakesh for Leo
       secretWeaknessEn: "fierce royal pride that refuses to ask for help even when bleeding internally, and feeling taken for granted by the very people you shelter",
       secretWeaknessHi: "अटूट राजसी स्वाभिमान जिसके कारण आप टूटने पर भी किसी से मदद नहीं मांगते, और जिन लोगों की आप रक्षा करते हैं उन्हीं से अपेक्षित सम्मान न मिलना"
     },
-    6: {
-      yogakaraka: ["Venus", "Mercury"], benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Moon"], marakas: ["Mars", "Jupiter"],
+    6: { // Kanya (Dual -> 7th Badhaka)
+      yogakaraka: [],
+      benefics: ["Venus", "Mercury"],
+      neutrals: ["Saturn", "Sun"],
+      malefics: ["Mars", "Jupiter", "Moon"],
+      marakas: ["Mars", "Jupiter", "Venus"],
       badhakaHouse: 7, badhakesh: "Jupiter",
       secretWeaknessEn: "hyper-critical perfectionism, spotting micro-flaws that others miss, gut/nervous tension when plans go off-script, and acting as the unpaid fixer in relationships",
       secretWeaknessHi: "हर काम में पूर्णता (perfection) खोजने की आदत, सूक्ष्म से सूक्ष्म गलती को तुरंत पकड़ लेना, और रिश्तों में हमेशा दूसरों की समस्याएं सुलझाते रहना"
     },
-    7: {
-      yogakaraka: ["Saturn"], benefics: ["Saturn", "Mercury", "Venus"],
-      malefics: ["Sun", "Mars", "Jupiter"], marakas: ["Mars", "Jupiter"],
+    7: { // Tula (Movable -> 11th Badhaka)
+      yogakaraka: ["Saturn"],
+      benefics: ["Saturn", "Mercury", "Venus"],
+      neutrals: ["Moon"],
+      malefics: ["Sun", "Jupiter", "Mars"],
+      marakas: ["Mars", "Jupiter"],
       badhakaHouse: 11, badhakesh: "Sun",
       secretWeaknessEn: "swallowing your own hurt to preserve surface harmony until you suddenly detach forever, and second-guessing yourself at major life crossroads",
       secretWeaknessHi: "शांति बनाए रखने के लिए अपनी भावनाओं को दबाना—और जब सहनशक्ति की सीमा समाप्त हो जाए तो बिना शोर किए पूरी तरह तटस्थ (detach) हो जाना"
     },
-    8: {
-      yogakaraka: ["Moon", "Jupiter"], benefics: ["Sun", "Moon", "Jupiter", "Mars"],
-      malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Mercury", "Venus"],
+    8: { // Vrishchika (Fixed -> 9th Badhaka)
+      yogakaraka: [],
+      benefics: ["Moon", "Jupiter", "Sun", "Mars"],
+      neutrals: [],
+      malefics: ["Mercury", "Venus", "Saturn"],
+      marakas: ["Venus", "Mercury", "Saturn"],
       badhakaHouse: 9, badhakesh: "Moon",
       secretWeaknessEn: "living in 'all-or-nothing' extremes, radar-like suspicion born from past betrayals, and locking your deepest emotional scars inside an unbreakable vault",
       secretWeaknessHi: "'आर या पार' के चरम पर जीना, पूर्व में मिले विश्वासघात के कारण किसी पर आसानी से भरोसा न कर पाना और अपने गहरे घाव किसी को न दिखाना"
     },
-    9: {
-      yogakaraka: ["Sun", "Mars"], benefics: ["Sun", "Mars", "Jupiter"],
-      malefics: ["Venus", "Saturn", "Mercury"], marakas: ["Venus", "Saturn"],
+    9: { // Dhanu (Dual -> 7th Badhaka)
+      yogakaraka: [],
+      benefics: ["Mars", "Sun", "Jupiter"],
+      neutrals: ["Moon"],
+      malefics: ["Venus", "Saturn", "Mercury"],
+      marakas: ["Venus", "Saturn", "Mercury"],
       badhakaHouse: 7, badhakesh: "Mercury",
       secretWeaknessEn: "blunt truth-speaking that unintentionally offends diplomatic people, secret restlessness that you haven't hit your true ceiling yet, and guiding people who don't value your wisdom",
       secretWeaknessHi: "बिना लाग-लपेट के सच बोल देना जिससे स्वार्थी लोग दूरी बना लेते हैं, और भीतर ही भीतर यह बेचैनी कि आप अभी अपने असली मुकाम तक नहीं पहुंचे हैं"
     },
-    10: {
-      yogakaraka: ["Venus"], benefics: ["Venus", "Mercury", "Saturn"],
-      malefics: ["Mars", "Jupiter", "Moon"], marakas: ["Moon", "Mars", "Jupiter"],
+    10: { // Makara (Movable -> 11th Badhaka)
+      yogakaraka: ["Venus"],
+      benefics: ["Venus", "Mercury", "Saturn"],
+      neutrals: ["Sun"],
+      malefics: ["Mars", "Jupiter", "Moon"],
+      marakas: ["Moon", "Mars", "Jupiter"],
       badhakaHouse: 11, badhakesh: "Mars",
       secretWeaknessEn: "growing up too early emotionally, carrying a quiet fear of failure behind a stoic face, and feeling that everyone leans on your shoulder while you have no one to lean on",
       secretWeaknessHi: "उम्र से पहले जिम्मेदार हो जाना, चट्टान जैसे चेहरे के पीछे असफलता का अनकहा डर और यह एहसास कि सब आप पर टिके हैं पर आपके कंधे को सहारा देने वाला कोई नहीं"
     },
-    11: {
-      yogakaraka: ["Venus"], benefics: ["Venus", "Sun", "Mars", "Saturn"],
-      malefics: ["Jupiter", "Moon", "Mercury"], marakas: ["Jupiter", "Moon"],
+    11: { // Kumbha (Fixed -> 9th Badhaka)
+      yogakaraka: ["Venus"],
+      benefics: ["Venus", "Saturn", "Sun", "Mars"],
+      neutrals: ["Mercury"],
+      malefics: ["Jupiter", "Moon"],
+      marakas: ["Jupiter", "Moon", "Sun"],
       badhakaHouse: 9, badhakesh: "Venus",
       secretWeaknessEn: "deep inner detachment even while smiling in social gatherings, irregular sleep from a brain that lives five years in the future, and clashing with egoistic partners",
       secretWeaknessHi: "समाज में सबके साथ घुलने-मिलने के बावजूद भीतर से गहरा वैराग्य, रात्रि में अति-सक्रिय मस्तिष्क के कारण नींद में खलल और स्वाभिमानी जीवनसाथी से वैचारिक टकराव"
     },
-    12: {
-      yogakaraka: ["Mars", "Moon"], benefics: ["Moon", "Mars", "Jupiter"],
-      malefics: ["Sun", "Venus", "Saturn", "Mercury"], marakas: ["Mercury", "Venus", "Saturn"],
+    12: { // Meena (Dual -> 7th Badhaka)
+      yogakaraka: [],
+      benefics: ["Moon", "Mars", "Jupiter"],
+      neutrals: [],
+      malefics: ["Sun", "Venus", "Saturn", "Mercury"],
+      marakas: ["Mercury", "Saturn", "Venus"],
       badhakaHouse: 7, badhakesh: "Mercury",
       secretWeaknessEn: "forgiving people who repeatedly exploit your softness, struggling to enforce harsh boundaries, and falling in love with someone's potential rather than their reality",
       secretWeaknessHi: "अपनी करुणा का गलत फायदा उठाने वालों को भी बार-बार माफ कर देना, भावनात्मक सीमाएं (boundaries) न बना पाना और लोगों को जरूरत से ज्यादा आदर्श मान लेना"
