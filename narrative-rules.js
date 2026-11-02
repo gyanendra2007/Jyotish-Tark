@@ -70,7 +70,7 @@
       <div class="p-3.5 rounded-xl bg-slate-900/90 border border-amber-400/35">
         <div class="flex items-center justify-between gap-2 mb-1">
           <span class="font-bold text-amber-300 text-xs md:text-sm">✦ ${lang === "hi" ? y.titleHi : y.titleEn}</span>
-          <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-200 text-[10px] font-mono">BPHS Score: ${y.score}</span>
+          <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-200 text-[10px] font-bold">${y.score >= 80 ? (lang === "hi" ? "प्रबल" : "Strong") : (lang === "hi" ? "मध्यम" : "Moderate")}</span>
         </div>
         <p class="text-xs md:text-sm text-gray-200 mb-0">${lang === "hi" ? y.summaryHi : y.summaryEn}</p>
       </div>
@@ -340,7 +340,7 @@
       return `
         <p>
           <strong>1. धनेश (${PLANET_HI[w2.lord]}) एवं लाभेश (${PLANET_HI[g11.lord]}) का पाराशरी समीकरण:</strong>
-          द्वितीय भाव (${RASHI_HI[w2.sign]}) के स्वामी <strong>${PLANET_HI[w2.lord]}</strong> <strong>${lord2.house}वें भाव</strong> में तथा एकादश भाव (${RASHI_HI[g11.sign]}) के स्वामी <strong>${PLANET_HI[g11.lord]}</strong> <strong>${lord11.house}वें भाव</strong> में स्थित हैं। आय का मुख्य स्रोत <em>${HOUSE_DOMAIN_HI[lord11.house]}</em> से तथा धन-संचय <em>${HOUSE_DOMAIN_HI[lord2.house]}</em> के माध्यम से निर्मित होता है।
+          द्वितीय भाव (${RASHI_HI[w2.sign]}) के स्वामी <strong>${PLANET_HI[w2.lord]}</strong> <strong>${lord2.house}वें भाव</strong> में तथा एकादश भाव (${RASHI_HI[g11.sign]}) के स्वामी <strong>${PLANET_HI[g11.lord]}</strong> <strong>${lord11.house}वें भाव</strong> में स्थित हैं। ${lord11.house === lord2.house ? `आय और धन-संचय दोनों का मुख्य स्रोत <em>${HOUSE_DOMAIN_HI[lord2.house]}</em> है।` : `आय का मुख्य स्रोत <em>${HOUSE_DOMAIN_HI[lord11.house]}</em> से तथा धन-संचय <em>${HOUSE_DOMAIN_HI[lord2.house]}</em> के माध्यम से निर्मित होता है।`}
         </p>
         <p>
           <strong>2. धन-प्रवाह बनाम व्यय अष्टकवर्ग (लाभ 11H: ${bindu11} • कोष 2H: ${bindu2} • व्यय 12H: ${bindu12} बिंदु):</strong>
@@ -357,7 +357,7 @@
     return `
       <p>
         <strong>1. 2nd Lord (${w2.lord}) & 11th Lord (${g11.lord}) Artha Synthesis:</strong>
-        The 2nd house of treasury (${RASHI_EN[w2.sign]}) is ruled by <strong>${w2.lord}</strong> in <strong>House ${lord2.house}</strong>, while the 11th house of gains (${RASHI_EN[g11.sign]}) is ruled by <strong>${g11.lord}</strong> in <strong>House ${lord11.house}</strong>. Primary income flows through <em>${HOUSE_DOMAIN_EN[lord11.house]}</em> and consolidates via <em>${HOUSE_DOMAIN_EN[lord2.house]}</em>.
+        The 2nd house of treasury (${RASHI_EN[w2.sign]}) is ruled by <strong>${w2.lord}</strong> in <strong>House ${lord2.house}</strong>, while the 11th house of gains (${RASHI_EN[g11.sign]}) is ruled by <strong>${g11.lord}</strong> in <strong>House ${lord11.house}</strong>. ${lord11.house === lord2.house ? `Both income and savings flow through <em>${HOUSE_DOMAIN_EN[lord2.house]}</em>.` : `Primary income flows through <em>${HOUSE_DOMAIN_EN[lord11.house]}</em> and consolidates via <em>${HOUSE_DOMAIN_EN[lord2.house]}</em>.`}
       </p>
       <p>
         <strong>2. Savashtakavarga Treasury Balance (11H Gains: ${bindu11} • 2H Treasury: ${bindu2} • 12H Outflow: ${bindu12} Bindus):</strong>
@@ -478,7 +478,7 @@
           : `<div class="p-3 rounded-xl bg-emerald-950/60 border border-emerald-400/40 text-xs md:text-sm text-emerald-200 mt-3">✓ <strong>Manglik Dosha Status:</strong> With Mars in House ${chart.Mars.house}, the chart is completely free from Kuja/Manglik Dosha.</div>`;
       } else if (manglik.isCancelled) {
         manglikHtml = lang === "hi"
-          ? `<div class="p-3 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mt-3">ℹ️ <strong>मांगलिक दोष परिहार (Cancelled Kuja Dosha):</strong> मंगल ${manglik.marsFromLagna}वें भाव में स्थित है, परंतु शास्त्रीय नियमों (${manglik.reasonsHi.join("; ")}) के कारण मांगलिक दोष का परिहार हो रहा है।</div>`
+          ? `<div class="p-3 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mt-3">ℹ️ <strong>मांगलिक दोष परिहार (Cancelled Kuja Dosha):</strong> मंगल लग्न से ${manglik.marsFromLagna}वें${[1,2,4,7,8,12].includes(manglik.marsFromMoon) ? ` तथा चंद्र से ${manglik.marsFromMoon}वें` : ""} भाव में स्थित है, परंतु शास्त्रीय नियमों (${manglik.reasonsHi.join("; ")}) के कारण मांगलिक दोष का परिहार हो रहा है।</div>`
           : `<div class="p-3 rounded-xl bg-amber-950/60 border border-amber-400/40 text-xs md:text-sm text-amber-200 mt-3">ℹ️ <strong>Manglik Dosha Cancellation (Parihara):</strong> Although Mars occupies House ${manglik.marsFromLagna}, classical cancellation applies because ${manglik.reasonsEn.join("; ")}.</div>`;
       } else {
         manglikHtml = lang === "hi"
