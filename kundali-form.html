@@ -1143,7 +1143,7 @@
           <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-envelope mr-2 text-amber-400"></i> jyotishtark@gmail.com</p>
           <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-phone-alt mr-2 text-amber-400"></i> +91 8318513814</p>
           <p class="text-gray-300 mb-3 text-sm"><i class="fab fa-whatsapp mr-2 text-green-400"></i> +91 8318513814</p>
-          <p class="text-gray-300 text-sm"><i class="fas fa-map-marker-alt mr-2 text-amber-400"></i> Lucknow, Uttar Pradesh, India</p>
+          <p class="text-gray-300 text-sm"><i class="fas fa-map-marker-alt mr-2 text-amber-400"></i> 37, Shamsher Puram Colony, Gauri Bazar, Sarojini Nagar, Lucknow, Uttar Pradesh 226008</p>
         </div>
       </div>
       <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
@@ -1920,6 +1920,10 @@
     // ======================================================================
     // FREE A4 PARICHAY KUNDALI PDF (free-report.js) — fixed pages, QR on every page
     // ======================================================================
+    // GitHub Pages is a static host: there is no server to render a PDF, so the report is
+    // opened in a new tab and printed with the browser's "Save as PDF". The tab is opened
+    // immediately on the click (before any await) so pop-up blockers on mobile allow it.
+    // If you later add a Puppeteer server, set window.JT_PDF_API = '/api/generate-kundali-pdf'.
     async function downloadServerPdfDossier() {
       const target = document.getElementById('masterDossierOutput');
       const ctx = window.__jyotishLastCtx;
@@ -1931,59 +1935,58 @@
         alert('Report engine not loaded. Please refresh the page.');
         return;
       }
+      const en = ctx.lang === 'en';
+      const api = window.JT_PDF_API || null;
+      const w = api ? null : window.open('', '_blank');
+      if (!api && !w) {
+        alert(en ? 'Please allow pop-ups for jyotishtark.in to save the PDF.' : 'PDF सहेजने हेतु कृपया jyotishtark.in के लिए पॉप-अप की अनुमति दें।');
+        return;
+      }
+      if (w) {
+        w.document.write('<p style="font-family:sans-serif;padding:40px;text-align:center;color:#7c2d12">' +
+          (en ? 'Preparing your Kundali… the Save-as-PDF window will open shortly.' : 'आपकी कुंडली तैयार हो रही है… कुछ क्षण में "Save as PDF" विंडो खुलेगी।') + '</p>');
+      }
 
       const btn = document.getElementById('downloadPdfBtn');
       const label = document.getElementById('pdfBtnLabel');
       const origLabel = label ? label.textContent : 'Download Royal Kundali PDF';
       if (btn) btn.disabled = true;
-      if (label) label.textContent = ctx.lang === 'en' ? 'Preparing your Kundali PDF...' : 'आपकी कुंडली PDF तैयार हो रही है...';
-
+      if (label) label.textContent = en ? 'Preparing your Kundali PDF...' : 'आपकी कुंडली PDF तैयार हो रही है...';
       const safeName = (ctx.name || 'Seeker').replace(/[^\w\u0900-\u097F]+/g, '_');
-      let html;
-      try {
-        html = await window.FreeReport.buildDocument(ctx, window.__jtVedicData, {
-          qrSrc: 'qr-code.png',
-          logoSrc: 'logo.png'
-        });
-      } catch (err) {
-        console.error('FreeReport build failed:', err);
-        alert('Could not build the report: ' + (err && err.message ? err.message : err));
-        if (btn) btn.disabled = false;
-        if (label) label.textContent = origLabel;
-        return;
-      }
 
       try {
-        const response = await fetch('/api/generate-kundali-pdf', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fileName: `JyotishTark_Kundali_${safeName}.pdf`, html })
-        });
-        if (!response.ok) throw new Error('Server PDF endpoint unavailable');
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `JyotishTark_Kundali_${safeName}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      } catch (err) {
-        // Fallback: open the print-ready document and use the browser's "Save as PDF".
-        const w = window.open('', '_blank');
-        if (w) {
-          w.document.open();
-          w.document.write(html);
-          w.document.close();
-          const waitAndPrint = () => {
-            if (w.__JT_FIT_DONE) { w.focus(); w.print(); }
-            else setTimeout(waitAndPrint, 200);
-          };
-          setTimeout(waitAndPrint, 600);
-        } else {
-          alert(ctx.lang === 'en' ? 'Please allow pop-ups to save the PDF.' : 'PDF सहेजने हेतु कृपया पॉप-अप की अनुमति दें।');
+        const html = await window.FreeReport.buildDocument(ctx, window.__jtVedicData, { qrSrc: 'qr-code.png', logoSrc: 'logo.png' });
+        if (api) {
+          const response = await fetch(api, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName: `JyotishTark_Kundali_${safeName}.pdf`, html })
+          });
+          if (!response.ok) throw new Error('PDF server returned ' + response.status);
+          const url = URL.createObjectURL(await response.blob());
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `JyotishTark_Kundali_${safeName}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+          return;
         }
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+        let tries = 0;
+        const waitAndPrint = () => {
+          if (w.closed) return;
+          if (w.__JT_FIT_DONE || ++tries > 50) { w.focus(); w.print(); }
+          else setTimeout(waitAndPrint, 200);
+        };
+        setTimeout(waitAndPrint, 400);
+      } catch (err) {
+        console.error('Kundali PDF failed:', err);
+        if (w && !w.closed) w.close();
+        alert((en ? 'Could not prepare the PDF: ' : 'PDF तैयार नहीं हो सकी: ') + (err && err.message ? err.message : err));
       } finally {
         if (btn) btn.disabled = false;
         if (label) label.textContent = origLabel;
@@ -2113,8 +2116,10 @@
           e.preventDefault();
           const responseDiv = document.getElementById('submissionResponse');
           const email = document.getElementById("email").value;
-          if (localStorage.getItem("submitted_" + email)) {
-            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i><span>You have already submitted the form once. Message us on WhatsApp (+91 8318513814) for priority assistance.</span></div>`;
+          let lastSent = 0;
+          try { lastSent = Number(localStorage.getItem("submitted_" + email)) || 0; } catch (err) { lastSent = 0; }
+          if (Date.now() - lastSent < 10 * 60 * 1000) { // block only accidental double-submits (10 min); repeat orders are welcome
+            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i><span>Your details were just sent a few minutes ago. For another order, wait 10 minutes or message us on WhatsApp (+91 8318513814) for priority assistance.</span></div>`;
             responseDiv.classList.remove("hidden");
             return;
           }
@@ -2127,7 +2132,7 @@
           emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
             .then(() => {
               responseDiv.innerHTML = `<div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-check-circle mr-2"></i><span>Your Kundali details have been sent! Our team will contact you within 24 hours.</span></div>`;
-              localStorage.setItem("submitted_" + email, "true");
+              try { localStorage.setItem("submitted_" + email, String(Date.now())); } catch (err) { /* private mode */ }
               kundaliForm.reset();
               kundaliForm.querySelector("button").disabled = true;
             })
@@ -2139,5 +2144,8 @@
       }
     });
   </script>
+<div id="jt-reviews" data-limit="4"></div>
+    <script src="reviews-data.js"></script>
+    <script src="jt-reviews.js" defer></script>
 </body>
 </html>
