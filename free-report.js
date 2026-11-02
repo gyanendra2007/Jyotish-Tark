@@ -380,6 +380,8 @@
       dk: ck.darakaraka || null,
       transit: computeTransits(moonR, ascR)
     };
+    m.moonReliable = Boolean(full || (chart.isDobOnlyRealAstronomy && chart.meta && chart.moonShiftedSignThatDay === false));
+    m.num = full ? null : buildNumModel(ctx);
     m.dasha = buildDashaModel(m);
     m.yogas = detectPositiveYogas(m);
     m.cons = detectSensitivePoints(m);
@@ -614,9 +616,12 @@
     const add = (o) => { if (!out.some((x) => x.key === o.key)) out.push(o); };
     const { chart, full, transit: tr } = m;
     const ss = tr.sadeSati;
+    // Moon-based points need a reliable Moon sign (always true with birth time;
+    // with date only, only if the Moon stayed in one sign all day).
+    const moonOK = full || m.moonReliable;
 
     // 1. Sade-Sati / Dhaiya (live transit)
-    if (ss.current) {
+    if (moonOK && ss.current) {
       const h = tr.satFromMoon;
       const phase = h === 12 ? 1 : (h === 1 ? 2 : 3);
       const phaseHi = ["", "प्रथम (उदय)", "द्वितीय (शिखर)", "तृतीय (अस्त)"][phase];
@@ -634,7 +639,7 @@
           `Transit Saturn in ${rName(tr.satNow)}, ${ordEn(h)} from your Moon sign ${rName(m.moonR)} • whole span approx. ${fmtMY(ss.current.start)} – ${fmtMY(ss.current.end)}`),
         effect: T(effHi, effEn)
       });
-    } else if (ss.next && ss.next.start - Date.now() < 4 * YEAR_MS) {
+    } else if (moonOK && ss.next && ss.next.start - Date.now() < 4 * YEAR_MS) {
       add({
         key: "SADESATI_NEXT", sev: 1, dom: ["health"],
         title: T("आगामी शनि साढ़ेसाती", "Upcoming Shani Sade-Sati"),
@@ -642,7 +647,7 @@
         effect: T("अभी से तैयारी व उपाय आरंभ करने पर प्रभाव बहुत हल्का रहता है।", "Starting preparation and remedies early keeps the impact light.")
       });
     }
-    if (tr.satFromMoon === 4 && tr.dhaiya4.current) {
+    if (moonOK && tr.satFromMoon === 4 && tr.dhaiya4.current) {
       add({
         key: "DHAIYA4", sev: 2, dom: ["health", "wealth"],
         title: T("शनि की चतुर्थ ढैय्या (कंटक शनि) सक्रिय", "Shani Dhaiya (4th, Kantaka) active"),
@@ -650,7 +655,7 @@
         effect: T("घर, माता, वाहन और मानसिक शांति पर दबाव; संपत्ति के निर्णय सावधानी से।", "Pressure on home, mother, vehicles and peace of mind; be careful with property decisions.")
       });
     }
-    if (tr.satFromMoon === 8 && tr.dhaiya8.current) {
+    if (moonOK && tr.satFromMoon === 8 && tr.dhaiya8.current) {
       add({
         key: "DHAIYA8", sev: 3, dom: ["health", "career"],
         title: T("शनि की अष्टम ढैय्या सक्रिय", "Ashtama Shani Dhaiya active"),
@@ -739,6 +744,7 @@
       ["SHRAPIT", ["Saturn", ["Rahu"]], "श्रापित योग (शनि-राहु)", "Shrapit Yoga (Saturn-Rahu)", "बार-बार की रुकावटें; धैर्य से सफलता।", "Repeated obstacles; success through patience.", ["career"]]
     ];
     CJ.forEach(([key, [a, list], tHi, tEn, eHi, eEn, dom]) => {
+      if (!moonOK && a === "Moon") return;
       const hit = list.find((b) => conj(a, b));
       if (hit) {
         add({
@@ -822,6 +828,8 @@
         });
       }
     }
+
+    if (!full && m.num) addNumerologyCons(m, add);
 
     return out.sort((a, b) => b.sev - a.sev);
   }
@@ -1007,7 +1015,13 @@
     const tz = full ? (meta.tzLabel || "IST +05:30") : "—";
     const ayan = meta.ayanamsa ? `${Number(meta.ayanamsa).toFixed(3)}° (${T("लाहिरी", "Lahiri")})` : T("लाहिरी", "Lahiri");
 
-    const trio = [
+    const nm = m.num;
+    const trio = nm ? [
+      [T("मूलांक", "Birth number"), `${nm.mulank} <small>${pName(NUM_PLANET[nm.mulank])}</small>`],
+      [T("भाग्यांक", "Destiny number"), `${nm.bhagyank} <small>${pName(NUM_PLANET[nm.bhagyank])}</small>`],
+      nm.name ? [T("नामांक", "Name number"), `${nm.name.single} <small>(${nm.name.compound})</small>`]
+        : (m.moonReliable ? [T("चंद्र राशि", "Moon sign"), rName(m.moonR)] : [T("वर्ष-अंक", "Personal year"), `${nm.currentPY} <small>${nm.years[0].yr}</small>`])
+    ] : [
       [T("लग्न", "Ascendant"), full ? `${rName(m.ascR)} <small>${shortDeg(chart.Asc)}</small>` : T("जन्म समय आवश्यक", "Needs birth time")],
       [T("चंद्र राशि", "Moon sign"), `${rName(m.moonR)} <small>${shortDeg(chart.Moon)}</small>`],
       [T("जन्म नक्षत्र", "Birth star"), `${nName(m.moonNak)} <small>${T("चरण", "Pada")} ${m.moonPada}</small>`]
@@ -1018,20 +1032,20 @@
         <div class="inv">॥ श्री गणेशाय नमः ॥</div>
         ${OPT.logoData ? `<img class="clogo" src="${OPT.logoData}" alt="">` : ""}
         <div class="ctitle">${T("जन्म पत्रिका", "Janam Patrika")}</div>
-        <div class="csub">${T("वैदिक परिचय कुंडली • पाराशरी पद्धति", "Vedic Introductory Horoscope • Parashari System")}</div>
+        <div class="csub">${full ? T("वैदिक परिचय कुंडली • पाराशरी पद्धति", "Vedic Introductory Horoscope • Parashari System") : T("जन्म-तिथि आधारित जीवन-मार्गदर्शन • अंक ज्योतिष", "Birth-Date Life Guidance • Ank Jyotish")}</div>
         <div class="orn">❖ ❖ ❖</div>
         <div class="cname">${esc(ctx.name)}</div>
-        ${m.syllable ? `<div class="cakshar">${T("शास्त्रीय जन्म-नामाक्षर", "Classical birth syllable")}: <b>${esc(m.syllable)}</b></div>` : ""}
+        ${m.syllable && m.moonReliable ? `<div class="cakshar">${T("शास्त्रीय जन्म-नामाक्षर", "Classical birth syllable")}: <b>${esc(m.syllable)}</b></div>` : ""}
         <div class="trio">${trio.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join("")}</div>
         ${kv([
           [T("जन्म तिथि", "Date of birth"), `${fmtDMY(dobMs)} • ${vara}`],
           [T("जन्म समय", "Time of birth"), `${esc(timeStr)}${full ? ` <small>(${esc(tz)})</small>` : ""}`],
-          [T("जन्म स्थान", "Place of birth"), `${esc(place)} <small>${coords}</small>`],
-          [T("अयनांश", "Ayanamsa"), ayan],
+          ...(full ? [[T("जन्म स्थान", "Place of birth"), `${esc(place)} <small>${coords}</small>`], [T("अयनांश", "Ayanamsa"), ayan]] : [[T("ग्रह-स्वामी", "Ruling planets"), `${pName(NUM_PLANET[nm.mulank])} • ${pName(NUM_PLANET[nm.bhagyank])}`], [T("चालू वर्ष-अंक", "Current personal year"), `${nm.currentPY} — ${T(PY_HI[nm.currentPY][0], PY_EN[nm.currentPY][0])}`]]),
           [T("संवत्", "Samvat"), samvat ? T(`विक्रम ${samvat.vikramSamvat} • शक ${samvat.shakaSamvat}`, `Vikram ${samvat.vikramSamvat} • Shaka ${samvat.shakaSamvat}`) : "—"],
-          [T("तिथि", "Tithi"), panchang ? T(panchang.tithiHi, panchang.tithiEn) : "—"],
+          ...(m.moonReliable ? [[T("तिथि", "Tithi"), panchang ? T(panchang.tithiHi, panchang.tithiEn) : "—"]] : []),
           [T("रिपोर्ट क्रमांक", "Report ID"), `${m.reportId} • ${T("निर्मित", "Generated")} ${fmtDMY(Date.now())}`]
         ])}
+        ${nm ? `<div class="csum">${T(`<b>जीवन-सार:</b> मूलांक ${nm.mulank} आपको ${NUMT(nm.mulank, "trait")} देता है, और भाग्यांक ${nm.bhagyank} जीवन को ${NUMT(nm.bhagyank, "trait")} की ओर ले जाता है।`, `<b>Life in brief:</b> Birth number ${nm.mulank} gives you ${NUMT(nm.mulank, "trait")}, and destiny number ${nm.bhagyank} steers life towards ${NUMT(nm.bhagyank, "trait")}.`)}</div>` : ""}
         <div class="cqr">
           ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">UPI<br>${esc(OPT.phone)}</div>`}
           <div>
@@ -1324,8 +1338,8 @@
     const keys = [];
     if (m.full) keys.push(m.lordOf(1));
     if (m.dasha) keys.push(m.dasha.md.lord, m.dasha.ad.lord);
-    if (m.transit.sadeSati.current || [4, 8].includes(m.transit.satFromMoon)) keys.push("Saturn");
-    if (!m.full) keys.push("Moon", RASHI_LORD[m.moonR]);
+    if (m.moonReliable && (m.transit.sadeSati.current || [4, 8].includes(m.transit.satFromMoon))) keys.push("Saturn");
+    if (!m.full && m.num) keys.push(NUM_PLANET[m.num.mulank], NUM_PLANET[m.num.bhagyank]);
     const rem = uniq(keys).slice(0, 4).map((k) => `<li><b>${pName(k)}:</b> ${T(SIMPLE_REMEDY_HI[k], SIMPLE_REMEDY_EN[k])} • <span class="mantra">${MANTRA[k]}</span> ${T("(108 बार)", "(108 times)")}</li>`).join("");
     const full = T(
       ["षोडश वर्ग (D1–D60) सहित 40+ पृष्ठों का विस्तृत विश्लेषण", "विवाह का सबसे प्रबल वर्ष, जीवनसाथी का स्वरूप व गुण-मिलान", "करियर: नौकरी बनाम व्यवसाय, पदोन्नति व परिवर्तन के वर्ष", "120 वर्षीय दशा-अंतर्दशा-प्रत्यंतर फल", "साढ़ेसाती/ढैय्या व गोचर के महीने-वार प्रभाव", "रत्न-पात्रता (वर्जित रत्न सहित) व रुद्राक्ष परामर्श", "आपकी कुंडली हेतु व्यक्तिगत मंत्र-दान-अनुष्ठान योजना", "आचार्य जी से सीधा WhatsApp/कॉल परामर्श"],
@@ -1350,6 +1364,338 @@
       <p class="disc">${T("अस्वीकरण: यह विश्लेषण वैदिक ज्योतिष के शास्त्रीय सिद्धांतों (BPHS, जैमिनी सूत्र) पर आधारित मार्गदर्शन है। गणनाएँ खगोलीय रूप से सटीक हैं, परंतु फलादेश संभावनाएँ दर्शाते हैं। चिकित्सा, कानूनी या वित्तीय निर्णय संबंधित विशेषज्ञ की सलाह से लें।", "Disclaimer: This analysis is guidance based on classical Vedic principles (BPHS, Jaimini Sutras). Calculations are astronomically precise; predictions indicate probabilities. Take medical, legal or financial decisions with a qualified professional.")}</p>
       <div class="bless">॥ ${T("शुभम् भवतु • कल्याणमस्तु", "Shubham Bhavatu • Kalyanamastu")} ॥</div>`;
   }
+
+  // ==========================================================================
+  // 9B. DATE-OF-BIRTH (ANK JYOTISH) READING — USED WHEN BIRTH TIME IS UNKNOWN
+  // ==========================================================================
+  // Traditional Ank-Jyotish mapping: 1 Sun, 2 Moon, 3 Jupiter, 4 Rahu, 5 Mercury,
+  // 6 Venus, 7 Ketu, 8 Saturn, 9 Mars. Number friendship is derived from the
+  // classical (Naisargika) friendship of these planets, so it stays consistent
+  // with the rest of the kundali engine.
+  const NUM_PLANET = [null, "Sun", "Moon", "Jupiter", "Rahu", "Mercury", "Venus", "Ketu", "Saturn", "Mars"];
+  const PLANET_NUM = { Sun: 1, Moon: 2, Jupiter: 3, Rahu: 4, Mercury: 5, Venus: 6, Ketu: 7, Saturn: 8, Mars: 9 };
+  const NAT_FRIENDS = {
+    Sun: { f: ["Moon", "Mars", "Jupiter"], e: ["Venus", "Saturn", "Rahu", "Ketu"] },
+    Moon: { f: ["Sun", "Mercury"], e: ["Rahu", "Ketu"] },
+    Mars: { f: ["Sun", "Moon", "Jupiter", "Ketu"], e: ["Mercury", "Rahu"] },
+    Mercury: { f: ["Sun", "Venus", "Rahu"], e: ["Moon"] },
+    Jupiter: { f: ["Sun", "Moon", "Mars", "Ketu"], e: ["Mercury", "Venus", "Rahu"] },
+    Venus: { f: ["Mercury", "Saturn", "Rahu"], e: ["Sun", "Moon"] },
+    Saturn: { f: ["Mercury", "Venus", "Rahu"], e: ["Sun", "Moon", "Mars"] },
+    Rahu: { f: ["Venus", "Saturn", "Mercury"], e: ["Sun", "Moon", "Mars", "Jupiter"] },
+    Ketu: { f: ["Mars", "Jupiter"], e: ["Sun", "Moon"] }
+  };
+  function numRelation(a, b) {
+    if (a === b) return "same";
+    const pa = NUM_PLANET[a], pb = NUM_PLANET[b];
+    const fa = NAT_FRIENDS[pa], fb = NAT_FRIENDS[pb];
+    const aToB = fa.f.includes(pb) ? 1 : (fa.e.includes(pb) ? -1 : 0);
+    const bToA = fb.f.includes(pa) ? 1 : (fb.e.includes(pa) ? -1 : 0);
+    const s = aToB + bToA;
+    return s >= 1 ? "friend" : (s <= -1 ? "enemy" : "neutral");
+  }
+  const reduce9 = (n) => { n = Math.abs(Number(n) || 0); while (n > 9) n = String(n).split("").reduce((x, d) => x + Number(d), 0); return n || 9; };
+
+  const NUM_HI = {
+    1: { trait: "नेतृत्व, आत्मविश्वास और स्वतंत्र निर्णय", str: ["जन्मजात नेतृत्व क्षमता", "आत्मनिर्भरता", "स्पष्ट लक्ष्य"], ch: ["अहंकार व ज़िद", "दूसरों की बात कम सुनना", "सब कुछ अकेले करने की आदत"], career: "प्रशासन, सरकारी सेवा, प्रबंधन, स्वयं का व्यवसाय, राजनीति", money: "धन स्वयं के प्रयास और पद से आता है; बड़े निर्णय स्वयं लेना पसंद।", love: "सम्मान चाहने वाले; साथी पर नियंत्रण की प्रवृत्ति से बचें।", health: "हृदय, आँखें, रक्तचाप व हड्डियों का ध्यान रखें।", color: "सुनहरा, नारंगी, केसरिया", day: "रविवार", dir: "पूर्व", deity: "सूर्य देव" },
+    2: { trait: "भावुकता, कल्पनाशीलता, सहयोग और कूटनीति", str: ["गहरी संवेदनशीलता", "सहयोग व मेल-मिलाप", "रचनात्मकता"], ch: ["मूड जल्दी बदलना", "निर्णय में अनिश्चितता", "अधिक चिंता करना"], career: "कला/संगीत, परामर्श/मनोविज्ञान, स्वास्थ्य-सेवा, आतिथ्य, जल-खाद्य से जुड़ा व्यापार", money: "आय में उतार-चढ़ाव रहता है; नियमित बचत की आदत आवश्यक।", love: "गहरा भावनात्मक जुड़ाव; छोटी बातों से आहत न हों।", health: "मन, नींद, पाचन व सर्दी-जुकाम पर ध्यान दें।", color: "सफ़ेद, क्रीम, हल्का हरा", day: "सोमवार", dir: "उत्तर-पश्चिम", deity: "भगवान शिव" },
+    3: { trait: "ज्ञान, अनुशासन, महत्वाकांक्षा और मार्गदर्शन", str: ["सीखने व सिखाने की ललक", "ईमानदारी व सिद्धांत", "लोगों को दिशा देना"], ch: ["दूसरों की आलोचना", "स्वयं को ही सही मानना", "अधिक उपदेश देना"], career: "शिक्षण, विधि/न्याय, बैंकिंग/वित्त, परामर्श, धार्मिक-सामाजिक संस्थाएँ", money: "ज्ञान और प्रतिष्ठा से धन; उधार देने में सावधानी रखें।", love: "आदर्शवादी; साथी में बुद्धिमत्ता और सम्मान चाहते हैं।", health: "यकृत, शर्करा (मधुमेह), वज़न व पाचन पर ध्यान दें।", color: "पीला, सुनहरा, बैंगनी", day: "गुरुवार", dir: "उत्तर-पूर्व", deity: "भगवान विष्णु / देवगुरु बृहस्पति" },
+    4: { trait: "परिश्रम, अलग सोच, व्यवस्था और परिवर्तन", str: ["कठिन परिश्रम की क्षमता", "नई व मौलिक सोच", "तकनीकी समझ"], ch: ["अचानक आने वाली बाधाएँ", "ज़िद व विद्रोह", "जल्दबाज़ी में खर्च"], career: "आईटी/तकनीक, इंजीनियरिंग, शोध, विदेशी व्यापार, मीडिया", money: "आय अचानक आती-जाती है; जोखिम भरे निवेश से बचें।", love: "मित्र कम पर गहरे; ग़लतफ़हमियों को समय पर सुलझाएँ।", health: "नसें, सिरदर्द, अनिद्रा और अचानक होने वाले रोगों से सावधानी।", color: "नीला, धूसर, खाकी", day: "शनिवार", dir: "दक्षिण-पश्चिम", deity: "माँ दुर्गा" },
+    5: { trait: "बुद्धिमत्ता, तीव्रता, मिलनसारिता और बहुमुखी प्रतिभा", str: ["उत्कृष्ट संवाद कौशल", "व्यापारिक बुद्धि", "जल्दी सीखना"], ch: ["बेचैनी", "बार-बार दिशा बदलना", "जल्दबाज़ी"], career: "व्यापार/मार्केटिंग, वित्त/लेखा, आईटी, मीडिया/लेखन, यात्रा से जुड़े कार्य", money: "व्यापार और संपर्कों से अच्छी कमाई; जोखिम संतुलित रखें।", love: "हँसमुख व आकर्षक; संबंधों में स्थिरता सीखनी होती है।", health: "नसें, त्वचा, श्वास और तनाव पर ध्यान दें।", color: "हरा, फ़िरोज़ी", day: "बुधवार", dir: "उत्तर", deity: "श्री गणेश" },
+    6: { trait: "आकर्षण, कलाप्रियता, ज़िम्मेदारी और पारिवारिक प्रेम", str: ["सौंदर्य-बोध", "संबंध निभाने की कला", "सेवा भाव"], ch: ["सुख-सुविधा पर अधिक खर्च", "भावनात्मक निर्भरता", "आलोचना से आहत होना"], career: "डिज़ाइन/फ़ैशन, मीडिया/फ़िल्म, होटल/आतिथ्य, सौंदर्य उद्योग, वित्त", money: "आय अच्छी, पर विलासिता पर खर्च अधिक; बजट बनाएँ।", love: "प्रेम व परिवार जीवन का केंद्र; सामंजस्य प्रिय।", health: "गला, गुर्दे, त्वचा व हार्मोन संतुलन पर ध्यान दें।", color: "सफ़ेद, गुलाबी, हल्का नीला", day: "शुक्रवार", dir: "दक्षिण-पूर्व", deity: "माँ लक्ष्मी" },
+    7: { trait: "गहन चिंतन, अंतर्ज्ञान, आध्यात्मिकता और स्वतंत्रता", str: ["विश्लेषण व शोध क्षमता", "तीव्र अंतर्ज्ञान", "मौलिकता"], ch: ["एकांत-प्रियता", "लोगों पर अविश्वास", "निर्णय टालना"], career: "शोध/विज्ञान, चिकित्सा, लेखन, ज्योतिष/आध्यात्म, विदेश से जुड़े कार्य", money: "धन के प्रति उदासीनता; योजनाबद्ध बचत आवश्यक।", love: "भावनाएँ कम व्यक्त करते हैं; विश्वास बनने में समय लगता है।", health: "पाचन, त्वचा और मनोदैहिक (तनाव-जनित) कष्टों पर ध्यान दें।", color: "हल्का हरा, सफ़ेद, धूसर", day: "सोमवार", dir: "उत्तर-पश्चिम", deity: "श्री गणेश" },
+    8: { trait: "गंभीरता, धैर्य, कर्मठता और न्यायप्रियता", str: ["अटूट अनुशासन", "लंबी अवधि की योजना", "कठिन समय में डटे रहना"], ch: ["सफलता देर से", "अकेलापन/उदासी", "लोगों द्वारा ग़लत समझा जाना"], career: "उद्योग/निर्माण, विधि/न्याय, प्रशासन/संचालन, रियल एस्टेट, खनन/ऊर्जा", money: "धन देर से, पर स्थायी; आयु के साथ बढ़ता है।", love: "निष्ठावान, पर भावनाएँ व्यक्त करने में संकोच।", health: "जोड़ों, हड्डियों, दाँतों व वात-रोगों पर ध्यान दें।", color: "गहरा नीला, काला, बैंगनी", day: "शनिवार", dir: "पश्चिम", deity: "श्री हनुमान / शनि देव" },
+    9: { trait: "साहस, ऊर्जा, जोश और रक्षा-भाव", str: ["अदम्य साहस", "भरपूर ऊर्जा", "नेतृत्व व रक्षा का भाव"], ch: ["क्रोध", "जल्दबाज़ी", "विवाद व चोट"], career: "सेना/पुलिस, इंजीनियरिंग, खेल, चिकित्सा/सर्जरी, भूमि/निर्माण", money: "कमाई अच्छी, खर्च भी तेज़; भूमि में निवेश शुभ।", love: "भावुक व रक्षक; क्रोध पर नियंत्रण संबंध बचाता है।", health: "रक्त, बुखार, चोट और रक्तचाप पर ध्यान दें।", color: "लाल, गुलाबी, केसरिया", day: "मंगलवार", dir: "दक्षिण", deity: "श्री हनुमान" }
+  };
+  const NUM_EN = {
+    1: { trait: "leadership, confidence and independent decisions", str: ["natural leadership", "self-reliance", "clear goals"], ch: ["ego and stubbornness", "not listening to others", "doing everything alone"], career: "administration, government, management, own business, politics", money: "Money comes through your own effort and position; you prefer to take big decisions yourself.", love: "You want respect; avoid controlling your partner.", health: "Care for heart, eyes, blood pressure and bones.", color: "gold, orange, saffron", day: "Sunday", dir: "East", deity: "Surya Dev" },
+    2: { trait: "emotion, imagination, cooperation and diplomacy", str: ["deep sensitivity", "cooperation and harmony", "creativity"], ch: ["changing moods", "indecision", "excess worry"], career: "arts/music, counselling/psychology, healthcare, hospitality, food and liquids trade", money: "Income fluctuates; a regular saving habit is essential.", love: "Deep emotional bonding; try not to be hurt by small things.", health: "Mind, sleep, digestion and colds need care.", color: "white, cream, light green", day: "Monday", dir: "North-West", deity: "Lord Shiva" },
+    3: { trait: "wisdom, discipline, ambition and guidance", str: ["love of learning and teaching", "honesty and principles", "guiding others"], ch: ["criticising others", "always believing you are right", "over-advising"], career: "teaching, law, banking/finance, consulting, religious and social institutions", money: "Wealth through knowledge and reputation; be careful lending money.", love: "Idealistic; you look for intelligence and respect in a partner.", health: "Care for liver, blood sugar, weight and digestion.", color: "yellow, gold, purple", day: "Thursday", dir: "North-East", deity: "Lord Vishnu / Guru Brihaspati" },
+    4: { trait: "hard work, original thinking, order and change", str: ["capacity for hard work", "new and original ideas", "technical understanding"], ch: ["sudden obstacles", "stubbornness and rebellion", "impulsive spending"], career: "IT/technology, engineering, research, foreign trade, media", money: "Money comes and goes suddenly; avoid risky investments.", love: "Few but deep friendships; clear misunderstandings early.", health: "Nerves, headaches, insomnia and sudden ailments need care.", color: "blue, grey, khaki", day: "Saturday", dir: "South-West", deity: "Goddess Durga" },
+    5: { trait: "intelligence, speed, sociability and versatility", str: ["excellent communication", "business sense", "quick learning"], ch: ["restlessness", "changing direction often", "haste"], career: "business/marketing, finance/accounts, IT, media/writing, travel-related work", money: "Good earnings through trade and contacts; keep risks balanced.", love: "Cheerful and charming; stability has to be learned.", health: "Nerves, skin, breathing and stress need care.", color: "green, turquoise", day: "Wednesday", dir: "North", deity: "Lord Ganesha" },
+    6: { trait: "charm, artistry, responsibility and love of family", str: ["aesthetic sense", "nurturing relationships", "service"], ch: ["overspending on comforts", "emotional dependence", "hurt by criticism"], career: "design/fashion, media/film, hotels/hospitality, beauty industry, finance", money: "Good income but high spending on luxury; keep a budget.", love: "Love and family are the centre of life; you value harmony.", health: "Throat, kidneys, skin and hormonal balance need care.", color: "white, pink, light blue", day: "Friday", dir: "South-East", deity: "Goddess Lakshmi" },
+    7: { trait: "deep thought, intuition, spirituality and independence", str: ["analysis and research", "strong intuition", "originality"], ch: ["love of solitude", "distrust of people", "postponing decisions"], career: "research/science, medicine, writing, astrology/spirituality, foreign-linked work", money: "Indifferent to money; planned saving is essential.", love: "You express feelings little; trust takes time.", health: "Digestion, skin and stress-related complaints need care.", color: "light green, white, grey", day: "Monday", dir: "North-West", deity: "Lord Ganesha" },
+    8: { trait: "seriousness, patience, hard work and justice", str: ["unbreakable discipline", "long-term planning", "standing firm in hard times"], ch: ["late success", "loneliness/low mood", "being misunderstood"], career: "industry/construction, law, administration/operations, real estate, mining/energy", money: "Wealth comes late but stays; it grows with age.", love: "Loyal, but hesitant to express emotions.", health: "Joints, bones, teeth and Vata disorders need care.", color: "dark blue, black, purple", day: "Saturday", dir: "West", deity: "Lord Hanuman / Shani Dev" },
+    9: { trait: "courage, energy, passion and protectiveness", str: ["fearless courage", "abundant energy", "leadership and protectiveness"], ch: ["anger", "haste", "disputes and injuries"], career: "army/police, engineering, sports, medicine/surgery, land/construction", money: "Good earnings, fast spending; investing in land is auspicious.", love: "Passionate and protective; controlling anger saves relationships.", health: "Blood, fevers, injuries and blood pressure need care.", color: "red, pink, saffron", day: "Tuesday", dir: "South", deity: "Lord Hanuman" }
+  };
+  const PY_HI = {
+    1: ["नई शुरुआत", "नया काम, कोर्स या नौकरी शुरू करने का वर्ष; पहल करें।", "good"],
+    2: ["धैर्य व साझेदारी", "संबंध और सहयोग का वर्ष; जल्दबाज़ी न करें।", "mixed"],
+    3: ["विस्तार व अभिव्यक्ति", "शिक्षा, रचनात्मकता और सामाजिक संपर्क बढ़ते हैं।", "good"],
+    4: ["परिश्रम व नींव", "मेहनत अधिक, फल धीरे; स्वास्थ्य व खर्च पर ध्यान।", "caution"],
+    5: ["परिवर्तन", "यात्रा, बदलाव व नए अवसर; अस्थिर निर्णयों से बचें।", "mixed"],
+    6: ["परिवार व ज़िम्मेदारी", "विवाह, घर, परिवार और सेवा से जुड़े शुभ अवसर।", "good"],
+    7: ["आत्मचिंतन", "अध्ययन, आध्यात्म व एकांत का वर्ष; बड़े निवेश टालें।", "caution"],
+    8: ["कर्म-फल व धन", "पद, धन व अधिकार के अवसर, पर दबाव व कानूनी मामलों में सावधानी।", "mixed"],
+    9: ["पूर्णता", "पुराने कार्य पूरे करने और जो काम का नहीं उसे छोड़ने का वर्ष।", "mixed"]
+  };
+  const PY_EN = {
+    1: ["New beginnings", "A year to start a new job, course or venture; take initiative.", "good"],
+    2: ["Patience & partnership", "A year of relationships and cooperation; don't rush.", "mixed"],
+    3: ["Expansion & expression", "Education, creativity and social contacts grow.", "good"],
+    4: ["Hard work & foundations", "More effort, slower results; watch health and spending.", "caution"],
+    5: ["Change", "Travel, change and new openings; avoid unstable decisions.", "mixed"],
+    6: ["Family & responsibility", "Good openings around marriage, home, family and service.", "good"],
+    7: ["Reflection", "A year for study, spirituality and solitude; postpone big investments.", "caution"],
+    8: ["Karma & money", "Chances of position, money and authority, but care with pressure and legal matters.", "mixed"],
+    9: ["Completion", "Finish old work and let go of what no longer serves you.", "mixed"]
+  };
+  const MISSING_HI = {
+    1: "अपनी बात कहने व आत्मविश्वास में संकोच", 2: "धैर्य, सहयोग और अंतर्ज्ञान पर काम आवश्यक", 3: "कल्पना, योजना व पढ़ाई में एकाग्रता हेतु प्रयास",
+    4: "अनुशासन व व्यवस्था की कमी; काम अधूरे छूटना", 5: "भावनात्मक संतुलन और स्थिरता की कमी", 6: "घर-परिवार के सुख व ज़िम्मेदारी में कमी का भाव",
+    7: "भाग्य के सहारे की कमी; अनुभव से सीखना पड़ता है", 8: "धन-प्रबंधन व बारीकियों पर ध्यान की कमी", 9: "महत्वाकांक्षा, ऊर्जा व प्रेरणा की कमी"
+  };
+  const MISSING_EN = {
+    1: "hesitation in self-expression and confidence", 2: "patience, cooperation and intuition need work", 3: "effort needed in imagination, planning and focus",
+    4: "lack of discipline and order; tasks left unfinished", 5: "lack of emotional balance and stability", 6: "a sense of lack in home comforts and responsibility",
+    7: "less support from luck; lessons come through experience", 8: "weak money management and attention to detail", 9: "low ambition, energy and motivation"
+  };
+  const PLANES = [
+    { n: [4, 9, 2], hi: "विचार-शक्ति (मानसिक)", en: "Mental plane" }, { n: [3, 5, 7], hi: "भावनात्मक संतुलन", en: "Emotional plane" },
+    { n: [8, 1, 6], hi: "व्यावहारिक कुशलता", en: "Practical plane" }, { n: [4, 3, 8], hi: "योजना-शक्ति", en: "Thought plane" },
+    { n: [9, 5, 1], hi: "इच्छा-शक्ति", en: "Will plane" }, { n: [2, 7, 6], hi: "कर्म-शक्ति", en: "Action plane" },
+    { n: [4, 5, 6], hi: "स्वर्ण (सफलता) रेखा", en: "Golden (success) line" }, { n: [2, 5, 8], hi: "संपत्ति रेखा", en: "Property line" }
+  ];
+  const LOSHU_LAYOUT = [[4, 9, 2], [3, 5, 7], [8, 1, 6]];
+  const PLANE_MEAN_HI = ["स्मरण-शक्ति, बुद्धि व विश्लेषण", "भावनाओं की गहराई व संतुलन", "व्यावहारिक कार्य, धन-प्रबंधन व भौतिक सफलता", "योजना बनाना व विचारों को व्यवस्थित करना", "दृढ़ संकल्प और लक्ष्य पर टिके रहना", "विचारों को कर्म में बदलना", "सफलता, प्रगति व स्थिरता", "संपत्ति, भूमि व भौतिक सुख"];
+  const PLANE_MEAN_EN = ["memory, intellect and analysis", "emotional depth and balance", "practical work, money management and material success", "planning and organising ideas", "determination and staying on target", "turning ideas into action", "success, progress and stability", "property, land and material comfort"];
+  const ADVICE_HI = {
+    1: "दूसरों को साथ लेकर चलें — आपकी सफलता टीम के सहयोग से कई गुना बढ़ती है। सुबह जल्दी उठना और सूर्य-नमस्कार आपके लिए विशेष शुभ है।",
+    2: "बड़े निर्णय शांत मन से, एक दिन रुककर लें। नियमित ध्यान, पर्याप्त नींद और जल-सेवन आपके मन को स्थिर रखते हैं।",
+    3: "ज्ञान बाँटें, पर उपदेश कम दें — सुनने की आदत आपको सर्वोत्तम मार्गदर्शक बनाती है। गुरुवार को बड़ों का आशीर्वाद लें।",
+    4: "योजना लिखकर काम करें और अचानक निर्णयों से बचें। अनुशासित दिनचर्या आपकी बाधाओं को अवसर में बदल देती है।",
+    5: "एक समय में एक लक्ष्य पर टिकें। आपकी वाणी आपकी पूँजी है — संवाद, नेटवर्क और व्यापारिक बुद्धि का सही उपयोग करें।",
+    6: "सुख-सुविधा और बचत में संतुलन रखें। परिवार और कला से जुड़ाव आपको ऊर्जा देता है; स्वच्छता और सुगंध शुभ फल देती हैं।",
+    7: "अपने अंतर्ज्ञान पर भरोसा करें, पर विश्वसनीय लोगों से विचार साझा करें। अध्ययन और ध्यान आपकी सबसे बड़ी शक्ति हैं।",
+    8: "धैर्य ही आपकी कुंजी है — आपकी मेहनत देर से, पर स्थायी फल देती है। ईमानदारी, सेवा और ज़रूरतमंदों की सहायता भाग्य खोलती है।",
+    9: "क्रोध को ऊर्जा में बदलें — खेल, व्यायाम या सेवा कार्य में। विवाद से पहले दस तक गिनें; साहस को धैर्य के साथ जोड़ें।"
+  };
+  const ADVICE_EN = {
+    1: "Take others along — your success multiplies with a team. Rising early and Surya Namaskar are especially good for you.",
+    2: "Take big decisions with a calm mind, after a day's pause. Regular meditation, enough sleep and water keep your mind steady.",
+    3: "Share knowledge but advise less — listening makes you the best guide. Seek elders' blessings on Thursdays.",
+    4: "Work from a written plan and avoid sudden decisions. A disciplined routine turns your obstacles into openings.",
+    5: "Stick to one goal at a time. Your words are your capital — use communication, networks and business sense well.",
+    6: "Balance comfort and saving. Family and the arts recharge you; cleanliness and fragrance bring good results.",
+    7: "Trust your intuition, but share ideas with trusted people. Study and meditation are your greatest strengths.",
+    8: "Patience is your key — your effort pays late but lasts. Honesty, service and helping the needy open your luck.",
+    9: "Turn anger into energy — sport, exercise or service. Count to ten before a dispute; pair courage with patience."
+  };
+
+  function buildNumModel(ctx) {
+    const nd = ctx.numData || {};
+    const [y, mo, d] = String(ctx.dob || "2000-01-01").split("-").map(Number);
+    const mulank = reduce9(d);
+    const digitsAll = String(ctx.dob || "").replace(/\D/g, "");
+    const bhagyank = reduce9(digitsAll.split("").reduce((a, b) => a + Number(b), 0));
+    const latin = /[A-Za-z]/.test(ctx.name || "");
+    const name = latin && ctx.chaldean && ctx.chaldean.compound > 0 ? { compound: ctx.chaldean.compound, single: reduce9(ctx.chaldean.compound) } : null;
+
+    const counts = {};
+    for (let i = 1; i <= 9; i++) counts[i] = 0;
+    digitsAll.split("").map(Number).filter((x) => x > 0).forEach((x) => { counts[x]++; });
+    counts[bhagyank]++;
+    if (d > 9) counts[mulank]++;
+    const missing = Object.keys(counts).map(Number).filter((k) => counts[k] === 0);
+    const strong = Object.keys(counts).map(Number).filter((k) => counts[k] >= 2);
+    const fullPlanes = PLANES.filter((p) => p.n.every((x) => counts[x] > 0));
+    const emptyPlanes = PLANES.filter((p) => p.n.every((x) => counts[x] === 0));
+
+    const thisYear = new Date().getFullYear();
+    const pyOf = (yr) => reduce9(d + mo + reduce9(yr));
+    const years = [];
+    for (let yr = thisYear; yr <= thisYear + 5; yr++) years.push({ yr, py: pyOf(yr) });
+
+    const friendsOf = (n) => [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((k) => k !== n && numRelation(n, k) === "friend");
+    const enemiesOf = (n) => [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((k) => k !== n && numRelation(n, k) === "enemy");
+    return {
+      d, mo, y, mulank, bhagyank, name, counts, missing, strong, fullPlanes, emptyPlanes, years,
+      mbRel: numRelation(mulank, bhagyank),
+      nameRelM: name ? numRelation(name.single, mulank) : null,
+      nameRelB: name ? numRelation(name.single, bhagyank) : null,
+      lucky: uniq([mulank, ...friendsOf(mulank)]).filter((k) => !enemiesOf(bhagyank).includes(k)),
+      avoid: enemiesOf(mulank).filter((k) => k !== bhagyank),
+      partner: friendsOf(mulank),
+      currentPY: years[0].py
+    };
+  }
+
+  const NUMT = (n, key) => (LANG === "hi" ? NUM_HI[n][key] : NUM_EN[n][key]);
+  const relLabel = (r) => ({ same: T("समान", "same"), friend: T("मित्र", "friendly"), neutral: T("सम", "neutral"), enemy: T("विरोधी", "opposing") }[r]);
+
+  function addNumerologyCons(m, add) {
+    const n = m.num;
+    if (n.mbRel === "enemy") {
+      add({
+        key: "NUM_MB", sev: 2, dom: ["career", "health"],
+        title: T(`मूलांक ${n.mulank} और भाग्यांक ${n.bhagyank} में टकराव`, `Conflict between birth number ${n.mulank} and destiny number ${n.bhagyank}`),
+        basis: T(`मूलांक ${n.mulank} (${PL_HI[NUM_PLANET[n.mulank]]}) और भाग्यांक ${n.bhagyank} (${PL_HI[NUM_PLANET[n.bhagyank]]}) परस्पर विरोधी ग्रहों के अंक हैं`, `${n.mulank} (${PL_EN[NUM_PLANET[n.mulank]]}) and ${n.bhagyank} (${PL_EN[NUM_PLANET[n.bhagyank]]}) belong to opposing planets`),
+        effect: T("मन एक दिशा चाहता है, परिस्थितियाँ दूसरी ओर ले जाती हैं — प्रयास के अनुपात में फल देर से मिलता है। सही दिशा-चयन व उपाय से यह संतुलित होता है।", "The mind wants one direction while circumstances pull another — results lag behind effort. The right direction and remedies balance this.")
+      });
+    }
+    if (n.name && (n.nameRelM === "enemy" || n.nameRelB === "enemy")) {
+      add({
+        key: "NUM_NAME", sev: 2, dom: ["career", "wealth"],
+        title: T(`नाम का अंक ${n.name.single} आपके जन्म-अंकों से मेल नहीं खाता`, `Your name number ${n.name.single} does not match your birth numbers`),
+        basis: T(`नाम "${esc(m.ctx.name)}" का अंक ${n.name.compound}/${n.name.single} (${PL_HI[NUM_PLANET[n.name.single]]}) — मूलांक से ${relLabel(n.nameRelM)}, भाग्यांक से ${relLabel(n.nameRelB)}`, `Name "${esc(m.ctx.name)}" totals ${n.name.compound}/${n.name.single} (${PL_EN[NUM_PLANET[n.name.single]]}) — ${relLabel(n.nameRelM)} to the birth number, ${relLabel(n.nameRelB)} to the destiny number`),
+        effect: T("नाम रोज़ बोला और लिखा जाता है; अंक-विरोध से पहचान, अवसर व प्रतिष्ठा में अकारण रुकावट आती है। नाम की वर्तनी में छोटे संशोधन से इसे ठीक किया जा सकता है।", "A name is spoken and written daily; a mismatch brings needless friction in recognition, opportunities and reputation. A small spelling correction can fix it.")
+      });
+    }
+    const pyTone = PY_HI[n.currentPY][2];
+    if (pyTone === "caution" || n.currentPY === 8) {
+      add({
+        key: "NUM_PY", sev: pyTone === "caution" ? 2 : 1, dom: ["career", "wealth"],
+        title: T(`वर्ष ${n.years[0].yr}: व्यक्तिगत वर्ष-अंक ${n.currentPY} — ${PY_HI[n.currentPY][0]}`, `${n.years[0].yr}: personal year ${n.currentPY} — ${PY_EN[n.currentPY][0]}`),
+        basis: T(`जन्म-दिन व माह के अंकों और वर्ष ${n.years[0].yr} के योग से`, `From your birth day and month plus the year ${n.years[0].yr}`),
+        effect: T(PY_HI[n.currentPY][1], PY_EN[n.currentPY][1])
+      });
+    }
+    if (n.emptyPlanes.length || n.missing.length >= 5) {
+      add({
+        key: "NUM_MISSING", sev: 1, dom: ["education"],
+        title: T(`जन्म-तिथि में ${n.missing.length} अंकों की कमी`, `${n.missing.length} numbers missing from your birth date`),
+        basis: T(`अनुपस्थित अंक: ${n.missing.join(", ")}${n.emptyPlanes.length ? ` • रिक्त रेखा: ${n.emptyPlanes.map((p) => p.hi).join(", ")}` : ""}`, `Missing: ${n.missing.join(", ")}${n.emptyPlanes.length ? ` • empty line: ${n.emptyPlanes.map((p) => p.en).join(", ")}` : ""}`),
+        effect: T(`मुख्य कमी: ${n.missing.slice(0, 3).map((k) => MISSING_HI[k]).join("; ")}। इनकी पूर्ति के सरल उपाय होते हैं।`, `Main gaps: ${n.missing.slice(0, 3).map((k) => MISSING_EN[k]).join("; ")}. Each has simple remedies.`)
+      });
+    }
+  }
+
+  // ---------- DOB page A: birth numbers + grid ----------
+  function pageNumbers(m) {
+    const n = m.num;
+    const tile = (label, val, sub, note) => `<div class="ntile"><span>${label}</span><b>${val}</b><em>${sub}</em><small>${note}</small></div>`;
+    const grid = LOSHU_LAYOUT.map((row) => `<tr>${row.map((k) => `<td class="${n.counts[k] ? "has" : "miss"}">${n.counts[k] ? String(k).repeat(n.counts[k]) : "—"}</td>`).join("")}</tr>`).join("");
+    return `
+      <div class="ntiles">
+        ${tile(T("मूलांक", "Birth number"), n.mulank, pName(NUM_PLANET[n.mulank]), T("आपका स्वभाव और सोच", "your nature and thinking"))}
+        ${tile(T("भाग्यांक", "Destiny number"), n.bhagyank, pName(NUM_PLANET[n.bhagyank]), T("जीवन की दिशा और भाग्य", "life direction and fortune"))}
+        ${n.name ? tile(T("नामांक", "Name number"), `${n.name.single}<sup>${n.name.compound}</sup>`, pName(NUM_PLANET[n.name.single]), T("पहचान और प्रतिष्ठा", "identity and reputation")) : tile(T("वर्ष-अंक", "Personal year"), n.currentPY, String(n.years[0].yr), T(PY_HI[n.currentPY][0], PY_EN[n.currentPY][0]))}
+      </div>
+      <p class="lead">${T(`मूलांक ${n.mulank} और भाग्यांक ${n.bhagyank} का संबंध <b>${relLabel(n.mbRel)}</b> है${n.mbRel === "enemy" ? " — इसलिए प्रयास और परिणाम में अक्सर अंतर दिखता है।" : (n.mbRel === "friend" || n.mbRel === "same" ? " — स्वभाव और भाग्य एक ही दिशा में चलते हैं, जो प्रगति में सहायक है।" : " — परिणाम आपके सही चुनावों पर निर्भर करते हैं।")}${n.name ? ` नाम का अंक ${n.name.single} मूलांक से ${relLabel(n.nameRelM)} और भाग्यांक से ${relLabel(n.nameRelB)} है।` : ""}`,
+        `The relationship between birth number ${n.mulank} and destiny number ${n.bhagyank} is <b>${relLabel(n.mbRel)}</b>${n.mbRel === "enemy" ? " — so effort and results often diverge." : (n.mbRel === "friend" || n.mbRel === "same" ? " — nature and destiny pull the same way, which helps progress." : " — results depend on your choices.")}${n.name ? ` Your name number ${n.name.single} is ${relLabel(n.nameRelM)} to the birth number and ${relLabel(n.nameRelB)} to the destiny number.` : ""}`)}</p>
+      <div class="h3">${T("जन्म-तिथि अंक-चक्र", "Birth-date number grid")}</div>
+      <div class="loshu">
+        <table class="lsg">${grid}</table>
+        <div>
+          ${n.fullPlanes.length ? `<p><b class="ok">✦ ${T("पूर्ण रेखाएँ (शक्ति)", "Complete lines (strength)")}:</b> ${n.fullPlanes.map((p) => T(p.hi, p.en)).join(", ")}</p>` : ""}
+          ${n.strong.length ? `<p><b class="ok">✦ ${T("प्रबल अंक", "Strong numbers")}:</b> ${n.strong.join(", ")}</p>` : ""}
+          <p><b class="bad">⚠ ${T("अनुपस्थित अंक", "Missing numbers")}:</b> ${n.missing.length ? n.missing.join(", ") : T("कोई नहीं", "none")}</p>
+          <ul class="bul">${n.missing.slice(0, 4).map((k) => `<li><b>${k}:</b> ${T(MISSING_HI[k], MISSING_EN[k])}</li>`).join("")}</ul>
+        </div>
+      </div>
+      <div class="h3">${T("अंक-चक्र की आठ रेखाएँ", "The eight lines of the grid")}</div>
+      <table class="tbl"><thead><tr><th>${T("रेखा", "Line")}</th><th class="c">${T("अंक", "Numbers")}</th><th>${T("क्या दर्शाती है", "What it shows")}</th><th class="c">${T("स्थिति", "Status")}</th></tr></thead><tbody>
+        ${PLANES.map((pl, i) => { const c = pl.n.filter((x) => n.counts[x] > 0).length; const st = c === 3 ? `<span class="chip chip-good">${T("पूर्ण", "Complete")}</span>` : (c === 0 ? `<span class="chip chip-caution">${T("रिक्त", "Empty")}</span>` : `<span class="chip chip-mixed">${T("आंशिक", "Partial")} ${c}/3</span>`); return `<tr><td class="b">${T(pl.hi, pl.en)}</td><td class="c">${pl.n.join("-")}</td><td>${T(PLANE_MEAN_HI[i], PLANE_MEAN_EN[i])}</td><td class="c">${st}</td></tr>`; }).join("")}
+      </tbody></table>
+      <div class="lockbox">🔒 ${T("अनुपस्थित अंकों की पूर्ति के व्यक्तिगत उपाय और नाम-वर्तनी सुधार — पूर्ण विश्लेषण में।", "Personal remedies for missing numbers and name-spelling correction — in the full analysis.")}</div>`;
+  }
+
+  // ---------- DOB page B: personality ----------
+  function pageNumPersonality(m) {
+    const n = m.num;
+    const mul = n.mulank, bh = n.bhagyank;
+    const list = (arr) => arr.map((x) => `<li>${x}</li>`).join("");
+    return `
+      <p><b>${T(`आपका मूल स्वभाव (मूलांक ${mul} — ${PL_HI[NUM_PLANET[mul]]}):`, `Your core nature (birth number ${mul} — ${PL_EN[NUM_PLANET[mul]]}):`)}</b> ${T(`आपके व्यक्तित्व की पहचान है — ${NUMT(mul, "trait")}।`, `Your personality is marked by ${NUMT(mul, "trait")}.`)}</p>
+      <p><b>${T(`जीवन की दिशा (भाग्यांक ${bh} — ${PL_HI[NUM_PLANET[bh]]}):`, `Life direction (destiny number ${bh} — ${PL_EN[NUM_PLANET[bh]]}):`)}</b> ${T(`जीवन आपको ${NUMT(bh, "trait")} की ओर ले जाता है; आयु के साथ ये गुण अधिक उभरते हैं।`, `Life steers you towards ${NUMT(bh, "trait")}; these qualities grow stronger with age.`)}</p>
+      <div class="two">
+        <div class="card okcard"><div class="ct">✦ ${T("आपकी शक्तियाँ", "Your strengths")}</div><ul class="bul">${list(uniq([...NUMT(mul, "str"), ...NUMT(bh, "str").slice(0, 2)]))}</ul></div>
+        <div class="card sev2"><div class="ct">⚠ ${T("जिन पर काम करना है", "What to work on")}</div><ul class="bul">${list(uniq([...NUMT(mul, "ch"), ...NUMT(bh, "ch").slice(0, 1)]))}</ul></div>
+      </div>
+      ${m.moonReliable ? `<p><b>${T(`चंद्र राशि ${RASHI_HI[m.moonR]} (${NAK_HI[m.moonNak - 1]} नक्षत्र):`, `Moon sign ${RASHI_EN[m.moonR]} (${NAK_EN[m.moonNak - 1]}):`)}</b> ${T(MOON_TRAIT_HI[m.moonR], MOON_TRAIT_EN[m.moonR])}</p>` : ""}
+      <p><b>${T("स्वभाव और भाग्य का मेल:", "How nature and destiny combine:")}</b> ${n.mbRel === "enemy"
+        ? T(`${PL_HI[NUM_PLANET[mul]]} और ${PL_HI[NUM_PLANET[bh]]} विरोधी ग्रह हैं — आप जो करना चाहते हैं और जीवन जो माँगता है, उनमें अक्सर खिंचाव रहता है। सही दिशा चुनने पर यही खिंचाव आपको असाधारण बनाता है।`, `${PL_EN[NUM_PLANET[mul]]} and ${PL_EN[NUM_PLANET[bh]]} are opposing planets — what you want and what life asks of you often pull apart. With the right direction this very tension makes you exceptional.`)
+        : (n.mbRel === "neutral"
+          ? T(`${PL_HI[NUM_PLANET[mul]]} और ${PL_HI[NUM_PLANET[bh]]} सम संबंध में हैं — परिणाम आपके चुनावों पर निर्भर करते हैं; सही समय और सही संगति से भाग्य तेज़ी से साथ देता है।`, `${PL_EN[NUM_PLANET[mul]]} and ${PL_EN[NUM_PLANET[bh]]} are neutral to each other — results depend on your choices; the right timing and company bring luck quickly.`)
+          : T(`${PL_HI[NUM_PLANET[mul]]} और ${PL_HI[NUM_PLANET[bh]]} मित्र ग्रह हैं — आपका स्वभाव और भाग्य एक ही दिशा में चलते हैं। अपनी स्वाभाविक रुचि का अनुसरण करना ही आपकी सफलता का मार्ग है।`, `${PL_EN[NUM_PLANET[mul]]} and ${PL_EN[NUM_PLANET[bh]]} are friends — your nature and destiny pull the same way. Following your natural interests is your path to success.`))}</p>
+      ${n.name ? `<p><b>${T(`नाम का प्रभाव (नामांक ${n.name.single} — ${PL_HI[NUM_PLANET[n.name.single]]}):`, `Effect of your name (name number ${n.name.single} — ${PL_EN[NUM_PLANET[n.name.single]]}):`)}</b> ${T(`लोग आपको ${NUMT(n.name.single, "trait")} से पहचानते हैं।`, `People recognise you by ${NUMT(n.name.single, "trait")}.`)} ${(n.nameRelM === "enemy" || n.nameRelB === "enemy") ? T("परंतु यह अंक आपके जन्म-अंकों से मेल नहीं खाता, इसलिए आपकी वास्तविक क्षमता लोगों तक पूरी नहीं पहुँचती।", "But this number clashes with your birth numbers, so your real ability does not fully reach people.") : T("यह अंक आपके जन्म-अंकों से अनुकूल है, जो पहचान और प्रतिष्ठा में सहायक है।", "This number suits your birth numbers, which helps recognition and reputation.")}</p>` : ""}
+      <div class="card neutral"><div class="ct">🧭 ${T("आपकी सफलता का सूत्र", "Your formula for success")}</div><p>${T(ADVICE_HI[mul], ADVICE_EN[mul])}</p>${mul !== bh ? `<p>${T(ADVICE_HI[bh], ADVICE_EN[bh])}</p>` : ""}</div>
+      <div class="lockbox">🔒 ${T("जन्म-समय से लग्न, नवांश और दशा जोड़कर स्वभाव का संपूर्ण विश्लेषण — पूर्ण कुंडली में।", "A complete temperament reading with ascendant, navamsa and dasha from your birth time — in the full kundali.")}</div>`;
+  }
+
+  // ---------- DOB page C: life areas ----------
+  function pageNumAreas(m) {
+    const n = m.num, mul = n.mulank, bh = n.bhagyank;
+    const consFor = (dom) => { const c = m.cons.find((x) => (x.dom || []).includes(dom)); return c ? c.title : null; };
+    const cards = [
+      ["💼", T("करियर एवं कार्यक्षेत्र", "Career & Work"), [T(`अनुकूल क्षेत्र: ${NUMT(mul, "career")}`, `Suitable fields: ${NUMT(mul, "career")}`), mul !== bh ? T(`भाग्यांक से अतिरिक्त अवसर: ${NUMT(bh, "career")}`, `Extra openings via destiny number: ${NUMT(bh, "career")}`) : ""], consFor("career"), T("नौकरी बनाम व्यवसाय और बदलाव के सटीक वर्ष", "Job vs business and exact change years")],
+      ["💰", T("धन एवं बचत", "Money & Savings"), [NUMT(mul, "money"), mul !== bh ? NUMT(bh, "money") : ""], consFor("wealth"), T("धन-वृद्धि व निवेश के अनुकूल वर्ष", "Favourable years for growth and investment")],
+      ["🎓", T("शिक्षा एवं बुद्धि", "Education & Intellect"), [T(`विषय-चयन में ${NUMT(mul, "career").split(",")[0]} जैसे क्षेत्र स्वाभाविक रूप से अनुकूल।`, `Fields like ${NUMT(mul, "career").split(",")[0]} come naturally.`), n.missing.includes(3) ? T("अंक 3 अनुपस्थित — पढ़ाई में एकाग्रता हेतु नियमित दिनचर्या रखें।", "3 is missing — keep a regular study routine for focus.") : T("अंक 3 उपस्थित — सीखने की स्वाभाविक क्षमता।", "3 is present — a natural capacity to learn.")], consFor("education"), T("परीक्षा/प्रवेश के प्रबल वर्ष", "Strong exam/admission years")],
+      ["💍", T("संबंध एवं विवाह", "Relationships & Marriage"), [NUMT(mul, "love"), T(`अनुकूल साथी के मूलांक: ${n.partner.join(", ")}`, `Compatible partner birth numbers: ${n.partner.join(", ")}`)], consFor("marriage"), T("विवाह का प्रबल समय और कुंडली-मिलान", "Strong marriage timing and matching")],
+      ["🌿", T("स्वास्थ्य", "Health"), [NUMT(mul, "health"), mul !== bh ? NUMT(bh, "health") : "", T("(सामान्य संकेत — चिकित्सा सलाह नहीं)", "(General indication — not medical advice)")], consFor("health"), T("स्वास्थ्य के संवेदनशील वर्ष व उपाय", "Sensitive health years and remedies")],
+      ["🧭", T("शुभ दिशा एवं समय", "Lucky Direction & Timing"), [T(`शुभ दिशा: ${NUMT(mul, "dir")} • शुभ वार: ${NUMT(mul, "day")}`, `Lucky direction: ${NUMT(mul, "dir")} • lucky day: ${NUMT(mul, "day")}`), T(`महत्वपूर्ण कार्य ${n.lucky.join(", ")} तारीख़ों को शुरू करें।`, `Start important work on dates adding to ${n.lucky.join(", ")}.`)], null, T("मुहूर्त-चयन हेतु व्यक्तिगत परामर्श", "Personal guidance for muhurta selection")]
+    ];
+    return `
+      <p class="lead">${T(`मूलांक ${mul} (${PL_HI[NUM_PLANET[mul]]}) आपकी स्वाभाविक क्षमता और भाग्यांक ${bh} (${PL_HI[NUM_PLANET[bh]]}) जीवन के अवसर दर्शाता है। नीचे दोनों के मेल से हर जीवन-क्षेत्र का मार्गदर्शन है।`, `Birth number ${mul} (${PL_EN[NUM_PLANET[mul]]}) shows your natural ability and destiny number ${bh} (${PL_EN[NUM_PLANET[bh]]}) the openings life brings. Below, both are combined for each area of life.`)}</p>
+      <div class="agrid">
+        ${cards.map(([icon, title, lines, caut, lock]) => `
+          <div class="acard">
+            <div class="ah"><span>${icon} ${title}</span></div>
+            ${lines.filter(Boolean).map((l) => `<p>${l}</p>`).join("")}
+            ${caut ? `<p class="acaut">⚠ ${caut}</p>` : ""}
+            <p class="alock">🔒 ${lock}</p>
+          </div>`).join("")}
+      </div>`;
+  }
+
+  // ---------- DOB page D: years ahead ----------
+  function pageNumYears(m) {
+    const n = m.num;
+    const cur = n.years[0];
+    const ageIn = (yr) => yr - n.y;
+    const rows = n.years.map((x, i) => `<tr${i === 0 ? ' class="curyr"' : ""}><td class="b">${x.yr}${i === 0 ? ` <small>(${T("वर्तमान", "now")})</small>` : ""}</td><td class="c">${ageIn(x.yr)}</td><td class="c b">${x.py}</td><td><b>${T(PY_HI[x.py][0], PY_EN[x.py][0])}</b> — ${T(PY_HI[x.py][1], PY_EN[x.py][1])}</td><td>${toneChip(PY_HI[x.py][2])}</td></tr>`).join("");
+    const best = n.years.slice(1).filter((x) => PY_HI[x.py][2] === "good").map((x) => x.yr);
+    const careful = n.years.slice(1).filter((x) => PY_HI[x.py][2] === "caution").map((x) => x.yr);
+    return `
+      <div class="card ${PY_HI[cur.py][2] === "caution" ? "sev2" : (PY_HI[cur.py][2] === "good" ? "okcard" : "neutral")}">
+        <div class="ct">${T(`वर्ष ${cur.yr} — व्यक्तिगत वर्ष-अंक ${cur.py}: ${PY_HI[cur.py][0]}`, `${cur.yr} — personal year ${cur.py}: ${PY_EN[cur.py][0]}`)} ${toneChip(PY_HI[cur.py][2])}</div>
+        <p>${T(PY_HI[cur.py][1], PY_EN[cur.py][1])}</p>
+      </div>
+      <div class="h3">${T("आने वाले वर्षों का क्रम", "The years ahead")}</div>
+      <table class="tbl"><thead><tr><th>${T("वर्ष", "Year")}</th><th class="c">${T("आयु", "Age")}</th><th class="c">${T("वर्ष-अंक", "Year no.")}</th><th>${T("मुख्य विषय", "Main theme")}</th><th>${T("स्वभाव", "Tone")}</th></tr></thead><tbody>${rows}</tbody></table>
+      <div class="two">
+        <div class="card okcard"><div class="ct">✦ ${T("आगे के सबसे अनुकूल वर्ष", "Most favourable years ahead")}</div><p>${best.length ? best.join(", ") : T("मिश्रित क्रम — प्रयास से अवसर बनेंगे", "a mixed run — effort will create openings")}</p></div>
+        <div class="card sev2"><div class="ct">⚠ ${T("सावधानी के वर्ष", "Years needing care")}</div><p>${careful.length ? careful.join(", ") : T("कोई विशेष नहीं", "none in particular")}</p></div>
+      </div>
+      <div class="h3">${T(`वर्ष ${cur.yr} — महीने-वार मार्गदर्शन`, `${cur.yr} — month-by-month guide`)}</div>
+      <div class="mgrid">${(T(MON_HI, MON_EN)).map((mn, i) => { const pm = reduce9(cur.py + i + 1); const tone = PY_HI[pm][2]; const past = cur.yr === new Date().getFullYear() && i < new Date().getMonth(); return `<div class="mcell t-${tone}${past ? " past" : ""}"><b>${mn}</b><span>${pm} • ${T(PY_HI[pm][0], PY_EN[pm][0])}</span></div>`; }).join("")}</div>
+      <div class="lockbox">🔒 ${T("हर वर्ष के महीने-वार शुभ/अशुभ समय और जन्म-समय से विंशोत्तरी दशा — पूर्ण कुंडली में।", "Month-by-month good/difficult periods for each year and the Vimshottari dasha from your birth time — in the full kundali.")}</div>`;
+  }
+
+  // ---------- DOB page E: lucky factors + moon/transit ----------
+  function pageNumLucky(m) {
+    const n = m.num, mul = n.mulank;
+    const cells = [
+      [T("शुभ अंक", "Lucky numbers"), n.lucky.join(", ")],
+      [T("सावधानी के अंक", "Numbers to avoid"), n.avoid.length ? n.avoid.join(", ") : "—"],
+      [T("शुभ रंग", "Lucky colours"), NUMT(mul, "color")],
+      [T("शुभ वार", "Lucky day"), NUMT(mul, "day")],
+      [T("शुभ दिशा", "Lucky direction"), NUMT(mul, "dir")],
+      [T("इष्ट देव", "Deity"), NUMT(mul, "deity")],
+      [T("अनुकूल साथी/साझेदार", "Compatible partners"), n.partner.join(", ")],
+      [T("ग्रह-स्वामी", "Ruling planet"), `${pName(NUM_PLANET[mul])} / ${pName(NUM_PLANET[n.bhagyank])}`]
+    ];
+    const tr = m.transit;
+    let moonCard = "";
+    if (m.moonReliable) {
+      const ss = tr.sadeSati;
+      moonCard = ss.current
+        ? `<div class="card sev3"><div class="ct">🪐 ${T(`शनि साढ़ेसाती सक्रिय (चंद्र राशि ${RASHI_HI[m.moonR]})`, `Shani Sade-Sati active (Moon sign ${RASHI_EN[m.moonR]})`)}</div><p>${T(`लगभग ${fmtMY(ss.current.start)} – ${fmtMY(ss.current.end)}। धैर्य, अनुशासन और शनि-शांति के उपाय आवश्यक।`, `Approx. ${fmtMY(ss.current.start)} – ${fmtMY(ss.current.end)}. Patience, discipline and Saturn remedies are needed.`)}</p></div>`
+        : `<div class="card okcard"><div class="ct">🪐 ${T(`चंद्र राशि ${RASHI_HI[m.moonR]} — साढ़ेसाती अभी नहीं`, `Moon sign ${RASHI_EN[m.moonR]} — no Sade-Sati now`)}</div><p>${ss.next ? T(`अगली साढ़ेसाती लगभग ${fmtMY(ss.next.start)} से।`, `Next Sade-Sati from approx. ${fmtMY(ss.next.start)}.`) : ""}</p></div>`;
+    } else {
+      moonCard = `<div class="card verify"><div class="ct">🌙 ${T("चंद्र राशि हेतु जन्म-समय आवश्यक", "Birth time needed for the Moon sign")}</div><p>${T("आपके जन्म-दिन चंद्रमा ने राशि बदली थी, इसलिए साढ़ेसाती का सटीक निर्णय जन्म-समय से ही होगा।", "The Moon changed sign on your birth day, so Sade-Sati can be judged exactly only with your birth time.")}</p></div>`;
+    }
+    return `
+      <div class="grid4">${cells.map(([k, v]) => `<div class="cell"><span>${k}</span><b>${v}</b></div>`).join("")}</div>
+      <div class="h3">${T("वर्तमान ग्रह-गोचर का प्रभाव", "Effect of current transits")}</div>
+      ${moonCard}
+      <div class="card verify">
+        <div class="ct">⏳ ${T("जन्म-समय जोड़ने पर आपकी कुंडली में और क्या खुलेगा", "What else unlocks with your birth time")}</div>
+        <ul class="bul">${T(["लग्न कुंडली, नवांश व 12 भावों का विश्लेषण", "विंशोत्तरी महादशा-अंतर्दशा की सटीक तिथियाँ", "मांगलिक दोष, राजयोग व धनयोग का निर्णय", "विवाह, करियर व संतान के संभावित वर्ष"], ["Ascendant chart, navamsa and all 12 houses", "Exact Vimshottari dasha dates", "Manglik dosha, Raja and Dhana yogas", "Probable years for marriage, career and children"]).map((x) => `<li>${x}</li>`).join("")}</ul>
+        <p>${T("जन्म-समय नहीं पता? जीवन की 3–4 प्रमुख घटनाओं से आचार्य जी जन्म-समय शोधन करते हैं।", "Don't know your birth time? Acharya ji can rectify it from 3–4 major life events.")} <b>WhatsApp: ${esc(OPT.phone)}</b></p>
+      </div>`;
+  }
+
 
   // ==========================================================================
   // 10. PAGE SHELL, CSS & DOCUMENT
@@ -1483,6 +1829,25 @@
   .cqr img, .cqr .qrph { width: 30mm; height: 30mm; border-radius: 1.5mm; border: .6pt solid #d4a24c; }
   .cqr b { color: #7c2d12; } .cqr p { font-size: 8.8pt; margin: 1mm 0 0; }
   .cby { font-size: 9pt; color: #6b4a2a; margin: 3mm 0 1mm; }
+  .ntiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-bottom: 3mm; }
+  .ntile { background: #fff; border: 1pt solid #d4a24c; border-radius: 2.5mm; padding: 2.5mm; text-align: center; }
+  .ntile span { display: block; font-size: .82em; color: #92400e; font-weight: 700; }
+  .ntile b { display: block; font-family: 'Tiro Devanagari Hindi', serif; font-size: 2.6em; color: #7c2d12; line-height: 1.1; }
+  .ntile b sup { font-size: .35em; color: #9a6a3a; }
+  .ntile em { display: block; font-style: normal; font-weight: 700; color: #b45309; }
+  .ntile small { display: block; }
+  .loshu { display: grid; grid-template-columns: 54mm 1fr; gap: 4mm; align-items: start; }
+  .lsg { border-collapse: collapse; width: 54mm; }
+  .lsg td { width: 18mm; height: 16mm; border: 1pt solid #d4a24c; text-align: center; font-size: 1.25em; font-weight: 700; letter-spacing: .5mm; }
+  .lsg td.has { background: #fdf3e1; color: #7c2d12; } .lsg td.miss { background: #fff; color: #d6c2a0; }
+  .ok { color: #15803d; } .bad { color: #b91c1c; }
+  .curyr td { background: #fff3d6 !important; font-weight: 600; }
+  .mgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6mm; }
+  .mcell { border: .6pt solid #e2c08a; border-radius: 1.5mm; padding: 1.2mm 2mm; background: #fff; border-left-width: 2.4pt; }
+  .mcell b { display: block; color: #7c2d12; font-size: .9em; } .mcell span { font-size: .8em; }
+  .mcell.t-good { border-left-color: #15803d; background: #f3fbf5; } .mcell.t-mixed { border-left-color: #d97706; } .mcell.t-caution { border-left-color: #b91c1c; background: #fff5f5; }
+  .mcell.past { opacity: .55; }
+  .csum { width: 100%; text-align: left; background: #fdf3e1; border-radius: 2mm; padding: 2.5mm 3.5mm; font-size: 10pt; margin: 1mm 0 3mm; }
   `;
 
   // Shrinks a page body's text (never charts) until it fits its fixed A4 slot.
@@ -1495,7 +1860,7 @@
       document.querySelectorAll('.pb').forEach(function (b) {
         var fs = 10.2;
         b.style.fontSize = fs + 'pt';
-        while (fits(b) && fs < 13.4) { fs += 0.2; b.style.fontSize = fs.toFixed(1) + 'pt'; }
+        while (fits(b) && fs < 14.6) { fs += 0.2; b.style.fontSize = fs.toFixed(1) + 'pt'; }
         while (!fits(b) && fs > 7.6) { fs -= 0.2; b.style.fontSize = fs.toFixed(1) + 'pt'; }
         if (!fits(b)) b.setAttribute('data-overflow', '1');
       });
@@ -1512,6 +1877,16 @@
 
     const pages = [];
     pages.push({ cover: true, body: pageCover(m) });
+    if (!m.full) {
+      // No birth time: no charts at all — a birth-date (Ank Jyotish) reading instead.
+      pages.push({ title: T("आपके जन्म-अंक", "Your Birth Numbers"), sub: T("जन्म-तिथि और नाम से निकले मूल अंक तथा अंक-चक्र", "Core numbers from your birth date and name, with the number grid"), body: pageNumbers(m) });
+      pages.push({ title: T("आपका व्यक्तित्व एवं स्वभाव", "Your Personality & Temperament"), sub: T("मूलांक और भाग्यांक के ग्रह-स्वामियों के आधार पर", "Based on the ruling planets of your birth and destiny numbers"), body: pageNumPersonality(m) });
+      pages.push({ title: T("जीवन-क्षेत्र मार्गदर्शन", "Life-Area Guidance"), sub: T("करियर, धन, शिक्षा, विवाह व स्वास्थ्य", "Career, money, education, marriage and health"), body: pageNumAreas(m) });
+      pages.push({ title: T("आने वाले वर्ष", "The Years Ahead"), sub: T("व्यक्तिगत वर्ष-अंक के अनुसार हर वर्ष का मुख्य विषय", "The main theme of each year by your personal year number"), body: pageNumYears(m) });
+      pages.push({ title: T("शुभ तत्व एवं वर्तमान गोचर", "Lucky Factors & Current Transits"), sub: "", body: pageNumLucky(m) });
+      pages.push({ title: T("जीवन के संवेदनशील बिंदु", "Sensitive Points in Your Life"), sub: T("जिन पर समय रहते ध्यान और उपाय आवश्यक है", "Points that need attention and remedies in time"), body: pageCons(m) });
+      pages.push({ title: T("उपाय, पूर्ण कुंडली एवं गुरु-दक्षिणा", "Remedies, Full Kundali & Guru-Dakshina"), sub: "", body: pageClose(m) });
+    } else {
     pages.push({ title: m.full ? T("लग्न कुंडली, चंद्र कुंडली एवं ग्रह स्पष्ट", "Lagna Chart, Chandra Chart & Planetary Positions") : T("चंद्र कुंडली एवं ग्रह स्पष्ट", "Chandra Chart & Planetary Positions"),
       sub: m.full ? T("जन्म-क्षण के ग्रहों की सटीक स्थिति (VSOP87 खगोलीय गणना)", "Exact planetary positions at birth (VSOP87 astronomy)") : T("जन्म-दिवस (दोपहर 12 बजे) के ग्रह — लग्न हेतु जन्म-समय आवश्यक", "Planets for the birth date (12:00 noon) — the Ascendant needs the birth time"),
       body: pageCharts(m) });
@@ -1523,6 +1898,7 @@
     if (m.full) pages.push({ title: T("जीवन-क्षेत्र झलक", "Life-Area Snapshot"), sub: T("शिक्षा, करियर, धन, विवाह, संतान व स्वास्थ्य", "Education, career, wealth, marriage, children and health"), body: pageAreas(m) });
     pages.push({ title: T("कुंडली के संवेदनशील बिंदु एवं दोष", "Sensitive Points & Doshas in Your Chart"), sub: T("जिन पर समय रहते ध्यान और उपाय आवश्यक है", "Points that need attention and remedies in time"), body: pageCons(m) });
     pages.push({ title: T("उपाय, पूर्ण कुंडली एवं गुरु-दक्षिणा", "Remedies, Full Kundali & Guru-Dakshina"), sub: "", body: pageClose(m) });
+    }
 
     const total = pages.length;
     const html = pages.map((p, i) => shell(m, i + 1, total, p.title, p.sub, p.body, p.cover)).join("");
