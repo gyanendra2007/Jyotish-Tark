@@ -244,27 +244,27 @@
   }
 
   // Dynamic Planet Activation Ages Computed Strictly from the Native's Vimshottari Dasha Tree
-  function computeDynamicPlanetActivationAges(planetKey, dashaTree, birthYear, degInSign) {
-    if (dashaTree && Array.isArray(dashaTree.fullSeq)) {
-      const ages = [];
-      dashaTree.fullSeq.forEach(md => {
-        (md.antardashas || []).forEach(ad => {
-          if (ad.lord === planetKey || (md.lord === planetKey && ad.lord === planetKey)) {
-            const yr = ad.start.getFullYear();
-            const a = yr - birthYear;
-            if (a >= 1 && a <= 85 && !ages.some(existing => Math.abs(existing - a) <= 2)) {
-              ages.push(a);
-            }
-          }
-        });
+  // FIX v12.1: accepts the dasha tree OR its fullSeq array (callers passed the array,
+  // which silently fell through to a hard-coded table). Ages are now exact (from the
+  // birth instant) and UPCOMING activations are listed first. No fake fallback: when
+  // there is no dasha tree (DOB-only mode) an empty list is returned.
+  function computeDynamicPlanetActivationAges(planetKey, dashaTree, birthYear) {
+    const seq = Array.isArray(dashaTree) ? dashaTree : (dashaTree && dashaTree.fullSeq);
+    if (!Array.isArray(seq)) return [];
+    const bu = window.__jtVedicData && window.__jtVedicData.chart && window.__jtVedicData.chart.meta && window.__jtVedicData.chart.meta.birthUTC;
+    const birthMs = bu ? new Date(bu).getTime() : Date.UTC(birthYear || 2000, 0, 1);
+    const yearMs = 365.25 * 86400000;
+    const now = Date.now();
+    const hits = [];
+    seq.forEach(md => {
+      (md.antardashas || []).forEach(ad => {
+        if (ad.lord !== planetKey) return;
+        const a = Math.floor((ad.start.getTime() - birthMs) / yearMs);
+        if (a >= 0 && a <= 90 && !hits.some(h => Math.abs(h.a - a) <= 2)) hits.push({ a, future: ad.end.getTime() >= now });
       });
-      if (ages.length >= 2) return ages.slice(0, 4);
-    }
-    // Degree-calibrated BPHS fallback only if DOB-only mode without Dasha tree
-    const baseMap = { Jupiter: 16, Sun: 22, Moon: 24, Venus: 25, Mars: 28, Mercury: 32, Saturn: 36, Rahu: 42, Ketu: 45 };
-    const b = baseMap[planetKey] || 24;
-    const degShift = Math.round(((degInSign || 15) - 15) / 7.5);
-    return [Math.max(14, b + degShift), b + degShift + 6, b + degShift + 12];
+    });
+    const ordered = [...hits.filter(h => h.future), ...hits.filter(h => !h.future)];
+    return ordered.slice(0, 3).map(h => h.a).sort((x, y) => x - y);
   }
 
   function deriveSiderealSunRashi(month, day) {
@@ -1059,8 +1059,9 @@
     const ls = timeline?.lifeStage || { code: "YUVA_KARMA", integerAge: 25 };
 
     const domPlanetForStudy = (chart._shadbalaDetails?.[lord5Key]?.rupas || 5) >= (chart._shadbalaDetails?.[amkKey]?.rupas || 5) ? lord5Key : amkKey;
-    const studyDisciplinesHi = `${PLANET_META[lord5Key].fieldHi} तथा ${PLANET_META[amkKey].fieldHi}`;
-    const studyDisciplinesEn = `${PLANET_META[lord5Key].fieldEn} alongside ${PLANET_META[amkKey].fieldEn}`;
+    // FIX v12.1: no duplicated phrase when the 5th lord is also the Amatyakaraka
+    const studyDisciplinesHi = lord5Key === amkKey ? PLANET_META[lord5Key].fieldHi : `${PLANET_META[lord5Key].fieldHi} तथा ${PLANET_META[amkKey].fieldHi}`;
+    const studyDisciplinesEn = lord5Key === amkKey ? PLANET_META[lord5Key].fieldEn : `${PLANET_META[lord5Key].fieldEn} alongside ${PLANET_META[amkKey].fieldEn}`;
 
     if (lang === "hi") {
       return `
@@ -1367,7 +1368,8 @@
       const shadbalaObj = chart._shadbalaDetails?.[k];
       const degBadge = info.formattedDeg ? `<span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">${info.formattedDeg}</span>` : "";
 
-      const dynamicAges = computeDynamicPlanetActivationAges(k, dasha?.fullSeq, numData.year, info.degInSign).join(", ");
+      const dynamicAgesArr = computeDynamicPlanetActivationAges(k, dasha?.fullSeq, numData.year);
+      const dynamicAges = dynamicAgesArr.length ? dynamicAgesArr.join(", ") : (lang === "hi" ? "जन्म-समय आवश्यक" : "needs birth time");
       const conjNamesEn = info.conjunctWith.map(c => PLANET_META[c].en).join(", ");
       const conjNamesHi = info.conjunctWith.map(c => PLANET_META[c].hi).join(", ");
 
@@ -1420,7 +1422,7 @@
               </div>
               <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
                 <span class="text-gray-400 block">${shadbalaObj ? "षड्बल / BAV बिंदु:" : "दशा सक्रियता आयु:"}</span>
-                <strong class="text-cyan-300">${shadbalaObj ? `${shadbalaObj.rupas}R • ${bavScoreHere ?? 4}/8 BAV` : `आयु ${dynamicAges} वर्ष`}</strong>
+                <strong class="text-cyan-300">${shadbalaObj ? `${shadbalaObj.rupas}R • ${bavScoreHere ?? 4}/8 BAV` : (dynamicAgesArr.length ? `आयु ${dynamicAges} वर्ष` : dynamicAges)}</strong>
               </div>
             </div>
 
@@ -1464,7 +1466,7 @@
             </div>
             <div class="p-2 rounded-lg bg-slate-900 border border-white/10">
               <span class="text-gray-400 block">${shadbalaObj ? "Shadbala / BAV:" : "Dasha Activation Ages:"}</span>
-              <strong class="text-cyan-300">${shadbalaObj ? `${shadbalaObj.rupas}R • ${bavScoreHere ?? 4}/8 BAV` : `Ages ${dynamicAges}`}</strong>
+              <strong class="text-cyan-300">${shadbalaObj ? `${shadbalaObj.rupas}R • ${bavScoreHere ?? 4}/8 BAV` : (dynamicAgesArr.length ? `Ages ${dynamicAges}` : dynamicAges)}</strong>
             </div>
           </div>
 
@@ -1893,13 +1895,16 @@
     const selectedMds = seq.slice(activeIdx, activeIdx + 4);
 
     const tablesHtml = selectedMds.map(md => {
-      const startAge = Math.max(0, ((md.start.getFullYear() - birthYear) + (md.start.getMonth() / 12)).toFixed(1));
-      const endAge   = Math.max(1, ((md.end.getFullYear() - birthYear) + (md.end.getMonth() / 12)).toFixed(1));
+      // FIX v12.1: exact ages from the birth instant (old maths ignored the birth month, ~0.9 yr error)
+      const birthMsExact = (vd.chart && vd.chart.meta && vd.chart.meta.birthUTC) ? new Date(vd.chart.meta.birthUTC).getTime() : Date.UTC(birthYear, 0, 1);
+      const ageAtMs = (d) => Math.max(0, (d.getTime() - birthMsExact) / (365.25 * 86400000));
+      const startAge = Math.floor(ageAtMs(md.start));
+      const endAge   = Math.floor(ageAtMs(md.end));
       const isCurrentMd = (md.lord === vd.dasha.mahadasha);
 
       const adRows = (md.antardashas || []).map(ad => {
         const isCurrentAd = isCurrentMd && (ad.lord === vd.dasha.antardasha);
-        const adEndAge = Math.max(0, ((ad.end.getFullYear() - birthYear) + (ad.end.getMonth() / 12)).toFixed(1));
+        const adEndAge = ageAtMs(ad.end).toFixed(1);
         const rowCls = isCurrentAd ? "bg-amber-500/20 font-bold text-amber-200" : "";
         const label = lang === "hi"
           ? `${PLANET_META[md.lord].hi.split(" ")[0]} - ${PLANET_META[ad.lord].hi.split(" ")[0]}${isCurrentAd ? " (सक्रिय)" : ""}`
@@ -2420,7 +2425,7 @@
         ${panchangHtml}
         <div class="pdf-keep-together grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
           <div class="rounded-3xl bg-slate-950/90 border border-cyan-400/40 p-4 md:p-5">
-            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${ctx.lang === 'hi' ? 'षड्बल ग्रह-बल (Shadbala in Rupas)' : 'Shadbala Planetary Strength (in Rupas)'}</h3>
+            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${ctx.lang === 'hi' ? 'सापेक्ष ग्रह-बल (संकेतात्मक षड्बल)' : 'Relative Planetary Strength (indicative Shadbala)'}</h3>
             ${window.VedicChartAnalyzer.renderShadbalaBars(vd.shadbala, ctx.lang, vd.chart)}
           </div>
           <div class="rounded-3xl bg-slate-950/90 border border-indigo-400/40 p-4 md:p-5">
