@@ -260,8 +260,9 @@
         const slice = Math.min(4, Math.floor(degInSign / 6)); // 0..4
         const isOddSign = (rashi % 2 === 1);
         const avasthaIdx = isOddSign ? slice : (4 - slice);
-        const avasthaNamesEn = ["Bala (Infant - 25%)", "Kumara (Adolescent - 50%)", "Yuva (Youth - 100%)", "Vriddha (Old - 10%)", "Mrita (Dormant - 0%)"];
-        const avasthaNamesHi = ["बाल (25% फल)", "कुमार (50% फल)", "युवा (100% पूर्ण फल)", "वृद्ध (10% फल)", "मृत (0% सुप्त)"];
+        // FIX v12.1: no percentage shown to clients (it alarmed users and contradicted the multiplier)
+        const avasthaNamesEn = ["Bala (Infant)", "Kumara (Adolescent)", "Yuva (Youth)", "Vriddha (Mature)", "Mrita (Dormant)"];
+        const avasthaNamesHi = ["बाल अवस्था", "कुमार अवस्था", "युवा अवस्था", "वृद्ध अवस्था", "मृत अवस्था"];
         p.avasthaEn = avasthaNamesEn[avasthaIdx];
         p.avasthaHi = avasthaNamesHi[avasthaIdx];
         p.avasthaMultiplier = [0.25, 0.5, 1.0, 0.15, 0.05][avasthaIdx];
