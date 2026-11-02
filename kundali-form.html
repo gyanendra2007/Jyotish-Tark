@@ -1021,7 +1021,8 @@
           <input type="checkbox" id="consent" name="consent" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
           <label for="consent" class="ml-2 block text-sm text-gray-300">I agree to the <a href="privacy-policy.html" class="text-purple-400 hover:text-purple-300">privacy policy</a> and understand that I will be contacted for consultation confirmation.</label>
         </div>
-        <button type="submit" class="primary-button w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Kundali Details</button>
+        <button type="submit" class="primary-button w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Details &amp; Pay ₹1101</button>
+        <p class="text-center text-xs text-gray-400 mt-2"><i class="fas fa-lock mr-1"></i> अगले चरण में UPI (GPay / PhonePe / Paytm) से ₹1101 का भुगतान — फिर 24–48 घंटे में आपकी कुंडली।</p>
       </form>
       <div id="submissionResponse" class="mt-6 p-4 rounded-lg text-center font-semibold text-lg hidden"></div>
     </div>
@@ -2114,32 +2115,51 @@
       if (kundaliForm) {
         kundaliForm.addEventListener('submit', function (e) {
           e.preventDefault();
+          const form = this;
           const responseDiv = document.getElementById('submissionResponse');
-          const email = document.getElementById("email").value;
+          const val = (id) => ((document.getElementById(id) || {}).value || '').trim();
+          const email = val('email');
           let lastSent = 0;
           try { lastSent = Number(localStorage.getItem("submitted_" + email)) || 0; } catch (err) { lastSent = 0; }
           if (Date.now() - lastSent < 10 * 60 * 1000) { // block only accidental double-submits (10 min); repeat orders are welcome
-            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i><span>Your details were just sent a few minutes ago. For another order, wait 10 minutes or message us on WhatsApp (+91 8318513814) for priority assistance.</span></div>`;
-            responseDiv.classList.remove("hidden");
+            let last = null;
+            try { last = JSON.parse(sessionStorage.getItem('jt-last-order') || 'null'); } catch (err) { last = null; }
+            responseDiv.classList.remove('hidden');
+            if (last && window.JTPay) { window.JTPay.render(responseDiv, last); return; }
+            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-exclamation-triangle mr-2"></i><span>Your details were just sent a few minutes ago. For another order, wait 10 minutes or message us on WhatsApp (+91 8318513814).</span></div>`;
             return;
           }
+          // Order number: added to the form so it also reaches you by email
+          const order = {
+            orderId: window.JTPay ? window.JTPay.newOrderId() : ('JT' + Date.now()),
+            name: val('name'), dob: val('dob'), tob: val('tob'), pob: val('pob'),
+            phone: val('phone'), email: email
+          };
+          let idField = form.querySelector('input[name="order_id"]');
+          if (!idField) { idField = document.createElement('input'); idField.type = 'hidden'; idField.name = 'order_id'; form.appendChild(idField); }
+          idField.value = order.orderId;
+
+          const btn = form.querySelector('button[type="submit"]');
+          if (btn) btn.disabled = true;
           responseDiv.classList.remove('hidden');
           responseDiv.innerHTML = `<div class="flex items-center justify-center"><i class="fas fa-spinner fa-spin text-amber-300 mr-2"></i><span>Submitting your details...</span></div>`;
-          if (typeof emailjs === 'undefined') {
-            responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-times-circle mr-2"></i><span>Form service is temporarily unavailable. Please contact us directly on WhatsApp (+91 8318513814).</span></div>`;
-            return;
-          }
-          emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", this)
-            .then(() => {
-              responseDiv.innerHTML = `<div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-check-circle mr-2"></i><span>Your Kundali details have been sent! Our team will contact you within 24 hours.</span></div>`;
-              try { localStorage.setItem("submitted_" + email, String(Date.now())); } catch (err) { /* private mode */ }
-              kundaliForm.reset();
-              kundaliForm.querySelector("button").disabled = true;
-            })
-            .catch((error) => {
-              console.error("EmailJS Error:", error);
-              responseDiv.innerHTML = `<div class="text-red-400 bg-red-900 bg-opacity-20 p-4 rounded-lg"><i class="fas fa-times-circle mr-2"></i><span>Something went wrong. Please contact us directly on WhatsApp (+91 8318513814).</span></div>`;
-            });
+
+          const showPayment = (emailFailed) => {
+            if (window.JTPay) {
+              window.JTPay.render(responseDiv, order, { emailFailed: emailFailed });
+            } else {
+              responseDiv.innerHTML = `<div class="text-green-400 bg-green-900 bg-opacity-20 p-4 rounded-lg"><span>Order ${order.orderId}: please pay ₹1101 by UPI to 8318513814@ptsbi and send the screenshot on WhatsApp (+91 8318513814).</span></div>`;
+            }
+          };
+          const sent = (typeof emailjs !== 'undefined')
+            ? emailjs.sendForm("service_6w2tj0r", "template_r6rqkf8", form).then(() => true, (error) => { console.error("EmailJS Error:", error); return false; })
+            : Promise.resolve(false);
+          sent.then((ok) => {
+            if (ok) { try { localStorage.setItem("submitted_" + email, String(Date.now())); } catch (err) { /* private mode */ } }
+            showPayment(!ok);
+            form.reset();
+            if (btn) btn.disabled = false;
+          });
         });
       }
     });
@@ -2147,5 +2167,6 @@
 <div id="jt-reviews" data-limit="4"></div>
     <script src="reviews-data.js"></script>
     <script src="jt-reviews.js" defer></script>
+    <script src="jt-payment.js" defer></script>
 </body>
 </html>
