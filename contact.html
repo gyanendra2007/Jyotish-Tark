@@ -897,7 +897,7 @@
                 <span class="text-3xl md:text-4xl text-amber-300">Jyotish Tark Experts</span>
             </h1>
             <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Have questions about your Kundali or need personalized astrological guidance? Our expert astrologers are here to help you.
+                Have questions about your Kundali or need personalized astrological guidance? Acharya Gyanendra Singh Tomar personally answers every query.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
                 <a href="https://wa.me/918318513814" target="_blank" class="primary-button bg-green-600 hover:bg-green-700">
@@ -919,7 +919,7 @@
                 Get In Touch
             </h2>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                Have questions about your Kundali or need personalized guidance? Reach out to our expert astrologers.
+                Have questions about your Kundali or need personalized guidance? Reach out to Acharya Gyanendra Singh Tomar directly.
             </p>
         </div>
 
@@ -1098,7 +1098,7 @@
                     Need Immediate Guidance?
                 </h2>
                 <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                    Connect with our expert astrologers directly through WhatsApp for prompt responses to your queries.
+                    Connect with Acharya Gyanendra Singh Tomar directly through WhatsApp for prompt responses to your queries.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="https://wa.me/918318513814" target="_blank" class="primary-button bg-green-600 hover:bg-green-700">
@@ -1115,6 +1115,8 @@
     </section>
 
     <!-- Footer -->
+    <div id="jt-reviews" data-limit="3"></div>
+
     <footer class="glass-card text-center py-12 mt-12">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-center space-x-6 mb-8 text-2xl">
@@ -1164,7 +1166,7 @@
                     <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
                     <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
                     <p class="text-gray-300 mb-3"><i class="fab fa-whatsapp mr-2"></i> 8318513814</p>
-                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> Lucknow, India</p>
+                    <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> 37, Shamsher Puram Colony, Gauri Bazar, Sarojini Nagar, Lucknow, Uttar Pradesh 226008</p>
                 </div>
             </div>
             <p class="text-gray-400 text-sm">© 2025 Jyotish Tark. All rights reserved.</p>
@@ -1217,31 +1219,38 @@ document.addEventListener('click', function(event) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Simulate sending the message (replace with actual backend logic)
-            setTimeout(() => {
-                // Simulate success (replace with actual response from your server)
-                const success = true; // Change to false to test error
-
-                if (success) {
-                    messageSent.classList.remove('hidden');
-                    messageError.classList.add('hidden');
-                    contactForm.reset(); // Clear the form
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        messageSent.classList.add('hidden');
-                    }, 5000);
-                } else {
-                    messageError.classList.remove('hidden');
-                    messageSent.classList.add('hidden');
-                    
-                    // Hide error message after 5 seconds
-                    setTimeout(() => {
-                        messageError.classList.add('hidden');
-                    }, 5000);
-                }
-            }, 2000); // Simulate a 2-second delay
+            // Sends through EmailJS when a contact template is set in reviews-data.js,
+            // otherwise opens WhatsApp with the message filled in, so no message is lost.
+            const f = new FormData(contactForm);
+            const p = {
+                name: (f.get('name') || '').trim(), email: (f.get('email') || '').trim(),
+                phone: (f.get('phone') || '').trim(), subject: (f.get('subject') || '').trim(),
+                message: (f.get('message') || '').trim(), page: location.href
+            };
+            if (!p.name || !p.message) {
+                messageError.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> कृपया नाम और संदेश लिखें। / Please enter your name and message.';
+                messageError.classList.remove('hidden');
+                return;
+            }
+            const waText = `🙏 Website message — Jyotish Tark\nName: ${p.name}\nPhone: ${p.phone || '-'}\nEmail: ${p.email || '-'}\nSubject: ${p.subject || '-'}\n\n${p.message}`;
+            const btn = contactForm.querySelector('button[type="submit"]');
+            if (btn) btn.disabled = true;
+            const send = (window.JTSend && window.JT_CONFIG)
+                ? window.JTSend.deliver((window.JT_CONFIG.emailjs || {}).contactTemplateId, p, waText)
+                : Promise.resolve((window.open('https://wa.me/918318513814?text=' + encodeURIComponent(waText), '_blank'), 'whatsapp'));
+            send.then((via) => {
+                messageSent.innerHTML = via === 'email'
+                    ? '<i class="fas fa-check-circle mr-2"></i> Your message has been sent! We will reply shortly.'
+                    : '<i class="fab fa-whatsapp mr-2"></i> WhatsApp has opened with your message — please tap <b>Send</b> there.';
+                messageSent.classList.remove('hidden');
+                messageError.classList.add('hidden');
+                contactForm.reset();
+                setTimeout(() => messageSent.classList.add('hidden'), 8000);
+            }).finally(() => { if (btn) btn.disabled = false; });
         });
     </script>
+
+    <script src="reviews-data.js"></script>
+    <script src="jt-reviews.js" defer></script>
 </body>
 </html>
