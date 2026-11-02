@@ -62,6 +62,8 @@
     12: { yogakaraka: [],         benefics: ["Moon", "Mars", "Jupiter"],        malefics: ["Sun", "Venus", "Saturn", "Mercury"], marakas: ["Mercury", "Saturn"], badhakaHouse: 7, badhakesh: "Mercury" }
   };
 
+  const PL_HI = { Sun: "सूर्य", Moon: "चंद्र", Mars: "मंगल", Mercury: "बुध", Jupiter: "गुरु", Venus: "शुक्र", Saturn: "शनि", Rahu: "राहु", Ketu: "केतु" };
+
   const PARASHARI_ASPECTS = {
     Sun: [7], Moon: [7], Mercury: [7], Venus: [7],
     Mars: [4, 7, 8], Jupiter: [5, 7, 9], Saturn: [3, 7, 10],
@@ -166,9 +168,9 @@
           score,
           domains: def.domain,
           titleEn: `${def.nameEn} (${def.planet} in House ${h})`,
-          titleHi: `${def.nameHi} (${h}वें भाव में ${def.planet})`,
+          titleHi: `${def.nameHi} (${h}वें भाव में ${PL_HI[def.planet]})`,
           summaryEn: `${def.planet} is placed in a Kendra (House ${h}) in its ${EXALTED_SIGN[def.planet] === p.rashi ? "exalted" : "own"} sign ${RASHI_NAMES_EN[p.rashi]}${d9Strong ? " and fortified in Navamsa (D9)" : ""}${isCombust ? " (partially moderated by combustion)" : ""}.`,
-          summaryHi: `${def.planet} केंद्र (${h}वें भाव) में अपनी ${EXALTED_SIGN[def.planet] === p.rashi ? "उच्च" : "स्व"} राशि (${RASHI_NAMES_HI[p.rashi]}) में स्थित होकर प्रबल ${def.nameHi} का निर्माण कर रहा है${d9Strong ? " तथा नवांश (D9) में भी पुष्ट है" : ""}।`
+          summaryHi: `${PL_HI[def.planet]} केंद्र (${h}वें भाव) में अपनी ${EXALTED_SIGN[def.planet] === p.rashi ? "उच्च" : "स्व"} राशि (${RASHI_NAMES_HI[p.rashi]}) में स्थित होकर प्रबल ${def.nameHi} का निर्माण कर रहा है${d9Strong ? " तथा नवांश (D9) में भी पुष्ट है" : ""}।`
         });
       }
     });
@@ -199,9 +201,9 @@
         score: 92,
         domains: ["career", "luck", "wealth"],
         titleEn: `Dharma-Karmadhipati Raja Yoga (${lord9} & ${lord10})`,
-        titleHi: `धर्म-कर्माधिपति राजयोग (${lord9} एवं ${lord10})`,
+        titleHi: `धर्म-कर्माधिपति राजयोग (${PL_HI[lord9]} एवं ${PL_HI[lord10]})`,
         summaryEn: `Your 9th lord of fortune (${lord9}) and 10th lord of career command (${lord10}) form a ${dkRelation.replace("_", " ").toLowerCase()} in House ${chart[lord10].house}, creating high-level executive rise.`,
-        summaryHi: `भाग्येश (${lord9}) और दशमेश (${lord10}) के मध्य संबंध से सर्वोच्च धर्म-कर्माधिपति राजयोग निर्मित हो रहा है, जो उच्च पद और स्थायी प्रतिष्ठा देता है।`
+        summaryHi: `भाग्येश (${PL_HI[lord9]}) और दशमेश (${PL_HI[lord10]}) के मध्य संबंध से सर्वोच्च धर्म-कर्माधिपति राजयोग निर्मित हो रहा है, जो उच्च पद और स्थायी प्रतिष्ठा देता है।`
       });
     }
 
@@ -222,9 +224,9 @@
               score: 80,
               domains: ["wealth", "career"],
               titleEn: `Parashari Dhana Yoga (${hA}th Lord ${lA} + ${hB}th Lord ${lB})`,
-              titleHi: `पाराशरी धन योग (${hA}वेश ${lA} एवं ${hB}वेश ${lB})`,
+              titleHi: `पाराशरी धन योग (${hA}वेश ${PL_HI[lA]} एवं ${hB}वेश ${PL_HI[lB]})`,
               summaryEn: `Lord of House ${hA} (${lA}) and Lord of House ${hB} (${lB}) connect via ${rel.toLowerCase().replace("_", " ")} in House ${chart[lA].house}, multiplying asset accumulation.`,
-              summaryHi: `${hA}वें और ${hB}वें भाव के स्वामियों (${lA} व ${lB}) का संबंध प्रबल धन-संचय योग बना रहा है।`
+              summaryHi: `${hA}वें और ${hB}वें भाव के स्वामियों (${PL_HI[lA]} व ${PL_HI[lB]}) का संबंध प्रबल धन-संचय योग बना रहा है।`
             });
           }
         }
@@ -248,9 +250,9 @@
             score: isDainya ? 45 : 88,
             domains: ["career", "wealth", "luck"],
             titleEn: `${isDainya ? "Dainya" : "Maha"} Parivartana Yoga (${pA} ⇄ ${pB} across H-${hA} & H-${hB})`,
-            titleHi: `${isDainya ? "दैन्य" : "महा"} परिवर्तन राजयोग (${pA} ⇄ ${pB}, भाव ${hA} व ${hB})`,
+            titleHi: `${isDainya ? "दैन्य" : "महा"} परिवर्तन राजयोग (${PL_HI[pA]} ⇄ ${PL_HI[pB]}, भाव ${hA} व ${hB})`,
             summaryEn: `${pA} (in House ${hA}) and ${pB} (in House ${hB}) exchange signs, locking their karmic results together.`,
-            summaryHi: `${pA} (${hA}वें भाव) और ${pB} (${hB}वें भाव) के बीच राशि परिवर्तन होने से दोनों भावों के फल एक-दूसरे को शक्ति दे रहे हैं।`
+            summaryHi: `${PL_HI[pA]} (${hA}वें भाव) और ${PL_HI[pB]} (${hB}वें भाव) के बीच राशि परिवर्तन होने से दोनों भावों के फल एक-दूसरे को शक्ति दे रहे हैं।`
           });
         }
       }
@@ -274,9 +276,9 @@
           score: 76,
           domains: ["career", "wealth", "luck"],
           titleEn: `${d.name} (${d.h}th Lord ${lord} in House ${placedH})`,
-          titleHi: `${d.nameHi} (${d.h}वेश ${lord} का ${placedH}वें भाव में स्थान)`,
+          titleHi: `${d.nameHi} (${d.h}वेश ${PL_HI[lord]} का ${placedH}वें भाव में स्थान)`,
           summaryEn: `Because the ${d.h}th lord (${lord}) sits in a Dusthana (House ${placedH}), crises and rivals end up triggering your unexpected rise.`,
-          summaryHi: `${d.h}वें भाव के स्वामी (${lord}) के ${placedH}वें भाव में बैठने से संकट और विरोधियों के पराभव के बाद आकस्मिक उत्थान होता है।`
+          summaryHi: `${d.h}वें भाव के स्वामी (${PL_HI[lord]}) के ${placedH}वें भाव में बैठने से संकट और विरोधियों के पराभव के बाद आकस्मिक उत्थान होता है।`
         });
       }
     });
@@ -315,9 +317,9 @@
             score: 82,
             domains: ["personality", "career", "luck"],
             titleEn: `Neechabhanga Raja Yoga of ${pKey} (in House ${p.house})`,
-            titleHi: `${pKey} का नीचभंग राजयोग (भाव ${p.house})`,
+            titleHi: `${PL_HI[pKey]} का नीचभंग राजयोग (भाव ${p.house})`,
             summaryEn: `Although ${pKey} is in its debilitation sign ${RASHI_NAMES_EN[p.rashi]}, cancellation rules are satisfied (${cond3 ? "fortified in D9 Navamsa" : `dispositor ${signLord} in Kendra`}), turning initial struggle in House ${p.house} into resilient authority.`,
-            summaryHi: `${pKey} के नीच राशि (${RASHI_NAMES_HI[p.rashi]}) में होने के बावजूद शास्त्रीय नीचभंग शर्तें पूर्ण हो रही हैं, जिससे प्रारंभिक संघर्ष के बाद स्थायी सफलता मिलती है।`
+            summaryHi: `${PL_HI[pKey]} के नीच राशि (${RASHI_NAMES_HI[p.rashi]}) में होने के बावजूद शास्त्रीय नीचभंग शर्तें पूर्ण हो रही हैं, जिससे प्रारंभिक संघर्ष के बाद स्थायी सफलता मिलती है।`
           });
         }
       }
