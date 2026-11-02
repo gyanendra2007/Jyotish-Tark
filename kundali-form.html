@@ -1159,6 +1159,7 @@
   <script src="timing-engine.js"></script>
   <script src="narrative-rules.js"></script>
   <script src="kundali-engine.js"></script>
+  <script src="free-report.js"></script>
 
   <script>
     // ========================================================================
@@ -1229,7 +1230,7 @@
         <div id="screenPanchangBoxWrapper">${window.VedicChartAnalyzer.renderPanchangAndGocharaBox(vd.chart, lang)}</div>
         <div class="pdf-keep-together grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
           <div class="rounded-3xl bg-slate-950/90 border border-cyan-400/40 p-4 md:p-5">
-            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${lang === 'hi' ? 'षड्बल ग्रह-बल (Shadbala in Rupas)' : 'Shadbala Planetary Strength (in Rupas)'}</h3>
+            <h3 class="text-base md:text-lg font-bold text-white mb-3"><i class="fas fa-bolt text-cyan-400 mr-2"></i>${lang === 'hi' ? 'सापेक्ष ग्रह-बल (संकेतात्मक षड्बल)' : 'Relative Planetary Strength (indicative Shadbala)'}</h3>
             ${window.VedicChartAnalyzer.renderShadbalaBars(vd.shadbala, lang, vd.chart)}
           </div>
           <div class="rounded-3xl bg-slate-950/90 border border-indigo-400/40 p-4 md:p-5">
@@ -1916,10 +1917,18 @@
       `;
     }
 
+    // ======================================================================
+    // FREE A4 PARICHAY KUNDALI PDF (free-report.js) — fixed pages, QR on every page
+    // ======================================================================
     async function downloadServerPdfDossier() {
       const target = document.getElementById('masterDossierOutput');
-      if (!target || target.classList.contains('hidden')) {
-        alert('Please generate your Kundali Dossier first before downloading or printing the PDF.');
+      const ctx = window.__jyotishLastCtx;
+      if (!ctx || !target || target.classList.contains('hidden')) {
+        alert(ctx && ctx.lang === 'en' ? 'Please generate your Kundali first.' : 'कृपया पहले अपनी कुंडली बनाएँ, फिर PDF डाउनलोड करें।');
+        return;
+      }
+      if (!window.FreeReport) {
+        alert('Report engine not loaded. Please refresh the page.');
         return;
       }
 
@@ -1927,97 +1936,53 @@
       const label = document.getElementById('pdfBtnLabel');
       const origLabel = label ? label.textContent : 'Download Royal Kundali PDF';
       if (btn) btn.disabled = true;
-      if (label) label.textContent = 'Preparing Royal Janampatri PDF...';
+      if (label) label.textContent = ctx.lang === 'en' ? 'Preparing your Kundali PDF...' : 'आपकी कुंडली PDF तैयार हो रही है...';
 
-      // Since Page 1 already renders D1 + D9 and Panchang, set the secondary grid on Page 2 to D10 Dasamsa + D7 Saptamsa so there is zero duplication!
-      const prevVargaPair = window.__jtVargaPair;
-      if (typeof window.switchVargaView === 'function' && window.__jyotishLastCtx?.chart?.isFullChartMode) {
-        window.switchVargaView('D10_D7');
+      const safeName = (ctx.name || 'Seeker').replace(/[^\w\u0900-\u097F]+/g, '_');
+      let html;
+      try {
+        html = await window.FreeReport.buildDocument(ctx, window.__jtVedicData, {
+          qrSrc: 'qr-code.png',
+          logoSrc: 'logo.png'
+        });
+      } catch (err) {
+        console.error('FreeReport build failed:', err);
+        alert('Could not build the report: ' + (err && err.message ? err.message : err));
+        if (btn) btn.disabled = false;
+        if (label) label.textContent = origLabel;
+        return;
       }
-
-      const ctxForCover = window.__jyotishLastCtx || {
-        name: document.getElementById('userName')?.value || 'Seeker',
-        dob:  document.getElementById('userDob')?.value || '',
-        numData: { age: '' },
-        displayAsc: '', displayMoon: '', displayMoonNak: ''
-      };
-
-      const page1Html = buildRoyalPage1JanampatriHtml(ctxForCover);
-      const clone = target.cloneNode(true);
-      clone.classList.add('pdf-mode');
-
-      // Remove screen-only masthead, duplicate panchang box (already on Page 1), and buttons
-      clone.querySelectorAll('.no-print, .pdf-hide-masthead, #dossierWebMasthead, #screenPanchangBoxWrapper, button, a[href^="https://wa.me"], .chapter-nav-pill, #chartControlsBar, #youtubeLiveTokenBar').forEach(el => el.remove());
-
-      // Restore user's active varga view on screen
-      if (typeof window.switchVargaView === 'function' && prevVargaPair) {
-        window.switchVargaView(prevVargaPair);
-      }
-
-      const auspiciousColophonHtml = `
-        <div class="pdf-keep-together" style="margin-top:14px;padding:12px 16px;background:#fef3c7;border:2px double #9a3412;border-radius:10px;text-align:center;">
-          <div style="font-size:14px;font-weight:800;color:#7c2d12;">॥ शुभम् भवतु • कल्याणमस्तु ॥</div>
-          <div style="font-size:11px;color:#1e293b;margin-top:3px;">
-            श्री गणेश जी एवं देवाधिदेव महादेव की असीम कृपा से <strong>${ctxForCover.name}</strong> का जीवन दीर्घायु, यशस्वी, ज्ञानवान, स्वस्थ एवं समृद्ध हो — इसी पावन मंगल कामना के साथ।
-          </div>
-          <div style="font-size:10.5px;color:#92400e;font-weight:700;margin-top:5px;">
-            आचार्य ज्ञानेन्द्र सिंह तोमर • ज्योतिष तर्क (jyotishtark.in) • WhatsApp: +91 8318513814
-          </div>
-        </div>
-      `;
-
-      const fullDocumentHtml = `
-        <!DOCTYPE html>
-        <html lang="${ctxForCover.lang || 'hi'}">
-        <head>
-          <meta charset="UTF-8">
-          <title>Kundali_${(ctxForCover.name || 'Report').replace(/\s+/g, '_')}</title>
-          <script src="https://cdn.tailwindcss.com"><\/script>
-          <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-          <style>${document.querySelector('style').innerHTML}</style>
-        </head>
-        <body class="pdf-mode" style="background:#fffdf8;color:#1e293b;padding:0;margin:0;">
-          ${page1Html}
-          <div style="padding:0;">
-            ${clone.outerHTML}
-            ${auspiciousColophonHtml}
-          </div>
-        </body>
-        </html>
-      `;
 
       try {
         const response = await fetch('/api/generate-kundali-pdf', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            fileName: `JyotishTark_Kundali_${(ctxForCover.name || 'Seeker').replace(/\s+/g, '_')}.pdf`,
-            html: fullDocumentHtml
-          })
+          body: JSON.stringify({ fileName: `JyotishTark_Kundali_${safeName}.pdf`, html })
         });
-
         if (!response.ok) throw new Error('Server PDF endpoint unavailable');
-
         const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `JyotishTark_Kundali_${(ctxForCover.name || 'Seeker').replace(/\s+/g, '_')}.pdf`;
+        a.download = `JyotishTark_Kundali_${safeName}.pdf`;
         document.body.appendChild(a);
         a.click();
         a.remove();
-        window.URL.revokeObjectURL(url);
+        URL.revokeObjectURL(url);
       } catch (err) {
-        const printWin = window.open('', '_blank');
-        if (printWin) {
-          printWin.document.open();
-          printWin.document.write(fullDocumentHtml);
-          printWin.document.close();
-          setTimeout(() => {
-            printWin.focus();
-            printWin.print();
-          }, 950);
+        // Fallback: open the print-ready document and use the browser's "Save as PDF".
+        const w = window.open('', '_blank');
+        if (w) {
+          w.document.open();
+          w.document.write(html);
+          w.document.close();
+          const waitAndPrint = () => {
+            if (w.__JT_FIT_DONE) { w.focus(); w.print(); }
+            else setTimeout(waitAndPrint, 200);
+          };
+          setTimeout(waitAndPrint, 600);
+        } else {
+          alert(ctx.lang === 'en' ? 'Please allow pop-ups to save the PDF.' : 'PDF सहेजने हेतु कृपया पॉप-अप की अनुमति दें।');
         }
       } finally {
         if (btn) btn.disabled = false;
