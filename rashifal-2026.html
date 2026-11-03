@@ -57,8 +57,8 @@
 }
 </script>
 
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
@@ -145,52 +145,48 @@
     }
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
+  <link rel="stylesheet" href="jt-theme.css?v=1">
+  <script src="jt-site.js" defer></script>
 </head>
 <body class="min-h-screen">
 
     <!-- Navigation -->
-    <header class="glass-card shadow-md px-6 py-4 max-w-7xl mx-auto rounded-b-lg sticky top-0 z-50 mt-4">
-        <div class="flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3">
-                <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-amber-300">
-                    <img src="logo.png" alt="Jyotish Tark Logo" class="h-full w-full object-cover">
-                </div>
-                <span class="text-2xl md:text-3xl font-bold text-white">Jyotish Tark</span>
-            </a>
-
-            <nav class="hidden md:flex space-x-6 font-medium">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="kundali-form.html" class="nav-link">Kundali</a>
-                <div class="dropdown">
-                    <a href="#" class="nav-link flex items-center">
-                        Calculator <i class="fas fa-chevron-down dropdown-arrow"></i>
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="numerology.html">Numerology Report</a>
-                        <a href="tarot.html">Tarot Reading</a>
-                    </div>
-                </div>
-                <a href="panchang.html" class="nav-link">Panchang</a>
-                <a href="rashifal.html" class="nav-link">Rashifal</a>
-                <a href="rudraksha.html" class="nav-link">Rudraksha</a>
-                <a href="blog.html" class="nav-link">Blog</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
-
-            <button id="menuToggle" class="md:hidden text-white focus:outline-none text-2xl transition">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <nav id="mobileNav" class="hidden md:hidden flex-col mt-4 space-y-2 py-4 glass-card rounded-lg p-4">
-            <a href="index.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Home</a>
-            <a href="kundali-form.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Kundali</a>
-            <a href="numerology.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Numerology Report</a>
-            <a href="rashifal.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Rashifal</a>
-            <a href="rudraksha.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Rudraksha</a>
-            <a href="blog.html" class="block px-4 py-3 text-white hover:bg-slate-800 rounded">Blog</a>
-        </nav>
-    </header>
+    <header class="jt-header no-print">
+    <div class="jt-wrap jt-header-row">
+      <a class="jt-brand" href="https://jyotishtark.in/" aria-label="Jyotish Tark — होम">
+        <img src="logo.png" alt="" width="46" height="46">
+        <span class="jt-brand-text"><span class="jt-brand-hi">ज्योतिष तर्क</span><span class="jt-brand-en">JYOTISH TARK · LUCKNOW</span></span>
+      </a>
+      <nav class="jt-nav" aria-label="मुख्य मेनू">
+        <a href="kundali-form.html">मुफ़्त कुंडली</a>
+        <a href="rashifal.html" aria-current="page">राशिफल</a>
+        <a href="panchang.html">पंचांग</a>
+        <a href="numerology.html">अंक ज्योतिष</a>
+        <a href="tarot.html">टैरो</a>
+        <a href="rudraksha.html">रुद्राक्ष</a>
+        <a href="blog.html">लेख</a>
+        <a href="about.html">हमारे बारे में</a>
+        <a href="contact.html">संपर्क</a>
+      </nav>
+      <a class="jt-cta" href="https://wa.me/918318513814" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>WhatsApp</a>
+      <button id="menuToggle" class="jt-menu-btn" type="button" aria-label="मेनू खोलें" aria-controls="mobileNav" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+    <nav id="mobileNav" class="jt-mobile-nav hidden" aria-label="मोबाइल मेनू">
+      <a href="https://jyotishtark.in/">होम</a>
+      <a href="kundali-form.html">मुफ़्त कुंडली</a>
+        <a href="rashifal.html" aria-current="page">राशिफल</a>
+        <a href="panchang.html">पंचांग</a>
+        <a href="numerology.html">अंक ज्योतिष</a>
+        <a href="tarot.html">टैरो</a>
+        <a href="rudraksha.html">रुद्राक्ष</a>
+        <a href="blog.html">लेख</a>
+        <a href="about.html">हमारे बारे में</a>
+        <a href="contact.html">संपर्क</a>
+      <a class="jt-cta" href="https://wa.me/918318513814" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>WhatsApp पर बात करें</a>
+    </nav>
+  </header>
 
     <!-- WhatsApp Floating Button -->
     <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
@@ -219,7 +215,7 @@
         <span class="text-secondary">वार्षिक राशिफल</span>
       </nav>
 
-      <span class="blog-tag">Yearly Forecast & Medical Astrology</span>
+      <span class="blog-tag">Yearly Forecast</span>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 mt-2 leading-tight">राशिफल 2026: सभी 12 राशियों का वार्षिक भविष्यफल</h1>
       
       <div class="blog-meta mb-8">
@@ -266,7 +262,7 @@
             <p><strong>सार:</strong> ऊर्जा का विस्फोट और करियर का चरम (Explosion of Energy and Career Peak)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके लिए 1000 वॉट के बल्ब की तरह है। राहु और मंगल के प्रभाव से आप अपने कार्यक्षेत्र में आक्रामक (Aggressive) निर्णय लेंगे। यदि आप टेक्नोलॉजी, मेडिसिन या स्टार्टअप में हैं, तो यह वर्ष आपको अप्रत्याशित (Unexpected) आर्थिक वृद्धि देगा। हालांकि, ओवर-इन्वेस्टमेंट (Over-investment) से बचें।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>मेष राशि वालों के लिए इस वर्ष काम का दबाव अधिक रह सकता है। जल्दबाज़ी और क्रोध से बचें, पर्याप्त आराम करें और नियमित व्यायाम करें। मन को शांत रखने के लिए हनुमान चालीसा का पाठ श्रेष्ठ उपाय है।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>आपके हाई-एनर्जी लेवल के कारण पार्टनर के साथ ईगो क्लैश (Ego clashes) हो सकते हैं। अपने गुस्से (Amygdala response) पर नियंत्रण रखें।</p>
@@ -278,7 +274,7 @@
             <p><strong>सार:</strong> आर्थिक विस्तार और गले का चक्र (Financial Expansion and Throat Chakra)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>गुरु (Jupiter) का गोचर आपके लिए 'धन के भंडार' खोलने वाला है। पिछले 2 सालों की आपकी जो मेहनत अटकी हुई थी, वह 2026 में लिक्विड कैश (Liquid Cash) में बदलेगी। बैंकिंग, कला, और रियल एस्टेट से जुड़े लोगों को भारी लाभ होगा।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>वृषभ राशि वालों को खान-पान में संयम रखना होगा — अधिक मीठा और जंक फूड कम करें। सुख-सुविधा पर खर्च भी सोच-समझकर करें। शुक्रवार को श्री सूक्त का पाठ लाभकारी रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>यह वर्ष पारिवारिक खुशियों का है। यदि आप विवाह की योजना बना रहे हैं, तो साल के मध्य में उत्तम योग बनेंगे।</p>
@@ -290,7 +286,7 @@
             <p><strong>सार:</strong> बड़ा बदलाव और नेटवर्किंग (Major Shifts and Networking)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 में आपकी कम्युनिकेशन स्किल्स (Communication Skills) आपके लिए जादू का काम करेंगी। यदि आप मार्केटिंग, मीडिया, या सोशल मीडिया (YouTube/Content Creation) में हैं, तो राहु आपको वायरल कर सकता है। जॉब स्विच (Job switch) के प्रबल योग हैं।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>मिथुन राशि वालों को ओवर-थिंकिंग से बचना होगा, जिससे नींद प्रभावित हो सकती है। प्राणायाम (अनुलोम-विलोम) और विष्णु सहस्रनाम का पाठ मन को शांत रखने में सहायक रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>रिश्तों में गलतफहमियां (Miscommunications) आ सकती हैं। अपने पार्टनर को पूरा समय दें।</p>
@@ -302,7 +298,7 @@
             <p><strong>सार:</strong> भाग्य का उदय और भावनात्मक संतुलन (Destiny Unlocking and Emotional Balance)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>गुरु की दृष्टि आपके करियर भाव पर पड़ने से 2026 में आपको कार्यस्थल पर पदोन्नति (Promotion) और सम्मान मिलेगा। जो लोग विदेश (Foreign) जाना चाहते हैं, उनके लिए यह वर्ष वीजा या इमिग्रेशन के लिए बहुत शुभ है।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>कर्क राशि वाले भावुक स्वभाव के होते हैं; इस वर्ष चिंता को मन पर हावी न होने दें। भोजन समय पर और शांत मन से करें। भोजन से पहले अन्नपूर्णा स्तोत्र का पाठ शुभ रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>पारिवारिक जीवन में मधुरता आएगी। माता के स्वास्थ्य में सुधार होगा।</p>
@@ -314,7 +310,7 @@
             <p><strong>सार:</strong> गुप्त धन और सत्ता की प्राप्ति (Secret Wealth and Authority)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके लिए नेतृत्व (Leadership) का वर्ष है। आपको कोई बड़ा प्रोजेक्ट या सरकारी टेंडर मिल सकता है। गुप्त स्रोतों (Secret sources) या शेयर बाजार (Stock Market) से अचानक धन लाभ के प्रबल योग हैं।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>सिंह राशि वालों को इस वर्ष काम के साथ अपनी दिनचर्या का भी ध्यान रखना होगा — समय पर सोना, व्यायाम और संतुलित भोजन। प्रतिदिन सूर्य को अर्घ्य और आदित्य हृदय स्तोत्र का पाठ आत्मबल बढ़ाएगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अहंकार (Ego) के कारण रिश्तों में दूरियां आ सकती हैं। क्षमा करना सीखें।</p>
@@ -326,7 +322,7 @@
             <p><strong>सार:</strong> साझेदारी और परफेक्शन (Partnerships and Perfection)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>इस वर्ष आपकी तरक्की आपकी पार्टनरशिप्स (Partnerships) पर निर्भर करेगी। अकेले काम करने के बजाय टीम में काम करें। विदेशी व्यापार (Import-Export) से जुड़े लोगों को भारी लाभ होगा।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>कन्या राशि वाले हर काम में परफेक्शन चाहते हैं, जिससे तनाव बढ़ सकता है। छोटी बातों की चिंता छोड़ें। ध्यान (Meditation) और नारायण कवच का पाठ मन को स्थिर रखेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अविवाहित लोगों को इस वर्ष अपना जीवनसाथी (Soulmate) मिल सकता है।</p>
@@ -338,7 +334,7 @@
             <p><strong>सार:</strong> शत्रुओं पर विजय और सफलता (Overcoming Enemies and Success)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 में आप अपने सभी प्रतिस्पर्धियों (Competitors) को पीछे छोड़ देंगे। जो भी लीगल मामले (Legal cases) अटके हुए थे, वे आपके पक्ष में आएंगे। नौकरीपेशा लोगों के वेतन (Salary) में अच्छी वृद्धि होगी।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>तुला राशि वालों को दिनचर्या में संतुलन रखना होगा — पर्याप्त पानी पिएं और लंबे समय तक बैठे रहने से बचें। नवग्रह स्तोत्र का पाठ ग्रहों की शांति के लिए शुभ रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>वैवाहिक जीवन में कुछ उतार-चढ़ाव आ सकते हैं, शांति से काम लें।</p>
@@ -350,7 +346,7 @@
             <p><strong>सार:</strong> रचनात्मकता और संतान सुख (Creative Burst and Happiness)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>यह वर्ष आपके लिए बहुत ही 'क्रिएटिव' (Creative) साबित होगा। यदि आप रिसर्च (Research), शेयर मार्केट या किसी भी गुप्त विद्या (Occult) में हैं, तो आपको अपार सफलता मिलेगी। धन आगमन के नए स्रोत (Passive income) खुलेंगे।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>वृश्चिक राशि वालों को इस वर्ष भावनाओं और क्रोध पर नियंत्रण रखना होगा। मंगलवार को अंगारक स्तोत्र का पाठ और रक्तदान जैसे सेवा-कार्य आपके लिए शुभ रहेंगे।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>प्रेम जीवन में जुनून (Passion) रहेगा। संतान प्राप्ति के उत्तम योग हैं।</p>
@@ -362,7 +358,7 @@
             <p><strong>सार:</strong> घर-जायदाद और मानसिक शांति (Property and Home Peace)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>यदि आप नया घर, वाहन (Vehicle) या कोई प्रॉपर्टी (Property) खरीदने की योजना बना रहे हैं, तो 2026 आपका साल है। करियर में स्थिरता (Stability) आएगी। विदेश से जुड़े कार्यों में लाभ होगा।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>धनु राशि <strong>लिवर (Liver) और जांघों (Thighs)</strong> का कारक है। इस वर्ष फैटी लिवर (Fatty Liver) या वजन बढ़ने (Weight gain) की समस्या हो सकती है। उपवास (Fasting) और <em>विष्णु सहस्रनाम</em> का पाठ आपके मेटाबॉलिज्म को ठीक रखेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>माता के साथ संबंध मधुर होंगे। परिवार में कोई मांगलिक कार्य हो सकता है।</p>
@@ -374,7 +370,7 @@
             <p><strong>सार:</strong> पराक्रम और नई शुरुआत (Courage and New Beginnings)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>साढ़ेसाती का अंतिम चरण आपको सोने की तरह तपाकर कुंदन बना चुका है। 2026 में आप पूरे आत्मविश्वास के साथ नए प्रोजेक्ट्स शुरू करेंगे। शॉर्ट ट्रिप्स (Short travels) और नेटवर्किंग से आपको बड़ा वित्तीय लाभ (Financial Gain) होगा।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>मकर राशि वालों के लिए यह परिश्रम का वर्ष है। काम के साथ अपने शरीर का भी ध्यान रखें — नियमित व्यायाम और संतुलित भोजन अपनाएं। शनिवार को दशरथ कृत शनि स्तोत्र का पाठ शुभ फल देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>भाई-बहनों का सहयोग मिलेगा। पुराने टूटे हुए रिश्ते वापस जुड़ सकते हैं।</p>
@@ -386,7 +382,7 @@
             <p><strong>सार:</strong> धन संचय और वाणी का प्रभाव (Wealth Accumulation and Speech)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>यह वर्ष आपके बैंक बैलेंस को बढ़ाने वाला है। साढ़ेसाती के मध्य चरण के बावजूद, गुरु की कृपा आपको पैतृक संपत्ति (Ancestral Property) या फिक्स्ड डिपॉजिट्स (Fixed Deposits) में लाभ दिलाएगी। आप जो बोलेंगे, लोग उसे सुनेंगे।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>कुंभ राशि वालों को देर रात तक जागने की आदत छोड़नी होगी। सोने से पहले ध्यान (Meditation) और शिव कवच का पाठ मन को शांति देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अपनी वाणी (Harsh Speech) पर नियंत्रण रखें, अन्यथा परिवार में अकारण क्लेश हो सकता है।</p>
@@ -398,7 +394,7 @@
             <p><strong>सार:</strong> आत्म-खोज और बड़ा परिवर्तन (Identity Transformation)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके व्यक्तित्व (Personality) को पूरी तरह से बदलने वाला वर्ष है। आप अपने पुराने करियर को छोड़कर कुछ बिल्कुल नया शुरू कर सकते हैं। शुरुआत में संघर्ष होगा, लेकिन आध्यात्मिक और वित्तीय (Financial) रूप से यह एक 'उदय' (Rising) का वर्ष है।</p>
-            <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
+            <span class="zodiac-section-title">स्वास्थ्य के प्रति सावधानी:</span>
             <p>मीन राशि वालों पर साढ़ेसाती का प्रभाव रहेगा, इसलिए धैर्य रखें और जल्दबाज़ी में बड़े निर्णय न लें। यात्रा में सावधानी रखें और पर्याप्त आराम करें। नारायण कवच का पाठ सुरक्षा का भाव देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>रिश्तों में 'बाउंड्रीज' (Boundaries) सेट करना सीखें। लोग आपका भावनात्मक (Emotional) फायदा उठा सकते हैं।</p>
@@ -421,7 +417,7 @@
           <div class="text-center md:text-left">
             <h3 class="text-2xl font-bold text-white tracking-wide mb-1">Gyanendra Singh Tomar</h3>
             <p class="text-blue-400 text-sm mb-4 font-bold uppercase tracking-widest">Founder & Vedic Astrologer</p>
-            <p class="text-gray-300 text-base leading-relaxed">As an MBBS student at IOM Nepal and an expert Vedic Astrologer, Gyanendra connects the empirical world of modern anatomy (Endocrinology, Neuroplasticity) with the profound predictive science of Vedic Planetary Transits. He provides yearly forecasts that are not just generic predictions, but highly logical, medical, and practical blueprints for life optimization.</p>
+            <p class="text-gray-300 text-base leading-relaxed">Gyanendra Singh Tomar is the founder of Jyotish Tark — a Vedic astrologer from Lucknow with 5+ years of practice in Kundali analysis, Ashtakavarga, remedies and Numerology. He explains astrology in simple, practical language, without fear or false promises.</p>
           </div>
         </a>
       </section>
@@ -430,13 +426,71 @@
   </main>
 
   <!-- Footer -->
-  <footer class="glass-card text-center py-12 mt-12">
-    <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved.</p>
+  <footer class="jt-footer no-print">
+    <div class="jt-footer-cta">
+      <div class="jt-wrap">
+        <div>
+          <p class="jt-big">कोई प्रश्न है? सीधे बात करें।</p>
+          <p class="jt-small">WhatsApp या फ़ोन: +91 83185 13814 · मिलना केवल अपॉइंटमेंट से</p>
+        </div>
+        <a href="https://wa.me/918318513814?text=Namaste%2C%20I%20would%20like%20to%20book%20a%20consultation" target="_blank" rel="noopener">परामर्श बुक करें</a>
+      </div>
+    </div>
+    <div class="jt-wrap jt-footer-grid">
+      <div>
+        <p class="jt-foot-brand">ज्योतिष तर्क</p>
+        <p>वैदिक ज्योतिष, सरल भाषा में। हर कुंडली और हर सलाह ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं देखते हैं।</p>
+        <div class="jt-social">
+          <a href="https://www.facebook.com/jyotishtark" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.4-.8 1-.8z"></path></svg></a>
+          <a href="https://www.instagram.com/jyotishtark/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle></svg></a>
+          <a href="https://www.youtube.com/channel/UCvZ3fLkKVTU3azT7F1DfNXA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.4 3.1-5.4 3.1z"></path></svg></a>
+          <a href="https://wa.me/918318513814" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg></a>
+        </div>
+      </div>
+      <div>
+        <h2>सेवाएं</h2>
+        <ul>
+          <li><a href="kundali-form.html">मुफ़्त जन्म कुंडली</a></li>
+          <li><a href="kundali-form.html">विस्तृत रिपोर्ट · ₹1101</a></li>
+          <li><a href="rashifal.html">राशिफल</a></li>
+          <li><a href="panchang.html">पंचांग व मुहूर्त</a></li>
+          <li><a href="numerology.html">अंक ज्योतिष</a></li>
+          <li><a href="tarot.html">टैरो रीडिंग</a></li>
+          <li><a href="rudraksha.html">प्रामाणिक रुद्राक्ष</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>जानकारी</h2>
+        <ul>
+          <li><a href="about.html">हमारे बारे में</a></li>
+          <li><a href="blog.html">ज्योतिष लेख</a></li>
+          <li><a href="durga-saptashati-hindi-pdf.html">दुर्गा सप्तशती PDF</a></li>
+          <li><a href="disclaimer.html">अस्वीकरण</a></li>
+          <li><a href="privacy-policy.html">गोपनीयता नीति</a></li>
+          <li><a href="terms-of-service.html">नियम व शर्तें</a></li>
+          <li><a href="shipping-and-delivery.html">शिपिंग व डिलीवरी</a></li>
+          <li><a href="cancellation.html">रद्दीकरण</a> · <a href="refund.html">रिफ़ंड</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>संपर्क</h2>
+        <p><a href="tel:+918318513814">+91 83185 13814</a></p>
+        <p><a href="mailto:jyotishtark@gmail.com">jyotishtark@gmail.com</a></p>
+        <p>37, शमशेर पुरम कॉलोनी, गौरी बाज़ार, सरोजिनी नगर, लखनऊ, उत्तर प्रदेश 226008</p>
+        <p>मिलना केवल अपॉइंटमेंट से</p>
+      </div>
+    </div>
+    <div class="jt-footer-bottom">
+      <div class="jt-wrap">
+        <span>© 2026 Jyotish Tark · सर्वाधिकार सुरक्षित</span>
+        <span>ज्योतिष मार्गदर्शन है — चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं।</span>
+      </div>
+    </div>
   </footer>
 
   <script>
     // Navigation Scripts
-    document.getElementById('menuToggle').addEventListener('click', function() {
+    document.createElement('button').addEventListener('click', function() {
         document.getElementById('mobileNav').classList.toggle('hidden');
     });
 
