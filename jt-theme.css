@@ -347,3 +347,16 @@ html body :is([class*="text-lime-"], [class*="text-green-"], [class*="text-emera
 html body :is(.tarot-slot-back, .fan-card-back) [class*="bg-"] { background-color: rgba(255, 255, 255, .16) !important; background-image: none !important; }
 html body :is(.tarot-slot-back, .fan-card-back) [class*="text-"] { color: #FFFFFF !important; }
 html body .primary-button { box-shadow: 0 8px 20px rgba(122, 31, 31, .18) !important; }
+
+/* ---- share bar ---- */
+.jt-share { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px auto; max-width: 1120px; padding: 0 2px; }
+.jt-share-end { margin: 36px auto 8px; padding: 14px 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); }
+.jt-share-label { font-size: 15px; font-weight: 600; color: var(--jt-body, #4A3628) !important; margin-right: 2px; }
+.jt-sh { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--jt-line, #E8DCC4); background: #FFFFFF; color: var(--jt-ink, #2B1810) !important; font: 600 14.5px/1 inherit; font-family: inherit; text-decoration: none !important; cursor: pointer; }
+.jt-sh:hover, .jt-sh:focus-visible { border-color: var(--jt-maroon, #7A1F1F); color: var(--jt-maroon, #7A1F1F) !important; }
+.jt-sh-wa { background: #136C35 !important; border-color: #136C35 !important; color: #FFFFFF !important; }
+.jt-sh-wa:hover, .jt-sh-wa:focus-visible { background: #0E5429 !important; color: #FFFFFF !important; }
+.jt-sh-native { background: var(--jt-maroon, #7A1F1F) !important; border-color: var(--jt-maroon, #7A1F1F) !important; color: #FFFFFF !important; }
+.jt-sh-msg { font-size: 14px; color: #136C35 !important; font-weight: 600; }
+@media (max-width: 560px) { .jt-sh-t { display: none; } .jt-sh { padding: 7px 11px; } .jt-share { padding: 0 16px; } .jt-share-end { margin-left: 16px; margin-right: 16px; } }
+@media print { .jt-share { display: none !important; } }
