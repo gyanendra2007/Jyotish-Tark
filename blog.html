@@ -38,8 +38,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -212,19 +215,19 @@
     </header>
 
 <!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>   
+<a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
 <div class="whatsapp-popup" id="whatsappPopup">
     <div class="whatsapp-header">
         <img src="logo.png" alt="Jyotish Tark">
-        <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+        <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
     </div>
     <div class="whatsapp-body">
         <p class="mb-4 text-gray-600 text-center">नमस्ते! हम आपकी क्या सहायता कर सकते हैं?</p>
         <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark%2C%20I%20was%20reading%20your%20blog%20and%20want%20astrology%20guidance.', '_blank');">
-            <i class="fas fa-comment text-green-600 text-xl"></i><div><h4 class="font-semibold text-gray-800">Chat with Astrologer</h4><p class="text-xs text-gray-500">Instant WhatsApp Consultation</p></div>
+            <i class="fas fa-comment text-green-600 text-xl"></i><div><p class="font-semibold text-gray-800">Chat with Astrologer</p><p class="text-xs text-gray-500">Instant WhatsApp Consultation</p></div>
         </div>
         <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone text-purple-600 text-xl"></i><div><h4 class="font-semibold text-gray-800">Call Us Directly</h4><p class="text-xs text-gray-500">+91 83185 13814</p></div>
+            <i class="fas fa-phone text-purple-600 text-xl"></i><div><p class="font-semibold text-gray-800">Call Us Directly</p><p class="text-xs text-gray-500">+91 83185 13814</p></div>
         </div>
     </div>
 </div>
@@ -920,7 +923,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
             <div>
-                <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                <h3 class="font-semibold text-amber-300 mb-4">Quick Links</h3>
                 <ul class="space-y-3 footer-links">
                     <li><a href="index.html" class="text-gray-300 hover:text-white transition">Home</a></li>
                     <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Kundali</a></li>
@@ -929,7 +932,7 @@
                 </ul>
             </div>
             <div>
-                <h4 class="font-semibold text-amber-300 mb-4">Services</h4>
+                <h3 class="font-semibold text-amber-300 mb-4">Services</h3>
                 <ul class="space-y-3 footer-links">
                     <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Get Your Kundali</a></li>
                     <li><a href="numerology.html" class="text-gray-300 hover:text-white transition">Numerology Report</a></li>
@@ -938,7 +941,7 @@
                 </ul>
             </div>
             <div>
-                <h4 class="font-semibold text-amber-300 mb-4">Information</h4>
+                <h3 class="font-semibold text-amber-300 mb-4">Information</h3>
                 <ul class="space-y-3 footer-links">
                     <li><a href="about.html" class="text-gray-300 hover:text-white transition">About Us</a></li>
                     <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition">Disclaimer</a></li>
@@ -947,7 +950,7 @@
                 </ul>
             </div>
             <div>
-                <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                <h3 class="font-semibold text-amber-300 mb-4">Contact</h3>
                 <p class="text-gray-300 mb-3"><i class="fas fa-envelope mr-2"></i> jyotishtark@gmail.com</p>
                 <p class="text-gray-300 mb-3"><i class="fas fa-phone-alt mr-2"></i> 8318513814</p>
                 <p class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i> 37, Shamsher Puram Colony, Gauri Bazar, Sarojini Nagar, Lucknow, Uttar Pradesh 226008</p>

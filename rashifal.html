@@ -131,8 +131,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         :root {
@@ -490,9 +493,10 @@
             </a>
         </nav>
     </header>
+    <main id="main">
 
     <!-- WhatsApp Floating Button & Modal -->
-    <a class="whatsapp-float" id="whatsappButton" aria-label="Chat on WhatsApp">
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -500,7 +504,7 @@
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark" width="48" height="48">
             <div>
-                <h3 class="font-bold text-lg">Jyotish Tark</h3>
+                <p class="font-bold text-lg">Jyotish Tark</p>
                 <p class="text-sm opacity-90">Typically replies within minutes</p>
             </div>
         </div>
@@ -509,21 +513,21 @@
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20have%20a%20question%20regarding%20today\'s%20Rashifal%20and%20Gochar.', '_blank');">
                 <i class="fas fa-comment"></i>
                 <div>
-                    <h4 class="font-semibold text-gray-800">Rashifal Guidance</h4>
+                    <p class="font-semibold text-gray-800">Rashifal Guidance</p>
                     <p class="text-sm text-gray-600">Ask about your zodiac transit</p>
                 </div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
                 <i class="fas fa-phone"></i>
                 <div>
-                    <h4 class="font-semibold text-gray-800">Call Astrologer</h4>
+                    <p class="font-semibold text-gray-800">Call Astrologer</p>
                     <p class="text-sm text-gray-600">Speak directly with our team</p>
                 </div>
             </div>
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20hand-crafted%20Kundali%20consultation', '_blank');">
                 <i class="fas fa-calendar-check"></i>
                 <div>
-                    <h4 class="font-semibold text-gray-800">Book Consultation</h4>
+                    <p class="font-semibold text-gray-800">Book Consultation</p>
                     <p class="text-sm text-gray-600">Schedule personal Kundali session</p>
                 </div>
             </div>
@@ -654,6 +658,8 @@
     </div>
 
     <!-- Comprehensive Synchronized 4-Column Master Footer -->
+    </main>
+
     <footer class="glass-card text-center py-12 mt-12 max-w-7xl mx-auto rounded-t-2xl">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-center space-x-6 mb-8 text-2xl">
@@ -664,7 +670,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
                 <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Quick Links</h4>
+                    <h3 class="font-semibold text-amber-300 mb-4">Quick Links</h3>
                     <ul class="space-y-2.5 footer-links text-sm">
                         <li><a href="https://jyotishtark.in/" class="text-gray-300 hover:text-white transition">Home</a></li>
                         <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Free 45-Min Kundali Dossier</a></li>
@@ -675,7 +681,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Services & Store</h4>
+                    <h3 class="font-semibold text-amber-300 mb-4">Services & Store</h3>
                     <ul class="space-y-2.5 footer-links text-sm">
                         <li><a href="kundali-form.html" class="text-gray-300 hover:text-white transition">Order Hand-Made Kundali (₹1101)</a></li>
                         <li><a href="rudraksha.html" class="text-gray-300 hover:text-white transition">Buy Lab-Certified Rudraksha</a></li>
@@ -685,7 +691,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Information & Policies</h4>
+                    <h3 class="font-semibold text-amber-300 mb-4">Information & Policies</h3>
                     <ul class="space-y-2.5 footer-links text-sm">
                         <li><a href="about.html" class="text-gray-300 hover:text-white transition">About Us</a></li>
                         <li><a href="disclaimer.html" class="text-gray-300 hover:text-white transition">Disclaimer</a></li>
@@ -696,7 +702,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-amber-300 mb-4">Contact</h4>
+                    <h3 class="font-semibold text-amber-300 mb-4">Contact</h3>
                     <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-envelope mr-2 text-amber-400"></i> jyotishtark@gmail.com</p>
                     <p class="text-gray-300 mb-3 text-sm"><i class="fas fa-phone-alt mr-2 text-amber-400"></i> +91 8318513814</p>
                     <p class="text-gray-300 mb-3 text-sm"><i class="fab fa-whatsapp mr-2 text-green-400"></i> +91 8318513814</p>
@@ -988,7 +994,7 @@
                             <div class="rashi-prediction-category">
                                 <div class="flex items-center mb-1">
                                     <i class="fas fa-briefcase prediction-icon"></i>
-                                    <h4 class="font-semibold text-amber-300 text-sm">करियर एवं व्यवसाय (Career)</h4>
+                                    <h3 class="font-semibold text-amber-300 text-sm">करियर एवं व्यवसाय (Career)</h3>
                                 </div>
                                 <p class="text-gray-300 text-sm leading-relaxed">${pred.career}</p>
                             </div>
@@ -996,7 +1002,7 @@
                             <div class="rashi-prediction-category">
                                 <div class="flex items-center mb-1">
                                     <i class="fas fa-coins prediction-icon"></i>
-                                    <h4 class="font-semibold text-amber-300 text-sm">आर्थिक स्थिति (Finance)</h4>
+                                    <h3 class="font-semibold text-amber-300 text-sm">आर्थिक स्थिति (Finance)</h3>
                                 </div>
                                 <p class="text-gray-300 text-sm leading-relaxed">${pred.finance}</p>
                             </div>
@@ -1004,7 +1010,7 @@
                             <div class="rashi-prediction-category">
                                 <div class="flex items-center mb-1">
                                     <i class="fas fa-heart prediction-icon"></i>
-                                    <h4 class="font-semibold text-amber-300 text-sm">प्रेम एवं परिवार (Relationships)</h4>
+                                    <h3 class="font-semibold text-amber-300 text-sm">प्रेम एवं परिवार (Relationships)</h3>
                                 </div>
                                 <p class="text-gray-300 text-sm leading-relaxed">${pred.love}</p>
                             </div>
@@ -1012,7 +1018,7 @@
                             <div class="rashi-prediction-category">
                                 <div class="flex items-center mb-1">
                                     <i class="fas fa-heartbeat prediction-icon"></i>
-                                    <h4 class="font-semibold text-amber-300 text-sm">स्वास्थ्य एवं शारीरिक ऊर्जा (Health)</h4>
+                                    <h3 class="font-semibold text-amber-300 text-sm">स्वास्थ्य एवं शारीरिक ऊर्जा (Health)</h3>
                                 </div>
                                 <p class="text-gray-300 text-sm leading-relaxed">${pred.health}</p>
                             </div>
@@ -1020,9 +1026,9 @@
 
                         <div>
                             <div class="mt-2 p-3 rounded-xl bg-purple-950/50 border border-purple-500/30">
-                                <h4 class="font-semibold text-amber-300 text-xs uppercase mb-1">
+                                <h3 class="font-semibold text-amber-300 text-xs uppercase mb-1">
                                     <i class="fas fa-wand-magic-sparkles mr-1"></i> लाल किताब एवं वैदिक उपाय
-                                </h4>
+                                </h3>
                                 <p class="text-gray-200 text-xs leading-relaxed">${pred.remedy}</p>
                             </div>
 
