@@ -194,3 +194,5 @@
   .bk-reader { border: 0; } .bk-text { font-size: 16pt !important; color: #000; } .rs-hero h1 { font-size: 22pt; }
 }
 .bk-group .fx-days { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); }
+.bk-prose { text-align: left; max-width: 760px; margin: 0 auto 16px; font-family: var(--jt-sans, 'Mukta', sans-serif); font-size: .82em; line-height: 1.85; color: var(--jt-body); }
+.bk-uvacha { margin: 20px auto 8px; font-size: .8em; font-weight: 700; color: #8A3A0A; }
