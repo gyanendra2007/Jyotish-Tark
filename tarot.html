@@ -122,407 +122,15 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-
   <style>
-    :root {
-      --primary: #7e22ce;
-      --primary-light: #a855f7;
-      --primary-dark: #6b21a8;
-      --secondary: #f59e0b;
-      --accent: #ec4899;
-      --dark: #0f172a;
-      --light: #f9fafb;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', 'Hind', sans-serif;
-      background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 45%, #020617 100%);
-      color: #f3f4f6;
-      background-attachment: fixed;
-      overflow-x: hidden;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Playfair Display', 'Hind', serif;
-      font-weight: 700;
-    }
-
-    .hindi { font-family: 'Hind', sans-serif; }
-
-    .glass-card {
-      background: rgba(30, 41, 59, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-    }
-
-    /* Zero-Latency Pure CSS Nebula Hero Background */
-    .cosmic-bg {
-      background: 
-        radial-gradient(circle at 20% 25%, rgba(236, 72, 153, 0.25) 0%, transparent 45%),
-        radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.2) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(88, 28, 135, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
-      position: relative;
-    }
-
-    .nav-link {
-      position: relative;
-      padding: 0.5rem 0;
-      transition: all 0.3s ease;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--secondary, #f59e0b);
-      transition: width 0.3s ease;
-    }
-
-    .nav-link:hover::after { width: 100%; }
-
-    .astrological-symbol {
-      font-size: 1.2rem;
-      margin-right: 0.5rem;
-    }
-
-    /* Dropdown Styles */
-    .dropdown { position: relative; }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(15, 23, 42, 0.98);
-      backdrop-filter: blur(20px);
-      min-width: 240px;
-      border-radius: 12px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      margin-top: 10px;
-    }
-
-    .dropdown-content:hover,
-    .dropdown:hover .dropdown-content { display: block !important; }
-
-    .dropdown::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 0;
-      width: 100%;
-      height: 20px;
-      background: transparent;
-      z-index: 999;
-    }
-
-    .dropdown-content a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 20px;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-weight: 500;
-    }
-
-    .dropdown-content a:hover {
-      background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(236, 72, 153, 0.2));
-      padding-left: 24px;
-    }
-
-    .mobile-dropdown-content {
-      display: none;
-      padding-left: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      margin-top: 8px;
-      border-left: 3px solid var(--primary, #7e22ce);
-    }
-
-    .mobile-dropdown.active .mobile-dropdown-content { display: block; }
-
-    .mobile-dropdown-toggle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    /* Buttons */
-    .primary-button {
-      background: linear-gradient(135deg, #7e22ce 0%, #db2777 50%, #f59e0b 100%);
-      background-size: 200% auto;
-      color: white;
-      padding: 0.95rem 2.2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 25px rgba(219, 39, 119, 0.4);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .primary-button:hover {
-      background-position: right center;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5);
-    }
-
-    .secondary-button {
-      background: rgba(255, 255, 255, 0.05);
-      color: white;
-      border: 2px solid var(--secondary);
-      padding: 0.85rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .secondary-button:hover {
-      background: var(--secondary);
-      color: #0f172a;
-      transform: translateY(-2px);
-    }
-
-    /* Form Inputs */
-    .form-input {
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #fde68a;
-      border-radius: 12px;
-      padding: 0.75rem 0.95rem;
-      width: 100%;
-      transition: all 0.25s ease;
-      font-weight: 500;
-      font-size: 16px;
-    }
-
-    @media (min-width: 768px) {
-      .form-input {
-        font-size: 0.92rem;
-        padding: 0.7rem 0.95rem;
-      }
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
-    }
-
-    .form-input option {
-      background: #0f172a;
-      color: #f3f4f6;
-    }
-
-    /* 5 Viral Spread Mode Selector Buttons */
-    .tarot-mode-btn {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1.5px solid rgba(255, 255, 255, 0.14);
-      border-radius: 16px;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .tarot-mode-btn:hover {
-      border-color: rgba(245, 158, 11, 0.6);
-      transform: translateY(-2px);
-      background: rgba(30, 41, 59, 0.9);
-    }
-
-    .tarot-mode-btn.active {
-      background: linear-gradient(135deg, rgba(126, 34, 206, 0.85), rgba(219, 39, 119, 0.75));
-      border-color: #f59e0b;
-      box-shadow: 0 10px 25px rgba(219, 39, 119, 0.35);
-    }
-
-    /* ===================================================================== */
-    /* INTERACTIVE 22-CARD FANNED MYSTIC DECK STYLES                         */
-    /* ===================================================================== */
-    .fanned-deck-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      overflow-x: auto;
-      padding: 28px 16px 36px;
-      gap: 0;
-      scroll-snap-type: x proximity;
-    }
-
-    @media (min-width: 1024px) {
-      .fanned-deck-wrapper {
-        justify-content: center;
-        overflow-x: visible;
-        padding: 40px 20px 50px;
-      }
-    }
-
-    .fan-card-item {
-      width: 78px;
-      height: 128px;
-      flex-shrink: 0;
-      margin-left: -28px;
-      border-radius: 12px;
-      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-      position: relative;
-      cursor: pointer;
-      scroll-snap-align: center;
-    }
-
-    .fan-card-item:first-child { margin-left: 0; }
-
-    @media (min-width: 1024px) {
-      .fan-card-item {
-        width: 86px;
-        height: 142px;
-        margin-left: -38px;
-        transform: rotate(var(--fan-angle, 0deg)) translateY(var(--fan-y, 0px));
-      }
-      .fan-card-item:hover:not(.picked) {
-        transform: rotate(0deg) translateY(-28px) scale(1.14);
-        z-index: 40;
-      }
-    }
-
-    @media (max-width: 1023px) {
-      .fan-card-item:active:not(.picked) {
-        transform: translateY(-16px) scale(1.08);
-        z-index: 40;
-      }
-    }
-
-    .fan-card-back {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      background: linear-gradient(145deg, #3b0764 0%, #1e1b4b 55%, #701a75 100%);
-      border: 2px solid rgba(251, 191, 36, 0.65);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
-      padding: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fan-card-item:hover:not(.picked) .fan-card-back {
-      border-color: #fde047;
-      box-shadow: 0 0 25px rgba(251, 191, 36, 0.75);
-    }
-
-    .fan-card-border {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      border: 1px dashed rgba(251, 191, 36, 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
-    }
-
-    .fan-card-item.picked {
-      opacity: 0.18;
-      transform: translateY(-40px) scale(0.85) !important;
-      pointer-events: none;
-      filter: grayscale(80%);
-    }
-
-    /* ===================================================================== */
-    /* 3-CARD 3D FLIP SPREAD SLOTS                                           */
-    /* ===================================================================== */
-    .tarot-slot-card {
-      width: 195px;
-      height: 300px;
-      perspective: 1200px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .tarot-slot-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.85s cubic-bezier(0.4, 0.2, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .tarot-slot-card.flipped .tarot-slot-inner {
-      transform: rotateY(180deg);
-    }
-
-    .tarot-slot-front,
-    .tarot-slot-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      border-radius: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
-    }
-
-    .tarot-slot-front {
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.95));
-      border: 2px dashed rgba(245, 158, 11, 0.45);
-      color: rgba(251, 191, 36, 0.7);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .tarot-slot-back {
-      background: radial-gradient(circle at top, #3b0764 0%, #0f172a 70%, #020617 100%);
-      color: white;
-      transform: rotateY(180deg);
-      padding: 18px 14px;
-      text-align: center;
-      border: 2px solid #f59e0b;
-      justify-content: space-between;
-    }
-
-    /* CSS Compatibility Fixes for FontAwesome Icons in tarot-engine.js */
     .fa-hand-Sparkles::before { content: "\f65d"; }
     .fa-phoenix-framework::before { content: "\f06d"; }
     .fa-planet-ringed::before { content: "\f0ac"; }
     .fa-lantern::before { content: "\f0eb"; }
 
-    .danger-glow { animation: dangerPulse 3s infinite; }
+    
 
-    @keyframes dangerPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-      50% { box-shadow: 0 0 28px 6px rgba(239, 68, 68, 0.25); }
-    }
+    
 
     /* WhatsApp Floating */
     .whatsapp-float {
@@ -610,16 +218,15 @@
       text-align: center;
     }
 
-    .footer-links a { transition: all 0.3s ease; }
-    .footer-links a:hover { color: var(--secondary); padding-left: 5px; }
+
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=1">
+  <link rel="stylesheet" href="tarot-studio.css?v=2">
   <script src="jt-site.js" defer></script>
 </head>
-<body class="min-h-screen">
+<body>
 
-  <!-- Navigation Header -->
   <header class="jt-header no-print">
     <div class="jt-wrap jt-header-row">
       <a class="jt-brand" href="https://jyotishtark.in/" aria-label="Jyotish Tark — होम">
@@ -657,343 +264,132 @@
     </nav>
   </header>
 
-  <!-- Breadcrumb Navigation -->
-  <nav aria-label="Breadcrumb" class="max-w-7xl mx-auto px-4 mt-4 text-sm text-gray-400">
-    <ol class="flex items-center space-x-2">
-      <li><a href="https://jyotishtark.in/" class="hover:text-amber-300">Home</a></li>
-      <li><span>/</span></li>
-      <li class="text-amber-300 font-medium">Free 78-Card Vedic Tarot Reading</li>
+    <main id="main" class="tt-page">
+    <nav aria-label="Breadcrumb" class="tt-crumb"><a href="https://jyotishtark.in/">होम</a> / <span>टैरो रीडिंग</span></nav>
+
+    <section class="tt-hero">
+      <p class="tt-kicker">॥ 78 कार्ड · वैदिक ग्रह · हिंदी व English ॥</p>
+      <h1>मुफ़्त <span>टैरो कार्ड</span> रीडिंग</h1>
+      <p>मन में एक प्रश्न रखें, कार्ड फेंटें और अपने तीन कार्ड स्वयं चुनें। हर कार्ड का अर्थ, उसका ग्रह, तत्व और संभावित समय — सरल भाषा में।</p>
+    </section>
+
+    <ol class="tt-steps" aria-label="टैरो के चरण">
+      <li class="on"><b>1</b>प्रश्न चुनें</li>
+      <li><b>2</b>कार्ड फेंटें व चुनें</li>
+      <li><b>3</b>फलादेश पढ़ें</li>
     </ol>
-  </nav>
 
-  <!-- Compact Hero Section -->
-  <section class="cosmic-bg rounded-3xl shadow-2xl max-w-7xl mx-3 md:mx-4 xl:mx-auto mt-4 p-6 md:p-10 text-center relative overflow-hidden border border-purple-500/30">
-    <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs md:text-sm font-bold uppercase tracking-wider mb-3">
-        <i class="fas fa-dharmachakra"></i> 78-Card Vedic-Tarot & Numerology Oracle • English & हिंदी
-      </div>
-      <h1 class="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 leading-tight">
-        Decode Your <span class="text-amber-300">Yes/No Timing, Partner's Unspoken Feelings & Karmic Blocks</span>
-      </h1>
-      <p class="text-xs sm:text-sm md:text-lg text-purple-100 max-w-3xl mx-auto">
-        Unlike generic random card generators, our engine fuses the <strong>3 cards your intuition touches</strong> with their ruling <strong>Vedic Grahas (Planets), your Birth Date (Mulank/Bhagyank), and Chaldean Name Vibration</strong>.
-      </p>
-    </div>
-  </section>
+    <form id="ttForm" class="tt-panel" novalidate>
+      <fieldset class="tt-modes">
+        <legend>आप किस बारे में जानना चाहते हैं?</legend>
+        <label class="tt-mode"><input type="radio" name="ttMode" value="yesno" checked>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>
+          <strong>हाँ या ना + समय</strong><span>किसी एक प्रश्न का सीधा उत्तर और संभावित समय</span></label>
+        <label class="tt-mode"><input type="radio" name="ttMode" value="feelings">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
+          <strong>उनके मन की बात</strong><span>साथी या किसी ख़ास व्यक्ति की भावनाएं और अगला कदम</span></label>
+        <label class="tt-mode"><input type="radio" name="ttMode" value="career">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"></path></svg>
+          <strong>करियर व धन</strong><span>काम, परीक्षा और पैसे से जुड़ी रुकावट और राह</span></label>
+        <label class="tt-mode"><input type="radio" name="ttMode" value="destiny">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"></path></svg>
+          <strong>भूत · वर्तमान · भविष्य</strong><span>अतीत का असर, आज की स्थिति और आगे की दिशा</span></label>
+        <label class="tt-mode"><input type="radio" name="ttMode" value="evileye">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <strong>नज़र व नकारात्मकता</strong><span>कहीं ईर्ष्या या नकारात्मक माहौल तो असर नहीं डाल रहा</span></label>
+      </fieldset>
 
-  <!-- ========================================================================= -->
-  <!-- MAIN INTERACTIVE VEDIC-TAROT WORKSPACE                                    -->
-  <!-- ========================================================================= -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-6 md:py-8">
-    <div class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border border-purple-500/30 space-y-8">
-
-      <!-- STEP 1: ENERGY CALIBRATION (NAME, DOB, LANGUAGE & QUESTION) -->
-      <div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-4 border-b border-white/10">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Step 1 • Sync Your Personal Vibration</span>
-            <h2 class="text-xl md:text-2xl font-bold text-white mt-0.5">Enter Your Name, Birth Date & Question</h2>
-          </div>
-          <span class="text-xs text-gray-400"><i class="fas fa-language text-amber-400 mr-1"></i> Instant Live Translation (English / हिंदी)</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-900/65 p-4 md:p-5 rounded-2xl border border-white/10">
-          <div>
-            <label for="tarotUserName" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-signature text-amber-400 mr-1"></i>Your Name (नाम)
-            </label>
-            <input type="text" id="tarotUserName" class="form-input" placeholder="e.g., Priya Sharma">
-          </div>
-
-          <div>
-            <label for="tarotUserDob" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-calendar-alt text-amber-400 mr-1"></i>Date of Birth (जन्मतिथि)
-            </label>
-            <input type="date" id="tarotUserDob" class="form-input">
-          </div>
-
-          <div>
-            <label for="tarotLang" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-globe text-amber-400 mr-1"></i>Reading Language / भाषा
-            </label>
-            <select id="tarotLang" class="form-input font-bold">
-              <option value="hi">🇮🇳 हिंदी (संपूर्ण वैदिक-टैरो फलित)</option>
-              <option value="en">🇬🇧 English (Deep Analysis)</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="tarotUserQuestion" class="block text-xs font-bold text-gray-200 mb-1.5">
-              <i class="fas fa-comment-dots text-amber-400 mr-1"></i>Your Question / Person's Name (Optional)
-            </label>
-            <input type="text" id="tarotUserQuestion" class="form-input" placeholder="मन का प्रश्न या पार्टनर का नाम...">
+      <div class="tt-fields">
+        <label class="tt-field w12">आपका प्रश्न <small>(एक ही प्रश्न रखें — जितना साफ़ प्रश्न, उतना साफ़ उत्तर)</small>
+          <input type="text" id="ttQuestion" maxlength="160" placeholder="जैसे: क्या इस साल मेरी नौकरी बदलेगी?">
+        </label>
+        <label class="tt-field w4">आपका नाम <small>(वैकल्पिक)</small>
+          <input type="text" id="ttName" maxlength="60" autocomplete="given-name" placeholder="जैसे: प्रिया">
+        </label>
+        <label class="tt-field w4">जन्म तिथि <small>(वैकल्पिक — मूलांक के लिए)</small>
+          <input type="date" id="ttDob">
+        </label>
+        <div class="tt-field w4"><span id="ttLangLabel">फलादेश की भाषा</span>
+          <div class="tt-lang" role="group" aria-labelledby="ttLangLabel">
+            <button type="button" data-lang="hi" aria-pressed="true">हिंदी</button>
+            <button type="button" data-lang="en" aria-pressed="false">English</button>
           </div>
         </div>
       </div>
 
-      <!-- STEP 2: CHOOSE ONE OF THE 5 VIRAL READING MODES -->
-      <div>
-        <div class="mb-4">
-          <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Step 2 • Choose Your Oracle Spread</span>
-          <h2 class="text-xl md:text-2xl font-bold text-white mt-0.5">What Do You Want the Cards to Reveal Today?</h2>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          <!-- Mode 1: Yes/No + Timing -->
-          <button type="button" onclick="selectTarotSpreadMode('yesno', this)" class="tarot-mode-btn active">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0 text-amber-300 text-lg">
-              <i class="fas fa-bolt"></i>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-white">Yes / No + Timing</div>
-              <div class="text-[11px] text-gray-300 hindi">हाँ/ना प्रतिशत व सटीक समय</div>
-            </div>
-          </button>
-
-          <!-- Mode 2: Partner's Unspoken Feelings -->
-          <button type="button" onclick="selectTarotSpreadMode('feelings', this)" class="tarot-mode-btn">
-            <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-400/40 flex items-center justify-center shrink-0 text-pink-300 text-lg">
-              <i class="fas fa-heart"></i>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-white">Partner's Feelings</div>
-              <div class="text-[11px] text-gray-300 hindi">उनके दिल की अनकही बात</div>
-            </div>
-          </button>
-
-          <!-- Mode 3: Career, Exam & Money -->
-          <button type="button" onclick="selectTarotSpreadMode('career', this)" class="tarot-mode-btn">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 text-emerald-300 text-lg">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-white">Career & Wealth</div>
-              <div class="text-[11px] text-gray-300 hindi">करियर, परीक्षा व धन उछाल</div>
-            </div>
-          </button>
-
-          <!-- Mode 4: Aura Block & Evil Eye -->
-          <button type="button" onclick="selectTarotSpreadMode('evileye', this)" class="tarot-mode-btn">
-            <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center shrink-0 text-purple-300 text-lg">
-              <i class="fas fa-eye"></i>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-white">Evil Eye & Aura Scan</div>
-              <div class="text-[11px] text-gray-300 hindi">बुरी नज़र व गुप्त शत्रु जांच</div>
-            </div>
-          </button>
-
-          <!-- Mode 5: Past, Present & Future -->
-          <button type="button" onclick="selectTarotSpreadMode('destiny', this)" class="tarot-mode-btn">
-            <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center shrink-0 text-cyan-300 text-lg">
-              <i class="fas fa-compass"></i>
-            </div>
-            <div>
-              <div class="font-bold text-sm text-white">Past • Present • Future</div>
-              <div class="text-[11px] text-gray-300 hindi">संपूर्ण काल-चक्र भविष्यवाणी</div>
-            </div>
-          </button>
-        </div>
-
-        <p id="activeSpreadModeSubtitle" class="text-xs md:text-sm text-amber-200/90 mt-3 text-center bg-slate-950/60 py-2 px-4 rounded-xl border border-white/10">
-          आपके प्रश्न की सफलता का प्रतिशत (0–100%), गुप्त शर्त और कार्य पूर्ण होने का सटीक समय।
-        </p>
+      <div class="tt-go">
+        <button type="submit" class="tt-btn saffron">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2"></rect><path d="M8 3h11a2 2 0 0 1 2 2v13"></path></svg>
+          कार्ड फेंटें और चुनें
+        </button>
+        <p class="tt-note">पूरी तरह मुफ़्त · कोई लॉगिन नहीं · आपका प्रश्न कहीं सेव नहीं होता</p>
       </div>
+    </form>
 
-      <!-- STEP 3: INTERACTIVE FANNED MYSTIC DECK ARENA -->
-      <div id="mysticDeckArena" class="rounded-3xl bg-slate-950/80 border border-amber-400/30 p-5 md:p-8 text-center relative overflow-hidden">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
-          <div class="text-left">
-            <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Step 3 • Touch 3 Cards From the 78-Card Mystic Deck</span>
-            <h3 class="text-lg md:text-2xl font-bold text-white">Take a Deep Breath & Tap the 3 Cards That Call Your Intuition</h3>
-          </div>
-          <div class="flex gap-2.5 w-full md:w-auto justify-center">
-            <button type="button" onclick="quickDrawThreeCards()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-700 to-pink-600 hover:from-purple-600 hover:to-pink-500 text-white text-xs font-bold transition shadow-lg">
-              <i class="fas fa-wand-magic-sparkles mr-1.5"></i> Quick Auto-Draw 3 Cards
-            </button>
-            <button type="button" onclick="resetTarotDeckAndSpread(false)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/20 text-amber-300 text-xs font-bold transition">
-              <i class="fas fa-shuffle mr-1.5"></i> Shuffle Deck
-            </button>
-          </div>
-        </div>
-
-        <!-- Dynamic Progress Counter -->
-        <div id="pickedCounterBadge" class="inline-block my-2 px-5 py-2 rounded-full bg-purple-950/90 border border-amber-400/50 text-xs md:text-sm text-white shadow-lg">
-          <i class="fas fa-hand-sparkles text-amber-300 mr-1.5"></i>Tap Card 1 of 3
-        </div>
-
-        <!-- 22-Card Interactive Fan (Populated by tarot-engine.js) -->
-        <div id="tarotFanContainer" class="fanned-deck-wrapper"></div>
-        <p class="text-[11px] text-gray-400 mt-1 lg:hidden">
-          <i class="fas fa-arrows-left-right mr-1 text-amber-400"></i> Swipe left/right across the deck and tap any 3 cards
-        </p>
-
-        <!-- 3-Card 3D Reveal Slots -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-white/10">
-          <!-- Slot 1 -->
-          <div>
-            <div id="slotPositionLabel_1" class="text-xs md:text-sm font-bold text-amber-300 mb-3">1. Root Energy Behind Your Question</div>
-            <div class="tarot-slot-card" id="spreadCard_1">
-              <div class="tarot-slot-inner">
-                <div class="tarot-slot-front">
-                  <i class="fas fa-hand-pointer text-3xl mb-2 opacity-60"></i>
-                  <span class="text-xs font-semibold">Card Slot 1</span>
-                  <span class="text-[10px] text-gray-400 mt-1">Tap a card from the deck above</span>
-                </div>
-                <div class="tarot-slot-back">
-                  <span id="slotNumeral_1" class="text-[10px] uppercase tracking-widest text-amber-300/80 font-bold">Major • I</span>
-                  <div>
-                    <i id="slotIcon_1" class="fas fa-sun text-4xl text-amber-300 my-2"></i>
-                    <h4 id="slotCardTitle_1" class="text-base md:text-lg font-bold text-white leading-snug mt-1">Card Name</h4>
-                    <p id="slotCardGraha_1" class="text-[11px] text-purple-200 mt-1">Vedic Graha</p>
-                  </div>
-                  <span id="slotCardPolarity_1" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold">Upright</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slot 2 -->
-          <div>
-            <div id="slotPositionLabel_2" class="text-xs md:text-sm font-bold text-amber-300 mb-3">2. Hidden Karmic Condition / Obstacle</div>
-            <div class="tarot-slot-card" id="spreadCard_2">
-              <div class="tarot-slot-inner">
-                <div class="tarot-slot-front">
-                  <i class="fas fa-hand-pointer text-3xl mb-2 opacity-60"></i>
-                  <span class="text-xs font-semibold">Card Slot 2</span>
-                  <span class="text-[10px] text-gray-400 mt-1">Tap a second card above</span>
-                </div>
-                <div class="tarot-slot-back">
-                  <span id="slotNumeral_2" class="text-[10px] uppercase tracking-widest text-amber-300/80 font-bold">Major • II</span>
-                  <div>
-                    <i id="slotIcon_2" class="fas fa-moon text-4xl text-amber-300 my-2"></i>
-                    <h4 id="slotCardTitle_2" class="text-base md:text-lg font-bold text-white leading-snug mt-1">Card Name</h4>
-                    <p id="slotCardGraha_2" class="text-[11px] text-purple-200 mt-1">Vedic Graha</p>
-                  </div>
-                  <span id="slotCardPolarity_2" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold">Upright</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slot 3 -->
-          <div>
-            <div id="slotPositionLabel_3" class="text-xs md:text-sm font-bold text-amber-300 mb-3">3. Final Verdict & Timing Trigger</div>
-            <div class="tarot-slot-card" id="spreadCard_3">
-              <div class="tarot-slot-inner">
-                <div class="tarot-slot-front">
-                  <i class="fas fa-hand-pointer text-3xl mb-2 opacity-60"></i>
-                  <span class="text-xs font-semibold">Card Slot 3</span>
-                  <span class="text-[10px] text-gray-400 mt-1">Tap your final card above</span>
-                </div>
-                <div class="tarot-slot-back">
-                  <span id="slotNumeral_3" class="text-[10px] uppercase tracking-widest text-amber-300/80 font-bold">Major • III</span>
-                  <div>
-                    <i id="slotIcon_3" class="fas fa-star text-4xl text-amber-300 my-2"></i>
-                    <h4 id="slotCardTitle_3" class="text-base md:text-lg font-bold text-white leading-snug mt-1">Card Name</h4>
-                    <p id="slotCardGraha_3" class="text-[11px] text-purple-200 mt-1">Vedic Graha</p>
-                  </div>
-                  <span id="slotCardPolarity_3" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold">Upright</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <section id="ttTable" class="tt-table" aria-label="टैरो टेबल" hidden>
+      <button type="button" id="ttSound" class="tt-sound" aria-pressed="false" aria-label="ध्वनि बंद करें"></button>
+      <div id="ttStatus" class="tt-status" aria-live="polite"></div>
+      <div class="tt-arena"><div id="ttFan" class="tt-fan"></div></div>
+      <div class="tt-tools">
+        <button type="button" id="ttAuto" class="tt-btn light" hidden>मेरे लिए चुनें</button>
+        <button type="button" id="ttReshuffle" class="tt-btn light">फिर से फेंटें</button>
       </div>
-
-      <!-- =================================================================== -->
-      <!-- DYNAMIC DEEP READING OUTPUT SECTION (Revealed when 3 cards picked)  -->
-      <!-- =================================================================== -->
-      <div id="tarotDeepResultSection" class="hidden pt-8 border-t-2 border-amber-500/40 space-y-8">
-
-        <!-- 1. Oracle Verdict, Probability Meter & Exact Timing Banner -->
-        <div id="oracleVerdictContainer" class="rounded-3xl bg-gradient-to-r from-purple-950 via-slate-900 to-amber-950 p-6 md:p-8 border border-amber-400/50 shadow-2xl">
-          <!-- Populated by tarot-engine.js -->
-        </div>
-
-        <!-- NEW VIRAL SHARE & ACTION BAR -->
-        <div class="p-4 md:p-5 rounded-2xl bg-slate-900/95 border border-emerald-500/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-center sm:text-left">
-            <h4 class="font-bold text-white text-sm md:text-base hindi">✨ क्या यह टैरो भविष्यवाणी आपके मन की स्थिति से मेल खाती है?</h4>
-            <p class="text-xs text-gray-300 hindi">अपने कार्ड्स का परिणाम WhatsApp पर शेयर करें या अपनी 45-मिनट की संपूर्ण जन्म-कुंडली अभी चेक करें:</p>
-          </div>
-          <div class="flex flex-wrap justify-center gap-2.5 shrink-0">
-            <button type="button" onclick="shareTarotReadingOnWhatsApp()" class="px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-xs md:text-sm flex items-center gap-2 shadow-lg transition">
-              <i class="fab fa-whatsapp text-base"></i> Share My Tarot Cards
-            </button>
-            <button type="button" onclick="launchKundaliFromTarot()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs md:text-sm flex items-center gap-2 shadow-lg transition">
-              <i class="fas fa-star"></i> Open My 45-Min Kundali →
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. Detailed 3-Card Position Breakdown -->
-        <div id="threeCardDetailedCards" class="space-y-5">
-          <!-- Populated by tarot-engine.js -->
-        </div>
-
-        <!-- 3. Critical Vedic-Tarot Root-Cause Hook -->
-        <div id="tarotKarmicDiagnosticBox" class="danger-glow rounded-3xl bg-gradient-to-br from-red-950/90 via-slate-950 to-purple-950/90 p-6 md:p-8 border-2 border-red-500/70 shadow-2xl">
-          <!-- Populated by tarot-engine.js -->
-        </div>
-
-        <!-- NEW: Energized Rudraksha Aura Shield Banner -->
-        <div class="p-5 rounded-2xl bg-slate-950/90 border border-amber-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="space-y-1 text-center sm:text-left">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/20 px-3 py-0.5 rounded-full">
-              <i class="fas fa-shield-alt mr-1"></i> Vedic Aura & Graha Shield
-            </span>
-            <h4 class="text-lg font-bold text-white hindi">नकारात्मक स्पंदन, बुरी नज़र और ग्रह-अवरोध से रक्षा हेतु अभिमंत्रित रुद्राक्ष</h4>
-            <p class="text-xs text-gray-300 hindi">अपने कार्ड्स में आए उग्र ग्रहों और मानसिक तनाव को शांत करने के लिए प्रामाणिक अभिमंत्रित नेपाली रुद्राक्ष (₹499 से शुरू) धारण करें।</p>
-          </div>
-          <a href="rudraksha.html" class="shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-extrabold text-xs md:text-sm shadow-lg transition">
-            <i class="fas fa-gem mr-1.5"></i> सिद्ध रुद्राक्ष चुनें →
-          </a>
-        </div>
-
-        <!-- Draw Again Button -->
-        <div class="text-center pt-2">
-          <button type="button" onclick="resetTarotDeckAndSpread(true)" class="secondary-button">
-            <i class="fas fa-redo mr-2"></i> Shuffle Deck & Ask Another Question
-          </button>
-        </div>
-
+      <div class="tt-slots">
+        <div class="tt-slot"><div class="tt-slot-label"></div><div class="tt-slot-box">1</div></div>
+        <div class="tt-slot"><div class="tt-slot-label"></div><div class="tt-slot-box">2</div></div>
+        <div class="tt-slot"><div class="tt-slot-label"></div><div class="tt-slot-box">3</div></div>
       </div>
-
-    </div>
-
-    <!-- SEO & Educational Section Below the Tool -->
-    <section class="glass-card p-6 md:p-10 rounded-3xl mt-10 space-y-6">
-      <h2 class="text-2xl md:text-3xl font-bold text-white text-center">
-        Why Jyotish Tark's Vedic-Tarot Fusion Is Unmatched in Accuracy
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-300">
-        <div class="p-5 rounded-2xl bg-slate-900/70 border border-white/10">
-          <h3 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-dharmachakra mr-2"></i>1. 78-Card Graha & Tatva Mapping</h3>
-          <p>Every Major and Minor Arcana card carries a direct correspondence with the <strong>9 Vedic Grahas (Sun to Ketu)</strong> and the <strong>4 Elements (Agni, Jala, Vayu, Prithvi)</strong>—revealing not just surface events, but the planetary force driving them.</p>
-        </div>
-        <div class="p-5 rounded-2xl bg-slate-900/70 border border-white/10">
-          <h3 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-rotate mr-2"></i>2. Upright & Reversed Polarity</h3>
-          <p>Real life is not always upright. By detecting whether your drawn card lands <strong>Upright (सीधा)</strong> or <strong>Reversed (उल्टा)</strong>, our oracle distinguishes between free-flowing blessings and blocked internal karma.</p>
-        </div>
-        <div class="p-5 rounded-2xl bg-slate-900/70 border border-white/10">
-          <h3 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-star mr-2"></i>3. Complete Kundali Integration</h3>
-          <p>While Tarot reads your immediate 60-to-90-day subconscious aura, you can immediately cross-check your permanent destiny using our <a href="kundali-form.html" class="text-amber-300 underline font-semibold">Free 45-Minute Kundali, Navamsa (D9) & 337-Bindu Ashtakavarga Dossier</a>.</p>
-        </div>
-      </div>
-
-      <!-- Contextual Internal Silo Links -->
-      <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-        <span class="text-xs md:text-sm font-semibold text-amber-300 hindi"><i class="fas fa-link mr-1.5"></i>संबंधित ज्योतिष एवं मेडिकल साइंस लेख:</span>
-        <div class="flex flex-wrap gap-2 text-xs">
-          <a href="evil-eye-science-aura.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🧿 बुरी नज़र (Evil Eye) का विज्ञान</a>
-          <a href="nadi-dosha-blood-group.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🧬 नाड़ी दोष और ब्लड ग्रुप</a>
-          <a href="numerology.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">🔢 चैल्डियन अंक ज्योतिष</a>
-          <a href="kundali-milan.html" class="bg-white/10 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-full transition hindi">💍 कुंडली मिलान और जीवनसाथी</a>
-        </div>
+      <div class="tt-tools" style="margin-top:22px">
+        <button type="button" id="ttReveal" class="tt-btn saffron" hidden>कार्ड पलटें</button>
       </div>
     </section>
+
+    <div id="ttReading" class="tt-reading" aria-live="polite" hidden></div>
+
+    <section class="tt-info" aria-label="टैरो के बारे में">
+      <div>
+        <h2 class="tt-h2" style="font-size:22px;color:var(--jt-maroon)">78 कार्ड, 9 ग्रह</h2>
+        <p>हर मेजर और माइनर आर्काना कार्ड को एक वैदिक ग्रह और तत्व (अग्नि, जल, वायु, पृथ्वी) से जोड़ा गया है, ताकि अर्थ सिर्फ़ घटना नहीं, उसके पीछे की ऊर्जा भी बताए।</p>
+      </div>
+      <div>
+        <h2 class="tt-h2" style="font-size:22px;color:var(--jt-maroon)">सीधा और उल्टा कार्ड</h2>
+        <p>सीधा (Upright) कार्ड खुली, बहती ऊर्जा दिखाता है; उल्टा (Reversed) कार्ड रुकावट, देरी या भीतर की सीख की ओर इशारा करता है।</p>
+      </div>
+      <div>
+        <h2 class="tt-h2" style="font-size:22px;color:var(--jt-maroon)">कुंडली से पुष्टि</h2>
+        <p>टैरो अगले कुछ हफ़्तों का संकेत देता है। जीवन की बड़ी दिशा के लिए अपनी <a href="kundali-form.html">मुफ़्त जन्म कुंडली</a> भी देखें।</p>
+      </div>
+    </section>
+
+    <section class="tt-faq" aria-labelledby="ttFaqH">
+      <h2 id="ttFaqH" class="tt-h2" style="margin:14px 0 4px">अक्सर पूछे जाने वाले प्रश्न</h2>
+      <details>
+        <summary>टैरो रीडिंग कैसे काम करती है?</summary>
+        <p>आप मन में प्रश्न रखकर 22 कार्डों में से तीन कार्ड चुनते हैं। हर कार्ड का स्थान (जैसे कारण, बाधा, परिणाम), उसका अर्थ, ग्रह और तत्व मिलाकर फलादेश बनता है।</p>
+      </details>
+      <details>
+        <summary>क्या मैं हिंदी में टैरो रीडिंग देख सकता हूँ?</summary>
+        <p>हाँ। फलादेश की भाषा में "हिंदी" या "English" चुनें — रीडिंग के बाद भी भाषा बदल सकते हैं।</p>
+      </details>
+      <details>
+        <summary>सीधा और उल्टा कार्ड क्या होता है?</summary>
+        <p>सीधा कार्ड बताता है कि उस कार्ड की ऊर्जा खुलकर काम कर रही है। उल्टा कार्ड रुकावट, देरी या ऐसी सीख दिखाता है जिसके लिए धैर्य या रणनीति बदलनी पड़ सकती है।</p>
+      </details>
+      <details>
+        <summary>क्या टैरो का उत्तर पक्का होता है?</summary>
+        <p>नहीं। टैरो आत्म-चिंतन और मार्गदर्शन का साधन है, निश्चित भविष्यवाणी नहीं। बड़े निर्णयों के लिए अपनी कुंडली और विशेषज्ञ की सलाह भी लें।</p>
+      </details>
+    </section>
+
+    <nav class="tt-links" aria-label="संबंधित पेज">
+      <a href="kundali-form.html">मुफ़्त जन्म कुंडली</a>
+      <a href="numerology.html">अंक ज्योतिष</a>
+      <a href="rashifal.html">आज का राशिफल</a>
+      <a href="kundali-milan.html">कुंडली मिलान</a>
+      <a href="evil-eye-science-aura.html">बुरी नज़र के उपाय</a>
+    </nav>
   </main>
+
 
   <!-- WhatsApp Floating Button -->
   <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()">
@@ -1098,102 +494,16 @@
     </div>
   </footer>
 
-  <!--EXTERNAL 78-CARD VEDIC-TAROT FUSION ENGINE -->
+  
   <script src="tarot-engine.js"></script>
-
-  <!-- Navigation, Mystical Card Chime, WhatsApp Viral Share & Kundali Bridge -->
+  <script src="tarot-studio.js"></script>
   <script>
-    document.createElement('button').addEventListener('click', function() {
-      const mobileNav = document.getElementById('mobileNav');
-      mobileNav.classList.toggle('hidden');
-      const icon = this.querySelector('i');
-      icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
-    });
-
-    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function() {
-        this.closest('.mobile-dropdown').classList.toggle('active');
-      });
-    });
-
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
-    whatsappButton.addEventListener('click', function() {
-      whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-    });
-    document.addEventListener('click', function(event) {
-      if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-        whatsappPopup.style.display = 'none';
-      }
-    });
-
-    // Subtle Web Audio API Chime & Haptic Vibration when picking Tarot cards
-    function playMysticCardChime() {
-      if (navigator.vibrate) navigator.vibrate(30);
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(528, ctx.currentTime); // 528Hz Solfeggio chime
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
-        gain.gain.setValueAtTime(0.06, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.24);
-      } catch (e) {}
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const origSelectCard = window.selectCardFromMysticFan;
-      if (typeof origSelectCard === 'function') {
-        window.selectCardFromMysticFan = function(fanIdx, btnEl) {
-          playMysticCardChime();
-          origSelectCard(fanIdx, btnEl);
-        };
-      }
-    });
-
-    // Viral Share Function for 3-Card Tarot Reading
-    function shareTarotReadingOnWhatsApp() {
-      const name = document.getElementById('tarotUserName')?.value.trim() || 'मैंने';
-      const c1 = document.getElementById('slotCardTitle_1')?.textContent || 'Card 1';
-      const c2 = document.getElementById('slotCardTitle_2')?.textContent || 'Card 2';
-      const c3 = document.getElementById('slotCardTitle_3')?.textContent || 'Card 3';
-      const probEl = document.querySelector('#oracleVerdictContainer .text-4xl');
-      const prob = probEl ? probEl.textContent.trim() : '';
-
-      const msg =
-        `🃏 *${name} ने अभी Jyotish Tark पर 78-Card Vedic Tarot से अपनी भविष्यवाणी और Yes/No प्रतिशत चेक किया!* ✨\n\n` +
-        `🔮 *मेरे 3 दिव्य कार्ड्स:*\n` +
-        `1️⃣ ${c1}\n2️⃣ ${c2}\n3️⃣ ${c3}\n` +
-        (prob ? `⚡ *सफलता संभावना (Cosmic Probability):* ${prob}\n\n` : '\n') +
-        `आप भी अपने मन का प्रश्न, पार्टनर के दिल की अनकही बात या करियर का सटीक समय *100% FREE* में यहाँ चेक करें 👇\n` +
-        `https://jyotishtark.in/tarot.html`;
-
-      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    // Bridge user's Name & DOB straight to kundali-form.html
-    function launchKundaliFromTarot() {
-      const name = document.getElementById('tarotUserName')?.value.trim() || 'Seeker';
-      const dob  = document.getElementById('tarotUserDob')?.value || '';
-      const lang = document.getElementById('tarotLang')?.value || 'hi';
-
-      if (dob) {
-        localStorage.setItem('jt_prefill_dossier', JSON.stringify({
-          name: name,
-          dob: dob,
-          lang: lang,
-          autoRun: true
-        }));
-        window.location.href = `kundali-form.html?name=${encodeURIComponent(name)}&dob=${encodeURIComponent(dob)}&lang=${encodeURIComponent(lang)}&autorun=1`;
-      } else {
-        window.location.href = 'kundali-form.html';
-      }
-    }
+    (function () {
+      var btn = document.getElementById('whatsappButton'), pop = document.getElementById('whatsappPopup');
+      if (!btn || !pop) return;
+      btn.addEventListener('click', function () { pop.style.display = pop.style.display === 'block' ? 'none' : 'block'; });
+      document.addEventListener('click', function (e) { if (!btn.contains(e.target) && !pop.contains(e.target)) pop.style.display = 'none'; });
+    })();
   </script>
 </body>
 </html>

@@ -1253,4 +1253,12 @@
     }
   });
 
+
+  // Shared data for the Tarot Studio page (tarot-studio.js)
+  window.JT_TAROT = {
+    deck: FULL_TAROT_DECK,
+    modes: SPREAD_MODES,
+    numerology: getUserNumerology,
+    planets: MULANK_PLANETS
+  };
 })();
