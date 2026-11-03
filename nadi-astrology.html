@@ -57,8 +57,10 @@
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -185,18 +187,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -234,25 +236,15 @@
         
         <p>अचानक, वह आपका नाम, आपके माता-पिता का नाम, आपके जीवनसाथी का नाम, और यहाँ तक कि आपके जीवन की वह गुप्त घटनाएं बताने लगता है जो आपके अलावा दुनिया में कोई नहीं जानता! यह कोई हॉलीवुड की साइंस-फिक्शन फिल्म का दृश्य नहीं है; यह दक्षिण भारत का वह रहस्यमयी और गहरा विज्ञान है जिसे <strong>नाड़ी ज्योतिष (Nadi Astrology)</strong> कहा जाता है।</p>
 
-        <blockquote>
-          "नाड़ी ज्योतिष एक साधारण भविष्यवाणी नहीं है। यह इस बात का प्रमाण है कि समय (Time) रैखिक (Linear) नहीं है। प्राचीन ऋषियों ने 'क्वांटम एंटेंगलमेंट' (Quantum Entanglement) और 'आकाशिक रिकॉर्ड्स' (Akashic Records) को बहुत पहले ही डीकोड कर लिया था।"
-        </blockquote>
+        <blockquote>"नाड़ी ज्योतिष एक साधारण भविष्यवाणी नहीं है। मान्यता है कि प्राचीन ऋषियों ने अपनी दिव्य दृष्टि से मनुष्यों के जीवन का लेखा-जोखा ताड़पत्रों पर लिख दिया था।"</blockquote>
 
         <h2>1. नाड़ी ज्योतिष की उत्पत्ति: अगस्त्य मुनि और ताड़पत्रों का रहस्य</h2>
         
-        <p>मान्यता है कि लगभग 2,000 से 4,000 वर्ष पूर्व, भगवान शिव के आशीर्वाद से महर्षि अगस्त्य, भृगु, वशिष्ठ, और विश्वामित्र जैसे महान सिद्ध ऋषियों ने अपनी दिव्य दृष्टि (Clairvoyance) से कलयुग में जन्म लेने वाले लाखों लोगों के जीवन का पूरा खाका तैयार कर लिया था। उन्होंने इस 'कॉस्मिक डेटाबेस' को विशेष रूप से उपचारित ताड़पत्रों (Palm Leaves) पर प्राचीन तमिल और संस्कृत भाषा में उकेर दिया।</p>
+        <p>मान्यता है कि लगभग 2,000 से 4,000 वर्ष पूर्व, भगवान शिव के आशीर्वाद से महर्षि अगस्त्य, भृगु, वशिष्ठ, और विश्वामित्र जैसे महान सिद्ध ऋषियों ने अपनी दिव्य दृष्टि (Clairvoyance) से कलयुग में जन्म लेने वाले लाखों लोगों के जीवन का पूरा खाका तैयार कर लिया था। उन्होंने इस ज्ञान को विशेष रूप से तैयार किए गए ताड़पत्रों (Palm Leaves) पर प्राचीन तमिल और संस्कृत भाषा में उकेर दिया।</p>
 
         <img class="blog-image inline-image" src="images/ancient-sage.jpg" alt="Ancient Indian Sage Writing on Palm Leaves">
 
         <p>इस विज्ञान को 'नाड़ी' कहा जाता है। 'नाड़ी' शब्द का तमिल में अर्थ है "खोजना" (In search of)। इसका मतलब है कि आप नाड़ी की तलाश नहीं करते; जब आपके जीवन का सही समय (Destined Time) आता है, तो नाड़ी पत्ती आपको खुद अपनी ओर खींच लेती है।</p>
-
-        <h2>2. अंगूठे का निशान (Thumbprint): आपका जेनेटिक और कॉस्मिक पासवर्ड</h2>
-        <p>क्या आपने कभी सोचा है कि नाड़ी पाठक आपका नाम या जन्म तिथि क्यों नहीं मांगते? वे केवल <strong>पुरुषों के दाहिने अंगूठे</strong> और <strong>महिलाओं के बाएँ अंगूठे</strong> का निशान (Thumb Impression) लेते हैं। एक मेडिकल स्टूडेंट होने के नाते, मुझे इस प्रक्रिया में सबसे गहरी वैज्ञानिकता नजर आती है।</p>
-
-        <img class="blog-image inline-image" src="images/nadi-thumbprint.jpg" alt="Glowing Cosmic Thumbprint Nadi Astrology">
-
-        <p>आधुनिक जीव विज्ञान (Modern Biology) और फोरेंसिक साइंस साबित कर चुका है कि दुनिया के किन्हीं भी दो इंसानों के फिंगरप्रिंट एक जैसे नहीं हो सकते। यह हमारा अद्वितीय जेनेटिक बारकोड है। प्राचीन ऋषियों ने मानव अंगूठे के निशानों को 108 मुख्य श्रेणियों (Categories) में विभाजित किया था, जैसे शंख (Conch), चक्र (Wheel), कमल (Lotus) आदि।</p>
-        <p>जब आप अपना अंगूठे का निशान देते हैं, तो नाड़ी पाठक उस पैटर्न की पहचान करता है और पुस्तकालय से उस विशिष्ट 'बंडल' को निकालता है जिसमें आपके पैटर्न से मेल खाने वाले लोगों की पत्तियां रखी होती हैं। यह बिल्कुल आधुनिक 'बायोमेट्रिक डेटाबेस' को एक्सेस करने जैसा है!</p>
 
         <h2>3. 14 कंदम (Kandams): जीवन के 14 अध्याय</h2>
         <p>नाड़ी पुस्तकालय में एक व्यक्ति के जीवन को विभिन्न अध्यायों में विभाजित किया गया है, जिन्हें 'कंदम' कहा जाता है। आइए जानते हैं कि कौन सा कंदम आपके जीवन का कौन सा रहस्य खोलता है:</p>
@@ -276,11 +268,6 @@
         <img class="blog-image inline-image" src="images/nadi-library.jpg" alt="Ancient Palm Leaf Library in Tamil Nadu Vaitheeswaran Koil">
 
         <p><strong>लेकिन वास्तविकता इससे कहीं अधिक गहरी है।</strong> एक प्रामाणिक नाड़ी पाठक जब आपकी इंडेक्स पत्ती ढूंढता है, तो वह आपसे केवल 'हाँ' या 'ना' में उत्तर देने को कहता है। यदि कोई भी तथ्य (जैसे माता का नाम) गलत निकलता है, तो वह पत्ती पलट देता है। जब एक भी पत्ती पर लिखे हुए सभी तथ्य (आपका नाम, पिता का नाम, माता का नाम, पत्नी का नाम) 100% सही निकलते हैं, तभी वह पत्ती आपकी मानी जाती है। क्या कोई 'कोल्ड रीडिंग' करने वाला तुक्का मारकर आपके माता-पिता का सटीक नाम बता सकता है? बिल्कुल नहीं। यह प्राचीन ज्ञान की अचूकता का प्रमाण है।</p>
-
-        <h2>5. पिछले जन्म का कर्म (Past Life Karma) और चिकित्सा विज्ञान (Medical Science)</h2>
-        <p>नाड़ी ज्योतिष का 13वां कंदम 'शांति कंदम' होता है। इसमें स्पष्ट रूप से बताया जाता है कि आपने पिछले जन्म में कौन से पाप किए थे (जैसे किसी को धोखा देना, किसी की हत्या करना, या किसी के वैवाहिक जीवन को नष्ट करना) और उन कर्मों का प्रभाव आज आपके डीएनए (DNA) या प्रारब्ध में बीमारी या दरिद्रता के रूप में कैसे प्रकट हो रहा है।</p>
-        
-        <p>मेडिकल साइंस आज 'एपिजेनेटिक्स' (Epigenetics) की बात कर रहा है—यानी कैसे हमारे पूर्वजों के आघात (Trauma) और अनुभव हमारे डीएनए में स्टोर हो जाते हैं और हमें बीमारियां देते हैं। नाड़ी ज्योतिष हजारों साल पहले इसी 'जेनेटिक कर्मा' को मिटाने के उपाय बता चुका है। जब आप 14वें कंदम में बताए गए विशिष्ट मंदिरों के दर्शन करते हैं या दान-पुण्य करते हैं, तो वास्तव में आप अपने 'न्यूरोलॉजिकल और जेनेटिक पैटर्न्स' (Neurological and Genetic patterns) को शुद्ध कर रहे होते हैं।</p>
 
         <h2>6. नाड़ी ज्योतिष केंद्र जाते समय रखें ये सावधानियां</h2>
         <p>आजकल तमिलनाडु (विशेषकर वैदीस्वरन कोइल - Vaitheeswaran Koil) में नाड़ी ज्योतिष के नाम पर कई फर्जी केंद्र भी खुल गए हैं। असली और प्रामाणिक नाड़ी केंद्र की पहचान कैसे करें?</p>

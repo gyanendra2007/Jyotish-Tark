@@ -57,8 +57,10 @@
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -187,18 +189,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -232,30 +234,11 @@
       <img class="blog-image main-image" src="images/vedic-modern.jpg" alt="Vedic Astrology in Modern World">
       
       <article class="article-content hindi">
-        <p>जब हम "ज्योतिष" शब्द सुनते हैं, तो अक्सर हमारे दिमाग में किसी पुराने पेड़ के नीचे बैठे तपस्वी या पुरानी लाल रंग की पोथियों की तस्वीर उभरती है। लेकिन क्या आप जानते हैं कि हजारों साल पहले लिखा गया <strong>वैदिक ज्योतिष (Vedic Astrology)</strong> आज के आर्टिफिशियल इंटेलिजेंस (AI), मेडिकल साइंस और आधुनिक शेयर बाजार के दौर में भी उतना ही सटीक और वैज्ञानिक है?</p>
+        <p>जब हम "ज्योतिष" शब्द सुनते हैं, तो अक्सर हमारे दिमाग में किसी पुराने पेड़ के नीचे बैठे तपस्वी या पुरानी लाल रंग की पोथियों की तस्वीर उभरती है। लेकिन क्या आप जानते हैं कि हजारों साल पहले लिखा गया <strong>वैदिक ज्योतिष (Vedic Astrology)</strong> आज के आर्टिफिशियल इंटेलिजेंस (AI) और आधुनिक शेयर बाजार के दौर में भी उतना ही प्रासंगिक है?</p>
 
-        <p>एक मेडिकल छात्र होने के नाते, मेरा अधिकांश समय जटिल पैथोलॉजी (Pathology) की किताबों और मानव शरीर की शारीरिक प्रणालियों को समझने में बीतता है। लेकिन जब मैंने गहराई से वैदिक ज्योतिष का अध्ययन किया, तो मुझे यह देखकर आश्चर्य हुआ कि यह कोई अंधविश्वास नहीं, बल्कि <strong>ब्रह्मांडीय डेटा साइंस (Cosmic Data Science)</strong> है। आइए गहराई से समझते हैं कि यह प्राचीन ज्ञान आज के आधुनिक युग में कैसे काम करता है।</p>
+        <p>जब मैंने गहराई से वैदिक ज्योतिष का अध्ययन किया, तो पाया कि यह अंधविश्वास नहीं, बल्कि गणित, खगोल और हज़ारों वर्षों के अनुभव पर आधारित एक व्यवस्थित विद्या है। आइए समझते हैं कि यह प्राचीन ज्ञान आज के आधुनिक युग में कैसे काम आता है।</p>
 
-        <blockquote>
-          "आपकी जन्म कुंडली (Kundali) असल में ब्रह्मांड द्वारा लिखा गया एक 'सोर्स कोड' है। यदि आप इसे डिकोड करना सीख लें, तो आप अपनी शारीरिक, मानसिक और वित्तीय प्रोग्रामिंग को हैक कर सकते हैं।"
-        </blockquote>
-
-        <h2>1. मेडिकल एस्ट्रोलॉजी: पैथोलॉजी और ग्रहों का अद्भुत विज्ञान</h2>
-        
-        <p>आधुनिक चिकित्सा विज्ञान (Modern Medical Science) बीमारियों का पता लगाने के लिए रक्त परीक्षण, एमआरआई (MRI) और पैथोलॉजी रिपोर्ट्स का उपयोग करता है। लेकिन क्या आप जानते हैं कि एक बीमारी के शरीर में प्रकट होने से महीनों पहले, उसका बीज हमारे <strong>सूक्ष्म शरीर (Astral Body)</strong> में बोया जा चुका होता है? यहीं पर 'मेडिकल एस्ट्रोलॉजी' काम आती है।</p>
-
-        <img class="blog-image inline-image" src="images/astro-medical.jpg" alt="Medical Astrology and Human Pathology">
-
-        <div class="highlight-box">
-            <h4>ग्रहीय प्रभाव और बीमारियाँ:</h4>
-            <p>चिकित्सा ज्योतिष (Medical Astrology) के अनुसार, हमारे शरीर का हर एक अंग एक विशिष्ट ग्रह और भाव से जुड़ा है। उदाहरण के लिए:</p>
-            <ul>
-                <li>यदि आपकी कुंडली के छठे भाव (रोग भाव) में राहु या शनि का गोचर हो रहा है, तो यह अक्सर ऐसी बीमारियों का संकेत देता है जिन्हें आधुनिक मशीनें (Diagnostic tools) आसानी से पकड़ नहीं पातीं (जैसे Autoimmune diseases या रहस्यमयी वायरल संक्रमण)।</li>
-                <li>सूर्य का कमजोर होना विटामिन डी की कमी, हृदय की समस्याओं (Cardiovascular issues) और हड्डियों के कमजोर होने का सीधा संकेत है।</li>
-                <li>जब मैं एनाटॉमी पढ़ता हूँ, तो मुझे स्पष्ट दिखता है कि कैसे 'मंगल' हमारे रक्त प्रवाह (Blood flow) और बोन मैरो को नियंत्रित करता है, जबकि 'चंद्रमा' हमारे शरीर के तरल पदार्थों और मानसिक अवसादों (Depression) का स्वामी है।</li>
-            </ul>
-        </div>
-        <p>मेडिकल एस्ट्रोलॉजी डॉक्टर का विकल्प नहीं है, बल्कि यह एक <strong>'प्रिवेंटिव टूल' (Preventive Tool)</strong> है जो आपको सचेत करता है कि भविष्य में आपको किन स्वास्थ्य समस्याओं के प्रति सतर्क रहना है।</p>
+        <blockquote>"आपकी जन्म कुंडली (Kundali) असल में आपके जीवन का एक नक्शा है। यदि आप इसे पढ़ना सीख लें, तो सही समय पर सही निर्णय लेना आसान हो जाता है।"</blockquote>
 
         <h2>2. मुंडेन एस्ट्रोलॉजी: वैश्विक बाजार, AI और ई-व्हीकल (EV) इंडस्ट्री</h2>
         <p>क्या वैदिक ज्योतिष हमें बता सकता है कि स्टॉक मार्केट कब क्रैश होगा या कौन सी नई तकनीक दुनिया पर राज करेगी? बिल्कुल!</p>
@@ -279,17 +262,17 @@
         <p>फर्क सिर्फ इतना है कि AI सिलिकॉन चिप्स पर चलता है, और ज्योतिष <strong>ऋषियों (Sages) की उच्च चेतना और गणितीय गणनाओं</strong> पर आधारित है। दोनों ही पैटर्न्स (Patterns) पहचानने का विज्ञान हैं।</p>
 
         <h2>4. आधुनिक मानसिक तनाव और ज्योतिषीय उपाय (Remedies)</h2>
-        <p>आज की भागदौड़ भरी जिंदगी में डिप्रेशन, एंग्जायटी और स्ट्रेस आम हो गया है। जब हम मेडिकल साइंस के नजरिए से देखते हैं, तो हम इसके लिए कॉर्टिसोल (Cortisol) हार्मोन को जिम्मेदार ठहराते हैं। लेकिन ज्योतिष के नजरिए से, यह 'चंद्रमा' और 'बुध' पर पाप ग्रहों के प्रभाव का परिणाम है।</p>
+        <p>आज की भागदौड़ भरी जिंदगी में तनाव और चिंता आम हो गई है। ज्योतिष के नज़रिए से इसका संबंध अक्सर 'चंद्रमा' (मन) और 'बुध' (बुद्धि) पर पाप ग्रहों के प्रभाव से जोड़ा जाता है। लगातार चिंता या उदासी रहे तो डॉक्टर या काउंसलर से अवश्य मिलें; ज्योतिषीय उपाय उसके साथ किए जा सकते हैं।</p>
 
         <p>प्राचीन वैदिक उपाय (Vedic Remedies) आज भी अचूक क्यों हैं?</p>
         <ul>
-            <li><strong>रत्न चिकित्सा (Gemstone Therapy):</strong> यह कोई जादू नहीं है। रत्न विशिष्ट प्रकाश तरंगों (Light frequencies) को अवशोषित करते हैं और शरीर के इलेक्ट्रोमैग्नेटिक फील्ड (Electromagnetic field) को संतुलित करते हैं, जो सीधे हमारे नर्वस सिस्टम को शांत करता है।</li>
-            <li><strong>मंत्र विज्ञान (Mantra Science):</strong> मंत्रों का विशिष्ट ध्वन्यात्मक (Acoustic) उच्चारण मस्तिष्क में वाइब्रेशन (Vibration) पैदा करता है, जो तनाव पैदा करने वाले हार्मोन्स को कम करता है और न्यूरोप्लास्टिसिटी (Neuroplasticity) को बढ़ाता है।</li>
-            <li><strong>ध्यान और दान:</strong> ये उपाय सीधे तौर पर डोपामाइन और ऑक्सीटोसिन (Happy Hormones) बढ़ाते हैं, जिससे व्यक्ति का 'कर्म' और 'मन' दोनों शुद्ध होते हैं।</li>
+            <li><strong>रत्न (Gemstones):</strong> ज्योतिष में कमजोर ग्रह को बल देने के लिए रत्न धारण करने की परंपरा है। रत्न हमेशा कुंडली का पूरा विश्लेषण करवाकर ही धारण करें — गलत रत्न लाभ के स्थान पर हानि कर सकता है।</li>
+            <li><strong>मंत्र जाप:</strong> मंत्रों का नियमित और शुद्ध उच्चारण मन को एकाग्र और शांत करता है। यह ग्रहों की शांति का सबसे सरल और सुरक्षित उपाय है।</li>
+            <li><strong>ध्यान और दान:</strong> ध्यान मन को स्थिर करता है और दान से संतोष व करुणा बढ़ती है। ज्योतिष में ये दोनों उपाय हर ग्रह के लिए शुभ माने गए हैं।</li>
         </ul>
 
         <h2>निष्कर्ष: विज्ञान और आध्यात्मिकता का महासंगम</h2>
-        <p>वैदिक ज्योतिष अंधविश्वास नहीं है, बल्कि यह एक ऐसा उच्च विज्ञान है जिसे समझने के लिए खुले दिमाग और तार्किक दृष्टिकोण की आवश्यकता है। चाहे वह मेडिकल पैथोलॉजी की किताबों (Robbins Pathology) का अध्ययन करना हो, वीडियो एडिटिंग के लिए AI टूल्स का इस्तेमाल करना हो, या एक जन्म कुंडली के रहस्यों को सुलझाना हो—मूल सिद्धांत एक ही है: <strong>गहराई में छिपे हुए सत्य (Data) को खोजना।</strong></p>
+        <p>वैदिक ज्योतिष अंधविश्वास नहीं है, बल्कि यह एक ऐसी गहरी विद्या है जिसे समझने के लिए खुले दिमाग और तार्किक दृष्टिकोण की आवश्यकता है। चाहे वह कोई कठिन विषय पढ़ना हो, AI टूल्स का इस्तेमाल करना हो, या एक जन्म कुंडली के रहस्यों को सुलझाना हो—मूल सिद्धांत एक ही है: <strong>गहराई में छिपे हुए सत्य (Data) को खोजना।</strong></p>
         <p>आधुनिक युग में प्राचीन ज्ञान को अपनाकर, हम न केवल अपने करियर और वित्तीय लक्ष्यों को प्राप्त कर सकते हैं, बल्कि एक संतुलित, स्वस्थ और सार्थक जीवन भी जी सकते हैं। आपके सितारे आपको आपकी क्षमता बताते हैं, लेकिन उन सितारों तक पहुंचना आपकी अपनी मेहनत और कर्म पर निर्भर करता है।</p>
       </article>
       

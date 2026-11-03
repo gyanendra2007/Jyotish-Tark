@@ -57,8 +57,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -191,18 +193,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -239,11 +241,9 @@
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
         <p>जब एक वर्ष समाप्त होता है और नया वर्ष शुरू होता है, तो हर व्यक्ति के मन में एक ही सवाल होता है— <em>"यह नया साल मेरे बैंक बैलेंस, मेरे स्वास्थ्य और मेरे करियर के लिए कैसा रहेगा?"</em></p>
 
-        <p>एक मेडिकल छात्र और वैदिक ज्योतिषी होने के नाते, मैं वर्ष <strong>2026 (Year 2026)</strong> को एक 'सामान्य वर्ष' के रूप में नहीं देखता। ब्रह्मांडीय स्तर पर, 2026 एक <strong>'शिफ्टिंग ईयर' (Shifting Year)</strong> है। इस वर्ष आकाश में मौजूद इलेक्ट्रोमैग्नेटिक फ्रीक्वेंसी (Electromagnetic Frequency) में भारी बदलाव होंगे जो सीधे आपके नर्वस सिस्टम, आपके गट-ब्रेन एक्सिस (Gut-Brain Axis) और आपके निर्णयों को प्रभावित करेंगे।</p>
+        <p>एक वैदिक ज्योतिषी होने के नाते मैं वर्ष 2026 को एक 'सामान्य वर्ष' के रूप में नहीं देखता। 2026 एक 'बदलाव का वर्ष' (Shifting Year) है, जिसमें शनि, गुरु और राहु-केतु जैसे बड़े ग्रहों के गोचर करियर, धन और रिश्तों पर गहरा प्रभाव डालेंगे।</p>
 
-        <blockquote>
-          "ज्योतिष भविष्य बताने का कोई जादू नहीं है; यह 'कॉस्मिक डेटा एनालिटिक्स' (Cosmic Data Analytics) है। जब शनि और राहु अपनी धुरी बदलते हैं, तो वे दुनिया के आर्थिक बाजार और मानव शरीर की पैथोलॉजी को पूरी तरह से री-प्रोग्राम कर देते हैं।"
-        </blockquote>
+        <blockquote>"ज्योतिष भविष्य बताने का कोई जादू नहीं है; यह समय को समझने की विद्या है। जब शनि और राहु अपनी चाल बदलते हैं, तो दुनिया के बाज़ार से लेकर हमारे निजी जीवन तक, सब पर उसका प्रभाव दिखता है।"</blockquote>
 
         <img class="blog-image inline-image" src="images/transit-2026.jpg" alt="Planetary Transits 2026 Neuroscience and Astrology">
 
@@ -251,14 +251,14 @@
         <p>2026 का भविष्यफल जानने से पहले, यह समझना आवश्यक है कि कौन सी ब्रह्मांडीय शक्तियां (Planetary Transits) इस वर्ष को नियंत्रित कर रही हैं:</p>
 
         <ul>
-            <li><strong>शनि का गोचर (Saturn's Movement):</strong> शनि देव जो अनुशासन और हड्डियों (Skeletal system) के कारक हैं, 2026 में अपनी चाल बदलेंगे। यह बदलाव दुनिया भर में रोजगार (Employment) और रियल एस्टेट मार्केट को प्रभावित करेगा। जिन लोगों के शरीर में मेलाटोनिन (स्लीप हार्मोन) असंतुलित है, उन्हें इस साल विशेष ध्यान देना होगा।</li>
-            <li><strong>राहु-केतु का अक्ष परिवर्तन (Rahu-Ketu Axis):</strong> राहु (भ्रम और तकनीक) और केतु (वैराग्य और जेनेटिक्स) अपनी राशियां बदलेंगे। यह गोचर आर्टिफिशियल इंटेलिजेंस (AI Tools) और डिजिटल फाइनेंस (Digital Finance platforms) में क्रांति लाएगा। स्वास्थ्य की दृष्टि से, यह 'गट माइक्रोबायोम' (Gut Microbiome) में बदलाव लाएगा।</li>
+            <li><strong>शनि का गोचर (Saturn's Movement):</strong> अनुशासन और कर्म के कारक शनि देव 2026 में अपनी चाल बदलेंगे। यह बदलाव दुनिया भर में रोज़गार (Employment) और रियल एस्टेट मार्केट को प्रभावित करेगा। जिन पर साढ़ेसाती या ढैय्या है, उन्हें धैर्य और मेहनत से काम लेना होगा।</li>
+            <li><strong>राहु-केतु का अक्ष परिवर्तन (Rahu-Ketu Axis):</strong> राहु (भ्रम और तकनीक) और केतु (वैराग्य और अध्यात्म) अपनी राशियां बदलेंगे। यह गोचर आर्टिफिशियल इंटेलिजेंस (AI Tools) और डिजिटल फाइनेंस में बड़े बदलाव का संकेत देता है।</li>
             <li><strong>बृहस्पति का आशीर्वाद (Jupiter's Grace):</strong> ज्ञान, विस्तार और लिवर (Liver/Metabolism) का कारक ग्रह गुरु अपनी राशि बदलकर कुछ विशेष राशियों के लिए धन और सौभाग्य के नए द्वार खोलेगा।</li>
         </ul>
 
         <h2>सभी 12 राशियों का सम्पूर्ण भविष्यफल (Aries to Pisces 2026)</h2>
         
-        <p>नीचे सभी 12 राशियों के लिए करियर, स्वास्थ्य (मेडिकल दृष्टि से) और प्रेम संबंधों का सटीक विश्लेषण दिया गया है। <em>(नोट: अधिक सटीकता के लिए अपनी जन्म कुंडली (Lagna) और चंद्र राशि (Moon Sign) दोनों को मिलाकर पढ़ें।)</em></p>
+        <p>नीचे सभी 12 राशियों के लिए करियर, स्वास्थ्य के प्रति सावधानी और प्रेम संबंधों का सटीक विश्लेषण दिया गया है। <em>(नोट: अधिक सटीकता के लिए अपनी जन्म कुंडली (Lagna) और चंद्र राशि (Moon Sign) दोनों को मिलाकर पढ़ें।)</em></p>
 
         <!-- ARIES -->
         <div class="zodiac-card">
@@ -267,7 +267,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके लिए 1000 वॉट के बल्ब की तरह है। राहु और मंगल के प्रभाव से आप अपने कार्यक्षेत्र में आक्रामक (Aggressive) निर्णय लेंगे। यदि आप टेक्नोलॉजी, मेडिसिन या स्टार्टअप में हैं, तो यह वर्ष आपको अप्रत्याशित (Unexpected) आर्थिक वृद्धि देगा। हालांकि, ओवर-इन्वेस्टमेंट (Over-investment) से बचें।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>चूंकि मेष सिर (Head) का कारक है, इसलिए इस वर्ष <strong>कॉर्टिसोल (स्ट्रेस हार्मोन)</strong> का स्तर उच्च रह सकता है। आपको माइग्रेन या रक्तचाप (Blood Pressure) की समस्या हो सकती है। अपने 'एड्रेनालाईन' (Adrenaline) को शांत करने के लिए <em>हनुमान चालीसा</em> का पाठ और <em>Cardio exercise</em> सर्वोत्तम रहेगा।</p>
+            <p>मेष राशि वालों के लिए इस वर्ष काम का दबाव अधिक रह सकता है। जल्दबाज़ी और क्रोध से बचें, पर्याप्त आराम करें और नियमित व्यायाम करें। मन को शांत रखने के लिए हनुमान चालीसा का पाठ श्रेष्ठ उपाय है।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>आपके हाई-एनर्जी लेवल के कारण पार्टनर के साथ ईगो क्लैश (Ego clashes) हो सकते हैं। अपने गुस्से (Amygdala response) पर नियंत्रण रखें।</p>
         </div>
@@ -279,7 +279,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>गुरु (Jupiter) का गोचर आपके लिए 'धन के भंडार' खोलने वाला है। पिछले 2 सालों की आपकी जो मेहनत अटकी हुई थी, वह 2026 में लिक्विड कैश (Liquid Cash) में बदलेगी। बैंकिंग, कला, और रियल एस्टेट से जुड़े लोगों को भारी लाभ होगा।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>वृषभ गले (Throat) और <strong>थायरॉइड ग्रंथि (Thyroid Gland)</strong> को नियंत्रित करता है। अधिक जंक फूड या मीठे के सेवन से बचें क्योंकि इस वर्ष आपका मेटाबॉलिज्म धीमा (Hypothyroidism) हो सकता है। <em>श्री सूक्त</em> का पाठ आपके अंदर शुक्र (Dopamine) को संतुलित करेगा।</p>
+            <p>वृषभ राशि वालों को खान-पान में संयम रखना होगा — अधिक मीठा और जंक फूड कम करें। सुख-सुविधा पर खर्च भी सोच-समझकर करें। शुक्रवार को श्री सूक्त का पाठ लाभकारी रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>यह वर्ष पारिवारिक खुशियों का है। यदि आप विवाह की योजना बना रहे हैं, तो साल के मध्य में उत्तम योग बनेंगे।</p>
         </div>
@@ -291,7 +291,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 में आपकी कम्युनिकेशन स्किल्स (Communication Skills) आपके लिए जादू का काम करेंगी। यदि आप मार्केटिंग, मीडिया, या सोशल मीडिया (YouTube/Content Creation) में हैं, तो राहु आपको वायरल कर सकता है। जॉब स्विच (Job switch) के प्रबल योग हैं।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>मिथुन फेफड़ों (Lungs) और <strong>नर्वस सिस्टम (Nervous System)</strong> का कारक है। ओवर-थिंकिंग के कारण आपको <em>Anxiety</em> और नींद की कमी (Insomnia) हो सकती है। 'प्राणायाम' (अनुलोम-विलोम) और <em>विष्णु सहस्रनाम</em> आपके न्यूरॉन्स को शांत रखेंगे।</p>
+            <p>मिथुन राशि वालों को ओवर-थिंकिंग से बचना होगा, जिससे नींद प्रभावित हो सकती है। प्राणायाम (अनुलोम-विलोम) और विष्णु सहस्रनाम का पाठ मन को शांत रखने में सहायक रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>रिश्तों में गलतफहमियां (Miscommunications) आ सकती हैं। अपने पार्टनर को पूरा समय दें।</p>
         </div>
@@ -299,11 +299,11 @@
         <!-- CANCER -->
         <div class="zodiac-card">
             <h3><i class="fas fa-crab"></i> कर्क राशि (Cancer 2026)</h3>
-            <p><strong>सार:</strong> भाग्य का उदय और भावनात्मक हीलिंग (Destiny Unlocking and Emotional Healing)।</p>
+            <p><strong>सार:</strong> भाग्य का उदय और भावनात्मक संतुलन (Destiny Unlocking and Emotional Balance)।</p>
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>गुरु की दृष्टि आपके करियर भाव पर पड़ने से 2026 में आपको कार्यस्थल पर पदोन्नति (Promotion) और सम्मान मिलेगा। जो लोग विदेश (Foreign) जाना चाहते हैं, उनके लिए यह वर्ष वीजा या इमिग्रेशन के लिए बहुत शुभ है।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>कर्क राशि का संबंध सीधे आपके <strong>पेट (Stomach) और गट-ब्रेन एक्सिस (Gut-Brain Axis)</strong> से है। चंद्रमा के गोचर से आपको एसिडिटी (Acidity) या आईबीएस (IBS) की शिकायत हो सकती है। <em>अन्नपूर्णा स्तोत्र</em> का पाठ आपके पाचन तंत्र के लिए औषधि का काम करेगा।</p>
+            <p>कर्क राशि वाले भावुक स्वभाव के होते हैं; इस वर्ष चिंता को मन पर हावी न होने दें। भोजन समय पर और शांत मन से करें। भोजन से पहले अन्नपूर्णा स्तोत्र का पाठ शुभ रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>पारिवारिक जीवन में मधुरता आएगी। माता के स्वास्थ्य में सुधार होगा।</p>
         </div>
@@ -315,7 +315,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके लिए नेतृत्व (Leadership) का वर्ष है। आपको कोई बड़ा प्रोजेक्ट या सरकारी टेंडर मिल सकता है। गुप्त स्रोतों (Secret sources) या शेयर बाजार (Stock Market) से अचानक धन लाभ के प्रबल योग हैं।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>सिंह राशि <strong>हृदय (Heart) और रीढ़ की हड्डी (Spine)</strong> का कारक है। इस वर्ष आपको अपने कोलेस्ट्रॉल लेवल (Cholesterol) और ब्लड प्रेशर का विशेष ध्यान रखना होगा। प्रतिदिन <em>आदित्य हृदय स्तोत्र</em> का पाठ आपके कार्डियोवैस्कुलर (Cardiovascular) स्वास्थ्य के लिए अचूक है।</p>
+            <p>सिंह राशि वालों को इस वर्ष काम के साथ अपनी दिनचर्या का भी ध्यान रखना होगा — समय पर सोना, व्यायाम और संतुलित भोजन। प्रतिदिन सूर्य को अर्घ्य और आदित्य हृदय स्तोत्र का पाठ आत्मबल बढ़ाएगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अहंकार (Ego) के कारण रिश्तों में दूरियां आ सकती हैं। क्षमा करना सीखें।</p>
         </div>
@@ -327,7 +327,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>इस वर्ष आपकी तरक्की आपकी पार्टनरशिप्स (Partnerships) पर निर्भर करेगी। अकेले काम करने के बजाय टीम में काम करें। विदेशी व्यापार (Import-Export) से जुड़े लोगों को भारी लाभ होगा।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>कन्या राशि आंतों (Intestines) और <strong>ऑटोइम्यून सिस्टम (Autoimmune system)</strong> का कारक है। अत्यधिक चिंता (Perfectionism) से आपको एलर्जी या स्किन (Skin) की समस्याएं हो सकती हैं। 'मेडिटेशन' और <em>नारायण कवच</em> आपके ऑरा (Aura) को शुद्ध करेंगे।</p>
+            <p>कन्या राशि वाले हर काम में परफेक्शन चाहते हैं, जिससे तनाव बढ़ सकता है। छोटी बातों की चिंता छोड़ें। ध्यान (Meditation) और नारायण कवच का पाठ मन को स्थिर रखेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अविवाहित लोगों को इस वर्ष अपना जीवनसाथी (Soulmate) मिल सकता है।</p>
         </div>
@@ -339,7 +339,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 में आप अपने सभी प्रतिस्पर्धियों (Competitors) को पीछे छोड़ देंगे। जो भी लीगल मामले (Legal cases) अटके हुए थे, वे आपके पक्ष में आएंगे। नौकरीपेशा लोगों के वेतन (Salary) में अच्छी वृद्धि होगी।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>तुला राशि <strong>किडनी (Kidneys) और निचले हिस्से (Lower back)</strong> को नियंत्रित करती है। पानी अधिक पिएं (Hydration) और यूरिनरी ट्रैक्ट (UTI) के संक्रमण से बचें। <em>नवग्रह स्तोत्र</em> का पाठ आपके हार्मोनल बैलेंस को बनाए रखेगा।</p>
+            <p>तुला राशि वालों को दिनचर्या में संतुलन रखना होगा — पर्याप्त पानी पिएं और लंबे समय तक बैठे रहने से बचें। नवग्रह स्तोत्र का पाठ ग्रहों की शांति के लिए शुभ रहेगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>वैवाहिक जीवन में कुछ उतार-चढ़ाव आ सकते हैं, शांति से काम लें।</p>
         </div>
@@ -351,7 +351,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>यह वर्ष आपके लिए बहुत ही 'क्रिएटिव' (Creative) साबित होगा। यदि आप रिसर्च (Research), शेयर मार्केट या किसी भी गुप्त विद्या (Occult) में हैं, तो आपको अपार सफलता मिलेगी। धन आगमन के नए स्रोत (Passive income) खुलेंगे।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>वृश्चिक राशि <strong>प्रजनन अंगों (Reproductive organs) और एंडोक्राइन सिस्टम</strong> को दर्शाती है। महिलाओं को PCOD या हार्मोनल समस्याओं का ध्यान रखना होगा। <em>अंगारक स्तोत्र</em> और रक्तदान (Blood Donation) आपके लिए संजीवनी है।</p>
+            <p>वृश्चिक राशि वालों को इस वर्ष भावनाओं और क्रोध पर नियंत्रण रखना होगा। मंगलवार को अंगारक स्तोत्र का पाठ और रक्तदान जैसे सेवा-कार्य आपके लिए शुभ रहेंगे।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>प्रेम जीवन में जुनून (Passion) रहेगा। संतान प्राप्ति के उत्तम योग हैं।</p>
         </div>
@@ -375,7 +375,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>साढ़ेसाती का अंतिम चरण आपको सोने की तरह तपाकर कुंदन बना चुका है। 2026 में आप पूरे आत्मविश्वास के साथ नए प्रोजेक्ट्स शुरू करेंगे। शॉर्ट ट्रिप्स (Short travels) और नेटवर्किंग से आपको बड़ा वित्तीय लाभ (Financial Gain) होगा।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>मकर राशि <strong>हड्डियों (Bones), घुटनों (Knees) और दांतों</strong> का कारक है। कैल्शियम और विटामिन डी की कमी से बचें (Osteopenia)। <em>दशरथ कृत शनि स्तोत्र</em> का पाठ आपके स्केलेटल सिस्टम (Skeletal system) को हील करेगा।</p>
+            <p>मकर राशि वालों के लिए यह परिश्रम का वर्ष है। काम के साथ अपने शरीर का भी ध्यान रखें — नियमित व्यायाम और संतुलित भोजन अपनाएं। शनिवार को दशरथ कृत शनि स्तोत्र का पाठ शुभ फल देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>भाई-बहनों का सहयोग मिलेगा। पुराने टूटे हुए रिश्ते वापस जुड़ सकते हैं।</p>
         </div>
@@ -387,7 +387,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>यह वर्ष आपके बैंक बैलेंस को बढ़ाने वाला है। साढ़ेसाती के मध्य चरण के बावजूद, गुरु की कृपा आपको पैतृक संपत्ति (Ancestral Property) या फिक्स्ड डिपॉजिट्स (Fixed Deposits) में लाभ दिलाएगी। आप जो बोलेंगे, लोग उसे सुनेंगे।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>कुंभ राशि <strong>पिंडलियों (Calves) और पीनियल ग्लैंड (Pineal Gland)</strong> को नियंत्रित करती है। मेलाटोनिन (Melatonin) असंतुलन के कारण आपको अनिद्रा (Insomnia) हो सकती है। <em>शिव कवच</em> और सोने से पहले ध्यान (Meditation) आपके लिए अत्यंत आवश्यक है।</p>
+            <p>कुंभ राशि वालों को देर रात तक जागने की आदत छोड़नी होगी। सोने से पहले ध्यान (Meditation) और शिव कवच का पाठ मन को शांति देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>अपनी वाणी (Harsh Speech) पर नियंत्रण रखें, अन्यथा परिवार में अकारण क्लेश हो सकता है।</p>
         </div>
@@ -399,7 +399,7 @@
             <span class="zodiac-section-title">करियर और वित्त (Career & Finance):</span>
             <p>2026 आपके व्यक्तित्व (Personality) को पूरी तरह से बदलने वाला वर्ष है। आप अपने पुराने करियर को छोड़कर कुछ बिल्कुल नया शुरू कर सकते हैं। शुरुआत में संघर्ष होगा, लेकिन आध्यात्मिक और वित्तीय (Financial) रूप से यह एक 'उदय' (Rising) का वर्ष है।</p>
             <span class="zodiac-section-title">स्वास्थ्य (Medical Astrology):</span>
-            <p>मीन राशि <strong>पैरों (Feet) और लिम्फेटिक सिस्टम (Lymphatic System)</strong> का कारक है। साढ़ेसाती का पहला चरण आपके 'इम्यून सिस्टम' (Immunity) को कमजोर कर सकता है। पैर में चोट या मानसिक थकान (Mental Fatigue) हो सकती है। <em>नारायण कवच</em> आपके ऑरा (Aura) को सुरक्षित रखेगा।</p>
+            <p>मीन राशि वालों पर साढ़ेसाती का प्रभाव रहेगा, इसलिए धैर्य रखें और जल्दबाज़ी में बड़े निर्णय न लें। यात्रा में सावधानी रखें और पर्याप्त आराम करें। नारायण कवच का पाठ सुरक्षा का भाव देगा।</p>
             <span class="zodiac-section-title">प्रेम और संबंध:</span>
             <p>रिश्तों में 'बाउंड्रीज' (Boundaries) सेट करना सीखें। लोग आपका भावनात्मक (Emotional) फायदा उठा सकते हैं।</p>
         </div>
@@ -407,7 +407,7 @@
         <img class="blog-image inline-image" src="images/zodiac-healing.jpg" alt="Zodiac Wheel Vedic Astrology Remedies 2026">
 
         <h2>निष्कर्ष: अपनी ऊर्जा को 'हैकिंग' करना सीखें</h2>
-        <p>वर्ष 2026 में ब्रह्मांड आपको जो ऊर्जा (Energy) दे रहा है, वह न तो अच्छी है और न ही बुरी; वह केवल एक 'फ्रीक्वेंसी' (Frequency) है। यदि आप अपनी राशि के अनुसार बताए गए न्यूरोलॉजिकल और वैदिक उपायों (Remedies) का पालन करते हैं, तो आप इस फ्रीक्वेंसी को हैक करके अपने जीवन की सबसे बड़ी सफलता (Ultimate Success) प्राप्त कर सकते हैं।</p>
+        <p>वर्ष 2026 में ग्रहों का प्रभाव न तो पूरी तरह अच्छा है और न ही बुरा; यह इस पर निर्भर करता है कि आप उसका उपयोग कैसे करते हैं। अपनी राशि के अनुसार बताए गए उपाय श्रद्धा से करें, मेहनत जारी रखें और स्वास्थ्य से जुड़ी किसी भी समस्या में डॉक्टर की सलाह अवश्य लें।</p>
         
         <p>याद रखें, ग्रह केवल रास्ता दिखाते हैं, उस रास्ते पर चलना आपकी <strong>स्वतंत्र इच्छा (Free Will)</strong> है। 2026 आपके लिए मंगलमय और असीमित सफलता का वर्ष हो! "ॐ श्री गुरुवे नमः"</p>
       </article>

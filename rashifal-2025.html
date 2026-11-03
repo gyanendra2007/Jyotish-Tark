@@ -57,8 +57,10 @@
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -196,18 +198,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>

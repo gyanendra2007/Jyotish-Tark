@@ -57,8 +57,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -191,18 +193,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -237,13 +239,11 @@
       
       <article class="article-content hindi">
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
-        <p>ज्योतिष की दुनिया में <strong>"शनि की साढ़ेसाती"</strong> (Sade Sati) और <strong>"ढैय्या"</strong> (Dhaiya) का नाम सुनते ही अच्छे-अच्छे लोगों के पसीने छूट जाते हैं। जब शनि अपना प्रभाव दिखाता है, तो रातों की नींद उड़ जाती है, हड्डियों में बिना कारण दर्द होने लगता है, व्यापार ठप्प हो जाता है और इंसान भयंकर डिप्रेशन (Clinical Depression) में चला जाता है। <span class="hidden-cite">[cite: 4]</span></p>
+        <p>ज्योतिष की दुनिया में <strong>"शनि की साढ़ेसाती"</strong> (Sade Sati) और <strong>"ढैय्या"</strong> (Dhaiya) का नाम सुनते ही अच्छे-अच्छे लोगों के पसीने छूट जाते हैं। जब शनि अपना प्रभाव दिखाता है, तो काम में रुकावटें आती हैं, मेहनत का फल देर से मिलता है और मन चिंता से भर जाता है। <span class="hidden-cite"></span></p>
 
-        <p>एक मेडिकल स्टूडेंट और ज्योतिषी के नजरिए से, मैं शनि (Saturn) को केवल एक 'क्रूर ग्रह' नहीं, बल्कि शरीर के <strong>कंकाल तंत्र (Skeletal System), मेलाटोनिन (Melatonin - स्लीप हार्मोन) और क्रोनिक स्ट्रेस (Chronic Stress)</strong> का मास्टर नियंत्रक मानता हूँ। जब आपको शनि परेशान कर रहा हो, तो कोई भी महंगी पूजा या नीलम रत्न काम नहीं आता। ऐसे समय में केवल एक ही अमोघ अस्त्र है— <strong>दशरथ कृत शनि स्तोत्र (Dasharath Krit Shani Stotra)</strong>। <span class="hidden-cite">[cite: 4]</span></p>
+        <p>एक वैदिक ज्योतिषी के नज़रिए से, शनि (Saturn) कोई 'क्रूर ग्रह' नहीं, बल्कि कर्म, अनुशासन और धैर्य का ग्रह है। जब शनि परीक्षा लेता है, तो वह हमें मेहनत, ईमानदारी और विनम्रता सिखाता है।</p>
 
-        <blockquote>
-          "शनि कोई दंड देने वाला देवता नहीं है; वह कर्मों का 'ऑडिटर' (Auditor) है। जब आप राजा दशरथ द्वारा रचित इस ध्वन्यात्मक (Acoustic) स्तोत्र का पाठ करते हैं, तो आप शनि के सामने अपनी हार (Surrender) स्वीकार करते हैं, और तभी से आपके न्यूरोलॉजिकल सिस्टम में हीलिंग शुरू होती है।"
-        </blockquote>
+        <blockquote>"शनि कोई दंड देने वाला देवता नहीं है; वह कर्मों का 'ऑडिटर' (Auditor) है। जब आप राजा दशरथ द्वारा रचित इस स्तोत्र का पाठ करते हैं, तो आप अहंकार छोड़कर शनि देव के सामने समर्पण करते हैं — और यहीं से मन में धैर्य और शांति आने लगती है।"</blockquote>
 
         <img class="blog-image inline-image" src="images/shani-medical.jpg" alt="Saturn Medical Astrology Skeletal System and Depression">
 
@@ -251,96 +251,81 @@
         
         <p>पद्म पुराण में एक अत्यंत रहस्यमयी कथा है। त्रेता युग में, ज्योतिषियों ने इक्ष्वाकु वंश के चक्रवर्ती सम्राट राजा दशरथ को बताया कि शनि देव 'रोहिणी नक्षत्र' का भेदन करने वाले हैं (जिसे <em>रोहिणी शकट भेदन</em> कहा जाता है)। यदि शनि ऐसा करते, तो पृथ्वी पर लगातार 12 वर्षों तक भयंकर सूखा (Famine) पड़ता और करोड़ों लोग भूख से मर जाते।</p>
 
-        <p>अपनी प्रजा को बचाने के लिए, राजा दशरथ अपने दिव्य रथ पर सवार होकर सीधे अंतरिक्ष में शनि देव के सामने जा पहुंचे और उन्हें चुनौती दी। शनि देव, राजा दशरथ के इस असीम साहस और अपनी प्रजा के प्रति निस्वार्थ प्रेम को देखकर अत्यंत प्रसन्न हुए। तब राजा दशरथ ने शनि देव का क्रोध शांत करने के लिए जिस दिव्य स्तोत्र की रचना की, उसे ही <strong>"दशरथ कृत शनि स्तोत्र"</strong> कहा जाता है। <span class="hidden-cite">[cite: 4]</span></p>
-
-        <h2>2. शनि का मेडिकल और मनोवैज्ञानिक विज्ञान</h2>
-        <p>मेडिकल एस्ट्रोलॉजी में, शनि सबसे धीमी गति से चलने वाला और सबसे ठंडा ग्रह है। शरीर में यह उन बीमारियों का कारक है जो <strong>धीरे-धीरे बढ़ती हैं और लंबे समय तक ठीक नहीं होतीं (Chronic Illnesses)</strong>।</p>
-        
-        <ul>
-            <li><strong>हड्डियां और दांत (Bones & Teeth):</strong> शनि आपके कंकाल तंत्र और जोड़ों के दर्द (Arthritis/Osteoporosis) का कारक है।</li>
-            <li><strong>स्लीप साइकिल और डिप्रेशन:</strong> शनि सीधे आपके पीनियल ग्लैंड (Pineal Gland) और मेलाटोनिन (Melatonin) उत्पादन को रोकता है, जिससे साढ़ेसाती में व्यक्ति को भयानक अनिद्रा (Insomnia) और एकांत (Isolation) का सामना करना पड़ता है।</li>
-            <li><strong>कॉर्टिसोल (Stress Hormone):</strong> साढ़ेसाती व्यक्ति को मानसिक रूप से निचोड़ देती है। </li>
-        </ul>
-        <p>इस स्तोत्र में प्रयुक्त विशेष 'अनुष्टुप छन्द' और कठोर व्यंजनों (Heavy Consonants) का कंपन सीधे आपके <strong>बेसल गैन्ग्लिया (Basal Ganglia)</strong> को शांत करता है और मस्तिष्क को यह संकेत देता है कि "डरने की कोई बात नहीं है।"</p>
-
-        <img class="blog-image inline-image" src="images/shani-stotra-chant.jpg" alt="Dasharath Krit Shani Stotra Sanskrit Chanting">
+        <p>अपनी प्रजा को बचाने के लिए, राजा दशरथ अपने दिव्य रथ पर सवार होकर सीधे अंतरिक्ष में शनि देव के सामने जा पहुंचे और उन्हें चुनौती दी। शनि देव, राजा दशरथ के इस असीम साहस और अपनी प्रजा के प्रति निस्वार्थ प्रेम को देखकर अत्यंत प्रसन्न हुए। तब राजा दशरथ ने शनि देव का क्रोध शांत करने के लिए जिस दिव्य स्तोत्र की रचना की, उसे ही <strong>"दशरथ कृत शनि स्तोत्र"</strong> कहा जाता है। <span class="hidden-cite"></span></p>
 
         <h2>3. दशरथ कृत शनि स्तोत्र: सम्पूर्ण 10 श्लोक और उनका गहरा अर्थ</h2>
-        <p>यहाँ राजा दशरथ द्वारा रचित इस चमत्कारी स्तोत्र का मूल संस्कृत पाठ, उसका भावार्थ और उसका वैज्ञानिक प्रभाव दिया जा रहा है: <span class="hidden-cite">[cite: 4]</span></p>
+        <p>यहाँ राजा दशरथ द्वारा रचित इस चमत्कारी स्तोत्र का मूल संस्कृत पाठ, उसका भावार्थ और उसका वैज्ञानिक प्रभाव दिया जा रहा है: <span class="hidden-cite"></span></p>
 
         <div class="shloka-container">
             
             <div class="shloka-box">
                 <p class="sanskrit">नम: कृष्णाय नीलाय शितिकण्ठनिभाय च।<br>नम: कालाग्निरूपाय कृतान्ताय च वै नम:॥ १ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनके शरीर का वर्ण कृष्ण (काला) और नीला है, जिनकी आभा भगवान शिव (नीलकंठ) के समान है, जो प्रलयकाल की अग्नि (कालाग्नि) के समान भयंकर हैं और जो यमराज के समान हैं—उन शनि देव को मेरा नमस्कार है। <span class="hidden-cite">[cite: 4]</span></p>
-                <p class="medical"><strong>विज्ञान:</strong> यह श्लोक शनि की डार्क एनर्जी (Dark Matter/Gravity) को स्वीकार करने का 'ग्राउंडिंग' (Grounding) मंत्र है।</p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनके शरीर का वर्ण कृष्ण (काला) और नीला है, जिनकी आभा भगवान शिव (नीलकंठ) के समान है, जो प्रलयकाल की अग्नि (कालाग्नि) के समान भयंकर हैं और जो यमराज के समान हैं—उन शनि देव को मेरा नमस्कार है। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">नमो निर्मांसदेहाय दीर्घश्मश्रुजटाय च।<br>नमो विशालनेत्राय शुष्कोदर भयाकृते॥ २ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनका शरीर मांसहीन (सूखा हुआ कंकाल) है, जिनकी लंबी दाढ़ी और जटाएं हैं, जिनके नेत्र विशाल हैं और जिनका पेट सूखा हुआ और आकृति भयानक है—उन्हें नमस्कार है। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनका शरीर मांसहीन (सूखा हुआ कंकाल) है, जिनकी लंबी दाढ़ी और जटाएं हैं, जिनके नेत्र विशाल हैं और जिनका पेट सूखा हुआ और आकृति भयानक है—उन्हें नमस्कार है। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">नम: पुष्कलगात्राय स्थूलरोम्णे च वै नम:।<br>नमो दीर्घाय शुष्काय कालदंष्ट्र नमोऽस्तु ते॥ ३ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनके शरीर की हड्डियां और रोएं (बाल) स्थूल (मोटे) हैं, जो आकार में लंबे और सूखे हुए हैं, और जिनकी दाढ़ें काल (मृत्यु) के समान भयानक हैं, हे शनि देव! आपको मेरा नमस्कार है। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनके शरीर की हड्डियां और रोएं (बाल) स्थूल (मोटे) हैं, जो आकार में लंबे और सूखे हुए हैं, और जिनकी दाढ़ें काल (मृत्यु) के समान भयानक हैं, हे शनि देव! आपको मेरा नमस्कार है। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">नमस्ते कोटराक्षाय दुर्नरीक्ष्याय वै नम:।<br>नमो घोराय रौद्राय भीषणाय कपालिने॥ ४ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनकी आंखें गहरे गड्ढों में धंसी हुई हैं, जिनकी ओर देखना अत्यंत कठिन (दुर्नरीक्ष्य) है, जो अत्यंत घोर, रौद्र, भीषण और कपाल धारण करने वाले हैं—उन्हें मैं नमस्कार करता हूँ। <span class="hidden-cite">[cite: 4]</span></p>
-                <p class="medical"><strong>विज्ञान:</strong> शनि के इस भयानक स्वरूप का ध्यान करने से व्यक्ति के भीतर छिपे हुए सबसे गहरे मनोवैज्ञानिक डर (Deep-seated Phobias) सतह पर आकर खत्म हो जाते हैं।</p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनकी आंखें गहरे गड्ढों में धंसी हुई हैं, जिनकी ओर देखना अत्यंत कठिन (दुर्नरीक्ष्य) है, जो अत्यंत घोर, रौद्र, भीषण और कपाल धारण करने वाले हैं—उन्हें मैं नमस्कार करता हूँ। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">नमस्ते सर्वभक्षाय बलीमुख नमोऽस्तु ते।<br>सूर्यपुत्र नमस्तेऽस्तु भास्करेऽभयदाय च॥ ५ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जो सब कुछ भक्षण कर जाने वाले (सर्वभक्षी) हैं, जिनका मुख वानर (बलीमुख) के समान है, हे सूर्यपुत्र! हे सूर्य को भी भय देने वाले! मैं आपको नमस्कार करता हूँ। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> जो सब कुछ भक्षण कर जाने वाले (सर्वभक्षी) हैं, जिनका मुख वानर (बलीमुख) के समान है, हे सूर्यपुत्र! हे सूर्य को भी भय देने वाले! मैं आपको नमस्कार करता हूँ। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">अधोदृष्टे: नमस्तेऽस्तु संवर्तक नमोऽस्तु ते।<br>नमो मन्दगते तुभ्यं निस्त्रिंशाय नमोऽस्तु ते॥ ६ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनकी दृष्टि हमेशा नीचे (अधोदृष्टि) रहती है, जो संवर्तक (प्रलय करने वाले) हैं, जिनकी गति बहुत धीमी (मंद) है, और जो निष्ठुर (बिना दया के न्याय करने वाले) हैं—आपको नमस्कार है। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनकी दृष्टि हमेशा नीचे (अधोदृष्टि) रहती है, जो संवर्तक (प्रलय करने वाले) हैं, जिनकी गति बहुत धीमी (मंद) है, और जो निष्ठुर (बिना दया के न्याय करने वाले) हैं—आपको नमस्कार है। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">तपसा दग्धदेहाय नित्यं योगरताय च।<br>नमो नित्यं क्षुधार्ताय अतृप्ताय च वै नम:॥ ७ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> जिनका शरीर कठोर तपस्या के कारण जलकर काला हो गया है, जो हमेशा योग-साधना में लीन रहते हैं, जो हमेशा भूख से पीड़ित और अतृप्त रहते हैं—उन्हें मेरा नमस्कार है। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> जिनका शरीर कठोर तपस्या के कारण जलकर काला हो गया है, जो हमेशा योग-साधना में लीन रहते हैं, जो हमेशा भूख से पीड़ित और अतृप्त रहते हैं—उन्हें मेरा नमस्कार है। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">ज्ञानचक्षु नमस्तेऽस्तु कश्यपात्मज सूनवे।<br>तुष्टो ददासि वै राज्यं रुष्टो हरसि तत्क्षणात्॥ ८ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> हे ज्ञानचक्षु (ज्ञान रूपी नेत्रों वाले)! हे कश्यप-नंदन सूर्य के पुत्र! आपको नमस्कार है। आप प्रसन्न होने पर रंक को राजा बना देते हैं, और क्रोधित होने पर राजा का राज्य क्षण भर में छीन लेते हैं। <span class="hidden-cite">[cite: 4]</span></p>
-                <p class="medical"><strong>विज्ञान:</strong> यह श्लोक पूर्ण 'समर्पण' (Absolute Surrender) का प्रतीक है। जब 'ईगो' (अहंकार) खत्म होता है, तो मस्तिष्क में सेरोटोनिन रिलीज होता है, जिससे डिप्रेशन खत्म हो जाता है।</p>
+                <p class="meaning"><strong>अर्थ:</strong> हे ज्ञानचक्षु (ज्ञान रूपी नेत्रों वाले)! हे कश्यप-नंदन सूर्य के पुत्र! आपको नमस्कार है। आप प्रसन्न होने पर रंक को राजा बना देते हैं, और क्रोधित होने पर राजा का राज्य क्षण भर में छीन लेते हैं। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">देवासुरमनुष्याश्च सिद्धविद्याधरोरगा:।<br>त्वया विलोकिता: सर्वे नाशं यान्ति समूलत:॥ ९ ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> देवता, असुर, मनुष्य, सिद्ध, विद्याधर और नाग—आपकी (वक्र) दृष्टि जिस पर भी पड़ जाती है, वे जड़ (समूल) सहित नष्ट हो जाते हैं। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> देवता, असुर, मनुष्य, सिद्ध, विद्याधर और नाग—आपकी (वक्र) दृष्टि जिस पर भी पड़ जाती है, वे जड़ (समूल) सहित नष्ट हो जाते हैं। <span class="hidden-cite"></span></p>
             </div>
 
             <div class="shloka-box">
                 <p class="sanskrit">प्रसादं कुरु मे देव वराहोऽहमुपागत:।<br>एवं स्तुतस्तदा सौरिर्ग्रहराजो महाबल:॥ १० ॥</p>
-                <p class="meaning"><strong>अर्थ:</strong> हे देव! मैं आपके सामने वरदान मांगने आया हूँ, मुझ पर कृपा करें (प्रसादं कुरु)। इस प्रकार राजा दशरथ द्वारा स्तुति किए जाने पर, ग्रहों के राजा महाबली सूर्यपुत्र शनि देव अत्यंत प्रसन्न हुए। <span class="hidden-cite">[cite: 4]</span></p>
+                <p class="meaning"><strong>अर्थ:</strong> हे देव! मैं आपके सामने वरदान मांगने आया हूँ, मुझ पर कृपा करें (प्रसादं कुरु)। इस प्रकार राजा दशरथ द्वारा स्तुति किए जाने पर, ग्रहों के राजा महाबली सूर्यपुत्र शनि देव अत्यंत प्रसन्न हुए। <span class="hidden-cite"></span></p>
             </div>
         </div>
 
         <img class="blog-image inline-image" src="images/sadesati-remedy.jpg" alt="Shani Sade Sati Remedies Sesame Seeds and Mustard Oil">
 
         <h2>4. साढ़ेसाती और ढैय्या के लिए 43-दिन का अमोघ अनुष्ठान</h2>
-        <p>यदि आप कर्ज (Debt), नौकरी छूटने, झूठे आरोपों (False allegations) या किसी ऐसी बीमारी से परेशान हैं जो डायग्नोस (Diagnose) नहीं हो पा रही है, तो इस वैज्ञानिक और वैदिक अनुष्ठान को आज़माएँ: <span class="hidden-cite">[cite: 4]</span></p>
+        <p>यदि आप कर्ज (Debt), नौकरी छूटने, झूठे आरोपों (False allegations) या लगातार मानसिक अशांति से परेशान हैं, तो इस वैदिक अनुष्ठान को आज़माएँ: <span class="hidden-cite"></span></p>
         
         <ul>
             <li><strong>आरंभ (Start):</strong> किसी भी शनिवार (Saturday) को सूर्यास्त के बाद (Twilight / गोधूलि वेला) इस अनुष्ठान को शुरू करें। शनि अंधेरे और एकांत का ग्रह है।</li>
-            <li><strong>दीपक (Lamp):</strong> एक लोहे की कटोरी या मिट्टी के दीये में सरसों का तेल (Mustard Oil) डालें। उसमें थोड़े काले तिल (Black sesame seeds) डालें और पश्चिम (West) दिशा की ओर मुख करके जलाएं। तिल और सरसों का तेल शनि की कॉस्मिक फ्रीक्वेंसी को बहुत तेजी से आकर्षित (Conduct) करते हैं।</li>
-            <li><strong>पाठ की विधि:</strong> दशरथ कृत शनि स्तोत्र का अत्यंत धीमी गति से (जैसे शनि की चाल मंद होती है) 1 बार या 3 बार पाठ करें। <span class="hidden-cite">[cite: 4]</span></li>
-            <li><strong>शारीरिक श्रम (Physical Labour):</strong> शनि को पसीना (Sweat) और मेहनत पसंद है। यदि आप साढ़ेसाती में हैं, तो जिम जाएं, भारी वजन उठाएं, या पैदल चलें। जब आपकी हड्डियों और मांसपेशियों पर जोर पड़ेगा, तो शनि का नकारात्मक प्रभाव स्वतः 'पसीने' के जरिए कट जाएगा।</li>
+            <li><strong>दीपक (Lamp):</strong> एक लोहे की कटोरी या मिट्टी के दीये में सरसों का तेल (Mustard Oil) डालें। उसमें थोड़े काले तिल (Black sesame seeds) डालें और पश्चिम (West) दिशा की ओर मुख करके जलाएं। शास्त्रों में तिल और सरसों का तेल शनि देव को अत्यंत प्रिय बताया गया है।</li>
+            <li><strong>पाठ की विधि:</strong> दशरथ कृत शनि स्तोत्र का अत्यंत धीमी गति से (जैसे शनि की चाल मंद होती है) 1 बार या 3 बार पाठ करें। <span class="hidden-cite"></span></li>
+            <li><strong>शारीरिक श्रम (Physical Labour):</strong> शनि को परिश्रम और मेहनत प्रिय है। साढ़ेसाती में आलस्य छोड़ें, नियमित व्यायाम या पैदल चलना अपनाएं और ईमानदारी से मेहनत करें — शनि को प्रसन्न करने का यही सबसे बड़ा उपाय बताया गया है।</li>
             <li><strong>दान (Charity):</strong> शनि न्याय का देवता है। शनिवार को अंधे, अपाहिज या सफाई-कर्मचारियों (Sanitation workers) को काले जूते, छाता या भोजन दान करें।</li>
         </ul>
 
         <h2>निष्कर्ष: शनि कोई विलेन नहीं, आपका सबसे बड़ा 'गुरू' है</h2>
-        <p>शनि ग्रह एक सख्त 'हेडमास्टर' (Headmaster) की तरह है। जब आप अपनी जन्म कुंडली (Kundali) के अनुसार सही रास्ते (Dharma) से भटक जाते हैं, बेईमानी करते हैं, या अपने शरीर और समय को बर्बाद करते हैं, तब शनि की साढ़ेसाती आपको रास्ते पर लाने के लिए 'डंडा' मारती है। <span class="hidden-cite">[cite: 4]</span></p>
+        <p>शनि ग्रह एक सख्त 'हेडमास्टर' (Headmaster) की तरह है। जब आप अपनी जन्म कुंडली (Kundali) के अनुसार सही रास्ते (Dharma) से भटक जाते हैं, बेईमानी करते हैं, या अपने शरीर और समय को बर्बाद करते हैं, तब शनि की साढ़ेसाती आपको रास्ते पर लाने के लिए 'डंडा' मारती है। <span class="hidden-cite"></span></p>
         
-        <p><strong>दशरथ कृत शनि स्तोत्र</strong> उसी डंडे की मार से बचने का एक 'क्षमा-याचना' (Apology) फॉर्म है। जब आप राजा दशरथ की तरह अहंकार (Ego) छोड़कर शनि देव की शरण में जाते हैं, तो वह आपको केवल माफ ही नहीं करते, बल्कि आपको इतना मानसिक बल (Mental Strength) और सफलता देते हैं, जो कोई दूसरा ग्रह आपको जीवन में कभी नहीं दे सकता! <span class="hidden-cite">[cite: 4]</span></p>
+        <p><strong>दशरथ कृत शनि स्तोत्र</strong> उसी डंडे की मार से बचने का एक 'क्षमा-याचना' (Apology) फॉर्म है। जब आप राजा दशरथ की तरह अहंकार (Ego) छोड़कर शनि देव की शरण में जाते हैं, तो वह आपको केवल माफ ही नहीं करते, बल्कि आपको इतना मानसिक बल (Mental Strength) और सफलता देते हैं, जो कोई दूसरा ग्रह आपको जीवन में कभी नहीं दे सकता! <span class="hidden-cite"></span></p>
       </article>
       
       <!-- Author Profile Block -->
@@ -352,7 +337,7 @@
           <div class="text-center md:text-left">
             <h3 class="text-2xl font-bold text-white tracking-wide mb-1">Gyanendra Singh Tomar</h3>
             <p class="text-blue-400 text-sm mb-4 font-bold uppercase tracking-widest">Founder & Vedic Astrologer</p>
-            <p class="text-gray-300 text-base leading-relaxed">As an MBBS student at IOM Nepal and an advanced Vedic Astrologer, Gyanendra connects the empirical world of modern Medical Science (Osteology, Endocrinology, and Psychology) with the immense acoustic and karmic power of ancient Vedic literature. He decodes severe astrological periods like 'Sade Sati' to provide practical, scientific, and highly effective remedies for physical and mental well-being. <span class="hidden-cite">[cite: 4]</span></p>
+            <p class="text-gray-300 text-base leading-relaxed">As an MBBS student at IOM Nepal and an advanced Vedic Astrologer, Gyanendra connects the empirical world of modern Medical Science (Osteology, Endocrinology, and Psychology) with the immense acoustic and karmic power of ancient Vedic literature. He decodes severe astrological periods like 'Sade Sati' to provide practical, scientific, and highly effective remedies for physical and mental well-being. <span class="hidden-cite"></span></p>
           </div>
         </a>
       </section>
@@ -362,7 +347,7 @@
 
   <!-- Footer -->
   <footer class="glass-card text-center py-12 mt-12">
-    <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved. <span class="hidden-cite">[cite: 4]</span></p>
+    <p class="text-gray-400 text-sm">© 2026 Jyotish Tark. All rights reserved. <span class="hidden-cite"></span></p>
   </footer>
 
   <script>

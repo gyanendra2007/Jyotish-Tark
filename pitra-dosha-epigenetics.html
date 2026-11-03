@@ -58,8 +58,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -183,18 +185,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -229,68 +231,28 @@
       
       <article class="article-content hindi">
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
-        <p>जब भी किसी परिवार में लगातार बीमारियां आती हैं, व्यापार में अचानक घाटा होता है, या घर के युवा बिना कारण डिप्रेशन में चले जाते हैं, तो समाज और कई ज्योतिषी इसे <strong>"पितृ दोष" (Pitra Dosha)</strong> का नाम दे देते हैं। लोगों को डराया जाता है कि उनके मृत दादा-परदादा या पूर्वज उनसे नाराज हैं और उन्हें श्राप (Curse) दे रहे हैं।</p>
+        <p>जब भी किसी परिवार में लगातार परेशानियाँ आती हैं, व्यापार में अचानक घाटा होता है या घर में अशांति रहती है, तो अक्सर इसे "पितृ दोष" (Pitra Dosha) का नाम दे दिया जाता है और लोगों को डराया जाता है कि उनके पूर्वज नाराज़ हैं।</p>
 
-        <p>लेकिन एक मेडिकल छात्र (MBBS) और वैदिक ज्योतिषी होने के नाते, मैं इस अंधविश्वास को पूरी तरह से खारिज करता हूँ। क्या मरे हुए लोग सच में आपको नुकसान पहुंचा सकते हैं? बिल्कुल नहीं। <strong>पितृ दोष कोई भूतों का श्राप नहीं है, बल्कि यह आपके शरीर के भीतर बैठे आपके DNA और 'Epigenetics' का खेल है।</strong> आइए इसे आधुनिक विज्ञान और वैदिक ज्योतिष की कसौटी पर परखते हैं।</p>
+        <p>लेकिन एक वैदिक ज्योतिषी होने के नाते मैं आपको बताना चाहता हूँ कि पितृ दोष का अर्थ भूत-प्रेत या श्राप नहीं है। ज्योतिष में पितृ दोष कुंडली का एक योग है — जब सूर्य, नवम भाव (भाग्य व पिता का भाव) या उसके स्वामी पर राहु-केतु या शनि का प्रभाव हो। शास्त्र इसे पूर्वजों के प्रति हमारे कर्तव्य — श्राद्ध, तर्पण और सेवा — की याद दिलाने वाला संकेत मानते हैं।</p>
 
-        <blockquote>
-          "आपके पूर्वज आसमान में बैठकर आपको श्राप नहीं दे रहे हैं; वे आपके खून, आपकी कोशिकाओं (Cells) और आपके DNA में जीवित हैं। पितृ दोष असल में जेनेटिक ट्रॉमा (Genetic Trauma) और म्यूटेशन का वैदिक नाम है।"
-        </blockquote>
+        <blockquote>"आपके पूर्वज आसमान में बैठकर आपको श्राप नहीं दे रहे हैं; वे आपके शुभचिंतक हैं। पितृ दोष असल में उनके प्रति कृतज्ञता और कर्तव्य को याद दिलाने वाला ज्योतिषीय संकेत है।"</blockquote>
 
         <img class="blog-image inline-image" src="images/epigenetics-trauma.jpg" alt="Epigenetics Inherited Trauma Ancestral Healing">
 
-        <h2>1. 'एपिजेनेटिक्स' (Epigenetics) क्या है? और यह पितृ दोष कैसे है?</h2>
-        
-        <p>आधुनिक चिकित्सा विज्ञान में एक नई ब्रांच है जिसे <strong>Epigenetics (एपिजेनेटिक्स)</strong> कहा जाता है। इसका अर्थ है कि हमारा DNA केवल हमारी आंखों का रंग या हमारी लंबाई तय नहीं करता; यह हमारे दादा-परदादाओं के <strong>दर्द, तनाव (Stress), भुखमरी और ट्रॉमा (Trauma)</strong> को भी रिकॉर्ड करता है और अगली पीढ़ी में ट्रांसफर कर देता है।</p>
-
-        <p>उदाहरण के लिए, यदि आपके परदादा ने जीवन में भयंकर गरीबी या अकाल (Famine) देखा था, तो उनके DNA में 'सर्वाइवल मोड' (Survival mode) ऑन हो गया। जब आप पैदा हुए, तो भले ही आज आपके पास पैसा हो, लेकिन आपका DNA उसी 'गरीबी के डर' (Scarcity mindset) पर प्रोग्राम्ड है। इसी अचेतन डर के कारण आप गलत वित्तीय निर्णय लेते हैं और कर्ज में डूब जाते हैं। <strong>ज्योतिष में इसी अनसुलझे जेनेटिक ट्रॉमा को "पितृ दोष" कहा गया है।</strong></p>
-
-        <h2>2. कुंडली में पितृ दोष कैसे बनता है? (Sun, Moon & DNA)</h2>
-        <p>अब बात करते हैं वैदिक ज्योतिष की। कुंडली में पितृ दोष तब बनता है जब <strong>सूर्य (Sun) या चंद्रमा (Moon) का राहु या केतु (Rahu/Ketu) के साथ संबंध</strong> बन जाए। इसे विज्ञान की भाषा में कैसे समझें?</p>
-
-        <ul>
-            <li><strong>सूर्य (Sun):</strong> सूर्य पिता का कारक है। मेडिकल एस्ट्रोलॉजी में सूर्य <strong>Paternal DNA (पिता के जीन)</strong> और बोन मैरो (Bone Marrow) का प्रतिनिधित्व करता है।</li>
-            <li><strong>चंद्रमा (Moon):</strong> चंद्रमा माता का कारक है। यह <strong>Mitochondrial DNA (मातृ पक्ष के जीन)</strong> और गर्भ के वातावरण को दर्शाता है।</li>
-            <li><strong>राहु और केतु (Rahu/Ketu):</strong> राहु और केतु कोई ग्रह नहीं, बल्कि दो कटान बिंदु (Intersection points) हैं। आधुनिक विज्ञान में इन्हें <strong>DNA Double Helix</strong> (डीएनए की दोहरी कुंडली) का रूप माना जा सकता है।</li>
-        </ul>
-
-        <p>जब राहु (वायरस/म्यूटेशन) सूर्य (DNA) के साथ बैठता है (जिसे <strong>सूर्य ग्रहण या पितृ दोष</strong> कहते हैं), तो इसका सीधा अर्थ है कि पैतृक जेनेटिक्स में कोई 'गड़बड़ी' (Genetic Mutation) या गहरा मनोवैज्ञानिक ट्रॉमा मौजूद है, जो अब आपके जीवन को कंट्रोल कर रहा है।</p>
-
-        <img class="blog-image inline-image" src="images/sun-rahu-dna.jpg" alt="Sun Rahu Conjunction Medical Astrology Genetic Mutation">
-
-        <h2>3. पितृ दोष के मेडिकल और व्यावहारिक लक्षण (Symptoms)</h2>
-        <p>यदि आपकी कुंडली में पितृ दोष है, तो आपके जीवन में भूत-प्रेत नहीं आएंगे, बल्कि ये वैज्ञानिक और मनोवैज्ञानिक लक्षण दिखाई देंगे:</p>
-
-        <div class="highlight-box">
-            <h4>जेनेटिक और मनोवैज्ञानिक लक्षण:</h4>
-            <ul>
-                <li><strong>आनुवंशिक बीमारियां (Hereditary Diseases):</strong> परिवार में लगातार पीढ़ी दर पीढ़ी शुगर (Diabetes), हृदय रोग (Heart Issues), या मानसिक रोग (Depression/Schizophrenia) का चलना।</li>
-                <li><strong>प्रजनन समस्याएं (Reproductive Issues):</strong> बार-बार गर्भपात (Miscarriages) होना या संतान सुख में भारी मेडिकल कॉम्प्लीकेशन्स आना। (केतु-चंद्रमा का प्रभाव)।</li>
-                <li><strong>अकारण कर्ज और दरिद्रता:</strong> आप चाहे जितना पैसा कमा लें, कोई न कोई अकारण खर्च (अस्पताल, कोर्ट-कचहरी) उसे खत्म कर देता है। (यह आपके DNA में बैठे गरीबी के ट्रॉमा का नतीजा है)।</li>
-                <li><strong>पारिवारिक क्लेश:</strong> परिवार के सदस्यों के बीच बिना किसी बड़े कारण के भारी नफरत और विवाद होना।</li>
-            </ul>
-        </div>
-
-        <h2>4. पितृ दोष का 'जेनेटिक' और वैदिक इलाज (The Real Cure)</h2>
-        <p>यदि पितृ दोष DNA का ट्रॉमा है, तो क्या इसका इलाज हो सकता है? बिल्कुल! <strong>Neuroplasticity</strong> और वैदिक ज्योतिष के उपाय आपके DNA के एक्सप्रेशन (Gene expression) को बदल सकते हैं। गया (Gaya) में पिंडदान करने के पीछे भी एक गहरा मनोविज्ञान है।</p>
-
-        <h3>पिंडदान (Pind Daan) का मनोविज्ञान:</h3>
-        <p>जब आप अपने पूर्वजों के लिए 'पिंडदान' या श्राद्ध करते हैं, तो आप वास्तव में उनके प्रति <strong>कृतज्ञता (Gratitude)</strong> और <strong>क्षमा (Forgiveness)</strong> व्यक्त कर रहे होते हैं। मनोविज्ञान कहता है कि कृतज्ञता आपके मस्तिष्क में <em>ऑक्सीटोसिन (Oxytocin)</em> और <em>सेरोटोनिन (Serotonin)</em> रिलीज करती है। यह केमिकल बदलाव आपके जेनेटिक ट्रॉमा की चेन को तोड़ देता है। आप अपने पूर्वजों को नहीं, <strong>अपने खुद के DNA को 'शांति' दे रहे होते हैं।</strong></p>
-
         <h2>5. पितृ दोष निवारण का 15-दिन का प्रैक्टिकल रूटीन</h2>
-        <p>हजारों रुपये की पूजा कराने से पहले, अपने शरीर और अवचेतन मन (Subconscious mind) को इन सरल और वैज्ञानिक वैदिक उपायों से हील करें:</p>
+        <p>हजारों रुपये की पूजा कराने से पहले, ये सरल और शास्त्रीय उपाय श्रद्धा से करें:</p>
 
         <ol class="list-decimal pl-6 text-gray-300 space-y-3 mb-8">
-            <li><strong>सूर्य को अर्घ्य (Resetting Circadian Rhythm):</strong> प्रतिदिन सुबह उठकर सूर्य को तांबे के लोटे से जल दें। इसके दो फायदे हैं— पहला, तांबे से छनकर आने वाली सूरज की किरणें आपके 'पीनियल ग्लैंड' को एक्टिवेट करती हैं। दूसरा, सूर्य (Paternal DNA) मजबूत होने से आपका आत्म-सम्मान (Self-esteem) वापस आता है।</li>
+            <li><strong>सूर्य को अर्घ्य:</strong> प्रतिदिन सुबह उठकर तांबे के लोटे से सूर्य देव को जल अर्पित करें। ज्योतिष में सूर्य पिता और पूर्वजों का कारक है; सूर्य उपासना पितृ दोष का सबसे सरल उपाय मानी गई है।</li>
             <li><strong>कौवों और कुत्तों को भोजन (Ecological Balance):</strong> राहु और केतु को शांत करने के लिए कौवे (Crow) और स्ट्रीट डॉग्स को रोटी खिलाएं। पशु-पक्षियों की सेवा आपके 'लिम्बिक सिस्टम' (Emotions) को शांत कर सहानुभूति (Empathy) बढ़ाती है।</li>
-            <li><strong>अमावस्या का उपवास (Autophagy):</strong> हर अमावस्या (New Moon) को उपवास (Fasting) रखें। उपवास से शरीर में <em>Autophagy</em> की प्रक्रिया शुरू होती है, जो शरीर की खराब और डैमेज कोशिकाओं (Damaged Cells) को खुद ही खाकर शरीर को कैंसर और जेनेटिक बीमारियों से बचाती है।</li>
+            <li><strong>अमावस्या पर तर्पण और दान:</strong> हर अमावस्या को पूर्वजों के नाम से जल-तर्पण करें, ज़रूरतमंदों को भोजन कराएं और पितृ पक्ष में श्राद्ध अवश्य करें। स्वास्थ्य ठीक हो तो सात्विक उपवास भी रख सकते हैं।</li>
             <li><strong>दक्षिण दिशा में दीपक:</strong> पितरों की दिशा दक्षिण मानी गई है। वहां तिल के तेल का दीपक जलाने से इलेक्ट्रोमैग्नेटिक शुद्धि होती है।</li>
         </ol>
 
         <h2>निष्कर्ष: अंधविश्वास से विज्ञान की ओर</h2>
-        <p>आपके पूर्वज आपके शुभचिंतक हैं, वे कभी आपको बर्बाद नहीं करना चाहेंगे। <strong>पितृ दोष असल में प्रकृति का आपको दिया गया एक 'अलार्म' (Alarm) है कि आपके परिवार के DNA में कुछ ट्रॉमा या बीमारियां चल रही हैं, जिन्हें आपको अपनी पीढ़ी में आकर ठीक (Heal) करना है।</strong></p>
+        <p>आपके पूर्वज आपके शुभचिंतक हैं, वे कभी आपको बर्बाद नहीं करना चाहेंगे। पितृ दोष हमें याद दिलाता है कि हम अपने बड़ों का सम्मान करें, परिवार में प्रेम बनाए रखें और उनकी स्मृति में अच्छे कर्म करें।</p>
         
-        <p>डरना बंद करें। जब आप विज्ञान और अध्यात्म को मिलाकर इन दोषों का उपाय करते हैं, तो आप न केवल अपनी कुंडली को ठीक करते हैं, बल्कि अपनी आने वाली पीढ़ियों के DNA को भी एक शानदार और स्वस्थ भविष्य का उपहार देते हैं!</p>
+        <p>डरना बंद करें। जब आप श्रद्धा से श्राद्ध, तर्पण, दान और बड़ों की सेवा करते हैं, तो न केवल मन को शांति मिलती है, बल्कि परिवार में भी सुख और सौहार्द बढ़ता है।</p>
       </article>
       
       <!-- Author Profile Block -->

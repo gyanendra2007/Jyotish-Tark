@@ -57,8 +57,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -185,18 +187,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -233,7 +235,7 @@
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
         <p>क्या आपने कभी गौर किया है कि किसी विशेष घर या कमरे में प्रवेश करते ही आपको अचानक भारीपन, थकान या घबराहट महसूस होने लगती है? इसके विपरीत, कुछ जगहों पर जाते ही आपका मन अकारण ही शांत और प्रफुल्लित हो जाता है। क्या यह सिर्फ एक मनोवैज्ञानिक (Psychological) भ्रम है? <strong>मेडिकल साइंस और क्वांटम फिजिक्स कहता है— बिल्कुल नहीं!</strong></p>
 
-        <p>एक मेडिकल छात्र और वैदिक ज्योतिषी होने के नाते, मैं <strong>वास्तु शास्त्र (Vastu Shastra)</strong> को किसी अंधविश्वास या सिर्फ फर्नीचर खिसकाने की कला के रूप में नहीं देखता। वास्तु असल में पृथ्वी के इलेक्ट्रोमैग्नेटिक फील्ड (Electromagnetic Field), कॉस्मिक ऊर्जा (Cosmic Energy) और मानव शरीर की न्यूरोबायोलॉजी (Neurobiology) के बीच का गहरा तालमेल है। आज हम वास्तु के उन रहस्यों को खोलेंगे जिन्हें 99% लोग नहीं जानते।</p>
+        <p>एक वैदिक ज्योतिषी होने के नाते, मैं वास्तु शास्त्र (Vastu Shastra) को अंधविश्वास या सिर्फ फर्नीचर खिसकाने की कला नहीं मानता। वास्तु दिशाओं, पंचतत्व, सूर्य के प्रकाश और हवा के प्रवाह को ध्यान में रखकर घर को सुखद और संतुलित बनाने की प्राचीन विद्या है।</p>
 
         <blockquote>
           "वास्तु शास्त्र का मूल सिद्धांत है: जैसा ब्रह्मांड में है (Macrocosm), वैसा ही मानव शरीर में है (Microcosm), और वैसा ही उस घर में होना चाहिए जहां वह शरीर रहता है।"
@@ -241,35 +243,26 @@
 
         <h2>1. वास्तु पुरुष मंडल (Vastu Purusha Mandala): घर की एनाटॉमी (Anatomy)</h2>
         
-        <p>प्राचीन ऋषियों ने घर के नक्शे को एक जीवित प्राणी माना है, जिसे 'वास्तु पुरुष' कहते हैं। मेडिकल भाषा में, जैसे मानव शरीर में विभिन्न अंग (हृदय, मस्तिष्क, फेफड़े) होते हैं, वैसे ही घर के विभिन्न कोनों को ऊर्जा के विशिष्ट अंगों के रूप में विभाजित किया गया है।</p>
+        <p>प्राचीन ऋषियों ने घर के नक्शे को एक जीवित प्राणी माना है, जिसे 'वास्तु पुरुष' कहते हैं। जैसे मानव शरीर में विभिन्न अंग होते हैं, वैसे ही घर के विभिन्न कोनों को ऊर्जा के विशिष्ट अंगों के रूप में विभाजित किया गया है।</p>
 
         <img class="blog-image inline-image" src="images/vastu-elements.jpg" alt="4 Elements of Vastu Shastra Agni Vayu Jal Prithvi">
 
         <div class="highlight-box">
             <h4>चार मुख्य दिशाएं और शरीर के अंग:</h4>
             <ul>
-                <li><strong>ईशान कोण (North-East / Water Element):</strong> यह घर का 'मस्तिष्क' (Brain) और पीनियल ग्लैंड (Pineal Gland) है। यह दिशा जल तत्व को दर्शाती है। यदि इस दिशा में भारी निर्माण, कूड़ा या शौचालय (Toilet) है, तो उस घर के सदस्यों को माइग्रेन, न्यूरोलॉजिकल समस्याएं और निर्णय लेने में भारी कन्फ्यूजन (Brain Fog) का सामना करना पड़ता है।</li>
-                <li><strong>आग्नेय कोण (South-East / Fire Element):</strong> यह घर का 'पाचन तंत्र' (Digestive System) और 'मेटाबॉलिज्म' है। यह दिशा अग्नि तत्व की है। यदि यहाँ पानी का टैंक बना दिया जाए, तो घर का 'कैश फ्लो' (Cash Flow) और स्त्रियों का स्वास्थ्य (Gynecological issues) पूरी तरह से जलकर खाक हो जाता है।</li>
-                <li><strong>नैऋत्य कोण (South-West / Earth Element):</strong> यह घर का 'कंकाल तंत्र' (Skeletal System) है। यह स्थिरता (Stability) देता है। घर के मुखिया (Head of the family) का कमरा यहीं होना चाहिए। यदि यह दिशा कमजोर या कटी हुई है, तो हड्डियां कमजोर होती हैं और जीवन में स्थायित्व कभी नहीं आता।</li>
-                <li><strong>वायव्य कोण (North-West / Air Element):</strong> यह घर का 'श्वसन तंत्र' (Respiratory System) है। यह गति (Movement) और नेटवर्किंग का कारक है। यदि यहाँ कोई वास्तु दोष है, तो कोर्ट-कचहरी के मामले और डिप्रेशन (Depression) जैसी समस्याएं जन्म लेती हैं।</li>
+                <li><strong>ईशान कोण (North-East / Water Element):</strong> यह घर का सबसे पवित्र कोना माना जाता है और जल तत्व को दर्शाता है। यहाँ पूजा-स्थान रखना शुभ है। इस दिशा में भारी निर्माण, कूड़ा या शौचालय होने को वास्तु दोष माना जाता है, जिससे मानसिक अशांति और निर्णय लेने में उलझन बढ़ती है।</li>
+                <li><strong>आग्नेय कोण (South-East / Fire Element):</strong> यह अग्नि तत्व की दिशा है, इसलिए रसोई के लिए सबसे उपयुक्त मानी जाती है। यहाँ पानी का टैंक बनाना वास्तु दोष माना जाता है, जिससे घर के 'कैश फ्लो' (Cash Flow) में रुकावट आती है।</li>
+                <li><strong>नैऋत्य कोण (South-West / Earth Element):</strong> यह पृथ्वी तत्व की दिशा है और घर को स्थिरता (Stability) देती है। घर के मुखिया (Head of the family) का कमरा यहीं होना चाहिए। यदि यह दिशा कमजोर या कटी हुई हो, तो जीवन में स्थायित्व की कमी मानी जाती है।</li>
+                <li><strong>वायव्य कोण (North-West / Air Element):</strong> यह वायु तत्व की दिशा है और गति (Movement) व नेटवर्किंग का कारक है। यहाँ वास्तु दोष होने पर कोर्ट-कचहरी के मामले और मन की अस्थिरता जैसी समस्याएं मानी जाती हैं।</li>
             </ul>
         </div>
-
-        <h2>2. उत्तर दिशा में सिर रखकर सोना क्यों मना है? (The Medical Science)</h2>
-        <p>भारत में हर बच्चा अपनी दादी-नानी से सुनता है कि "उत्तर (North) की ओर सिर करके मत सोओ।" लेकिन इसके पीछे का विज्ञान क्या है?</p>
-
-        <img class="blog-image inline-image" src="images/vastu-magnetic.jpg" alt="Vastu Shastra Earth Magnetic Field Sleeping Direction">
-
-        <p>पृथ्वी का अपना एक विशाल इलेक्ट्रोमैग्नेटिक फील्ड है, जिसका उत्तरी ध्रुव (North Pole) पॉजिटिव (+) और दक्षिणी ध्रुव (South Pole) नेगेटिव (-) चार्ज होता है। इसी प्रकार, मानव शरीर का भी अपना एक मैग्नेटिक फील्ड है—जहाँ हमारा सिर पॉजिटिव (+) और पैर नेगेटिव (-) होते हैं।</p>
-        
-        <p>हमारे रक्त (Blood) में हीमोग्लोबिन होता है, जिसका मुख्य तत्व <strong>आयरन (Iron)</strong> है। जब आप उत्तर दिशा में सिर करके सोते हैं, तो पृथ्वी का उत्तरी ध्रुव और आपके सिर का उत्तरी ध्रुव आपस में टकराते हैं (Like poles repel)। इस भारी चुंबकीय प्रतिकर्षण (Magnetic Repulsion) के कारण आपके मस्तिष्क में रक्त का प्रवाह अनियंत्रित रूप से बढ़ जाता है। इसके परिणामस्वरूप आपको बुरे सपने (Nightmares), स्लीप एप्निया (Sleep Apnea), सुबह उठकर भारी थकान और लंबे समय में <strong>ब्रेन स्ट्रोक (Brain Stroke) या उच्च रक्तचाप (Hypertension)</strong> का खतरा कई गुना बढ़ जाता है। यही कारण है कि दक्षिण (South) या पूर्व (East) की ओर सिर रखकर सोना सबसे स्वास्थ्यवर्धक माना गया है।</p>
 
         <h2>3. ब्रह्मस्थान (Brahmasthan): घर का धड़कता हुआ हृदय</h2>
         <p>ब्रह्मस्थान घर का बिल्कुल मध्य भाग (Center) होता है। जिस प्रकार मानव शरीर में नाभि (Navel) या हृदय सबसे महत्वपूर्ण होता है, वैसे ही घर का पूरा ऊर्जा संचार ब्रह्मस्थान से ही होता है।</p>
 
         <img class="blog-image inline-image" src="images/vastu-brahmasthan.jpg" alt="Brahmasthan The Cosmic Heart of the House in Vastu">
 
-        <p>प्राचीन काल के आंगनों (Courtyards) वाले घरों में यह स्थान हमेशा खुला रखा जाता था ताकि कॉस्मिक एनर्जी (Cosmic Energy) सीधे घर में आ सके। आज के आधुनिक फ्लैट्स (Apartments) में, यदि आपने घर के बिल्कुल बीचों-बीच भारी डाइनिंग टेबल, कोई पिलर (Pillar), या सबसे खराब—शौचालय (Toilet) बना रखा है, तो उस घर में कभी शांति नहीं आ सकती। घर के केंद्र में भारी अवरोध होने से परिवार के सदस्यों को पेट की गंभीर बीमारियां (Gastrointestinal diseases) और अकारण आर्थिक नुकसान झेलना पड़ता है। <strong>ब्रह्मस्थान को हमेशा खाली, साफ और हल्का (Clutter-free) रखें।</strong></p>
+        <p>प्राचीन काल के आंगनों (Courtyards) वाले घरों में यह स्थान हमेशा खुला रखा जाता था ताकि सूर्य का प्रकाश और हवा सीधे घर में आ सके। आज के आधुनिक फ्लैट्स (Apartments) में, यदि आपने घर के बिल्कुल बीचों-बीच भारी डाइनिंग टेबल, कोई पिलर (Pillar), या सबसे खराब—शौचालय (Toilet) बना रखा है, तो उस घर में कभी शांति नहीं आ सकती। वास्तु के अनुसार घर के केंद्र में भारी अवरोध परिवार में अशांति और आर्थिक रुकावट का कारण माना जाता है। <strong>ब्रह्मस्थान को हमेशा खाली, साफ और हल्का (Clutter-free) रखें।</strong></p>
 
         <h2>4. आधुनिक फ्लैट्स में वास्तु दोष: बिना तोड़-फोड़ के वैज्ञानिक उपाय (Remedies)</h2>
         <p>कई लोग वास्तु दोष सुनकर डर जाते हैं कि अब पूरा घर तोड़ना पड़ेगा। लेकिन 'एनर्जी अलाइनमेंट' (Energy Alignment) के लिए घर तोड़ने की जरूरत नहीं होती। आप रंगों (Colors), धातुओं (Metals) और प्राकृतिक तत्वों से ऊर्जा को बैलेंस कर सकते हैं:</p>
@@ -281,9 +274,9 @@
         </ul>
 
         <h2>निष्कर्ष: आपका घर आपका मंदिर है</h2>
-        <p>वास्तु शास्त्र कोई जादू-टोना नहीं है। यह पर्यावरण (Environment) और मानव मनोविज्ञान (Human Psychology) के बीच सामंजस्य बिठाने का सबसे पुराना और सटीक विज्ञान है। यदि आप लगातार बीमार पड़ रहे हैं, करियर में रुकावट आ रही है, या घर में बिना बात के कलेश हो रहा है, तो एक बार अपनी जन्म कुंडली (Kundali) और अपने घर के वास्तु (Vastu) दोनों का गहराई से विश्लेषण करवाएं।</p>
+        <p>वास्तु शास्त्र कोई जादू-टोना नहीं है। यह घर और प्रकृति के बीच सामंजस्य बिठाने की सबसे पुरानी भारतीय विद्या है। यदि करियर में रुकावट आ रही है, या घर में बिना बात के कलेश हो रहा है, तो एक बार अपनी जन्म कुंडली (Kundali) और अपने घर के वास्तु (Vastu) दोनों का गहराई से विश्लेषण करवाएं।</p>
         
-        <p>याद रखें, एक बीमार शरीर कभी बड़े लक्ष्य हासिल नहीं कर सकता, और एक बीमार घर (वास्तु दोष वाला घर) कभी एक स्वस्थ और समृद्ध परिवार को नहीं पाल सकता। अपने घर की ऊर्जा को संतुलित करें, ब्रह्मांड आपकी ऊर्जा को अपने आप संतुलित कर देगा!</p>
+        <p>याद रखें, एक सुखद और व्यवस्थित घर पूरे परिवार को ऊर्जा देता है। अपने घर को साफ, हवादार और व्यवस्थित रखें, और सरल वास्तु नियमों का पालन करें — घर में सुख-शांति अपने आप बढ़ेगी।</p>
       </article>
       
       <!-- Author Profile Block -->

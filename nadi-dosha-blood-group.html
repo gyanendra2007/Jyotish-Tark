@@ -58,8 +58,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -183,18 +185,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -231,11 +233,9 @@
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
         <p>भारत में जब दो लोगों की शादी तय होती है, तो कुंडली मिलान (Kundali Milan) में सबसे ज्यादा खौफ जिस चीज का होता है, वह है <strong>"नाड़ी दोष" (Nadi Dosha)</strong>। कुंडली मिलान के 36 गुणों में से सबसे अधिक 8 गुण नाड़ी को दिए गए हैं। पंडित जी अक्सर डरा देते हैं कि "नाड़ी दोष है, 0 गुण मिल रहे हैं... शादी की तो बच्चा अपंग पैदा होगा या किसी एक की मृत्यु हो जाएगी!" और पल भर में एक हँसता-खेलता रिश्ता टूट जाता है।</p>
 
-        <p>लेकिन एक मेडिकल छात्र (MBBS) और वैदिक ज्योतिषी के रूप में, मैं आपको बताना चाहता हूँ कि ऋषियों ने 'नाड़ी' का सिद्धांत आपको डराने के लिए नहीं, बल्कि जेनेटिक्स (Genetics) और इम्यूनोलॉजी (Immunology) को समझने के लिए बनाया था। <strong>नाड़ी दोष का सीधा संबंध आपके 'ब्लड ग्रुप' (Blood Group) और 'Rh-Factor Incompatibility' से है।</strong> आइए इस अंधविश्वास का मेडिकल चीरहरण करते हैं।</p>
+        <p>लेकिन एक वैदिक ज्योतिषी के रूप में मैं आपको बताना चाहता हूँ कि नाड़ी का सिद्धांत आपको डराने के लिए नहीं बनाया गया। आयुर्वेद की तरह ज्योतिष में भी नाड़ी को वात, पित्त और कफ — तीन प्रकृतियों से जोड़ा गया है, और कुंडली मिलान में इसका उद्देश्य दोनों के स्वभाव का तालमेल देखना है।</p>
 
-        <blockquote>
-          "नाड़ी कोई रहस्यमयी श्राप नहीं है। आयुर्वेद और आधुनिक चिकित्सा के अनुसार, यह वर और वधू के जीन्स (Genes) और इम्यून सिस्टम (Immune System) के क्लैश होने का एक जेनेटिक इंडिकेटर है।"
-        </blockquote>
+        <blockquote>"नाड़ी कोई रहस्यमयी श्राप नहीं है। यह कुंडली मिलान का एक कूट है, जिसका शास्त्रों में परिहार भी बताया गया है।"</blockquote>
 
         <img class="blog-image inline-image" src="images/ayurveda-dosha.jpg" alt="Vata Pitta Kapha Ayurveda Nadi Dosha Science">
 
@@ -244,32 +244,20 @@
         <p>वैदिक ज्योतिष में 27 नक्षत्रों को 3 नाड़ियों में बांटा गया है: <strong>आदि (Aadi), मध्य (Madhya), और अंत्य (Antya)</strong>। आयुर्वेद के अनुसार, ये तीन नाड़ियां मानव शरीर के तीन मुख्य 'दोषों' (Prakriti) का प्रतिनिधित्व करती हैं:</p>
 
         <ul>
-            <li><strong>आदि नाड़ी (Aadi Nadi):</strong> 'वात' (Vata / Air) प्रकृति का प्रतीक है। (नर्वस सिस्टम और रेस्पिरेशन)।</li>
+            <li><strong>आदि नाड़ी (Aadi Nadi):</strong> 'वात' (Vata / Air) प्रकृति का प्रतीक है। ।</li>
             <li><strong>मध्य नाड़ी (Madhya Nadi):</strong> 'पित्त' (Pitta / Fire) प्रकृति का प्रतीक है। (मेटाबॉलिज्म और पाचन)।</li>
-            <li><strong>अंत्य नाड़ी (Antya Nadi):</strong> 'कफ' (Kapha / Water) प्रकृति का प्रतीक है। (इम्यूनिटी और जेनेटिक्स)।</li>
+            <li><strong>अंत्य नाड़ी (Antya Nadi):</strong> 'कफ' (Kapha / Water) प्रकृति का प्रतीक है। ।</li>
         </ul>
 
         <p>ज्योतिष का नियम कहता है कि वर और वधू दोनों की नाड़ी <strong>समान (Same) नहीं होनी चाहिए</strong>। यदि दोनों की 'आदि' नाड़ी है, या दोनों की 'मध्य' नाड़ी है, तो इसे <strong>नाड़ी दोष</strong> कहा जाता है और इसके लिए 0 अंक दिए जाते हैं।</p>
 
-        <h2>2. नाड़ी दोष और मेडिकल साइंस: 'Rh-Factor Incompatibility'</h2>
-        <p>अब सवाल उठता है कि समान नाड़ी होने पर शादी क्यों नहीं करनी चाहिए? इसका जवाब आधुनिक <strong>हेमेटोलॉजी (Hematology - रक्त विज्ञान)</strong> में छिपा है।</p>
-
-        <p>जब एक जैसी प्रकृति (समान नाड़ी) वाले दो लोग विवाह करते हैं, तो उनके शरीर का <em>जेनेटिक मेकअप</em> और <em>ब्लड एंटीजेन्स (Blood Antigens)</em> एक समान तरीके से रिएक्ट करते हैं। मेडिकल साइंस में एक गंभीर स्थिति होती है जिसे <strong>Rh-Factor Incompatibility (आरएच फैक्टर असंगति)</strong> कहते हैं।</p>
-
-        <div class="highlight-box">
-            <h4>जेनेटिक क्लैश (Erythroblastosis Fetalis):</h4>
-            <p>यदि पिता का ब्लड ग्रुप Rh-Positive (जैसे B+) है और माता का ब्लड ग्रुप Rh-Negative (जैसे O-) है, तो गर्भावस्था के दौरान माँ का शरीर बच्चे के खून (जो पिता से Positive आया है) को एक 'खतरा' (Foreign body) मान लेता है और उसके खिलाफ 'एंटीबॉडीज' (Antibodies) बनाने लगता है। इससे बच्चा गर्भ में ही बीमार हो सकता है या उसकी मृत्यु हो सकती है। प्राचीन ऋषियों ने ब्लड टेस्ट किए बिना, <strong>नक्षत्रों की जेनेटिक कोडिंग</strong> के माध्यम से इसी 'जेनेटिक क्लैश' को <strong>नाड़ी दोष</strong> का नाम दिया था।</p>
-        </div>
-
-        <img class="blog-image inline-image" src="images/rh-factor-astrology.jpg" alt="Rh Factor Incompatibility Erythroblastosis Fetalis Nadi Dosha">
-
         <h2>3. क्या नाड़ी दोष होने पर शादी तोड़ देनी चाहिए? (Myth Buster)</h2>
         <p><strong>बिल्कुल नहीं!</strong> यह सबसे बड़ा अंधविश्वास है कि नाड़ी दोष होने पर शादी नहीं हो सकती। हमारे शास्त्रों (जैसे <em>मुहूर्त चिंतामणि</em> और <em>पीयूष धारा</em>) में नाड़ी दोष के <strong>परिहार (Cancellation)</strong> के कई नियम दिए गए हैं, जिन्हें आजकल के पंडित अक्सर नजरअंदाज कर देते हैं या उन्हें पता ही नहीं होता।</p>
 
-        <p>मेडिकल साइंस के अनुसार भी, आज अगर Rh-Incompatibility होती है, तो पहली डिलीवरी के बाद महिला को <strong>Anti-D (Rhogam) का इंजेक्शन</strong> लगा दिया जाता है, जिससे सारे खतरे खत्म हो जाते हैं। ज्योतिष में भी नाड़ी दोष इन स्थितियों में स्वतः समाप्त (Cancel) हो जाता है:</p>
+        <p>ज्योतिष शास्त्र में नाड़ी दोष इन स्थितियों में स्वतः समाप्त (Cancel) माना जाता है:</p>
 
         <ul>
-            <li><strong>एक ही नक्षत्र, लेकिन अलग चरण:</strong> यदि लड़का और लड़की दोनों का नक्षत्र एक ही है (जैसे रोहिणी), लेकिन उनके जन्म के चरण अलग-अलग हैं (एक का जन्म प्रथम चरण में और दूसरे का चतुर्थ चरण में), तो नाड़ी दोष खत्म हो जाता है। (जेनेटिक डाइवर्सिटी मेंटेन रहती है)।</li>
+            <li><strong>एक ही नक्षत्र, लेकिन अलग चरण:</strong> यदि लड़का और लड़की दोनों का नक्षत्र एक ही है (जैसे रोहिणी), लेकिन उनके जन्म के चरण अलग-अलग हैं (एक का जन्म प्रथम चरण में और दूसरे का चतुर्थ चरण में), तो नाड़ी दोष खत्म हो जाता है। </li>
             <li><strong>एक ही राशि, लेकिन अलग नक्षत्र:</strong> यदि दोनों की राशि एक है (जैसे मिथुन), लेकिन नक्षत्र अलग हैं (एक का मृगशिरा और दूसरे का आर्द्रा), तो नाड़ी दोष लागू नहीं होता।</li>
             <li><strong>एक ही नक्षत्र, लेकिन अलग राशि:</strong> यदि नक्षत्र एक ही है (जैसे कृत्तिका), लेकिन एक का वृषभ राशि में है और दूसरे का मेष राशि में, तो दोष भंग हो जाता है।</li>
         </ul>
@@ -278,14 +266,14 @@
         <p>यदि आप किसी ऐसे व्यक्ति से प्यार करते हैं जिसके साथ आपका नाड़ी दोष बन रहा है (और कैंसिलेशन भी नहीं हो रहा है), तो घबराने की कोई बात नहीं है। आप इन आधुनिक और वैदिक उपायों का पालन करके एक स्वस्थ जीवन जी सकते हैं:</p>
 
         <ol class="list-decimal pl-6 text-gray-300 space-y-3 mb-8">
-            <li><strong>Medical Blood Test:</strong> शादी से पहले लड़का और लड़की दोनों अपना पूरा <em>Complete Blood Count (CBC)</em> और <em>Rh-Factor Test</em> कराएं। यदि दोनों का Rh-Factor सेम है (दोनों Positive या दोनों Negative), तो जेनेटिकली कोई बड़ा खतरा नहीं है।</li>
-            <li><strong>महामृत्युंजय मंत्र का अनुष्ठान:</strong> यदि सच में कोई जेनेटिक दोष है, तो विवाह से पूर्व शिव जी के 'महामृत्युंजय मंत्र' का सवा लाख जाप कराएं। ध्वनि विज्ञान (Acoustics) के अनुसार, यह मंत्र शरीर के 'ऑटोइम्यून रिस्पॉन्स' (Autoimmune response) को शांत करता है।</li>
+            <li><strong>विवाह से पहले स्वास्थ्य जाँच:</strong> नाड़ी दोष हो या न हो, विवाह से पहले डॉक्टर की सलाह से दोनों का ब्लड ग्रुप व Rh-Factor, CBC और थैलेसीमिया जैसी सामान्य जाँच कराना समझदारी है। यदि पत्नी Rh-Negative और पति Rh-Positive हैं, तो भी घबराने की बात नहीं — गर्भावस्था में डॉक्टर इसका सुरक्षित प्रबंधन करते हैं। यह जाँच ज्योतिष का विकल्प नहीं, एक अलग स्वास्थ्य सावधानी है।</li>
+            <li><strong>महामृत्युंजय मंत्र का अनुष्ठान:</strong> शास्त्रों में नाड़ी दोष के परिहार के लिए विवाह से पूर्व शिव जी के 'महामृत्युंजय मंत्र' का सवा लाख जाप कराने का विधान बताया गया है।</li>
             <li><strong>स्वर्ण दान (Gold Donation) और नाड़ी दोष निवारण पूजा:</strong> ज्योतिषीय उपाय के रूप में स्वर्ण (Gold), गाय (Cow), या अन्न का दान किया जाता है। सोना (Gold) इलेक्ट्रोमैग्नेटिक ऊर्जा का सबसे अच्छा सुचालक है जो शरीर की 'कफ' या 'वात' प्रकृति को संतुलित करता है।</li>
-            <li><strong>रक्तदान (Blood Donation):</strong> विवाह से पहले और बाद में पति-पत्नी दोनों को नियमित रूप से रक्तदान करना चाहिए। यह बोन मैरो (Bone Marrow) को नई रक्त कोशिकाएं बनाने के लिए प्रेरित करता है, जिससे जेनेटिक म्यूटेशन का खतरा कम होता है।</li>
+            <li><strong>दान:</strong> नाड़ी दोष के परिहार के लिए अन्न, वस्त्र और स्वर्ण-दान की परंपरा बताई गई है। अपनी सामर्थ्य के अनुसार ज़रूरतमंदों की सेवा करें।</li>
         </ol>
 
         <h2>निष्कर्ष: डर का व्यापार बंद करें</h2>
-        <p>कुंडली मिलान का उद्देश्य दो लोगों को अलग करना नहीं, बल्कि उनके जेनेटिक और मनोवैज्ञानिक तालमेल (Compatibility) को समझना है। <strong>नाड़ी दोष का अर्थ मृत्यु या अपंगता नहीं है; यह सिर्फ एक 'मेडिकल अलर्ट' (Medical Alert) है</strong> कि आपको अपनी हेल्थ और होने वाले बच्चे की जेनेटिक्स को लेकर थोड़ा एक्स्ट्रा केयरफुल रहना है।</p>
+        <p>कुंडली मिलान का उद्देश्य दो लोगों को अलग करना नहीं, बल्कि उनके स्वभाव और जीवन के तालमेल को समझना है। नाड़ी दोष का अर्थ मृत्यु या अपंगता नहीं है। सही परिहार, आपसी समझ और विवाह से पहले सामान्य स्वास्थ्य जाँच — यही सबसे संतुलित रास्ता है।</p>
         
         <p>आधुनिक चिकित्सा विज्ञान (Medicine) और सही वैदिक ज्योतिष के ज्ञान के साथ, आप किसी भी दोष को पार कर सकते हैं। इसलिए 'नाड़ी दोष' के नाम पर डराने वाले झोलाछाप ज्ञानियों से बचें और अपने सच्चे प्यार को विज्ञान और अध्यात्म के सही तालमेल के साथ अपनाएं!</p>
       </article>

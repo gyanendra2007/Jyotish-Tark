@@ -57,8 +57,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -193,18 +195,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -239,21 +241,15 @@
       
       <article class="article-content hindi">
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
-        <p>आज के डिजिटल युग में, जहाँ हमारा ध्यान (Attention Span) गोल्डफिश से भी कम हो गया है—हम चीजें भूल जाते हैं, पढ़ते समय फोकस नहीं कर पाते, और अक्सर 'ब्रेन फॉग' (Brain Fog) का शिकार रहते हैं। हम इसे ठीक करने के लिए महंगी दवाइयां (Nootropics) खाते हैं। लेकिन क्या आपको पता है कि वैदिक ऋषियों ने हजारों साल पहले ही मानव मस्तिष्क को 'सुपरचार्ज' करने का कोड लिख दिया था?</p>
+        <p>आज के डिजिटल युग में हमारा ध्यान (Attention Span) बहुत कम हो गया है — हम चीजें भूल जाते हैं और पढ़ते समय फोकस नहीं कर पाते। ऐसे समय में हमारे ऋषियों की बताई मेधा सूक्त की प्रार्थना विद्यार्थियों के लिए विशेष महत्व रखती है।</p>
 
-        <p>एक मेडिकल छात्र (MBBS) होने के नाते, मैं मानव मस्तिष्क के हिप्पोकैम्पस (Hippocampus) और न्यूरोप्लास्टिसिटी (Neuroplasticity) का गहराई से अध्ययन करता हूँ। जब मैंने <strong>मेधा सूक्त (Medha Suktam)</strong> का विश्लेषण किया, तो मुझे समझ आया कि यह केवल एक प्रार्थना नहीं है; यह आपके मस्तिष्क की न्यूरॉनल वायरिंग (Neural Wiring) को बदलने का एक <strong>सोनिक (Acoustic) एल्गोरिदम</strong> है। <span class="hidden-cite"></span></p>
+        <p>मेधा सूक्त (Medha Suktam) माँ सरस्वती और मेधा देवी से बुद्धि, स्मरण शक्ति और विद्या की प्रार्थना है। आइए इसके मंत्र, उनका अर्थ और विद्यार्थियों के लिए पाठ की सही विधि समझते हैं।</p>
 
         <blockquote>
           "मेधा (Medha) केवल 'ज्ञान' नहीं है। ज्ञान तो गूगल पर भी है। मेधा का अर्थ है 'रिटेंशन' (Retention)—ज्ञान को धारण करने, समझने और सही समय पर उसे याद करने की कॉग्निटिव (Cognitive) क्षमता।"
         </blockquote>
 
         <img class="blog-image inline-image" src="images/neuroplasticity-mantra.jpg" alt="Neuroplasticity and Sanskrit Mantra Frequencies">
-
-        <h2>मेडिकल एस्ट्रोलॉजी: मेधा, बुध (Mercury) और गुरु (Jupiter)</h2>
-        
-        <p>ज्योतिष में, आपकी बुद्धि और नर्वस सिस्टम का नियंत्रण <strong>बुध (Mercury)</strong> के पास है, जबकि ज्ञान (Wisdom) का नियंत्रण <strong>गुरु (Jupiter)</strong> के पास है। जब ये ग्रह राहु या शनि से पीड़ित होते हैं, तो व्यक्ति की याददाश्त (Memory) कमजोर हो जाती है और वह अक्सर भ्रमित रहता है।</p>
-
-        <p>आधुनिक न्यूरोबायोलॉजी (Neurobiology) में, जब आप मेधा सूक्त के विशिष्ट संस्कृत अक्षरों का उच्चारण करते हैं, तो वह आपके मस्तिष्क में <strong>गामा (Gamma) और अल्फा (Alpha) ब्रेन वेव्स</strong> उत्पन्न करता है। यह ध्वन्यात्मक ऊर्जा (Acoustic Energy) सीधे आपके <em>प्रीफ्रंटल कॉर्टेक्स (Prefrontal Cortex)</em> को उत्तेजित करती है, जिससे ध्यान, तर्क और सीखने की क्षमता कई गुना बढ़ जाती है। <span class="hidden-cite"></span></p>
 
         <h2>सम्पूर्ण मेधा सूक्त (मूल संस्कृत पाठ और गहरा भावार्थ)</h2>
         <p>महान वेदों से लिया गया यह सूक्त मेधा देवी (सरस्वती का बुद्धिमत्ता स्वरूप) का आह्वान करता है। आइए इसे अर्थ सहित समझते हैं: <span class="hidden-cite"></span></p>
@@ -304,7 +300,7 @@
             <!-- Shloka 8 -->
             <div class="shloka-box">
                 <p class="sanskrit">मयि मेधां मयि प्रजां मय्यग्निस्तेजो दधातु ।<br>मयि मेधां मयि प्रजां मयीन्द्र इन्द्रियं दधातु ।<br>मयि मेधां मयि प्रजां मयि सूर्यो भ्राजो दधातु ।</p>
-                <p class="meaning"><strong>भावार्थ:</strong> अग्निदेव मेरे भीतर तेज और मेधा का संचार करें। इन्द्रदेव मेरी इन्द्रियों (Senses) में शक्ति और स्थिरता प्रदान करें। सूर्यदेव मुझमें प्रकाश, बुद्धि और ओज (Aura) प्रदान करें। मेरी बुद्धि सदैव प्रकाशित रहे। <span class="hidden-cite"></span></p>
+                <p class="meaning"><strong>भावार्थ:</strong> अग्निदेव मेरे भीतर तेज और मेधा का संचार करें। इन्द्रदेव मेरी इन्द्रियों (Senses) में शक्ति और स्थिरता प्रदान करें। सूर्यदेव मुझमें प्रकाश, बुद्धि और ओज (तेज) प्रदान करें। मेरी बुद्धि सदैव प्रकाशित रहे। <span class="hidden-cite"></span></p>
             </div>
 
             <!-- Gayatri & Hamsa Mantra -->
@@ -316,16 +312,9 @@
 
         <img class="blog-image inline-image" src="images/student-focus.jpg" alt="Vedic Medha Suktam Focus for Students">
 
-        <h2>मेधा सूक्त के वैज्ञानिक और ज्योतिषीय लाभ</h2>
-        <ul>
-            <li><strong>छात्रों के लिए अमोघ अस्त्र:</strong> मेडिकल या इंजीनियरिंग की तैयारी कर रहे छात्रों के लिए यह 'ब्रेन हैक' (Brain Hack) है। परीक्षा से पहले इसका पाठ तनाव (Cortisol) को घटाता है और 'मेमोरी कंसोलिडेशन' (Memory Consolidation) को बढ़ाता है। <span class="hidden-cite"></span></li>
-            <li><strong>वाक्पटुता (Communication Skills):</strong> जो लोग हकलाते हैं या इंटरव्यू में घबरा जाते हैं, उनके लिए यह स्तोत्र उनके 'विशुद्ध चक्र' (Throat Chakra) और बुध ग्रह (Mercury) को तुरंत सक्रिय करता है।</li>
-            <li><strong>न्यूरोलॉजिकल हीलिंग:</strong> डिमेंशिया (Dementia) या उम्र के साथ याददाश्त कम होने की समस्या में इस मंत्र के वाइब्रेशन्स मस्तिष्क की कोशिकाओं (Neurons) को फिर से जीवंत करते हैं। <span class="hidden-cite"></span></li>
-        </ul>
-
         <h2>निष्कर्ष: अपनी बुद्धि के हार्डवेयर को अपग्रेड करें</h2>
-        <p>हम मोबाइल और कंप्यूटर का तो सॉफ्टवेयर और हार्डवेयर अपग्रेड करते रहते हैं, लेकिन अपने शरीर के सबसे बड़े सुपरकंप्यूटर—अपने मस्तिष्क—पर ध्यान नहीं देते। <span class="hidden-cite"></span></p>
-        <p>मेधा सूक्त आपके मस्तिष्क का वही 'सॉफ्टवेयर अपडेट' है। प्रतिदिन सुबह पूर्व या उत्तर दिशा की ओर मुख करके, रीढ़ की हड्डी सीधी रखकर इस सूक्त का केवल एक बार सस्वर पाठ करें। कुछ ही हफ्तों में आप अपनी एकाग्रता (Focus), आत्मविश्वास और याददाश्त में वह बदलाव देखेंगे जिसे कोई मेडिकल टॉनिक नहीं ला सकता!</p>
+        <p>हम मोबाइल और कंप्यूटर को तो समय-समय पर अपडेट करते रहते हैं, लेकिन अपने मन और एकाग्रता पर ध्यान नहीं देते।</p>
+        <p>प्रतिदिन सुबह पूर्व या उत्तर दिशा की ओर मुख करके, सीधे बैठकर इस सूक्त का एक बार सस्वर पाठ करें। नियमित पाठ, अच्छी नींद और मन लगाकर पढ़ाई — इन तीनों के साथ आप अपनी एकाग्रता और आत्मविश्वास में बदलाव महसूस करेंगे।</p>
       </article>
       
       <!-- Author Profile Block -->

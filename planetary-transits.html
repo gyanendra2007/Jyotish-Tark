@@ -57,8 +57,10 @@
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -186,18 +188,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -233,27 +235,11 @@
       <article class="article-content hindi">
         <p>ज्योतिष शास्त्र में ग्रहों की चाल (Transits) का विशेष महत्व है। ग्रहों की गति और उनकी स्थिति में परिवर्तन मनुष्य के जीवन पर गहरा प्रभाव डालते हैं। क्या आपने कभी सोचा है कि एक दिन सब कुछ बिल्कुल सही चल रहा होता है, और अगले ही दिन अचानक से तनाव, वाद-विवाद या आर्थिक नुकसान शुरू हो जाता है? यह सब कुछ ग्रहों के गोचर (Planetary Transits) का परिणाम है।</p>
 
-        <p>आज इस विस्तृत लेख में, हम न केवल सामान्य गोचर की बात करेंगे, बल्कि <strong>मेडिकल एस्ट्रोलॉजी (Medical Astrology)</strong> और <strong>मुंडेन एस्ट्रोलॉजी (Mundane Astrology)</strong> के उन गहरे रहस्यों से भी पर्दा उठाएंगे जो आपको शायद ही कहीं और पढ़ने को मिलें। आपकी जन्म कुंडली एक 'पार्किंग लॉट' की तरह है जहाँ ग्रह आपके जन्म के समय खड़े थे, लेकिन <strong>'गोचर'</strong> वह ट्रैफ़िक है जो आज सड़क पर चल रहा है। दोनों का टकराव ही आपके जीवन की घटनाएं तय करता है।</p>
+        <p>आज इस विस्तृत लेख में, हम न केवल सामान्य गोचर की बात करेंगे, बल्कि <strong>मुंडेन एस्ट्रोलॉजी (Mundane Astrology)</strong> के उन गहरे रहस्यों से भी पर्दा उठाएंगे जो आपको शायद ही कहीं और पढ़ने को मिलें। आपकी जन्म कुंडली एक 'पार्किंग लॉट' की तरह है जहाँ ग्रह आपके जन्म के समय खड़े थे, लेकिन <strong>'गोचर'</strong> वह ट्रैफ़िक है जो आज सड़क पर चल रहा है। दोनों का टकराव ही आपके जीवन की घटनाएं तय करता है।</p>
 
         <blockquote>
           "जन्म कुंडली आपका 'प्रारब्ध' (Past Karma) है, जबकि गोचर उस प्रारब्ध के ट्रिगर होने का 'समय' (Timing) है। बिना गोचर को समझे भविष्यवाणियां करना असंभव है।"
         </blockquote>
-
-        <h2>ग्रहों की चाल और मानव शरीर: मेडिकल एस्ट्रोलॉजी (Medical Astrology)</h2>
-        
-        <p>एक मेडिकल छात्र और ज्योतिषी होने के नाते, मैंने हमेशा मानव शरीर की कार्यप्रणाली (Anatomy and Physiology) और ग्रहों के बीच एक गहरा संबंध देखा है। जब कोई पाप ग्रह (Malefic Planet) गोचर में किसी विशेष भाव से गुजरता है, तो वह केवल बाहरी जीवन को नहीं, बल्कि हमारे शरीर के अंगों की पैथोलॉजी (Pathology) को भी प्रभावित करता है।</p>
-
-        <img class="blog-image inline-image" src="images/medical-astrology.jpg" alt="Medical Astrology - Planets and Human Body">
-
-        <div class="highlight-box">
-            <h4>शारीरिक संरचना पर ग्रहों का गोचर:</h4>
-            <ul>
-                <li><strong>सूर्य (Sun) - हृदय और हड्डियां:</strong> सूर्य एक महीने में एक राशि में रहता है और पूरे राशि चक्र को 12 महीनों में पूरा करता है। सूर्य की चाल व्यक्ति के आत्मविश्वास, सत्ता और प्रतिष्ठा को प्रभावित करती है[cite: 10]। जब सूर्य राहु या शनि के गोचर से पीड़ित होता है, तो हृदय रोग (Cardiovascular issues), हड्डियों में दर्द, और विटामिन्स की कमी देखने को मिलती है।</li>
-                <li><strong>चंद्रमा (Moon) - मन और शारीरिक तरल पदार्थ:</strong> चंद्रमा लगभग 2.5 दिनों में एक राशि बदलता है और पूरे राशि चक्र को 28 दिनों में पूरा करता है। यह मन, भावनाओं और daily life को प्रभावित करती है[cite: 10]। हमारे शरीर में मौजूद 70% जल तत्व और रक्तचाप (Blood Pressure) चंद्रमा के गोचर के अनुसार ही घटता-बढ़ता है।</li>
-                <li><strong>मंगल (Mars) - ऊर्जा और रक्त:</strong> मंगल की चाल energy, courage और competition को प्रभावित करती है। जब मंगल का गोचर खराब होता है, तो यह बुखार, सूजन (Inflammation), और सर्जरी (Surgery) का कारण बनता है।</li>
-                <li><strong>बुध (Mercury) - नर्वस सिस्टम:</strong> बुध की चाल communication, business और intelligence को प्रभावित करती है। जब बुध वक्री (Retrograde) होता है, तो चिंता (Anxiety) और नर्वस सिस्टम की समस्याएं बढ़ जाती हैं।</li>
-            </ul>
-        </div>
 
         <h2>मुंडेन एस्ट्रोलॉजी: शेयर बाजार और वैश्विक अर्थव्यवस्था पर गोचर का प्रभाव</h2>
         <p>गोचर केवल एक व्यक्ति को नहीं, बल्कि पूरी दुनिया को प्रभावित करता है। इसे 'मुंडेन एस्ट्रोलॉजी' कहा जाता है। आधुनिक समय में, जो लोग यूरोपियन ईवी मार्केट्स (European EV markets), स्टॉक ट्रेडिंग या वित्तीय प्लेटफॉर्म्स (जैसे Trade Republic या Scalable Capital) में निवेश करते हैं, उनके लिए राहु, गुरु और शनि का गोचर वरदान या अभिशाप साबित हो सकता है।</p>
@@ -284,7 +270,7 @@
         <p>इसी तरह <strong>सुदर्शन चक्र (Sudarshan Chakra)</strong> पद्धति में लग्न, चंद्र और सूर्य तीनों को एक साथ रखकर गोचर का प्रभाव देखा जाता है। जब कोई पाप ग्रह इन तीनों के ऊपर से एक साथ गुजरता है, तभी जीवन में बड़ी दुर्घटनाएं या महा-संकट आते हैं। यदि आप ज्योतिष की गहराई को समझना चाहते हैं, तो इन प्रणालियों को नजरअंदाज नहीं किया जा सकता।</p>
 
         <h2>ग्रहों की वक्री चाल (Retrogression)</h2>
-        <p>जब कोई ग्रह पीछे की ओर चलता हुआ प्रतीत होता है, तो उसे वक्री चाल कहते हैं। वक्री ग्रह का प्रभाव अलग होता है और यह अक्सर internal processes और past karmas को activate करता है[cite: 10]। जब कोई ग्रह वक्री होता है, तो उसकी चेष्टा बल (Chesta Bala) बढ़ जाती है। इसका मतलब है कि वह ग्रह आपको पिछले जन्मों के अधूरे कार्यों को पूरा करने के लिए मजबूर करेगा।</p>
+        <p>जब कोई ग्रह पीछे की ओर चलता हुआ प्रतीत होता है, तो उसे वक्री चाल कहते हैं। वक्री ग्रह का प्रभाव अलग होता है और यह अक्सर internal processes और past karmas को activate करता है। जब कोई ग्रह वक्री होता है, तो उसकी चेष्टा बल (Chesta Bala) बढ़ जाती है। इसका मतलब है कि वह ग्रह आपको पिछले जन्मों के अधूरे कार्यों को पूरा करने के लिए मजबूर करेगा।</p>
 
         <h2>निष्कर्ष</h2>
         <p>ग्रहों की चाल का अध्ययन करके हम अपने जीवन में आने वाले changes को समझ सकते हैं और उनके अनुसार तैयारी कर सकते हैं। याद रखें, ग्रहों की चाल केवल tendencies create करती है, और हमारे karma और efforts final outcome determine करते हैं। </p>

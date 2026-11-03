@@ -57,8 +57,10 @@
 }
 </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
   <style>
     :root {
@@ -185,18 +187,18 @@
     </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton"><i class="fab fa-whatsapp"></i></a>   
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
     <div class="whatsapp-popup" id="whatsappPopup">
         <div class="whatsapp-header">
             <img src="logo.png" alt="Jyotish Tark">
-            <div><h3 class="font-bold text-lg">Jyotish Tark</h3><p class="text-sm opacity-90">Typically replies within minutes</p></div>
+            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
         </div>
         <div class="whatsapp-body">
             <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><h4 class="font-semibold text-gray-800">Chat with us</h4></div>
+                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
             </div>
             <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><h4 class="font-semibold text-gray-800">Call us</h4></div>
+                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
             </div>
         </div>
     </div>
@@ -231,34 +233,13 @@
       
       <article class="article-content hindi">
 <div class="jt-health-note" role="note" style="margin:0 0 1.5rem;padding:0.9rem 1.1rem;border-radius:0.75rem;background:rgba(245,158,11,0.10);border:1px solid rgba(245,158,11,0.35);color:#fde68a;font-size:0.95rem;line-height:1.6">🙏 यह लेख आध्यात्मिक और ज्योतिषीय मार्गदर्शन है, चिकित्सा सलाह नहीं। किसी भी शारीरिक या मानसिक समस्या में डॉक्टर से परामर्श लें और उनका बताया उपचार जारी रखें। मंत्र-पाठ व उपाय उपचार के साथ किए जा सकते हैं, उसके स्थान पर नहीं।</div>
-        <p>क्या आपके जीवन में कभी ऐसा हुआ है कि अचानक कोई भयंकर बीमारी आ गई हो, लेकिन जब आप डॉक्टर के पास एमआरआई (MRI) या सीटी स्कैन (CT Scan) कराने गए, तो सारी रिपोर्ट्स बिल्कुल नॉर्मल आईं? या क्या ऐसा हुआ है कि आपका व्यापार बहुत अच्छा चल रहा था और अचानक, बिना किसी तार्किक कारण के, सब कुछ रातों-रात खत्म हो गया?</p>
+        <p>क्या आपके जीवन में कभी ऐसा हुआ है कि सब कुछ ठीक चल रहा था और अचानक, बिना किसी स्पष्ट कारण के, काम-धंधा रुक गया या मन बेचैन रहने लगा? ज्योतिष में ऐसे अचानक बदलावों को अक्सर केतु से जोड़ा जाता है।</p>
 
-        <p>यदि हाँ, तो स्वागत है उस दुनिया में जहाँ विज्ञान की सीमाएं खत्म होती हैं और <strong>केतु (Ketu)</strong> का साम्राज्य शुरू होता है। एक मेडिकल छात्र और वैदिक ज्योतिषी होने के नाते, मैंने अक्सर देखा है कि आधुनिक चिकित्सा विज्ञान (Medical Science) जिन बीमारियों को 'इडियोपैथिक' (Idiopathic - अज्ञात कारण वाली बीमारी) कह कर छोड़ देता है, उनकी जड़ें वास्तव में जन्म कुंडली में बैठे <strong>केतु दोष (Ketu Dosha)</strong> में होती हैं।</p>
+        <p>एक वैदिक ज्योतिषी के रूप में मैंने अक्सर देखा है कि लोग केतु के नाम से डरते हैं, जबकि केतु वैराग्य, अध्यात्म और गहरी अंतर्दृष्टि का ग्रह भी है। आइए समझें कि कुंडली में केतु दोष कब बनता है, किस भाव में क्या प्रभाव देता है और इसके सरल वैदिक उपाय क्या हैं।</p>
 
         <blockquote>
           "राहु वह है जो आप इस जन्म में पाना चाहते हैं। लेकिन केतु वह 'वायरस' है जो आपके पिछले जन्मों के अधूरे कर्मों का डेटाबेस लेकर बैठा है। यह तब ट्रिगर होता है जब आप गलत रास्ते पर जा रहे होते हैं।"
         </blockquote>
-
-        <h2>1. केतु क्या है? छाया ग्रह का असली विज्ञान</h2>
-        
-        <p>खगोलीय (Astronomical) दृष्टि से, केतु कोई भौतिक ग्रह (Physical Planet) नहीं है। यह चंद्रमा की कक्षा (Moon's orbit) और पृथ्वी के सूर्य के चारों ओर घूमने वाले पथ (Ecliptic) का <strong>दक्षिणी प्रतिच्छेदन बिंदु (South Node)</strong> है। जहां राहु उत्तरी ध्रुव (North Node) है, वहीं केतु दक्षिणी ध्रुव है।</p>
-
-        <p>चूंकि केतु का कोई भौतिक शरीर नहीं है, इसलिए इसका प्रभाव सीधे हमारे अवचेतन मन (Subconscious mind) और हमारे सूक्ष्म शरीर (Astral body) पर पड़ता है। केतु को मोक्ष, वैराग्य (Detachment), रहस्य, छुपे हुए खजाने, अध्यात्म और अचानक होने वाली घटनाओं का कारक माना जाता है।</p>
-
-        <h2>2. मेडिकल एस्ट्रोलॉजी और केतु: वे बीमारियां जो मशीनें नहीं पकड़ पातीं</h2>
-        <p>मेडिकल एस्ट्रोलॉजी (Medical Astrology) में केतु सबसे खतरनाक और रहस्यमयी ग्रह माना जाता है। जब केतु कुंडली में खराब स्थिति में होता है या किसी खराब गोचर (Transit) से गुजरता है, तो यह व्यक्ति की पैथोलॉजी (Pathology) को इस तरह बिगाड़ता है कि डॉक्टर भी हैरान रह जाते हैं।</p>
-
-        <img class="blog-image inline-image" src="images/ketu-medical.jpg" alt="Medical Astrology Ketu Hidden Diseases">
-
-        <div class="highlight-box">
-            <h4>केतु दोष के कारण होने वाली शारीरिक और मानसिक समस्याएं:</h4>
-            <ul>
-                <li><strong>ऑटोइम्यून डिसीज (Autoimmune Diseases):</strong> केतु भ्रम का कारक है। जब यह शरीर पर हावी होता है, तो शरीर का प्रतिरक्षा तंत्र (Immune System) भ्रमित हो जाता है और अपने ही स्वस्थ ऊतकों (Healthy tissues) को नष्ट करने लगता है। </li>
-                <li><strong>अज्ञात संक्रमण (Mysterious Infections):</strong> वायरस, परजीवी (Parasites) और ऐसे फंगल इन्फेक्शन जिनका स्रोत पता न चले, केतु के अधीन आते हैं।</li>
-                <li><strong>सर्जरी और अचानक चोट:</strong> केतु मंगल के समान कार्य करता है (कुजवत केतु)। लेकिन मंगल की चोट सामने से दिखती है, जबकि केतु की चोट अचानक होती है या इसमें सर्जरी की नौबत आ जाती है।</li>
-                <li><strong>मानसिक अलगाव (Psychological Detachment):</strong> व्यक्ति भीड़ में रहकर भी खुद को अकेला महसूस करता है। उसे ऐसा लगता है कि कोई उसे समझ नहीं पा रहा है। यह केतु के कारण होने वाला क्लिनिकल डिप्रेशन (Clinical Depression) है।</li>
-            </ul>
-        </div>
 
         <h2>3. कुंडली में केतु दोष: 12 भावों का रहस्य</h2>
         <p>केतु दोष का प्रभाव हर व्यक्ति की कुंडली में अलग-अलग होता है। आइए समझते हैं कि जब केतु कुंडली के विशिष्ट (और सबसे संवेदनशील) भावों में बैठता है, तो वह क्या तबाही मचाता है:</p>
@@ -286,11 +267,11 @@
         <div class="highlight-box">
             <h4>लाल किताब और वैदिक ज्योतिष के अचूक उपाय:</h4>
             <ul>
-                <li><strong>भगवान गणेश की उपासना:</strong> केतु का कोई सिर नहीं है (यह केवल धड़ है), इसलिए यह दिशाहीन है। भगवान गणेश, जिन्हें 'विघ्नहर्ता' कहा जाता है, बुद्धि (सिर) के देवता हैं। गणेश जी की पूजा करने से केतु को एक 'दिशा' और 'नियंत्रण' मिल जाता है। "ॐ गं गणपतये नमः" का जाप केतु का सबसे बड़ा इलाज है।</li>
+                <li><strong>भगवान गणेश की उपासना:</strong> केतु का कोई सिर नहीं है (यह केवल धड़ है), इसलिए यह दिशाहीन है। भगवान गणेश, जिन्हें 'विघ्नहर्ता' कहा जाता है, बुद्धि (सिर) के देवता हैं। गणेश जी की पूजा करने से केतु को एक 'दिशा' और 'नियंत्रण' मिल जाता है। "ॐ गं गणपतये नमः" का जाप केतु का सबसे सरल और श्रेष्ठ उपाय माना गया है।</li>
                 <li><strong>कुत्तों की सेवा (Feeding Dogs):</strong> लाल किताब के अनुसार, कुत्ता केतु का वाहन और प्रतीक है। सड़क के कुत्तों (Street dogs) को नियमित रूप से भोजन कराने और उनसे प्रेम करने से केतु का क्रोध तुरंत शांत होता है। यह अचानक होने वाली दुर्घटनाओं (Sudden Accidents) को टालने का अचूक उपाय है।</li>
-                <li><strong>अश्विनी कुमार और मेडिकल दान:</strong> यदि केतु के कारण कोई ऐसी बीमारी हो गई है जो ठीक नहीं हो रही है, तो अस्पतालों में गरीब मरीजों को दवाइयां दान करें या किसी मेडिकल संस्था में गुप्त दान (Anonymous Donation) करें।</li>
+                <li><strong>दान और सेवा:</strong> केतु की शांति के लिए अस्पतालों में ज़रूरतमंद मरीजों की सहायता करें, कंबल या भोजन का दान करें या किसी सेवा संस्था में गुप्त दान (Anonymous Donation) करें। किसी भी बीमारी में डॉक्टर का उपचार अवश्य जारी रखें।</li>
                 <li><strong>अनासक्ति (Detachment) का अभ्यास करें:</strong> केतु आपसे वह चीज छीन लेता है जिससे आप सबसे ज्यादा चिपके (Obsessed) होते हैं। चाहे वह पैसा हो या इंसान। इसलिए, मन से वैरागी (Detached) बनना सीखें। "जो मेरा है, वह मेरे पास रहेगा"—इस मानसिकता के साथ नियमित ध्यान (Meditation) करें।</li>
-                <li><strong>मंत्र जाप:</strong> केतु बीज मंत्र: <strong>"ॐ स्रां स्रीं स्रौं सः केतवे नमः"</strong> का नियमित 108 बार जाप आपकी नसों (Nervous System) में उठने वाले मानसिक तूफानों को शांत करता है।</li>
+                <li><strong>मंत्र जाप:</strong> केतु बीज मंत्र "ॐ स्रां स्रीं स्रौं सः केतवे नमः" का नियमित 108 बार जाप मन की बेचैनी को शांत करने में सहायक माना जाता है।</li>
             </ul>
         </div>
 
