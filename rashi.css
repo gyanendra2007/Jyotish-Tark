@@ -114,3 +114,36 @@
   .rs-faq { padding: 4px 16px; }
   .whatsapp-float { right: 16px; bottom: 18px; }
 }
+
+/* ---------- festival pages ---------- */
+.fx-date { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 16px; padding: 12px 16px; border-radius: 14px; background: #FFFFFF; border: 1px solid var(--jt-line); font-size: 16.5px; }
+.fx-date b { color: var(--jt-maroon); font-size: 19px; }
+.fx-muhurat { margin-top: 18px; border-radius: 18px; overflow: hidden; border: 1px solid #E8C98A; background: #FFFFFF; }
+.fx-muhurat h2 { margin: 0; padding: 14px 20px; background: var(--jt-maroon); color: #FFFFFF !important; font-size: 22px; }
+.fx-muhurat dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.fx-muhurat dt, .fx-muhurat dd { margin: 0; padding: 12px 20px; border-top: 1px solid var(--jt-line); font-size: 16.5px; line-height: 1.55; }
+.fx-muhurat dt { color: var(--jt-body); font-weight: 600; }
+.fx-muhurat dd { color: var(--jt-ink); font-weight: 700; }
+.fx-muhurat dd small { display: block; font-weight: 400; color: var(--jt-muted); font-size: 13.5px; }
+.fx-muhurat .fx-best { background: #FBEBD0; }
+.fx-muhurat .fx-note { grid-column: 1 / -1; font-weight: 400; font-size: 14px; color: var(--jt-muted); background: var(--jt-ivory); }
+.fx-steps { counter-reset: fx; margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fx-steps li { counter-increment: fx; position: relative; padding: 14px 16px 14px 58px; background: #FFFFFF; border: 1px solid var(--jt-line); border-radius: 14px; line-height: 1.75; color: var(--jt-body); font-size: 16.5px; }
+.fx-steps li::before { content: counter(fx); position: absolute; left: 16px; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--jt-saffron); color: #FFFFFF; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.fx-steps strong { color: var(--jt-ink); }
+.fx-mantra { margin: 14px 0 0; padding: 18px 20px; border-radius: 16px; background: #FBEBD0; border: 1px solid #E8C98A; text-align: center; }
+.fx-mantra p { margin: 0; font-family: var(--jt-serif); font-size: 21px; line-height: 1.7; color: var(--jt-maroon); }
+.fx-mantra small { display: block; margin-top: 6px; color: var(--jt-body); font-size: 14.5px; }
+.fx-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+.fx-days a, .fx-days div { display: flex; flex-direction: column; gap: 3px; padding: 16px; border-radius: 16px; border: 1px solid var(--jt-line); background: #FFFFFF; text-decoration: none !important; color: var(--jt-ink) !important; }
+.fx-days a:hover { border-color: var(--jt-maroon); box-shadow: 0 10px 22px rgba(122, 31, 31, .08); }
+.fx-days .fx-d { font-size: 13.5px; font-weight: 700; color: var(--jt-saffron); letter-spacing: .02em; }
+.fx-days b { font-family: var(--jt-serif); font-weight: 400; font-size: 21px; color: var(--jt-maroon); }
+.fx-days small { color: var(--jt-muted); font-size: 14px; line-height: 1.45; }
+.fx-days .is-here { background: var(--jt-cream); border-color: var(--jt-maroon); }
+.fx-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 14px; }
+@media (max-width: 560px) { .fx-muhurat dl { grid-template-columns: 1fr; } .fx-muhurat dd { border-top: 0; padding-top: 0; } }
+.fx-hero { grid-template-columns: minmax(0, 1fr); padding-bottom: 6px; }
+.fx-hero .rs-lead { max-width: 900px; }
+.fx-days + .fx-days { margin-top: 12px; }
+.fx-days .is-here .fx-d { color: var(--jt-maroon); }
