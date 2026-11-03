@@ -11,7 +11,7 @@ window.JT_CONFIG = {
   // googleReviewUrl: from Business Profile → "Ask for reviews" → copy link
   //   (looks like https://g.page/r/XXXXXXXX/review). Until it is filled in,
   //   the "Review on Google" button opens your profile page instead.
-  googleReviewUrl: "",
+  googleReviewUrl: "https://g.page/r/CZT7zaDR-9K8EAI/review",
   googleProfileUrl: "https://www.google.com/maps?cid=13606214302004280212",
 
   // Your current Google rating. Leave null until you have at least 5 reviews;
@@ -42,5 +42,5 @@ window.JT_CONFIG = {
    -------------------------------------------------------------------------- */
 window.JT_REVIEWS = [
   { name: "Abhishek Singh", city: "", date: "2026-11", stars: 5, source: "google", service: "",
-    text: "सटीक गणना और बहुत अच्छे उपाय। यहाँ की गई भविष्यवाणियां मेरे जीवन की परिस्थितियों से पूरी तरह मेल खाती हैं। समस्याओं के…" }
+    text: "सटीक गणना और बहुत अच्छे उपाय। यहाँ की गई भविष्यवाणियां मेरे जीवन की परिस्थितियों से पूरी तरह मेल खाती हैं। समस्याओं के समाधान के लिए सरल और प्रभावशाली उपाय बताने के लिए आपका बहुत-बहुत धन्यवाद। मैं यहाँ के काम से पूरी तरह संतुष्ट हूँ।🫡" }
 ];
