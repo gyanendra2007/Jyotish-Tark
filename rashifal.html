@@ -417,6 +417,28 @@
   <link rel="stylesheet" href="jt-theme.css?v=1">
   <link rel="stylesheet" href="rashi.css?v=1">
   <script src="jt-site.js" defer></script>
+
+  <style>
+    #rashifal-grid-section { scroll-margin-top: 90px; }
+    .rf-focus-grid { max-width: 760px; margin: 0 auto; }
+    .rf-focus-grid .rashi-card { padding: 28px !important; }
+    #rashi-focus-extra { max-width: 760px; margin: 22px auto 0; display: flex; flex-direction: column; gap: 18px; }
+    #rashi-focus-extra[hidden] { display: none; }
+    .rf-panel { background: #FFFFFF; border: 1px solid var(--jt-line); border-radius: 18px; padding: 22px; }
+    .rf-panel h2 { margin: 0 0 4px; font-size: 24px; color: var(--jt-ink); }
+    .rf-panel > p { margin: 0 0 14px; color: var(--jt-body); }
+    .rf-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .rf-opt { display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 12px; border: 1px solid var(--jt-line); background: var(--jt-ivory); text-decoration: none !important; color: var(--jt-ink) !important; }
+    .rf-opt:hover { border-color: var(--jt-maroon); background: #FFFFFF; }
+    .rf-opt b { color: var(--jt-maroon); font-size: 17px; } .rf-opt small { color: var(--jt-muted); font-size: 13.5px; line-height: 1.4; }
+    .rf-full { display: inline-flex; margin-top: 14px; font-weight: 700; color: var(--jt-maroon) !important; }
+    .rf-others { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+    .rf-other { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 64px; padding: 8px; border-radius: 12px; border: 1px solid var(--jt-line); background: var(--jt-ivory); color: var(--jt-ink); font: inherit; font-weight: 600; cursor: pointer; }
+    .rf-other:hover { border-color: var(--jt-maroon); color: var(--jt-maroon); }
+    .rf-ic { font-size: 22px; color: var(--jt-maroon); }
+    .rf-all { margin-top: 14px; width: 100%; min-height: 48px; border-radius: 12px; border: 1.5px solid var(--jt-maroon); background: transparent; color: var(--jt-maroon); font: inherit; font-weight: 700; cursor: pointer; }
+    .rf-all:hover { background: var(--jt-cream); }
+  </style>
 </head>
 <body class="min-h-screen">
 
@@ -576,7 +598,7 @@
     <section class="max-w-7xl mx-auto px-4 mt-8">
         <div class="glass-card p-5 rounded-2xl text-center">
             <div class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-3">
-                📌 अपनी राशि चुनें (Pin Your Zodiac Sign to Top)
+                📌 अपनी राशि चुनें — केवल आपकी राशि का राशिफल दिखेगा
             </div>
             <div id="rashi-filter-bar" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-2">
                 <!-- Populated via JS -->
@@ -589,6 +611,7 @@
         <div id="rashifal-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Dynamically generated 12 Rashi Cards -->
         </div>
+        <div id="rashi-focus-extra" hidden></div>
     </section>
 
     <!-- Hidden Offscreen Template for High-Res WhatsApp Status Card Export -->
@@ -854,9 +877,14 @@
 
         let currentSelectedDate = new Date();
         let currentDateKey = "";
-        let pinnedRashiIndex = localStorage.getItem('jt_pinned_rashi') !== null 
-            ? parseInt(localStorage.getItem('jt_pinned_rashi'), 10) 
-            : null;
+        const RASHI_SLUGS = ['mesh','vrishabh','mithun','kark','singh','kanya','tula','vrishchik','dhanu','makar','kumbh','meen'];
+        let pinnedRashiIndex = null;
+        try {
+            const qp = new URLSearchParams(location.search).get('rashi');
+            const qi = qp ? RASHI_SLUGS.indexOf(qp.replace('-rashi', '')) : -1;
+            if (qi >= 0) { pinnedRashiIndex = qi; localStorage.setItem('jt_pinned_rashi', qi); }
+            else if (localStorage.getItem('jt_pinned_rashi') !== null) pinnedRashiIndex = parseInt(localStorage.getItem('jt_pinned_rashi'), 10);
+        } catch (e) {}
 
         function formatDateKey(dateObj) {
             const year = dateObj.getFullYear();
@@ -882,11 +910,20 @@
         function togglePinRashi(idx) {
             if (pinnedRashiIndex === idx) {
                 pinnedRashiIndex = null;
-                localStorage.removeItem('jt_pinned_rashi');
+                try { localStorage.removeItem('jt_pinned_rashi'); } catch (e) {}
             } else {
                 pinnedRashiIndex = idx;
-                localStorage.setItem('jt_pinned_rashi', idx);
+                try { localStorage.setItem('jt_pinned_rashi', idx); } catch (e) {}
             }
+            renderRashiFilterBar();
+            renderRashifal(currentDateKey);
+            const target = document.getElementById('rashifal-grid-section');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showAllRashis() {
+            pinnedRashiIndex = null;
+            try { localStorage.removeItem('jt_pinned_rashi'); } catch (e) {}
             renderRashiFilterBar();
             renderRashifal(currentDateKey);
         }
@@ -937,8 +974,11 @@
                 return a.idx - b.idx;
             });
 
+            const focused = pinnedRashiIndex !== null && ZODIAC_META[pinnedRashiIndex];
+            const listToRender = focused ? [ZODIAC_META[pinnedRashiIndex]] : orderedZodiacs;
             const gridEl = document.getElementById('rashifal-grid');
-            gridEl.innerHTML = orderedZodiacs.map(z => {
+            gridEl.className = focused ? 'rf-focus-grid' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+            gridEl.innerHTML = listToRender.map(z => {
                 const pred = computeRashiPrediction(z, dayData);
                 const isPinned = pinnedRashiIndex === z.idx;
                 const badgeColor = pred.score >= 75 
@@ -1036,6 +1076,38 @@
                     </div>
                 `;
             }).join('');
+            renderFocusExtras(focused ? ZODIAC_META[pinnedRashiIndex] : null);
+        }
+
+        // Selected-rashi extras: deeper links, then the other 11 rashis
+        function renderFocusExtras(z) {
+            const box = document.getElementById('rashi-focus-extra');
+            if (!box) return;
+            if (!z) { box.hidden = true; box.innerHTML = ''; return; }
+            const slug = RASHI_SLUGS[z.idx] + '-rashi.html';
+            const links = [
+                ['#gochar', 'गोचर 2026–27', 'शनि, गुरु, राहु-केतु का आपकी राशि पर असर'],
+                ['#swabhav', 'स्वभाव', 'ख़ूबियां और जिन बातों पर ध्यान दें'],
+                ['#career', 'करियर व धन', 'अनुकूल क्षेत्र और धन की सलाह'],
+                ['#love', 'प्रेम व विवाह', 'किस राशि से अच्छा मेल'],
+                ['#upay', 'उपाय', 'मंत्र, दान और सरल उपाय'],
+                ['#faq', 'प्रश्न-उत्तर', 'नाम अक्षर, रत्न, साढ़ेसाती']
+            ].map(l => `<a class="rf-opt" href="${slug}${l[0]}"><b>${l[1]}</b><small>${l[2]}</small></a>`).join('');
+            const others = ZODIAC_META.filter(o => o.idx !== z.idx).map(o =>
+                `<button type="button" class="rf-other" onclick="togglePinRashi(${o.idx})"><span class="rf-ic">${o.icon}</span><span>${o.nameHi}</span></button>`).join('');
+            box.innerHTML = `
+                <section class="rf-panel" aria-labelledby="rfMoreH">
+                    <h2 id="rfMoreH">${z.nameHi} राशि के बारे में और जानें</h2>
+                    <p>आज के राशिफल से आगे — ${z.nameHi} राशि का ग्रह गोचर, स्वभाव, करियर, विवाह और उपाय।</p>
+                    <div class="rf-opts">${links}</div>
+                    <a class="rf-full" href="${slug}">${z.nameHi} राशि की पूरी जानकारी पढ़ें →</a>
+                </section>
+                <section class="rf-panel" aria-labelledby="rfOtherH">
+                    <h2 id="rfOtherH">दूसरी राशियों का आज का राशिफल</h2>
+                    <div class="rf-others">${others}</div>
+                    <button type="button" class="rf-all" onclick="showAllRashis()">सभी 12 राशियों का राशिफल एक साथ देखें</button>
+                </section>`;
+            box.hidden = false;
         }
 
         // LISTEN TO SPECIFIC RASHI IN HINDI AUDIO
