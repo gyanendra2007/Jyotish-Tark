@@ -184,7 +184,7 @@
     </section>`;
 
     // ---------------- contents ----------------
-    const CH = ["जन्म विवरण, पंचांग, अवकहड़ा व नामाक्षर", "कुंडली चक्र — लग्न, चंद्र, चलित, नवांश, दशमांश, सप्तांश", "ग्रह स्पष्ट, भाव तालिका व अष्टकवर्ग", "आपका स्वभाव व व्यक्तित्व", "नौ ग्रहों का विस्तृत फल", "12 भावों का विश्लेषण", "शिक्षा व करियर", "धन, संपत्ति व भाग्य", "विवाह व दांपत्य जीवन", "संतान व स्वास्थ्य", "दशा फल व अगले 5 वर्ष", "योग, दोष, वर्षफल 2027 व उपाय"];
+    const CH = ["जन्म विवरण, पंचांग, अवकहड़ा व नामाक्षर", "कुंडली चक्र — लग्न, चंद्र, चलित, नवांश, दशमांश, सप्तांश", "ग्रह स्पष्ट, भाव तालिका, षड्बल व अष्टकवर्ग", "आपका स्वभाव व व्यक्तित्व", "नौ ग्रहों का विस्तृत फल", "12 भावों का विस्तृत विश्लेषण", "शिक्षा व बुद्धि", "करियर व कार्यक्षेत्र", "धन, आय, संपत्ति व भाग्य", "विवाह व जीवनसाथी", "परिवार व संतान", "स्वास्थ्य व प्रकृति", "विदेश, यात्रा व आध्यात्मिकता", "दशा फल — वर्तमान व अगली महादशा", "अगले 10 वर्ष — वर्षवार संकेत", "योग व दोष", "वर्षफल 2027, उपाय व रत्न-विचार"];
     const toc = `<section class="toc"><h2>विषय सूची</h2><ol>${CH.map((t) => `<li>${t}</li>`).join("")}<li class="tnote">ज्योतिषी की टिप्पणी व आवश्यक सूचना</li></ol>
       <div class="howto"><h3>इस कुंडली के बारे में</h3><p>यह कुंडली लाहिड़ी अयनांश, उत्तर भारतीय शैली और विंशोत्तरी दशा पद्धति से तैयार की गई है। गणना आपके जन्म समय (${esc(tob)}) और जन्म स्थान (${esc(pob)}) पर आधारित है — जन्म समय में कुछ मिनट का अंतर भी लग्न और दशा की तारीखें बदल सकता है।</p><p>ज्योतिष जीवन की प्रवृत्तियाँ और समय के संकेत बताता है, गारंटी नहीं। स्वास्थ्य, क़ानून या धन से जुड़े बड़े फ़ैसलों में संबंधित विशेषज्ञ की सलाह अवश्य लें।</p></div></section>`;
 
@@ -233,42 +233,78 @@
     const ch3 = chapter(3, CH[2], `
       <h3>ग्रह स्पष्ट (निरयण, लाहिड़ी)</h3>
       <table class="grid"><thead><tr><th>ग्रह</th><th>राशि</th><th>अंश</th><th>नक्षत्र (चरण)</th><th>भाव</th><th>नवांश</th><th>स्थिति</th><th>विशेष</th></tr></thead><tbody>${rows}</tbody></table>
+      ${vd.shadbala ? `<h3>षड्बल व अवस्था — ग्रहों का वास्तविक बल</h3><table class="grid"><thead><tr><th>ग्रह</th><th>षड्बल (100 में)</th><th>अवस्था</th><th>भाव चलित</th><th>निष्कर्ष</th></tr></thead><tbody>${["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"].map((k) => { const v = vd.shadbala[k], q = c[k] || {}; return `<tr><td><b>${PL[k]}</b></td><td><span class="bar"><i style="width:${Math.max(6, Math.min(100, v || 0))}%"></i></span> ${v != null ? v : "—"}</td><td>${esc(q.avasthaHi || "—")}</td><td>${q.chalitHouse ? ORD[q.chalitHouse] + " भाव" : "—"}</td><td>${v >= 60 ? "बलवान" : (v >= 45 ? "मध्यम" : "कम बल")}</td></tr>`; }).join("")}</tbody></table>` : ""}
       <h3>भाव, राशि, भावेश, भाव में ग्रह और अष्टकवर्ग बिंदु</h3>
       <table class="grid"><thead><tr><th>भाव</th><th>राशि</th><th>भावेश</th><th>भावेश कहाँ</th><th>भाव में ग्रह</th><th>बिंदु</th></tr></thead><tbody>${lordRows}</tbody></table>
       <p class="note">अष्टकवर्ग: 28 से अधिक बिंदु वाला भाव बलवान, 25 से कम वाला कमज़ोर माना जाता है।</p>
       ${m ? `<p class="cap">आत्मकारक: <b>${PL[m.ak] || ""}</b>${m.amk ? ` · अमात्यकारक: <b>${PL[m.amk]}</b>` : ""}${m.dk ? ` · दाराकारक: <b>${PL[m.dk]}</b>` : ""}</p>` : ""}`, "हर ग्रह की राशि, अंश, नक्षत्र, भाव और बल", true);
 
-    // ---------------- ch 4–10 from the analysis engine ----------------
-    const ch4 = chapter(4, CH[3], A.personality(ctx, vd, m), `लग्न ${RASHI[ascR]} · राशि ${RASHI[moonR]} · नक्षत्र ${NAK[moonNak - 1]}`);
-    const ch5 = chapter(5, CH[4], A.planets(ctx, vd, m).map((x) => `<div class="pl"><h4>${x.title}</h4>${x.html}</div>`).join(""), "हर ग्रह आपके जीवन में क्या फल देता है");
+    // ---------------- ch 4–13 from the analysis engine ----------------
+    const ch4 = chapter(4, CH[3], A.personality(ctx, vd, m), `लग्न ${RASHI[ascR]} · राशि ${RASHI[moonR]} · नक्षत्र ${NAK[moonNak - 1]}`, true);
+    const ch5 = chapter(5, CH[4], `<p class="intro">नीचे हर ग्रह की स्थिति, उसका भीतरी बल (नवांश, षड्बल, अवस्था), वह किन भावों का स्वामी है, किस नक्षत्र से रंग लेता है और उसकी दशा में क्या होगा — यह सब आपके जीवन की भाषा में समझाया गया है।</p>` + A.planets(ctx, vd, m).map((x) => `<div class="pl ${x.tone}"><h4>${x.title} <span class="tag ${x.tone}">${A.TAG[x.tone]}</span></h4>${x.html}</div>`).join(""), "हर ग्रह आपके जीवन में क्या फल देता है", true);
     const LV = { good: ["बलवान", "g"], mid: ["सामान्य", "m"], weak: ["ध्यान दें", "w"] };
-    const ch6 = chapter(6, CH[5], A.houses(ctx, vd, m).map((x) => `<div class="hs"><h4>${x.title} <span class="lv ${LV[x.lvl][1]}">${LV[x.lvl][0]}</span></h4><p class="sub">${x.sub}</p>${x.html}</div>`).join(""), "जीवन के 12 क्षेत्रों का फल — भाव, भावेश, ग्रह और अष्टकवर्ग के आधार पर");
-    const ch7 = chapter(7, CH[6], A.career(ctx, vd, m), "पंचम व दशम भाव, दशमांश (D10) और अमात्यकारक");
-    const ch8 = chapter(8, CH[7], A.wealth(ctx, vd, m), "द्वितीय, एकादश और नवम भाव");
-    const ch9 = chapter(9, CH[8], A.marriage(ctx, vd, m, status), `सप्तम भाव, ${ctx.gender === "female" ? "गुरु" : "शुक्र"} और नवांश (D9) · वैवाहिक स्थिति: ${STATUS[status] || ""}`);
-    const ch10 = chapter(10, CH[9], `<h3>संतान</h3>${A.children(ctx, vd, m, status)}<h3>स्वास्थ्य संकेत</h3>${A.health(ctx, vd, m)}`, "पंचम भाव, गुरु, सप्तांश (D7) और लग्न का बल");
+    const ch6 = chapter(6, CH[5], `<p class="intro">कुंडली के 12 भाव जीवन के 12 क्षेत्र हैं। हर भाव का निष्कर्ष उसके अष्टकवर्ग बिंदु, स्वामी की स्थिति, भाव में बैठे और उसे देखने वाले ग्रहों को मिलाकर निकाला गया है; साथ में चंद्र कुंडली से मन के स्तर का फल और उस भाव के अलग-अलग विषयों की स्थिति दी गई है।</p>` + A.houses(ctx, vd, m).map((x) => `<div class="hs"><h4>${x.title} <span class="lv ${LV[x.lvl][1]}">${LV[x.lvl][0]}</span></h4><p class="sub">${x.sub}</p>${x.html}</div>`).join(""), "जीवन के 12 क्षेत्रों का फल — भाव, भावेश, ग्रह और अष्टकवर्ग के आधार पर", true);
+    const ch7 = chapter(7, CH[6], A.education(ctx, vd, m), "चतुर्थ, पंचम, नवम भाव, बुध और गुरु");
+    const ch8 = chapter(8, CH[7], A.career(ctx, vd, m), "दशम भाव, चंद्र से दशम, दशमांश (D10), सूर्य-शनि और अमात्यकारक");
+    const ch9 = chapter(9, CH[8], A.wealth(ctx, vd, m), "द्वितीय, एकादश, चतुर्थ, अष्टम, द्वादश और नवम भाव");
+    const ch10 = chapter(10, CH[9], A.marriage(ctx, vd, m, status), `सप्तम भाव, ${ctx.gender === "female" ? "गुरु" : "शुक्र"}, नवांश (D9), दाराकारक और उपपद · वैवाहिक स्थिति: ${STATUS[status] || ""}`, true);
+    const ch11 = chapter(11, CH[10], `${A.family(ctx, vd, m)}<h3>संतान</h3>${A.children(ctx, vd, m, status)}`, "नवम, चतुर्थ, तृतीय, एकादश और पंचम भाव, सप्तांश (D7)");
+    const ch12 = chapter(12, CH[11], A.health(ctx, vd, m), "लग्न, षष्ठ, अष्टम भाव, लग्नेश व चंद्र — आयुर्वेदिक ज्योतिष के संकेत");
+    const ch13 = chapter(13, CH[12], A.travelSpirit(ctx, vd, m), "द्वादश, नवम, तृतीय भाव, राहु-केतु और गुरु");
 
-    // ---------------- ch 11: dasha ----------------
+    // ---------------- ch 14: dasha ----------------
     const seq = (ctx.dasha && ctx.dasha.fullSeq) || [];
     const now = Date.now();
     const mdRows = seq.map((x) => `<tr${ms(x.start) <= now && ms(x.end) >= now ? ' class="now"' : ""}><td><b>${PL[x.lord]}</b></td><td>${dmy(x.start)}</td><td>${dmy(x.end)}</td><td>${Math.max(0, Math.floor((ms(x.start) - ms(new Date(ctx.dob))) / 31557600000))}–${Math.floor((ms(x.end) - ms(new Date(ctx.dob))) / 31557600000)}</td></tr>`).join("");
     const curMd = seq.findIndex((x) => ms(x.start) <= now && ms(x.end) >= now);
     const adBlock = (md) => md ? `<h3>${PL[md.lord]} महादशा की अंतर्दशाएँ</h3><table class="grid"><thead><tr><th>अंतर्दशा</th><th>आरंभ</th><th>समाप्ति</th></tr></thead><tbody>${(md.antardashas || []).map((a) => `<tr${ms(a.start) <= now && ms(a.end) >= now ? ' class="now"' : ""}><td>${PL[md.lord]}–${PL[a.lord]}</td><td>${dmy(a.start)}</td><td>${dmy(a.end)}</td></tr>`).join("")}</tbody></table>` : "";
-    const ch11 = chapter(11, CH[10], `
-      ${A.dashaResults(ctx, vd, m)}
+    const ch14 = chapter(14, CH[13], `
+      ${A.dashaDeep(ctx, vd, m)}
       <h3>जीवन के मुख्य पड़ाव (महादशा के अनुसार)</h3>
       ${A.lifePhases(ctx, vd, m)}
       <h3>विंशोत्तरी महादशा क्रम (120 वर्ष)</h3>
       <table class="grid"><thead><tr><th>महादशा</th><th>आरंभ</th><th>समाप्ति</th><th>आयु (वर्ष)</th></tr></thead><tbody>${mdRows}</tbody></table>
-      ${curMd >= 0 ? adBlock(seq[curMd]) : ""}`, "अभी की दशा का फल, आने वाले समय की दिशा और पूरी दशा-तालिका");
+      ${curMd >= 0 ? adBlock(seq[curMd]) : ""}`, "वर्तमान और अगली महादशा की हर अंतर्दशा का फल, जीवन के पड़ाव और पूरी दशा-तालिका", true);
 
-    // ---------------- ch 12: yogas, doshas, 2027, remedies ----------------
+    // ---------------- ch 15: next 10 years ----------------
+    const X = A.make(ctx, vd, m);
+    const Y0 = new Date().getFullYear() + 1;
+    const yearRows = [];
+    for (let y = Y0; y < Y0 + 10; y++) {
+      const T = transitsFor(y);
+      if (!T) break;
+      const dom = (b) => T[b].slice().sort((p1, p2) => (p2.to - p2.from) - (p1.to - p1.from))[0].r;
+      const jr = dom("Jupiter"), sr = dom("Saturn");
+      const jh = houseFrom(moonR, jr), sh = houseFrom(moonR, sr);
+      const mid = Date.UTC(y, 6, 1);
+      let md = null, ad = null;
+      seq.forEach((x) => { if (ms(x.start) <= mid && ms(x.end) >= mid) { md = x; (x.antardashas || []).forEach((a) => { if (ms(a.start) <= mid && ms(a.end) >= mid) ad = a; }); } });
+      const tAd = ad ? A.mdTone(X, ad.lord) : "mixed", tMd = md ? A.mdTone(X, md.lord) : "mixed";
+      let sc = (GOCHAR.Jupiter.good.includes(jh) ? 1 : -0.4) + (GOCHAR.Saturn.good.includes(sh) ? 1 : ([12, 1, 2, 4, 8].includes(sh) ? -0.8 : -0.2)) + ({ good: 1, care: -1, mixed: 0 })[tAd] + ({ good: 0.5, care: -0.5, mixed: 0 })[tMd];
+      const v = sc >= 1.8 ? ["बहुत अनुकूल", "good"] : (sc >= 0.6 ? ["अनुकूल", "good"] : (sc >= -0.6 ? ["मिश्रित", "mixed"] : ["सावधानी", "care"]));
+      const ss = [12, 1, 2].includes(sh) ? " · शनि की साढ़ेसाती" : ([4, 8].includes(sh) ? " · शनि की ढैया" : "");
+      const focus = ad ? A.topicsOf(X, ad.lord).slice(0, 2).join("; ") : "";
+      yearRows.push(`<div class="yr ${v[1]}"><h4>${y} <span class="tag ${v[1]}">${v[0]}</span><span class="muted"> ${md && ad ? `${PL[md.lord]}–${PL[ad.lord]} दशा` : ""}${ss}</span></h4>
+        <p><b>मुख्य विषय:</b> ${focus || "—"}। <b>गुरु</b> ${RASHI[jr]} में (चंद्र से ${jh}) — ${GOCHAR.Jupiter.t[jh]} <b>शनि</b> ${RASHI[sr]} में (चंद्र से ${sh}) — ${GOCHAR.Saturn.t[sh]}</p>
+        <p class="tip">${v[1] === "good" ? "इस वर्ष नए काम, निवेश, विवाह-संबंधी बातचीत या बड़े फ़ैसलों के लिए अच्छा समय है।" : (v[1] === "care" ? "इस वर्ष धैर्य रखें — सेहत, ख़र्च और विवाद पर ध्यान दें; बड़े जोखिम टालें और उपाय नियमित करें।" : "इस वर्ष अच्छे-बुरे दोनों अनुभव होंगे — योजना बनाकर चलें और अवसर आने पर पीछे न हटें।")}</p></div>`);
+    }
+    const ch15 = chapter(15, CH[14], `<p class="intro">हर वर्ष का संकेत तीन बातों को मिलाकर निकाला गया है — उस वर्ष चल रही दशा-अंतर्दशा, आपकी चंद्र राशि से गुरु का गोचर और शनि का गोचर। ये सामान्य दिशा बताते हैं; किसी विशेष घटना के सटीक समय के लिए परामर्श लें।</p>${yearRows.join("")}`, `${Y0} से ${Y0 + 9} तक — दशा और गुरु-शनि गोचर के आधार पर`, true);
+
+    // ---------------- ch 16: yogas & doshas ----------------
     const YD = A.yogas(ctx, vd, m);
     const tr = m && m.transit;
     const ss = tr && tr.sadeSati;
     const ssTxt = ss ? (ss.current ? `अभी शनि की साढ़ेसाती चल रही है (${my(ss.current.start)} – ${my(ss.current.end)})। यह समय मेहनत, धैर्य और अनुशासन का है — इसी दौर में व्यक्ति सबसे ज़्यादा परिपक्व होता है।` : (ss.next ? `अगली साढ़ेसाती लगभग ${my(ss.next.start)} से ${my(ss.next.end)} तक रहेगी।` : "")) + (ss.prev ? ` पिछली साढ़ेसाती ${my(ss.prev.start)} – ${my(ss.prev.end)} में थी।` : "") : "";
-    const Y = 2027, T = transitsFor(Y);
-    const gRows = T ? ["Jupiter", "Saturn", "Rahu"].map((b) => T[b].map((sgm) => {
+    const ch16 = chapter(16, CH[15], `
+      <h3>आपकी कुंडली के शुभ योग</h3>
+      ${YD.yogas.length ? YD.yogas.map((y) => `<div class="yg"><h4>${y.t}</h4><p>${y.d}</p></div>`).join("") : "<p>कुंडली में कोई प्रमुख शास्त्रीय योग नहीं बनता — ऐसी कुंडली में ग्रहों की दशा और मेहनत ही मुख्य फल देती है।</p>"}
+      <h3>दोष और ध्यान देने योग्य बातें</h3>
+      ${YD.doshas.length ? YD.doshas.map((y) => `<div class="yg care"><h4>${y.t}</h4><p>${y.d}</p></div>`).join("") : "<p>कुंडली में मांगलिक, कालसर्प जैसा कोई प्रमुख दोष नहीं है।</p>"}
+      ${ssTxt ? `<div class="yg"><h4>शनि की साढ़ेसाती</h4><p>${ssTxt}</p></div>` : ""}`, "शुभ योग कब और कैसे फल देंगे, दोषों का सही अर्थ और सरल उपाय");
+
+    // ---------------- ch 17: 2027, remedies, gems ----------------
+    const Y = 2027, T27 = transitsFor(Y);
+    const gRows = T27 ? ["Jupiter", "Saturn", "Rahu"].map((b) => T27[b].map((sgm) => {
       const hm = houseFrom(moonR, sgm.r), ha = houseFrom(ascR, sgm.r), good = GOCHAR[b].good.includes(hm);
       return `<tr><td><b>${PL[b]}</b></td><td>${RASHI[sgm.r]}</td><td>${dmy(sgm.from)} – ${dmy(sgm.to)}</td><td>चंद्र से ${hm} · लग्न से ${ha}</td><td class="${good ? "g" : "c"}">${GOCHAR[b].t[hm]}</td></tr>`;
     }).join("")).join("") : "";
@@ -276,18 +312,15 @@
     seq.forEach((md) => (md.antardashas || []).forEach((a) => { if (ms(a.end) >= Date.UTC(Y, 0, 1) && ms(a.start) <= Date.UTC(Y, 11, 31)) in27.push(`${PL[md.lord]}–${PL[a.lord]} (${my(a.start)} – ${my(a.end)})`); }));
     const lagL = LORD[ascR], l5 = lordOf(5), l9 = lordOf(9);
     const GEM = { Sun: "माणिक्य", Moon: "मोती", Mars: "मूँगा", Mercury: "पन्ना", Jupiter: "पुखराज", Venus: "हीरा / ओपल", Saturn: "नीलम", Rahu: "गोमेद", Ketu: "लहसुनिया" };
-    const ch12 = chapter(12, CH[11], `
-      <h3>आपकी कुंडली के शुभ योग</h3>
-      ${YD.yogas.length ? YD.yogas.map((y) => `<div class="yg"><h4>${y.t}</h4><p>${y.d}</p></div>`).join("") : "<p>कुंडली में कोई प्रमुख शास्त्रीय योग नहीं बनता — ऐसी कुंडली में ग्रहों की दशा और मेहनत ही मुख्य फल देती है।</p>"}
-      <h3>दोष और ध्यान देने योग्य बातें</h3>
-      ${YD.doshas.length ? YD.doshas.map((y) => `<div class="yg care"><h4>${y.t}</h4><p>${y.d}</p></div>`).join("") : "<p>कुंडली में मांगलिक, कालसर्प जैसा कोई प्रमुख दोष नहीं है।</p>"}
-      ${ssTxt ? `<div class="yg"><h4>शनि की साढ़ेसाती</h4><p>${ssTxt}</p></div>` : ""}
+    const avoid = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"].filter((k) => ![lagL, l5, l9].includes(k) && X.owns(k).length && X.owns(k).every((h) => [3, 6, 8, 11, 12].includes(h)));
+    const ch17 = chapter(17, CH[16], `
       <h3>वर्षफल ${Y}</h3>
       <p>${Y} में आपकी दशा: <b>${in27.join(" · ") || "—"}</b>।</p>
       ${gRows ? `<table class="grid"><thead><tr><th>ग्रह</th><th>गोचर राशि</th><th>अवधि (लगभग)</th><th>भाव</th><th>फल</th></tr></thead><tbody>${gRows}</tbody></table><p class="note">गोचर का फल चंद्र राशि से गिना गया है; हरा = अनुकूल, नारंगी = सावधानी।</p>` : ""}
       <h3>आपके लिए उपाय</h3>
+      <p class="intro">ये उपाय आपके लग्नेश, अभी चल रही दशा-अंतर्दशा और कमज़ोर ग्रहों को देखकर चुने गए हैं। श्रद्धा और नियमितता उपाय की सबसे बड़ी शर्त है — एक साथ बहुत सारे उपाय करने के बजाय एक-दो उपाय रोज़ करें।</p>
       ${A.remedies(ctx, vd, m)}
-      <div class="yg"><h4>रत्न-विचार</h4><p>आपकी कुंडली के शुभ (त्रिकोण) ग्रह हैं — लग्नेश <b>${PL[lagL]}</b> (${GEM[lagL]}), पंचमेश <b>${PL[l5]}</b> (${GEM[l5]}) और नवमेश <b>${PL[l9]}</b> (${GEM[l9]})। सामान्यतः इन्हीं के रत्न विचारणीय होते हैं। रत्न केवल ज्योतिषी से सलाह लेकर, सही वज़न व धातु में और परीक्षण के बाद ही पहनें।</p></div>`, "शुभ योग, दोष-विचार, आने वाले वर्ष के संकेत और उपाय");
+      <div class="yg"><h4>रत्न-विचार</h4><p>आपकी कुंडली के शुभ (त्रिकोण) ग्रह हैं — लग्नेश <b>${PL[lagL]}</b> (${GEM[lagL]}), पंचमेश <b>${PL[l5]}</b> (${GEM[l5]}) और नवमेश <b>${PL[l9]}</b> (${GEM[l9]})। सामान्यतः इन्हीं के रत्न विचारणीय होते हैं।${avoid.length ? ` <b>${avoid.map((k) => `${PL[k]} (${GEM[k]})`).join(", ")}</b> केवल अशुभ भावों के स्वामी होने से इनके रत्न बिना विशेष परामर्श के न पहनें।` : ""} रत्न केवल ज्योतिषी से सलाह लेकर, सही वज़न व धातु में और परीक्षण के बाद ही पहनें।</p></div>`, "आने वाले वर्ष के गोचर, आपके लिए चुने गए उपाय और रत्न");
 
     // ---------------- note & close ----------------
     const note = (opts.note || "").trim();
@@ -336,9 +369,9 @@
       .cfoot { margin: 3mm 0 0; font-size: 9.5pt; line-height: 1.5; color: #E9D7A8; }
       /* contents */
       .toc { break-before: page; }
-      .toc h2 { font-size: 24pt; margin: 0 0 5mm; border-bottom: .6mm solid #C9A227; padding-bottom: 2mm; text-align: center; }
+      .toc h2 { font-size: 22pt; margin: 0 0 3mm; border-bottom: .6mm solid #C9A227; padding-bottom: 2mm; text-align: center; }
       .toc ol { margin: 0 auto; padding: 0; list-style: none; counter-reset: c; max-width: 150mm; }
-      .toc li { counter-increment: c; display: flex; gap: 4mm; align-items: baseline; padding: 2.6mm 0; border-bottom: .2mm dotted #CDB993; font-size: 12.5pt; }
+      .toc li { counter-increment: c; display: flex; gap: 4mm; align-items: baseline; padding: 1.5mm 0; border-bottom: .2mm dotted #CDB993; font-size: 11.5pt; }
       .toc li::before { content: "अध्याय " counter(c); flex: none; width: 22mm; font-size: 9.5pt; font-weight: 700; color: #8A6416; }
       .toc .tnote::before { content: "अंत में"; }
       .howto { margin: 9mm auto 0; max-width: 150mm; padding: 5mm 6mm; background: #FBF6EC; border: .3mm solid #E0CFAE; border-left: 1.2mm solid #C9A227; }
@@ -394,7 +427,15 @@
       .lv.g { background: #DCFCE7; color: #14532D; } .lv.m { background: #FEF3C7; color: #78350F; } .lv.w { background: #FFE4E6; color: #9F1239; }
       .yg.care { border-left-color: #C2410C; }
       .ad.good { border-left-color: #15803D; } .ad.care { border-left-color: #C2410C; }
-      .tag { font-size: 8.6pt; padding: .2mm 2mm; border-radius: 3mm; font-weight: 700; }
+      td .lv { float: none; } .intro { color: #4A3B2A; font-size: 10.2pt; background: #FBF5E6; padding: 2mm 3.5mm; border-radius: 1.5mm; }
+      table.kv.mini { font-size: 9pt; margin: 0 0 1.5mm; } table.kv.mini th { width: auto; white-space: nowrap; }
+      .bar { display: inline-block; width: 22mm; height: 2.2mm; background: #EFE6D2; border-radius: 1mm; vertical-align: middle; overflow: hidden; } .bar i { display: block; height: 100%; background: linear-gradient(90deg,#C9A227,#7A1F1F); }
+      .tip { background: #F3F8EE; border-radius: 1.2mm; padding: 1.4mm 2.5mm; } .why { font-size: 9.4pt; color: #5B4B37; }
+      table.grid.sub { font-size: 9.2pt; margin: 1.5mm 0; } ol.rank li { margin: 0 0 1.6mm; }
+      .pl.good { border-left-color: #15803D; } .pl.care { border-left-color: #C2410C; }
+      .yr { margin: 0 0 2.6mm; padding: 2.4mm 4mm 1.8mm; border: .25mm solid #E8DCC4; border-left: 1.2mm solid #C9A227; border-radius: 1.5mm; background: #FFFDF7; } .yr h4 { margin: 0 0 1mm; } .yr p { margin: .8mm 0; } .yr.good { border-left-color: #15803D; } .yr.care { border-left-color: #C2410C; }
+      .md.good { border-left: 1.2mm solid #15803D; } .md.care { border-left: 1.2mm solid #C2410C; }
+ padding: .2mm 2mm; border-radius: 3mm; font-weight: 700; }
       .tag.good { background: #DCFCE7; color: #14532D; } .tag.care { background: #FFE4E6; color: #9F1239; } .tag.mixed { background: #FEF3C7; color: #78350F; }
       .pbox { padding: 3mm 4mm; border-radius: 1.5mm; border: .25mm solid #E8DCC4; } .pbox.good { background: #F0FDF4; } .pbox.care { background: #FFF7ED; }
       .pbox h4 { margin-top: 0; }
@@ -412,8 +453,8 @@
       <title>Sampurna-Kundali-${esc((ctx.name || "").replace(/\s+/g, "-"))}${reportNo ? "-" + esc(reportNo) : ""}</title>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;600;700&display=swap">
       <style>${CSS}</style></head><body><div class="page-wrap">
-      ${cover}${toc}${ch1}${ch2}${ch3}${ch4}${ch5}${ch6}${ch7}${ch8}${ch9}${ch10}${ch11}${ch12}${close}
-      </div><script>(function(){var mm=96/25.4;function k(){document.querySelectorAll(".bx,.two,table.kv,.akshar,.pl,.hs,.yg,.ad,.pbox").forEach(function(e){if(e.getBoundingClientRect().height<70*mm)e.classList.add("keep")});}if(document.readyState==="complete")k();else window.addEventListener("load",k);})();<\/script></body></html>`;
+      ${cover}${toc}${ch1}${ch2}${ch3}${ch4}${ch5}${ch6}${ch7}${ch8}${ch9}${ch10}${ch11}${ch12}${ch13}${ch14}${ch15}${ch16}${ch17}${close}
+      </div><script>(function(){var mm=96/25.4;function k(){document.querySelectorAll(".bx,.two,table.kv,.akshar,.pl,.hs,.yg,.ad,.pbox,.yr,table.sub,ol.rank li").forEach(function(e){if(e.getBoundingClientRect().height<70*mm)e.classList.add("keep")});}if(document.readyState==="complete")k();else window.addEventListener("load",k);})();<\/script></body></html>`;
   }
 
   window.JTSampurnaReport = { build };

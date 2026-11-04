@@ -125,7 +125,7 @@
     const firstLine = (k) => { const a = area(k); return a && a.lines && a.lines[0] ? strip(a.lines[0]) : ""; };
     const out = [];
 
-    out.push(`<div class="sp-top"><p class="sp-om">॥ श्री गणेशाय नमः ॥</p><h2>सम्पूर्ण जन्म कुंडली</h2><p>${esc(ctx.name)} · ज्योतिष तर्क, लखनऊ</p><span class="sp-pill">20+ पेज · 12 अध्याय · PDF</span></div>`);
+    out.push(`<div class="sp-top"><p class="sp-om">॥ श्री गणेशाय नमः ॥</p><h2>सम्पूर्ण जन्म कुंडली</h2><p>${esc(ctx.name)} · ज्योतिष तर्क, लखनऊ</p><span class="sp-pill">35+ पेज · 17 अध्याय · PDF</span></div>`);
     out.push(`<div class="sp-ok"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><div><b>आपकी कुंडली की गणना पूरी हो गई है</b><span>हर अध्याय की कुछ बातें नीचे खुली हैं — पूरी रिपोर्ट ₹${PRICE.toLocaleString("en-IN")} में, 24 घंटे के अंदर।</span></div></div>`);
 
     out.push(sec(1, "जन्म विवरण व अवकहड़ा चक्र", "1–2", `<div class="sp-kv">
@@ -177,11 +177,11 @@
     } else {
       out.push(sec(8, "जीवनसाथी व विवाह", "16–18", `${bars([90, 72, 84])}${lock("जन्म समय से सप्तम भाव, विवाह का समय व मांगलिक विचार")}`, true));
     }
-    out.push(topic(9, "संतान", "19", "children", "संतान योग, पंचम भाव व सप्तांश (D7) का विचार"));
-    out.push(sec(10, "स्वास्थ्य संकेत", "20", `${firstLine("health") ? `<p class="sp-t">${esc(firstLine("health"))}</p>` : ""}${bars([88, 70])}${lock("ध्यान रखने योग्य वर्ष व सामान्य सावधानियाँ")}<p class="sp-t" style="font-size:13.5px;color:#6B5444;margin-top:8px">ज्योतिषीय संकेत हैं, चिकित्सा सलाह नहीं।</p>`));
+    out.push(topic(9, "परिवार व संतान", "19", "children", "संतान योग, पंचम भाव व सप्तांश (D7) का विचार"));
+    out.push(sec(10, "स्वास्थ्य, विदेश व आध्यात्मिकता", "20", `${firstLine("health") ? `<p class="sp-t">${esc(firstLine("health"))}</p>` : ""}${bars([88, 70])}${lock("ध्यान रखने योग्य वर्ष व सामान्य सावधानियाँ")}<p class="sp-t" style="font-size:13.5px;color:#6B5444;margin-top:8px">ज्योतिषीय संकेत हैं, चिकित्सा सलाह नहीं।</p>`));
 
     const ds = m.dasha;
-    out.push(sec(11, "विंशोत्तरी दशा व अगले 5 वर्ष", "21–25", ds && ds.md && ds.ad
+    out.push(sec(11, "दशा फल व अगले 10 वर्ष (वर्षवार)", "21–25", ds && ds.md && ds.ad
       ? `<p class="sp-t">अभी चल रही: <b style="color:#7A1F1F">${PL[ds.md.lord]} महादशा</b> (${my(ds.md.start)} – ${my(ds.md.end)}) · <b style="color:#7A1F1F">${PL[ds.ad.lord]} अंतर्दशा</b> (${my(ds.ad.start)} – ${my(ds.ad.end)})</p>
          <div class="sp-bl" aria-hidden="true"><div style="display:flex;height:24px;border-radius:4px;overflow:hidden"><div style="flex:3;background:#B8892B"></div><div style="flex:1;background:#7A1F1F"></div><div style="flex:2;background:#CDB993"></div><div style="flex:3;background:#8A6416"></div></div>${bars([88, 70])}</div>${lock("आने वाली हर अंतर्दशा की तारीख, उसका फल और वर्ष-वार समय-रेखा")}`
       : `${bars([90, 70, 80])}${lock("दशा की सटीक तारीखें जन्म समय से निकलती हैं")}`));
@@ -190,7 +190,7 @@
     const cs = m.cons || [];
     out.push(sec(12, "योग, दोष, वर्षफल 2027 व उपाय", "26–30", `<p class="sp-t">${ys.length ? `आपकी कुंडली में <b style="color:#7A1F1F">${ys.length} शुभ योग</b> मिले — जिनमें एक <b>${esc(strip(ys[0].title))}</b> है।` : "आपकी कुंडली के योग और उनका फल पूरी रिपोर्ट में।"}${cs.length ? ` साथ ही <b>${cs.length} संवेदनशील बिंदु</b> जिन पर ध्यान देना है।` : ""}</p>${bars([72, 90, 58, 80])}${lock("सभी योगों का फल, दोष-विचार, 2027 का वर्षफल, मंत्र, दान व रत्न-विचार")}`));
 
-    out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 20+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
+    out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
       <ol><li>UPI से ₹${PRICE.toLocaleString("en-IN")} भुगतान करें</li><li>भुगतान का स्क्रीनशॉट WhatsApp पर भेजें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
       <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
@@ -208,7 +208,7 @@
       card = document.createElement("article");
       card.id = "chapter-sampurna";
       card.className = "no-print";
-      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,100) का प्रीव्यू तैयार है</b><span>20+ पेज · 12 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
+      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,100) का प्रीव्यू तैयार है</b><span>35+ पेज · 17 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
     }
     const dk = document.getElementById("chapter-dakshina");
     const out = document.getElementById("masterDossierOutput");
