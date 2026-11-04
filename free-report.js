@@ -1342,14 +1342,14 @@
     if (!m.full && m.num) keys.push(NUM_PLANET[m.num.mulank], NUM_PLANET[m.num.bhagyank]);
     const rem = uniq(keys).slice(0, 4).map((k) => `<li><b>${pName(k)}:</b> ${T(SIMPLE_REMEDY_HI[k], SIMPLE_REMEDY_EN[k])} • <span class="mantra">${MANTRA[k]}</span> ${T("(108 बार)", "(108 times)")}</li>`).join("");
     const full = T(
-      ["लगभग 30 पेज, 12 अध्याय — लग्न, नवांश, दशमांश व सप्तांश कुंडली सहित", "विवाह का सबसे प्रबल वर्ष, जीवनसाथी का स्वरूप व गुण-मिलान", "करियर: नौकरी बनाम व्यवसाय, पदोन्नति व परिवर्तन के वर्ष", "महादशा-अंतर्दशा की तारीखें व अगले 5 वर्षों की समय-रेखा", "रत्न-पात्रता (वर्जित रत्न सहित) व रुद्राक्ष परामर्श", "आपकी कुंडली हेतु व्यक्तिगत मंत्र-दान-अनुष्ठान योजना", "ज्योतिषी द्वारा हस्तनिर्मित कुंडली भी उपलब्ध — ₹2,100, 5–7 दिन"],
-      ["About 30 pages, 12 chapters — with Lagna, Navamsa, Dasamsa and Saptamsa charts", "Strongest marriage year, spouse profile and matching", "Career: job vs business, promotion and change years", "Mahadasha–antardasha dates and a 5-year timeline", "Gemstone suitability (incl. prohibited stones) and Rudraksha", "A personal mantra–charity–ritual plan for your chart", "Handmade kundali by the astrologer also available — ₹2,100, 5–7 days"]);
+      ["20+ पेज, 12 अध्याय — लग्न, नवांश, दशमांश व सप्तांश कुंडली सहित", "विवाह का सबसे प्रबल वर्ष, जीवनसाथी का स्वरूप व गुण-मिलान", "करियर: नौकरी बनाम व्यवसाय, पदोन्नति व परिवर्तन के वर्ष", "महादशा-अंतर्दशा की तारीखें व अगले 5 वर्षों की समय-रेखा", "रत्न-पात्रता (वर्जित रत्न सहित) व रुद्राक्ष परामर्श", "आपकी कुंडली हेतु व्यक्तिगत मंत्र-दान-अनुष्ठान योजना", "ज्योतिषी द्वारा हस्तनिर्मित कुंडली भी उपलब्ध — ₹2,100, 5–7 दिन"],
+      ["20+ pages, 12 chapters — with Lagna, Navamsa, Dasamsa and Saptamsa charts", "Strongest marriage year, spouse profile and matching", "Career: job vs business, promotion and change years", "Mahadasha–antardasha dates and a 5-year timeline", "Gemstone suitability (incl. prohibited stones) and Rudraksha", "A personal mantra–charity–ritual plan for your chart", "Handmade kundali by the astrologer also available — ₹2,100, 5–7 days"]);
     return `
       <div class="h3">${T("सरल दैनिक उपाय (सभी के लिए सुरक्षित)", "Simple daily remedies (safe for everyone)")}</div>
       <ul class="bul">${rem}</ul>
       <p class="note">${T("रत्न केवल पूर्ण कुंडली विश्लेषण के बाद धारण करें — गलत रत्न लाभ के स्थान पर हानि कर सकता है।", "Wear gemstones only after a full chart analysis — a wrong stone can harm instead of help.")}</p>
       <div class="offer">
-        <div class="oh">${T("सम्पूर्ण कुंडली — लगभग 30 पेज, 24 घंटे में", "Sampurna Kundali — about 30 pages, within 24 hours")} <span class="price">${OPT.fullPrice}${OPT.fullPriceStrike ? ` <s>${OPT.fullPriceStrike}</s>` : ""}</span></div>
+        <div class="oh">${T("सम्पूर्ण कुंडली — 20+ पेज, 24 घंटे में", "Sampurna Kundali — 20+ pages, within 24 hours")} <span class="price">${OPT.fullPrice}${OPT.fullPriceStrike ? ` <s>${OPT.fullPriceStrike}</s>` : ""}</span></div>
         <ul>${full.map((x) => `<li>✔ ${x}</li>`).join("")}</ul>
       </div>
       <div class="bigqr">

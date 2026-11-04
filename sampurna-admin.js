@@ -22,7 +22,12 @@
   .jta-err{color:#B91C1C;font-weight:600;min-height:20px}
   .jta-bar{position:fixed;left:16px;right:16px;bottom:16px;z-index:150;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:#FBF6EC;border:3px double #B8892B;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.3);font-family:'Mukta',system-ui,sans-serif;color:#2B1810}
   .jta-bar b{font-size:16px;color:#7A1F1F}.jta-bar small{display:block;font-size:13px;color:#6B5444}
-  .jta-bar label{flex:1 1 320px;font-size:14px;font-weight:600}
+  .jta-bar label{font-size:14px;font-weight:600}
+  .jta-in{display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px 10px;border:1px solid #B9A88E;border-radius:10px;font:inherit;font-size:15px;background:#FFFFFF}
+  .jta-names{display:flex;flex-wrap:wrap;gap:6px;max-height:96px;overflow-y:auto;margin-top:4px}
+  .jta-chip{padding:4px 10px;border:1px solid #D9C6A0;border-radius:999px;background:#FFFFFF;color:#2B1810;font:inherit;font-size:14px;cursor:pointer}
+  .jta-chip.on{border-color:#B8892B;background:#FEF3C7}.jta-chip.sel{background:#7A1F1F;color:#FFFFFF;border-color:#7A1F1F}
+  .jta-bar{max-height:70vh;overflow-y:auto}
   .jta-bar textarea{display:block;width:100%;box-sizing:border-box;margin-top:4px;min-height:58px;padding:8px 10px;border:1px solid #B9A88E;border-radius:10px;font:inherit;font-size:15px}
   .jta-view{position:fixed;inset:0;z-index:210;background:#3B2A20;display:flex;flex-direction:column}
   .jta-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 14px;background:#7A1F1F;color:#FFFFFF;font-family:'Mukta',system-ui,sans-serif}
@@ -63,18 +68,44 @@
 
   function bar() {
     if (document.getElementById("jtaBar")) return;
+    const ctx = window.__jyotishLastCtx || {};
+    const c = (window.__jtVedicData && window.__jtVedicData.chart) || ctx.chart || {};
+    const nak = (c.Moon && (c.Moon.nakshatra || Math.floor((((c.Moon.longitude % 360) + 360) % 360) / (360 / 27)) + 1)) || 1;
+    const pada = (c.Moon && c.Moon.pada) || 1;
+    const NN = (window.JT_NAK_NAMES || {})[nak];
+    const syl = NN ? NN.s[pada - 1] : "";
+    const g0 = q.get("g") || (document.getElementById("userGender") || {}).value || "male";
+    const m0 = q.get("m") || "single";
     const b = document.createElement("div");
     b.id = "jtaBar"; b.className = "jta-bar no-print";
-    b.innerHTML = `<div style="flex:0 0 auto"><b>सम्पूर्ण कुंडली PDF</b><small>${q.get("o") ? "ऑर्डर " + esc(q.get("o")) + " · " : ""}कुंडली बनते ही तैयार</small></div>
-      <label>ज्योतिषी की टिप्पणी (रिपोर्ट के अंत में छपेगी)<textarea id="jtaNote" placeholder="जैसे: 2027 के मध्य में करियर में बदलाव के अच्छे योग हैं…"></textarea></label>
-      <button type="button" class="jta-btn g" id="jtaMake">रिपोर्ट बनाएँ</button>`;
+    b.innerHTML = `<div style="flex:1 1 100%;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between"><div><b>सम्पूर्ण कुंडली PDF</b><small>${q.get("o") ? "ऑर्डर " + esc(q.get("o")) + " · " : ""}नक्षत्र चरण अक्षर: <b>${esc(syl)}</b></small></div>
+        <button type="button" class="jta-btn l" id="jtaToggle" aria-expanded="true">छोटा करें</button></div>
+      <div id="jtaBody" style="flex:1 1 100%;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end">
+        <label style="flex:0 0 150px">लिंग<select id="jtaGender" class="jta-in"><option value="male">पुरुष</option><option value="female">स्त्री</option></select></label>
+        <label style="flex:0 0 190px">वैवाहिक स्थिति<select id="jtaStatus" class="jta-in"><option value="single">अविवाहित</option><option value="married">विवाहित</option><option value="divorced">तलाक़शुदा</option><option value="widowed">विधुर / विधवा</option></select></label>
+        <label style="flex:1 1 220px">राशि नाम (सूची से चुनें या लिखें)<input id="jtaRname" class="jta-in" placeholder="जैसे: ${esc(syl)}…"></label>
+        <div style="flex:1 1 100%"><small>ज्योतिष टिप्पणी — ${NN ? "नक्षत्र के नाम (पहले चरण-अक्षर " + esc(syl) + " वाले):" : ""}</small><div id="jtaNames" class="jta-names"></div></div>
+        <label style="flex:1 1 320px">ज्योतिषी की टिप्पणी (रिपोर्ट के अंत में छपेगी)<textarea id="jtaNote" placeholder="जैसे: 2027 के मध्य में करियर में बदलाव के अच्छे योग हैं…"></textarea></label>
+        <button type="button" class="jta-btn g" id="jtaMake">रिपोर्ट बनाएँ</button></div>`;
     document.body.appendChild(b);
+    const gs = b.querySelector("#jtaGender"), ms = b.querySelector("#jtaStatus"), rn = b.querySelector("#jtaRname"), box = b.querySelector("#jtaNames");
+    gs.value = g0 === "female" ? "female" : "male"; ms.value = m0;
+    const draw = () => {
+      if (!NN) { box.innerHTML = ""; return; }
+      const list = (gs.value === "female" ? NN.g : NN.b).split(",").map((x) => x.trim()).filter(Boolean);
+      const first = list.filter((n) => syl && n.startsWith(syl)), rest = list.filter((n) => !first.includes(n));
+      box.innerHTML = first.concat(rest).map((n) => `<button type="button" class="jta-chip${first.includes(n) ? " on" : ""}${rn.value === n ? " sel" : ""}" data-n="${esc(n)}">${esc(n)}</button>`).join("");
+    };
+    draw();
+    gs.addEventListener("change", draw);
+    box.addEventListener("click", (e) => { const t = e.target.closest("[data-n]"); if (!t) return; rn.value = t.dataset.n; draw(); });
+    b.querySelector("#jtaToggle").addEventListener("click", (e) => { const body = b.querySelector("#jtaBody"); const open = body.style.display !== "none"; body.style.display = open ? "none" : "flex"; e.target.textContent = open ? "खोलें" : "छोटा करें"; e.target.setAttribute("aria-expanded", String(!open)); });
     b.querySelector("#jtaMake").addEventListener("click", make);
   }
 
   function make() {
     let html;
-    try { html = window.JTSampurnaReport.build({ note: document.getElementById("jtaNote").value, orderId: q.get("o") || "" }); }
+    try { html = window.JTSampurnaReport.build({ note: document.getElementById("jtaNote").value, orderId: q.get("o") || "", gender: document.getElementById("jtaGender").value, status: document.getElementById("jtaStatus").value, rashiName: document.getElementById("jtaRname").value }); }
     catch (e) { alert(e.message || e); return; }
     const v = document.createElement("div");
     v.className = "jta-view";
