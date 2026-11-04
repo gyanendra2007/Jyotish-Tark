@@ -96,23 +96,45 @@
     return out;
   }
 
-  function stampSvg(size) {
-    const s = size || 170;
+  // Rubber-stamp style seal (maroon); size in px
+  function stampSvg(size, col) {
+    const s = size || 170, k = col || "#7A1F1F";
+    const star = (cx, cy) => `<path d="M${cx} ${cy - 5}L${cx + 1.5} ${cy - 1.5}L${cx + 5} ${cy}L${cx + 1.5} ${cy + 1.5}L${cx} ${cy + 5}L${cx - 1.5} ${cy + 1.5}L${cx - 5} ${cy}L${cx - 1.5} ${cy - 1.5}Z" fill="${k}"/>`;
     return `<svg class="stamp" width="${s}" height="${s}" viewBox="0 0 200 200" role="img" aria-label="ज्योतिष तर्क मुहर">
-      <defs><path id="stTop" d="M 30 100 A 70 70 0 0 1 170 100"/><path id="stBot" d="M 26 100 A 74 74 0 0 0 174 100"/></defs>
-      <circle cx="100" cy="100" r="94" fill="none" stroke="#7A1F1F" stroke-width="4"/>
-      <circle cx="100" cy="100" r="86" fill="none" stroke="#7A1F1F" stroke-width="1.5"/>
-      <circle cx="100" cy="100" r="52" fill="none" stroke="#7A1F1F" stroke-width="1.5"/>
-      <text font-family="Mukta,sans-serif" font-size="19" font-weight="700" fill="#7A1F1F" letter-spacing="2"><textPath href="#stTop" startOffset="50%" text-anchor="middle">ज्योतिष तर्क</textPath></text>
-      <text font-family="Mukta,sans-serif" font-size="12" font-weight="700" fill="#7A1F1F" letter-spacing="1.6"><textPath href="#stBot" startOffset="50%" text-anchor="middle">★ JYOTISH TARK · LUCKNOW ★</textPath></text>
-      <image href="logo.png" x="56" y="56" width="88" height="88"/>
+      <defs><path id="stT" d="M 32 100 A 68 68 0 0 1 168 100"/><path id="stB" d="M 22 100 A 78 78 0 0 0 178 100"/></defs>
+      <circle cx="100" cy="100" r="96" fill="none" stroke="${k}" stroke-width="4.5"/>
+      <circle cx="100" cy="100" r="89.5" fill="none" stroke="${k}" stroke-width="1.2"/>
+      <circle cx="100" cy="100" r="85" fill="none" stroke="${k}" stroke-width="1.6" stroke-dasharray="0.1 3.6" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="57" fill="none" stroke="${k}" stroke-width="1.2"/>
+      <circle cx="100" cy="100" r="52.5" fill="none" stroke="${k}" stroke-width="3"/>
+      <text font-family="'Tiro Devanagari Hindi',serif" font-size="23" fill="${k}" letter-spacing="2"><textPath href="#stT" startOffset="50%" text-anchor="middle">ज्योतिष तर्क</textPath></text>
+      <text font-family="Mukta,sans-serif" font-size="11.5" font-weight="700" fill="${k}" letter-spacing="2.2"><textPath href="#stB" startOffset="50%" text-anchor="middle">JYOTISH TARK · LUCKNOW</textPath></text>
+      ${star(29, 100)}${star(171, 100)}
+      <text x="100" y="121" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="58" fill="${k}">ॐ</text>
+      <text x="100" y="140" text-anchor="middle" font-family="Mukta,sans-serif" font-size="8.5" font-weight="700" letter-spacing="1.5" fill="${k}">॥ शुभम् भवतु ॥</text>
     </svg>`;
   }
+  // Gold mandala with ॐ for the cover
+  function mandalaSvg() {
+    let g = "";
+    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="47" rx="9.5" ry="27" transform="rotate(${i * 22.5} 100 100)" fill="none" stroke="#E9C46A" stroke-width="1"/>`;
+    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="66" rx="6" ry="15" transform="rotate(${i * 22.5 + 11.25} 100 100)" fill="rgba(233,196,106,.12)" stroke="#E9C46A" stroke-width=".8"/>`;
+    for (let i = 0; i < 48; i++) { const a = i * 7.5 * Math.PI / 180; g += `<circle cx="${(100 + 93 * Math.sin(a)).toFixed(2)}" cy="${(100 - 93 * Math.cos(a)).toFixed(2)}" r="1.3" fill="#E9C46A"/>`; }
+    return `<svg class="mandala" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="98" fill="none" stroke="#E9C46A" stroke-width="1.4"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#E9C46A" stroke-width=".6"/>
+      ${g}
+      <circle cx="100" cy="100" r="42" fill="#5A1414" stroke="#E9C46A" stroke-width="1.6"/>
+      <circle cx="100" cy="100" r="37" fill="none" stroke="#E9C46A" stroke-width=".6" stroke-dasharray="2 2"/>
+      <text x="100" y="121" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="56" fill="#F7E7C1">ॐ</text>
+    </svg>`;
+  }
+  const corner = (cls) => `<svg class="corner ${cls}" viewBox="0 0 60 60" aria-hidden="true"><path d="M4 56V4h52" fill="none" stroke="#E9C46A" stroke-width="2"/><path d="M10 56V10h46" fill="none" stroke="#E9C46A" stroke-width=".8"/><path d="M4 4l10 10M14 4h6M4 14v6" stroke="#E9C46A" stroke-width="1.2"/><circle cx="18" cy="18" r="3.2" fill="#E9C46A"/><path d="M18 9l2.2 6.8L27 18l-6.8 2.2L18 27l-2.2-6.8L9 18l6.8-2.2z" fill="none" stroke="#E9C46A" stroke-width=".9"/></svg>`;
 
   function kvTable(rows) {
     return `<table class="kv">${rows.filter((r) => r && r[1] !== undefined && r[1] !== "").map((r) => `<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join("")}</table>`;
   }
-  const chapter = (n, title, body, sub) => `<section class="ch"><div class="chh"><span class="chn">अध्याय ${n}</span><h2>${title}</h2>${sub ? `<p class="chs">${sub}</p>` : ""}</div>${body}</section>`;
+  const chapter = (n, title, body, sub, newPage) => `<section class="ch${newPage ? " np" : ""}"><div class="chh"><span class="chn">अध्याय ${n}</span><h2>${title}</h2>${sub ? `<p class="chs">${sub}</p>` : ""}</div>${body}</section>`;
   const block = (title, html) => (html && html.replace(/<[^>]+>/g, "").trim() ? `<div class="blk">${title ? `<h3>${title}</h3>` : ""}<div class="src">${html}</div></div>` : "");
 
   function build(opts) {
@@ -137,13 +159,23 @@
 
     // ---------------- cover ----------------
     const cover = `<section class="cover">
-      <div class="om">ॐ</div>
-      <p class="ganesh">॥ श्री गणेशाय नमः ॥</p>
-      <h1>सम्पूर्ण जन्म कुंडली</h1>
-      <p class="cname">${esc(ctx.name)}</p>
-      <table class="cdet"><tr><th>जन्म तिथि</th><td>${dobTxt}</td></tr><tr><th>जन्म समय</th><td>${esc(tob)}</td></tr><tr><th>जन्म स्थान</th><td>${esc(pob)}</td></tr><tr><th>लग्न · राशि · नक्षत्र</th><td>${RASHI[ascR]} · ${RASHI[moonR]} · ${NAK[moonNak - 1]}</td></tr></table>
-      <div class="cstamp">${stampSvg(190)}</div>
-      <p class="cfoot">ज्योतिष तर्क · लखनऊ · jyotishtark.in${reportNo ? ` · रिपोर्ट क्रमांक ${esc(reportNo)}` : ""} · ${today}</p>
+      <div class="frame"></div><div class="frame2"></div>
+      ${corner("tl")}${corner("tr")}${corner("bl")}${corner("br")}
+      <div class="cin">
+        <p class="ganesh">॥ श्री गणेशाय नमः ॥</p>
+        ${mandalaSvg()}
+        <h1>सम्पूर्ण जन्म कुंडली</h1>
+        <p class="csub">वैदिक जन्मपत्रिका · लाहिड़ी अयनांश · विंशोत्तरी दशा</p>
+        <div class="plaque"><span>जातक</span><b>${esc(ctx.name)}</b></div>
+        <div class="cgrid">
+          <div><small>जन्म तिथि</small><b>${dobTxt}</b></div>
+          <div><small>जन्म समय</small><b>${esc(tob)}</b></div>
+          <div><small>जन्म स्थान</small><b>${esc(pob)}</b></div>
+          <div><small>लग्न · राशि · नक्षत्र</small><b>${RASHI[ascR]} · ${RASHI[moonR]} · ${NAK[moonNak - 1]}</b></div>
+        </div>
+        <div class="cbottom"><div class="seal">${stampSvg(150)}</div>
+          <p class="cfoot">ज्योतिष तर्क, लखनऊ · jyotishtark.in<br>${reportNo ? `रिपोर्ट क्रमांक ${esc(reportNo)} · ` : ""}${today}</p></div>
+      </div>
     </section>`;
 
     // ---------------- contents ----------------
@@ -164,7 +196,7 @@
       <div class="blk akshar"><h3>नामाक्षर व राशि नाम</h3>
         <div class="two"><div>${kvTable([["जन्म राशि", RASHI[moonR]], ["नक्षत्र चरण का अक्षर", `<b class="big">${esc((m && m.syllable) || "")}</b>`], ["नक्षत्र देवता", esc((m && m.aksh && m.aksh.devataHi) || "")], ["राशि के सभी अक्षर", rk.a]])}</div>
         <div><p>पारंपरिक रूप से नाम जन्म नक्षत्र के चरण के अक्षर से रखा जाता है; उसी राशि के दूसरे अक्षरों से भी नाम रखा जा सकता है।</p>
-        <p><b>इस राशि के कुछ नाम (बालक):</b> ${rk.b}</p><p><b>इस राशि के कुछ नाम (बालिका):</b> ${rk.g}</p></div></div></div>`, "आपके जन्म के समय का पंचांग, अवकहड़ा चक्र और नाम का अक्षर");
+        <p><b>इस राशि के कुछ नाम (बालक):</b> ${rk.b}</p><p><b>इस राशि के कुछ नाम (बालिका):</b> ${rk.g}</p></div></div></div>`, "आपके जन्म के समय का पंचांग, अवकहड़ा चक्र और नाम का अक्षर", true);
 
     // ---------------- ch 2 ----------------
     const svg = (s) => (s ? `<div class="chart">${s}</div>` : "");
@@ -175,11 +207,12 @@
     const extraSvgs = [...chD.querySelectorAll("svg")].map((s) => s.outerHTML);
     const ch2 = chapter(2, CH[1], `
       <div class="charts">${svg(vd.d1SVG)}${extraSvgs[0] ? svg(extraSvgs[0]) : ""}</div>
-      <p class="cap">बाएँ: जन्म लग्न कुंडली (D1) — शरीर, स्वभाव और जीवन के सभी 12 भाव। दाएँ: चंद्र कुंडली — मन और गोचर का विचार।</p>
-      ${extraSvgs[1] ? `<div class="charts one">${svg(extraSvgs[1])}</div><p class="cap">श्रीपति भाव चलित — भावों की सटीक सीमा के अनुसार ग्रहों का फल-स्थान।</p>` : ""}
-      <div class="charts pb">${svg(vd.d9SVG)}${svg(vd.d10SVG)}</div>
-      <p class="cap">नवांश (D9) — विवाह, धर्म और ग्रहों का वास्तविक बल · दशमांश (D10) — करियर और कर्म।</p>
-      <div class="charts one">${svg(vd.d7SVG)}</div><p class="cap">सप्तांश (D7) — संतान का विचार।</p>`, "उत्तर भारतीय शैली में आपकी मुख्य कुंडलियाँ");
+      <p class="cap">जन्म लग्न कुंडली (D1) — शरीर, स्वभाव और जीवन के 12 भाव · चंद्र कुंडली — मन और गोचर का विचार</p>
+      ${extraSvgs[1] ? `<div class="charts one">${svg(extraSvgs[1])}</div><p class="cap">श्रीपति भाव चलित — भावों की सटीक सीमा के अनुसार ग्रहों का फल-स्थान</p>` : ""}
+      <div class="cont"><span>अध्याय 2 (जारी)</span> वर्ग कुंडलियाँ</div>
+      <div class="charts">${svg(vd.d9SVG)}${svg(vd.d10SVG)}</div>
+      <p class="cap">नवांश (D9) — विवाह, धर्म और ग्रहों का वास्तविक बल · दशमांश (D10) — करियर और कर्म</p>
+      <div class="charts one">${svg(vd.d7SVG)}</div><p class="cap">सप्तांश (D7) — संतान का विचार</p>`, "उत्तर भारतीय शैली में आपकी मुख्य कुंडलियाँ", true);
 
     // ---------------- ch 3 ----------------
     const rows = ["Asc"].concat(P9).map((k) => {
@@ -196,7 +229,7 @@
       <table class="grid"><thead><tr><th>भाव</th><th>राशि</th><th>भावेश</th><th>भावेश कहाँ</th><th>भाव में ग्रह</th></tr></thead><tbody>${lordRows}</tbody></table>
       ${m ? `<p class="cap">आत्मकारक: <b>${PL[m.ak] || ""}</b>${m.amk ? ` · अमात्यकारक: <b>${PL[m.amk]}</b>` : ""}${m.dk ? ` · दाराकारक: <b>${PL[m.dk]}</b>` : ""}</p>` : ""}
       ${block("सभी 9 ग्रहों का विस्तृत फल", clean("contentPlanetsAspects"))}
-      ${block("विशेष लग्न, अष्टकवर्ग और 12 भाव", clean("contentSpecialLagnas"))}`, "हर ग्रह की राशि, अंश, नक्षत्र, भाव और बल");
+      ${block("विशेष लग्न, अष्टकवर्ग और 12 भाव", clean("contentSpecialLagnas"))}`, "हर ग्रह की राशि, अंश, नक्षत्र, भाव और बल", true);
 
     // ---------------- ch 4–9 from the dossier ----------------
     const ch4 = chapter(4, CH[3], block("", clean("contentPersonality")), `लग्न ${RASHI[ascR]} · राशि ${RASHI[moonR]} · नक्षत्र ${NAK[moonNak - 1]}`);
@@ -254,7 +287,7 @@
 
     // ---------------- note & close ----------------
     const note = (opts.note || "").trim();
-    const close = `<section class="ch close"><div class="chh"><h2>ज्योतिषी की टिप्पणी</h2></div>
+    const close = `<section class="ch close keep"><div class="chh"><h2>ज्योतिषी की टिप्पणी</h2></div>
       ${note ? `<div class="note-box">${esc(note).replace(/\n/g, "<br>")}</div>` : `<div class="note-box empty"></div>`}
       <div class="blk"><h3>आवश्यक सूचना</h3><ul>
         <li>यह कुंडली आपके दिए जन्म विवरण पर आधारित है। जन्म समय ग़लत होने पर लग्न, भाव और दशा की तारीखें बदल सकती हैं।</li>
@@ -262,67 +295,96 @@
         <li>किसी भी प्रश्न के लिए: WhatsApp / कॉल <b>+91 83185 13814</b> · jyotishtark@gmail.com · jyotishtark.in</li></ul></div>
       <div class="sign">${stampSvg(150)}<p>ज्योतिष तर्क, लखनऊ<br>${today}</p></div></section>`;
 
+    const NAME = esc(ctx.name).replace(/"/g, "");
     const CSS = `
-      @page { size: A4; margin: 15mm 14mm 17mm; @bottom-center { content: "ज्योतिष तर्क · सम्पूर्ण कुंडली · ${esc(ctx.name).replace(/"/g, "")} · पेज " counter(page); font: 9pt Mukta, sans-serif; color: #6B5444; } }
-      @page :first { margin: 12mm; @bottom-center { content: none; } }
+      @page { size: A4; margin: 19mm 14mm 16mm;
+        @top-left { content: "ज्योतिष तर्क"; font: 600 9pt Mukta, sans-serif; color: #7A1F1F; border-bottom: .35mm solid #C9A227; vertical-align: bottom; padding-bottom: 1.5mm; }
+        @top-center { content: ""; border-bottom: .35mm solid #C9A227; }
+        @top-right { content: "सम्पूर्ण जन्म कुंडली · ${NAME}"; font: 9pt Mukta, sans-serif; color: #6B5444; border-bottom: .35mm solid #C9A227; vertical-align: bottom; padding-bottom: 1.5mm; }
+        @bottom-center { content: "— " counter(page) " —"; font: 9pt Mukta, sans-serif; color: #7A1F1F; }
+        @bottom-right { content: "jyotishtark.in"; font: 8pt Mukta, sans-serif; color: #8A7A6A; } }
+      @page :first { margin: 0; @top-left { content: none; border: 0; } @top-center { content: none; border: 0; } @top-right { content: none; border: 0; } @bottom-center { content: none; } @bottom-right { content: none; } }
       * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      html, body { margin: 0; background: #FFFFFF; color: #2B1810; font-family: 'Mukta', 'Noto Sans Devanagari', sans-serif; font-size: 11.2pt; line-height: 1.6; }
+      html, body { margin: 0; background: #FFFFFF; color: #2B1810; font-family: 'Mukta', 'Noto Sans Devanagari', sans-serif; font-size: 11pt; line-height: 1.58; orphans: 3; widows: 3; }
       h1, h2, h3 { font-family: 'Tiro Devanagari Hindi', serif; font-weight: 400; color: #7A1F1F; line-height: 1.3; }
-      .cover { height: 271mm; border: 3px double #B8892B; outline: 1px solid #7A1F1F; outline-offset: 4px; padding: 14mm 12mm; text-align: center; display: flex; flex-direction: column; align-items: center; background: #FBF6EC; }
-      .om { font-family: 'Tiro Devanagari Hindi', serif; font-size: 70pt; color: #7A1F1F; line-height: 1; }
-      .ganesh { margin: 4mm 0 0; font-family: 'Tiro Devanagari Hindi', serif; font-size: 15pt; color: #8A6416; }
-      .cover h1 { margin: 8mm 0 2mm; font-size: 34pt; }
-      .cname { margin: 0 0 8mm; font-size: 22pt; font-weight: 700; color: #2B1810; }
-      .cdet { border-collapse: collapse; font-size: 12.5pt; min-width: 120mm; }
-      .cdet th, .cdet td { padding: 2.2mm 4mm; border-bottom: 1px dotted #CDB993; text-align: left; }
-      .cdet th { color: #6B5444; font-weight: 600; width: 45mm; }
-      .cstamp { margin-top: auto; }
-      .cfoot { margin: 6mm 0 0; font-size: 10pt; color: #6B5444; }
-      .stamp { display: inline-block; opacity: .92; }
+      /* cover */
+      .cover { position: relative; width: 210mm; height: 297mm; overflow: hidden; break-after: page; color: #F7E7C1; background: radial-gradient(circle at 50% 30%, #93302A 0%, #6E1C17 48%, #4A110E 100%); }
+      .frame { position: absolute; inset: 9mm; border: 1.1mm solid #C9A227; }
+      .frame2 { position: absolute; inset: 12mm; border: .35mm solid #E9C46A; }
+      .corner { position: absolute; width: 22mm; height: 22mm; }
+      .corner.tl { top: 6mm; left: 6mm; } .corner.tr { top: 6mm; right: 6mm; transform: scaleX(-1); }
+      .corner.bl { bottom: 6mm; left: 6mm; transform: scaleY(-1); } .corner.br { bottom: 6mm; right: 6mm; transform: scale(-1, -1); }
+      .cin { position: absolute; inset: 16mm 18mm; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .ganesh { margin: 4mm 0 4mm; font-family: 'Tiro Devanagari Hindi', serif; font-size: 15pt; color: #F1D38A; letter-spacing: .05em; }
+      .mandala { width: 78mm; height: 78mm; }
+      .cover h1 { margin: 6mm 0 1mm; font-size: 38pt; color: #F1D38A; text-shadow: 0 .4mm 0 #3A0C0A; }
+      .csub { margin: 0; font-size: 11pt; letter-spacing: .12em; color: #E9D7A8; }
+      .plaque { margin: 7mm 0 6mm; min-width: 120mm; padding: 3mm 10mm 3.5mm; background: #FBF2DC; border: .6mm solid #C9A227; outline: .3mm solid #FBF2DC; outline-offset: .8mm; border-radius: 2mm; color: #5A1414; }
+      .plaque span { display: block; font-size: 9pt; letter-spacing: .2em; color: #8A6416; }
+      .plaque b { display: block; font-family: 'Tiro Devanagari Hindi', serif; font-weight: 400; font-size: 24pt; line-height: 1.25; }
+      .cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; width: 150mm; }
+      .cgrid div { padding: 2.5mm 4mm; border: .3mm solid rgba(233,196,106,.7); border-radius: 1.5mm; background: rgba(0,0,0,.14); text-align: left; }
+      .cgrid small { display: block; font-size: 8.5pt; letter-spacing: .08em; color: #E9C46A; }
+      .cgrid b { font-size: 12pt; color: #FFF6DF; font-weight: 600; }
+      .cbottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; }
+      .seal { width: 44mm; height: 44mm; border-radius: 50%; background: #FBF2DC; border: .6mm solid #C9A227; display: flex; align-items: center; justify-content: center; }
+      .seal .stamp { width: 40mm; height: 40mm; transform: rotate(-8deg); }
+      .cfoot { margin: 3mm 0 0; font-size: 9.5pt; line-height: 1.5; color: #E9D7A8; }
+      /* contents */
       .toc { break-before: page; }
-      .toc h2 { font-size: 24pt; margin: 0 0 6mm; border-bottom: 2px solid #B8892B; padding-bottom: 2mm; }
-      .toc ol { margin: 0; padding-left: 8mm; font-size: 13pt; line-height: 2.1; }
-      .toc .tnote { list-style: none; margin-left: -8mm; color: #6B5444; }
-      .howto { margin-top: 10mm; padding: 5mm 6mm; background: #FBF6EC; border: 1px solid #E8DCC4; border-radius: 3mm; }
-      .howto h3 { margin: 0 0 2mm; font-size: 14pt; }
-      .ch { break-before: page; }
-      .chh { margin: 0 0 5mm; padding: 4mm 5mm; background: #7A1F1F; color: #FFFFFF; border-radius: 2mm; border-bottom: 3px double #B8892B; }
-      .chh .chn { display: block; font-size: 9.5pt; font-weight: 700; letter-spacing: .08em; color: #F1D99A; }
-      .chh h2 { margin: 1mm 0 0; color: #FFFFFF; font-size: 19pt; }
-      .chh .chs { margin: 1mm 0 0; font-size: 10pt; color: #F3E9D6; }
-      h3 { margin: 5mm 0 2mm; font-size: 14pt; border-bottom: 1px solid #E8DCC4; padding-bottom: 1mm; }
-      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
-      table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 10pt; }
-      th, td { border: 1px solid #E0CFAE; padding: 1.6mm 2mm; text-align: left; vertical-align: top; }
+      .toc h2 { font-size: 24pt; margin: 0 0 5mm; border-bottom: .6mm solid #C9A227; padding-bottom: 2mm; text-align: center; }
+      .toc ol { margin: 0 auto; padding: 0; list-style: none; counter-reset: c; max-width: 150mm; }
+      .toc li { counter-increment: c; display: flex; gap: 4mm; align-items: baseline; padding: 2.6mm 0; border-bottom: .2mm dotted #CDB993; font-size: 12.5pt; }
+      .toc li::before { content: "अध्याय " counter(c); flex: none; width: 22mm; font-size: 9.5pt; font-weight: 700; color: #8A6416; }
+      .toc .tnote::before { content: "अंत में"; }
+      .howto { margin: 9mm auto 0; max-width: 150mm; padding: 5mm 6mm; background: #FBF6EC; border: .3mm solid #E0CFAE; border-left: 1.2mm solid #C9A227; }
+      .howto h3 { margin: 0 0 2mm; font-size: 13.5pt; border: 0; }
+      .howto p { margin: 1.5mm 0; font-size: 10.5pt; }
+      /* chapters */
+      .ch { margin-top: 9mm; }
+      .ch.np { break-before: page; margin-top: 0; }
+      .chh { margin: 0 0 4mm; padding: 3.5mm 5mm 3.8mm; background: #7A1F1F; color: #FFFFFF; border-radius: 1.5mm; border-bottom: 1mm solid #C9A227; break-after: avoid; break-inside: avoid; }
+      .chh .chn { display: block; font-size: 9pt; font-weight: 700; letter-spacing: .14em; color: #F1D38A; }
+      .chh h2 { margin: .5mm 0 0; color: #FFFFFF; font-size: 18pt; }
+      .chh .chs { margin: .5mm 0 0; font-size: 9.8pt; color: #F3E9D6; }
+      h3 { margin: 4.5mm 0 2mm; font-size: 13.5pt; border-bottom: .3mm solid #E0CFAE; padding-bottom: 1mm; break-after: avoid; }
+      .cont { break-before: page; margin: 0 0 4mm; padding: 2mm 4mm; border-left: 1.2mm solid #C9A227; background: #FBF6EC; font-family: 'Tiro Devanagari Hindi', serif; font-size: 14pt; color: #7A1F1F; }
+      .cont span { display: block; font-family: Mukta, sans-serif; font-size: 8.5pt; font-weight: 700; letter-spacing: .1em; color: #8A6416; }
+      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+      table { width: 100%; border-collapse: collapse; margin: 2mm 0 3.5mm; font-size: 9.8pt; }
+      th, td { border: .25mm solid #E0CFAE; padding: 1.5mm 2mm; text-align: left; vertical-align: top; }
       thead th, .grid th { background: #F3E9D6; color: #5A1414; font-weight: 700; }
+      thead { display: table-header-group; }
       tr { break-inside: avoid; }
       tr.now td { background: #FFF4D6; font-weight: 700; }
       .kv th { width: 42%; background: #FBF6EC; color: #5A1414; font-weight: 600; }
       .kv td { font-weight: 600; }
       .big { font-size: 15pt; color: #7A1F1F; }
-      .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin: 2mm 0; }
-      .charts.one { grid-template-columns: 1fr; width: 60%; margin-left: auto; margin-right: auto; }
-      .charts.pb { break-before: page; }
+      .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin: 1mm 0; }
+      .charts.one { grid-template-columns: 1fr; width: 50%; margin: 1mm auto; }
+      .chart { break-inside: avoid; }
       .chart svg { width: 100%; height: auto; display: block; }
-      .cap { margin: 1mm 0 4mm; font-size: 9.8pt; color: #6B5444; text-align: center; }
-      .blk { margin: 4mm 0; }
-      .src p { margin: 1.5mm 0; }
-      .src h3, .src h4, .src h5 { font-family: 'Mukta', sans-serif; font-weight: 700; font-size: 11.5pt; color: #5A1414; border: 0; margin: 3mm 0 1mm; padding: 0; }
-      .src div { margin: 1.5mm 0; }
-      .src > div > div, .src li { break-inside: avoid; }
+      .cap { margin: 1mm 0 3.5mm; font-size: 9.5pt; color: #6B5444; text-align: center; }
+      .blk { margin: 3.5mm 0; }
+      .src p { margin: 1.4mm 0; }
+      .src h3, .src h4, .src h5 { font-family: 'Mukta', sans-serif; font-weight: 700; font-size: 11.2pt; color: #5A1414; border: 0; margin: 3mm 0 1mm; padding: 0; break-after: avoid; }
+      .src div { margin: 1.4mm 0; }
+      .src li, .blk li { break-inside: avoid; margin: .8mm 0; }
       .src ul, .blk ul { margin: 1mm 0; padding-left: 6mm; }
       .src strong, .src b { color: #2B1810; }
       .src svg { max-width: 100%; height: auto; }
-      .src table { font-size: 9.4pt; }
-      .bx { border: 1px solid #E8DCC4; border-radius: 2mm; padding: 2mm 3mm; background: #FFFDF7; break-inside: avoid; }
+      .src table { font-size: 9.2pt; }
+      .bx { border: .25mm solid #E8DCC4; border-radius: 1.5mm; padding: 2mm 3mm; background: #FFFDF7; }
       .bx .bx { background: #FFFFFF; }
+      .keep { break-inside: avoid; }
       .muted { color: #6B5444; }
-      .note { font-size: 9.6pt; color: #6B5444; }
+      .note { font-size: 9.4pt; color: #6B5444; }
       td.g { background: #EEF8EE; } td.c { background: #FFF4E8; }
-      .note-box { min-height: 70mm; padding: 6mm; border: 1.5px solid #B8892B; border-radius: 3mm; background: #FBF6EC; font-size: 12pt; white-space: normal; }
-      .sign { margin-top: 10mm; text-align: right; }
-      .sign p { margin: 2mm 0 0; font-size: 10.5pt; color: #6B5444; }
-      @media screen { body { background: #EDE6D9; } .page-wrap { max-width: 210mm; margin: 8mm auto; background: #FFFFFF; padding: 14mm; box-shadow: 0 4px 20px rgba(0,0,0,.15); } .ch, .toc { border-top: 2px dashed #CDB993; margin-top: 12mm; padding-top: 8mm; } }
+      .note-box { min-height: 60mm; padding: 6mm; border: .5mm solid #C9A227; border-radius: 2mm; background: #FBF6EC; font-size: 12pt; }
+      .sign { margin-top: 10mm; display: flex; justify-content: flex-end; align-items: center; gap: 6mm; }
+      .sign .stamp { transform: rotate(-8deg); }
+      .sign p { margin: 0; font-size: 10.5pt; color: #6B5444; text-align: right; }
+      @media screen { body { background: #EDE6D9; } .page-wrap { width: 210mm; margin: 8mm auto; background: #FFFFFF; padding: 0 14mm 14mm; box-shadow: 0 4px 20px rgba(0,0,0,.15); } .cover { margin: 0 -14mm; } .ch.np, .toc { border-top: 2px dashed #CDB993; padding-top: 8mm; margin-top: 10mm; } }
       @media print { .page-wrap { padding: 0; } }`;
 
     const base = new URL(".", location.href).href;
@@ -331,7 +393,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;600;700&display=swap">
       <style>${CSS}</style></head><body><div class="page-wrap">
       ${cover}${toc}${ch1}${ch2}${ch3}${ch4}${ch5}${ch6}${ch7}${ch8}${ch9}${ch10}${ch11}${ch12}${close}
-      </div></body></html>`;
+      </div><script>(function(){var mm=96/25.4;function k(){document.querySelectorAll(".bx,.two,table.kv,.blk>.src>div,.src>p,.akshar").forEach(function(e){if(e.getBoundingClientRect().height<70*mm)e.classList.add("keep")});}if(document.readyState==="complete")k();else window.addEventListener("load",k);})();<\/script></body></html>`;
   }
 
   window.JTSampurnaReport = { build };
