@@ -1,4 +1,4 @@
-/* Jyotish Tark — shared behaviour: mobile menu + share bar. Loaded on every page. */
+/* Jyotish Tark — shared behaviour: mobile menu, share bar, help bot, offer card. Loaded on every page. */
 (function () {
   "use strict";
   function menu() {
@@ -88,7 +88,160 @@
     if (main.tagName === "MAIN") main.appendChild(bar("end"));
   }
 
-  function init() { menu(); try { share(); } catch (e) {} }
+
+  /* ---------- Help bot (menu based, no data stored; booking goes to WhatsApp) ---------- */
+  var WA = "918318513814";
+  var PLANS = [
+    { id: "a15", g: "call", t: "ऑडियो कॉल · 15 मिनट", p: "₹301" },
+    { id: "a30", g: "call", t: "ऑडियो कॉल · 30 मिनट", p: "₹501" },
+    { id: "a60", g: "call", t: "ऑडियो कॉल · 1 घंटा", p: "₹901" },
+    { id: "v30", g: "call", t: "वीडियो कॉल · 30 मिनट", p: "₹1,101" },
+    { id: "v60", g: "call", t: "वीडियो कॉल · 1 घंटा", p: "₹2,101" },
+    { id: "k15", g: "call", t: "15 मिनट कॉल + विस्तृत कुंडली रिपोर्ट", p: "₹1,301" },
+    { id: "k30", g: "call", t: "30 मिनट कॉल + विस्तृत कुंडली रिपोर्ट", p: "₹1,501" },
+    { id: "rem", g: "msg", t: "उपाय (केवल WhatsApp संदेश द्वारा, कॉल नहीं)", p: "₹199" },
+    { id: "p1", g: "meet", t: "व्यक्तिगत भेंट · लखनऊ में (पहले से अपॉइंटमेंट)", p: "₹11,000" },
+    { id: "p2", g: "meet", t: "ज्योतिषी आपके स्थान पर आएँ (पहले से अपॉइंटमेंट)", p: "₹21,000" }
+  ];
+  var FAQ = [
+    ["पहले 5 मिनट मुफ़्त कैसे हैं?", "कॉल के पहले 5 मिनट मुफ़्त हैं — आप अपनी समस्या बताइए, और आगे बात करनी है या नहीं, यह आप तय करें।"],
+    ["भुगतान कब और कैसे करना है?", "ऑडियो/वीडियो कॉल और उपाय का भुगतान सेवा के बाद UPI से होता है। व्यक्तिगत भेंट (₹11,000 / ₹21,000) का भुगतान अपॉइंटमेंट पक्का करते समय पहले होता है।"],
+    ["अपॉइंटमेंट की तारीख बदल सकते हैं?", "हाँ, व्यक्तिगत भेंट की तारीख 48 घंटे पहले बताकर बदली जा सकती है।"],
+    ["कॉल का समय कैसे तय होगा?", "बुकिंग संदेश भेजने के बाद WhatsApp पर आपकी सुविधा के अनुसार समय तय किया जाता है।"],
+    ["कॉल के लिए क्या तैयार रखें?", "जन्म तिथि, जन्म का सही समय और जन्म स्थान — और अपने 2–3 मुख्य प्रश्न।"],
+    ["क्या ज्योतिष से गारंटी मिलती है?", "नहीं। ज्योतिष मार्गदर्शन देता है, गारंटी नहीं। स्वास्थ्य, कानूनी या आर्थिक मामलों में संबंधित विशेषज्ञ (डॉक्टर, वकील) की सलाह ज़रूर लें।"]
+  ];
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function helpBot() {
+    if (document.getElementById("jtBot")) return;
+    var old = document.querySelector(".whatsapp-float");
+    var direct = (old && /wa\.me/.test(old.getAttribute("href") || "")) ? old.getAttribute("href") : "https://wa.me/" + WA;
+    document.documentElement.classList.add("jt-bot-on");
+    var wrap = document.createElement("div");
+    wrap.className = "jt-bot no-print";
+    wrap.innerHTML =
+      '<button type="button" class="jt-bot-btn" id="jtBotBtn" aria-expanded="false" aria-controls="jtBot" aria-label="सहायता खोलें">' +
+      '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>' +
+      '<span class="jt-bot-btn-t">सहायता</span></button>' +
+      '<div class="jt-bot-panel" id="jtBot" role="dialog" aria-modal="false" aria-labelledby="jtBotTitle" hidden>' +
+      '<div class="jt-bot-head"><img src="logo.png" alt="" width="36" height="36"><div><b id="jtBotTitle">ज्योतिष तर्क सहायक</b><small>पहले 5 मिनट की बात मुफ़्त</small></div>' +
+      '<button type="button" class="jt-bot-x" data-a="close" aria-label="बंद करें">×</button></div>' +
+      '<div class="jt-bot-body" aria-live="polite"></div></div>';
+    document.body.appendChild(wrap);
+    var btn = wrap.querySelector(".jt-bot-btn"), panel = wrap.querySelector(".jt-bot-panel"), body = wrap.querySelector(".jt-bot-body");
+    var plan = null;
+
+    function say(html) { body.innerHTML = html; body.scrollTop = 0; var f = body.querySelector("button,a,input"); if (f) f.focus({ preventScroll: true }); }
+    function back() { return '<button type="button" class="jt-bot-back" data-a="home">← मुख्य मेनू</button>'; }
+    function home() {
+      say('<p class="jt-bot-msg">नमस्ते 🙏 मैं आपकी कैसे मदद करूँ?</p><div class="jt-bot-opts">' +
+        '<button type="button" data-a="book">📞 परामर्श बुक करें</button>' +
+        '<button type="button" data-a="price">💰 परामर्श शुल्क</button>' +
+        '<button type="button" data-a="kundali">📜 कुंडली</button>' +
+        '<button type="button" data-a="daily">📅 आज का राशिफल व पंचांग</button>' +
+        '<button type="button" data-a="bhakti">🙏 भक्ति संग्रह</button>' +
+        '<button type="button" data-a="faq">❓ सामान्य प्रश्न</button>' +
+        '<a href="' + esc(direct) + '" target="_blank" rel="noopener">💬 सीधे WhatsApp पर बात करें</a></div>');
+    }
+    function priceList(pick) {
+      var g = { call: "ऑडियो / वीडियो कॉल", msg: "बिना कॉल", meet: "व्यक्तिगत भेंट" }, out = "", last = "";
+      PLANS.forEach(function (x) {
+        if (x.g !== last) { out += '<p class="jt-bot-g">' + g[x.g] + "</p>"; last = x.g; }
+        out += pick ? '<button type="button" class="jt-bot-plan" data-a="plan" data-id="' + x.id + '"><span>' + x.t + "</span><b>" + x.p + "</b></button>"
+                    : '<div class="jt-bot-plan"><span>' + x.t + "</span><b>" + x.p + "</b></div>";
+      });
+      return out;
+    }
+    var views = {
+      home: home,
+      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>हर कॉल के पहले 5 मिनट मुफ़्त · कॉल का भुगतान बात के बाद UPI से</small></p>' + priceList(true)); },
+      price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>हर कॉल के पहले 5 मिनट मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
+      kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="kundali-form.html">विस्तृत कुंडली रिपोर्ट · ₹1,101</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट कॉल + कुंडली रिपोर्ट · ₹1,501</button></div>'); },
+      daily: function () { say(back() + '<p class="jt-bot-msg">रोज़ की जानकारी</p><div class="jt-bot-opts"><a href="rashifal.html">आज का राशिफल</a><a href="panchang.html">आज का पंचांग</a><a href="ekadashi-list.html">एकादशी सूची 2026–27</a><a href="tyohar-2026.html">त्योहार 2026</a><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></div>'); },
+      bhakti: function () { say(back() + '<p class="jt-bot-msg">भक्ति संग्रह</p><div class="jt-bot-opts"><a href="hanuman-chalisa.html">हनुमान चालीसा</a><a href="om-jai-jagdish-hare-aarti.html">ॐ जय जगदीश हरे</a><a href="sundarkand.html">सुंदरकांड</a><a href="ekadashi-vrat-katha.html">एकादशी व्रत कथा</a><a href="bhakti-sangrah.html">सभी पाठ, आरती व कथाएँ →</a></div>'); },
+      faq: function () { say(back() + '<p class="jt-bot-msg">सामान्य प्रश्न</p>' + FAQ.map(function (q) { return "<details><summary>" + q[0] + "</summary><p>" + q[1] + "</p></details>"; }).join("") + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 परामर्श बुक करें</button></div>'); }
+    };
+    function form() {
+      var meet = plan.g === "meet";
+      say('<button type="button" class="jt-bot-back" data-a="book">← दूसरा विकल्प चुनें</button>' +
+        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (meet ? "व्यक्तिगत भेंट का भुगतान अपॉइंटमेंट पक्का होने पर पहले होता है; 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "उपाय WhatsApp संदेश से भेजे जाएँगे; भुगतान उसके बाद UPI से।" : "पहले 5 मिनट मुफ़्त; भुगतान कॉल के बाद UPI से।")) + "</small></p>" +
+        '<form class="jt-bot-form" novalidate>' +
+        '<label>आपका नाम<input name="n" autocomplete="name" required></label>' +
+        '<label>जन्म तिथि<input name="d" type="date" required></label>' +
+        '<label>जन्म समय<input name="t" type="time"></label>' +
+        '<label>जन्म स्थान<input name="p" placeholder="जैसे: लखनऊ, उत्तर प्रदेश"></label>' +
+        (meet ? '<label>पसंद की तारीख व शहर<input name="w" placeholder="जैसे: 20 नवंबर, लखनऊ"></label>' : "") +
+        '<label>मुख्य प्रश्न (वैकल्पिक)<textarea name="q" rows="2" placeholder="जैसे: करियर, विवाह, नौकरी"></textarea></label>' +
+        '<p class="jt-bot-err" role="alert"></p>' +
+        '<button type="submit" class="jt-bot-send">WhatsApp पर बुकिंग भेजें</button>' +
+        "<small>आपकी जानकारी इस वेबसाइट पर सेव नहीं होती — सीधे WhatsApp संदेश में जाती है।</small></form>");
+      body.querySelector("form").addEventListener("input", function (e) { e.currentTarget.querySelector(".jt-bot-err").textContent = ""; });
+      body.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var f = e.target, v = function (k) { return f[k] ? f[k].value.trim() : ""; };
+        if (!v("n") || !v("d")) { f.querySelector(".jt-bot-err").textContent = "कृपया नाम और जन्म तिथि भरें।"; (v("n") ? f.d : f.n).focus(); return; }
+        var d = v("d").split("-"), dd = d.length === 3 ? d[2] + "-" + d[1] + "-" + d[0] : v("d");
+        var msg = "नमस्ते, मुझे परामर्श बुक करना है।\nसेवा: " + plan.t + " (" + plan.p + ")\nनाम: " + v("n") + "\nजन्म तिथि: " + dd +
+          (v("t") ? "\nजन्म समय: " + v("t") : "") + (v("p") ? "\nजन्म स्थान: " + v("p") : "") + (v("w") ? "\nपसंद की तारीख/शहर: " + v("w") : "") +
+          (v("q") ? "\nप्रश्न: " + v("q") : "") + "\n(jyotishtark.in से)";
+        window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+        say('<p class="jt-bot-msg">धन्यवाद 🙏 WhatsApp में संदेश तैयार है — वहाँ <b>Send</b> दबाएँ। समय वहीं तय होगा।</p><div class="jt-bot-opts"><button type="button" data-a="home">मुख्य मेनू</button></div>');
+      });
+    }
+    function open(v) {
+      panel.hidden = false; btn.setAttribute("aria-expanded", "true"); btn.setAttribute("aria-label", "सहायता बंद करें");
+      document.documentElement.classList.add("jt-bot-open"); hideOffer(false);
+      (views[v] || home)();
+    }
+    function close() { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-label", "सहायता खोलें"); document.documentElement.classList.remove("jt-bot-open"); btn.focus(); }
+    btn.addEventListener("click", function () { panel.hidden ? open() : close(); });
+    panel.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-a]"); if (!b) return;
+      var a = b.dataset.a;
+      if (a === "close") return close();
+      if (a === "plan") { plan = PLANS.filter(function (x) { return x.id === b.dataset.id; })[0]; return form(); }
+      (views[a] || home)();
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) close(); });
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest("[data-jt-bot]"); if (!t) return;
+      e.preventDefault(); var id = t.getAttribute("data-jt-bot");
+      if (id && id.indexOf("plan:") === 0) { open("book"); plan = PLANS.filter(function (x) { return x.id === id.slice(5); })[0]; if (plan) form(); }
+      else open(id);
+    });
+    window.jtBotOpen = open;
+  }
+
+  /* ---------- Offer card: slides up after 8s, once per session; × hides it for 7 days ---------- */
+  var OFFER_KEY = "jt-offer-closed";
+  function store(kind, k, v) { try { var s = window[kind]; if (v === undefined) return s.getItem(k); s.setItem(k, v); } catch (e) { return null; } }
+  function hideOffer(remember) {
+    var o = document.getElementById("jtOffer"); if (o) o.remove();
+    document.documentElement.classList.remove("jt-offer-on");
+    if (remember) store("localStorage", OFFER_KEY, String(Date.now()));
+  }
+  function offer() {
+    if (document.querySelector("main.bk-page") || document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname)) return;
+    var t = +store("localStorage", OFFER_KEY) || 0;
+    if (Date.now() - t < 7 * 864e5 || store("sessionStorage", "jt-offer-seen")) return;
+    setTimeout(function () {
+      if (document.documentElement.classList.contains("jt-bot-open")) return;
+      store("sessionStorage", "jt-offer-seen", "1");
+      var o = document.createElement("aside");
+      o.id = "jtOffer"; o.className = "jt-offer no-print"; o.setAttribute("aria-label", "परामर्श ऑफ़र");
+      o.innerHTML = '<button type="button" class="jt-offer-x" aria-label="बंद करें">×</button>' +
+        '<p class="jt-offer-k">ज्योतिषी ज्ञानेंद्र सिंह तोमर से सीधी बात</p>' +
+        '<p class="jt-offer-h">पहले <b>5 मिनट मुफ़्त</b> · ऑडियो कॉल ₹301 से</p>' +
+        '<div class="jt-offer-r"><button type="button" class="jt-offer-b" data-jt-bot="book">अभी बुक करें</button><a href="consultation.html">शुल्क देखें</a></div>';
+      document.body.appendChild(o);
+      document.documentElement.classList.add("jt-offer-on");
+      o.querySelector(".jt-offer-x").addEventListener("click", function () { hideOffer(true); });
+      o.querySelector(".jt-offer-b").addEventListener("click", function () { hideOffer(true); });
+    }, 8000);
+  }
+
+  function init() { menu(); try { share(); } catch (e) {} try { helpBot(); offer(); } catch (e) {} }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

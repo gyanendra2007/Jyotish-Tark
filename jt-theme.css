@@ -360,3 +360,69 @@ html body .primary-button { box-shadow: 0 8px 20px rgba(122, 31, 31, .18) !impor
 .jt-sh-msg { font-size: 14px; color: #136C35 !important; font-weight: 600; }
 @media (max-width: 560px) { .jt-sh-t { display: none; } .jt-sh { padding: 7px 11px; } .jt-share { padding: 0 16px; } .jt-share-end { margin-left: 16px; margin-right: 16px; } }
 @media print { .jt-share { display: none !important; } }
+
+/* ---------- Help bot ---------- */
+html.jt-bot-on .whatsapp-float, html.jt-bot-on .whatsapp-popup { display: none !important; }
+.jt-bot { position: fixed; right: 20px; bottom: 22px; z-index: 60; font-family: var(--jt-sans, 'Mukta', system-ui, sans-serif); }
+.jt-bot-btn { display: flex; align-items: center; gap: 8px; height: 56px; padding: 0 20px 0 16px; border-radius: 999px; border: 3px solid #FFFFFF; background: #15803D; color: #FFFFFF; font-size: 17px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 22px rgba(21, 128, 61, .35); }
+.jt-bot-btn:hover { background: #166534; }
+.jt-bot-btn:focus-visible, .jt-bot button:focus-visible, .jt-bot a:focus-visible, .jt-offer button:focus-visible, .jt-offer a:focus-visible { outline: 3px solid var(--jt-gold, #B8892B); outline-offset: 2px; }
+.jt-bot-panel { position: absolute; right: 0; bottom: 68px; width: min(380px, calc(100vw - 32px)); max-height: min(600px, calc(100vh - 110px)); display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-radius: 18px; box-shadow: 0 18px 48px rgba(43, 24, 16, .25); overflow: hidden; }
+.jt-bot-panel[hidden] { display: none; }
+.jt-bot-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--jt-maroon, #7A1F1F); color: #FFFFFF; }
+.jt-bot-head img { border-radius: 50%; background: #FFFFFF; }
+.jt-bot-head b { display: block; font-size: 17px; color: #FFFFFF; }
+.jt-bot-head small { display: block; font-size: 13.5px; color: #F3E9D6; }
+.jt-bot-x { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .15); color: #FFFFFF; font-size: 24px; line-height: 1; cursor: pointer; }
+.jt-bot-body { padding: 14px; overflow-y: auto; background: var(--jt-ivory, #FBF6EC); }
+.jt-bot-msg { margin: 0 0 12px; padding: 10px 12px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-radius: 4px 14px 14px 14px; color: var(--jt-ink, #2B1810); font-size: 16px; line-height: 1.55; }
+.jt-bot-msg small { display: block; margin-top: 4px; color: var(--jt-muted, #6B5444); font-size: 13.5px; }
+.jt-bot-opts { display: flex; flex-direction: column; gap: 8px; }
+.jt-bot-opts button, .jt-bot-opts a { display: block; text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--jt-line, #E8DCC4); background: #FFFFFF; color: var(--jt-maroon, #7A1F1F) !important; font: inherit; font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.jt-bot-opts button:hover, .jt-bot-opts a:hover, .jt-bot-plan:hover { border-color: var(--jt-maroon, #7A1F1F); }
+.jt-bot-back { margin: 0 0 10px; padding: 4px 0; border: 0; background: none; color: var(--jt-maroon, #7A1F1F); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+.jt-bot-g { margin: 12px 0 6px; font-size: 13.5px; font-weight: 700; color: var(--jt-muted, #6B5444); text-transform: uppercase; }
+.jt-bot-plan { display: flex; width: 100%; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 6px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--jt-line, #E8DCC4); background: #FFFFFF; color: var(--jt-ink, #2B1810); font: inherit; font-size: 15.5px; text-align: left; }
+button.jt-bot-plan { cursor: pointer; }
+.jt-bot-plan b { color: var(--jt-maroon, #7A1F1F); white-space: nowrap; }
+.jt-bot details { margin-bottom: 8px; padding: 8px 12px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-radius: 12px; }
+.jt-bot summary { cursor: pointer; font-weight: 600; color: var(--jt-ink, #2B1810); font-size: 15.5px; }
+.jt-bot details p { margin: 6px 0 2px; color: var(--jt-body, #4A3628); font-size: 15px; line-height: 1.6; }
+.jt-bot-form label { display: block; margin-bottom: 10px; font-size: 14.5px; font-weight: 600; color: var(--jt-ink, #2B1810); }
+.jt-bot-form input, .jt-bot-form textarea { display: block; width: 100%; margin-top: 4px; padding: 9px 10px; border: 1px solid #B9A88E; border-radius: 10px; background: #FFFFFF; color: var(--jt-ink, #2B1810); font: inherit; font-size: 16px; }
+.jt-bot-form small { display: block; margin-top: 8px; color: var(--jt-muted, #6B5444); font-size: 13px; }
+.jt-bot-err { margin: 0 0 8px; color: #B91C1C; font-size: 14.5px; min-height: 0; }
+.jt-bot-send { width: 100%; padding: 12px; border: 0; border-radius: 12px; background: #15803D; color: #FFFFFF; font: inherit; font-size: 17px; font-weight: 700; cursor: pointer; }
+@media (max-width: 640px) {
+  .jt-bot { right: 14px; bottom: 16px; }
+  .jt-bot-btn { height: 54px; padding: 0 14px; }
+  .jt-bot-btn-t { display: none; }
+  .jt-bot-panel { position: fixed; right: 12px; left: 12px; bottom: 82px; width: auto; max-height: calc(100vh - 100px); }
+}
+
+/* ---------- Offer card ---------- */
+.jt-offer { position: fixed; left: 20px; bottom: 22px; z-index: 59; width: 340px; padding: 16px 18px 14px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-left: 5px solid var(--jt-saffron, #C2410C); border-radius: 16px; box-shadow: 0 14px 40px rgba(43, 24, 16, .22); font-family: var(--jt-sans, 'Mukta', system-ui, sans-serif); animation: jtOfferIn .35s ease-out; }
+@keyframes jtOfferIn { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .jt-offer { animation: none; } }
+.jt-offer-x { position: absolute; top: 6px; right: 8px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: none; color: var(--jt-muted, #6B5444); font-size: 24px; line-height: 1; cursor: pointer; }
+.jt-offer-k { margin: 0 30px 2px 0; font-size: 14px; font-weight: 600; color: var(--jt-muted, #6B5444); }
+.jt-offer-h { margin: 0 0 12px; font-size: 19px; line-height: 1.35; color: var(--jt-ink, #2B1810); }
+.jt-offer-h b { color: var(--jt-saffron, #C2410C); }
+.jt-offer-r { display: flex; gap: 10px; align-items: center; }
+.jt-offer-b { padding: 9px 16px; border: 0; border-radius: 999px; background: var(--jt-maroon, #7A1F1F); color: #FFFFFF; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.jt-offer-r a { color: var(--jt-maroon, #7A1F1F) !important; font-weight: 600; font-size: 16px; }
+@media (max-width: 640px) { .jt-offer { left: 12px; right: 82px; bottom: 16px; width: auto; padding: 12px 14px 12px; } .jt-offer-h { font-size: 17px; margin-bottom: 8px; } .jt-offer-k { font-size: 13px; } }
+@media print { .jt-bot, .jt-offer { display: none !important; } }
+
+/* ---------- Consultation page ---------- */
+.cp-points { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; }
+.cp-points span { padding: 6px 12px; border-radius: 999px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); color: #166534; font-weight: 700; font-size: 15.5px; }
+.cp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; margin-top: 14px; }
+.cp-two { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.cp-card { display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-radius: 18px; padding: 20px; }
+.cp-card h3 { margin: 0; font-size: 19px; color: var(--jt-ink, #2B1810); }
+.cp-sub { margin: 2px 0 0; color: var(--jt-muted, #6B5444); font-weight: 600; font-size: 16px; }
+.cp-price { margin: 12px 0 6px; font-size: 32px; font-weight: 700; color: var(--jt-maroon, #7A1F1F); line-height: 1.1; }
+.cp-note { margin: 0 0 16px; color: var(--jt-body, #4A3628); font-size: 15.5px; line-height: 1.6; flex: 1; }
+.cp-btn { display: block; text-align: center; padding: 11px 14px; border-radius: 12px; background: var(--jt-maroon, #7A1F1F); color: #FFFFFF !important; font-weight: 700; text-decoration: none; }
+.cp-btn:hover { background: var(--jt-maroon-dark, #5A1414); }
