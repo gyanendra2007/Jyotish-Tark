@@ -163,6 +163,14 @@
             "@type": "Answer",
             "text": "2027 का वर्ष-अंक 2 + 0 + 2 + 7 = 11 → 2 है, जिसका स्वामी चंद्र है। इसे सहयोग, रिश्तों और धैर्य का साल माना जाता है।"
           }
+        },
+        {
+          "@type": "Question",
+          "name": "मोबाइल नंबर के लिए कौन-सा योग सबसे अच्छा है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "सबसे अच्छा योग वही है जो आपके मूलांक और भाग्यांक दोनों के अनुकूल हो। सामान्य रूप से व्यापार के लिए 5 और 6, नौकरी व प्रशासन के लिए 1 और 3 अच्छे माने जाते हैं। इस पेज का मोबाइल नंबर कैलकुलेटर आपकी जन्मतिथि से आपके लिए अनुकूल योग बताता है।"
+          }
         }
       ]
     }
@@ -397,7 +405,7 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=3">
   <script src="jt-site.js?v=6" defer></script>
-  <script src="numerology-tools.js?v=1" defer></script>
+  <script src="numerology-tools.js?v=3" defer></script>
 
 <style id="nm-css">
 .nm-wrap{max-width:1000px;margin:0 auto;padding:0 16px;font-family:'Mukta',system-ui,sans-serif;color:#2B1810}
@@ -427,6 +435,20 @@
 .nm-verdict{font-size:18px !important;font-weight:700;color:#5A1414 !important}
 .nm-note{font-size:15px !important}.nm-small{font-size:13.5px !important;color:#6B5444 !important}
 .nm-err{color:#B91C1C !important;font-weight:600}
+.nm-sel{display:block;width:100%;box-sizing:border-box;margin-top:5px;padding:11px 12px;border:1px solid #B9A88E;border-radius:12px;font:inherit;font-size:17px;background:#FFFFFF;color:#2B1810}
+.nm-mobrep h3{margin:18px 0 6px;font-size:18px;color:#5A1414}
+.nm-mobrep ul,.nm-sec ul{margin:4px 0;padding-left:22px;list-style:disc}
+.nm-score{display:flex;align-items:center;gap:14px;margin:12px 0;padding:12px 14px;border-radius:12px;background:#FFFFFF;border:1px solid #E8DCC4}
+.nm-score-n{white-space:nowrap;flex:none}.nm-score-n b{font-size:40px;color:#7A1F1F;line-height:1}.nm-score-n small{font-size:15px;color:#6B5444}
+.nm-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:8px 0}
+.nm-g{padding:8px 4px;border-radius:10px;background:#FFFFFF;border:1px solid #E8DCC4;text-align:center}
+.nm-g b{display:block;font-size:20px;color:#2B1810}.nm-g small{display:block;font-size:12.5px;color:#6B5444}.nm-g span{display:block;font-size:13px;font-weight:700;color:#14532D}
+.nm-g0{background:#F4F1EC}.nm-g0 span{color:#6B5444}
+.nm-pairs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.nm-pair{display:inline-flex;flex-direction:column;align-items:center;min-width:64px;padding:6px 8px;border-radius:10px;font-weight:700;font-size:18px;border:1px solid #E8DCC4;background:#FFFFFF;color:#2B1810}
+.nm-pair small{font-size:12px;font-weight:600}
+.nm-pf small{color:#14532D}.nm-pn small{color:#3F3A34}.nm-pm small{color:#78350F}.nm-pe small{color:#9F1239}
+.nm-pf{background:#F0FDF4}.nm-pe{background:#FFF1F2}.nm-pm{background:#FFFBEB}
 .nm-ex{padding:12px 14px;border-radius:12px;background:#FBF6EC;border:1px solid #E8DCC4;font-size:16px}
 .nm-acc details{border:1px solid #E8DCC4;border-radius:14px;margin:10px 0;background:#FFFFFF}
 .nm-acc summary{cursor:pointer;padding:14px 16px;font-size:18px;font-weight:700;color:#2B1810;list-style-position:inside}
@@ -755,12 +777,41 @@
     <h2>मोबाइल नंबर अंक ज्योतिष (Mobile Number Numerology Calculator)</h2>
     <p class="nm-lead">अपना मोबाइल नंबर डालें — उसके सभी अंकों का कुल योग, उसका अंक और ग्रह, और (जन्मतिथि डालने पर) आपके मूलांक व भाग्यांक से उसका मेल देखें।</p>
     <form class="nm-form" id="nmMobForm" novalidate>
-      <label>मोबाइल नंबर<input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="जैसे 98765 43210" required></label>
-      <label>जन्मतिथि (वैकल्पिक)<input name="dob" type="date"><small>मूलांक-भाग्यांक से मेल देखने के लिए</small></label>
-      <button type="submit" class="nm-btn">नंबर जाँचें</button>
+      <label>मोबाइल नंबर *<input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="17" placeholder="जैसे 98765 43210" required></label>
+      <label>जन्मतिथि<input name="dob" type="date"><small>मूलांक-भाग्यांक से मेल और स्कोर के लिए</small></label>
+      <label>नाम अंग्रेज़ी में (वैकल्पिक)<input name="nm" type="text" autocomplete="name" placeholder="जैसे RAHUL SHARMA"><small>नामांक से मेल के लिए</small></label>
+      <label>नंबर का उपयोग<select name="purpose" class="nm-sel"><option value="personal">निजी</option><option value="business">व्यापार / सेल्स</option><option value="job">नौकरी / प्रोफ़ेशनल</option><option value="creative">कला / ग्राहक सेवा</option></select></label>
+      <button type="submit" class="nm-btn">पूरी रिपोर्ट देखें</button>
     </form>
     <div id="nmMobOut" aria-live="polite"></div>
     <p class="nm-small">आपका नंबर इस वेबसाइट पर सेव नहीं होता — गणना आपके फ़ोन/ब्राउज़र में ही होती है।</p>
+
+    <h3>मोबाइल नंबर अंक ज्योतिष क्या है?</h3>
+    <p>अंक ज्योतिष में माना जाता है कि जिस नंबर का हम रोज़ सबसे ज़्यादा उपयोग करते हैं, उसके अंकों का भी एक कंपन (vibration) होता है। मोबाइल नंबर के सभी अंकों का योग एक अंक (1 से 9) तक लाकर उसके स्वामी ग्रह से नंबर का स्वभाव देखा जाता है, और फिर उसे आपके मूलांक, भाग्यांक और नामांक से मिलाया जाता है।</p>
+    <h3>इस रिपोर्ट में क्या-क्या देखा जाता है</h3>
+    <ul>
+      <li><b>कुल योग:</b> सभी 10 अंकों का जोड़, एक अंक तक — नंबर का मुख्य ग्रह।</li>
+      <li><b>मूलांक, भाग्यांक व नामांक से मेल:</b> नंबर का अंक आपके अंकों के अनुकूल है या नहीं।</li>
+      <li><b>आख़िरी अंक:</b> नंबर किस अंक पर ख़त्म होता है और उसका ग्रह।</li>
+      <li><b>अंकों का चार्ट:</b> कौन-सा अंक कितनी बार है, कौन-से ग्रह नंबर में नहीं हैं, शून्य कितने हैं।</li>
+      <li><b>आसपास के जोड़े:</b> साथ-साथ आने वाले अंकों (जैसे 98, 76) के ग्रहों की आपसी मित्रता।</li>
+      <li><b>अंक-मेल स्कोर:</b> इन सब बातों को मिलाकर 100 में से एक सरल स्कोर, और नया नंबर लेने के लिए सुझाए गए योग।</li>
+    </ul>
+    <h3>किस काम के लिए कौन-सा कुल योग</h3>
+    <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">मोबाइल नंबर के कुल योग 1 से 9</caption>
+      <thead><tr><th scope="col">योग</th><th scope="col">ग्रह</th><th scope="col">अच्छा माना जाता है</th></tr></thead>
+      <tbody>
+        <tr><td><b>1</b></td><td>सूर्य</td><td>अपना व्यवसाय, प्रशासन, लीडरशिप</td></tr>
+        <tr><td><b>2</b></td><td>चंद्र</td><td>सेवा, काउंसलिंग, कला, रिश्ते</td></tr>
+        <tr><td><b>3</b></td><td>गुरु</td><td>शिक्षा, क़ानून, वित्त, सलाह</td></tr>
+        <tr><td><b>4</b></td><td>राहु</td><td>तकनीक, रिसर्च, सोशल मीडिया</td></tr>
+        <tr><td><b>5</b></td><td>बुध</td><td>व्यापार, सेल्स, मार्केटिंग, यात्रा — सबसे लोकप्रिय</td></tr>
+        <tr><td><b>6</b></td><td>शुक्र</td><td>फ़ैशन, ब्यूटी, होटल, ग्राहक सेवा</td></tr>
+        <tr><td><b>7</b></td><td>केतु</td><td>लेखन, शोध, आध्यात्म (व्यापार में धीमा)</td></tr>
+        <tr><td><b>8</b></td><td>शनि</td><td>लंबी मेहनत, उद्योग, क़ानून, रियल एस्टेट</td></tr>
+        <tr><td><b>9</b></td><td>मंगल</td><td>खेल, सुरक्षा, ज़मीन-जायदाद, प्रतियोगिता</td></tr>
+      </tbody></table></div>
+    <p class="nm-small">किसी एक योग को "अशुभ" मानकर डरने की ज़रूरत नहीं — सबसे ज़रूरी है कि नंबर आपके अपने मूलांक और भाग्यांक से मेल खाए।</p>
   </section>
 
   <section class="nm-sec" id="mulank-milan">
