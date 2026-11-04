@@ -200,26 +200,29 @@
     return { html: out.join(""), order: { name: ctx.name, dob: ctx.dob, tob: tob, pob: pob } };
   }
 
-  function mount(ctx) {
-    const res = build(ctx);
-    let host = document.getElementById("chapter-sampurna");
-    if (!res) { if (host) host.remove(); return; }
-    css();
-    if (!host) {
-      host = document.createElement("article");
-      host.id = "chapter-sampurna";
-      host.className = "no-print";
-      host.setAttribute("aria-label", "₹1,100 सम्पूर्ण कुंडली");
-      const mid = document.getElementById("chapter-dakshina") || document.getElementById("chapter-planets");
-      const traps = document.getElementById("chapter-traps");
-      const out = document.getElementById("masterDossierOutput");
-      if (mid && mid.parentNode) mid.parentNode.insertBefore(host, mid);
-      else if (traps && traps.parentNode) traps.parentNode.insertBefore(host, traps.nextSibling);
-      else if (out) out.appendChild(host);
-      else return;
+  // The ₹1,100 preview lives in its own workspace (#sampurnaWorkspaceContainer);
+  // the free dossier only gets a small link card to it.
+  function teaser() {
+    let card = document.getElementById("chapter-sampurna");
+    if (!card) {
+      card = document.createElement("article");
+      card.id = "chapter-sampurna";
+      card.className = "no-print";
+      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,100) का प्रीव्यू तैयार है</b><span>लगभग 30 पेज · 12 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
     }
     const dk = document.getElementById("chapter-dakshina");
-    if (dk && dk.parentNode && host.nextElementSibling !== dk) dk.parentNode.insertBefore(host, dk);
+    const out = document.getElementById("masterDossierOutput");
+    if (dk && dk.parentNode) { if (card.nextElementSibling !== dk) dk.parentNode.insertBefore(card, dk); }
+    else if (out && !card.parentNode) out.appendChild(card);
+  }
+
+  function mount(ctx) {
+    const host = document.getElementById("spPreviewHost");
+    if (!host) return;
+    const res = build(ctx);
+    if (!res) { host.innerHTML = ""; return; }
+    css();
+    teaser();
     host.innerHTML = `<div class="sp">${res.html}</div>`;
     const pay = host.querySelector("#spPayBtn");
     pay.addEventListener("click", () => {
@@ -232,10 +235,19 @@
     host.querySelector("#spHandBtn").addEventListener("click", (e) => {
       e.preventDefault();
       if (typeof window.switchWorkspaceMode === "function") window.switchWorkspaceMode("manual");
-      const f = document.getElementById("manualWorkspaceContainer");
-      if (f) f.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+    if (window.__jtWorkspace === "sampurna") {
+      const ws = document.getElementById("sampurnaWorkspaceContainer");
+      if (ws) ws.classList.add("sp-has-preview");
+      setTimeout(() => host.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+    }
   }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-sp-open]");
+    if (!b) return;
+    e.preventDefault();
+    if (typeof window.jtGoSampurna === "function") window.jtGoSampurna();
+  });
 
   document.addEventListener("jt:dossier-ready", (e) => { try { mount(e.detail || window.__jyotishLastCtx); } catch (err) { console.warn("sampurna preview:", err); } });
   window.JTSampurna = { mount };

@@ -193,6 +193,7 @@
 
     .mode-tab { transition: all 0.3s ease; }
     @supports (overflow: clip) { #masterDossierOutput, #chapter-traps { overflow: clip; } }
+    #spPreviewHost, #sampurnaWorkspaceContainer, #manualWorkspaceContainer { scroll-margin-top: 90px; }
     @media (min-width: 1024px) { .jt-side { align-self: stretch; } .jt-side-sticky { position: sticky; top: 6.5rem; } }
     .mode-tab.active {
       background: linear-gradient(135deg, rgba(126, 34, 206, 0.9), rgba(219, 39, 119, 0.85));
@@ -726,7 +727,7 @@
               <a href="#chapter-love" class="chapter-nav-pill">6. Relationships</a>
               <a href="#chapter-partner" class="chapter-nav-pill">7. Marriage (7H & D9)</a>
               <a href="#chapter-childbirth" class="chapter-nav-pill text-emerald-300 border-emerald-400/40">8. Progeny (5H & D7)</a>
-              <a href="#chapter-sampurna" class="chapter-nav-pill text-amber-300 border-amber-400/40">₹1,100 सम्पूर्ण कुंडली</a>
+              <a href="#sampurnaWorkspaceContainer" data-sp-open class="chapter-nav-pill text-amber-300 border-amber-400/40">₹1,100 सम्पूर्ण कुंडली</a>
               <a href="#chapter-dakshina" class="chapter-nav-pill text-amber-300 border-amber-400/40">🙏 Guru Dakshina</a>
               <a href="#chapter-planets" class="chapter-nav-pill">9. All 9 Planets</a>
               <a href="#chapter-lagnas" class="chapter-nav-pill">10. Special Lagnas & SAV (337)</a>
@@ -933,7 +934,7 @@
               <h4 class="text-xl font-bold text-white mt-2">सम्पूर्ण कुंडली</h4>
               <div class="text-3xl font-extrabold text-amber-400 mt-2">₹1,100</div>
               <p class="text-xs md:text-sm text-gray-300 mt-1">24 घंटे के अंदर PDF · करियर, धन, विवाह, दशा, वर्षफल 2027 व उपाय</p>
-              <a href="#chapter-sampurna" class="mt-4 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2">अपनी कुंडली का प्रीव्यू देखें</a>
+              <button type="button" data-sp-open class="mt-4 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2">अपनी कुंडली का प्रीव्यू देखें</button>
               <a href="sampurna-kundali.html" class="mt-2 inline-block text-xs font-bold text-amber-300 underline">नमूना कुंडली देखें</a>
             </div>
             <div class="bg-slate-950/95 p-6 md:p-7 rounded-2xl border border-amber-400/50 shadow-2xl space-y-5">
@@ -990,6 +991,17 @@
     </div>
 
     <!-- MANUAL BOOKING FORM WORKSPACE -->
+    <!-- ₹1,100 SAMPURNA KUNDALI WORKSPACE (own screen; the birth-details form moves here) -->
+    <div id="sampurnaWorkspaceContainer" class="hidden glass-card rounded-3xl p-4 sm:p-6 md:p-10 max-w-4xl mx-auto border-2 border-amber-400/60 no-print">
+      <div class="text-center mb-6">
+        <span class="px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">लगभग 30 पेज · 12 अध्याय · PDF</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">सम्पूर्ण कुंडली — ₹1,100</h2>
+        <p class="text-gray-300 mt-2 text-sm md:text-base">अपना जन्म विवरण भरें। आपकी कुंडली की गणना होते ही यहीं उसका प्रीव्यू खुलेगा — हर अध्याय की कुछ बातें खुली, बाकी पूरी रिपोर्ट में। भुगतान के बाद 24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर। <a href="sampurna-kundali.html" class="text-amber-300 underline font-bold">नमूना देखें</a></p>
+      </div>
+      <div id="spFormSlot"></div>
+      <div id="spPreviewHost" class="mt-8" aria-live="polite"></div>
+    </div>
+
     <div id="manualWorkspaceContainer" class="hidden glass-card rounded-3xl p-6 md:p-10 max-w-4xl mx-auto border border-amber-400/40 no-print">
       <div class="text-center mb-8">
         <span class="px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">Prepared Personally by Gyanendra S. Tomar</span>
@@ -1212,7 +1224,7 @@
   <script src="narrative-rules.js"></script>
   <script src="kundali-engine.js?v=2"></script>
   <script src="free-report.js?v=2"></script>
-  <script src="sampurna-preview.js?v=2"></script>
+  <script src="sampurna-preview.js?v=3"></script>
 
   <script>
     // ========================================================================
@@ -2046,34 +2058,49 @@
       }
     }
 
-    function jtGoSampurna() {
-      switchWorkspaceMode('instant');
-      const sp = document.getElementById('chapter-sampurna');
-      const out = document.getElementById('masterDossierOutput');
-      if (sp && out && !out.classList.contains('hidden')) { sp.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-      const note = document.getElementById('spTabNote');
-      if (note) note.classList.remove('hidden');
-      const nm = document.getElementById('userName');
-      if (nm) { nm.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => nm.focus({ preventScroll: true }), 400); }
-    }
+    // Workspaces: 'instant' (free dossier), 'sampurna' (₹1,100 preview), 'manual' (₹2,100 order form).
+    // The birth-details form is shared: it moves into the ₹1,100 screen and back.
+    var __jtFormHome = null;
+    window.__jtWorkspace = 'instant';
     function switchWorkspaceMode(mode) {
-      const instantDiv = document.getElementById('instantWorkspaceContainer');
-      const manualDiv  = document.getElementById('manualWorkspaceContainer');
-      const tabInstant = document.getElementById('tabInstantDossier');
-      const tabManual  = document.getElementById('tabManualOrder');
-      if (mode === 'instant') {
-        instantDiv.classList.remove('hidden');
-        manualDiv.classList.add('hidden');
-        tabInstant.classList.add('active');
-        tabManual.classList.remove('active');
-      } else {
-        instantDiv.classList.add('hidden');
-        manualDiv.classList.remove('hidden');
-        tabManual.classList.add('active');
-        tabInstant.classList.remove('active');
-        manualDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const box = {
+        instant:  document.getElementById('instantWorkspaceContainer'),
+        sampurna: document.getElementById('sampurnaWorkspaceContainer'),
+        manual:   document.getElementById('manualWorkspaceContainer')
+      };
+      const tab = { instant: 'tabInstantDossier', sampurna: 'tabSampurna', manual: 'tabManualOrder' };
+      if (!box[mode]) mode = 'instant';
+      const form = document.getElementById('lifeDossierForm');
+      const slot = document.getElementById('spFormSlot');
+      const label = document.getElementById('submitBtnText');
+      if (form && !__jtFormHome) __jtFormHome = { parent: form.parentNode, next: form.nextSibling };
+      if (form && slot && mode === 'sampurna' && form.parentNode !== slot) {
+        slot.appendChild(form);
+        if (label) { if (!label.dataset.orig) label.dataset.orig = label.textContent; label.textContent = 'सम्पूर्ण कुंडली का प्रीव्यू देखें'; }
+      } else if (form && __jtFormHome && mode === 'instant' && form.parentNode !== __jtFormHome.parent) {
+        __jtFormHome.parent.insertBefore(form, __jtFormHome.next);
+        if (label && label.dataset.orig) label.textContent = label.dataset.orig;
       }
+      Object.keys(box).forEach((k) => {
+        if (box[k]) box[k].classList.toggle('hidden', k !== mode);
+        const t = document.getElementById(tab[k]);
+        if (t) t.classList.toggle('active', k === mode);
+      });
+      window.__jtWorkspace = mode;
+      const note = document.getElementById('spTabNote');
+      if (note) note.classList.add('hidden');
+      if (mode === 'manual') box.manual.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    function jtGoSampurna() {
+      switchWorkspaceMode('sampurna');
+      const host = document.getElementById('spPreviewHost');
+      if (host && host.firstElementChild) { host.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+      const ws = document.getElementById('sampurnaWorkspaceContainer');
+      if (ws) ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const nm = document.getElementById('userName');
+      if (nm) setTimeout(() => nm.focus({ preventScroll: true }), 400);
+    }
+    window.jtGoSampurna = jtGoSampurna;
 
     function toggleChartDetailsPanel(isChecked) {
       const panel = document.getElementById('planetaryInputPanel');
