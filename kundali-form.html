@@ -389,8 +389,8 @@
     @page { size: A4 portrait; margin: 8mm; }
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
-  <link rel="stylesheet" href="jt-theme.css?v=3">
-  <script src="jt-site.js?v=6" defer></script>
+  <link rel="stylesheet" href="jt-theme.css?v=4">
+  <script src="jt-site.js?v=7" defer></script>
 </head>
 <body class="min-h-screen">
 
@@ -2156,6 +2156,7 @@
         };
       }
 
+      if (location.hash === '#sampurna') { setTimeout(() => jtGoSampurna(), 60); }
       if (localStorage.getItem('openManualTab') === '1') {
         localStorage.removeItem('openManualTab');
         switchWorkspaceMode('manual');

@@ -213,32 +213,56 @@
     window.jtBotOpen = open;
   }
 
-  /* ---------- Offer card: slides up after 8s, once per session; × hides it for 7 days ---------- */
-  var OFFER_KEY = "jt-offer-closed";
+  /* ---------- Welcome ad: opens shortly after a page loads, once per browser session; × / Esc / backdrop closes ---------- */
   function store(kind, k, v) { try { var s = window[kind]; if (v === undefined) return s.getItem(k); s.setItem(k, v); } catch (e) { return null; } }
-  function hideOffer(remember) {
-    var o = document.getElementById("jtOffer"); if (o) o.remove();
-    document.documentElement.classList.remove("jt-offer-on");
-    if (remember) store("localStorage", OFFER_KEY, String(Date.now()));
+  var adLast = null;
+  function hideOffer() {
+    var o = document.getElementById("jtAd"); if (!o) return;
+    o.remove();
+    document.documentElement.classList.remove("jt-ad-open");
+    document.removeEventListener("keydown", adKeys, true);
+    if (adLast && adLast.focus) { try { adLast.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+  }
+  function adKeys(e) {
+    var o = document.getElementById("jtAd"); if (!o) return;
+    if (e.key === "Escape") { e.preventDefault(); hideOffer(); return; }
+    if (e.key === "Tab") { // keep focus inside the dialog
+      var f = o.querySelectorAll("a[href],button"); if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
   }
   function offer() {
-    if (document.querySelector("main.bk-page") || document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname)) return;
-    var t = +store("localStorage", OFFER_KEY) || 0;
-    if (Date.now() - t < 7 * 864e5 || store("sessionStorage", "jt-offer-seen")) return;
+    if (document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname)) return;
+    if (store("sessionStorage", "jt-ad-seen")) return;
     setTimeout(function () {
-      if (document.documentElement.classList.contains("jt-bot-open")) return;
-      store("sessionStorage", "jt-offer-seen", "1");
-      var o = document.createElement("aside");
-      o.id = "jtOffer"; o.className = "jt-offer no-print"; o.setAttribute("aria-label", "परामर्श ऑफ़र");
-      o.innerHTML = '<button type="button" class="jt-offer-x" aria-label="बंद करें">×</button>' +
-        '<p class="jt-offer-k">ज्योतिषी ज्ञानेंद्र सिंह तोमर से सीधी बात</p>' +
-        '<p class="jt-offer-h">पहले <b>5 मिनट मुफ़्त</b> · ऑडियो कॉल ₹301 से</p>' +
-        '<div class="jt-offer-r"><button type="button" class="jt-offer-b" data-jt-bot="book">अभी बुक करें</button><a href="consultation.html">शुल्क देखें</a></div>';
+      if (document.getElementById("jtAd") || document.documentElement.classList.contains("jt-bot-open")) return;
+      store("sessionStorage", "jt-ad-seen", "1");
+      adLast = document.activeElement;
+      var o = document.createElement("div");
+      o.id = "jtAd"; o.className = "jt-ad no-print";
+      o.innerHTML =
+        '<div class="jt-ad-box" role="dialog" aria-modal="true" aria-labelledby="jtAdT" aria-describedby="jtAdD">' +
+        '<button type="button" class="jt-ad-x" data-ad-close aria-label="बंद करें"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+        '<div class="jt-ad-top"><img src="images/big-profile.JPG" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="64" height="64"><div><b>ज्योतिषी ज्ञानेंद्र सिंह तोमर</b><small>ज्योतिष तर्क · लखनऊ</small></div></div>' +
+        '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहले <span>5 मिनट मुफ़्त</span></h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — भुगतान बात के बाद UPI से।</p></div>' +
+        '<div class="jt-ad-cards">' +
+          '<div class="jt-ad-c jt-ad-c1"><p class="jt-ad-ct">कॉल परामर्श</p><p class="jt-ad-cp">ऑडियो <b>₹301</b> से · वीडियो <b>₹1,101</b> से</p><button type="button" class="jt-ad-b" data-jt-bot="book" data-ad-close>कॉल बुक करें</button></div>' +
+          '<div class="jt-ad-c"><p class="jt-ad-ct">सम्पूर्ण कुंडली</p><p class="jt-ad-cp"><b>₹1,100</b> · लगभग 30 पेज PDF · 24 घंटे में</p><a class="jt-ad-b jt-ad-b2" href="kundali-form.html#sampurna">कुंडली बनवाएँ</a></div>' +
+          '<div class="jt-ad-c"><p class="jt-ad-ct">मुफ़्त जन्म कुंडली</p><p class="jt-ad-cp">तुरंत, हिंदी में · लग्न, ग्रह, दशा</p><a class="jt-ad-b jt-ad-b3" href="kundali-form.html">मुफ़्त कुंडली देखें</a></div>' +
+        '</div>' +
+        '<p class="jt-ad-f"><a href="consultation.html">सभी परामर्श शुल्क देखें</a> · हस्तनिर्मित कुंडली ₹2,100</p>' +
+        '</div>';
       document.body.appendChild(o);
-      document.documentElement.classList.add("jt-offer-on");
-      o.querySelector(".jt-offer-x").addEventListener("click", function () { hideOffer(true); });
-      o.querySelector(".jt-offer-b").addEventListener("click", function () { hideOffer(true); });
-    }, 8000);
+      document.documentElement.classList.add("jt-ad-open");
+      o.addEventListener("click", function (e) {
+        if (e.target === o || e.target.closest("[data-ad-close]")) hideOffer();
+      });
+      document.addEventListener("keydown", adKeys, true);
+      var first = o.querySelector(".jt-ad-c1 .jt-ad-b"); if (first) first.focus({ preventScroll: true });
+      try { if (window.gtag) window.gtag("event", "welcome_ad_shown"); } catch (e) { /* ignore */ }
+    }, 1500);
   }
 
   function init() { menu(); try { share(); } catch (e) {} try { helpBot(); offer(); } catch (e) {} }

@@ -400,19 +400,50 @@ button.jt-bot-plan { cursor: pointer; }
   .jt-bot-panel { position: fixed; right: 12px; left: 12px; bottom: 82px; width: auto; max-height: calc(100vh - 100px); }
 }
 
-/* ---------- Offer card ---------- */
-.jt-offer { position: fixed; left: 20px; bottom: 22px; z-index: 59; width: 340px; padding: 16px 18px 14px; background: #FFFFFF; border: 1px solid var(--jt-line, #E8DCC4); border-left: 5px solid var(--jt-saffron, #C2410C); border-radius: 16px; box-shadow: 0 14px 40px rgba(43, 24, 16, .22); font-family: var(--jt-sans, 'Mukta', system-ui, sans-serif); animation: jtOfferIn .35s ease-out; }
-@keyframes jtOfferIn { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .jt-offer { animation: none; } }
-.jt-offer-x { position: absolute; top: 6px; right: 8px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: none; color: var(--jt-muted, #6B5444); font-size: 24px; line-height: 1; cursor: pointer; }
-.jt-offer-k { margin: 0 30px 2px 0; font-size: 14px; font-weight: 600; color: var(--jt-muted, #6B5444); }
-.jt-offer-h { margin: 0 0 12px; font-size: 19px; line-height: 1.35; color: var(--jt-ink, #2B1810); }
-.jt-offer-h b { color: var(--jt-saffron, #C2410C); }
-.jt-offer-r { display: flex; gap: 10px; align-items: center; }
-.jt-offer-b { padding: 9px 16px; border: 0; border-radius: 999px; background: var(--jt-maroon, #7A1F1F); color: #FFFFFF; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
-.jt-offer-r a { color: var(--jt-maroon, #7A1F1F) !important; font-weight: 600; font-size: 16px; }
-@media (max-width: 640px) { .jt-offer { left: 12px; right: 82px; bottom: 16px; width: auto; padding: 12px 14px 12px; } .jt-offer-h { font-size: 17px; margin-bottom: 8px; } .jt-offer-k { font-size: 13px; } }
-@media print { .jt-bot, .jt-offer { display: none !important; } }
+/* ---------- Welcome ad (modal) ---------- */
+html.jt-ad-open, html.jt-ad-open body { overflow: hidden; }
+.jt-ad { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(30, 14, 8, .62); font-family: var(--jt-sans, 'Mukta', system-ui, sans-serif); animation: jtAdFade .25s ease-out; }
+@keyframes jtAdFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes jtAdUp { from { transform: translateY(24px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .jt-ad, .jt-ad-box { animation: none !important; } }
+.jt-ad-box { position: relative; width: 100%; max-width: 560px; max-height: calc(100vh - 32px); overflow-y: auto; background: #FBF6EC; border: 3px double #B8892B; border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); animation: jtAdUp .3s ease-out; }
+.jt-ad-x { position: absolute; top: 10px; right: 10px; z-index: 2; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .92); color: #5A1414; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, .18); }
+.jt-ad-x:hover { background: #FFFFFF; }
+.jt-ad-top { display: flex; align-items: center; gap: 12px; padding: 16px 64px 14px 18px; background: #7A1F1F; border-radius: 15px 15px 0 0; }
+.jt-ad-top img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid #F1D99A; flex: none; }
+.jt-ad-top b { display: block; font-size: 18px; color: #FFFFFF; }
+.jt-ad-top small { display: block; font-size: 14px; color: #F3E9D6; }
+.jt-ad-hero { padding: 18px 20px 6px; text-align: center; }
+.jt-ad-k { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: .02em; color: #9A3412; }
+.jt-ad-hero h2 { margin: 4px 0 6px; font-family: var(--jt-serif, 'Tiro Devanagari Hindi', serif); font-weight: 400; font-size: 36px; line-height: 1.2; color: #2B1810; }
+.jt-ad-hero h2 span { color: #C2410C; }
+.jt-ad-hero p#jtAdD { margin: 0 auto; max-width: 440px; font-size: 16px; line-height: 1.6; color: #4A3628; }
+.jt-ad-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 16px 16px 6px; }
+.jt-ad-c { display: flex; flex-direction: column; padding: 12px; background: #FFFFFF; border: 1px solid #E8DCC4; border-radius: 14px; }
+.jt-ad-c1 { border: 2px solid #15803D; }
+.jt-ad-ct { margin: 0; font-size: 16.5px; font-weight: 700; color: #2B1810; }
+.jt-ad-cp { margin: 4px 0 10px; font-size: 14px; line-height: 1.5; color: #4A3628; flex: 1; }
+.jt-ad-cp b { color: #7A1F1F; }
+.jt-ad-b { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 10px; border: 0; border-radius: 10px; background: #15803D; color: #FFFFFF !important; font: inherit; font-size: 15.5px; font-weight: 700; text-align: center; text-decoration: none !important; cursor: pointer; }
+.jt-ad-b:hover { background: #166534; }
+.jt-ad-b2 { background: #7A1F1F; } .jt-ad-b2:hover { background: #5A1414; }
+.jt-ad-b3 { background: #FFFFFF; color: #7A1F1F !important; border: 1.5px solid #7A1F1F; } .jt-ad-b3:hover { background: #F3E9D6; }
+.jt-ad-f { margin: 6px 16px 16px; text-align: center; font-size: 14px; color: #6B5444; }
+.jt-ad-f a { color: #7A1F1F !important; font-weight: 700; }
+.jt-ad-x:focus-visible, .jt-ad-b:focus-visible, .jt-ad-f a:focus-visible { outline: 3px solid #B8892B; outline-offset: 2px; }
+@media (max-width: 560px) {
+  .jt-ad { align-items: flex-end; padding: 0; }
+  .jt-ad-box { max-width: none; max-height: 92vh; border-radius: 18px 18px 0 0; border-bottom: 0; }
+  .jt-ad-top { border-radius: 15px 15px 0 0; padding: 12px 60px 12px 14px; }
+  .jt-ad-top img { width: 52px; height: 52px; }
+  .jt-ad-hero { padding: 14px 16px 2px; } .jt-ad-hero h2 { font-size: 30px; }
+  .jt-ad-cards { grid-template-columns: 1fr; gap: 8px; padding: 12px 14px 4px; }
+  .jt-ad-c { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px; padding: 10px 12px; }
+  .jt-ad-cp { margin: 2px 0 0; grid-column: 1; }
+  .jt-ad-ct { grid-column: 1; }
+  .jt-ad-b { grid-column: 2; grid-row: 1 / span 2; min-width: 124px; }
+}
+@media print { .jt-bot, .jt-ad { display: none !important; } }
 
 /* ---------- Consultation page ---------- */
 .cp-points { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; }
