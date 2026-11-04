@@ -89,14 +89,6 @@
         border: 3px solid white; cursor: pointer;
     }
     .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
-    .whatsapp-popup {
-        position: fixed; bottom: 110px; right: 40px; width: 320px; background: white; border-radius: 16px; display: none; z-index: 99; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden;
-    }
-    .whatsapp-header { background: linear-gradient(135deg, #075E54, #128C7E); color: white; padding: 20px; display: flex; align-items: center; }
-    .whatsapp-header img { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; border: 2px solid white; }
-    .whatsapp-body { padding: 20px; color: #4a4a4a; }
-    .whatsapp-option { display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; border: 1px solid #f0f0f0; transition: 0.3s; }
-    .whatsapp-option:hover { background: #f8f9fa; border-color: #25d366; }
 
     body {
       font-family: 'Inter', 'Hind', sans-serif;
@@ -218,22 +210,8 @@
   </header>
 
 <!-- WhatsApp Floating Button -->
-<a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
-<div class="whatsapp-popup" id="whatsappPopup">
-    <div class="whatsapp-header">
-        <img src="logo.png" alt="Jyotish Tark">
-        <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
-    </div>
-    <div class="whatsapp-body">
-        <p class="mb-4 text-gray-600 text-center">नमस्ते! हम आपकी क्या सहायता कर सकते हैं?</p>
-        <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark%2C%20I%20was%20reading%20your%20blog%20and%20want%20astrology%20guidance.', '_blank');">
-            <i class="fas fa-comment text-green-600 text-xl"></i><div><p class="font-semibold text-gray-800">Chat with Astrologer</p><p class="text-xs text-gray-500">Instant WhatsApp Consultation</p></div>
-        </div>
-        <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-            <i class="fas fa-phone text-purple-600 text-xl"></i><div><p class="font-semibold text-gray-800">Call Us Directly</p><p class="text-xs text-gray-500">+91 83185 13814</p></div>
-        </div>
-    </div>
-</div>
+<a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" aria-label="WhatsApp पर बात करें" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>   
+
 
   <!-- Hero Section -->
   <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-10 p-8 md:p-12 text-center relative overflow-hidden">
@@ -483,27 +461,6 @@
             <span><i class="far fa-calendar-alt mr-1"></i> Oct 27, 2025</span>
             <span><i class="far fa-clock mr-1"></i> 22 min</span>
             <a href="shree-suktam.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 10. Weekly Rashifal -->
-      <article class="blog-card overflow-hidden" data-category="rashifal">
-        <div>
-          <a href="weekly-rashifal-24-30-august-2026.html"><img src="images/weekly-rashifal-24-30-aug-hero.jpg" alt="साप्ताहिक राशिफल" class="blog-image" loading="lazy" decoding="async"></a>
-          <div class="p-5 pb-0">
-            <span class="blog-tag">Transit Analysis</span>
-            <h3 class="text-xl font-semibold mb-2 text-white mt-3">
-              <a href="weekly-rashifal-24-30-august-2026.html" class="hover:text-amber-300 transition">साप्ताहिक राशिफल व गोचर विश्लेषण: सभी 12 राशियों का भविष्यफल</a>
-            </h3>
-            <p class="text-gray-300 text-sm leading-relaxed">सूर्य-सिंह संक्रांति और चंद्र गोचर का करियर, स्वास्थ्य और वित्त पर विस्तृत प्रभाव।</p>
-          </div>
-        </div>
-        <div class="p-5 pt-0">
-          <div class="blog-meta">
-            <span><i class="far fa-calendar-alt mr-1"></i> Aug 24, 2026</span>
-            <span><i class="far fa-clock mr-1"></i> 20 min</span>
-            <a href="weekly-rashifal-24-30-august-2026.html" class="read-more-link">पढ़ें <i class="fas fa-arrow-right text-xs"></i></a>
           </div>
         </div>
       </article>
@@ -986,17 +943,6 @@
         mobileNav.classList.toggle('hidden');
     });
 
-    // WhatsApp Popup Toggle
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappPopup = document.getElementById('whatsappPopup');
-    whatsappButton.addEventListener('click', function() {
-        whatsappPopup.style.display = whatsappPopup.style.display === 'block' ? 'none' : 'block';
-    });
-    document.addEventListener('click', function(event) {
-        if (!whatsappButton.contains(event.target) && !whatsappPopup.contains(event.target)) {
-            whatsappPopup.style.display = 'none';
-        }
-    });
 
     // Functional Lead Funnel Redirect to WhatsApp
     function handleLeadSubmit(event) {
@@ -1195,20 +1141,6 @@
           "position": 10,
           "item": {
             "@type": "BlogPosting",
-            "headline": "साप्ताहिक राशिफल व गोचर विश्लेषण: सभी 12 राशियों का भविष्यफल",
-            "url": "https://jyotishtark.in/weekly-rashifal-24-30-august-2026.html",
-            "datePublished": "2026-08-24",
-            "author": {
-              "@type": "Person",
-              "name": "Gyanendra Singh Tomar"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 11,
-          "item": {
-            "@type": "BlogPosting",
             "headline": "अमोघ शिव कवच: सम्पूर्ण पाठ, अर्थ और लाभ",
             "url": "https://jyotishtark.in/shiv-kavach.html",
             "datePublished": "2025-10-15",
@@ -1220,7 +1152,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 12,
+          "position": 11,
           "item": {
             "@type": "BlogPosting",
             "headline": "श्री नारायण कवच: सम्पूर्ण पाठ, अर्थ और पाठ-विधि",
@@ -1234,7 +1166,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 13,
+          "position": 12,
           "item": {
             "@type": "BlogPosting",
             "headline": "मंगल दोष का सच: कब लगता है, कब निरस्त होता है और अंगारक स्तोत्र",
@@ -1248,7 +1180,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 14,
+          "position": 13,
           "item": {
             "@type": "BlogPosting",
             "headline": "हनुमान भक्ति संग्रह: चालीसा, बजरंग बाण, अष्टक और अंगारक स्तोत्र",
@@ -1262,7 +1194,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 15,
+          "position": 14,
           "item": {
             "@type": "BlogPosting",
             "headline": "मेधा सूक्त: बुद्धि व स्मरण शक्ति के लिए पाठ, अर्थ और विधि",
@@ -1276,7 +1208,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 16,
+          "position": 15,
           "item": {
             "@type": "BlogPosting",
             "headline": "अन्नपूर्णा स्तोत्र: सम्पूर्ण पाठ, अर्थ और भोजन मंत्र",
@@ -1290,7 +1222,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 17,
+          "position": 16,
           "item": {
             "@type": "BlogPosting",
             "headline": "नवग्रह स्तोत्र: सम्पूर्ण पाठ, हिंदी अर्थ और लाभ",
@@ -1304,7 +1236,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 18,
+          "position": 17,
           "item": {
             "@type": "BlogPosting",
             "headline": "आदित्य हृदय स्तोत्र: सम्पूर्ण पाठ, अर्थ और लाभ",
@@ -1318,7 +1250,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 19,
+          "position": 18,
           "item": {
             "@type": "BlogPosting",
             "headline": "कालसर्प दोष: प्रकार, प्रभाव, और निवारण विधियाँ",
@@ -1332,7 +1264,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 20,
+          "position": 19,
           "item": {
             "@type": "BlogPosting",
             "headline": "केतु दोष: लक्षण, अचानक बदलाव और सरल वैदिक उपाय",
@@ -1346,7 +1278,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 21,
+          "position": 20,
           "item": {
             "@type": "BlogPosting",
             "headline": "वास्तु शास्त्र: घर की दिशाएँ, ऊर्जा और बिना तोड़-फोड़ के सरल उपाय",
@@ -1360,7 +1292,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 22,
+          "position": 21,
           "item": {
             "@type": "BlogPosting",
             "headline": "क्या है नाड़ी ज्योतिष?—तमिलनाडु की प्राचीन भविष्यवाणी तकनीक",
@@ -1374,7 +1306,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 23,
+          "position": 22,
           "item": {
             "@type": "BlogPosting",
             "headline": "राशिफल 2025: क्या कहता है आपका भविष्य?",
@@ -1388,7 +1320,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 24,
+          "position": 23,
           "item": {
             "@type": "BlogPosting",
             "headline": "अंक ज्योतिष और भाग्य का रहस्य",
@@ -1402,7 +1334,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 25,
+          "position": 24,
           "item": {
             "@type": "BlogPosting",
             "headline": "कुंडली से करियर कैसे देखें?",
@@ -1416,7 +1348,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 26,
+          "position": 25,
           "item": {
             "@type": "BlogPosting",
             "headline": "ग्रहों की चाल का आपके जीवन पर प्रभाव",
@@ -1430,7 +1362,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 27,
+          "position": 26,
           "item": {
             "@type": "BlogPosting",
             "headline": "वैदिक ज्योतिष: प्राचीन ज्ञान का आधुनिक उपयोग",
@@ -1444,7 +1376,7 @@
         },
         {
           "@type": "ListItem",
-          "position": 28,
+          "position": 27,
           "item": {
             "@type": "BlogPosting",
             "headline": "कुंडली मिलान: 36 गुण मिलने के बाद भी शादियाँ क्यों टूटती हैं?",

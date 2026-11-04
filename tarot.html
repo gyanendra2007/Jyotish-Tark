@@ -159,64 +159,12 @@
       transform: scale(1.1);
     }
 
-    .whatsapp-popup {
-      position: fixed;
-      bottom: 95px;
-      right: 24px;
-      width: 310px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-      z-index: 99;
-      overflow: hidden;
-      display: none;
-      border: 1px solid #e0e0e0;
-    }
 
-    .whatsapp-header {
-      background: linear-gradient(135deg, #075E54, #128C7E);
-      color: white;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-    }
 
-    .whatsapp-header img {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      margin-right: 12px;
-      border: 2px solid white;
-    }
 
-    .whatsapp-body {
-      padding: 18px;
-      color: #4a4a4a;
-    }
 
-    .whatsapp-option {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid #f0f0f0;
-    }
 
-    .whatsapp-option:hover {
-      background: #f8f9fa;
-      border-color: #25d366;
-    }
 
-    .whatsapp-option i {
-      margin-right: 12px;
-      font-size: 22px;
-      color: #25d366;
-      width: 24px;
-      text-align: center;
-    }
 
 
   </style>
@@ -400,44 +348,11 @@
 
 
   <!-- WhatsApp Floating Button -->
-  <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()">
+  <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" aria-label="WhatsApp पर बात करें" target="_blank" rel="noopener">
     <i class="fab fa-whatsapp"></i>
   </a>   
 
-  <!-- WhatsApp Popup -->
-  <div class="whatsapp-popup" id="whatsappPopup">
-    <div class="whatsapp-header">
-      <img src="logo.png" alt="Jyotish Tark" width="46" height="46">
-      <div>
-        <p class="font-bold text-lg">Jyotish Tark</p>
-        <p class="text-sm opacity-90">Typically replies within minutes</p>
-      </div>
-    </div>
-    <div class="whatsapp-body">
-      <p class="mb-4 text-gray-600 text-center">Hello! How can we help you?</p>
-      <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello%20Jyotish%20Tark,%20I%20did%20a%20Tarot%20reading%20on%20your%20site%20and%20want%20to%20consult%20about%20my%20Kundali', '_blank');">
-        <i class="fas fa-comment"></i>
-        <div>
-          <p class="font-semibold text-gray-800">Chat with us</p>
-          <p class="text-sm text-gray-600">Ask questions about our services</p>
-        </div>
-      </div>
-      <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-        <i class="fas fa-phone"></i>
-        <div>
-          <p class="font-semibold text-gray-800">Call us</p>
-          <p class="text-sm text-gray-600">Speak directly with our astrologer</p>
-        </div>
-      </div>
-      <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814?text=Hello,%20I%20would%20like%20to%20book%20a%20personal%20consultation', '_blank');">
-        <i class="fas fa-calendar-check"></i>
-        <div>
-          <p class="font-semibold text-gray-800">Book consultation</p>
-          <p class="text-sm text-gray-600">Schedule a personal session</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Footer (Synchronized with All Sitemap Policy Links) -->
   <footer class="jt-footer no-print">
@@ -506,13 +421,5 @@
   
   <script src="tarot-engine.js?v=2"></script>
   <script src="tarot-studio.js?v=2"></script>
-  <script>
-    (function () {
-      var btn = document.getElementById('whatsappButton'), pop = document.getElementById('whatsappPopup');
-      if (!btn || !pop) return;
-      btn.addEventListener('click', function () { pop.style.display = pop.style.display === 'block' ? 'none' : 'block'; });
-      document.addEventListener('click', function (e) { if (!btn.contains(e.target) && !pop.contains(e.target)) pop.style.display = 'none'; });
-    })();
-  </script>
 </body>
 </html>

@@ -299,19 +299,6 @@
             transition: all 0.3s ease; border: 3px solid white; cursor: pointer;
         }
         .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
-        .whatsapp-popup {
-            position: fixed; bottom: 110px; right: 40px; width: 320px; background: white; border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); z-index: 99; overflow: hidden; display: none; border: 1px solid #e0e0e0;
-        }
-        .whatsapp-header { background: linear-gradient(135deg, #075E54, #128C7E); color: white; padding: 20px; display: flex; align-items: center; }
-        .whatsapp-header img { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; border: 2px solid white; }
-        .whatsapp-body { padding: 20px; color: #4a4a4a; }
-        .whatsapp-option {
-            display: flex; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 12px;
-            cursor: pointer; transition: all 0.3s ease; border: 1px solid #f0f0f0;
-        }
-        .whatsapp-option:hover { background: #f8f9fa; border-color: #25d366; }
-        .whatsapp-option i { margin-right: 12px; font-size: 22px; color: #25d366; width: 24px; text-align: center; }
 
         .number-circle {
             width: 78px;
@@ -391,7 +378,6 @@
         @media (max-width: 768px) {
             .planet-1, .planet-2 { display: none; }
             .whatsapp-float { width: 52px; height: 52px; bottom: 20px; right: 20px; font-size: 26px; }
-            .whatsapp-popup { bottom: 82px; right: 20px; width: 290px; }
         }
 
         @media print {

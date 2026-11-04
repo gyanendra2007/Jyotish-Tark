@@ -96,12 +96,6 @@
     /* WhatsApp Float */
     .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); z-index: 100; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
     .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1) rotate(5deg); }
-    .whatsapp-popup { position: fixed; bottom: 110px; right: 40px; width: 320px; background: white; border-radius: 16px; display: none; z-index: 99; }
-    .whatsapp-header { background: linear-gradient(135deg, #075E54, #128C7E); color: white; padding: 20px; display: flex; align-items: center; }
-    .whatsapp-header img { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; }
-    .whatsapp-body { padding: 20px; color: #4a4a4a; }
-    .whatsapp-option { display: flex; align-items: center; padding: 15px; border: 1px solid #f0f0f0; border-radius: 10px; margin-bottom: 12px; cursor: pointer; }
-    .whatsapp-option i { color: #25d366; font-size: 22px; margin-right: 12px; }
 
     /* Article Styles */
     .blog-image { width: 100%; object-fit: cover; border-radius: 16px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); }
@@ -199,21 +193,8 @@
   </header>
 
     <!-- WhatsApp Floating Button -->
-    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" role="button" aria-label="WhatsApp पर बात करें" aria-controls="whatsappPopup" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>   
-    <div class="whatsapp-popup" id="whatsappPopup">
-        <div class="whatsapp-header">
-            <img src="logo.png" alt="Jyotish Tark">
-            <div><p class="font-bold text-lg">Jyotish Tark</p><p class="text-sm opacity-90">Typically replies within minutes</p></div>
-        </div>
-        <div class="whatsapp-body">
-            <div class="whatsapp-option" onclick="window.open('https://wa.me/918318513814', '_blank');">
-                <i class="fas fa-comment"></i><div><p class="font-semibold text-gray-800">Chat with us</p></div>
-            </div>
-            <div class="whatsapp-option" onclick="window.open('tel:+918318513814');">
-                <i class="fas fa-phone"></i><div><p class="font-semibold text-gray-800">Call us</p></div>
-            </div>
-        </div>
-    </div>
+    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/918318513814" aria-label="WhatsApp पर बात करें" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>   
+    
   
   <!-- Content -->
   <main class="max-w-5xl mx-auto px-6 py-12">
@@ -425,13 +406,6 @@
         document.getElementById('mobileNav').classList.toggle('hidden');
     });
 
-    // WhatsApp Scripts
-    const wBtn = document.getElementById('whatsappButton');
-    const wPop = document.getElementById('whatsappPopup');
-    wBtn.addEventListener('click', () => wPop.style.display = wPop.style.display === 'block' ? 'none' : 'block');
-    document.addEventListener('click', (e) => {
-        if (!wBtn.contains(e.target) && !wPop.contains(e.target)) wPop.style.display = 'none';
-    });
   </script>
 </body>
 </html>
