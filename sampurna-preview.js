@@ -107,7 +107,7 @@
   }
 
   function sec(n, title, pages, body, hl) {
-    return `<section class="sp-sec${hl ? " hl" : ""}"><h3><span class="sp-n">${n}</span>${title}<span class="sp-pg">पेज ${pages}</span></h3>${body}</section>`;
+    return `<section class="sp-sec${hl ? " hl" : ""}"><h3><span class="sp-n">${n}</span>${title}</h3>${body}</section>`;
   }
 
   function build(ctx) {
@@ -229,6 +229,10 @@
       const payHost = host.querySelector("#spPayHost");
       if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock">UPI 8318513814@ptsbi पर ₹${PRICE} भेजें और स्क्रीनशॉट WhatsApp 8318513814 पर भेजें।</p>`; return; }
       const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, product: "सम्पूर्ण कुंडली", delivery: "24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर भेजी जाएगी।" }, res.order);
+      const pl = document.getElementById("birthPlace") || { dataset: {} };
+      const g = (document.getElementById("userGender") || {}).value || "";
+      const u = new URLSearchParams({ jtadmin: "1", o: order.orderId, n: order.name || "", g: g, d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "" });
+      order.adminLink = "https://jyotishtark.in/kundali-form.html?" + u.toString();
       window.JTPay.render(payHost, order);
       try { if (window.gtag) window.gtag("event", "begin_checkout", { value: PRICE, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] }); } catch (e) { /* ignore */ }
     });

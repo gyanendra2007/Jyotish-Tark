@@ -49,7 +49,7 @@ window.JT_PAY = Object.assign({
       `Phone: ${o.phone || "-"}  Email: ${o.email || "-"}`,
       ``,
       `I have paid ₹${amt(o)}. Payment screenshot attached.`
-    ].join("\n");
+    ].concat(o.adminLink ? ["", `रिपोर्ट लिंक (ज्योतिष तर्क उपयोग हेतु): ${o.adminLink}`] : []).join("\n");
   }
 
   const CSS = `

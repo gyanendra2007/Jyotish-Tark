@@ -234,7 +234,7 @@
     }
   }
   function offer() {
-    if (document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname)) return;
+    if (document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname) || /[?&]jtadmin=/.test(location.search)) return;
     if (store("sessionStorage", "jt-ad-seen")) return;
     setTimeout(function () {
       if (document.getElementById("jtAd") || document.documentElement.classList.contains("jt-bot-open")) return;
