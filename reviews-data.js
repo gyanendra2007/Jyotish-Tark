@@ -19,7 +19,7 @@ window.JT_CONFIG = {
   googleRating: 5.0, // shown once googleCount is 5 or more
   googleCount: 2,
 
-  // Email delivery through EmailJS (the same account the ₹1101 order form uses).
+  // Email delivery through EmailJS (the same account the kundali order form uses).
   // Create two templates in EmailJS and paste their IDs here. While an ID is
   // empty, that form sends the message to your WhatsApp instead, so nothing is lost.
   emailjs: {

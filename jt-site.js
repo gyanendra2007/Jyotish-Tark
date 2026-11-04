@@ -97,8 +97,8 @@
     { id: "a60", g: "call", t: "ऑडियो कॉल · 1 घंटा", p: "₹901" },
     { id: "v30", g: "call", t: "वीडियो कॉल · 30 मिनट", p: "₹1,101" },
     { id: "v60", g: "call", t: "वीडियो कॉल · 1 घंटा", p: "₹2,101" },
-    { id: "k15", g: "call", t: "15 मिनट ऑडियो कॉल + विस्तृत कुंडली रिपोर्ट", p: "₹1,301" },
-    { id: "k30", g: "call", t: "30 मिनट ऑडियो कॉल + विस्तृत कुंडली रिपोर्ट", p: "₹1,501" },
+    { id: "k15", g: "call", t: "15 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली", p: "₹1,301" },
+    { id: "k30", g: "call", t: "30 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली", p: "₹1,501" },
     { id: "rem", g: "msg", t: "उपाय (केवल WhatsApp संदेश द्वारा, कॉल नहीं)", p: "₹199" },
     { id: "p1", g: "meet", t: "व्यक्तिगत भेंट · लखनऊ में (पहले से अपॉइंटमेंट)", p: "₹11,000" },
     { id: "p2", g: "meet", t: "ज्योतिषी आपके स्थान पर आएँ (पहले से अपॉइंटमेंट, यात्रा शुल्क नहीं)", p: "₹21,000" }
@@ -157,7 +157,7 @@
       home: home,
       book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>हर कॉल के पहले 5 मिनट मुफ़्त · कॉल का भुगतान बात के बाद UPI से</small></p>' + priceList(true)); },
       price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>हर कॉल के पहले 5 मिनट मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
-      kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="kundali-form.html">विस्तृत कुंडली रिपोर्ट · ₹1,101</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट ऑडियो कॉल + कुंडली रिपोर्ट · ₹1,501</button></div>'); },
+      kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="sampurna-kundali.html">सम्पूर्ण कुंडली (30 पेज) · ₹1,100</a><a href="kundali-form.html">हस्तनिर्मित कुंडली · ₹2,100</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली · ₹1,501</button></div>'); },
       daily: function () { say(back() + '<p class="jt-bot-msg">रोज़ की जानकारी</p><div class="jt-bot-opts"><a href="rashifal.html">आज का राशिफल</a><a href="panchang.html">आज का पंचांग</a><a href="ekadashi-list.html">एकादशी सूची 2026–27</a><a href="tyohar-2026.html">त्योहार 2026</a><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></div>'); },
       bhakti: function () { say(back() + '<p class="jt-bot-msg">भक्ति संग्रह</p><div class="jt-bot-opts"><a href="hanuman-chalisa.html">हनुमान चालीसा</a><a href="om-jai-jagdish-hare-aarti.html">ॐ जय जगदीश हरे</a><a href="sundarkand.html">सुंदरकांड</a><a href="ekadashi-vrat-katha.html">एकादशी व्रत कथा</a><a href="bhakti-sangrah.html">सभी पाठ, आरती व कथाएँ →</a></div>'); },
       faq: function () { say(back() + '<p class="jt-bot-msg">सामान्य प्रश्न</p>' + FAQ.map(function (q) { return "<details><summary>" + q[0] + "</summary><p>" + q[1] + "</p></details>"; }).join("") + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 परामर्श बुक करें</button></div>'); }

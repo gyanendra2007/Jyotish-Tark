@@ -1,12 +1,16 @@
 /* ==========================================================================
-   JYOTISH TARK — ₹1101 KUNDALI PAYMENT SCREEN
-   Shown after the order form is submitted on kundali-form.html.
+   JYOTISH TARK — KUNDALI PAYMENT SCREEN
+   Default: ₹2,100 handmade kundali (order form on kundali-form.html).
+   An order may carry its own amount / product / delivery (e.g. the ₹1,100
+   sampurna kundali from sampurna-preview.js).
    Edit only the settings block below.
    ========================================================================== */
 window.JT_PAY = Object.assign({
   upiId: "8318513814@ptsbi",          // from your QR code
   payeeName: "GYANENDRA SINGH TOMAR",
-  amount: 1101,
+  amount: 2100,
+  product: "हस्तनिर्मित कुंडली",
+  delivery: "भुगतान मिलने के बाद ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली तैयार करके 5–7 दिन में WhatsApp व ईमेल पर भेजेंगे।",
   whatsapp: "918318513814",
   qrImage: "qr-code.png",
   // Optional: paste a Razorpay / Cashfree payment-page link here later.
@@ -27,21 +31,24 @@ window.JT_PAY = Object.assign({
     return `JT${String(d.getFullYear()).slice(2)}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${rnd}`;
   }
 
-  function upiLink(orderId) {
+  const amt = (o) => (o && o.amount) || P.amount;
+  const inr = (n) => Number(n).toLocaleString("en-IN");
+
+  function upiLink(orderId, amount) {
     // UPI apps expect the "@" in the UPI ID unencoded
-    return `upi://pay?pa=${P.upiId}&pn=${encodeURIComponent(P.payeeName)}&am=${P.amount}&cu=INR&tn=${encodeURIComponent("Kundali " + orderId)}`;
+    return `upi://pay?pa=${P.upiId}&pn=${encodeURIComponent(P.payeeName)}&am=${amount || P.amount}&cu=INR&tn=${encodeURIComponent("Kundali " + orderId)}`;
   }
 
   function whatsappText(o) {
     return [
-      `🙏 Namaste Acharya ji — ₹${P.amount} Kundali order`,
+      `🙏 Namaste Acharya ji — ₹${amt(o)} ${o.product || P.product} order`,
       `Order ID: ${o.orderId}`,
       `Name: ${o.name || "-"}`,
       `DOB: ${o.dob || "-"}  Time: ${o.tob || "-"}`,
       `Place: ${o.pob || "-"}`,
       `Phone: ${o.phone || "-"}  Email: ${o.email || "-"}`,
       ``,
-      `I have paid ₹${P.amount}. Payment screenshot attached.`
+      `I have paid ₹${amt(o)}. Payment screenshot attached.`
     ].join("\n");
   }
 
@@ -78,21 +85,22 @@ window.JT_PAY = Object.assign({
     css();
     opts = opts || {};
     const wa = `https://wa.me/${P.whatsapp}?text=${encodeURIComponent(whatsappText(order))}`;
-    host.innerHTML = `<div class="jtp" role="region" aria-label="₹${P.amount} भुगतान">
-      <h3>✅ आपका विवरण मिल गया — अब ₹${P.amount} का भुगतान करें</h3>
+    const A = inr(amt(order));
+    host.innerHTML = `<div class="jtp" role="region" aria-label="₹${A} भुगतान">
+      <h3>✅ ${esc(order.product || P.product)} — अब ₹${A} का भुगतान करें</h3>
       <p class="jtp-sub">ऑर्डर नंबर <span class="jtp-id">${esc(order.orderId)}</span> — इसे संभाल कर रखें।</p>
       ${opts.emailFailed ? `<p class="jtp-warn">ईमेल से विवरण नहीं जा सका — कोई बात नहीं, नीचे तीसरे चरण का WhatsApp संदेश आपका पूरा विवरण भेज देगा।</p>` : ""}
       <ol>
         <li><div>
-          <b>₹${P.amount} भुगतान करें</b>
+          <b>₹${A} भुगतान करें</b>
           ${P.onlinePayLink ? `<div style="margin:.5rem 0"><a class="jtp-btn jtp-gold" href="${esc(P.onlinePayLink)}" target="_blank" rel="noopener">💳 ऑनलाइन भुगतान (Card / UPI / Net Banking)</a></div><p class="jtp-note">या UPI से सीधे:</p>` : ""}
           <div class="jtp-pay">
             <div class="jtp-qr"><img src="${esc(P.qrImage)}" alt="UPI QR code — ${esc(P.payeeName)}" width="160" height="160"></div>
             <div>
-              <div class="jtp-amt">₹${P.amount}</div>
+              <div class="jtp-amt">₹${A}</div>
               <div class="jtp-upi"><code id="jtpUpi">${esc(P.upiId)}</code><button type="button" class="jtp-btn jtp-ghost" id="jtpCopy">UPI ID कॉपी करें</button></div>
-              ${isPhone() ? `<a class="jtp-btn jtp-gold" href="${esc(upiLink(order.orderId))}">📱 UPI ऐप से भुगतान करें</a>` : ""}
-              <p class="jtp-note">GPay, PhonePe, Paytm या किसी भी UPI ऐप से QR स्कैन करें और राशि ₹${P.amount} भरें।</p>
+              ${isPhone() ? `<a class="jtp-btn jtp-gold" href="${esc(upiLink(order.orderId, amt(order)))}">📱 UPI ऐप से भुगतान करें</a>` : ""}
+              <p class="jtp-note">GPay, PhonePe, Paytm या किसी भी UPI ऐप से QR स्कैन करें और राशि ₹${A} भरें।</p>
             </div>
           </div>
         </div></li>
@@ -102,8 +110,8 @@ window.JT_PAY = Object.assign({
           <a class="jtp-btn jtp-green" href="${esc(wa)}" target="_blank" rel="noopener">💬 WhatsApp पर भेजें</a>
         </div></li>
         <li><div>
-          <b>24–48 घंटे में आपकी कुंडली</b>
-          <p class="jtp-note" style="margin:.2rem 0 0">भुगतान मिलने के बाद आचार्य ज्ञानेन्द्र सिंह तोमर स्वयं आपकी कुंडली तैयार कर WhatsApp व ईमेल पर भेजेंगे।</p>
+          <b>आपकी कुंडली</b>
+          <p class="jtp-note" style="margin:.2rem 0 0">${esc(order.delivery || P.delivery)}</p>
         </div></li>
       </ol>
     </div>`;

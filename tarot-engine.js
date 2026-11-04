@@ -1138,7 +1138,7 @@
       `• Spread: ${modeObj.titleEn}\n` +
       `• Cards Drawn: ${cardNamesEn}\n` +
       `• Probability Score: ${prob}%\n` +
-      `I want to book my ₹1101 Complete Hand-Crafted Kundali & Personal Remedies to unlock these planetary blocks.`
+      `I want to book my ₹1,100 Sampurna Kundali to understand these planetary blocks.`
     );
     const waUrl = `https://wa.me/918318513814?text=${waText}`;
 
@@ -1167,7 +1167,7 @@
               <i class="fas fa-key mr-2"></i> अपनी 45-Min फ्री कुंडली पढ़ें
             </a>
             <a href="${waUrl}" target="_blank" class="w-full py-3.5 px-5 rounded-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition">
-              <i class="fab fa-whatsapp text-lg"></i> ज्ञानेंद्र जी से परामर्श लें (₹1101)
+              <i class="fab fa-whatsapp text-lg"></i> ज्ञानेंद्र जी से परामर्श लें (5 मिनट मुफ़्त)
             </a>
           </div>
         </div>
@@ -1199,7 +1199,7 @@
             <i class="fas fa-key mr-2"></i> Read Free 45-Min Kundali Dossier
           </a>
           <a href="${waUrl}" target="_blank" class="w-full py-3.5 px-5 rounded-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition">
-            <i class="fab fa-whatsapp text-lg"></i> Consult Gyanendra Ji (₹1101)
+            <i class="fab fa-whatsapp text-lg"></i> Consult Gyanendra Ji (first 5 min free)
           </a>
         </div>
       </div>

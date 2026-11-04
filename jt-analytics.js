@@ -34,7 +34,7 @@
   document.addEventListener("submit", function (e) {
     const id = (e.target && e.target.id) || "";
     if (id === "lifeDossierForm") track("free_kundali_generate", { page: page });
-    else if (id === "kundaliForm") track("order_1101_submit", { page: page, value: 1101, currency: "INR" });
+    else if (id === "kundaliForm") track("order_handmade_submit", { page: page, value: 2100, currency: "INR" });
     else if (id === "contactForm") track("contact_message", { page: page });
     else if (e.target.closest && e.target.closest(".jtr-modal")) track("review_submit", { page: page });
   }, true);

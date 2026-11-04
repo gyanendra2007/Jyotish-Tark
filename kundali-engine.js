@@ -2789,6 +2789,7 @@
           setTimeout(() => outputContainer.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
         }
       }
+      try { document.dispatchEvent(new CustomEvent("jt:dossier-ready", { detail: ctx })); } catch (e) { /* old browsers */ }
     } catch (err) {
       console.error("Jyotish Tark Dossier Generation Error:", err);
       alert("Error generating reading: " + (err && err.message ? err.message : err));
