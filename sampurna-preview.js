@@ -210,12 +210,16 @@
       host.id = "chapter-sampurna";
       host.className = "no-print";
       host.setAttribute("aria-label", "₹1,100 सम्पूर्ण कुंडली");
+      const mid = document.getElementById("chapter-dakshina") || document.getElementById("chapter-planets");
       const traps = document.getElementById("chapter-traps");
       const out = document.getElementById("masterDossierOutput");
-      if (traps && traps.parentNode) traps.parentNode.insertBefore(host, traps.nextSibling);
+      if (mid && mid.parentNode) mid.parentNode.insertBefore(host, mid);
+      else if (traps && traps.parentNode) traps.parentNode.insertBefore(host, traps.nextSibling);
       else if (out) out.appendChild(host);
       else return;
     }
+    const dk = document.getElementById("chapter-dakshina");
+    if (dk && dk.parentNode && host.nextElementSibling !== dk) dk.parentNode.insertBefore(host, dk);
     host.innerHTML = `<div class="sp">${res.html}</div>`;
     const pay = host.querySelector("#spPayBtn");
     pay.addEventListener("click", () => {

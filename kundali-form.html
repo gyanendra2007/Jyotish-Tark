@@ -192,6 +192,8 @@
     @media (min-width: 768px) { .mobile-field-label { display: none; } }
 
     .mode-tab { transition: all 0.3s ease; }
+    @supports (overflow: clip) { #masterDossierOutput, #chapter-traps { overflow: clip; } }
+    @media (min-width: 1024px) { .jt-side { align-self: stretch; } .jt-side-sticky { position: sticky; top: 6.5rem; } }
     .mode-tab.active {
       background: linear-gradient(135deg, rgba(126, 34, 206, 0.9), rgba(219, 39, 119, 0.85));
       border-color: #f59e0b; color: white; box-shadow: 0 10px 30px rgba(126, 34, 206, 0.45);
@@ -454,8 +456,15 @@
       <button type="button" id="tabInstantDossier" onclick="switchWorkspaceMode('instant')" class="mode-tab active flex-1 max-w-lg py-3.5 px-5 rounded-2xl border border-amber-400/50 glass-card flex items-center gap-3.5 text-left">
         <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0 text-amber-300 text-xl"><i class="fas fa-book-reader"></i></div>
         <div class="min-w-0">
-          <div class="font-bold text-sm md:text-lg text-white">Generate Instant Vedic Kundali Dossier</div>
-          <div class="text-[11px] md:text-xs text-purple-200">View D1/D9/D10/D7 Charts, Graha Spashta, Age Roadmap & Dasha</div>
+          <div class="font-bold text-sm md:text-lg text-white">मुफ़्त कुंडली तुरंत बनाएँ</div>
+          <div class="text-[11px] md:text-xs text-purple-200">D1/D9/D10/D7 चार्ट, ग्रह स्पष्ट, दशा व जीवन-मार्ग</div>
+        </div>
+      </button>
+      <button type="button" id="tabSampurna" onclick="jtGoSampurna()" class="mode-tab flex-1 max-w-lg py-3.5 px-5 rounded-2xl border border-amber-400/60 glass-card flex items-center gap-3.5 text-left text-gray-300 hover:text-white">
+        <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0 text-amber-300 text-xl"><i class="fas fa-file-pdf"></i></div>
+        <div class="min-w-0">
+          <div class="font-bold text-sm md:text-lg">सम्पूर्ण कुंडली (₹1,100)</div>
+          <div class="text-[11px] md:text-xs text-gray-400">लगभग 30 पेज PDF · 24 घंटे में</div>
         </div>
       </button>
       <button type="button" id="tabManualOrder" onclick="switchWorkspaceMode('manual')" class="mode-tab flex-1 max-w-lg py-3.5 px-5 rounded-2xl border border-white/15 glass-card flex items-center gap-3.5 text-left text-gray-300 hover:text-white">
@@ -466,6 +475,7 @@
         </div>
       </button>
     </div>
+    <p id="spTabNote" class="hidden no-print text-center text-sm md:text-base text-amber-200 -mt-3 mb-6 px-4" role="status">पहले नीचे अपना नाम, जन्म तिथि, समय और स्थान भरकर कुंडली बनाएँ — मुफ़्त रिपोर्ट के साथ सम्पूर्ण कुंडली का प्रीव्यू दिखेगा। <a href="sampurna-kundali.html" class="underline font-bold">नमूना देखें</a></p>
 
     <div id="instantWorkspaceContainer" class="glass-card rounded-3xl p-4 sm:p-6 md:p-10 border border-purple-500/30">
 
@@ -716,6 +726,7 @@
               <a href="#chapter-love" class="chapter-nav-pill">6. Relationships</a>
               <a href="#chapter-partner" class="chapter-nav-pill">7. Marriage (7H & D9)</a>
               <a href="#chapter-childbirth" class="chapter-nav-pill text-emerald-300 border-emerald-400/40">8. Progeny (5H & D7)</a>
+              <a href="#chapter-sampurna" class="chapter-nav-pill text-amber-300 border-amber-400/40">₹1,100 सम्पूर्ण कुंडली</a>
               <a href="#chapter-dakshina" class="chapter-nav-pill text-amber-300 border-amber-400/40">🙏 Guru Dakshina</a>
               <a href="#chapter-planets" class="chapter-nav-pill">9. All 9 Planets</a>
               <a href="#chapter-lagnas" class="chapter-nav-pill">10. Special Lagnas & SAV (337)</a>
@@ -916,7 +927,16 @@
               </div>
             </div>
 
-            <div class="lg:col-span-4 bg-slate-950/95 p-6 md:p-7 rounded-2xl border border-amber-400/50 shadow-2xl space-y-5 lg:sticky lg:top-28 no-print">
+            <div class="lg:col-span-4 space-y-5 no-print jt-side">
+            <div class="bg-slate-950/95 p-6 md:p-7 rounded-2xl border-2 border-amber-400/60 shadow-2xl text-center">
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">लगभग 30 पेज · 12 अध्याय</span>
+              <h4 class="text-xl font-bold text-white mt-2">सम्पूर्ण कुंडली</h4>
+              <div class="text-3xl font-extrabold text-amber-400 mt-2">₹1,100</div>
+              <p class="text-xs md:text-sm text-gray-300 mt-1">24 घंटे के अंदर PDF · करियर, धन, विवाह, दशा, वर्षफल 2027 व उपाय</p>
+              <a href="#chapter-sampurna" class="mt-4 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2">अपनी कुंडली का प्रीव्यू देखें</a>
+              <a href="sampurna-kundali.html" class="mt-2 inline-block text-xs font-bold text-amber-300 underline">नमूना कुंडली देखें</a>
+            </div>
+            <div class="bg-slate-950/95 p-6 md:p-7 rounded-2xl border border-amber-400/50 shadow-2xl space-y-5">
               <div class="text-center border-b border-white/10 pb-4">
                 <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">ज्योतिषी द्वारा स्वयं</span>
                 <h4 class="text-xl font-bold text-white mt-2">हस्तनिर्मित कुंडली (Handmade Kundali)</h4>
@@ -928,7 +948,24 @@
                 <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-green-400 mt-1"></i><span><strong>Classical Vedic Remedies:</strong> Personalized mantra, charity (Dana), and gemstone suitability guidance by <strong>Gyanendra S. Tomar</strong>.</span></li>
               </ul>
               <a id="urgentConsultWhatsappBtn" href="https://wa.me/918318513814" target="_blank" class="w-full py-4 px-5 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold text-base shadow-xl flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5"><i class="fab fa-whatsapp text-xl"></i> Book Consultation with Gyanendra Ji</a>
-              <button type="button" onclick="switchWorkspaceMode('manual')" class="w-full py-3 px-4 rounded-xl border border-amber-400/50 text-amber-300 hover:bg-amber-400/10 text-xs font-bold transition">Or Submit Questions via Booking Form</button>
+              <button type="button" onclick="switchWorkspaceMode('manual')" class="w-full py-3 px-4 rounded-xl border border-amber-400/50 text-amber-300 hover:bg-amber-400/10 text-xs font-bold transition">हस्तनिर्मित कुंडली का फ़ॉर्म भरें</button>
+            </div>
+            <div class="jt-side-sticky bg-slate-950/95 p-6 md:p-7 rounded-2xl border-2 border-green-500/60 shadow-2xl">
+              <div class="text-center border-b border-white/10 pb-4">
+                <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-300 text-xs font-bold uppercase tracking-wider">पहले 5 मिनट मुफ़्त</span>
+                <h4 class="text-xl font-bold text-white mt-2">ज्योतिषी से सीधी बात करें</h4>
+                <p class="text-xs md:text-sm text-gray-300 mt-1">अपनी कुंडली के प्रश्न ऑडियो या वीडियो कॉल पर पूछें · भुगतान कॉल के बाद UPI से</p>
+              </div>
+              <ul class="text-sm space-y-2 text-gray-200 mt-4">
+                <li class="flex justify-between gap-3"><span>ऑडियो कॉल · 15 मिनट</span><b class="text-amber-300">₹301</b></li>
+                <li class="flex justify-between gap-3"><span>ऑडियो कॉल · 30 मिनट</span><b class="text-amber-300">₹501</b></li>
+                <li class="flex justify-between gap-3"><span>ऑडियो कॉल · 1 घंटा</span><b class="text-amber-300">₹901</b></li>
+                <li class="flex justify-between gap-3"><span>वीडियो कॉल · 30 मिनट</span><b class="text-amber-300">₹1,101</b></li>
+                <li class="flex justify-between gap-3"><span>वीडियो कॉल · 1 घंटा</span><b class="text-amber-300">₹2,101</b></li>
+              </ul>
+              <a href="https://wa.me/918318513814?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%2C%20%E0%A4%AE%E0%A5%81%E0%A4%9D%E0%A5%87%20%E0%A4%AA%E0%A4%B0%E0%A4%BE%E0%A4%AE%E0%A4%B0%E0%A5%8D%E0%A4%B6%20%E0%A4%AC%E0%A5%81%E0%A4%95%20%E0%A4%95%E0%A4%B0%E0%A4%A8%E0%A4%BE%20%E0%A4%B9%E0%A5%88%E0%A5%A4" data-jt-bot="book" target="_blank" rel="noopener" class="mt-4 w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold text-base flex items-center justify-center gap-2"><i class="fab fa-whatsapp text-xl"></i> परामर्श बुक करें</a>
+              <a href="consultation.html" class="mt-2 block text-center text-xs font-bold text-amber-300 underline">सभी परामर्श शुल्क देखें</a>
+            </div>
             </div>
           </div>
         </article>
@@ -1175,7 +1212,7 @@
   <script src="narrative-rules.js"></script>
   <script src="kundali-engine.js?v=2"></script>
   <script src="free-report.js?v=2"></script>
-  <script src="sampurna-preview.js?v=1"></script>
+  <script src="sampurna-preview.js?v=2"></script>
 
   <script>
     // ========================================================================
@@ -2009,6 +2046,16 @@
       }
     }
 
+    function jtGoSampurna() {
+      switchWorkspaceMode('instant');
+      const sp = document.getElementById('chapter-sampurna');
+      const out = document.getElementById('masterDossierOutput');
+      if (sp && out && !out.classList.contains('hidden')) { sp.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+      const note = document.getElementById('spTabNote');
+      if (note) note.classList.remove('hidden');
+      const nm = document.getElementById('userName');
+      if (nm) { nm.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => nm.focus({ preventScroll: true }), 400); }
+    }
     function switchWorkspaceMode(mode) {
       const instantDiv = document.getElementById('instantWorkspaceContainer');
       const manualDiv  = document.getElementById('manualWorkspaceContainer');
