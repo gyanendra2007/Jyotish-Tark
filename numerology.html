@@ -171,6 +171,22 @@
             "@type": "Answer",
             "text": "सबसे अच्छा योग वही है जो आपके मूलांक और भाग्यांक दोनों के अनुकूल हो। सामान्य रूप से व्यापार के लिए 5 और 6, नौकरी व प्रशासन के लिए 1 और 3 अच्छे माने जाते हैं। इस पेज का मोबाइल नंबर कैलकुलेटर आपकी जन्मतिथि से आपके लिए अनुकूल योग बताता है।"
           }
+        },
+        {
+          "@type": "Question",
+          "name": "लो शू ग्रिड क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "लो शू ग्रिड 3×3 का वर्ग (4-9-2, 3-5-7, 8-1-6) है जिसमें जन्मतिथि के अंक रखकर देखा जाता है कि कौन-से अंक मौजूद हैं, कौन-से नहीं और कौन-से तल (जैसे 4-5-6 स्वर्ण योग) पूरे हैं। इस पेज का कैलकुलेटर आपका ग्रिड अपने-आप बनाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "गाड़ी नंबर का अंक कैसे निकालें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "गाड़ी नंबर के अक्षर छोड़कर सभी अंक जोड़ें और योग को एक अंक तक लाएँ — जैसे UP32 AB 1234 = 3+2+1+2+3+4 = 15 → 6 (शुक्र)। कुछ अंक ज्योतिषी केवल आख़िरी 4 अंक जोड़ते हैं; इस पेज का कैलकुलेटर दोनों दिखाता है।"
+          }
         }
       ]
     }
@@ -391,7 +407,11 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
   <script src="jt-site.js?v=9" defer></script>
-  <script src="numerology-tools.js?v=3" defer></script>
+  <script src="numerology-tools.js?v=4" defer></script>
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <style id="nm-css">
 .nm-wrap{max-width:1000px;margin:0 auto;padding:0 16px;font-family:'Mukta',system-ui,sans-serif;color:#2B1810}
@@ -450,12 +470,43 @@
 .nm-tbl th,.nm-tbl td{border:1px solid #E8DCC4;padding:8px 10px;text-align:left;color:#2B1810}
 .nm-tbl th{background:#F3E9D6;color:#5A1414}
 .nm-scroll{overflow-x:auto}
+.nm-hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.nm-ring{--p:0;flex:none;width:118px;height:118px;border-radius:50%;background:conic-gradient(#7A1F1F calc(var(--p)*1%),#EADCC0 0);display:grid;place-items:center}
+.nm-ring>div{width:94px;height:94px;border-radius:50%;background:#FFFFFF;display:grid;place-items:center;text-align:center;align-content:center}
+.nm-ring b{font-size:40px;line-height:1;color:#7A1F1F}.nm-ring small{font-size:13px;color:#6B5444;font-weight:700}
+.nm-hero-t{flex:1;min-width:220px}.nm-hero-t>small{font-size:14px;color:#6B5444}.nm-hero-t h3{margin:2px 0 6px !important;font-size:22px !important}
+.nm-badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin:14px 0}
+.nm-badges span{padding:8px 10px;border-radius:12px;background:#FFFFFF;border:1px solid #E8DCC4}.nm-badges small{display:block;font-size:12.5px;color:#6B5444}.nm-badges b{font-size:16px;color:#2B1810}
+.nm-card{margin:12px 0;padding:14px 16px;border-radius:14px;background:#FFFFFF;border:1px solid #E8DCC4}
+.nm-card h4{margin:0 0 6px;font-size:17px;color:#5A1414}.nm-card p{margin:6px 0}
+.nm-c-good{border-left:5px solid #15803D}.nm-c-care{border-left:5px solid #C2410C}.nm-c-mid{border-left:5px solid #B8892B}
+.nm-bar{display:grid;grid-template-columns:118px 1fr 86px;gap:10px;align-items:center;margin:7px 0;font-size:15px}
+.nm-bar i{display:block;height:10px;border-radius:99px;background:#F0E6D3;overflow:hidden}.nm-bar em{display:block;height:100%;background:linear-gradient(90deg,#B8892B,#7A1F1F);border-radius:99px}
+.nm-bar b{font-size:13.5px;color:#4A3628}
+.nm-strip{display:flex;flex-wrap:wrap;align-items:center;gap:0;margin:8px 0}
+.nm-dg{display:inline-grid;place-items:center;width:34px;height:40px;border-radius:9px;background:#FBF6EC;border:1px solid #E0CFAE;font-size:20px;font-weight:700;color:#2B1810}
+.nm-lk{display:inline-block;width:14px;height:6px;border-radius:3px;margin:0 2px}.nm-lk.nm-pf,.nm-key.nm-pf{background:#16A34A}.nm-lk.nm-pn,.nm-key.nm-pn{background:#A8A29E}.nm-lk.nm-pm,.nm-key.nm-pm{background:#D97706}.nm-lk.nm-pe,.nm-key.nm-pe{background:#DC2626}.nm-lk.nm-p0{background:transparent}
+.nm-key{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 3px 0 8px;vertical-align:-1px}
+.nm-g3{border-color:#7A1F1F !important;background:#FFF4E8 !important}
+.nm-sugg{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.nm-sugg span{display:grid;place-items:center;min-width:64px;padding:8px;border-radius:12px;background:#F0FDF4;border:1px solid #BBF7D0}.nm-sugg b{font-size:24px;color:#14532D;line-height:1}.nm-sugg small{font-size:12.5px;color:#14532D}.nm-sugg span.on{outline:3px solid #15803D}
+.nm-how{margin:10px 0;border:1px solid #E8DCC4;border-radius:12px;background:#FFFFFF}.nm-how summary{cursor:pointer;padding:10px 14px;font-weight:700;color:#5A1414}.nm-how>*:not(summary){margin:0 14px 12px}
+.nm-actions{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}.nm-wa{background:#15803D !important;text-decoration:none;display:inline-flex;align-items:center;color:#FFFFFF !important}.nm-ghost{background:#FFFFFF !important;color:#7A1F1F !important;border:2px solid #7A1F1F !important}
+.nm-rep{margin-top:22px;display:grid;gap:16px}
+.nm-rcard{padding:18px;border-radius:18px;background:#FFFFFF;border:1px solid #E8DCC4;color:#2B1810;text-align:left}
+.nm-rcard h4{margin:0 0 10px;font-size:19px;font-weight:700;color:#5A1414}.nm-rcard p,.nm-rcard li{font-size:15.5px;line-height:1.7;color:#4A3628}.nm-rcard ul,.nm-rcard ol{padding-left:20px;margin:6px 0}.nm-rcard ul{list-style:disc}.nm-rcard ol{list-style:decimal}
+.nm-rcard .nm-small{color:#6B5444 !important}.nm-rcard a{color:#7A1F1F;text-decoration:underline}
+.nm-lsw{display:grid;grid-template-columns:minmax(180px,230px) 1fr;gap:16px;align-items:start}
+.nm-lsg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.nm-ls{aspect-ratio:1;border-radius:12px;background:#FBF1DC;border:1px solid #D9BE85;display:grid;place-items:center;align-content:center;text-align:center}
+.nm-ls b{font-size:20px;color:#7A1F1F;letter-spacing:1px;word-break:break-all}.nm-ls small{font-size:11.5px;color:#6B5444}.nm-ls0{background:#FFFFFF;border-style:dashed;border-color:#CDBB9C}.nm-ls0 b{color:#B3A48C}
+.nm-pm{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.nm-pmc{display:grid;gap:2px;padding:8px;border-radius:12px;background:#FBF6EC;border:1px solid #E8DCC4;text-align:center}.nm-pmc small{font-size:12px;color:#6B5444}.nm-pmc b{font-size:24px;color:#7A1F1F;line-height:1.1}.nm-pmc em{font-style:normal;font-size:12.5px;color:#2B1810}.nm-pmc.on{border:2px solid #7A1F1F;background:#FFF4E8}
+.nm-steps li{margin:6px 0}
+.nm-rules{counter-reset:r;list-style:none !important;padding:0 !important}.nm-rules li{position:relative;padding:10px 12px 10px 48px;margin:8px 0;border-radius:12px;background:#FBF6EC;border:1px solid #E8DCC4}.nm-rules li::before{counter-increment:r;content:counter(r);position:absolute;left:12px;top:10px;width:26px;height:26px;border-radius:50%;background:#7A1F1F;color:#FFFFFF;display:grid;place-items:center;font-weight:700;font-size:14px}
+.nm-lsdemo{display:grid;grid-template-columns:repeat(3,56px);gap:5px;margin:8px 0}.nm-lsdemo span{display:grid;place-items:center;height:56px;border-radius:10px;background:#FBF6EC;border:1px solid #E0CFAE;font-size:22px;font-weight:700;color:#5A1414}
+@media (max-width:560px){.nm-lsw{grid-template-columns:1fr}.nm-lsg{max-width:240px}.nm-bar{grid-template-columns:96px 1fr 74px;font-size:14px}}
 @media (max-width:520px){.nm-sec{padding:18px 14px}.nm-sec h2{font-size:24px}}
 </style>
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body class="min-h-screen">
    
@@ -748,45 +799,26 @@
 <!-- NM:START -->
 <div class="nm-wrap no-print">
   <nav class="nm-toc" aria-label="इस पेज पर और क्या है">
-    <a href="#kaise-nikale">मूलांक कैसे निकालें</a><a href="#mobile-number-numerology">मोबाइल नंबर अंक ज्योतिष</a><a href="#mulank-milan">मूलांक मिलान</a><a href="#mulank-1-9">मूलांक 1 से 9</a><a href="#ank-rashifal-2027">अंक राशिफल 2027</a><a href="#naam-ank">नाम का अंक (चार्ट)</a>
+    <a href="#calculator">मूलांक-भाग्यांक कैलकुलेटर</a><a href="#mobile-number-numerology">मोबाइल / गाड़ी नंबर</a><a href="#mulank-milan">मूलांक मिलान</a><a href="#lo-shu-grid">लो शू ग्रिड</a><a href="#sahi-mobile-number">सही नंबर कैसे चुनें</a><a href="#mulank-1-9">मूलांक 1 से 9</a><a href="#ank-rashifal-2027">अंक राशिफल 2027</a><a href="#naam-ank">नाम का अंक</a><a href="#kaise-nikale">मूलांक कैसे निकालें</a>
   </nav>
 
-  <section class="nm-sec" id="kaise-nikale">
-    <h2>मूलांक, भाग्यांक और नामांक कैसे निकालें</h2>
-    <p class="nm-lead">ऊपर का कैलकुलेटर यह सब अपने-आप करता है। हाथ से निकालना हो तो उदाहरण के लिए जन्मतिथि <b>14-03-1995</b> और नाम <b>RAHUL</b> लेते हैं:</p>
-    <h3>1. मूलांक (Psychic / Driver Number)</h3>
-    <p class="nm-ex">केवल जन्म की तारीख जोड़ें: 1 + 4 = <b>5</b> → मूलांक 5। (तारीख 1 से 9 हो तो वही मूलांक है; 29 हो तो 2 + 9 = 11 → 1 + 1 = 2)</p>
-    <h3>2. भाग्यांक (Life Path / Destiny Number)</h3>
-    <p class="nm-ex">पूरी जन्मतिथि के सभी अंक जोड़ें: 1 + 4 + 0 + 3 + 1 + 9 + 9 + 5 = 32 → 3 + 2 = <b>5</b> → भाग्यांक 5।</p>
-    <h3>3. नामांक (Name Number — चैल्डियन पद्धति)</h3>
-    <p class="nm-ex">नाम के हर अंग्रेज़ी अक्षर का अंक नीचे के चार्ट से लें: R(2) + A(1) + H(5) + U(6) + L(3) = 17 → 1 + 7 = <b>8</b> → नामांक 8।</p>
-    <p>मूलांक आपका स्वभाव बताता है, भाग्यांक जीवन की दिशा, और नामांक बताता है कि नाम की स्पेलिंग आपके मूलांक-भाग्यांक के साथ कितना मेल खाती है।</p>
-  </section>
 
   <section class="nm-sec" id="mobile-number-numerology">
-    <h2>मोबाइल नंबर अंक ज्योतिष (Mobile Number Numerology Calculator)</h2>
-    <p class="nm-lead">अपना मोबाइल नंबर डालें — उसके सभी अंकों का कुल योग, उसका अंक और ग्रह, और (जन्मतिथि डालने पर) आपके मूलांक व भाग्यांक से उसका मेल देखें।</p>
+    <h2>मोबाइल नंबर अंक ज्योतिष — गाड़ी और मकान नंबर भी (Mobile Number Numerology)</h2>
+    <p class="nm-lead">नंबर डालें और देखें — उसका ग्रह, स्वभाव, संयुक्त अंक का अर्थ, जीवन के क्षेत्रों में झुकाव, अंकों की आपसी दोस्ती, और जन्मतिथि डालने पर आपसे मेल का स्कोर (हर अंक का हिसाब खुला)।</p>
     <form class="nm-form" id="nmMobForm" novalidate>
-      <label>मोबाइल नंबर *<input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="17" placeholder="जैसे 98765 43210" required></label>
+      <label>नंबर का प्रकार<select name="kind" class="nm-sel"><option value="mobile">मोबाइल नंबर</option><option value="vehicle">गाड़ी नंबर</option><option value="house">मकान / फ़्लैट नंबर</option></select></label>
+      <label>नंबर *<input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="17" placeholder="जैसे 98765 43210" required></label>
       <label>जन्मतिथि<input name="dob" type="date"><small>मूलांक-भाग्यांक से मेल और स्कोर के लिए</small></label>
       <label>नाम अंग्रेज़ी में (वैकल्पिक)<input name="nm" type="text" autocomplete="name" placeholder="जैसे RAHUL SHARMA"><small>नामांक से मेल के लिए</small></label>
       <label>नंबर का उपयोग<select name="purpose" class="nm-sel"><option value="personal">निजी</option><option value="business">व्यापार / सेल्स</option><option value="job">नौकरी / प्रोफ़ेशनल</option><option value="creative">कला / ग्राहक सेवा</option></select></label>
-      <button type="submit" class="nm-btn">पूरी रिपोर्ट देखें</button>
+      <button type="submit" class="nm-btn">नंबर की रिपोर्ट देखें</button>
     </form>
     <div id="nmMobOut" aria-live="polite"></div>
     <p class="nm-small">आपका नंबर इस वेबसाइट पर सेव नहीं होता — गणना आपके फ़ोन/ब्राउज़र में ही होती है।</p>
 
     <h3>मोबाइल नंबर अंक ज्योतिष क्या है?</h3>
     <p>अंक ज्योतिष में माना जाता है कि जिस नंबर का हम रोज़ सबसे ज़्यादा उपयोग करते हैं, उसके अंकों का भी एक कंपन (vibration) होता है। मोबाइल नंबर के सभी अंकों का योग एक अंक (1 से 9) तक लाकर उसके स्वामी ग्रह से नंबर का स्वभाव देखा जाता है, और फिर उसे आपके मूलांक, भाग्यांक और नामांक से मिलाया जाता है।</p>
-    <h3>इस रिपोर्ट में क्या-क्या देखा जाता है</h3>
-    <ul>
-      <li><b>कुल योग:</b> सभी 10 अंकों का जोड़, एक अंक तक — नंबर का मुख्य ग्रह।</li>
-      <li><b>मूलांक, भाग्यांक व नामांक से मेल:</b> नंबर का अंक आपके अंकों के अनुकूल है या नहीं।</li>
-      <li><b>आख़िरी अंक:</b> नंबर किस अंक पर ख़त्म होता है और उसका ग्रह।</li>
-      <li><b>अंकों का चार्ट:</b> कौन-सा अंक कितनी बार है, कौन-से ग्रह नंबर में नहीं हैं, शून्य कितने हैं।</li>
-      <li><b>आसपास के जोड़े:</b> साथ-साथ आने वाले अंकों (जैसे 98, 76) के ग्रहों की आपसी मित्रता।</li>
-      <li><b>अंक-मेल स्कोर:</b> इन सब बातों को मिलाकर 100 में से एक सरल स्कोर, और नया नंबर लेने के लिए सुझाए गए योग।</li>
-    </ul>
     <h3>किस काम के लिए कौन-सा कुल योग</h3>
     <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">मोबाइल नंबर के कुल योग 1 से 9</caption>
       <thead><tr><th scope="col">योग</th><th scope="col">ग्रह</th><th scope="col">अच्छा माना जाता है</th></tr></thead>
@@ -813,6 +845,37 @@
       <button type="submit" class="nm-btn">मेल देखें</button>
     </form>
     <div id="nmMilOut" aria-live="polite"></div>
+  </section>
+
+  <section class="nm-sec" id="lo-shu-grid">
+    <h2>लो शू ग्रिड — जन्मतिथि का अंक चक्र</h2>
+    <p class="nm-lead">ऊपर के कैलकुलेटर में जन्मतिथि डालने पर आपकी रिपोर्ट में आपका अपना लो शू ग्रिड बनता है। यह 3×3 का जादुई वर्ग है, जिसकी हर लाइन का योग 15 होता है:</p>
+    <div class="nm-lsdemo" aria-label="लो शू ग्रिड"><span>4</span><span>9</span><span>2</span><span>3</span><span>5</span><span>7</span><span>8</span><span>1</span><span>6</span></div>
+    <p>जन्मतिथि के सभी अंक (शून्य छोड़कर) उनके ख़ाने में रखे जाते हैं। भारतीय अंक ज्योतिषी इसमें भाग्यांक भी जोड़ते हैं, और तारीख दो अंकों की हो (10–31) तो मूलांक भी। जो अंक ग्रिड में नहीं है, उससे जुड़ा गुण विकसित करना होता है; जो अंक बार-बार है, उसका गुण प्रबल होता है।</p>
+    <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">लो शू ग्रिड के तल (Planes) — तीनों अंक हों तो वह तल पूरा माना जाता है</caption>
+      <thead><tr><th scope="col">तल</th><th scope="col">अंक</th><th scope="col">क्या दर्शाता है</th></tr></thead>
+      <tbody>
+        <tr><td>मानसिक तल</td><td>4-9-2</td><td>बुद्धि, याददाश्त, योजना</td></tr>
+        <tr><td>भावनात्मक तल</td><td>3-5-7</td><td>भावनात्मक संतुलन, संवेदनशीलता</td></tr>
+        <tr><td>व्यावहारिक तल</td><td>8-1-6</td><td>मेहनत, व्यावहारिक सफलता</td></tr>
+        <tr><td>विचार तल</td><td>4-3-8</td><td>नए विचार और व्यवस्था</td></tr>
+        <tr><td>इच्छाशक्ति तल</td><td>9-5-1</td><td>दृढ़ संकल्प</td></tr>
+        <tr><td>कर्म तल</td><td>2-7-6</td><td>विचारों को काम में बदलना</td></tr>
+        <tr><td>स्वर्ण योग</td><td>4-5-6</td><td>सफलता और समृद्धि</td></tr>
+        <tr><td>संपत्ति योग</td><td>2-5-8</td><td>घर, ज़मीन, संपत्ति</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section class="nm-sec" id="sahi-mobile-number">
+    <h2>सही मोबाइल नंबर कैसे चुनें — 6 आसान नियम</h2>
+    <ol class="nm-rules">
+      <li><b>कुल योग आपके अंकों से मेल खाए</b> — नंबर का योग आपके मूलांक और भाग्यांक दोनों की अनुकूल सूची में हो। ऊपर का कैलकुलेटर आपके लिए ये योग बताता है।</li>
+      <li><b>संयुक्त अंक भी देखें</b> — 9 पर पहुँचने से पहले का योग (जैसे 45 या 36) भी अर्थ रखता है। 19, 23, 27, 37, 41, 45 जैसे योग कीरो पद्धति में शुभ माने गए हैं; 16, 18, 26, 29, 43 सावधानी वाले।</li>
+      <li><b>आख़िरी अंक 0 न हो</b> — शून्य पर ख़त्म होने वाला नंबर प्रभाव को धीमा करने वाला माना जाता है।</li>
+      <li><b>बहुत सारे शून्य से बचें</b> — तीन या ज़्यादा शून्य वाले नंबर कम पसंद किए जाते हैं।</li>
+      <li><b>शत्रु-जोड़े कम हों</b> — जैसे 1-8, 2-8, 1-4, 3-6, 5-9: इनके ग्रह आपस में शत्रु माने जाते हैं।</li>
+      <li><b>डर में नंबर न बदलें</b> — चालू नंबर से आपकी पहचान, ग्राहक और बैंक जुड़े होते हैं। नया नंबर लेने का मौक़ा हो, तभी अंक ज्योतिष का ध्यान रखें।</li>
+    </ol>
   </section>
 
   <section class="nm-sec nm-acc" id="mulank-1-9">
@@ -916,6 +979,24 @@
       <thead><tr><th scope="col">अंक</th><th scope="col">अक्षर</th></tr></thead>
       <tbody><tr><td><b>1</b></td><td>A, I, J, Q, Y</td></tr><tr><td><b>2</b></td><td>B, K, R</td></tr><tr><td><b>3</b></td><td>C, G, L, S</td></tr><tr><td><b>4</b></td><td>D, M, T</td></tr><tr><td><b>5</b></td><td>E, H, N, X</td></tr><tr><td><b>6</b></td><td>U, V, W</td></tr><tr><td><b>7</b></td><td>O, Z</td></tr><tr><td><b>8</b></td><td>F, P</td></tr></tbody></table></div>
     <p>नाम की स्पेलिंग बदलने से पहले अपने मूलांक और भाग्यांक दोनों देखें — केवल एक अंक के लिए नाम बदलना ज़रूरी नहीं। व्यक्तिगत नाम-सुधार के लिए <a href="consultation.html">परामर्श लें</a>।</p>
+  </section>
+
+  <section class="nm-sec" id="kaise-nikale">
+    <h2>मूलांक, भाग्यांक और नामांक कैसे निकालें</h2>
+    <p class="nm-lead">ऊपर के कैलकुलेटर यह सब अपने-आप करते हैं, और आपकी रिपोर्ट के आख़िर में आपकी अपनी गणना भी दिखती है। हाथ से निकालना हो तो उदाहरण के लिए जन्मतिथि <b>14-03-1995</b> और नाम <b>RAHUL</b> लेते हैं:</p>
+    <h3>1. मूलांक (Psychic / Driver Number)</h3>
+    <p class="nm-ex">केवल जन्म की तारीख जोड़ें: 1 + 4 = <b>5</b> → मूलांक 5। (तारीख 1 से 9 हो तो वही मूलांक है; 29 हो तो 2 + 9 = 11 → 1 + 1 = 2)</p>
+    <h3>2. भाग्यांक (Life Path / Destiny Number)</h3>
+    <p class="nm-ex">पूरी जन्मतिथि के सभी अंक जोड़ें: 1 + 4 + 0 + 3 + 1 + 9 + 9 + 5 = 32 → 3 + 2 = <b>5</b> → भाग्यांक 5।</p>
+    <h3>3. नामांक (Name Number — चैल्डियन पद्धति)</h3>
+    <p class="nm-ex">नाम के हर अंग्रेज़ी अक्षर का अंक नीचे के चार्ट से लें: R(2) + A(1) + H(5) + U(6) + L(3) = 17 → 1 + 7 = <b>8</b> → नामांक 8।</p>
+    <h3>4. व्यक्तिगत वर्ष (Personal Year)</h3>
+    <p class="nm-ex">जन्म की तारीख + महीना + चालू वर्ष का अंक: 2027 के लिए 14 + 3 + (2+0+2+7 = 11 → 2) = 19 → 1 + 9 = 10 → <b>1</b>। यानी 2027 इस व्यक्ति के लिए नई शुरुआत का साल।</p>
+    <h3>5. मोबाइल नंबर का अंक</h3>
+    <p class="nm-ex">सभी 10 अंक जोड़ें: 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0 = 45 → 4 + 5 = <b>9</b> (मंगल)। 45 संयुक्त अंक है, जिसे कीरो पद्धति में 27 ("राजदंड") के समान शुभ माना गया है।</p>
+    <h3>मास्टर अंक 11, 22 और 33</h3>
+    <p>भाग्यांक निकालते समय अगर योग 11, 22 या 33 आए तो पश्चिमी (पाइथागोरस) अंक शास्त्र में इसे घटाया नहीं जाता — इन्हें "मास्टर अंक" कहते हैं, जो बड़ी क्षमता और बड़ी ज़िम्मेदारी दोनों दिखाते हैं। भारतीय पद्धति में इनका मूल अंक (2, 4, 6) भी साथ देखा जाता है।</p>
+    <p>मूलांक आपका स्वभाव बताता है, भाग्यांक जीवन की दिशा, और नामांक बताता है कि नाम की स्पेलिंग आपके मूलांक-भाग्यांक के साथ कितना मेल खाती है।</p>
   </section>
 </div>
 <!-- NM:END -->
@@ -1491,7 +1572,7 @@
                     cVerdict.textContent = `आपके नाम की चैल्डियन ध्वनि तरंग (${chaldean.compound} → ${chaldean.root}, स्वामी: ${cMeta.planet}) आपके मूलांक ${mulank} और भाग्यांक ${lifePathNumber} को सकारात्मक ऊर्जा दे रही है। इसे और अधिक शक्तिशाली बनाने के लिए अपने हस्ताक्षर (Signature) को ऊपर उठते हुए कोण पर रखें।`;
                 } else {
                     cHead.innerHTML = `<span class="text-amber-300">⚠️ नाम-स्पंदन घर्षण (Frequency Clash Detected: ${chaldean.compound} → ${chaldean.root})</span>`;
-                    cVerdict.textContent = `आपकी जन्मतिथि मूलांक ${mulank} (${mulankMeta.planet}) और भाग्यांक ${lifePathNumber} (${bhagyankMeta.planet}) पर चलती है, जबकि आपके नाम की स्पेलिंग का योग ${chaldean.compound} (मूल अंक ${chaldean.root} — ${cMeta.planet}) बन रहा है। यही कारण है कि आपकी 100% मेहनत के बाद भी काम 99% पर अटकता है या पूरा श्रेय नहीं मिलता। नाम की स्पेलिंग में सूक्ष्म चैल्डियन सुधार (Name Correction) से भाग्य तुरंत खुलता है।`;
+                    cVerdict.textContent = `आपकी जन्मतिथि मूलांक ${mulank} (${mulankMeta.planet}) और भाग्यांक ${lifePathNumber} (${bhagyankMeta.planet}) पर चलती है, जबकि आपके नाम की स्पेलिंग का योग ${chaldean.compound} (मूल अंक ${chaldean.root} — ${cMeta.planet}) बन रहा है। अंक ज्योतिष में माना जाता है कि नामांक जन्म-अंकों के अनुकूल हो तो प्रयासों में सहजता आती है। यह मेल अभी अनुकूल सूची में नहीं है — इसका मतलब असफलता नहीं, बस नाम की स्पेलिंग में छोटा बदलाव विचार करने योग्य हो सकता है। नाम बदलने से पहले अपने मूलांक, भाग्यांक और नाम के संयुक्त अंक — तीनों को साथ देखें।`;
                 }
 
                 const waMsg = `नमस्ते ज्योतिष तर्क! मेरा नाम ${name} (DOB: ${dob}) है। मेरा मूलांक ${mulank}, भाग्यांक ${lifePathNumber} और चैल्डियन नामांक ${chaldean.compound}→${chaldean.root} आ रहा है। मुझे अपने नाम की स्पेलिंग (Name Correction) और शुभ उपायों पर परामर्श चाहिए।`;
