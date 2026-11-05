@@ -158,7 +158,7 @@
     const box = $("#ttStatus");
     box.innerHTML = `<p class="tt-s1">${esc(pair[0])}</p><p class="tt-s2">${esc(pair[1] || "")}</p>`;
   }
-  function posLabel(i) { const p = D.modes[S.mode].positions[i]; return S.lang === "hi" ? p.hi : p.en; }
+  function posLabel(i) { if (window.JT_ASK) return window.JT_ASK.pos(i); const p = D.modes[S.mode].positions[i]; return S.lang === "hi" ? p.hi : p.en; }
   function cleanPos(s) { return String(s).replace(/^\d+\.\s*/, ""); }
   function updateSlotLabels() {
     $$(".tt-slot").forEach((slot, i) => {
@@ -325,70 +325,31 @@
   }
 
   function renderReading(animate) {
-    const t = L(), hi = S.lang === "hi";
-    const name = ($("#ttName").value || "").trim() || t.seeker;
-    const dob = $("#ttDob").value || "";
-    const q = ($("#ttQuestion").value || "").trim();
+    const t = L(), hi = S.lang === "hi", A = window.JT_ASK;
+    const name = ($("#ttName") && $("#ttName").value || "").trim();
+    const q = A ? A.questionText() : "";
     const prob = score();
-    const out = S.picked[2].card;
     const ring = prob >= 72 ? "#15803D" : prob >= 48 ? "#C2410C" : "#9F1239";
-    const vLabel = prob >= 72 ? t.vGood : prob >= 48 ? t.vMid : t.vLow;
-    let numLine = "";
-    if (dob && D.numerology) {
-      const n = D.numerology(name, dob), mp = D.planets[n.mulank] || D.planets[1], bp = D.planets[n.bhagyank] || D.planets[3];
-      const pn = (x) => String(x).replace(/\s*\(.*?\)\s*/g, "").trim();
-      numLine = `<span class="tt-chip">${esc(t.num(n.mulank, pn(hi ? mp.planetHi : mp.planetEn), n.bhagyank, pn(hi ? bp.planetHi : bp.planetEn)))}</span>`;
-    }
-    const counts = { Fire: 0, Water: 0, Air: 0, Earth: 0 };
-    S.picked.forEach((p) => { counts[p.card.element] = (counts[p.card.element] || 0) + 1; });
-    const dom = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
-
-    const cardsHTML = S.picked.map((p, i) => {
-      const c = p.card;
-      const core = p.reversed ? (hi ? c.reversedHi : c.reversedEn) : (hi ? c.uprightHi : c.uprightEn);
-      return `<article class="tt-read">
-        <div class="tt-mini" data-mini="${i}"></div>
-        <div>
-          <p class="tt-pos">${esc(t.pos)} ${i + 1} · ${esc(cleanPos(posLabel(i)))}</p>
-          <h3>${esc(hi ? c.nameHi : c.nameEn)}</h3>
-          <p><span class="tt-pol ${p.reversed ? "rev" : "up"}">${esc(p.reversed ? t.rev : t.up)}</span> <span class="tt-chip" style="margin-left:6px">${esc(hi ? c.grahaHi : c.grahaEn)}</span></p>
-          <p><strong>${esc(t.core)}:</strong> ${esc(core)}</p>
-          ${focusText(c) ? `<p><strong>${esc(t.focus)}:</strong> ${esc(focusText(c))}</p>` : ""}
-          <div class="tt-tip">${(hi ? c.adviceHi : c.adviceEn) ? `<strong>${esc(t.tip)}:</strong> ${esc(hi ? c.adviceHi : c.adviceEn)} · ` : ""}<strong>${esc(t.when)}:</strong> ${esc(hi ? c.timingHi : c.timingEn)}</div>
-        </div>
-      </article>`;
-    }).join("");
-
-    const elChips = Object.keys(counts).filter((k) => counts[k]).map((k) => `<span class="tt-chip">${esc(hi ? ELEMENTS[k].hi : ELEMENTS[k].en)} × ${counts[k]}</span>`).join("");
+    const head = A ? A.headline(prob) : (prob >= 72 ? t.vGood : prob >= 48 ? t.vMid : t.vLow);
+    const meterLbl = A && A.isYesNo() ? t.meterYes : t.meter;
     const names = S.picked.map((p) => shortName(p.card, S.lang)).join(" · ");
-    const waText = encodeURIComponent((hi ? `नमस्ते, मैंने Jyotish Tark पर टैरो रीडिंग की (${MODES[S.mode].hi[0]})। मेरे कार्ड: ${names}. मुझे विस्तार से परामर्श चाहिए।` : `Namaste, I did a tarot reading on Jyotish Tark (${MODES[S.mode].en[0]}). My cards: ${names}. I would like a detailed consultation.`));
-
+    const topic = A ? A.topicName() : "";
+    const waText = encodeURIComponent(hi ? `नमस्ते, मैंने Jyotish Tark पर टैरो रीडिंग की। प्रश्न: "${q}"। मेरे कार्ड: ${names}। मुझे विस्तार से परामर्श चाहिए।` : `Namaste, I did a tarot reading on Jyotish Tark. Question: "${q}". My cards: ${names}. I would like a detailed consultation.`);
     const box = $("#ttReading");
     box.innerHTML = `
       <section class="tt-panel tt-verdict ${animate ? "tt-reveal-in" : ""}" aria-labelledby="ttVerdictH">
         <div>
-          <span class="tt-kicker">${esc(hi ? MODES[S.mode].hi[0] : MODES[S.mode].en[0])}</span>
-          <h2 id="ttVerdictH">${name ? `<span>${esc(name)}</span>, ` : ""}${esc(hi || name ? t.answer : t.answer.charAt(0).toUpperCase() + t.answer.slice(1))}</h2>
+          <span class="tt-kicker">${esc(topic)}</span>
           ${q ? `<p class="tt-q">“${esc(q)}”</p>` : ""}
-          <p class="tt-plain"><strong>${esc(t.plain)}:</strong> ${esc(vLabel)}${hi ? "।" : "."} ${esc((() => { const core = S.picked[2].reversed ? (hi ? out.reversedHi : out.reversedEn) : (hi ? out.uprightHi : out.uprightEn); const k = { feelings: "feelings", career: "career", evileye: "evilEye" }[S.mode]; if (!k) return core; const f = out[k + (hi ? "Hi" : "En")]; return out.arcana === "Minor" ? core + " " + f : f; })())}${(hi ? out.adviceHi : out.adviceEn) ? " " + esc(hi ? out.adviceHi : out.adviceEn) : ""}</p>
-          <p style="margin:0;color:var(--jt-body)">${esc(t.synth)}: <strong>${esc(names)}</strong></p>
-          <div class="tt-chips">
-            <span class="tt-chip"><strong>${esc(t.timing)}:</strong>&nbsp;${esc(hi ? out.timingHi : out.timingEn)}</span>
-            <span class="tt-chip"><strong>${esc(t.graha)}:</strong>&nbsp;${esc(hi ? out.grahaHi : out.grahaEn)}</span>
-            ${numLine}
-          </div>
+          <h2 id="ttVerdictH">${name ? `<span>${esc(name)}</span>, ` : ""}${esc(head)}</h2>
+          <div class="tt-minis" aria-label="${esc(t.synth)}">${S.picked.map((p, i) => `<figure><div class="tt-mini" data-mini="${i}"></div><figcaption>${esc(shortName(p.card, S.lang))}${p.reversed ? ` <small>(${esc(t.rev)})</small>` : ""}</figcaption></figure>`).join("")}</div>
         </div>
         <div class="tt-meter">
-          <div class="tt-ring" id="ttRing" style="--tt-ring:${ring}" role="img" aria-label="${esc((S.mode === "yesno" ? t.meterYes : t.meter) + " " + prob + "%")}"><b id="ttRingNum">0%</b></div>
-          <p class="tt-vlabel" style="color:${ring}">${esc(vLabel)}</p>
-          <p class="tt-vsub">${esc(S.mode === "yesno" ? t.meterYes : t.meter)} · ${esc(t.vSub)}</p>
+          <div class="tt-ring" id="ttRing" style="--tt-ring:${ring}" role="img" aria-label="${esc(meterLbl + " " + prob + "%")}"><b id="ttRingNum">0%</b></div>
+          <p class="tt-vsub">${esc(meterLbl)} · ${esc(t.vSub)}</p>
         </div>
       </section>
-      <div class="tt-cardsread">${cardsHTML}</div>
-      <div class="tt-summary">
-        <div><h3>${esc(t.elements)}</h3><div class="tt-elements">${elChips}</div></div>
-        <div><h3>${esc(t.elAdvice)}</h3><p>${esc(counts[dom] < 2 ? (hi ? "तीनों कार्ड अलग-अलग तत्वों के हैं — स्थिति संतुलित है। योजना और धैर्य, दोनों साथ रखें।" : "Your three cards come from different elements — the situation is balanced. Keep both a plan and patience.") : (hi ? ELEMENTS[dom].adviceHi : ELEMENTS[dom].adviceEn))}</p></div>
-      </div>
+      ${A ? A.body(S.picked, prob) : ""}
       <div class="tt-cta">
         <div><h3>${esc(t.ctaH)}</h3><p>${esc(t.ctaP)}</p></div>
         <div class="tt-row">
@@ -402,27 +363,18 @@
         <button type="button" class="tt-btn ghost" id="ttChange">${esc(t.change)}</button>
       </div>
       <p class="tt-disclaimer">${esc(t.disclaimer)}</p>`;
-
-    S.picked.forEach((p, i) => {
-      const holder = box.querySelector(`[data-mini="${i}"]`);
-      holder.appendChild(makeCard({ card: p.card, reversed: p.reversed, flipped: true }));
-    });
+    S.picked.forEach((p, i) => { const holder = box.querySelector(`[data-mini="${i}"]`); if (holder) holder.appendChild(makeCard({ card: p.card, reversed: p.reversed, flipped: true })); });
     box.hidden = false;
     $("#ttKundali").addEventListener("click", launchKundali);
     $("#ttShare").addEventListener("click", () => share(names, prob));
     $("#ttAgain").addEventListener("click", () => { $("#ttTable").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); startTable(); });
-    $("#ttChange").addEventListener("click", () => { $("#ttForm").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); setTimeout(() => $("#ttQuestion").focus(), 400); });
-
-    // animate the ring
+    $("#ttChange").addEventListener("click", () => { $("#ttForm").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); });
+    $$("[data-next]", box).forEach((b) => b.addEventListener("click", () => { if (A) A.pick(b.dataset.next); $("#ttForm").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }));
     const ringEl = $("#ttRing"), numEl = $("#ttRingNum");
     if (!animate || reduceMotion) { ringEl.style.setProperty("--p", prob); numEl.textContent = prob + "%"; }
     else {
       const t0 = performance.now(), dur = 1300;
-      const step = (now) => {
-        const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3), v = Math.round(prob * e);
-        ringEl.style.setProperty("--p", v); numEl.textContent = v + "%";
-        if (k < 1) requestAnimationFrame(step);
-      };
+      const step = (now) => { const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3), v = Math.round(prob * e); ringEl.style.setProperty("--p", v); numEl.textContent = v + "%"; if (k < 1) requestAnimationFrame(step); };
       requestAnimationFrame(step);
       setTimeout(() => box.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
     }
@@ -431,15 +383,15 @@
   function share(names, prob) {
     const hi = S.lang === "hi";
     const msg = hi
-      ? `🃏 मैंने Jyotish Tark पर मुफ़्त टैरो रीडिंग की (${MODES[S.mode].hi[0]})।\nमेरे 3 कार्ड: ${names}\nअनुकूलता संकेत: ${prob}%\n\nआप भी अपना प्रश्न पूछें 👇\nhttps://jyotishtark.in/tarot.html`
-      : `🃏 I did a free tarot reading on Jyotish Tark (${MODES[S.mode].en[0]}).\nMy 3 cards: ${names}\nFavourability: ${prob}%\n\nAsk your own question 👇\nhttps://jyotishtark.in/tarot.html`;
+      ? `🃏 मैंने Jyotish Tark पर मुफ़्त टैरो रीडिंग की (${window.JT_ASK ? window.JT_ASK.topicName() : ""})।\nमेरे 3 कार्ड: ${names}\nअनुकूलता संकेत: ${prob}%\n\nआप भी अपना प्रश्न पूछें 👇\nhttps://jyotishtark.in/tarot.html`
+      : `🃏 I did a free tarot reading on Jyotish Tark (${window.JT_ASK ? window.JT_ASK.topicName() : ""}).\nMy 3 cards: ${names}\nFavourability: ${prob}%\n\nAsk your own question 👇\nhttps://jyotishtark.in/tarot.html`;
     window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank", "noopener");
     if (window.gtag) { try { window.gtag("event", "share_whatsapp", { page: "tarot" }); } catch (e) {} }
   }
 
   function launchKundali() {
-    const name = ($("#ttName").value || "").trim() || "Seeker";
-    const dob = $("#ttDob").value || "";
+    const name = (($("#ttName") && $("#ttName").value) || "").trim() || "Seeker";
+    const dob = ($("#ttDob") && $("#ttDob").value) || "";
     if (dob) {
       try { localStorage.setItem("jt_prefill_dossier", JSON.stringify({ name, dob, lang: S.lang, autoRun: true })); } catch (e) {}
       location.href = `kundali-form.html?name=${encodeURIComponent(name)}&dob=${encodeURIComponent(dob)}&lang=${encodeURIComponent(S.lang)}&autorun=1`;
@@ -452,11 +404,9 @@
   function applyLang() {
     const hi = S.lang === "hi";
     $$(".tt-lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === S.lang)));
-    $$(".tt-mode").forEach((m) => {
-      const k = m.querySelector("input").value;
-      m.querySelector("strong").textContent = MODES[k][S.lang][0];
-      m.querySelector("span").textContent = MODES[k][S.lang][1];
-    });
+    window.JT_TAROT_LANG = S.lang;
+    if (window.JT_ASK) window.JT_ASK.render();
+    $$("[data-tt-hi]").forEach((el) => { el.textContent = S.lang === "hi" ? el.getAttribute("data-tt-hi") : el.getAttribute("data-tt-en"); });
     $("#ttReveal").textContent = L().reveal;
     $("#ttAuto").textContent = L().auto;
     $("#ttReshuffle").textContent = L().reshuffle;
@@ -476,15 +426,20 @@
   // ---------- init ----------
   function init() {
     D = window.JT_TAROT;
+    window.JT_TAROT_LANG = S.lang;
     if (!D || !$("#ttForm")) return;
 
     $$(".tt-lang button").forEach((b) => b.addEventListener("click", () => { S.lang = b.dataset.lang; applyLang(); }));
-    $$(".tt-mode input").forEach((r) => r.addEventListener("change", () => {
-      S.mode = r.value;
-      if (S.phase !== "idle") { updateSlotLabels(); if (S.phase === "pick") setStatus(L().pick(S.picked.length + 1, cleanPos(posLabel(S.picked.length)))); if (S.phase === "done") renderReading(false); }
-    }));
+    if (window.JT_ASK) window.JT_ASK.onChange = () => {
+      if (S.phase !== "idle") { updateSlotLabels(); if (S.phase === "pick") setStatus(L().pick(S.picked.length + 1, cleanPos(posLabel(S.picked.length)))); }
+    };
     $("#ttForm").addEventListener("submit", (e) => {
       e.preventDefault();
+      const errMsg = window.JT_ASK ? window.JT_ASK.validate() : "";
+      const errBox = $("#ttFormErr");
+      if (errMsg) { if (errBox) { errBox.textContent = errMsg; errBox.scrollIntoView({ behavior: "smooth", block: "center" }); } return; }
+      if (errBox) errBox.textContent = "";
+      if (window.gtag) { try { window.gtag("event", "tarot_question", { q: window.JT_ASK ? window.JT_ASK.state.q : "", person: window.JT_ASK ? window.JT_ASK.state.person : "" }); } catch (e2) {} }
       ctx();
       const table = $("#ttTable");
       table.hidden = false;

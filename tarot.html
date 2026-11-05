@@ -170,7 +170,7 @@
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
-  <link rel="stylesheet" href="tarot-studio.css?v=92">
+  <link rel="stylesheet" href="tarot-studio.css?v=93">
   <script src="jt-site.js?v=9" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
@@ -226,59 +226,45 @@
     <section class="tt-hero">
       <p class="tt-kicker">॥ 78 कार्ड · हिंदी या English में ॥</p>
       <h1>मुफ़्त <span>टैरो कार्ड</span> रीडिंग</h1>
-      <p>मन में एक प्रश्न रखें, कार्ड फेंटें और अपने तीन कार्ड स्वयं चुनें। हर कार्ड का अर्थ, उसका ग्रह, तत्व और संभावित समय — सरल भाषा में।</p>
+      <p>विषय और प्रश्न चुनें, जिनके बारे में पूछ रहे हैं उनका नाम मन में रखें, और तीन कार्ड चुनें। आपको अपने प्रश्न पर आधारित विस्तृत विश्लेषण मिलेगा — हिंदी या English में।</p>
     </section>
 
     <ol class="tt-steps" aria-label="टैरो के चरण">
-      <li class="on"><b>1</b>प्रश्न चुनें</li>
-      <li><b>2</b>कार्ड फेंटें व चुनें</li>
-      <li><b>3</b>फलादेश पढ़ें</li>
+      <li class="on"><b>1</b><span data-tt-hi="प्रश्न चुनें" data-tt-en="Choose a question">प्रश्न चुनें</span></li>
+      <li><b>2</b><span data-tt-hi="कार्ड चुनें" data-tt-en="Pick cards">कार्ड चुनें</span></li>
+      <li><b>3</b><span data-tt-hi="विश्लेषण पढ़ें" data-tt-en="Read your analysis">विश्लेषण पढ़ें</span></li>
     </ol>
 
     <form id="ttForm" class="tt-panel" novalidate>
-      <fieldset class="tt-modes">
-        <legend>आप किस बारे में जानना चाहते हैं?</legend>
-        <label class="tt-mode"><input type="radio" name="ttMode" value="yesno" checked>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>
-          <strong>हाँ या ना + समय</strong><span>किसी एक प्रश्न का सीधा उत्तर और संभावित समय</span></label>
-        <label class="tt-mode"><input type="radio" name="ttMode" value="feelings">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
-          <strong>उनके मन की बात</strong><span>साथी या किसी ख़ास व्यक्ति की भावनाएं और अगला कदम</span></label>
-        <label class="tt-mode"><input type="radio" name="ttMode" value="career">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"></path></svg>
-          <strong>करियर व धन</strong><span>काम, परीक्षा और पैसे से जुड़ी रुकावट और राह</span></label>
-        <label class="tt-mode"><input type="radio" name="ttMode" value="destiny">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"></path></svg>
-          <strong>भूत · वर्तमान · भविष्य</strong><span>अतीत का असर, आज की स्थिति और आगे की दिशा</span></label>
-        <label class="tt-mode"><input type="radio" name="ttMode" value="evileye">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          <strong>नज़र व नकारात्मकता</strong><span>कहीं ईर्ष्या या नकारात्मक माहौल तो असर नहीं डाल रहा</span></label>
-      </fieldset>
-
-      <div class="tt-fields">
-        <label class="tt-field w12">आपका प्रश्न <small>(एक ही प्रश्न रखें — जितना साफ़ प्रश्न, उतना साफ़ उत्तर)</small>
-          <input type="text" id="ttQuestion" maxlength="160" placeholder="जैसे: क्या इस साल मेरी नौकरी बदलेगी?">
-        </label>
-        <label class="tt-field w4">आपका नाम <small>(वैकल्पिक)</small>
-          <input type="text" id="ttName" maxlength="60" autocomplete="given-name" placeholder="जैसे: प्रिया">
-        </label>
-        <label class="tt-field w4">जन्म तिथि <small>(वैकल्पिक — मूलांक के लिए)</small>
-          <input type="date" id="ttDob">
-        </label>
-        <div class="tt-field w4"><span id="ttLangLabel">फलादेश की भाषा</span>
-          <div class="tt-lang" role="group" aria-labelledby="ttLangLabel">
-            <button type="button" data-lang="hi" aria-pressed="true">हिंदी</button>
-            <button type="button" data-lang="en" aria-pressed="false">English</button>
-          </div>
+      <div class="tt-langrow"><span data-tt-hi="भाषा" data-tt-en="Language">भाषा</span>
+        <div class="tt-lang" role="group" aria-label="भाषा / Language">
+          <button type="button" data-lang="hi" aria-pressed="true">हिंदी</button>
+          <button type="button" data-lang="en" aria-pressed="false">English</button>
         </div>
       </div>
-
+      <fieldset class="tt-step">
+        <legend><b>1</b><span data-tt-hi="विषय चुनें" data-tt-en="Choose a topic">विषय चुनें</span></legend>
+        <div id="ttTopics" class="tt-chiprow"></div>
+      </fieldset>
+      <fieldset class="tt-step">
+        <legend><b>2</b><span data-tt-hi="अपना प्रश्न चुनें" data-tt-en="Choose your question">अपना प्रश्न चुनें</span></legend>
+        <div id="ttQs" class="tt-qlist"></div>
+      </fieldset>
+      <fieldset class="tt-step" id="ttPersonBox" hidden>
+        <legend><b>3</b><span data-tt-hi="आप किसके बारे में पूछ रहे हैं?" data-tt-en="Who are you asking about?">आप किसके बारे में पूछ रहे हैं?</span></legend>
+        <div id="ttPersons" class="tt-chiprow"></div>
+        <p class="tt-mind"><span data-tt-hi="उस व्यक्ति का नाम मन में रखें और कार्ड चुनते समय उन्हीं के बारे में सोचें। नाम लिखने की ज़रूरत नहीं।" data-tt-en="Keep that person's name in your mind and think of them while you pick the cards. No need to type the name.">उस व्यक्ति का नाम मन में रखें और कार्ड चुनते समय उन्हीं के बारे में सोचें। नाम लिखने की ज़रूरत नहीं।</span></p>
+      </fieldset>
+      <label class="tt-field tt-namef"><span data-tt-hi="आपका नाम (वैकल्पिक)" data-tt-en="Your name (optional)">आपका नाम (वैकल्पिक)</span>
+        <input type="text" id="ttName" maxlength="60" autocomplete="given-name">
+      </label>
+      <p id="ttFormErr" class="tt-err" role="alert"></p>
       <div class="tt-go">
         <button type="submit" class="tt-btn saffron">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2"></rect><path d="M8 3h11a2 2 0 0 1 2 2v13"></path></svg>
-          कार्ड फेंटें और चुनें
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="12" height="15" rx="2"></rect><path d="M9 3h10a2 2 0 0 1 2 2v13"></path></svg>
+          <span data-tt-hi="कार्ड फेंटें और चुनें" data-tt-en="Shuffle and pick cards">कार्ड फेंटें और चुनें</span>
         </button>
-        <p class="tt-note">पूरी तरह मुफ़्त · कोई लॉगिन नहीं · आपका प्रश्न कहीं सेव नहीं होता</p>
+        <p class="tt-note" data-tt-hi="पूरी तरह मुफ़्त · कोई लॉगिन नहीं · आपका प्रश्न कहीं सेव नहीं होता" data-tt-en="Completely free · No login · Your question is not saved">पूरी तरह मुफ़्त · कोई लॉगिन नहीं · आपका प्रश्न कहीं सेव नहीं होता</p>
       </div>
     </form>
 
@@ -421,6 +407,7 @@
   
   <script src="tarot-engine.js?v=2"></script>
   <script src="tarot-text.js?v=1"></script>
-  <script src="tarot-studio.js?v=3"></script>
+  <script src="tarot-ask.js?v=1"></script>
+  <script src="tarot-studio.js?v=4"></script>
 </body>
 </html>
