@@ -39,11 +39,11 @@
       done: ["आपका फलादेश तैयार है", "नीचे विस्तार से पढ़ें ↓"],
       reveal: "कार्ड पलटें", auto: "मेरे लिए चुनें", reshuffle: "फिर से फेंटें",
       pickAria: (i) => `कार्ड ${i} चुनें`, pos: "स्थान",
-      up: "सीधा (Upright)", rev: "उल्टा (Reversed)",
-      core: "कार्ड का संदेश", focus: "आपके विषय में", tip: "संकेत", when: "संभावित समय",
-      dear: "प्रिय", answer: "आपके कार्डों का उत्तर", seeker: "साधक",
+      up: "सीधा", rev: "उल्टा",
+      core: "अर्थ", focus: "आपके प्रश्न के लिए", tip: "सलाह", when: "समय",
+      dear: "", answer: "आपके कार्डों का उत्तर", seeker: "",
       meterYes: "हाँ की संभावना", meter: "अनुकूलता संकेत",
-      vGood: "अनुकूल संकेत", vMid: "शर्त के साथ हाँ — प्रयास ज़रूरी", vLow: "अभी रुकें — पहले बाधा दूर करें",
+      vGood: "हाँ, संकेत अच्छे हैं", vMid: "हाँ, पर मेहनत से", vLow: "अभी नहीं — पहले रुकावट दूर करें",
       vSub: "यह कार्डों का संकेत है, निश्चित भविष्य नहीं।",
       timing: "समय संकेत", graha: "प्रमुख ग्रह", num: (m, mp, b, bp) => `मूलांक ${m} (${mp}) · भाग्यांक ${b} (${bp})`,
       elements: "तत्व संतुलन", elAdvice: "आपके लिए सलाह",
@@ -52,7 +52,7 @@
       share: "WhatsApp पर शेयर करें", again: "नई रीडिंग", change: "प्रश्न बदलें",
       sound: ["ध्वनि बंद करें", "ध्वनि चालू करें"],
       disclaimer: "टैरो आत्म-चिंतन और मार्गदर्शन का साधन है। स्वास्थ्य, धन या कानूनी जैसे बड़े निर्णय केवल इसके आधार पर न लें।",
-      synth: "तीनों कार्डों का सार"
+      synth: "आपके कार्ड", plain: "सीधी बात"
     },
     en: {
       shuffling: ["Shuffling the cards…", "Keep your question in mind."],
@@ -63,19 +63,19 @@
       reveal: "Turn the cards", auto: "Pick for me", reshuffle: "Shuffle again",
       pickAria: (i) => `Choose card ${i}`, pos: "Position",
       up: "Upright", rev: "Reversed",
-      core: "Card message", focus: "For your question", tip: "Signal", when: "Likely timing",
-      dear: "Dear", answer: "here is what your cards say", seeker: "Seeker",
+      core: "Meaning", focus: "For your question", tip: "Advice", when: "Timing",
+      dear: "", answer: "here is what your cards say", seeker: "",
       meterYes: "Chance of yes", meter: "Favourability",
-      vGood: "Favourable signs", vMid: "A conditional yes — effort needed", vLow: "Wait — clear the block first",
+      vGood: "Yes, the signs are good", vMid: "Yes, with effort", vLow: "Not now — clear the block first",
       vSub: "This is what the cards suggest, not a fixed future.",
-      timing: "Timing", graha: "Ruling graha", num: (m, mp, b, bp) => `Psychic no. ${m} (${mp}) · Destiny no. ${b} (${bp})`,
+      timing: "Timing", graha: "Planet", num: (m, mp, b, bp) => `Birth number ${m} (${mp}) · Life path ${b} (${bp})`,
       elements: "Element balance", elAdvice: "Advice for you",
       ctaH: "Confirm it with your Kundali", ctaP: "Tarot shows the next few weeks; your Kundali shows the bigger picture.",
       ctaK: "See free Kundali", ctaW: "Talk to the astrologer · first 5 minutes free",
       share: "Share on WhatsApp", again: "New reading", change: "Change question",
       sound: ["Sound off", "Sound on"],
       disclaimer: "Tarot is a tool for reflection and guidance. Do not make big health, money or legal decisions on it alone.",
-      synth: "The three cards together"
+      synth: "Your cards", plain: "In short"
     }
   };
 
@@ -316,11 +316,12 @@
   }
   function focusText(card) {
     const hi = S.lang === "hi";
+    if (card.arcana === "Minor" && S.mode !== "yesno") return "";
     if (S.mode === "feelings") return hi ? card.feelingsHi : card.feelingsEn;
     if (S.mode === "career") return hi ? card.careerHi : card.careerEn;
     if (S.mode === "evileye") return hi ? card.evilEyeHi : card.evilEyeEn;
-    if (S.mode === "destiny") return hi ? card.careerHi : card.careerEn;
-    return hi ? card.verdictHi : card.verdictEn;
+    if (S.mode === "destiny") return "";
+    return (hi ? "उत्तर: " : "Answer: ") + (hi ? card.verdictHi : card.verdictEn);
   }
 
   function renderReading(animate) {
@@ -335,7 +336,8 @@
     let numLine = "";
     if (dob && D.numerology) {
       const n = D.numerology(name, dob), mp = D.planets[n.mulank] || D.planets[1], bp = D.planets[n.bhagyank] || D.planets[3];
-      numLine = `<span class="tt-chip">${esc(t.num(n.mulank, hi ? mp.planetHi : mp.planetEn, n.bhagyank, hi ? bp.planetHi : bp.planetEn))}</span>`;
+      const pn = (x) => String(x).replace(/\s*\(.*?\)\s*/g, "").trim();
+      numLine = `<span class="tt-chip">${esc(t.num(n.mulank, pn(hi ? mp.planetHi : mp.planetEn), n.bhagyank, pn(hi ? bp.planetHi : bp.planetEn)))}</span>`;
     }
     const counts = { Fire: 0, Water: 0, Air: 0, Earth: 0 };
     S.picked.forEach((p) => { counts[p.card.element] = (counts[p.card.element] || 0) + 1; });
@@ -351,8 +353,8 @@
           <h3>${esc(hi ? c.nameHi : c.nameEn)}</h3>
           <p><span class="tt-pol ${p.reversed ? "rev" : "up"}">${esc(p.reversed ? t.rev : t.up)}</span> <span class="tt-chip" style="margin-left:6px">${esc(hi ? c.grahaHi : c.grahaEn)}</span></p>
           <p><strong>${esc(t.core)}:</strong> ${esc(core)}</p>
-          <p><strong>${esc(t.focus)}:</strong> ${esc(focusText(c))}</p>
-          <div class="tt-tip"><strong>${esc(t.tip)}:</strong> ${esc(hi ? c.verdictHi : c.verdictEn)} · <strong>${esc(t.when)}:</strong> ${esc(hi ? c.timingHi : c.timingEn)}</div>
+          ${focusText(c) ? `<p><strong>${esc(t.focus)}:</strong> ${esc(focusText(c))}</p>` : ""}
+          <div class="tt-tip">${(hi ? c.adviceHi : c.adviceEn) ? `<strong>${esc(t.tip)}:</strong> ${esc(hi ? c.adviceHi : c.adviceEn)} · ` : ""}<strong>${esc(t.when)}:</strong> ${esc(hi ? c.timingHi : c.timingEn)}</div>
         </div>
       </article>`;
     }).join("");
@@ -366,8 +368,9 @@
       <section class="tt-panel tt-verdict ${animate ? "tt-reveal-in" : ""}" aria-labelledby="ttVerdictH">
         <div>
           <span class="tt-kicker">${esc(hi ? MODES[S.mode].hi[0] : MODES[S.mode].en[0])}</span>
-          <h2 id="ttVerdictH">${esc(t.dear)} <span>${esc(name)}</span>, ${esc(t.answer)}</h2>
+          <h2 id="ttVerdictH">${name ? `<span>${esc(name)}</span>, ` : ""}${esc(hi || name ? t.answer : t.answer.charAt(0).toUpperCase() + t.answer.slice(1))}</h2>
           ${q ? `<p class="tt-q">“${esc(q)}”</p>` : ""}
+          <p class="tt-plain"><strong>${esc(t.plain)}:</strong> ${esc(vLabel)}${hi ? "।" : "."} ${esc((() => { const core = S.picked[2].reversed ? (hi ? out.reversedHi : out.reversedEn) : (hi ? out.uprightHi : out.uprightEn); const k = { feelings: "feelings", career: "career", evileye: "evilEye" }[S.mode]; if (!k) return core; const f = out[k + (hi ? "Hi" : "En")]; return out.arcana === "Minor" ? core + " " + f : f; })())}${(hi ? out.adviceHi : out.adviceEn) ? " " + esc(hi ? out.adviceHi : out.adviceEn) : ""}</p>
           <p style="margin:0;color:var(--jt-body)">${esc(t.synth)}: <strong>${esc(names)}</strong></p>
           <div class="tt-chips">
             <span class="tt-chip"><strong>${esc(t.timing)}:</strong>&nbsp;${esc(hi ? out.timingHi : out.timingEn)}</span>
@@ -384,7 +387,7 @@
       <div class="tt-cardsread">${cardsHTML}</div>
       <div class="tt-summary">
         <div><h3>${esc(t.elements)}</h3><div class="tt-elements">${elChips}</div></div>
-        <div><h3>${esc(t.elAdvice)}</h3><p>${esc(hi ? ELEMENTS[dom].adviceHi : ELEMENTS[dom].adviceEn)}</p></div>
+        <div><h3>${esc(t.elAdvice)}</h3><p>${esc(counts[dom] < 2 ? (hi ? "तीनों कार्ड अलग-अलग तत्वों के हैं — स्थिति संतुलित है। योजना और धैर्य, दोनों साथ रखें।" : "Your three cards come from different elements — the situation is balanced. Keep both a plan and patience.") : (hi ? ELEMENTS[dom].adviceHi : ELEMENTS[dom].adviceEn))}</p></div>
       </div>
       <div class="tt-cta">
         <div><h3>${esc(t.ctaH)}</h3><p>${esc(t.ctaP)}</p></div>

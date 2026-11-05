@@ -110,26 +110,26 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the difference between Mulank (Psychic Number) and Bhagyank (Life Path Number)?",
+          "name": "मूलांक और भाग्यांक में क्या अंतर है?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your Mulank (Psychic/Driver Number) is calculated solely from the day of the month you were born (1 to 31 reduced to 1–9) and governs your inner nature and psychology. Your Bhagyank (Destiny/Life Path Number) is the sum of your complete birth date (DD + MM + YYYY) and governs your career destiny, luck, and second half of life."
+            "text": "मूलांक केवल जन्म की तारीख से निकलता है और आपका स्वभाव बताता है। भाग्यांक पूरी जन्मतिथि से निकलता है और जीवन की दिशा बताता है।"
           }
         },
         {
           "@type": "Question",
-          "name": "चैल्डियन नाम अंक ज्योतिष (Chaldean Name Numerology) कैसे काम करता है?",
+          "name": "नाम का अंक (नामांक) कैसे निकलता है?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "प्राचीन बेबीलोनियन/चैल्डियन पद्धति में प्रत्येक अंग्रेजी अक्षर की ध्वनि तरंग (1 से 8) को जोड़कर आपके नाम का संयुक्त अंक (Compound Number) और मूल नामांक निकाला जाता है। यदि आपका नामांक आपके मूलांक या भाग्यांक के मित्र ग्रह से मेल खाता है, तो कम प्रयास में भी बड़ी सफलता मिलती है।"
+            "text": "चैल्डियन पद्धति में अंग्रेज़ी के हर अक्षर को 1 से 8 तक एक अंक दिया गया है। नाम के सभी अक्षरों के अंक जोड़कर एक अंक तक लाने पर नामांक मिलता है।"
           }
         },
         {
           "@type": "Question",
-          "name": "What are Master Numbers in Numerology?",
+          "name": "मास्टर अंक क्या होते हैं?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Master Numbers (11, 22, and 33) carry amplified spiritual and material vibrations. Master Number 11 is The Illuminator, 22 is The Master Builder, and 33 is The Master Teacher."
+            "text": "भाग्यांक निकालते समय योग 11, 22 या 33 आए तो उसे घटाया नहीं जाता। इन्हें मास्टर अंक कहते हैं — ये बड़ी क्षमता और बड़ी ज़िम्मेदारी दिखाते हैं।"
           }
         },
         {
@@ -407,7 +407,7 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
   <script src="jt-site.js?v=9" defer></script>
-  <script src="numerology-tools.js?v=4" defer></script>
+  <script src="numerology-tools.js?v=5" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -507,6 +507,19 @@
 @media (max-width:560px){.nm-lsw{grid-template-columns:1fr}.nm-lsg{max-width:240px}.nm-bar{grid-template-columns:96px 1fr 74px;font-size:14px}}
 @media (max-width:520px){.nm-sec{padding:18px 14px}.nm-sec h2{font-size:24px}}
 </style>
+<style id="nm-css2">
+.nm-calc{margin-top:8px}.nm-calc-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.nm-lang{display:inline-flex;border:1px solid #B9A88E;border-radius:999px;overflow:hidden}.nm-lang button{border:0;background:#FFFFFF;color:#5A1414;font:inherit;font-weight:700;font-size:15px;padding:8px 16px;cursor:pointer;min-height:40px}.nm-lang button[aria-pressed="true"]{background:#7A1F1F;color:#FFFFFF}
+.nm-main .nm-mhead{text-align:center;margin-bottom:12px}.nm-mhead small{display:block;font-size:13px;letter-spacing:.06em;color:#6B5444;font-weight:700}.nm-mhead h3{margin:2px 0 !important;font-size:26px !important;color:#5A1414 !important}.nm-mhead span{font-size:14.5px;color:#6B5444}
+.nm-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0}
+.nm-tile{padding:12px 8px;border-radius:14px;background:#FFFFFF;border:1px solid #E8DCC4;text-align:center;display:grid;gap:2px}
+.nm-tile small{font-size:13px;color:#6B5444;font-weight:700}.nm-tile b{font-size:34px;line-height:1.1;color:#7A1F1F}.nm-tile span{font-size:14px;font-weight:700;color:#2B1810}.nm-tile em{font-style:normal;font-size:12.5px;color:#6B5444}
+.nm-oneline{margin:12px 0 !important;padding:12px 14px;border-radius:12px;background:#FFFFFF;border-left:5px solid #7A1F1F;font-size:17px !important;line-height:1.65 !important;color:#2B1810 !important}
+.nm-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.nm-two div{padding:8px 10px;border-radius:10px;background:#FBF6EC}.nm-two small{display:block;font-size:13px;color:#6B5444}.nm-two b{font-size:15.5px;color:#2B1810}
+.nm-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.nm-three .nm-card{margin:0}
+.nm-main .nm-card{margin:10px 0}
+@media (max-width:640px){.nm-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.nm-three{grid-template-columns:1fr}.nm-two{grid-template-columns:1fr}}
+</style>
 </head>
 <body class="min-h-screen">
    
@@ -574,227 +587,31 @@
     <!-- Hero Section -->
     <section class="cosmic-bg rounded-2xl shadow-2xl max-w-6xl mx-4 md:mx-auto mt-6 p-8 md:p-12 text-center relative overflow-hidden no-print">
         <div class="relative z-10">
-            <span class="inline-block bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
-                <i class="fas fa-hashtag mr-1"></i> Vedic Mulank, Bhagyank & Chaldean Name Vibration Engine
-            </span>
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">
-                <span class="block">Free Numerology Calculator</span>
-                <span class="text-2xl md:text-3xl text-amber-300 mt-2 block hindi">मूलांक, भाग्यांक, नामांक और मोबाइल नंबर अंक ज्योतिष — हिंदी में</span>
-            </h1>
-            <p class="text-lg md:text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
-                Decode your Psychic Number (मूलांक), Destiny/Life Path Number (भाग्यांक), Chaldean Compound Name Vibration (नामांक), and check if your name spelling is helping or blocking your birth chart.
-            </p>
-            <a href="#calculator" class="primary-button">
-                <i class="fas fa-calculator mr-2"></i>
-                Calculate My Numbers Free
-            </a>
+            <span class="inline-block bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full mb-4">मूलांक · भाग्यांक · नामांक · मोबाइल नंबर</span>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4 hindi">मुफ़्त अंक ज्योतिष कैलकुलेटर</h1>
+            <p class="text-lg md:text-xl text-purple-100 mb-8 max-w-3xl mx-auto hindi">अपनी जन्मतिथि और नाम से जानें — आपका स्वभाव, जीवन की दिशा, शुभ अंक और आपके मोबाइल नंबर का असर। सरल भाषा में, बिल्कुल मुफ़्त।</p>
+            <a href="#calculator" class="primary-button">अभी देखें</a>
         </div>
     </section>
 
-    <!-- Numerology Calculator Section -->
-    <section id="calculator" class="max-w-5xl mx-auto px-4 py-12">
-        <div class="glass-card p-6 md:p-10 rounded-3xl border border-purple-500/30">
-            <div class="text-center mb-8 no-print">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                    Vedic & Chaldean Numerology Calculator
-                </h2>
-                <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto hindi">
-                    अपनी जन्मतिथि और पूरा नाम दर्ज करें — तुरंत जानें अपना मूलांक, भाग्यांक, चैल्डियन नामांक, लकी नंबर और नाम सुधार (Name Correction) विश्लेषण:
-                </p>
-            </div>
-            
-            <form class="max-w-2xl mx-auto space-y-5 no-print" onsubmit="calculateNumber(event)">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                        <label for="dob" class="block text-gray-200 font-semibold mb-2 text-sm">
-                            <i class="fas fa-calendar-alt text-amber-400 mr-1.5"></i>Birth Date (जन्मतिथि) <span class="text-red-400">*</span>
-                        </label>
-                        <input type="date" id="dob" required 
-                               class="w-full bg-slate-900 border border-white/20 rounded-xl p-3.5 text-amber-200 focus:ring-2 focus:ring-amber-400 focus:outline-none text-base">
-                    </div>
-                    
-                    <div>
-                        <label for="name" class="block text-gray-200 font-semibold mb-2 text-sm">
-                            <i class="fas fa-signature text-amber-400 mr-1.5"></i>Your Full Name (पूरा नाम - Recommended)
-                        </label>
-                        <input type="text" id="name" placeholder="e.g., Aditya Pratap Singh"
-                               class="w-full bg-slate-900 border border-white/20 rounded-xl p-3.5 text-amber-200 focus:ring-2 focus:ring-amber-400 focus:outline-none text-base">
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <label for="numLang" class="text-sm font-semibold text-gray-300 shrink-0"><i class="fas fa-language text-amber-400 mr-1"></i>Report Language:</label>
-                        <select id="numLang" onchange="if(!document.getElementById('result').classList.contains('hidden')){ calculateNumber(new Event('submit')); }" class="bg-slate-900 border border-white/20 rounded-xl px-4 py-2.5 text-amber-300 font-semibold text-sm focus:outline-none">
-                            <option value="hi">🇮🇳 हिंदी + English (Bilingual)</option>
-                            <option value="en">🇬🇧 English Detailed</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="primary-button w-full sm:w-auto justify-center px-10 py-3.5 text-base shadow-xl">
-                        <i class="fas fa-magic mr-2"></i>
-                        Reveal My Numerology Blueprint
-                    </button>
-                </div>
-            </form>
-
-            <div id="loading" class="hidden mt-6 text-center no-print">
-                <div class="inline-flex items-center">
-                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-400 mr-3"></div>
-                    <span class="text-amber-300 font-semibold">Calculating Mulank, Bhagyank & Chaldean Name Vibrations...</span>
-                </div>
-            </div>
-
-            <!-- EXPANDED RESULTS CONTAINER -->
-            <div id="result" class="mt-10 hidden space-y-8">
-                <div class="glass-card p-6 md:p-8 rounded-3xl border-2 border-amber-400/40 bg-slate-950/70">
-                    
-                    <!-- Top 4-Number Matrix Grid -->
-                    <div class="text-center mb-6">
-                        <span class="inline-block px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2">
-                            Jyotish Tark Verified Numerology Matrix
-                        </span>
-                        <h3 id="reportHeaderName" class="text-2xl md:text-4xl font-bold text-white">Your Cosmic Number Matrix</h3>
-                    </div>
-
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <!-- Card 1: Mulank -->
-                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-purple-400/40 text-center">
-                            <span class="text-xs font-bold uppercase text-purple-300 block mb-2">मूलांक (Psychic / Driver)</span>
-                            <div id="mulankDisplay" class="number-circle mb-2" style="width:64px;height:64px;font-size:26px;">1</div>
-                            <div id="mulankPlanet" class="text-sm font-bold text-amber-300">सूर्य (Sun)</div>
-                            <p class="text-[11px] text-gray-400 mt-1">Governs your inner mind & personality</p>
-                        </div>
-
-                        <!-- Card 2: Bhagyank / Life Path -->
-                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-400/50 text-center">
-                            <span class="text-xs font-bold uppercase text-amber-300 block mb-2">भाग्यांक (Life Path / Destiny)</span>
-                            <div id="numberDisplay" class="number-circle mb-2" style="width:64px;height:64px;font-size:26px;">9</div>
-                            <div id="bhagyankPlanet" class="text-sm font-bold text-amber-300">मंगल (Mars)</div>
-                            <p class="text-[11px] text-gray-400 mt-1">Governs your career, luck & destiny</p>
-                        </div>
-
-                        <!-- Card 3: Chaldean Name Number -->
-                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-pink-400/40 text-center">
-                            <span class="text-xs font-bold uppercase text-pink-300 block mb-2">चैल्डियन नामांक (Name)</span>
-                            <div id="chaldeanDisplay" class="number-circle mb-2" style="width:64px;height:64px;font-size:24px;">23→5</div>
-                            <div id="chaldeanPlanet" class="text-sm font-bold text-amber-300">बुध (Mercury)</div>
-                            <p class="text-[11px] text-gray-400 mt-1">Compound & Root Name Vibration</p>
-                        </div>
-
-                        <!-- Card 4: Personal Year -->
-                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-400/40 text-center">
-                            <span class="text-xs font-bold uppercase text-emerald-300 block mb-2">व्यक्तिगत वर्ष (Personal Year)</span>
-                            <div id="personalYearDisplay" class="number-circle mb-2" style="width:64px;height:64px;font-size:26px;">3</div>
-                            <div id="personalYearTheme" class="text-sm font-bold text-emerald-300">Expansion & Rise</div>
-                            <p class="text-[11px] text-gray-400 mt-1">Active Cosmic Cycle for 2026–2027</p>
-                        </div>
-                    </div>
-
-                    <!-- Chaldean Name Vibration & Compatibility Diagnostic Box -->
-                    <div id="chaldeanAnalysisBox" class="p-5 rounded-2xl bg-gradient-to-r from-purple-950/80 via-slate-900 to-amber-950/50 border border-amber-400/40 mb-8">
-                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                            <div class="space-y-1.5">
-                                <div class="text-xs font-extrabold uppercase tracking-wider text-amber-400">
-                                    <i class="fas fa-wave-square mr-1.5"></i>Chaldean Name Spelling & Signature Diagnostic
-                                </div>
-                                <h4 id="chaldeanStatusHeading" class="text-lg md:text-xl font-bold text-white hindi"></h4>
-                                <p id="chaldeanBreakdownText" class="text-xs font-mono text-purple-200 bg-slate-950/70 px-3 py-1.5 rounded-lg inline-block"></p>
-                                <p id="chaldeanVerdictText" class="text-sm text-gray-200 leading-relaxed hindi"></p>
-                            </div>
-                            <a id="nameCorrectionWaBtn" href="https://wa.me/918318513814" target="_blank" rel="noopener" class="shrink-0 bg-green-600 hover:bg-green-500 text-white font-bold px-5 py-3 rounded-xl text-xs md:text-sm flex items-center gap-2 shadow-lg transition no-print">
-                                <i class="fab fa-whatsapp text-lg"></i> Name Spelling Correction सलाह लें
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Lucky Elements Bar (Numbers, Days, Colors, Gem/Rudraksha) -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-white/10 text-center">
-                            <span class="text-xs text-amber-400 font-bold block">शुभ अंक (Lucky Numbers)</span>
-                            <strong id="luckyNumbersVal" class="text-base text-white mt-1 block">1, 3, 5, 9</strong>
-                        </div>
-                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-white/10 text-center">
-                            <span class="text-xs text-amber-400 font-bold block">शुभ रंग (Lucky Colors)</span>
-                            <strong id="luckyColorsVal" class="text-sm text-white mt-1 block hindi">सुनहरा, पीला, नारंगी</strong>
-                        </div>
-                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-white/10 text-center">
-                            <span class="text-xs text-amber-400 font-bold block">शुभ वार (Lucky Days)</span>
-                            <strong id="luckyDaysVal" class="text-sm text-white mt-1 block hindi">रविवार, गुरुवार</strong>
-                        </div>
-                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-amber-400/30 text-center">
-                            <span class="text-xs text-amber-400 font-bold block">सिद्ध रुद्राक्ष (Lucky Rudraksha)</span>
-                            <a id="luckyRudraLink" href="rudraksha.html" class="text-sm font-bold text-emerald-300 hover:underline mt-1 block hindi">पंचमुखी रुद्राक्ष →</a>
-                        </div>
-                    </div>
-
-                    <!-- Primary Life Path / Bhagyank Deep Reading -->
-                    <div class="text-center mb-6 pt-4 border-t border-white/10">
-                        <h3 id="numberTitle" class="text-2xl md:text-3xl font-bold text-amber-300 mb-3"></h3>
-                        <p id="numberMeaning" class="text-gray-200 text-left leading-relaxed text-sm md:text-base"></p>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div class="bg-slate-900/80 border border-white/10 p-5 rounded-2xl">
-                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
-                                <i class="fas fa-star mr-2"></i> Strengths (शक्तियां)
-                            </h4>
-                            <p id="strengths" class="text-sm text-gray-300 leading-relaxed"></p>
-                        </div>
-                        <div class="bg-slate-900/80 border border-white/10 p-5 rounded-2xl">
-                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
-                                <i class="fas fa-exclamation-triangle mr-2"></i> Challenges (चुनौतियां)
-                            </h4>
-                            <p id="challenges" class="text-sm text-gray-300 leading-relaxed"></p>
-                        </div>
-                        <div class="bg-slate-900/80 border border-white/10 p-5 rounded-2xl">
-                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
-                                <i class="fas fa-bullseye mr-2"></i> Life Purpose (जीवन उद्देश्य)
-                            </h4>
-                            <p id="purpose" class="text-sm text-gray-300 leading-relaxed"></p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="bg-slate-900/80 border border-white/10 p-5 rounded-2xl">
-                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
-                                <i class="fas fa-heart mr-2"></i> Love & Relationships (प्रेम एवं विवाह)
-                            </h4>
-                            <p id="relationships" class="text-sm text-gray-300 leading-relaxed"></p>
-                        </div>
-                        <div class="bg-slate-900/80 border border-white/10 p-5 rounded-2xl">
-                            <h4 class="font-bold text-amber-300 mb-3 flex items-center">
-                                <i class="fas fa-briefcase mr-2"></i> Career & Wealth (करियर एवं धन)
-                            </h4>
-                            <p id="career" class="text-sm text-gray-300 leading-relaxed"></p>
-                        </div>
-                    </div>
-                    
-                    <div id="personalizedMessage" class="bg-purple-950/60 border border-purple-400/40 p-6 rounded-2xl mt-6 hidden">
-                        <h4 class="font-bold text-amber-300 mb-2 flex items-center text-lg">
-                            <i class="fas fa-user-astronaut mr-2"></i> Personal Cosmic Message for <span id="userName" class="ml-1.5 text-white"></span>
-                        </h4>
-                        <p class="text-gray-200 text-sm md:text-base leading-relaxed"></p>
-                    </div>
-
-                    <!-- Action Buttons: Share on WhatsApp, Open 45-Min Kundali Dossier, Print -->
-                    <div class="flex flex-wrap justify-center gap-3 mt-8 pt-6 border-t border-white/10 no-print">
-                        <button type="button" onclick="shareNumerologyOnWhatsApp()" class="bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3.5 rounded-full shadow-lg flex items-center gap-2 transition text-sm">
-                            <i class="fab fa-whatsapp text-lg"></i> Share Report on WhatsApp
-                        </button>
-
-                        <button type="button" onclick="openFullKundaliFromNumerology()" class="primary-button px-6 py-3.5 text-sm">
-                            <i class="fas fa-star mr-2"></i> Read My 45-Min Kundali & Future Partner Dossier →
-                        </button>
-
-                        <button type="button" onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 border border-amber-400/40 text-white font-semibold px-6 py-3.5 rounded-full flex items-center gap-2 transition text-sm">
-                            <i class="fas fa-print"></i> Print / Save PDF
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <!-- NMCALC:START -->
+    <section id="calculator" class="nm-wrap nm-calc">
+      <div class="nm-sec">
+        <div class="nm-calc-top">
+          <h2 data-en="Numerology calculator">अंक ज्योतिष कैलकुलेटर</h2>
+          <div class="nm-lang" role="group" aria-label="भाषा / Language"><button type="button" data-nm-lang="hi" aria-pressed="true">हिंदी</button><button type="button" data-nm-lang="en" aria-pressed="false">English</button></div>
         </div>
+        <p class="nm-lead" data-en="Enter your date of birth and name to see your birth number, life path, name number, lucky numbers and guidance for this year.">जन्मतिथि और नाम डालें — आपका मूलांक, भाग्यांक, नामांक, शुभ अंक और इस साल का मार्गदर्शन तुरंत देखें।</p>
+        <form id="nmMainForm" class="nm-form" novalidate>
+          <label><span data-en="Date of birth *">जन्मतिथि *</span><input name="dob" type="date" required></label>
+          <label><span data-en="Full name (in English letters)">पूरा नाम (अंग्रेज़ी अक्षरों में)</span><input name="nm" type="text" autocomplete="name" placeholder="जैसे Rahul Sharma" data-ph-en="e.g. Rahul Sharma"></label>
+          <button type="submit" class="nm-btn" data-en="See my report">रिपोर्ट देखें</button>
+        </form>
+        <div id="nmMainOut" aria-live="polite"></div>
+        <p class="nm-small" data-en="This language switch also applies to the mobile number and matching tools below.">यह भाषा नीचे के मोबाइल नंबर और मिलान टूल पर भी लागू होती है।</p>
+      </div>
     </section>
+    <!-- NMCALC:END -->
 
 <!-- NM:START -->
 <div class="nm-wrap no-print">
@@ -804,21 +621,21 @@
 
 
   <section class="nm-sec" id="mobile-number-numerology">
-    <h2>मोबाइल नंबर अंक ज्योतिष — गाड़ी और मकान नंबर भी (Mobile Number Numerology)</h2>
-    <p class="nm-lead">नंबर डालें और देखें — उसका ग्रह, स्वभाव, संयुक्त अंक का अर्थ, जीवन के क्षेत्रों में झुकाव, अंकों की आपसी दोस्ती, और जन्मतिथि डालने पर आपसे मेल का स्कोर (हर अंक का हिसाब खुला)।</p>
+    <h2 data-en="Mobile, vehicle and house number numerology">मोबाइल नंबर अंक ज्योतिष — गाड़ी और मकान नंबर भी</h2>
+    <p class="nm-lead" data-en="Enter a number to see its planet, what it is like, and — with your date of birth — how well it suits you.">नंबर डालें और देखें — उसका ग्रह, स्वभाव, और जन्मतिथि डालने पर यह आपसे कितना मेल खाता है।</p>
     <form class="nm-form" id="nmMobForm" novalidate>
-      <label>नंबर का प्रकार<select name="kind" class="nm-sel"><option value="mobile">मोबाइल नंबर</option><option value="vehicle">गाड़ी नंबर</option><option value="house">मकान / फ़्लैट नंबर</option></select></label>
-      <label>नंबर *<input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="17" placeholder="जैसे 98765 43210" required></label>
-      <label>जन्मतिथि<input name="dob" type="date"><small>मूलांक-भाग्यांक से मेल और स्कोर के लिए</small></label>
-      <label>नाम अंग्रेज़ी में (वैकल्पिक)<input name="nm" type="text" autocomplete="name" placeholder="जैसे RAHUL SHARMA"><small>नामांक से मेल के लिए</small></label>
-      <label>नंबर का उपयोग<select name="purpose" class="nm-sel"><option value="personal">निजी</option><option value="business">व्यापार / सेल्स</option><option value="job">नौकरी / प्रोफ़ेशनल</option><option value="creative">कला / ग्राहक सेवा</option></select></label>
-      <button type="submit" class="nm-btn">नंबर की रिपोर्ट देखें</button>
+      <label><span data-en="Type of number">नंबर का प्रकार</span><select name="kind" class="nm-sel"><option value="mobile" data-en="Mobile number">मोबाइल नंबर</option><option value="vehicle" data-en="Vehicle number">गाड़ी नंबर</option><option value="house" data-en="House / flat number">मकान / फ़्लैट नंबर</option></select></label>
+      <label><span data-en="Number *">नंबर *</span><input name="mob" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="17" placeholder="जैसे 98765 43210" required></label>
+      <label><span data-en="Date of birth">जन्मतिथि</span><input name="dob" type="date"><small data-en="To check the match with your numbers">आपके अंकों से मेल देखने के लिए</small></label>
+      <label><span data-en="Name in English (optional)">नाम अंग्रेज़ी में (वैकल्पिक)</span><input name="nm" type="text" autocomplete="name" placeholder="जैसे RAHUL SHARMA" data-ph-en="e.g. RAHUL SHARMA"></label>
+      <label><span data-en="Used for">नंबर का उपयोग</span><select name="purpose" class="nm-sel"><option value="personal" data-en="Personal">निजी</option><option value="business" data-en="Business / sales">व्यापार / सेल्स</option><option value="job" data-en="Job / professional">नौकरी / प्रोफ़ेशनल</option><option value="creative" data-en="Arts / customer service">कला / ग्राहक सेवा</option></select></label>
+      <button type="submit" class="nm-btn" data-en="Check number">नंबर जाँचें</button>
     </form>
     <div id="nmMobOut" aria-live="polite"></div>
-    <p class="nm-small">आपका नंबर इस वेबसाइट पर सेव नहीं होता — गणना आपके फ़ोन/ब्राउज़र में ही होती है।</p>
+    <p class="nm-small" data-en="Your number is not saved — the calculation happens on your own device.">आपका नंबर सेव नहीं होता — गणना आपके अपने फ़ोन में ही होती है।</p>
 
     <h3>मोबाइल नंबर अंक ज्योतिष क्या है?</h3>
-    <p>अंक ज्योतिष में माना जाता है कि जिस नंबर का हम रोज़ सबसे ज़्यादा उपयोग करते हैं, उसके अंकों का भी एक कंपन (vibration) होता है। मोबाइल नंबर के सभी अंकों का योग एक अंक (1 से 9) तक लाकर उसके स्वामी ग्रह से नंबर का स्वभाव देखा जाता है, और फिर उसे आपके मूलांक, भाग्यांक और नामांक से मिलाया जाता है।</p>
+    <p>अंक ज्योतिष में माना जाता है कि जिस नंबर का हम रोज़ उपयोग करते हैं, उसके अंकों का भी हम पर असर होता है। मोबाइल नंबर के सभी अंकों का योग एक अंक (1 से 9) तक लाकर उसके स्वामी ग्रह से नंबर का स्वभाव देखा जाता है, और फिर उसे आपके मूलांक, भाग्यांक और नामांक से मिलाया जाता है।</p>
     <h3>किस काम के लिए कौन-सा कुल योग</h3>
     <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">मोबाइल नंबर के कुल योग 1 से 9</caption>
       <thead><tr><th scope="col">योग</th><th scope="col">ग्रह</th><th scope="col">अच्छा माना जाता है</th></tr></thead>
@@ -837,12 +654,12 @@
   </section>
 
   <section class="nm-sec" id="mulank-milan">
-    <h2>मूलांक मिलान — विवाह व साझेदारी के लिए अंक मेल</h2>
-    <p class="nm-lead">दोनों की जन्मतिथि डालें — मूलांक और भाग्यांक का आपसी मेल देखें।</p>
+    <h2 data-en="Number matching for marriage and partnership">मूलांक मिलान — विवाह व साझेदारी के लिए</h2>
+    <p class="nm-lead" data-en="Enter both dates of birth to see how your numbers match.">दोनों की जन्मतिथि डालें और देखें कि आपके अंक कितना मेल खाते हैं।</p>
     <form class="nm-form" id="nmMilForm" novalidate>
-      <label>पहले व्यक्ति की जन्मतिथि<input name="d1" type="date" required></label>
-      <label>दूसरे व्यक्ति की जन्मतिथि<input name="d2" type="date" required></label>
-      <button type="submit" class="nm-btn">मेल देखें</button>
+      <label><span data-en="First person's date of birth">पहले व्यक्ति की जन्मतिथि</span><input name="d1" type="date" required></label>
+      <label><span data-en="Second person's date of birth">दूसरे व्यक्ति की जन्मतिथि</span><input name="d2" type="date" required></label>
+      <button type="submit" class="nm-btn" data-en="Check match">मेल देखें</button>
     </form>
     <div id="nmMilOut" aria-live="polite"></div>
   </section>
@@ -852,7 +669,7 @@
     <p class="nm-lead">ऊपर के कैलकुलेटर में जन्मतिथि डालने पर आपकी रिपोर्ट में आपका अपना लो शू ग्रिड बनता है। यह 3×3 का जादुई वर्ग है, जिसकी हर लाइन का योग 15 होता है:</p>
     <div class="nm-lsdemo" aria-label="लो शू ग्रिड"><span>4</span><span>9</span><span>2</span><span>3</span><span>5</span><span>7</span><span>8</span><span>1</span><span>6</span></div>
     <p>जन्मतिथि के सभी अंक (शून्य छोड़कर) उनके ख़ाने में रखे जाते हैं। भारतीय अंक ज्योतिषी इसमें भाग्यांक भी जोड़ते हैं, और तारीख दो अंकों की हो (10–31) तो मूलांक भी। जो अंक ग्रिड में नहीं है, उससे जुड़ा गुण विकसित करना होता है; जो अंक बार-बार है, उसका गुण प्रबल होता है।</p>
-    <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">लो शू ग्रिड के तल (Planes) — तीनों अंक हों तो वह तल पूरा माना जाता है</caption>
+    <div class="nm-scroll"><table class="nm-tbl"><caption class="nm-small" style="text-align:left;padding-bottom:6px">लो शू ग्रिड के तल — तीनों अंक हों तो तल पूरा माना जाता है</caption>
       <thead><tr><th scope="col">तल</th><th scope="col">अंक</th><th scope="col">क्या दर्शाता है</th></tr></thead>
       <tbody>
         <tr><td>मानसिक तल</td><td>4-9-2</td><td>बुद्धि, याददाश्त, योजना</td></tr>
@@ -957,7 +774,7 @@
 
   <section class="nm-sec" id="ank-rashifal-2027">
     <h2>अंक राशिफल 2027 — मूलांक 1 से 9</h2>
-    <p class="nm-lead">2027 का वर्ष-अंक है 2 + 0 + 2 + 7 = 11 → 2 (चंद्र) — यह सहयोग, रिश्तों और धैर्य का साल माना जाता है। नीचे हर मूलांक के लिए सामान्य संकेत हैं। आपके लिए 2027 का सटीक <b>व्यक्तिगत वर्ष (Personal Year)</b> ऊपर के कैलकुलेटर में दिखता है।</p>
+    <p class="nm-lead">2027 का वर्ष-अंक है 2 + 0 + 2 + 7 = 11 → 2 (चंद्र) — यह सहयोग, रिश्तों और धैर्य का साल माना जाता है। नीचे हर मूलांक के लिए सामान्य संकेत हैं। आपके लिए 2027 का सटीक <b>व्यक्तिगत वर्ष</b> ऊपर के कैलकुलेटर में दिखता है।</p>
     <div class="nm-y">
     <article id="mulank-1-2027"><h3>मूलांक 1 (सूर्य)</h3><p>2027 नई ज़िम्मेदारियों और पहचान का साल हो सकता है। काम में पहल करने के मौके मिलेंगे, पर जल्दबाज़ी और गुस्से से बचें। साझेदारी में बात साफ़ रखें; साल के दूसरे हिस्से में मेहनत का फल दिखने के संकेत।</p></article>
 <article id="mulank-2-2027"><h3>मूलांक 2 (चंद्र)</h3><p>2027 का अंक (2+0+2+7 = 11 → 2) आपके मूलांक से मेल खाता है — रिश्तों, साझेदारी और परिवार के लिए अनुकूल संकेत। भावनाओं में बहकर बड़े फ़ैसले न लें; धैर्य से काम लेने पर सहयोग मिलेगा।</p></article>
@@ -984,295 +801,42 @@
   <section class="nm-sec" id="kaise-nikale">
     <h2>मूलांक, भाग्यांक और नामांक कैसे निकालें</h2>
     <p class="nm-lead">ऊपर के कैलकुलेटर यह सब अपने-आप करते हैं, और आपकी रिपोर्ट के आख़िर में आपकी अपनी गणना भी दिखती है। हाथ से निकालना हो तो उदाहरण के लिए जन्मतिथि <b>14-03-1995</b> और नाम <b>RAHUL</b> लेते हैं:</p>
-    <h3>1. मूलांक (Psychic / Driver Number)</h3>
+    <h3>1. मूलांक</h3>
     <p class="nm-ex">केवल जन्म की तारीख जोड़ें: 1 + 4 = <b>5</b> → मूलांक 5। (तारीख 1 से 9 हो तो वही मूलांक है; 29 हो तो 2 + 9 = 11 → 1 + 1 = 2)</p>
-    <h3>2. भाग्यांक (Life Path / Destiny Number)</h3>
+    <h3>2. भाग्यांक</h3>
     <p class="nm-ex">पूरी जन्मतिथि के सभी अंक जोड़ें: 1 + 4 + 0 + 3 + 1 + 9 + 9 + 5 = 32 → 3 + 2 = <b>5</b> → भाग्यांक 5।</p>
-    <h3>3. नामांक (Name Number — चैल्डियन पद्धति)</h3>
+    <h3>3. नामांक (चैल्डियन पद्धति)</h3>
     <p class="nm-ex">नाम के हर अंग्रेज़ी अक्षर का अंक नीचे के चार्ट से लें: R(2) + A(1) + H(5) + U(6) + L(3) = 17 → 1 + 7 = <b>8</b> → नामांक 8।</p>
-    <h3>4. व्यक्तिगत वर्ष (Personal Year)</h3>
+    <h3>4. व्यक्तिगत वर्ष</h3>
     <p class="nm-ex">जन्म की तारीख + महीना + चालू वर्ष का अंक: 2027 के लिए 14 + 3 + (2+0+2+7 = 11 → 2) = 19 → 1 + 9 = 10 → <b>1</b>। यानी 2027 इस व्यक्ति के लिए नई शुरुआत का साल।</p>
     <h3>5. मोबाइल नंबर का अंक</h3>
     <p class="nm-ex">सभी 10 अंक जोड़ें: 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0 = 45 → 4 + 5 = <b>9</b> (मंगल)। 45 संयुक्त अंक है, जिसे कीरो पद्धति में 27 ("राजदंड") के समान शुभ माना गया है।</p>
     <h3>मास्टर अंक 11, 22 और 33</h3>
-    <p>भाग्यांक निकालते समय अगर योग 11, 22 या 33 आए तो पश्चिमी (पाइथागोरस) अंक शास्त्र में इसे घटाया नहीं जाता — इन्हें "मास्टर अंक" कहते हैं, जो बड़ी क्षमता और बड़ी ज़िम्मेदारी दोनों दिखाते हैं। भारतीय पद्धति में इनका मूल अंक (2, 4, 6) भी साथ देखा जाता है।</p>
+    <p>भाग्यांक निकालते समय अगर योग 11, 22 या 33 आए तो पश्चिमी अंक शास्त्र में इसे घटाया नहीं जाता — इन्हें "मास्टर अंक" कहते हैं, जो बड़ी क्षमता और बड़ी ज़िम्मेदारी दोनों दिखाते हैं। भारतीय पद्धति में इनका मूल अंक (2, 4, 6) भी साथ देखा जाता है।</p>
     <p>मूलांक आपका स्वभाव बताता है, भाग्यांक जीवन की दिशा, और नामांक बताता है कि नाम की स्पेलिंग आपके मूलांक-भाग्यांक के साथ कितना मेल खाती है।</p>
   </section>
 </div>
 <!-- NM:END -->
 
-    <!-- About Numerology -->
-    <section class="max-w-6xl mx-auto px-4 py-12 no-print">
-        <div class="glass-card p-8 rounded-2xl">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                    The Power of Vedic & Chaldean Numbers
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    Discover how Mulank (Psychic), Bhagyank (Destiny), and Chaldean Name Vibrations shape your destiny
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
-                        <i class="fas fa-question-circle text-amber-300 mr-3"></i> What is Numerology (अंक ज्योतिष)?
-                    </h3>
-                    <p class="text-gray-300 mb-4">
-                        Numerology is a traditional Vedic and Babylonian (Chaldean) system that links numbers with the Navagrahas and with life events. Every number from 1 to 9 is governed by a specific Navagraha (Sun, Moon, Jupiter, Rahu, Mercury, Venus, Ketu, Saturn, Mars).
-                    </p>
-                    <p class="text-gray-300 mb-4">
-                        While your <span class="text-amber-300 font-medium">Mulank (मूलांक - Birth Day)</span> reveals how your mind thinks and reacts, your <span class="text-amber-300 font-medium">Bhagyank (भाग्यांक / Life Path Number)</span> reveals the karmic highway of your career, wealth, and marriage.
-                    </p>
-                    <p class="text-gray-300">
-                        When your <span class="text-amber-300 font-medium">Chaldean Name Number (नामांक)</span> vibrates in harmony with your Mulank and Bhagyank, obstacles melt away and your efforts convert rapidly into recognition and financial abundance.
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
-                        <i class="fas fa-calculator text-amber-300 mr-3"></i> How Mulank & Bhagyank Are Calculated
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-3 text-gray-300 text-sm md:text-base">
-                        <li class="pb-1"><span class="font-medium text-amber-300">Mulank (मूलांक):</span> Reduce only your birth date (DD) to a single digit (e.g., Born on 24th → 2 + 4 = <strong>6 [Venus]</strong>).</li>
-                        <li class="pb-1"><span class="font-medium text-amber-300">Bhagyank / Life Path (भाग्यांक):</span> Add all digits of your full birth date (DD + MM + YYYY) together.</li>
-                        <li class="pb-1"><span class="font-medium text-amber-300">Master Number Exception:</span> If your total reaches <strong>11, 22, or 33</strong>, it carries a special Master Vibration alongside its base digit (2, 4, or 6).</li>
-                        <li class="pb-1"><span class="font-medium text-amber-300">Chaldean Name Number (नामांक):</span> Each letter of your name is mapped to its acoustic value (1 to 8) to reveal your Compound Destiny Number.</li>
-                    </ol>
-                    
-                    <div class="mt-6 p-5 bg-purple-900 bg-opacity-30 rounded-xl border border-purple-400/30">
-                        <h4 class="font-bold text-amber-300 mb-2">Example Calculation (15/04/1990)</h4>
-                        <p class="text-gray-300 text-sm"><strong>मूलांक (Mulank):</strong> 1 + 5 = <strong>6 (Venus / शुक्र)</strong></p>
-                        <p class="text-gray-300 text-sm mt-1"><strong>भाग्यांक (Life Path):</strong> Day (6) + Month (4) + Year (1+9+9+0 = 19 → 1) = <strong>11 (Master Illuminator) / 2 (Moon)</strong></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Life Path Numbers Section -->
-    <section class="max-w-6xl mx-auto px-4 py-14 no-print">
-        <div class="text-center mb-14">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">
-                Life Path & Mulank Number Meanings (1 to 9 & Master Numbers)
-            </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                Click any number below to read its ruling planet, strengths, challenges, career, and relationship compatibility.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Number 1 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">1</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: सूर्य (Sun)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Leader (राजा / नेतृत्व)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Independent, ambitious, and determined. You're a natural born leader with strong royal willpower.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(1)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 2 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">2</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: चंद्रमा (Moon)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Diplomat (अंतर्ज्ञानी व भावुक)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Cooperative, intuitive, and empathetic. You excel at emotional intelligence, art, and harmony.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(2)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 3 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">3</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: देवगुरु बृहस्पति (Jupiter)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Wise Creator (ज्ञान व विस्तार)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Expressive, dharmic, and knowledge-driven. You bring wisdom, counsel, and inspiration to the world.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(3)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 4 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">4</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: राहु / यूरेनस (Rahu)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Builder & Maverick (क्रांतिकारी)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Practical, unconventional, and resilient. You break outdated rules and build solid foundations.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(4)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 5 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">5</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: बुध (Mercury)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Freedom Seeker (व्यापार व बुद्धि)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Adventurous, sharp-witted, and adaptable. You thrive on business logic, speed, and communication.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(5)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 6 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">6</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: शुक्र (Venus)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Nurturer (वैभव, प्रेम व आकर्षण)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Magnetic, caring, and luxury-loving. You excel at relationships, aesthetics, and family protection.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(6)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 7 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">7</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: केतु (Ketu)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Mystic Seeker (शोध व अंतर्ज्ञान)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Analytical, intuitive, and spiritual. You possess X-ray research ability and prophetic gut instinct.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(7)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 8 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">8</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: शनि (Saturn)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Karmic Achiever (न्याय व साम्राज्य)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Ambitious, enduring, and authoritative. Tested early in life, you build an unshakeable empire.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(8)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Number 9 -->
-            <div class="number-card p-6 rounded-2xl">
-                <div>
-                    <div class="number-circle mb-3">9</div>
-                    <p class="text-xs text-center text-amber-300 font-bold uppercase mb-1">ग्रह स्वामी: मंगल (Mars)</p>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">The Commander & Humanitarian (साहस)</h3>
-                    <p class="text-gray-300 text-center text-sm">
-                        Fearless, energetic, and protective. You fight for truth and uplift humanity with warrior courage.
-                    </p>
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showNumberDetails(9)" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Learn More <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Master Numbers -->
-            <div class="number-card p-6 rounded-2xl col-span-1 md:col-span-3">
-                <div class="flex justify-center gap-6 mb-4">
-                    <div class="number-circle" style="background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);">11</div>
-                    <div class="number-circle" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">22</div>
-                    <div class="number-circle" style="background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);">33</div>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 text-center">Master Numbers (11, 22 & 33)</h3>
-                <p class="text-gray-300 text-center text-sm max-w-2xl mx-auto">
-                    These numbers carry higher spiritual vibrations and extraordinary potential (The Illuminator, The Master Builder, and The Master Teacher).
-                </p>
-                <div class="mt-4 text-center">
-                    <button type="button" onclick="showMasterNumbers()" class="text-amber-300 hover:text-amber-200 font-semibold text-sm">
-                        Discover Master Numbers <i class="fas fa-arrow-right ml-1"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <div id="jt-reviews" data-limit="3"></div>
 
 
     <!-- FAQ Section -->
-    <section id="faq" class="max-w-6xl mx-auto px-4 py-14 glass-card backdrop-blur-md rounded-2xl no-print">
-        <div class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 section-title">Numerology FAQs (अक्सर पूछे जाने वाले प्रश्न)</h2>
-        </div>
-        <div class="space-y-6">
-            <div>
-                <h3 class="font-semibold text-lg text-amber-300">Q: What is the difference between Mulank (मूलांक) and Bhagyank / Life Path Number (भाग्यांक)?</h3>
-                <p class="mt-2 text-gray-300 text-sm md:text-base">A: Your <strong>Mulank (Psychic Number)</strong> is calculated from your birth day alone (e.g., 24th = 2+4 = 6) and governs your mental nature and behavior. Your <strong>Bhagyank (Destiny / Life Path Number)</strong> is calculated by adding your full birth date (DD + MM + YYYY) and governs your career destiny, luck, and major life events.</p>
-            </div>
-            <div>
-                <h3 class="font-semibold text-lg text-amber-300 hindi">Q: चैल्डियन नाम अंक ज्योतिष (Chaldean Name Numerology) क्या है और नाम सुधार कैसे काम करता है?</h3>
-                <p class="mt-2 text-gray-300 text-sm md:text-base hindi">A: प्राचीन बेबीलोनियन (Chaldean) पद्धति अक्षरों की ध्वनि पर आधारित है। इसमें आपके नाम के अक्षरों का कुल योग (Compound Number जैसे 19, 23, 24, 37) और मूल नामांक निकाला जाता है। यदि आपका नामांक आपके मूलांक या भाग्यांक के विरोधी ग्रह पर हो, तो नाम की स्पेलिंग में 1-2 अक्षरों का वैज्ञानिक समायोजन (Name Correction) करने से भाग्य की रुकावटें दूर होती हैं।</p>
-            </div>
-            <div>
-                <h3 class="font-semibold text-lg text-amber-300">Q: What are Master Numbers (11, 22, 33) in Numerology?</h3>
-                <p class="mt-2 text-gray-300 text-sm md:text-base">A: Master Numbers (11, 22, 33) are high-voltage spiritual numbers in अंक ज्योतिष. They are not reduced to a single digit because they indicate heightened intuition, leadership, and karmic responsibility.</p>
-            </div>
-            <div>
-                <h3 class="font-semibold text-lg text-amber-300">Q: Which number and Rudraksha is lucky for me?</h3>
-                <p class="mt-2 text-gray-300 text-sm md:text-base">A: Your lucky numbers and Rudraksha depend on the ruling planets of your Mulank and Bhagyank. Use our calculator above to see your exact lucky numbers, colors, days, and the energized Rudraksha that strengthens your ruling planet.</p>
-            </div>
-        </div>
-
-        <!-- Contextual Internal Links Silo -->
-        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-            <span class="text-sm font-semibold text-amber-300 hindi"><i class="fas fa-compass mr-1.5"></i>अन्य संबंधित टूल्स एवं लेख:</span>
-            <div class="flex flex-wrap gap-2.5 text-xs md:text-sm">
-                <a href="kundali-form.html" class="bg-amber-500/20 border border-amber-400/40 text-amber-300 px-4 py-2 rounded-full font-bold transition">🌌 Free 45-Min Kundali Dossier</a>
-                <a href="ank-jyotish.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition hindi">🔢 अंक ज्योतिष और भाग्य का रहस्य</a>
-                <a href="tarot.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition">🃏 Interactive Tarot Reading</a>
-                <a href="rudraksha.html" class="bg-white/10 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition hindi">📿 अभिमंत्रित रुद्राक्ष स्टोर</a>
-            </div>
-        </div>
-    </section>
+    <!-- NMFAQ:START -->
+    <section id="faq" class="nm-wrap"><div class="nm-sec nm-acc">
+      <h2>अक्सर पूछे जाने वाले प्रश्न</h2>
+      <details><summary>मूलांक और भाग्यांक में क्या अंतर है?</summary><div class="in"><p>मूलांक केवल जन्म की तारीख से निकलता है और आपका स्वभाव बताता है। भाग्यांक पूरी जन्मतिथि से निकलता है और जीवन की दिशा बताता है।</p></div></details>
+      <details><summary>नाम का अंक (नामांक) कैसे निकलता है?</summary><div class="in"><p>चैल्डियन पद्धति में अंग्रेज़ी के हर अक्षर को 1 से 8 तक एक अंक दिया गया है। नाम के सभी अक्षरों के अंक जोड़कर एक अंक तक लाने पर नामांक मिलता है।</p></div></details>
+      <details><summary>मास्टर अंक क्या होते हैं?</summary><div class="in"><p>भाग्यांक निकालते समय योग 11, 22 या 33 आए तो उसे घटाया नहीं जाता। इन्हें मास्टर अंक कहते हैं — ये बड़ी क्षमता और बड़ी ज़िम्मेदारी दिखाते हैं।</p></div></details>
+      <details><summary>मूलांक कैसे निकालें?</summary><div class="in"><p>केवल जन्म की तारीख के अंक जोड़कर एक अंक तक लाएँ। जैसे 14 तारीख = 1 + 4 = 5, यानी मूलांक 5। 29 तारीख = 2 + 9 = 11 → 1 + 1 = 2।</p></div></details>
+      <details><summary>भाग्यांक कैसे निकालें?</summary><div class="in"><p>पूरी जन्मतिथि (दिन, महीना, साल) के सभी अंक जोड़कर एक अंक तक लाएँ। जैसे 14-03-1995 = 1+4+0+3+1+9+9+5 = 32 → 5, यानी भाग्यांक 5।</p></div></details>
+      <details><summary>मोबाइल नंबर का अंक कैसे निकालें?</summary><div class="in"><p>मोबाइल नंबर के सभी 10 अंकों को जोड़ें और योग को एक अंक तक लाएँ। जैसे 98765 43210 का योग 45 → 4 + 5 = 9। इस पेज के मोबाइल नंबर कैलकुलेटर से यह अपने-आप निकलता है।</p></div></details>
+      <details><summary>2027 किस अंक का साल है?</summary><div class="in"><p>2027 का वर्ष-अंक 2 + 0 + 2 + 7 = 11 → 2 है, जिसका स्वामी चंद्र है। इसे सहयोग, रिश्तों और धैर्य का साल माना जाता है।</p></div></details>
+      <details><summary>मोबाइल नंबर के लिए कौन-सा योग सबसे अच्छा है?</summary><div class="in"><p>सबसे अच्छा योग वही है जो आपके मूलांक और भाग्यांक दोनों के अनुकूल हो। सामान्य रूप से व्यापार के लिए 5 और 6, नौकरी व प्रशासन के लिए 1 और 3 अच्छे माने जाते हैं। इस पेज का मोबाइल नंबर कैलकुलेटर आपकी जन्मतिथि से आपके लिए अनुकूल योग बताता है।</p></div></details>
+      <details><summary>लो शू ग्रिड क्या है?</summary><div class="in"><p>लो शू ग्रिड 3×3 का वर्ग (4-9-2, 3-5-7, 8-1-6) है जिसमें जन्मतिथि के अंक रखकर देखा जाता है कि कौन-से अंक मौजूद हैं, कौन-से नहीं और कौन-से तल (जैसे 4-5-6 स्वर्ण योग) पूरे हैं। इस पेज का कैलकुलेटर आपका ग्रिड अपने-आप बनाता है।</p></div></details>
+      <details><summary>गाड़ी नंबर का अंक कैसे निकालें?</summary><div class="in"><p>गाड़ी नंबर के अक्षर छोड़कर सभी अंक जोड़ें और योग को एक अंक तक लाएँ — जैसे UP32 AB 1234 = 3+2+1+2+3+4 = 15 → 6 (शुक्र)। कुछ अंक ज्योतिषी केवल आख़िरी 4 अंक जोड़ते हैं; इस पेज का कैलकुलेटर दोनों दिखाता है।</p></div></details>
+    </div></section>
+    <!-- NMFAQ:END -->
 
     <!-- Footer (Synchronized with All Sitemap Policy Links & © 2026) -->
     </main>
@@ -1341,496 +905,6 @@
   </footer>
 
     <!-- Number Details Modal -->
-    <div id="numberModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden p-4 no-print">
-        <div class="glass-card p-6 md:p-8 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative border border-amber-400/40 bg-slate-900">
-            <button type="button" onclick="closeModal()" class="absolute top-4 right-4 text-white text-2xl hover:text-amber-300">
-                <i class="fas fa-times"></i>
-            </button>
-            <div id="modalContent" class="text-white"></div>
-        </div>
-    </div>
-
-    <script>
-        // Mobile Menu Toggle
-        document.createElement('button').addEventListener('click', function() {
-            const mobileNav = document.getElementById('mobileNav');
-            mobileNav.classList.toggle('hidden');
-            const icon = this.querySelector('i');
-            icon.className = mobileNav.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
-        });
-
-        document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                this.closest('.mobile-dropdown').classList.toggle('active');
-            });
-        });
-
-        // Chaldean Letter Map & Ruling Planets
-        const CHALDEAN_MAP = {
-            A:1, I:1, J:1, Q:1, Y:1,
-            B:2, K:2, R:2,
-            C:3, G:3, L:3, S:3,
-            D:4, M:4, T:4,
-            E:5, H:5, N:5, X:5,
-            U:6, V:6, W:6,
-            O:7, Z:7,
-            F:8, P:8
-        };
-
-        const PLANET_BY_NUMBER = {
-            1: { planet: "सूर्य (Sun)", luckyNums: "1, 2, 3, 9", colors: "सुनहरा, नारंगी, पीला (Gold/Orange)", days: "रविवार, सोमवार (Sun, Mon)", rudra: "तीन मुखी / पंचमुखी रुद्राक्ष", rudraId: "prod-3", friends: [1,2,3,5,9] },
-            2: { planet: "चंद्रमा (Moon)", luckyNums: "1, 2, 5, 7", colors: "सफेद, क्रीम, हल्का हरा (White/Silver)", days: "सोमवार, शुक्रवार (Mon, Fri)", rudra: "दो मुखी रुद्राक्ष (₹9,999)", rudraId: "prod-2", friends: [1,2,5,7] },
-            3: { planet: "बृहस्पति (Jupiter)", luckyNums: "1, 2, 3, 9", colors: "पीला, केसरिया, गुलाबी (Yellow/Saffron)", days: "गुरुवार, मंगलवार (Thu, Tue)", rudra: "पंचमुखी रुद्राक्ष (₹499)", rudraId: "prod-5", friends: [1,2,3,9] },
-            4: { planet: "राहु (Rahu)", luckyNums: "1, 4, 5, 6, 8", colors: "नीला, ग्रे, इलेक्ट्रिक ब्लू (Blue/Grey)", days: "शनिवार, बुधवार (Sat, Wed)", rudra: "आठ मुखी रुद्राक्ष (₹3,999)", rudraId: "prod-8", friends: [1,4,5,6,8] },
-            5: { planet: "बुध (Mercury)", luckyNums: "1, 3, 5, 6", colors: "हरा, पन्ना, सफेद (Emerald Green)", days: "बुधवार, शुक्रवार (Wed, Fri)", rudra: "चार मुखी रुद्राक्ष (₹999)", rudraId: "prod-4", friends: [1,3,5,6] },
-            6: { planet: "शुक्र (Venus)", luckyNums: "3, 5, 6, 8, 9", colors: "सफेद, गुलाबी, आसमानी (White/Pink)", days: "शुक्रवार, मंगलवार (Fri, Tue)", rudra: "छह मुखी / गौरी शंकर रुद्राक्ष", rudraId: "prod-6", friends: [3,4,5,6,8,9] },
-            7: { planet: "केतु (Ketu)", luckyNums: "1, 2, 4, 5, 7", colors: "हल्का पीला, सफेद, चितकबरा (Light Yellow)", days: "रविवार, सोमवार (Sun, Mon)", rudra: "नौ मुखी रुद्राक्ष (₹4,999)", rudraId: "prod-9", friends: [1,2,4,5,7] },
-            8: { planet: "शनि (Saturn)", luckyNums: "3, 4, 5, 6, 8", colors: "गहरा नीला, बैंगनी (Navy Blue/Purple)", days: "शनिवार, शुक्रवार (Sat, Fri)", rudra: "सप्तमुखी रुद्राक्ष (₹1,999)", rudraId: "prod-7", friends: [4,5,6,8] },
-            9: { planet: "मंगल (Mars)", luckyNums: "1, 3, 6, 9", colors: "लाल, सिंदूरी, गुलाबी (Red/Crimson)", days: "मंगलवार, गुरुवार (Tue, Thu)", rudra: "तीन मुखी रुद्राक्ष (₹1,499)", rudraId: "prod-3", friends: [1,2,3,6,9] },
-            11:{ planet: "मास्टर चंद्र-सूर्य (Master 11)", luckyNums: "1, 2, 7, 11", colors: "सफेद, सिल्वर, सुनहरा", days: "सोमवार, रविवार", rudra: "दो मुखी / पंचमुखी रुद्राक्ष", rudraId: "prod-2", friends: [1,2,5,7] },
-            22:{ planet: "मास्टर राहु-गुरु (Master 22)", luckyNums: "1, 4, 5, 6, 22", colors: "रॉयल ब्लू, सुनहरा", days: "शनिवार, बुधवार", rudra: "आठ मुखी रुद्राक्ष (₹3,999)", rudraId: "prod-8", friends: [1,4,5,6,8] },
-            33:{ planet: "मास्टर शुक्र-गुरु (Master 33)", luckyNums: "3, 6, 9, 33", colors: "पीला, गुलाबी, सफेद", days: "गुरुवार, शुक्रवार", rudra: "छह मुखी / गौरी शंकर रुद्राक्ष", rudraId: "prod-6", friends: [3,5,6,9] }
-        };
-
-        const PERSONAL_YEAR_THEMES = {
-            1: "New Beginnings & Leadership (नए कार्यों का आरंभ व नेतृत्व)",
-            2: "Partnerships & Patience (साझेदारी, विवाह व भावनात्मक संतुलन)",
-            3: "Expansion, Wisdom & Recognition (भाग्योदय, ज्ञान व पदोन्नति)",
-            4: "Hard Work & System Building (कठिन परिश्रम व स्थायी नींव)",
-            5: "Breakthrough Change & Travel (बड़ा परिवर्तन, व्यापार व स्थान परिवर्तन)",
-            6: "Marriage, Luxury & Family Harmony (विवाह, वाहन, प्रॉपर्टी व सुख)",
-            7: "Research, Healing & Inner Awakening (गहन शोध, आध्यात्मिकता व आत्म-मंथन)",
-            8: "Karmic Harvest & Wealth Authority (बड़ी आर्थिक उपलब्धि व न्याय)",
-            9: "Completion & Courageous Transition (पुराने चक्र की समाप्ति व नया साहस)"
-        };
-
-        let lastCalcState = null;
-
-        function reduceToSingleDigitStrict(num) {
-            let n = Math.abs(parseInt(num, 10) || 0);
-            while (n > 9) {
-                n = String(n).split('').reduce((a, b) => a + parseInt(b, 10), 0);
-            }
-            return n === 0 ? 1 : n;
-        }
-
-        function reduceToSingleOrMaster(number) {
-            if (number === 11 || number === 22 || number === 33) return number;
-            while (number > 9 && number !== 11 && number !== 22 && number !== 33) {
-                number = Math.floor(number / 10) + (number % 10);
-            }
-            return number;
-        }
-
-        function computeChaldean(nameStr) {
-            const clean = (nameStr || '').toUpperCase().replace(/[^A-Z]/g, '');
-            if (!clean) return null;
-            let compound = 0;
-            const parts = [];
-            for (let i = 0; i < clean.length; i++) {
-                const c = clean[i];
-                const v = CHALDEAN_MAP[c] || 1;
-                compound += v;
-                parts.push(`${c}(${v})`);
-            }
-            const root = reduceToSingleDigitStrict(compound);
-            return {
-                compound,
-                root,
-                breakdown: parts.slice(0, 16).join(' + ') + (parts.length > 16 ? ' ...' : '') + ` = ${compound} → ${root}`
-            };
-        }
-
-        function isValidDate(day, month, year) {
-            const inputDate = new Date(year, month - 1, day);
-            const currentDate = new Date();
-            return inputDate.getFullYear() === year && 
-                   inputDate.getMonth() === month - 1 && 
-                   inputDate.getDate() === day &&
-                   inputDate <= currentDate;
-        }
-
-        function showError(message) {
-            let errorElement = document.getElementById('calculationError');
-            if (!errorElement) {
-                errorElement = document.createElement('div');
-                errorElement.id = 'calculationError';
-                errorElement.className = 'bg-red-900 text-white p-3 rounded-lg mb-4 text-center';
-                document.querySelector('form').prepend(errorElement);
-            }
-            errorElement.textContent = message;
-            setTimeout(() => { errorElement.remove(); }, 5000);
-        }
-
-        function calculateNumber(event) {
-            if (event && event.preventDefault) event.preventDefault();
-            
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('result').classList.add('hidden');
-            
-            const dob = document.getElementById('dob').value;
-            const name = document.getElementById('name').value.trim();
-            
-            if (!dob) {
-                showError('Please enter your birth date (कृपया अपनी जन्मतिथि चुनें)');
-                document.getElementById('loading').classList.add('hidden');
-                return;
-            }
-            
-            setTimeout(() => {
-                try {
-                    const dateParts = dob.split('-');
-                    const year = parseInt(dateParts[0], 10);
-                    const month = parseInt(dateParts[1], 10);
-                    const day = parseInt(dateParts[2], 10);
-                    
-                    if (isNaN(day) || isNaN(month) || isNaN(year) || !isValidDate(day, month, year)) {
-                        showError('Please enter a valid past birth date');
-                        document.getElementById('loading').classList.add('hidden');
-                        return;
-                    }
-                    
-                    // 1. Mulank (Psychic Number from Birth Day)
-                    const mulank = reduceToSingleDigitStrict(day);
-
-                    // 2. Bhagyank / Life Path Number (With Master Number check)
-                    const dayReduced = reduceToSingleOrMaster(day);
-                    const monthReduced = reduceToSingleOrMaster(month);
-                    const yearReduced = reduceToSingleOrMaster(year);
-                    let lifePathNumber = dayReduced + monthReduced + yearReduced;
-                    if (lifePathNumber !== 11 && lifePathNumber !== 22 && lifePathNumber !== 33) {
-                        lifePathNumber = reduceToSingleOrMaster(lifePathNumber);
-                    }
-                    const baseBhagyank = reduceToSingleDigitStrict(lifePathNumber);
-
-                    // 3. Personal Year Number (for Current Year)
-                    const curYear = new Date().getFullYear();
-                    const personalYear = reduceToSingleDigitStrict(day + month + reduceToSingleDigitStrict(curYear));
-
-                    // 4. Chaldean Name Number
-                    const chaldean = computeChaldean(name);
-
-                    lastCalcState = { dob, name, mulank, lifePathNumber, baseBhagyank, personalYear, chaldean };
-                    displayResults(lastCalcState);
-                    document.getElementById('loading').classList.add('hidden');
-                } catch (error) {
-                    showError('An error occurred while calculating your number. Please try again.');
-                    console.error('Numerology calculation error:', error);
-                    document.getElementById('loading').classList.add('hidden');
-                }
-            }, 120);
-        }
-
-        function displayResults(state) {
-            const { dob, name, mulank, lifePathNumber, baseBhagyank, personalYear, chaldean } = state;
-            const numberData = getNumberData(lifePathNumber);
-            const mulankMeta = PLANET_BY_NUMBER[mulank] || PLANET_BY_NUMBER[1];
-            const bhagyankMeta = PLANET_BY_NUMBER[lifePathNumber] || PLANET_BY_NUMBER[baseBhagyank];
-
-            document.getElementById('reportHeaderName').textContent = name
-                ? `${name} का अंक ज्योतिष एवं नामांक विश्लेषण`
-                : `Your Vedic & Chaldean Numerology Blueprint`;
-
-            // Populate Top 4 Matrix Circles
-            document.getElementById('mulankDisplay').textContent = mulank;
-            document.getElementById('mulankPlanet').textContent = mulankMeta.planet;
-
-            document.getElementById('numberDisplay').textContent = lifePathNumber;
-            document.getElementById('bhagyankPlanet').textContent = bhagyankMeta.planet;
-
-            document.getElementById('personalYearDisplay').textContent = personalYear;
-            document.getElementById('personalYearTheme').textContent = PERSONAL_YEAR_THEMES[personalYear] || '';
-
-            // Populate Lucky Bar
-            document.getElementById('luckyNumbersVal').textContent = bhagyankMeta.luckyNums;
-            document.getElementById('luckyColorsVal').textContent = bhagyankMeta.colors;
-            document.getElementById('luckyDaysVal').textContent = bhagyankMeta.days;
-            const rLink = document.getElementById('luckyRudraLink');
-            rLink.textContent = bhagyankMeta.rudra + ' →';
-            rLink.href = `rudraksha.html#${bhagyankMeta.rudraId}`;
-
-            // Populate Chaldean Name Diagnostic Box
-            const cDisplay = document.getElementById('chaldeanDisplay');
-            const cPlanet  = document.getElementById('chaldeanPlanet');
-            const cHead    = document.getElementById('chaldeanStatusHeading');
-            const cBreak   = document.getElementById('chaldeanBreakdownText');
-            const cVerdict = document.getElementById('chaldeanVerdictText');
-            const cWaBtn   = document.getElementById('nameCorrectionWaBtn');
-
-            if (chaldean) {
-                const cMeta = PLANET_BY_NUMBER[chaldean.root] || PLANET_BY_NUMBER[1];
-                cDisplay.textContent = `${chaldean.compound}→${chaldean.root}`;
-                cPlanet.textContent  = cMeta.planet;
-                cBreak.textContent   = `Chaldean Calculation: ${chaldean.breakdown}`;
-
-                const isHarmonious = mulankMeta.friends.includes(chaldean.root) || PLANET_BY_NUMBER[baseBhagyank].friends.includes(chaldean.root);
-                const warningCompounds = [16, 18, 26, 28, 29, 35, 38, 43, 44, 47];
-                const isHeavyCompound = warningCompounds.includes(chaldean.compound);
-
-                if (isHarmonious && !isHeavyCompound) {
-                    cHead.innerHTML = `<span class="text-emerald-300">✅ शुभ सामंजस्य: आपका नामांक (${chaldean.compound} → ${chaldean.root}) आपके जन्म-अंकों के अनुकूल है!</span>`;
-                    cVerdict.textContent = `आपके नाम की चैल्डियन ध्वनि तरंग (${chaldean.compound} → ${chaldean.root}, स्वामी: ${cMeta.planet}) आपके मूलांक ${mulank} और भाग्यांक ${lifePathNumber} को सकारात्मक ऊर्जा दे रही है। इसे और अधिक शक्तिशाली बनाने के लिए अपने हस्ताक्षर (Signature) को ऊपर उठते हुए कोण पर रखें।`;
-                } else {
-                    cHead.innerHTML = `<span class="text-amber-300">⚠️ नाम-स्पंदन घर्षण (Frequency Clash Detected: ${chaldean.compound} → ${chaldean.root})</span>`;
-                    cVerdict.textContent = `आपकी जन्मतिथि मूलांक ${mulank} (${mulankMeta.planet}) और भाग्यांक ${lifePathNumber} (${bhagyankMeta.planet}) पर चलती है, जबकि आपके नाम की स्पेलिंग का योग ${chaldean.compound} (मूल अंक ${chaldean.root} — ${cMeta.planet}) बन रहा है। अंक ज्योतिष में माना जाता है कि नामांक जन्म-अंकों के अनुकूल हो तो प्रयासों में सहजता आती है। यह मेल अभी अनुकूल सूची में नहीं है — इसका मतलब असफलता नहीं, बस नाम की स्पेलिंग में छोटा बदलाव विचार करने योग्य हो सकता है। नाम बदलने से पहले अपने मूलांक, भाग्यांक और नाम के संयुक्त अंक — तीनों को साथ देखें।`;
-                }
-
-                const waMsg = `नमस्ते ज्योतिष तर्क! मेरा नाम ${name} (DOB: ${dob}) है। मेरा मूलांक ${mulank}, भाग्यांक ${lifePathNumber} और चैल्डियन नामांक ${chaldean.compound}→${chaldean.root} आ रहा है। मुझे अपने नाम की स्पेलिंग (Name Correction) और शुभ उपायों पर परामर्श चाहिए।`;
-                cWaBtn.href = `https://wa.me/918318513814?text=${encodeURIComponent(waMsg)}`;
-            } else {
-                cDisplay.textContent = '?';
-                cPlanet.textContent  = 'नाम दर्ज करें';
-                cHead.innerHTML      = `<span class="text-amber-300">💡 अपना चैल्डियन नामांक जानने के लिए ऊपर फॉर्म में अपना पूरा नाम भी लिखें!</span>`;
-                cBreak.textContent   = 'Chaldean A–Z Acoustic Mapping (1 to 8)';
-                cVerdict.textContent = 'ऊपर नाम वाले बॉक्स में अपना पूरा नाम लिखकर दोबारा क्लिक करें ताकि हम चेक कर सकें कि आपके नाम की स्पेलिंग आपकी जन्मतिथि के अनुकूल है या नहीं।';
-            }
-
-            // Populate Deep Reading Cards
-            document.getElementById('numberTitle').textContent = `भाग्यांक / Life Path ${lifePathNumber}: ${numberData.title} (${bhagyankMeta.planet})`;
-            document.getElementById('numberMeaning').textContent = numberData.meaning;
-            document.getElementById('strengths').textContent = numberData.strengths;
-            document.getElementById('challenges').textContent = numberData.challenges;
-            document.getElementById('purpose').textContent = numberData.purpose;
-            document.getElementById('relationships').textContent = numberData.relationships;
-            document.getElementById('career').textContent = numberData.career;
-            
-            if (name !== '') {
-                document.getElementById('userName').textContent = name;
-                document.getElementById('personalizedMessage').classList.remove('hidden');
-                document.getElementById('personalizedMessage').querySelector('p').textContent = 
-                    `Dear ${name} (Mulank ${mulank} • Bhagyank ${lifePathNumber} • Personal Year ${personalYear}): ${numberData.personalMessage}`;
-            } else {
-                document.getElementById('personalizedMessage').classList.add('hidden');
-            }
-            
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function shareNumerologyOnWhatsApp() {
-            if (!lastCalcState) return;
-            const { name, mulank, lifePathNumber, personalYear, chaldean } = lastCalcState;
-            const msg =
-                `🔢 *मैंने अभी Jyotish Tark पर अपना वैदिक और चैल्डियन अंक ज्योतिष (Numerology Blueprint) चेक किया!* ✨\n\n` +
-                (name ? `👤 *नाम:* ${name}\n` : '') +
-                `☀️ *मूलांक (Psychic Number):* ${mulank} (${PLANET_BY_NUMBER[mulank].planet})\n` +
-                `🌟 *भाग्यांक (Life Path Number):* ${lifePathNumber} (${PLANET_BY_NUMBER[lifePathNumber].planet})\n` +
-                (chaldean ? `✍️ *चैल्डियन नामांक:* ${chaldean.compound} → ${chaldean.root}\n` : '') +
-                `📅 *व्यक्तिगत वर्ष (Personal Year):* ${personalYear}\n\n` +
-                `आप भी अपनी जन्मतिथि और नाम की स्पेलिंग का भाग्य *100% FREE* में यहाँ चेक करें 👇\n` +
-                `https://jyotishtark.in/numerology.html`;
-
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function openFullKundaliFromNumerology() {
-            const dob = document.getElementById('dob').value;
-            const name = document.getElementById('name').value.trim() || 'Seeker';
-            if (dob) {
-                localStorage.setItem('jt_prefill_dossier', JSON.stringify({
-                    name: name,
-                    dob: dob,
-                    lang: 'hi',
-                    autoRun: true
-                }));
-                window.location.href = `kundali-form.html?name=${encodeURIComponent(name)}&dob=${encodeURIComponent(dob)}&lang=hi&autorun=1`;
-            } else {
-                window.location.href = 'kundali-form.html';
-            }
-        }
-
-        function getNumberData(number) {
-            const numberMeanings = {
-                1: {
-            title: "The Leader",
-            meaning: "Number 1 is the primal force of numerology — the spark of creation, the pioneer, the symbol of selfhood. It is the vertical line that stands tall, embodying independence, willpower, and individuality. Those who resonate with the number 1 are often trailblazers: people who thrive when initiating new paths, creating opportunities, and demonstrating courage in the face of obstacles. In ancient numerology, 1 was regarded as the indivisible unity, the foundation upon which all other numbers rest. It corresponds to the Sun — radiant, powerful, and life-giving. Just as the Sun shines alone yet supports all life, Number 1 represents both the privilege and the responsibility of individuality. Culturally, it has been associated with leadership, beginnings, divine unity, and the concept of the self. Psychologically, it reflects the development of ego, confidence, and the ability to stand tall in one’s own truth. Spiritually, it is the reminder that the self is not separate from the universe, but a vessel for divine creativity.",
-            strengths: "People with strong 1 energy possess remarkable determination, self-reliance, and originality. They are natural leaders who can inspire others through action rather than just words. Their ambition drives them to achieve, and their resilience ensures they rise again after setbacks. They think independently and dislike following the crowd, which gives them a visionary edge. Their creativity often takes practical form — inventing, innovating, or building something entirely new. They are courageous, assertive, and capable of making bold decisions. Many are magnetic personalities, admired for their confidence and strength of character. At their best, they combine independence with responsibility, leading others toward progress.",
-            challenges: "The shadow side of Number 1 includes arrogance, dominance, and impatience. Their strong drive for independence can sometimes lead them to isolate themselves or refuse help, creating unnecessary struggles. They may dismiss others’ opinions, becoming rigidly attached to their own way of doing things. In relationships, they can come across as controlling or self-centered. Impulsiveness and a quick temper may also cause conflict. If not careful, their ambition can push them toward workaholism or power struggles. The deeper challenge of Number 1 is learning humility, cooperation, and respect for others’ contributions.",
-            purpose: "The soul mission of Number 1 is to develop individuality and leadership that benefits not just the self but others as well. They are here to prove that independence does not mean isolation — it means standing in one’s truth while inspiring others to do the same. Their purpose is to initiate, to begin, to innovate, and to show what is possible when courage is paired with vision.",
-            relationships: "In love and friendships, Number 1 craves independence and respect. They need partners who admire their strength but are not intimidated by it. Balance is crucial, as they may unintentionally dominate or overlook the needs of their partner. They are passionate and protective but must learn compromise and sensitivity. Ideal partners for Number 1 are those who are strong in their own right, capable of standing beside them rather than behind them.",
-            career: "Number 1 individuals shine in careers that allow them to lead, innovate, and take initiative. They thrive in entrepreneurship, business leadership, administration, politics, technology, creative industries, and pioneering sciences. Any profession where they can be the first, the initiator, or the visionary suits them well.",
-            personalMessage: "You are here to lead, to create, and to stand tall in your individuality. Your courage and vision are gifts to the world, but they must be balanced with humility and respect for others. Do not fear being different — your uniqueness is your strength. Trust your instincts, take initiative, and blaze new trails with confidence."
-        },
-                2: {
-            title: "The Diplomat",
-            meaning: "Number 2 is the vibration of harmony, partnership, balance, and sensitivity. It is the number that transforms individuality into connection, turning ‘I’ into ‘we.’ Where Number 1 stands alone, Number 2 seeks union. It represents cooperation, diplomacy, and the ability to create peace in places of conflict. Symbolically, it is the number of the Moon, reflecting gentleness, intuition, and emotional depth. People influenced by this energy often have a natural gift for bringing others together, sensing the unspoken emotions in a room, and building bridges where there are divides.",
-            strengths: "The greatest strength of Number 2 lies in their intuition and emotional intelligence. They can read people easily, sensing feelings that are hidden beneath words. This makes them gifted peacemakers, counselors, and mediators. They are cooperative, gentle, patient, and supportive. Their sensitivity allows them to connect with others on a soul-deep level, creating relationships built on trust and understanding.",
-            challenges: "Because of their sensitivity, Number 2 can sometimes struggle with insecurity, overthinking, indecision, or fear of conflict. They may avoid speaking their truth in order to keep the peace, leading to resentment or suppressed emotions. Their deep empathy can cause them to absorb the feelings of others, leaving them drained or overwhelmed.",
-            purpose: "The soul purpose of Number 2 is to embody peace, harmony, and cooperation in the world. They are here to bring people together, heal divisions, and show the beauty of partnership. By mastering self-confidence and learning to honor their own needs while still caring for others, they fulfill their role as a bringer of peace and balance.",
-            relationships: "In love, Number 2 is deeply loyal, affectionate, and nurturing. They thrive in relationships where emotional intimacy and mutual respect are present. They are natural romantics who crave deep bonds of trust and closeness. However, they must be mindful not to lose themselves in their partners or become overly dependent.",
-            career: "Number 2s excel in careers that involve teamwork, collaboration, healthcare, psychology, teaching, diplomacy, music, art, and design. They are excellent mediators, negotiators, and advisors.",
-            personalMessage: "You are the peacemaker, the harmonizer, and the soul that nurtures connection. Your sensitivity is not a weakness — it is your greatest gift. Trust your intuition, for it guides you with remarkable accuracy. Remember that your needs matter just as much as those of others."
-        },
-                3: {
-            title: "The Creative & Wise Guru",
-            meaning: "Number 3 (governed by Brihaspati / Jupiter in Vedic Numerology) is the vibration of higher wisdom, self-expression, joy, creativity, and communication. It is the number of the teacher, counselor, strategist, and inspirer. People influenced by Number 3 radiate ethical pride, knowledge, and enthusiasm, attracting respect through their wisdom and ability to guide others.",
-            strengths: "The strengths of Number 3 are centered around wisdom, creativity, communication, and inspiration. They possess strong moral principles, leadership counsel, and an ability to grasp complex subjects rapidly. Their optimism and intellect light up any room they enter.",
-            challenges: "Despite their brilliance, Number 3 individuals can sometimes scatter their energy across too many responsibilities or feel unappreciated when people take their free advice for granted. Learning focused execution and financial discipline is essential for them.",
-            purpose: "The purpose of Number 3 is to uplift the world through knowledge, dharmic leadership, teaching, and creative expression. When they combine their vision with disciplined action, they achieve both high social honor and lasting wealth.",
-            relationships: "In love, Number 3 values mutual respect, loyalty, and intellectual depth. They are generous and protective partners who keep family values at the center of their life.",
-            career: "Number 3s thrive in education, administration, judiciary/law, finance, advisory/consulting, medicine, writing, public speaking, and leadership roles where their wisdom is respected.",
-            personalMessage: "You carry the grace of Guru (Brihaspati). Your knowledge, integrity, and voice are meant to guide and uplift others. Focus your energy on one grand goal at a time, and your rise to authority is guaranteed."
-        },
-                4: {
-            title: "The Builder & Maverick",
-            meaning: "Number 4 (governed by Rahu / Uranus) is the vibration of stability, discipline, unconventional genius, and foundation. Represented by the square, Number 4 energy is practical, hardworking, and capable of seeing patterns that ordinary minds miss. Spiritually, it anchors big dreams into tangible reality through relentless effort.",
-            strengths: "People influenced by Number 4 are diligent, methodical, and fearless problem-solvers. They have a natural ability to plan, organize, and build systems out of chaos. Their persistence allows them to achieve long-term breakthroughs.",
-            challenges: "Number 4 individuals often face sudden ups and downs or feel misunderstood by traditional thinkers. They must guard against stubbornness, over-skepticism, or carrying excessive workload alone.",
-            purpose: "The purpose of Number 4 is to build enduring physical, financial, and technological structures—proving that disciplined persistence conquers every obstacle.",
-            relationships: "In love and relationships, Number 4 values deep loyalty, honesty, and commitment over superficial romance. They show love through unwavering protection and action.",
-            career: "Number 4s excel in engineering, IT/software, architecture, real estate, law, science, administration, and complex operational management.",
-            personalMessage: "You are the architect of your own destiny. Even when life tests you with sudden turns, your ability to rebuild stronger than before makes you unstoppable."
-        },
-                5: {
-            title: "The Freedom Seeker",
-            meaning: "Number 5 (governed by Budh / Mercury) embodies intelligence, business acumen, freedom, adaptability, and speed. Situated at the exact center of the numerological grid (1 to 9), Number 5 balances all energies and excels in communication, commerce, and quick decision-making.",
-            strengths: "Adaptability, razor-sharp logic, financial intelligence, and magnetic communication. Number 5s bounce back from setbacks faster than any other number and connect effortlessly with powerful networks.",
-            challenges: "Restlessness, mental over-activity at night, and impatience with slow processes. Learning long-term consistency turns their quick wit into massive wealth.",
-            purpose: "To master communication, commerce, and adaptability—bridging people, ideas, and opportunities across the world.",
-            relationships: "Passionate, witty, and engaging. Number 5 needs a partner who is intellectually stimulating and respects their personal space.",
-            career: "Business & entrepreneurship, trade, finance/stock markets, IT, media, journalism, marketing, and consultancy.",
-            personalMessage: "Your mind is your greatest treasury. Channel your quicksilver Mercury intelligence into disciplined wealth-building, and no goal is out of your reach."
-        },
-                6: {
-            title: "The Nurturer & Magnet",
-            meaning: "Number 6 (governed by Shukra / Venus) is the vibration of charisma, luxury, love, responsibility, and harmony. It is the energy of the healer, the artist, and the protector of family and grace.",
-            strengths: "Natural personal magnetism, compassion, aesthetic refinement, and deep devotion to loved ones. Number 6 attracts wealth, vehicles, and social admiration.",
-            challenges: "Over-sacrificing for ungrateful people, emotional attachment, and struggling to say 'no' when family or friends take advantage of their kindness.",
-            purpose: "To create beauty, financial abundance, and emotional harmony while maintaining healthy personal boundaries.",
-            relationships: "Devoted, romantic, and deeply loyal. Number 6 thrives in a harmonious marriage built on mutual care and appreciation.",
-            career: "Luxury & lifestyle businesses, healthcare/medicine, design, arts, hospitality, teaching, counseling, and public relations.",
-            personalMessage: "You are blessed by Venus with charm and a golden heart. Protect your emotional boundaries as carefully as you protect others, and abundance will flow to you effortlessly."
-        },
-                7: {
-            title: "The Mystic Seeker",
-            meaning: "Number 7 (governed by Ketu / Neptune) is the vibration of deep research, intuition, analysis, and spiritual awakening. It is the archetype of the scientist, diagnostic healer, philosopher, and truth-seeker who looks beneath the surface of life.",
-            strengths: "Prophetic gut intuition, X-ray analytical depth, originality, and spiritual wisdom. Number 7s uncover root causes that everyone else overlooks.",
-            challenges: "Overthinking in solitude, emotional detachment, and feeling that very few people truly understand their inner world.",
-            purpose: "To uncover hidden truths—whether in science, medicine, technology, or spirituality—and share that enlightenment with humanity.",
-            relationships: "Values soul-deep honesty and mental connection over loud social displays. Loyal and protective once trust is earned.",
-            career: "Research & development, medicine/diagnostics, data science, occult/astrology, psychology, law, writing, and strategy.",
-            personalMessage: "Your sixth sense is a divine radar. Trust your first gut instinct, balance solitude with action, and your research mind will bring extraordinary recognition."
-        },
-                8: {
-            title: "The Karmic Achiever",
-            meaning: "Number 8 (governed by Shani / Saturn) is the vibration of power, karmic justice, endurance, authority, and material empire-building. Turned sideways, 8 is the symbol of infinity—representing the balance between relentless effort and massive reward.",
-            strengths: "Unbreakable willpower, administrative command, financial strategy, and the ability to turn heavy struggle into permanent authority.",
-            challenges: "Early-life delays, carrying heavy family responsibilities silently, and being misunderstood as strict when you are actually deeply fair and loyal.",
-            purpose: "To master patience, justice, and large-scale leadership—building an enduring financial and social legacy.",
-            relationships: "Deeply committed and protective, showing love through lifelong responsibility and action rather than empty words.",
-            career: "Administration, judiciary/law, real estate, manufacturing, finance, politics, medicine, and large-scale enterprise.",
-            personalMessage: "Saturn delays, but never denies. Every test you have endured has forged you for permanent leadership—your second half of life is built for royal stability."
-        },
-                9: {
-            title: "The Commander & Humanitarian",
-            meaning: "Number 9 (governed by Mangal / Mars) is the vibration of courage, completion, willpower, and righteous leadership. It combines warrior fire with deep humanitarian compassion.",
-            strengths: "Fearless determination, high physical and mental energy, protective loyalty, and the courage to conquer any competition.",
-            challenges: "Impulsive anger when witnessing injustice, restlessness, and getting hurt when people fail to match your 100% loyalty.",
-            purpose: "To lead with courage, protect the vulnerable, and channel fiery Mars energy into constructive victory.",
-            relationships: "Passionate, protective, and 100% authentic. Needs a partner who respects their self-respect and warmth.",
-            career: "Defense/administration, surgery/medicine, engineering, sports, entrepreneurship, real estate, and leadership.",
-            personalMessage: "You carry the invincible fire of Mars. When you channel your energy with calm strategy rather than haste, no obstacle can stand in front of you."
-        },
-                11: {
-            title: "The Illuminator (Master Number 11/2)",
-            meaning: "Number 11 is the first Master Number, combining the double leadership of Sun (1+1) with the intuitive depth of Moon (2). It is a high-voltage spiritual and visionary channel.",
-            strengths: "Extraordinary intuition, charisma, creative brilliance, and the ability to inspire masses.",
-            challenges: "Nervous tension, absorbing others' stress, and high internal expectations.",
-            purpose: "To bridge spiritual wisdom with real-world leadership and illuminate the path for others.",
-            relationships: "Seeks a deep, soulful twin-flame bond built on emotional transparency and respect.",
-            career: "Advisory, healing/medicine, teaching, media, psychology, spirituality, and visionary leadership.",
-            personalMessage: "You carry a rare Master Vibration. Ground your nervous system through meditation, trust your intuition, and step boldly into your leadership calling."
-        },
-                22: {
-            title: "The Master Builder (Master Number 22/4)",
-            meaning: "Number 22 combines the intuitive vision of 11 with the practical engineering power of 4—making it the most powerful manifestation number for building large-scale institutions and legacies.",
-            strengths: "Monumental vision paired with practical execution, organizational genius, and global-scale ambition.",
-            challenges: "Carrying immense mental pressure and perfectionism.",
-            purpose: "To turn seemingly impossible dreams into concrete reality that benefits society for generations.",
-            relationships: "Needs a grounded, supportive partner who understands their big mission in life.",
-            career: "Large-scale enterprise, architecture, technology, public policy, infrastructure, and finance.",
-            personalMessage: "You are the Master Builder. Think on a grand scale and back your vision with step-by-step discipline—your chart is wired to leave a lasting legacy."
-        },
-                33: {
-            title: "The Master Teacher (Master Number 33/6)",
-            meaning: "Number 33 combines the wisdom of Jupiter (3+3) with the nurturing love of Venus (6), representing the highest vibration of healing, teaching, and selfless upliftment.",
-            strengths: "Magnetic healing presence, supreme wisdom, artistic grace, and compassionate authority.",
-            challenges: "Taking on the emotional burdens of everyone around you while neglecting your own rest.",
-            purpose: "To heal, teach, and uplift humanity through wisdom and unconditional grace.",
-            relationships: "Deeply nurturing, protective, and devoted to family harmony.",
-            career: "Medicine & healing, education, counseling, spiritual leadership, arts, and philanthropy.",
-            personalMessage: "You are the Master Teacher. Protect your own energy as you heal and guide others—your wisdom is a rare blessing to everyone who meets you."
-        }
-            };
-            
-            return numberMeanings[number] || numberMeanings[reduceToSingleDigitStrict(number)];
-        }
-        
-        function showNumberDetails(number) {
-            const numberData = getNumberData(number);
-            const meta = PLANET_BY_NUMBER[number] || PLANET_BY_NUMBER[1];
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <h2 class="text-2xl font-bold text-amber-300 mb-2 text-center">Number ${number}: ${numberData.title}</h2>
-                <p class="text-center text-sm text-purple-200 font-semibold mb-4">Ruling Planet: ${meta.planet} • Lucky Numbers: ${meta.luckyNums}</p>
-                <div class="number-circle mx-auto mb-6">${number}</div>
-                <p class="text-gray-200 mb-4 text-sm md:text-base leading-relaxed">${numberData.meaning}</p>
-                
-                <h3 class="text-lg font-bold text-amber-300 mb-1 mt-4">Strengths</h3>
-                <p class="text-gray-300 mb-3 text-sm leading-relaxed">${numberData.strengths}</p>
-                
-                <h3 class="text-lg font-bold text-amber-300 mb-1">Challenges</h3>
-                <p class="text-gray-300 mb-3 text-sm leading-relaxed">${numberData.challenges}</p>
-                
-                <h3 class="text-lg font-bold text-amber-300 mb-1">Relationships & Career</h3>
-                <p class="text-gray-300 mb-5 text-sm leading-relaxed">${numberData.relationships} ${numberData.career}</p>
-                
-                <div class="text-center">
-                    <a href="#calculator" onclick="closeModal()" class="primary-button text-sm">
-                        <i class="fas fa-calculator mr-2"></i>
-                        Check My Full Numerology & Name Number
-                    </a>
-                </div>
-            `;
-            document.getElementById('numberModal').classList.remove('hidden');
-        }
-
-        function showMasterNumbers() {
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <h2 class="text-2xl font-bold text-amber-300 mb-4 text-center">Master Numbers (11, 22 & 33)</h2>
-                <p class="text-gray-300 mb-6 text-sm md:text-base">Master Numbers (11, 22, and 33) carry higher spiritual vibrations and greater potential. They are not reduced to a single digit in numerology calculations.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-xl border border-amber-400/30">
-                        <div class="number-circle mx-auto mb-3" style="width:60px;height:60px;font-size:22px;background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);">11</div>
-                        <h3 class="font-bold text-white text-center mb-1">The Illuminator</h3>
-                        <p class="text-gray-300 text-xs text-center">Heightened intuition and spiritual insight that inspires others.</p>
-                    </div>
-                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-xl border border-pink-400/30">
-                        <div class="number-circle mx-auto mb-3" style="width:60px;height:60px;font-size:22px;background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">22</div>
-                        <h3 class="font-bold text-white text-center mb-1">The Master Builder</h3>
-                        <p class="text-gray-300 text-xs text-center">Ability to turn grand dreams into practical reality on a large scale.</p>
-                    </div>
-                    <div class="bg-purple-900 bg-opacity-30 p-4 rounded-xl border border-purple-400/30">
-                        <div class="number-circle mx-auto mb-3" style="width:60px;height:60px;font-size:22px;background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);">33</div>
-                        <h3 class="font-bold text-white text-center mb-1">The Master Teacher</h3>
-                        <p class="text-gray-300 text-xs text-center">Extraordinary compassion and healing wisdom to serve humanity.</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <a href="#calculator" onclick="closeModal()" class="primary-button text-sm">
-                        <i class="fas fa-calculator mr-2"></i>
-                        Calculate My Number
-                    </a>
-                </div>
-            `;
-            document.getElementById('numberModal').classList.remove('hidden');
-        }
-        
-        function closeModal() {
-            document.getElementById('numberModal').classList.add('hidden');
-        }
-    </script>
 
     <script src="reviews-data.js"></script>
     <script src="jt-reviews.js?v=2" defer></script>

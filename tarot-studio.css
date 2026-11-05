@@ -121,6 +121,7 @@
 .tt-verdict h2 { margin: 6px 0 8px; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.25; }
 .tt-verdict h2 span { color: var(--jt-maroon); }
 .tt-q { margin: 0 0 10px; font-family: var(--jt-serif); font-size: 19px; color: var(--jt-body); }
+.tt-plain { margin: 0 0 12px; padding: 12px 14px; border-radius: 12px; background: var(--jt-ivory); border-left: 4px solid var(--jt-maroon); font-size: 17px; line-height: 1.6; color: var(--jt-ink); }
 .tt-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .tt-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #F3E9D6; border: 1px solid #E2D2B0; font-size: 14px; color: var(--jt-ink); }
 .tt-meter { text-align: center; background: var(--jt-ivory); border: 1px solid var(--jt-line); border-radius: 18px; padding: 22px 18px; }
