@@ -1,7 +1,7 @@
 /* ==========================================================================
    JYOTISH TARK — KUNDALI PAYMENT SCREEN
    Default: ₹2,100 handmade kundali (order form on kundali-form.html).
-   An order may carry its own amount / product / delivery (e.g. the ₹1,100
+   An order may carry its own amount / product / delivery (e.g. the ₹1,101
    sampurna kundali from sampurna-preview.js).
    Edit only the settings block below.
    ========================================================================== */
@@ -32,6 +32,8 @@ window.JT_PAY = Object.assign({
   }
 
   const amt = (o) => (o && o.amount) || P.amount;
+  // per-order link (e.g. Cashfree form for the sampurna kundali); the global link only for the default product
+  const payLink = (o) => (o && o.payLink) || (!(o && o.amount) || Number(o.amount) === Number(P.amount) ? P.onlinePayLink : "");
   const inr = (n) => Number(n).toLocaleString("en-IN");
 
   function upiLink(orderId, amount) {
@@ -93,7 +95,7 @@ window.JT_PAY = Object.assign({
       <ol>
         <li><div>
           <b>₹${A} भुगतान करें</b>
-          ${P.onlinePayLink ? `<div style="margin:.5rem 0"><a class="jtp-btn jtp-gold" href="${esc(P.onlinePayLink)}" target="_blank" rel="noopener">💳 ऑनलाइन भुगतान (Card / UPI / Net Banking)</a></div><p class="jtp-note">या UPI से सीधे:</p>` : ""}
+          ${payLink(order) ? `<div style="margin:.5rem 0"><a class="jtp-btn jtp-gold" id="jtpOnline" href="${esc(payLink(order))}" target="_blank" rel="noopener">💳 ऑनलाइन भुगतान (Card / UPI / Net Banking)</a></div><p class="jtp-note">फ़ॉर्म में अपना जन्म विवरण और ऑर्डर नंबर <b>${esc(order.orderId)}</b> भरें। भुगतान के बाद अलग से स्क्रीनशॉट भेजने की ज़रूरत नहीं।</p><p class="jtp-note">या UPI से सीधे:</p>` : ""}
           <div class="jtp-pay">
             <div class="jtp-qr"><img src="${esc(P.qrImage)}" alt="UPI QR code — ${esc(P.payeeName)}" width="160" height="160"></div>
             <div>

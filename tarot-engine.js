@@ -1138,7 +1138,7 @@
       `• Spread: ${modeObj.titleEn}\n` +
       `• Cards Drawn: ${cardNamesEn}\n` +
       `• Probability Score: ${prob}%\n` +
-      `I want to book my ₹1,100 Sampurna Kundali to understand these planetary blocks.`
+      `I want to book my ₹1,101 Sampurna Kundali to understand these planetary blocks.`
     );
     const waUrl = `https://wa.me/918318513814?text=${waText}`;
 

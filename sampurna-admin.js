@@ -1,4 +1,4 @@
-/* Jyotish Tark — private admin mode for the ₹1,100 Sampurna Kundali PDF.
+/* Jyotish Tark — private admin mode for the ₹1,101 Sampurna Kundali PDF.
    Opens only with kundali-form.html?jtadmin=1 (link in the customer's WhatsApp order message,
    or from sampurna-admin.html). A light passcode keeps casual visitors out; nothing is stored. */
 (function () {

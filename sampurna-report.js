@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JYOTISH TARK — ₹1,100 SAMPURNA KUNDALI: printable A4 report (Hindi)
+   JYOTISH TARK — ₹1,101 SAMPURNA KUNDALI: printable A4 report (Hindi)
    Built from the same calculations as the free dossier on kundali-form.html:
    window.__jyotishLastCtx, window.__jtVedicData, FreeReport._internal.buildModel
    and the chapter sections the dossier has just rendered.

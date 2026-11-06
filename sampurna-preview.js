@@ -1,5 +1,5 @@
 /* ==========================================================================
-   JYOTISH TARK — ₹1,100 SAMPURNA KUNDALI PREVIEW (traditional patri style)
+   JYOTISH TARK — ₹1,101 SAMPURNA KUNDALI PREVIEW (traditional patri style)
    Shown below the free dossier on kundali-form.html. Visible parts use the
    visitor's real computed chart; locked parts show only placeholder bars —
    the real 30-page report is prepared after payment, so nothing hidden here
@@ -8,7 +8,8 @@
    ========================================================================== */
 (function () {
   "use strict";
-  const PRICE = 1100, HAND = 2100;
+  const PRICE = 1101, HAND = 2100;
+  const PAY_LINK = "https://payments.cashfree.com/forms/sampurnakundali";
   const RASHI = [null, "मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"];
   const PL = { Asc: "लग्न", Sun: "सूर्य", Moon: "चंद्र", Mars: "मंगल", Mercury: "बुध", Jupiter: "गुरु", Venus: "शुक्र", Saturn: "शनि", Rahu: "राहु", Ketu: "केतु" };
   const PS = { Sun: "सू", Moon: "चं", Mars: "मं", Mercury: "बु", Jupiter: "गु", Venus: "शु", Saturn: "श", Rahu: "रा", Ketu: "के" };
@@ -191,7 +192,7 @@
     out.push(sec(12, "योग, दोष, वर्षफल 2027 व उपाय", "26–30", `<p class="sp-t">${ys.length ? `आपकी कुंडली में <b style="color:#7A1F1F">${ys.length} शुभ योग</b> मिले — जिनमें एक <b>${esc(strip(ys[0].title))}</b> है।` : "आपकी कुंडली के योग और उनका फल पूरी रिपोर्ट में।"}${cs.length ? ` साथ ही <b>${cs.length} संवेदनशील बिंदु</b> जिन पर ध्यान देना है।` : ""}</p>${bars([72, 90, 58, 80])}${lock("सभी योगों का फल, दोष-विचार, 2027 का वर्षफल, मंत्र, दान व रत्न-विचार")}`));
 
     out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
-      <ol><li>UPI से ₹${PRICE.toLocaleString("en-IN")} भुगतान करें</li><li>भुगतान का स्क्रीनशॉट WhatsApp पर भेजें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
+      <ol><li>₹${PRICE.toLocaleString("en-IN")} ऑनलाइन (Card / UPI / Net Banking) या सीधे UPI से भुगतान करें</li><li>UPI से भुगतान किया हो तो स्क्रीनशॉट WhatsApp पर भेजें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
       <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
       <div class="sp-hand"><b>ज्योतिषी द्वारा हस्तनिर्मित कुंडली — ₹${HAND.toLocaleString("en-IN")}</b><p>ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली का अध्ययन करके लिखते हैं · 5–7 दिन में · <a href="#" id="spHandBtn">ऑर्डर करें</a></p></div>
@@ -200,7 +201,7 @@
     return { html: out.join(""), order: { name: ctx.name, dob: ctx.dob, tob: tob, pob: pob } };
   }
 
-  // The ₹1,100 preview lives in its own workspace (#sampurnaWorkspaceContainer);
+  // The ₹1,101 preview lives in its own workspace (#sampurnaWorkspaceContainer);
   // the free dossier only gets a small link card to it.
   function teaser() {
     let card = document.getElementById("chapter-sampurna");
@@ -208,7 +209,7 @@
       card = document.createElement("article");
       card.id = "chapter-sampurna";
       card.className = "no-print";
-      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,100) का प्रीव्यू तैयार है</b><span>35+ पेज · 17 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
+      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,101) का प्रीव्यू तैयार है</b><span>35+ पेज · 17 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
     }
     const dk = document.getElementById("chapter-dakshina");
     const out = document.getElementById("masterDossierOutput");
@@ -228,7 +229,7 @@
     pay.addEventListener("click", () => {
       const payHost = host.querySelector("#spPayHost");
       if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock">UPI 8318513814@ptsbi पर ₹${PRICE} भेजें और स्क्रीनशॉट WhatsApp 8318513814 पर भेजें।</p>`; return; }
-      const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, product: "सम्पूर्ण कुंडली", delivery: "24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर भेजी जाएगी।" }, res.order);
+      const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, payLink: PAY_LINK, product: "सम्पूर्ण कुंडली", delivery: "24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर भेजी जाएगी।" }, res.order);
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const g = (document.getElementById("userGender") || {}).value || "";
       const u = new URLSearchParams({ jtadmin: "1", o: order.orderId, n: order.name || "", g: g, m: (document.getElementById("spMarital") || {}).value || "", d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "" });

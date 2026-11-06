@@ -216,7 +216,7 @@
     email: "jyotishtark@gmail.com",
     acharyaHi: "आचार्य ज्ञानेन्द्र सिंह तोमर",
     acharyaEn: "Acharya Gyanendra Singh Tomar",
-    fullPrice: "₹1,100",
+    fullPrice: "₹1,101",
     fullPriceStrike: ""
   };
 

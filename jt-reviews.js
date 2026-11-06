@@ -163,7 +163,7 @@
         <label class="jtr-f"><span>आपका नाम *</span><input name="name" required maxlength="60" autocomplete="name"></label>
         <label class="jtr-f"><span>शहर</span><input name="city" maxlength="40" autocomplete="address-level2"></label>
         <label class="jtr-f"><span>कौन-सी सेवा ली?</span><select name="service">
-          <option>निःशुल्क कुंडली</option><option>सम्पूर्ण कुंडली (₹1,100)</option><option>हस्तनिर्मित कुंडली (₹2,100)</option><option>व्यक्तिगत परामर्श</option>
+          <option>निःशुल्क कुंडली</option><option>सम्पूर्ण कुंडली (₹1,101)</option><option>हस्तनिर्मित कुंडली (₹2,100)</option><option>व्यक्तिगत परामर्श</option>
           <option>रुद्राक्ष</option><option>अंक ज्योतिष</option><option>अन्य</option></select></label>
         <div class="jtr-f"><span>रेटिंग *</span><div class="jtr-rate" role="radiogroup" aria-label="रेटिंग">
           ${[1, 2, 3, 4, 5].map((n) => `<button type="button" role="radio" aria-checked="false" aria-label="${n} स्टार" data-v="${n}">★</button>`).join("")}</div></div>
