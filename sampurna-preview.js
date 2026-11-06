@@ -192,7 +192,7 @@
     out.push(sec(12, "योग, दोष, वर्षफल 2027 व उपाय", "26–30", `<p class="sp-t">${ys.length ? `आपकी कुंडली में <b style="color:#7A1F1F">${ys.length} शुभ योग</b> मिले — जिनमें एक <b>${esc(strip(ys[0].title))}</b> है।` : "आपकी कुंडली के योग और उनका फल पूरी रिपोर्ट में।"}${cs.length ? ` साथ ही <b>${cs.length} संवेदनशील बिंदु</b> जिन पर ध्यान देना है।` : ""}</p>${bars([72, 90, 58, 80])}${lock("सभी योगों का फल, दोष-विचार, 2027 का वर्षफल, मंत्र, दान व रत्न-विचार")}`));
 
     out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
-      <ol><li>₹${PRICE.toLocaleString("en-IN")} ऑनलाइन (Card / UPI / Net Banking) या सीधे UPI से भुगतान करें</li><li>UPI से भुगतान किया हो तो स्क्रीनशॉट WhatsApp पर भेजें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
+      <ol><li>Cashfree के सुरक्षित पेज पर ₹${PRICE.toLocaleString("en-IN")} का ऑनलाइन भुगतान करें</li><li>पेमेंट फ़ॉर्म में जन्म विवरण और ऑर्डर नंबर भरें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
       <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
       <div class="sp-hand"><b>ज्योतिषी द्वारा हस्तनिर्मित कुंडली — ₹${HAND.toLocaleString("en-IN")}</b><p>ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली का अध्ययन करके लिखते हैं · 5–7 दिन में · <a href="#" id="spHandBtn">ऑर्डर करें</a></p></div>
@@ -228,7 +228,7 @@
     const pay = host.querySelector("#spPayBtn");
     pay.addEventListener("click", () => {
       const payHost = host.querySelector("#spPayHost");
-      if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock">UPI 8318513814@ptsbi पर ₹${PRICE} भेजें और स्क्रीनशॉट WhatsApp 8318513814 पर भेजें।</p>`; return; }
+      if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock"><a href="${PAY_LINK}" target="_blank" rel="noopener">₹${PRICE} का ऑनलाइन भुगतान करें (Cashfree) →</a></p>`; return; }
       const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, payLink: PAY_LINK, product: "सम्पूर्ण कुंडली", delivery: "24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर भेजी जाएगी।" }, res.order);
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const g = (document.getElementById("userGender") || {}).value || "";

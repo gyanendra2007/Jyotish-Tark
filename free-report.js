@@ -1047,7 +1047,7 @@
         ])}
         ${nm ? `<div class="csum">${T(`<b>जीवन-सार:</b> मूलांक ${nm.mulank} आपको ${NUMT(nm.mulank, "trait")} देता है, और भाग्यांक ${nm.bhagyank} जीवन को ${NUMT(nm.bhagyank, "trait")} की ओर ले जाता है।`, `<b>Life in brief:</b> Birth number ${nm.mulank} gives you ${NUMT(nm.mulank, "trait")}, and destiny number ${nm.bhagyank} steers life towards ${NUMT(nm.bhagyank, "trait")}.`)}</div>` : ""}
         <div class="cqr">
-          ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">UPI<br>${esc(OPT.phone)}</div>`}
+          ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">Pay<br>online</div>`}
           <div>
             <b>${T("गुरु-दक्षिणा एवं परामर्श", "Guru-Dakshina & Consultation")}</b>
             <p>${T("यह परिचय कुंडली निःशुल्क है। यदि यह उपयोगी लगी, तो श्रद्धानुसार गुरु-दक्षिणा हेतु QR स्कैन करें। पूर्ण कुंडली व व्यक्तिगत उपाय हेतु WhatsApp करें:", "This introductory kundali is free. If it helped you, scan the QR to offer Guru-Dakshina as you wish. For the full kundali and personal remedies, WhatsApp:")} <b>${esc(OPT.phone)}</b></p>
@@ -1353,10 +1353,10 @@
         <ul>${full.map((x) => `<li>✔ ${x}</li>`).join("")}</ul>
       </div>
       <div class="bigqr">
-        ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">UPI<br>${esc(OPT.phone)}</div>`}
+        ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">Pay<br>online</div>`}
         <div>
           <div class="bq1">🙏 ${T("गुरु-दक्षिणा / पूर्ण कुंडली हेतु स्कैन करें", "Scan for Guru-Dakshina / Full Kundali")}</div>
-          <p>${T("किसी भी UPI ऐप (GPay, PhonePe, Paytm) से स्कैन करें। भुगतान के बाद स्क्रीनशॉट और रिपोर्ट क्रमांक WhatsApp करें।", "Scan with any UPI app (GPay, PhonePe, Paytm). After payment, WhatsApp the screenshot and your report ID.")}</p>
+          <p>${T("QR स्कैन करें — Cashfree का सुरक्षित पेज खुलेगा, जहाँ Card, UPI ऐप या Net Banking से गुरु-दक्षिणा दे सकते हैं। पूर्ण कुंडली के लिए jyotishtark.in/sampurna-kundali.html देखें।", "Scan the QR to open our secure Cashfree page and offer Guru-Dakshina by card, UPI app or net banking. For the full kundali, visit jyotishtark.in/sampurna-kundali.html.")}</p>
           <p class="contact">📱 ${esc(OPT.phone)} • ✉ ${esc(OPT.email)} • 🌐 ${esc(OPT.site)}</p>
           <p class="sig">${T(OPT.acharyaHi, OPT.acharyaEn)}<br><small>${T("ज्योतिष तर्क", "Jyotish Tark")}</small></p>
         </div>

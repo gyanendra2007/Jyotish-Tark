@@ -1,28 +1,24 @@
 /* ==========================================================================
    JYOTISH TARK — KUNDALI PAYMENT SCREEN
+   All payments go through Cashfree payment forms (no direct UPI ID / QR).
    Default: ₹2,100 handmade kundali (order form on kundali-form.html).
    An order may carry its own amount / product / delivery (e.g. the ₹1,101
    sampurna kundali from sampurna-preview.js).
    Edit only the settings block below.
    ========================================================================== */
 window.JT_PAY = Object.assign({
-  upiId: "8318513814@ptsbi",          // from your QR code
-  payeeName: "GYANENDRA SINGH TOMAR",
   amount: 2100,
   product: "हस्तनिर्मित कुंडली",
   delivery: "भुगतान मिलने के बाद ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली तैयार करके 5–7 दिन में WhatsApp व ईमेल पर भेजेंगे।",
   whatsapp: "918318513814",
-  qrImage: "qr-code.png",
-  // Optional: paste a Razorpay / Cashfree payment-page link here later.
-  // When filled in, a "Pay online (Card / UPI / Net Banking)" button appears first.
-  onlinePayLink: ""
+  // Cashfree payment form for the default product (an order may carry its own payLink)
+  onlinePayLink: "https://payments.cashfree.com/forms/handmadekundali"
 }, window.JT_PAY || {});
 
 (function () {
   "use strict";
   const P = window.JT_PAY;
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const isPhone = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
 
   function newOrderId() {
     const d = new Date();
@@ -33,13 +29,8 @@ window.JT_PAY = Object.assign({
 
   const amt = (o) => (o && o.amount) || P.amount;
   // per-order link (e.g. Cashfree form for the sampurna kundali); the global link only for the default product
-  const payLink = (o) => (o && o.payLink) || (!(o && o.amount) || Number(o.amount) === Number(P.amount) ? P.onlinePayLink : "");
+  const payLink = (o) => (o && o.payLink) || P.onlinePayLink;
   const inr = (n) => Number(n).toLocaleString("en-IN");
-
-  function upiLink(orderId, amount) {
-    // UPI apps expect the "@" in the UPI ID unencoded
-    return `upi://pay?pa=${P.upiId}&pn=${encodeURIComponent(P.payeeName)}&am=${amount || P.amount}&cu=INR&tn=${encodeURIComponent("Kundali " + orderId)}`;
-  }
 
   function whatsappText(o) {
     return [
@@ -50,7 +41,7 @@ window.JT_PAY = Object.assign({
       `Place: ${o.pob || "-"}`,
       `Phone: ${o.phone || "-"}  Email: ${o.email || "-"}`,
       ``,
-      `I have paid ₹${amt(o)}. Payment screenshot attached.`
+      `Paid online through Cashfree (order ID entered in the payment form).`
     ].concat(o.adminLink ? ["", `रिपोर्ट लिंक (ज्योतिष तर्क उपयोग हेतु): ${o.adminLink}`] : []).join("\n");
   }
 
@@ -62,11 +53,7 @@ window.JT_PAY = Object.assign({
   .jtp ol{margin:0;padding:0;list-style:none;display:grid;gap:1rem;counter-reset:s}
   .jtp li{display:grid;grid-template-columns:2rem 1fr;gap:.75rem;align-items:start;counter-increment:s}
   .jtp li::before{content:counter(s);width:2rem;height:2rem;border-radius:50%;background:#f59e0b;color:#1f2937;font-weight:800;display:flex;align-items:center;justify-content:center}
-  .jtp .jtp-pay{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
-  .jtp .jtp-qr{width:160px;height:160px;background:#fff;border-radius:.6rem;padding:.4rem;box-sizing:border-box;flex-shrink:0}
-  .jtp .jtp-qr img{width:100%;height:100%;object-fit:contain;display:block}
   .jtp .jtp-amt{font-size:1.6rem;font-weight:800;color:#fbbf24}
-  .jtp .jtp-upi{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.35rem 0}
   .jtp code{font-family:ui-monospace,Consolas,monospace;background:#0b1222;border:1px solid #334155;border-radius:.4rem;padding:.3rem .55rem;color:#fff;word-break:break-all}
   .jtp .jtp-btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border:0;border-radius:999px;padding:.7rem 1.2rem;font-weight:700;cursor:pointer;text-decoration:none;font-size:.95rem;font-family:inherit}
   .jtp .jtp-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#1f2937}
@@ -75,7 +62,6 @@ window.JT_PAY = Object.assign({
   .jtp .jtp-note{font-size:.85rem;color:#94a3b8;margin:.4rem 0 0}
   .jtp .jtp-warn{font-size:.9rem;color:#fca5a5;margin:0 0 .9rem}
   .jtp .jtp-btn:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
-  @media (max-width:520px){.jtp .jtp-qr{width:140px;height:140px}}
   `;
   function css() {
     if (document.getElementById("jtp-css")) return;
@@ -91,42 +77,27 @@ window.JT_PAY = Object.assign({
     host.innerHTML = `<div class="jtp" role="region" aria-label="₹${A} भुगतान">
       <h3>✅ ${esc(order.product || P.product)} — अब ₹${A} का भुगतान करें</h3>
       <p class="jtp-sub">ऑर्डर नंबर <span class="jtp-id">${esc(order.orderId)}</span> — इसे संभाल कर रखें।</p>
-      ${opts.emailFailed ? `<p class="jtp-warn">ईमेल से विवरण नहीं जा सका — कोई बात नहीं, नीचे तीसरे चरण का WhatsApp संदेश आपका पूरा विवरण भेज देगा।</p>` : ""}
+      ${opts.emailFailed ? `<p class="jtp-warn">ईमेल से विवरण नहीं जा सका — कोई बात नहीं, भुगतान फ़ॉर्म में भरा जन्म विवरण हम तक पहुँच जाएगा।</p>` : ""}
       <ol>
         <li><div>
-          <b>₹${A} भुगतान करें</b>
-          ${payLink(order) ? `<div style="margin:.5rem 0"><a class="jtp-btn jtp-gold" id="jtpOnline" href="${esc(payLink(order))}" target="_blank" rel="noopener">💳 ऑनलाइन भुगतान (Card / UPI / Net Banking)</a></div><p class="jtp-note">फ़ॉर्म में अपना जन्म विवरण और ऑर्डर नंबर <b>${esc(order.orderId)}</b> भरें। भुगतान के बाद अलग से स्क्रीनशॉट भेजने की ज़रूरत नहीं।</p><p class="jtp-note">या UPI से सीधे:</p>` : ""}
-          <div class="jtp-pay">
-            <div class="jtp-qr"><img src="${esc(P.qrImage)}" alt="UPI QR code — ${esc(P.payeeName)}" width="160" height="160"></div>
-            <div>
-              <div class="jtp-amt">₹${A}</div>
-              <div class="jtp-upi"><code id="jtpUpi">${esc(P.upiId)}</code><button type="button" class="jtp-btn jtp-ghost" id="jtpCopy">UPI ID कॉपी करें</button></div>
-              ${isPhone() ? `<a class="jtp-btn jtp-gold" href="${esc(upiLink(order.orderId, amt(order)))}">📱 UPI ऐप से भुगतान करें</a>` : ""}
-              <p class="jtp-note">GPay, PhonePe, Paytm या किसी भी UPI ऐप से QR स्कैन करें और राशि ₹${A} भरें।</p>
-            </div>
-          </div>
+          <b>₹${A} का सुरक्षित ऑनलाइन भुगतान करें</b>
+          <div class="jtp-amt" style="margin:.2rem 0 .5rem">₹${A}</div>
+          <a class="jtp-btn jtp-gold" id="jtpOnline" href="${esc(payLink(order))}" target="_blank" rel="noopener">💳 भुगतान करें — Card / UPI / Net Banking</a>
+          <p class="jtp-note">Cashfree का सुरक्षित पेमेंट पेज खुलेगा। उसमें अपना नाम, फ़ोन, जन्म विवरण और ऑर्डर नंबर <b>${esc(order.orderId)}</b> भरें। भुगतान की रसीद आपके ईमेल पर आएगी — स्क्रीनशॉट भेजने की ज़रूरत नहीं।</p>
         </div></li>
         <li><div>
-          <b>भुगतान का स्क्रीनशॉट WhatsApp पर भेजें</b>
-          <p class="jtp-note" style="margin:.2rem 0 .6rem">आपका ऑर्डर नंबर और जन्म-विवरण संदेश में पहले से भरा होगा — बस स्क्रीनशॉट जोड़कर भेजें।</p>
-          <a class="jtp-btn jtp-green" href="${esc(wa)}" target="_blank" rel="noopener">💬 WhatsApp पर भेजें</a>
-        </div></li>
-        <li><div>
-          <b>आपकी कुंडली</b>
-          <p class="jtp-note" style="margin:.2rem 0 0">${esc(order.delivery || P.delivery)}</p>
+          <b>आपकी ${esc(order.product || P.product)}</b>
+          <p class="jtp-note" style="margin:.2rem 0 .6rem">${esc(order.delivery || P.delivery)}</p>
+          <a class="jtp-btn jtp-ghost" href="${esc(wa)}" target="_blank" rel="noopener">💬 ऑर्डर विवरण WhatsApp पर भेजें (वैकल्पिक)</a>
         </div></li>
       </ol>
     </div>`;
-    const btn = host.querySelector("#jtpCopy");
-    btn.addEventListener("click", () => {
-      const done = () => { btn.textContent = "कॉपी हो गया ✓"; setTimeout(() => { btn.textContent = "UPI ID कॉपी करें"; }, 2500); };
-      const fallback = () => { const r = document.createRange(); r.selectNodeContents(host.querySelector("#jtpUpi")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(P.upiId).then(done, fallback);
-      else fallback();
+    host.querySelector("#jtpOnline").addEventListener("click", () => {
+      try { if (window.gtag) window.gtag("event", "cashfree_open", { value: amt(order), currency: "INR", item_name: order.product || P.product }); } catch (e) { /* ignore */ }
     });
     try { sessionStorage.setItem("jt-last-order", JSON.stringify(order)); } catch (e) { /* ignore */ }
     host.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  window.JTPay = { render, newOrderId, upiLink };
+  window.JTPay = { render, newOrderId };
 })();

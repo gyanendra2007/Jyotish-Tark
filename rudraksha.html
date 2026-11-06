@@ -588,7 +588,7 @@
     </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
-  <script src="jt-site.js?v=9" defer></script>
+  <script src="jt-site.js?v=10" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -1747,7 +1747,7 @@
                 const price = this.getAttribute('data-price');
                 const labBox = document.getElementById('labCertOpt');
                 const lab = !!(labBox && labBox.checked);
-                const message = `नमस्ते Jyotish Tark! 🙏\n\nमुझे यह अभिमंत्रित रुद्राक्ष ऑर्डर करना है:\n\n📿 Product: ${product}\n💰 Offer Price: ₹${price}\n${lab ? "🔬 Lab Certificate: हाँ (+₹500)\n" : ""}\nकृपया मुझे order process, payment (COD/UPI) और मुफ्त डिलीवरी के बारे में बताएं।\n\nधन्यवाद!`;
+                const message = `नमस्ते Jyotish Tark! 🙏\n\nमुझे यह अभिमंत्रित रुद्राक्ष ऑर्डर करना है:\n\n📿 Product: ${product}\n💰 Offer Price: ₹${price}\n${lab ? "🔬 Lab Certificate: हाँ (+₹500)\n" : ""}\nकृपया मुझे order process, payment (COD / ऑनलाइन) और मुफ्त डिलीवरी के बारे में बताएं।\n\nधन्यवाद!`;
                 window.open(`https://wa.me/918318513814?text=${encodeURIComponent(message)}`, '_blank');
             });
         });

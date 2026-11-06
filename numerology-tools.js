@@ -262,8 +262,9 @@
       <div class="nm-paid">
         <div><span class="nm-paid-tag">${L("ज्योतिषी द्वारा · ₹299", "By the astrologer · ₹299")}</span>
         <h4>${L("विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "Detailed numerology report + name correction")}</h4>
-        <ul><li>${L("आपके लिए जाँची हुई 2–3 सबसे अनुकूल नाम-स्पेलिंग", "2–3 best name spellings, checked for you")}</li><li>${L("मोबाइल नंबर, शुभ तारीख़ें और रंगों पर व्यक्तिगत सलाह", "Personal advice on mobile number, dates and colours")}</li><li>${L("आपके अंकों के अनुसार उपाय", "Remedies for your numbers")}</li><li>${L("WhatsApp पर, भुगतान UPI से", "Sent on WhatsApp, pay by UPI")}</li></ul></div>
-        <a class="nm-btn nm-wa" href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener" data-paid>${L("₹299 में रिपोर्ट मँगाएँ", "Get it for ₹299")}</a>
+        <ul><li>${L("आपके लिए जाँची हुई 2–3 सबसे अनुकूल नाम-स्पेलिंग", "2–3 best name spellings, checked for you")}</li><li>${L("मोबाइल नंबर, शुभ तारीख़ें और रंगों पर व्यक्तिगत सलाह", "Personal advice on mobile number, dates and colours")}</li><li>${L("आपके अंकों के अनुसार उपाय", "Remedies for your numbers")}</li><li>${L("WhatsApp पर भेजी जाएगी · सुरक्षित ऑनलाइन भुगतान", "Sent on WhatsApp · secure online payment")}</li></ul></div>
+        <a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" target="_blank" rel="noopener" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
+        <p class="nm-small" style="margin:.4rem 0 0">${L("भुगतान फ़ॉर्म में अपनी जन्म तिथि और पूरा नाम भरें। कोई प्रश्न हो तो", "Enter your date of birth and full name in the payment form. Questions?")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">WhatsApp</a>.</p>
       </div>
       <div class="nm-actions">
         <button type="button" class="nm-btn" data-pdf>${L("PDF रिपोर्ट डाउनलोड करें", "Download PDF report")}</button>

@@ -91,6 +91,7 @@
 
   /* ---------- Help bot (menu based, no data stored; booking goes to WhatsApp) ---------- */
   var WA = "918318513814";
+  var PAY = {a15: "https://payments.cashfree.com/forms/audiocall15", a30: "https://payments.cashfree.com/forms/audiocall30", a60: "https://payments.cashfree.com/forms/audiocall60", v30: "https://payments.cashfree.com/forms/videocall30", v60: "https://payments.cashfree.com/forms/videocall60", k15: "https://payments.cashfree.com/forms/call15kundali", k30: "https://payments.cashfree.com/forms/call30kundali", rem: "https://payments.cashfree.com/forms/remedy", p1: "https://payments.cashfree.com/forms/personalmeeting", p2: "https://payments.cashfree.com/forms/homevisit"};
   var PLANS = [
     { id: "a15", g: "call", t: "ऑडियो कॉल · 15 मिनट", p: "₹301" },
     { id: "a30", g: "call", t: "ऑडियो कॉल · 30 मिनट", p: "₹501" },
@@ -105,7 +106,7 @@
   ];
   var FAQ = [
     ["पहले 5 मिनट मुफ़्त कैसे हैं?", "कॉल के पहले 5 मिनट मुफ़्त हैं — आप अपनी समस्या बताइए, और आगे बात करनी है या नहीं, यह आप तय करें।"],
-    ["भुगतान कब और कैसे करना है?", "ऑडियो/वीडियो कॉल और उपाय का भुगतान सेवा के बाद UPI से होता है। व्यक्तिगत भेंट (₹11,000 / ₹21,000) का भुगतान अपॉइंटमेंट पक्का करते समय पहले होता है।"],
+    ["भुगतान कब और कैसे करना है?", "ऑडियो/वीडियो कॉल और उपाय का भुगतान सेवा के बाद Cashfree के सुरक्षित लिंक से ऑनलाइन होता है। व्यक्तिगत भेंट (₹11,000 / ₹21,000) का भुगतान अपॉइंटमेंट पक्का करते समय पहले होता है।"],
     ["अपॉइंटमेंट की तारीख बदल सकते हैं?", "हाँ, व्यक्तिगत भेंट की तारीख 48 घंटे पहले बताकर बदली जा सकती है। अग्रिम भुगतान का रिफ़ंड नहीं होता — केवल तारीख बदलने की सुविधा है।"],
     ["कॉल का समय कैसे तय होगा?", "बुकिंग संदेश भेजने के बाद WhatsApp पर आपकी सुविधा के अनुसार समय तय किया जाता है।"],
     ["कॉल के लिए क्या तैयार रखें?", "जन्म तिथि, जन्म का सही समय और जन्म स्थान — और अपने 2–3 मुख्य प्रश्न।"],
@@ -155,7 +156,7 @@
     }
     var views = {
       home: home,
-      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>हर कॉल के पहले 5 मिनट मुफ़्त · कॉल का भुगतान बात के बाद UPI से</small></p>' + priceList(true)); },
+      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>हर कॉल के पहले 5 मिनट मुफ़्त · कॉल का भुगतान बात के बाद ऑनलाइन (Cashfree)</small></p>' + priceList(true)); },
       price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>हर कॉल के पहले 5 मिनट मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
       kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="sampurna-kundali.html">सम्पूर्ण कुंडली (35+ पेज) · ₹1,101</a><a href="kundali-form.html">हस्तनिर्मित कुंडली · ₹2,100</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली · ₹1,501</button></div>'); },
       daily: function () { say(back() + '<p class="jt-bot-msg">रोज़ की जानकारी</p><div class="jt-bot-opts"><a href="rashifal.html">आज का राशिफल</a><a href="panchang.html">आज का पंचांग</a><a href="ekadashi-list.html">एकादशी सूची 2026–27</a><a href="tyohar-2026.html">त्योहार 2026</a><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></div>'); },
@@ -165,7 +166,7 @@
     function form() {
       var meet = plan.g === "meet";
       say('<button type="button" class="jt-bot-back" data-a="book">← दूसरा विकल्प चुनें</button>' +
-        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (meet ? "व्यक्तिगत भेंट का भुगतान अपॉइंटमेंट पक्का होने पर पहले होता है (रिफ़ंड नहीं); 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "उपाय WhatsApp संदेश से भेजे जाएँगे; भुगतान उसके बाद UPI से।" : "पहले 5 मिनट मुफ़्त; भुगतान कॉल के बाद UPI से।")) + "</small></p>" +
+        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (meet ? "व्यक्तिगत भेंट का भुगतान अपॉइंटमेंट पक्का होने पर पहले होता है (रिफ़ंड नहीं); 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "उपाय WhatsApp संदेश से भेजे जाएँगे; भुगतान उसके बाद Cashfree लिंक से।" : "पहले 5 मिनट मुफ़्त; भुगतान कॉल के बाद ऑनलाइन (Cashfree)।")) + (PAY[plan.id] ? ' <a href="' + PAY[plan.id] + '" target="_blank" rel="noopener">भुगतान लिंक →</a>' : "") + "</small></p>" +
         '<form class="jt-bot-form" novalidate>' +
         '<label>आपका नाम<input name="n" autocomplete="name" required></label>' +
         '<label>जन्म तिथि<input name="d" type="date" required></label>' +
@@ -246,7 +247,7 @@
         '<div class="jt-ad-box" role="dialog" aria-modal="true" aria-labelledby="jtAdT" aria-describedby="jtAdD">' +
         '<button type="button" class="jt-ad-x" data-ad-close aria-label="बंद करें"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
         '<div class="jt-ad-top"><img src="images/big-profile.JPG" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="64" height="64"><div><b>ज्योतिषी ज्ञानेंद्र सिंह तोमर</b><small>ज्योतिष तर्क · लखनऊ</small></div></div>' +
-        '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहले <span>5 मिनट मुफ़्त</span></h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — भुगतान बात के बाद UPI से।</p></div>' +
+        '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहले <span>5 मिनट मुफ़्त</span></h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — भुगतान बात के बाद ऑनलाइन (Cashfree)।</p></div>' +
         '<div class="jt-ad-cards">' +
           '<div class="jt-ad-c jt-ad-c1"><p class="jt-ad-ct">कॉल परामर्श</p><p class="jt-ad-cp">ऑडियो <b>₹301</b> से · वीडियो <b>₹1,101</b> से</p><button type="button" class="jt-ad-b" data-jt-bot="book" data-ad-close>कॉल बुक करें</button></div>' +
           '<div class="jt-ad-c"><p class="jt-ad-ct">सम्पूर्ण कुंडली</p><p class="jt-ad-cp"><b>₹1,101</b> · 35+ पेज PDF · 24 घंटे में</p><a class="jt-ad-b jt-ad-b2" href="kundali-form.html#sampurna">कुंडली बनवाएँ</a></div>' +
