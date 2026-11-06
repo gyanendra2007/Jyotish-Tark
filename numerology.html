@@ -407,7 +407,8 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
   <script src="jt-site.js?v=9" defer></script>
-  <script src="numerology-tools.js?v=5" defer></script>
+  <script src="numerology-content.js?v=1" defer></script>
+<script src="numerology-tools.js?v=6" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -518,6 +519,19 @@
 .nm-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.nm-two div{padding:8px 10px;border-radius:10px;background:#FBF6EC}.nm-two small{display:block;font-size:13px;color:#6B5444}.nm-two b{font-size:15.5px;color:#2B1810}
 .nm-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.nm-three .nm-card{margin:0}
 .nm-main .nm-card{margin:10px 0}
+.nm-today{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:12px;margin:12px 0;padding:12px 16px;border-radius:14px;background:linear-gradient(90deg,#7A1F1F,#9B2C2C);color:#FFFFFF}
+.nm-today span{font-size:14px;font-weight:700;color:#FDE68A}.nm-today b{font-size:34px;line-height:1;color:#FFFFFF}.nm-today p{margin:0 !important;color:#FFF7E6 !important;font-size:15.5px !important}
+.nm-fix{list-style:none;padding:0 !important;margin:6px 0}.nm-fix li{padding:10px 12px;margin:6px 0;border-radius:10px;background:#FBF6EC;border-left:4px solid #B8892B}.nm-fix li b{display:block;color:#5A1414}.nm-fix li span{color:#4A3628;font-size:15px}
+.nm-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:6px}
+.nm-mo{padding:12px 14px;border-radius:12px;background:#FBF6EC;border:1px solid #E8DCC4;border-left:4px solid #B8892B}.nm-mo.on{border-left-color:#7A1F1F;background:#FFF4E8}
+.nm-mo h5{margin:0 0 4px;font-size:16px;color:#5A1414}.nm-mo h5 span{display:block;font-size:13px;font-weight:600;color:#6B5444}.nm-mo p{margin:4px 0 !important;font-size:15px !important;line-height:1.6 !important}.nm-lucky b{color:#14532D}
+.nm-subh{margin:16px 0 8px;font-size:17px;color:#5A1414}
+.nm-rem{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.nm-rem>div{padding:12px 14px;border-radius:12px;background:#FBF6EC;border:1px solid #E8DCC4}.nm-rem h6{margin:0 0 4px;font-size:16px;color:#7A1F1F}.nm-rem p,.nm-rem li{font-size:15px;line-height:1.6}.nm-rem ul{padding-left:18px;margin:4px 0}
+.nm-names span{min-width:140px}.nm-names b{font-size:18px !important}
+.nm-paid{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin:16px 0;padding:18px;border-radius:16px;background:linear-gradient(135deg,#FFF7E6,#FDEBD0);border:2px solid #B8892B}
+.nm-paid h4{margin:6px 0 !important;font-size:20px !important;color:#5A1414 !important}.nm-paid ul{margin:4px 0;padding-left:20px}.nm-paid li{font-size:15px;line-height:1.6;color:#2B1810}
+.nm-paid-tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#7A1F1F;color:#FFFFFF;font-size:13px;font-weight:700}
+@media (max-width:640px){.nm-today{grid-template-columns:auto 1fr}.nm-today p{grid-column:1/-1}}
 @media (max-width:640px){.nm-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.nm-three{grid-template-columns:1fr}.nm-two{grid-template-columns:1fr}}
 </style>
 </head>

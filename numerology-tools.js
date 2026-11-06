@@ -124,98 +124,240 @@
   const chip = (m) => `<span class="nm-chip nm-${m.k}">${m.t}</span>`;
 
   // =================== 1) MAIN REPORT ===================
-  let lastMain = null;
+  let lastMain = null, lastModel = null;
+  const CT = () => window.NM_CONTENT || {};
+  const LOSHU = [4, 9, 2, 3, 5, 7, 8, 1, 6];
+  const PLANES = [[[4, 9, 2], "मानसिक तल", "Mental plane", "तेज़ बुद्धि और अच्छी याददाश्त।", "Sharp mind and good memory."], [[3, 5, 7], "भावनात्मक तल", "Emotional plane", "भावनाओं में संतुलन।", "Emotional balance."], [[8, 1, 6], "व्यावहारिक तल", "Practical plane", "मेहनत और व्यावहारिक सफलता।", "Hard work and practical success."], [[4, 3, 8], "विचार तल", "Thought plane", "अच्छी योजना बनाने की क्षमता।", "Good at planning."], [[9, 5, 1], "इच्छाशक्ति तल", "Will plane", "जो ठानें, उसे पूरा करने की ताक़त।", "The will to finish what you start."], [[2, 7, 6], "कर्म तल", "Action plane", "विचारों को काम में बदलने की क्षमता।", "Turns ideas into action."], [[4, 5, 6], "स्वर्ण योग", "Golden plane", "सफलता और समृद्धि का शुभ संकेत।", "A lucky sign of success and prosperity."], [[2, 5, 8], "संपत्ति योग", "Property plane", "घर और संपत्ति बनाने का संकेत।", "A sign of building home and property."]];
+  const WA_NUM = "918318513814";
+  const H2 = (pair) => (hi() ? pair[0] : pair[1]);
+
+  // spelling suggestions for the name (adds or doubles one letter, keeps surname)
+  function nameSuggestions(name, p) {
+    const parts = String(name).toUpperCase().replace(/[^A-Z ]/g, " ").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return [];
+    const first = parts[0], rest = parts.slice(1).join(" ");
+    const both = LUCKY[p.mulank].filter((x) => LUCKY[p.bhagyank].includes(x));
+    const fav = both.length ? both : LUCKY[p.mulank];
+    const cand = new Set();
+    for (let i = 0; i < first.length; i++) cand.add(first.slice(0, i + 1) + first[i] + first.slice(i + 1));
+    ["A", "H", "E"].forEach((c) => cand.add(first + c));
+    if (/^[^AEIOU][AEIOU]/.test(first)) cand.add(first[0] + "H" + first.slice(1));
+    const out = [];
+    cand.forEach((f) => {
+      if (f === first) return;
+      const full = rest ? f + " " + rest : f, nn = nameNum(full);
+      const cp = nn.comp >= 10 && nn.comp <= 52 ? compound(nn.comp) : null;
+      if (fav.includes(nn.root) && !(cp && cp[2] === "care")) out.push({ full: f.charAt(0) + f.slice(1).toLowerCase() + (rest ? " " + rest.split(" ").map((w) => w.charAt(0) + w.slice(1).toLowerCase()).join(" ") : ""), comp: nn.comp, root: nn.root, good: cp && cp[2] === "good" });
+    });
+    out.sort((a, b) => (b.good ? 1 : 0) - (a.good ? 1 : 0));
+    return out.slice(0, 4);
+  }
+
+  function model(dob, name) {
+    const p = fromDob(dob); if (!p) return null;
+    const nn = nameNum(name), now = new Date(), Y = now.getFullYear();
+    const py = root(p.d + p.mo + root(Y)) || 9;
+    const pmNow = root(py + now.getMonth() + 1) || 9, pdToday = root(pmNow + root(now.getDate())) || 9;
+    const ok = nn ? (LUCKY[p.mulank].includes(nn.root) || LUCKY[p.bhagyank].includes(nn.root)) : true;
+    const ncp = nn && nn.comp >= 10 && nn.comp <= 52 ? compound(nn.comp) : null;
+    const months = [];
+    for (let i = 0; i < 12; i++) {
+      const dt = new Date(Y, now.getMonth() + i, 1), y2 = dt.getFullYear(), m2 = dt.getMonth() + 1, days = new Date(y2, m2, 0).getDate();
+      const pyy = root(p.d + p.mo + root(y2)) || 9, pm = root(pyy + m2) || 9;
+      let lucky = []; for (let d = 1; d <= days; d++) { const pd = root(pm + root(d)) || 9; if (LUCKY[p.mulank].includes(root(d) || 9) && [1, 3, 5, 6, 8].includes(pd)) lucky.push(d); }
+      if (lucky.length < 2) { lucky = []; for (let d = 1; d <= days; d++) if (LUCKY[p.mulank].includes(root(d) || 9)) lucky.push(d); }
+      months.push({ y: y2, m: m2, pm, lucky: lucky.slice(0, 6) });
+    }
+    const ds = (p.raw[3] + p.raw[2] + p.raw[1]).split("").map(Number).filter((x) => x);
+    const add = [p.bhagyank]; if (p.d > 9) add.push(p.mulank);
+    const all = ds.concat(add), cnt = Array.from({ length: 10 }, (_, d) => all.filter((x) => x === d).length);
+    return { p, nn, name, dob, Y, py, pdToday, ok, ncp, months, ds, add, cnt, sugg: nn && (!ok || (ncp && ncp[2] === "care")) ? nameSuggestions(name, p) : [] };
+  }
+
+  // all sections as [title, html] — used for both screen and PDF
+  function sections(M) {
+    const { p, nn, name, Y, py, cnt } = M, C2 = CT(), D = (C2.DEEP && C2.DEEP[p.mulank]) ? C2.DEEP[p.mulank][LANG] : null;
+    if (!D) return [];
+    const kw = (n) => (C2.KW ? H2(C2.KW[n]) : "");
+    const r1 = rel(p.mulank, p.bhagyank), r2 = rel(p.bhagyank, p.mulank);
+    const comboRel = p.mulank === p.bhagyank ? L("आपका मूलांक और भाग्यांक एक ही है — स्वभाव और जीवन की दिशा एक ही ओर हैं, इसलिए इस अंक के गुण आपमें बहुत प्रबल हैं। अपनी ताक़त पर भरोसा रखें, पर इसके कमज़ोर पक्षों पर भी ध्यान दें।", "Your birth number and life path are the same — your nature and direction point the same way, so this number's qualities are very strong in you. Trust your strengths, but watch its weak sides too.")
+      : (r1 === "e" || r2 === "e" ? L(`आपके स्वभाव में ${kw(p.mulank)} है, जबकि जीवन आपको ${kw(p.bhagyank)} की ओर ले जाता है। दोनों अंकों के ग्रह ${pl(p.mulank)} और ${pl(p.bhagyank)} आपस में मित्र नहीं माने जाते, इसलिए कई बार मन जो चाहता है और परिस्थितियाँ जो माँगती हैं, उनमें खिंचाव रहता है। यही खिंचाव आपको मज़बूत भी बनाता है — दोनों गुणों में संतुलन साधना आपकी सफलता की कुंजी है।`, `Your nature carries ${kw(p.mulank)}, while life pushes you towards ${kw(p.bhagyank)}. Their planets, ${pl(p.mulank)} and ${pl(p.bhagyank)}, are not considered friends, so there is often a pull between what you want and what life asks. That tension also makes you strong — balancing the two is your key to success.`)
+        : (r1 === "f" && r2 === "f" ? L(`आपके स्वभाव में ${kw(p.mulank)} है और जीवन आपको ${kw(p.bhagyank)} की ओर ले जाता है। दोनों अंकों के ग्रह ${pl(p.mulank)} और ${pl(p.bhagyank)} आपस में मित्र हैं — इसलिए आप जैसे हैं, वैसा ही रास्ता आपको आगे बढ़ाता है। आपके प्रयास अक्सर सही दिशा में लगते हैं।`, `Your nature carries ${kw(p.mulank)} and life leads you towards ${kw(p.bhagyank)}. Their planets, ${pl(p.mulank)} and ${pl(p.bhagyank)}, are friends — so the path suits who you are, and your efforts usually go in the right direction.`)
+          : L(`आपके स्वभाव में ${kw(p.mulank)} है और जीवन आपको ${kw(p.bhagyank)} की ओर ले जाता है। इन दोनों का संबंध सामान्य है — सही समय पर सही गुण का उपयोग करना आपको आगे ले जाएगा।`, `Your nature carries ${kw(p.mulank)} and life leads you towards ${kw(p.bhagyank)}. The two get along reasonably — using the right quality at the right time will take you forward.`)));
+    const partners = LUCKY[p.mulank].slice();
+    const hard = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((x) => match(p.mulank, x).k === "mid").slice(0, 4);
+    const S = [];
+    S.push([L(`आपका स्वभाव — मूलांक ${p.mulank} (${pl(p.mulank)})`, `Your nature — birth number ${p.mulank} (${pl(p.mulank)})`),
+      `<p>${D.nat}</p><div class="nm-two"><div><small>${L("लोग आपको कैसे देखते हैं", "How others see you")}</small><b>${D.out}</b></div><div><small>${L("आप भीतर से", "Who you are inside")}</small><b>${D.inn}</b></div></div>`]);
+    S.push([L(`जीवन की दिशा — भाग्यांक ${p.lp}`, `Life direction — life path ${p.lp}`), `<p>${C2.LIFE2 ? H2(C2.LIFE2[p.lp] || C2.LIFE2[p.bhagyank]) : ""}</p><p>${comboRel}</p>`]);
+    S.push([L("करियर और काम", "Career and work"), `<p>${D.career}</p><p class="nm-small">${D.work}</p>`]);
+    S.push([L("प्रेम और विवाह", "Love and marriage"), `<p>${D.love}</p><div class="nm-two"><div><small>${L("अनुकूल साथी के मूलांक", "Compatible birth numbers")}</small><b>${partners.join(", ")}</b></div><div><small>${L("जिनसे समझ में मेहनत लगती है", "Numbers that need more understanding")}</small><b>${hard.length ? hard.join(", ") : "—"}</b></div></div>`]);
+    S.push([L("पैसा", "Money"), `<p>${D.money}</p>`]);
+    S.push([L("परिवार", "Family"), `<p>${D.family}</p>`]);
+    S.push([L("सेहत की प्रवृत्ति", "Wellbeing tendencies"), `<p>${D.health}</p><p class="nm-small">${L("यह अंक ज्योतिष का सामान्य संकेत है, चिकित्सा सलाह नहीं।", "General numerology tendency, not medical advice.")}</p>`]);
+    S.push([L("कमज़ोरियाँ और सुधार", "Weak spots and how to fix them"), `<ul class="nm-fix">${D.weak.map((w) => `<li><b>${w[0]}</b><span>${w[1]}</span></li>`).join("")}</ul>`]);
+    // name
+    if (nn) {
+      const ok = M.ok && !(M.ncp && M.ncp[2] === "care");
+      S.push([L("आपके नाम का अंक", "Your name number"), `<p><b>${esc(name)}</b> = ${nn.comp} → <b>${nn.root}</b> (${pl(nn.root)})${M.ncp ? ` · ${L("संयुक्त अंक", "compound")} ${nn.comp}: "${cName(M.ncp)}" — ${cText(M.ncp)}` : ""}</p>
+        <p>${ok ? L("आपके नाम का अंक आपके मूलांक या भाग्यांक के अनुकूल है। नाम बदलने की ज़रूरत नहीं है — अपने नाम पर भरोसा रखें।", "Your name number suits your birth number or life path. There's no need to change your name.") : L(`नाम का अंक आपके जन्म-अंकों से पूरा मेल नहीं खाता। इसका मतलब असफलता नहीं है — पर अंक ज्योतिष में माना जाता है कि नाम का अनुकूल अंक प्रयासों में सहजता लाता है।`, `Your name number doesn't fully match your birth numbers. This doesn't mean failure — but in numerology a favourable name number is believed to make efforts smoother.`)}</p>
+        ${M.sugg.length ? `<p><b>${L("स्पेलिंग के कुछ विकल्प", "A few spelling options")}:</b></p><div class="nm-sugg nm-names">${M.sugg.map((x) => `<span><b>${esc(x.full)}</b><small>${x.comp} → ${x.root} (${pl(x.root)})</small></span>`).join("")}</div>
+        <p class="nm-small">${L("ये विकल्प केवल गणना के आधार पर हैं। नाम की स्पेलिंग बदलने से पहले ज्योतिषी से सलाह लें। सरकारी दस्तावेज़ बदलना ज़रूरी नहीं — लोग अक्सर नई स्पेलिंग हस्ताक्षर, सोशल मीडिया या व्यवसाय में उपयोग करते हैं। इससे किसी परिणाम की गारंटी नहीं है।", "These options are based on calculation only. Consult an astrologer before changing your spelling. You don't need to change official documents — people often use the new spelling in signatures, social media or business. No result is guaranteed.")}</p>` : (ok ? "" : `<p class="nm-small">${L("इस नाम के लिए आसान स्पेलिंग विकल्प नहीं मिला — ज्योतिषी से व्यक्तिगत सलाह लें।", "No simple spelling option was found for this name — ask the astrologer for personal advice.")}</p>`)}`]);
+    }
+    // lucky
+    S.push([L("आपके लिए शुभ", "Lucky for you"), `<div class="nm-kv"><div><small>${L("शुभ अंक", "Numbers")}</small><b>${LUCKY[p.mulank].join(", ")}</b></div><div><small>${L("शुभ रंग", "Colours")}</small><b>${H2(COLORS[p.mulank])}</b></div><div><small>${L("शुभ दिन", "Days")}</small><b>${H2(DAYS[p.mulank])}</b></div><div><small>${L("रुद्राक्ष", "Rudraksha")}</small><b><a href="https://jyotishtark.in/rudraksha.html#${RUDRA[p.mulank][2]}">${H2(RUDRA[p.mulank])}</a></b></div><div><small>${L("मंत्र", "Mantra")}</small><b>${C2.LS ? C2.LS[p.mulank].mantra : ""}</b></div></div>`]);
+    // year + months
+    S.push([L(`${Y} आपके लिए — व्यक्तिगत वर्ष ${py}`, `${Y} for you — personal year ${py}`), `<p>${C2.PY2 ? H2(C2.PY2[py]) : ""}</p>`]);
+    S.push([L("अगले 12 महीने — महीनेवार फल", "The next 12 months, month by month"), `<div class="nm-months">${M.months.map((mo, i) => { const t = C2.PM2 ? C2.PM2[mo.pm][hi() ? 0 : 1] : ["", "", ""]; return `<div class="nm-mo${i === 0 ? " on" : ""}"><h5>${MON[LANG][mo.m - 1]} ${mo.y} <span>${mo.pm} · ${PM[mo.pm][hi() ? 0 : 1]}</span></h5><p>${t[0]}</p><p class="nm-small">${t[1]}<br>${t[2]}</p><p class="nm-lucky">${L("शुभ तारीख़ें", "Lucky dates")}: <b>${mo.lucky.join(", ")}</b></p></div>`; }).join("")}</div><p class="nm-small">${L("शुभ तारीख़ें आपके मूलांक और उस दिन के व्यक्तिगत अंक से निकाली गई हैं — नया काम, मीटिंग या ज़रूरी बातचीत के लिए इन्हें चुनें।", "Lucky dates are worked out from your birth number and each day's personal number — use them for new work, meetings or important talks.")}</p>`]);
+    // Lo Shu
+    const grid = LOSHU.map((n) => `<div class="nm-ls${cnt[n] ? "" : " nm-ls0"}"><b>${cnt[n] ? String(n).repeat(cnt[n]) : "·"}</b><small>${pl(n)}</small></div>`).join("");
+    const done = PLANES.filter((x) => x[0].every((n) => cnt[n]));
+    const miss = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => !cnt[n]);
+    const exc = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => cnt[n] >= 3);
+    const strong = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => cnt[n] === 2);
+    const planeMiss = (C2.PLANE_MISS || []).filter(([s]) => s.filter((n) => !cnt[n]).length >= 2);
+    S.push([L("लो शू ग्रिड — आपका अंक चक्र", "Lo Shu grid — your number chart"), `<div class="nm-lsw"><div class="nm-lsg">${grid}</div><div>
+      <p>${L(`जन्मतिथि के अंक (${M.ds.join(", ")}) के साथ भाग्यांक ${M.add[0]}${p.d > 9 ? ` और मूलांक ${M.add[1]}` : ""} जोड़कर यह ग्रिड बना है।`, `Built from your date digits (${M.ds.join(", ")}) plus life path ${M.add[0]}${p.d > 9 ? ` and birth number ${M.add[1]}` : ""}.`)}</p>
+      ${done.length ? `<p><b>${L("पूरे तल", "Complete planes")}:</b></p><ul>${done.map((x) => `<li><b>${hi() ? x[1] : x[2]}</b> — ${hi() ? x[3] : x[4]}</li>`).join("")}</ul>` : `<p>${L("ग्रिड में कोई पूरा तल नहीं है — आपकी ताक़त अलग-अलग अंकों में बँटी है।", "No complete plane — your strengths are spread across numbers.")}</p>`}
+      ${strong.length ? `<p><b>${L("आपके मज़बूत अंक", "Your strong numbers")}:</b> ${strong.map((n) => `${n} (${pl(n)} — ${kw(n)})`).join(", ")}. ${L("इन गुणों को अपने काम और फ़ैसलों में खुलकर उपयोग करें।", "Use these qualities openly in your work and decisions.")}</p>` : ""}
+      </div></div>
+      ${miss.length ? `<h5 class="nm-subh">${L("जो अंक नहीं हैं — उनके उपाय", "Missing numbers — remedies")}</h5><div class="nm-rem">${miss.map((n) => { const R = C2.LS[n]; return `<div><h6>${n} · ${pl(n)}</h6><p>${H2([R.hi[0], R.en[0]])}</p><ul><li><b>${L("आदत", "Habit")}:</b> ${H2([R.hi[1], R.en[1]])}</li><li><b>${L("वास्तु", "Vastu")}:</b> ${H2(R.item)} (${L("दिशा", "direction")}: ${H2(R.dir)})</li><li><b>${L("मंत्र", "Mantra")}:</b> ${R.mantra} — ${L("108 बार", "108 times")}, ${H2(R.day)}</li></ul></div>`; }).join("")}</div>` : `<p>${L("आपके ग्रिड में 1 से 9 तक सभी अंक हैं — यह संतुलित और दुर्लभ स्थिति है।", "All numbers 1 to 9 are present — a rare, balanced chart.")}</p>`}
+      ${exc.length ? `<h5 class="nm-subh">${L("जो अंक बहुत बार हैं — संतुलन", "Repeated numbers — balance")}</h5><ul>${exc.map((n) => `<li>${H2(C2.EXC[n])}</li>`).join("")}</ul>` : ""}
+      ${planeMiss.length ? `<h5 class="nm-subh">${L("अधूरे तल", "Incomplete planes")}</h5><ul>${planeMiss.map(([, t]) => `<li>${H2(t)}</li>`).join("")}</ul>` : ""}
+      <p class="nm-small">${L("वास्तु दिशाएँ पारंपरिक लो शू वर्ग के अनुसार हैं। उपाय श्रद्धा और नियमितता से करें — ये सामान्य मार्गदर्शन हैं, गारंटी नहीं।", "Vastu directions follow the traditional Lo Shu square. Do remedies with faith and regularity — general guidance, not a guarantee.")}</p>`]);
+    // how
+    S.push([L("आपकी गणना कैसे हुई", "How your numbers were calculated"), `<ol class="nm-steps">
+        <li><b>${L("मूलांक", "Birth number")}:</b> ${L("तारीख", "Day")} ${p.d}${p.d > 9 ? " → " + reduceSteps(p.d) : ""} → <b>${p.mulank}</b></li>
+        <li><b>${L("भाग्यांक", "Life path")}:</b> ${L("तारीख", "day")} ${p.d} → ${p.parts[0]}, ${L("महीना", "month")} ${p.mo} → ${p.parts[1]}, ${L("वर्ष", "year")} ${p.y} → ${p.parts[2]}; ${p.parts.join(" + ")} = ${p.parts[0] + p.parts[1] + p.parts[2]} → <b>${p.lp}</b>${[11, 22, 33].includes(p.lp) ? L(" (मास्टर अंक)", " (master number)") : ""}</li>
+        ${nn ? `<li><b>${L("नामांक", "Name number")}:</b> ${nn.br} = ${nn.comp} → <b>${nn.root}</b></li>` : ""}
+        <li><b>${L("व्यक्तिगत वर्ष", "Personal year")}:</b> ${p.d} + ${p.mo} + ${root(Y)} (${Y}) = ${p.d + p.mo + root(Y)} → <b>${py}</b></li>
+        <li><b>${L("व्यक्तिगत माह", "Personal month")}:</b> ${L("व्यक्तिगत वर्ष + महीने का अंक", "personal year + month number")}</li></ol>`]);
+    return S;
+  }
+
   function mainReport(e) {
     if (e) e.preventDefault();
     const f = document.getElementById("nmMainForm"), out = document.getElementById("nmMainOut");
     if (!f || !out) return;
-    const p = fromDob(f.dob.value);
-    if (!p) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया सही जन्मतिथि चुनें।", "Please enter a valid date of birth.")}</p>`; f.dob.focus(); return; }
-    const name = (f.nm.value || "").trim();
-    const nn = nameNum(name);
-    const now = new Date(), Y = now.getFullYear();
-    const py = root(p.d + p.mo + root(Y)) || 9;
-    const N = NUM[p.mulank][LANG];
-    lastMain = { dob: f.dob.value, name };
+    const M = model(f.dob.value, (f.nm.value || "").trim());
+    if (!M) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया सही जन्मतिथि चुनें।", "Please enter a valid date of birth.")}</p>`; f.dob.focus(); return; }
+    lastMain = { dob: f.dob.value, name: M.name }; lastModel = M;
+    const { p, nn, Y, py } = M, C2 = CT(), D = C2.DEEP[p.mulank][LANG];
     const tile = (lbl, num, sub, note) => `<div class="nm-tile"><small>${lbl}</small><b>${num}</b><span>${sub}</span><em>${note}</em></div>`;
-    // name number verdict
-    let nameCard = "";
-    if (nn) {
-      const ok = LUCKY[p.mulank].includes(nn.root) || LUCKY[p.bhagyank].includes(nn.root);
-      const cp = nn.comp >= 10 && nn.comp <= 52 ? compound(nn.comp) : null;
-      const caution = cp && cp[2] === "care";
-      nameCard = `<div class="nm-card ${ok && !caution ? "nm-c-good" : "nm-c-mid"}"><h4>${L("आपके नाम का अंक", "Your name number")}</h4>
-        <p><b>${esc(name)}</b> = ${nn.comp} → <b>${nn.root}</b> (${pl(nn.root)})${cp ? ` · ${L("संयुक्त अंक", "compound")} ${nn.comp}: "${cName(cp)}"` : ""}</p>
-        <p>${ok && !caution ? L(`आपके नाम का अंक आपके मूलांक और भाग्यांक के अनुकूल है। नाम बदलने की ज़रूरत नहीं।`, `Your name number suits your birth numbers. No change is needed.`)
-          : (ok ? L(`नाम का मूल अंक अनुकूल है, पर संयुक्त अंक ${nn.comp} सावधानी वाला माना जाता है। ${cText(cp)}`, `The name's root number suits you, but compound ${nn.comp} is considered a caution number. ${cText(cp)}`)
-            : L(`नाम का अंक ${nn.root} आपके जन्म-अंकों की अनुकूल सूची में नहीं है। यह असफलता का संकेत नहीं है; चाहें तो स्पेलिंग में छोटा बदलाव विचार कर सकते हैं।`, `Name number ${nn.root} is not in your favourable list. This does not mean failure; a small spelling change may be worth considering.`))}</p>
-        ${ok && !caution ? "" : `<p class="nm-small"><a href="https://wa.me/918318513814?text=${encodeURIComponent(`नमस्ते, मेरा नाम ${name} (जन्मतिथि ${f.dob.value}) है। मुझे नाम की स्पेलिंग पर सलाह चाहिए।`)}" target="_blank" rel="noopener">${L("नाम की स्पेलिंग पर सलाह लें →", "Get advice on your name spelling →")}</a></p>`}</div>`;
-    }
-    // Lo Shu
-    const ds = (p.raw[3] + p.raw[2] + p.raw[1]).split("").map(Number).filter((x) => x);
-    const add = [p.bhagyank]; if (p.d > 9) add.push(p.mulank);
-    const all = ds.concat(add), cnt = Array.from({ length: 10 }, (_, d) => all.filter((x) => x === d).length);
-    const LOSHU = [4, 9, 2, 3, 5, 7, 8, 1, 6];
-    const PLANES = [[[4, 9, 2], "मानसिक तल", "Mental plane", "तेज़ बुद्धि और अच्छी याददाश्त।", "Sharp mind and good memory."], [[3, 5, 7], "भावनात्मक तल", "Emotional plane", "भावनाओं में संतुलन।", "Emotional balance."], [[8, 1, 6], "व्यावहारिक तल", "Practical plane", "मेहनत और व्यावहारिक सफलता।", "Hard work and practical success."], [[4, 3, 8], "विचार तल", "Thought plane", "अच्छी योजना बनाने की क्षमता।", "Good at planning."], [[9, 5, 1], "इच्छाशक्ति तल", "Will plane", "जो ठानें, उसे पूरा करने की ताक़त।", "The will to finish what you start."], [[2, 7, 6], "कर्म तल", "Action plane", "विचारों को काम में बदलने की क्षमता।", "Turns ideas into action."], [[4, 5, 6], "स्वर्ण योग", "Golden plane", "सफलता और समृद्धि का शुभ संकेत।", "A lucky sign of success and prosperity."], [[2, 5, 8], "संपत्ति योग", "Property plane", "घर और संपत्ति बनाने का संकेत।", "A sign of building home and property."]];
-    const MISS = { 1: ["अपनी बात खुलकर कहने का अभ्यास करें।", "Practise speaking up for yourself."], 2: ["धैर्य रखें और दूसरों की भावनाएँ समझें।", "Be patient and tune into others' feelings."], 3: ["रोज़ कुछ नया पढ़ें और सीखें।", "Read and learn something new every day."], 4: ["काम लिखकर और क्रम से करें।", "Plan your work in writing and in order."], 5: ["जीवन में संतुलन रखें, एक साथ बहुत काम न पकड़ें।", "Keep balance; don't take on too much at once."], 6: ["परिवार और घर को समय दें।", "Give time to family and home."], 7: ["रोज़ कुछ मिनट शांत बैठकर सोचें।", "Spend a few quiet minutes reflecting each day."], 8: ["पैसों का हिसाब और बजट रखें।", "Keep track of money and budget."], 9: ["बड़े लक्ष्य रखें और दूसरों की मदद करें।", "Set bigger goals and help others."] };
-    const done = PLANES.filter((x) => x[0].every((n) => cnt[n]));
-    const miss = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => !cnt[n]);
-    const grid = LOSHU.map((n) => `<div class="nm-ls${cnt[n] ? "" : " nm-ls0"}"><b>${cnt[n] ? String(n).repeat(cnt[n]) : "·"}</b><small>${pl(n)}</small></div>`).join("");
-    // months
-    const months = [];
-    for (let i = 0; i < 12; i++) {
-      const dt = new Date(Y, now.getMonth() + i, 1), y2 = dt.getFullYear(), m2 = dt.getMonth() + 1;
-      const pyy = root(p.d + p.mo + root(y2)) || 9, pm = root(pyy + m2) || 9;
-      months.push(`<span class="nm-pmc${i === 0 ? " on" : ""}"><small>${MON[LANG][m2 - 1]} ${y2}</small><b>${pm}</b><em>${PM[pm][hi() ? 0 : 1]}</em></span>`);
-    }
-    const lifeTxt = LIFE[p.lp] ? LIFE[p.lp][hi() ? 0 : 1] : LIFE[p.bhagyank][hi() ? 0 : 1];
+    const S = sections(M);
+    const one = (D.nat.split(/[।.]/)[0] + (hi() ? "।" : ".")) + " " + (C2.LIFE2 ? H2(C2.LIFE2[p.lp] || C2.LIFE2[p.bhagyank]).split(/[।.]/)[0] + (hi() ? "।" : ".") : "");
     const waText = L(`मेरी अंक ज्योतिष रिपोर्ट: मूलांक ${p.mulank} (${pl(p.mulank)}), भाग्यांक ${p.lp}${nn ? `, नामांक ${nn.root}` : ""}। आप भी देखें: https://jyotishtark.in/numerology.html`, `My numerology: birth number ${p.mulank} (${pl(p.mulank)}), life path ${p.lp}${nn ? `, name number ${nn.root}` : ""}. Try yours: https://jyotishtark.in/numerology.html`);
+    const paidMsg = `नमस्ते, मुझे ₹299 वाली विस्तृत अंक ज्योतिष रिपोर्ट और नाम सुधार चाहिए।\nनाम: ${M.name || "-"}\nजन्मतिथि: ${p.d}-${p.mo}-${p.y}\nमूलांक ${p.mulank}, भाग्यांक ${p.lp}${nn ? `, नामांक ${nn.root}` : ""}`;
     out.innerHTML = `<div class="nm-res nm-main">
-      <div class="nm-mhead"><small>${L("अंक ज्योतिष रिपोर्ट", "Numerology report")}</small><h3>${name ? esc(name) : L("आपकी रिपोर्ट", "Your report")}</h3><span>${L("जन्मतिथि", "Date of birth")}: ${p.d}-${p.mo}-${p.y}</span></div>
+      <div class="nm-mhead"><small>${L("अंक ज्योतिष रिपोर्ट", "Numerology report")}</small><h3>${M.name ? esc(M.name) : L("आपकी रिपोर्ट", "Your report")}</h3><span>${L("जन्मतिथि", "Date of birth")}: ${p.d}-${p.mo}-${p.y}</span></div>
       <div class="nm-tiles">
         ${tile(L("मूलांक", "Birth number"), p.mulank, pl(p.mulank), L("आपका स्वभाव", "Your nature"))}
         ${tile(L("भाग्यांक", "Life path"), p.lp, pl(p.bhagyank), L("जीवन की दिशा", "Your direction"))}
         ${tile(L("नामांक", "Name number"), nn ? nn.root : "—", nn ? pl(nn.root) : L("नाम लिखें", "Add name"), L("नाम का असर", "Name effect"))}
         ${tile(L(`व्यक्तिगत वर्ष ${Y}`, `Personal year ${Y}`), py, PM[py][hi() ? 0 : 1], L("इस साल का विषय", "This year's theme"))}
       </div>
-      <p class="nm-oneline"><b>${L("एक लाइन में", "In one line")}:</b> ${N.one} ${lifeTxt}</p>
-
-      <div class="nm-card"><h4>${L(`आपका स्वभाव — मूलांक ${p.mulank} (${N.t})`, `Your nature — birth number ${p.mulank} (${N.t.toLowerCase()})`)}</h4><p>${N.nat}</p>
-        <div class="nm-two"><div><small>${L("आपकी ताक़त", "Strengths")}</small><b>${N.str}</b></div><div><small>${L("ध्यान दें", "Watch out for")}</small><b>${N.watch}</b></div></div></div>
-      <div class="nm-card"><h4>${L(`जीवन की दिशा — भाग्यांक ${p.lp}`, `Life direction — life path ${p.lp}`)}</h4><p>${lifeTxt}${p.lp !== p.bhagyank ? L(` इसका मूल अंक ${p.bhagyank} (${pl(p.bhagyank)}) है।`, ` Its root number is ${p.bhagyank} (${pl(p.bhagyank)}).`) : ""} ${p.mulank === p.bhagyank ? L("आपका मूलांक और भाग्यांक एक ही है — आप जैसे हैं, जीवन भी आपको उसी दिशा में ले जाता है।", "Your birth number and life path are the same — your nature and your path point the same way.") : (match(p.mulank, p.bhagyank).k !== "mid" ? L("आपके मूलांक और भाग्यांक में अच्छा तालमेल है।", "Your birth number and life path work well together.") : L("आपके मूलांक और भाग्यांक का स्वभाव अलग है — मन और परिस्थितियों में संतुलन बनाना आपकी सीख है।", "Your birth number and life path differ — balancing your nature with life's demands is your lesson."))}</p></div>
-      <div class="nm-three">
-        <div class="nm-card"><h4>${L("करियर", "Career")}</h4><p>${N.car}</p></div>
-        <div class="nm-card"><h4>${L("प्रेम व विवाह", "Love & marriage")}</h4><p>${N.love}</p></div>
-        <div class="nm-card"><h4>${L("पैसा", "Money")}</h4><p>${N.money}</p></div>
+      <p class="nm-oneline"><b>${L("एक लाइन में", "In one line")}:</b> ${one}</p>
+      <div class="nm-today"><span>${L("आज का आपका अंक", "Your number today")}</span><b>${M.pdToday}</b><p>${C2.PD ? H2(C2.PD[M.pdToday]) : ""}</p></div>
+      ${S.map(([t, h]) => `<div class="nm-card"><h4>${t}</h4>${h}</div>`).join("")}
+      <div class="nm-paid">
+        <div><span class="nm-paid-tag">${L("ज्योतिषी द्वारा · ₹299", "By the astrologer · ₹299")}</span>
+        <h4>${L("विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "Detailed numerology report + name correction")}</h4>
+        <ul><li>${L("आपके लिए जाँची हुई 2–3 सबसे अनुकूल नाम-स्पेलिंग", "2–3 best name spellings, checked for you")}</li><li>${L("मोबाइल नंबर, शुभ तारीख़ें और रंगों पर व्यक्तिगत सलाह", "Personal advice on mobile number, dates and colours")}</li><li>${L("आपके अंकों के अनुसार उपाय", "Remedies for your numbers")}</li><li>${L("WhatsApp पर, भुगतान UPI से", "Sent on WhatsApp, pay by UPI")}</li></ul></div>
+        <a class="nm-btn nm-wa" href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener" data-paid>${L("₹299 में रिपोर्ट मँगाएँ", "Get it for ₹299")}</a>
       </div>
-      ${nameCard}
-      <div class="nm-card"><h4>${L("आपके लिए शुभ", "Lucky for you")}</h4><div class="nm-kv">
-        <div><small>${L("शुभ अंक", "Numbers")}</small><b>${LUCKY[p.mulank].join(", ")}</b></div>
-        <div><small>${L("शुभ रंग", "Colours")}</small><b>${COLORS[p.mulank][hi() ? 0 : 1]}</b></div>
-        <div><small>${L("शुभ दिन", "Days")}</small><b>${DAYS[p.mulank][hi() ? 0 : 1]}</b></div>
-        <div><small>${L("रुद्राक्ष", "Rudraksha")}</small><b><a href="rudraksha.html#${RUDRA[p.mulank][2]}">${RUDRA[p.mulank][hi() ? 0 : 1]}</a></b></div></div></div>
-      <div class="nm-card"><h4>${L(`${Y} आपके लिए — व्यक्तिगत वर्ष ${py}`, `${Y} for you — personal year ${py}`)}</h4><p>${PY[py][hi() ? 0 : 1]}</p>
-        <p class="nm-small">${L("अगले 12 महीने:", "Next 12 months:")}</p><div class="nm-pm">${months.join("")}</div></div>
-      <div class="nm-card"><h4>${L("लो शू ग्रिड", "Lo Shu grid")}</h4>
-        <div class="nm-lsw"><div class="nm-lsg">${grid}</div><div>
-        ${done.length ? `<p><b>${L("आपके ग्रिड में पूरे तल", "Complete planes in your grid")}:</b></p><ul>${done.map((x) => `<li><b>${hi() ? x[1] : x[2]}</b> — ${hi() ? x[3] : x[4]}</li>`).join("")}</ul>` : `<p>${L("आपके ग्रिड में कोई पूरा तल नहीं है — यह कमी नहीं, बस आपकी ताक़त अलग-अलग अंकों में है।", "No plane is complete in your grid — not a weakness; your strengths are spread across numbers.")}</p>`}
-        ${miss.length ? `<p><b>${L("जो अंक नहीं हैं, उनके लिए सुझाव", "Tips for missing numbers")}:</b></p><ul>${miss.map((n) => `<li><b>${n}</b> — ${MISS[n][hi() ? 0 : 1]}</li>`).join("")}</ul>` : `<p>${L("आपके ग्रिड में 1 से 9 तक सभी अंक हैं — यह संतुलित स्थिति है।", "All numbers 1 to 9 are in your grid — a balanced chart.")}</p>`}
-        </div></div></div>
-      <details class="nm-how"><summary>${L("आपकी गणना कैसे हुई", "How your numbers were calculated")}</summary><ol class="nm-steps">
-        <li><b>${L("मूलांक", "Birth number")}:</b> ${L("तारीख", "Day")} ${p.d}${p.d > 9 ? " → " + reduceSteps(p.d) : ""} → <b>${p.mulank}</b></li>
-        <li><b>${L("भाग्यांक", "Life path")}:</b> ${L("तारीख", "day")} ${p.d} → ${p.parts[0]}, ${L("महीना", "month")} ${p.mo} → ${p.parts[1]}, ${L("वर्ष", "year")} ${p.y} → ${p.parts[2]}; ${p.parts.join(" + ")} = ${p.parts[0] + p.parts[1] + p.parts[2]} → <b>${p.lp}</b>${[11, 22, 33].includes(p.lp) ? L(" (मास्टर अंक, इसलिए घटाया नहीं गया)", " (a master number, so it is not reduced)") : ""}</li>
-        ${nn ? `<li><b>${L("नामांक", "Name number")}:</b> ${nn.br} = ${nn.comp} → <b>${nn.root}</b></li>` : ""}
-        <li><b>${L("व्यक्तिगत वर्ष", "Personal year")}:</b> ${p.d} + ${p.mo} + ${root(Y)} (${Y}) = ${p.d + p.mo + root(Y)} → <b>${py}</b></li>
-        <li><b>${L("लो शू ग्रिड", "Lo Shu grid")}:</b> ${L("जन्मतिथि के अंक (शून्य छोड़कर)", "date digits (zeros left out)")} ${ds.join(", ")} + ${L("भाग्यांक", "life path")} ${p.bhagyank}${p.d > 9 ? ` + ${L("मूलांक", "birth number")} ${p.mulank}` : ""}</li>
-      </ol><p class="nm-small">${L('पूरी विधि उदाहरण के साथ पेज के आख़िर में <a href="#kaise-nikale">"मूलांक कैसे निकालें"</a> में है।', 'The full method with an example is at the end of this page (in Hindi).')}</p></details>
       <div class="nm-actions">
+        <button type="button" class="nm-btn" data-pdf>${L("PDF रिपोर्ट डाउनलोड करें", "Download PDF report")}</button>
         <a class="nm-btn nm-wa" href="https://wa.me/?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener">${L("WhatsApp पर शेयर करें", "Share on WhatsApp")}</a>
         <a class="nm-btn nm-ghost" href="kundali-form.html">${L("मुफ़्त कुंडली देखें", "See free Kundali")}</a>
-        <button type="button" class="nm-btn nm-ghost" onclick="window.print()">${L("प्रिंट / PDF", "Print / PDF")}</button>
       </div>
       <p class="nm-small">${L("अंक ज्योतिष सामान्य मार्गदर्शन है, गारंटी नहीं। व्यक्तिगत सलाह के लिए", "Numerology is general guidance, not a guarantee. For personal advice,")} <a href="consultation.html">${L("ज्योतिषी से बात करें — पहले 5 मिनट मुफ़्त", "talk to the astrologer — first 5 minutes free")}</a>.</p></div>`;
-    out.scrollIntoView({ behavior: "smooth", block: "start" });
+    out.querySelector("[data-pdf]").addEventListener("click", () => { pdf(M); track("numerology_pdf", { lang: LANG }); });
+    out.querySelector("[data-paid]").addEventListener("click", () => track("numerology_paid_click", { price: 299 }));
+    if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });
     track("numerology_report", { mulank: p.mulank, lang: LANG });
+  }
+
+  // ---------- PDF (print-ready A4 document in a new tab) ----------
+  function stampSvg(size) {
+    const k = "#7A1F1F", s = size || 150;
+    const star = (cx, cy) => `<path d="M${cx} ${cy - 5}L${cx + 1.5} ${cy - 1.5}L${cx + 5} ${cy}L${cx + 1.5} ${cy + 1.5}L${cx} ${cy + 5}L${cx - 1.5} ${cy + 1.5}L${cx - 5} ${cy}L${cx - 1.5} ${cy - 1.5}Z" fill="${k}"/>`;
+    return `<svg width="${s}" height="${s}" viewBox="0 0 200 200" role="img" aria-label="Jyotish Tark"><defs><path id="stT" d="M 38 100 A 62 62 0 0 1 162 100"/><path id="stB" d="M 22 100 A 78 78 0 0 0 178 100"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="${k}" stroke-width="4.5"/><circle cx="100" cy="100" r="89.5" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="85" fill="none" stroke="${k}" stroke-width="1.6" stroke-dasharray="0.1 3.6" stroke-linecap="round"/><circle cx="100" cy="100" r="50" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="46" fill="none" stroke="${k}" stroke-width="2.6"/><text font-family="'Tiro Devanagari Hindi',serif" font-size="19" fill="${k}" letter-spacing="1.5"><textPath href="#stT" startOffset="50%" text-anchor="middle">ज्योतिष तर्क</textPath></text><text font-family="Mukta,sans-serif" font-size="11.5" font-weight="700" fill="${k}" letter-spacing="2.2"><textPath href="#stB" startOffset="50%" text-anchor="middle">JYOTISH TARK · LUCKNOW</textPath></text>${star(29, 100)}${star(171, 100)}<text x="100" y="117" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="48" fill="${k}">ॐ</text><text x="100" y="134" text-anchor="middle" font-family="Mukta,sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.2" fill="${k}">॥ शुभम् भवतु ॥</text></svg>`;
+  }
+  function mandalaSvg() {
+    let g = "";
+    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="47" rx="9.5" ry="27" transform="rotate(${i * 22.5} 100 100)" fill="none" stroke="#E9C46A" stroke-width="1"/>`;
+    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="66" rx="6" ry="15" transform="rotate(${i * 22.5 + 11.25} 100 100)" fill="rgba(233,196,106,.12)" stroke="#E9C46A" stroke-width=".8"/>`;
+    for (let i = 0; i < 48; i++) { const a = i * 7.5 * Math.PI / 180; g += `<circle cx="${(100 + 93 * Math.sin(a)).toFixed(2)}" cy="${(100 - 93 * Math.cos(a)).toFixed(2)}" r="1.3" fill="#E9C46A"/>`; }
+    return `<svg viewBox="0 0 200 200" width="230" height="230" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="#E9C46A" stroke-width="1.4"/><circle cx="100" cy="100" r="88" fill="none" stroke="#E9C46A" stroke-width=".6"/>${g}<circle cx="100" cy="100" r="42" fill="#5A1414" stroke="#E9C46A" stroke-width="1.6"/><circle cx="100" cy="100" r="37" fill="none" stroke="#E9C46A" stroke-width=".6" stroke-dasharray="2 2"/><text x="100" y="121" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="56" fill="#F7E7C1">ॐ</text></svg>`;
+  }
+  function pdf(M) {
+    const { p, nn, Y, py } = M;
+    const S = sections(M);
+    const today = new Date();
+    const dstr = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+    const title = L("अंक ज्योतिष रिपोर्ट", "Numerology Report");
+    const box = (lbl, n, sub) => `<div class="cb"><small>${lbl}</small><b>${n}</b><span>${sub}</span></div>`;
+    const doc = `<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} — ${esc(M.name || "")} — Jyotish Tark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:16mm 14mm 16mm}
+@page:first{margin:0}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:#2B1810;font-family:Mukta,'Noto Sans Devanagari',sans-serif;font-size:11.5pt;line-height:1.65;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cover{width:210mm;height:297mm;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#8E2A2A 0%,#5A1414 55%,#3A0B0B 100%);color:#F7E7C1;text-align:center;page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22mm}
+.cover .fr{position:absolute;inset:9mm;border:1.6px solid #E9C46A;border-radius:3mm}.cover .fr2{position:absolute;inset:12mm;border:.6px solid #E9C46A;border-radius:2mm}
+.cover .k{letter-spacing:.3em;font-size:11pt;color:#E9C46A;font-weight:700;margin:14px 0 4px}
+.cover h1{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:40pt;margin:6px 0;color:#FBEFD0;line-height:1.2}
+.cover .nm{font-family:'Tiro Devanagari Hindi',serif;font-size:24pt;margin:14px 0 2px;color:#fff}
+.cover .dob{font-size:12.5pt;color:#F3DFAE}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:12mm 0 8mm;width:150mm}
+.cb{border:1px solid #E9C46A;border-radius:3mm;padding:4mm 2mm;background:rgba(0,0,0,.18)}.cb small{display:block;font-size:9.5pt;color:#E9C46A;font-weight:700}.cb b{display:block;font-size:26pt;line-height:1.15;color:#fff}.cb span{font-size:10pt;color:#F3DFAE}
+.seal{background:#FBF4E4;border-radius:50%;padding:3mm;display:inline-block;margin-top:4mm}
+.cover .ft{position:absolute;bottom:16mm;left:0;right:0;font-size:10pt;color:#E9C46A;letter-spacing:.05em}
+.hd{display:flex;justify-content:space-between;border-bottom:1.5px solid #C9A227;padding-bottom:2mm;margin-bottom:5mm;font-size:9.5pt;color:#7A1F1F;font-weight:700}
+h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;color:#7A1F1F;font-size:15.5pt;margin:6mm 0 2mm;padding-bottom:1mm;border-bottom:.6px solid #E3D3B0;break-after:avoid}
+p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
+.sec{break-inside:auto}.nm-two,.nm-kv{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:2mm 0}.nm-kv{grid-template-columns:repeat(3,1fr)}
+.nm-two div,.nm-kv div{background:#FBF6EC;border:1px solid #EADCC0;border-radius:2mm;padding:2mm 3mm;break-inside:avoid}.nm-two small,.nm-kv small{display:block;font-size:9pt;color:#6B5444}
+.nm-small{font-size:9.6pt;color:#5B4B37}a{color:#7A1F1F;text-decoration:none}
+.nm-fix li b{display:block}.nm-fix li span{color:#4A3628}
+.nm-months{display:grid;grid-template-columns:1fr 1fr;gap:3mm}.nm-mo{border:1px solid #EADCC0;border-left:3px solid #C9A227;border-radius:2mm;padding:2.5mm 3mm;break-inside:avoid}.nm-mo h5{margin:0 0 1mm;font-size:11pt;color:#7A1F1F}.nm-mo h5 span{font-weight:400;color:#6B5444;font-size:9.5pt}.nm-mo p{margin:.8mm 0;font-size:10.2pt}.nm-lucky b{color:#14532D}
+.nm-lsw{display:grid;grid-template-columns:52mm 1fr;gap:5mm;align-items:start}.nm-lsg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5mm}
+.nm-ls{aspect-ratio:1;border:1px solid #D9BE85;background:#FBF1DC;border-radius:2mm;display:grid;place-items:center;align-content:center;text-align:center}.nm-ls b{font-size:14pt;color:#7A1F1F}.nm-ls small{font-size:8pt;color:#6B5444}.nm-ls0{background:#fff;border-style:dashed}.nm-ls0 b{color:#B3A48C}
+.nm-subh{font-size:11.5pt;color:#7A1F1F;margin:4mm 0 1.5mm}.nm-rem{display:grid;grid-template-columns:1fr 1fr;gap:3mm}.nm-rem>div{border:1px solid #EADCC0;border-radius:2mm;padding:2.5mm 3mm;break-inside:avoid}.nm-rem h6{margin:0 0 1mm;font-size:11pt;color:#7A1F1F}.nm-rem p,.nm-rem li{font-size:10pt}
+.nm-sugg{display:flex;flex-wrap:wrap;gap:3mm}.nm-sugg span{border:1px solid #BBF7D0;background:#F0FDF4;border-radius:2mm;padding:2mm 4mm;text-align:center}.nm-sugg b{display:block;color:#14532D}.nm-sugg small{font-size:9pt}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:2mm 0 4mm}.summary div{border:1px solid #EADCC0;border-radius:2mm;text-align:center;padding:2.5mm;background:#FBF6EC}.summary small{display:block;font-size:9pt;color:#6B5444}.summary b{font-size:20pt;color:#7A1F1F;line-height:1.2;display:block}
+.close{margin-top:8mm;display:flex;gap:6mm;align-items:center;border-top:1.5px solid #C9A227;padding-top:5mm;break-inside:avoid}
+.bar{position:sticky;top:0;background:#7A1F1F;color:#fff;padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;font-size:14px;z-index:5}.bar button{background:#fff;color:#7A1F1F;border:0;border-radius:8px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
+@media print{.bar{display:none}}
+@media screen{body{background:#EDE6DA}.page{max-width:210mm;margin:0 auto;background:#fff;padding:14mm;box-shadow:0 2px 12px rgba(0,0,0,.15)}.cover{margin:0 auto}}
+</style></head><body>
+<div class="bar"><span>${L("यह आपकी PDF रिपोर्ट है। सेव करने के लिए बटन दबाएँ और 'Save as PDF' चुनें।", "This is your PDF report. Press the button and choose 'Save as PDF'.")}</span><button onclick="window.print()">${L("PDF सेव करें", "Save PDF")}</button></div>
+<section class="cover"><div class="fr"></div><div class="fr2"></div>
+  ${mandalaSvg()}
+  <p class="k">॥ ${L("ज्योतिष तर्क", "JYOTISH TARK")} ॥</p>
+  <h1>${esc(title)}</h1>
+  <p class="nm">${esc(M.name || L("आपकी रिपोर्ट", "Your report"))}</p>
+  <p class="dob">${L("जन्मतिथि", "Date of birth")}: ${p.d}-${p.mo}-${p.y}</p>
+  <div class="cgrid">${box(L("मूलांक", "Birth no."), p.mulank, pl(p.mulank))}${box(L("भाग्यांक", "Life path"), p.lp, pl(p.bhagyank))}${box(L("नामांक", "Name no."), nn ? nn.root : "—", nn ? pl(nn.root) : "")}${box(L(`वर्ष ${Y}`, `Year ${Y}`), py, PM[py][hi() ? 0 : 1])}</div>
+  <div class="seal">${stampSvg(120)}</div>
+  <p class="ft">jyotishtark.in · ${L("ज्योतिषी ज्ञानेंद्र सिंह तोमर, लखनऊ", "Astrologer Gyanendra Singh Tomar, Lucknow")} · ${L("तैयार", "Prepared")}: ${dstr}</p>
+</section>
+<div class="page">
+  <div class="hd"><span>${L("ज्योतिष तर्क · अंक ज्योतिष रिपोर्ट", "Jyotish Tark · Numerology Report")}</span><span>${esc(M.name || "")} · ${p.d}-${p.mo}-${p.y}</span></div>
+  <div class="summary"><div><small>${L("मूलांक", "Birth number")}</small><b>${p.mulank}</b>${pl(p.mulank)}</div><div><small>${L("भाग्यांक", "Life path")}</small><b>${p.lp}</b>${pl(p.bhagyank)}</div><div><small>${L("नामांक", "Name number")}</small><b>${nn ? nn.root : "—"}</b>${nn ? pl(nn.root) : ""}</div><div><small>${L("व्यक्तिगत वर्ष", "Personal year")}</small><b>${py}</b>${PM[py][hi() ? 0 : 1]}</div></div>
+  ${S.map(([t, h]) => `<div class="sec"><h2>${t}</h2>${h}</div>`).join("")}
+  <div class="close">${stampSvg(110)}<div><p><b>${L("ज्योतिष तर्क, लखनऊ", "Jyotish Tark, Lucknow")}</b><br>${L("विस्तृत परामर्श, नाम सुधार और कुंडली के लिए", "For detailed consultation, name correction and Kundali")}: jyotishtark.in · WhatsApp +91 83185 13814</p><p class="nm-small">${L("यह रिपोर्ट अंक ज्योतिष के सामान्य सिद्धांतों पर आधारित है — मार्गदर्शन के लिए, गारंटी के लिए नहीं।", "This report is based on general numerology principles — for guidance, not as a guarantee.")}</p></div></div>
+</div>
+<script>document.fonts&&document.fonts.ready.then(function(){setTimeout(function(){try{window.print()}catch(e){}},500)});</script>
+</body></html>`;
+    const w = window.open("", "_blank");
+    if (w) { w.document.open(); w.document.write(doc); w.document.close(); return; }
+    // popup blocked: print through a hidden frame
+    const fr = document.createElement("iframe");
+    fr.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0";
+    document.body.appendChild(fr);
+    fr.srcdoc = doc;
+    fr.onload = () => setTimeout(() => { try { fr.contentWindow.print(); } catch (e2) { /* ignore */ } setTimeout(() => fr.remove(), 4000); }, 900);
   }
 
   // =================== 2) NUMBER (mobile / vehicle / house) ===================
