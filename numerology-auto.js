@@ -78,7 +78,7 @@
     }
     overlay(`<div class="jtx-spin" aria-hidden="true"></div><h2>${T("आपकी रिपोर्ट बन रही है…", "Your report is being prepared…")}</h2><p>${T(`भुगतान के लिए धन्यवाद, ${esc(order.name)} जी।`, `Thank you for your payment, ${esc(order.name)}.`)}</p>`);
     let tries = 0;
-    (function wait() { if (window.JTNumPro && window.JT_NM && window.NM_CONTENT && window.NM_PRO) setTimeout(show, 500); else if (++tries < 60) setTimeout(wait, 150); else help(T("रिपोर्ट अपने-आप नहीं बन सकी", "The report could not be made automatically"), T("आपका भुगतान सुरक्षित है। WhatsApp पर संदेश भेजें।", "Your payment is safe. Please message us on WhatsApp.")); })();
+    (function wait() { if (window.JTNumPro && window.JT_NM && window.NM_CONTENT && window.NM_PRO && window.NM_PRO2) setTimeout(show, 500); else if (++tries < 60) setTimeout(wait, 150); else help(T("रिपोर्ट अपने-आप नहीं बन सकी", "The report could not be made automatically"), T("आपका भुगतान सुरक्षित है। WhatsApp पर संदेश भेजें।", "Your payment is safe. Please message us on WhatsApp.")); })();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(start, 50)); else setTimeout(start, 50);
 })();

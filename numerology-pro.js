@@ -45,6 +45,9 @@
     const today = new Date(), dstr = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
     const rno = o.orderId || ("JTN-" + String(p.y).slice(2) + String(p.mo).padStart(2, "0") + String(p.d).padStart(2, "0") + "-" + (nn ? nn.comp : 0));
     const pd = (n) => `${n} <small>(${pl(n)})</small>`;
+    const Y2 = window.NM_PRO2 || {}, Z = (k, n) => H(Y2[k] && (n == null ? Y2[k] : Y2[k][n]));
+    const ZL = (k, n, c) => { const a = Z(k, n); return Array.isArray(a) && a.length ? `<ul class="ck${c ? " " + c : ""}">${a.map((x) => `<li>${x}</li>`).join("")}</ul>` : ""; };
+    const mu = p.mulank, bh = p.bhagyank;
 
     // ---- chapters ----
     const CH = [];
@@ -65,10 +68,15 @@
       <h3>${L("आपकी गणना कैसे हुई", "How your numbers were calculated")}</h3>${sec(iHow)}
       ${soul || pers ? `<p class="sm">${L("आत्मांक नाम के स्वरों (A, E, I, O, U) और बाह्यांक व्यंजनों के कैल्डियन मानों के योग से निकाला गया है। परिपक्वता अंक = भाग्यांक + नामांक।", "Soul urge is the total of the vowels (A, E, I, O, U) of the name and personality the total of the consonants, using Chaldean values. Maturity number = life path + name number.")}</p>` : ""}`);
 
-    add(L(`आपका स्वभाव — मूलांक ${p.mulank}`, `Your nature — birth number ${p.mulank}`), sec(0) + `<h3>${L("कमज़ोरियाँ और सुधार", "Weak spots and how to fix them")}</h3>` + sec(7));
+    add(L(`आपका स्वभाव — मूलांक ${p.mulank}`, `Your nature — birth number ${p.mulank}`), sec(0) +
+      (Z("STR", mu) ? `<h3>${L("आपकी पाँच प्राकृतिक ताकतें", "Your five natural strengths")}</h3>${ZL("STR", mu)}` : "") +
+      (Z("SOCIAL", mu) ? `<h3>${L("दोस्ती, समाज और बातचीत", "Friendship, society and communication")}</h3><p>${Z("SOCIAL", mu)}</p>` : "") +
+      `<h3>${L("कमज़ोरियाँ और सुधार", "Weak spots and how to fix them")}</h3>` + sec(7) +
+      (Z("STRESS", mu) ? `<h3>${L("तनाव के समय आप — और क्या मदद करता है", "You under stress — and what helps")}</h3><div class="box"><p>${Z("STRESS", mu)}</p></div>` : ""));
 
     add(L(`जीवन की दिशा — भाग्यांक ${p.lp}`, `Direction of life — life path ${p.lp}`), sec(1) +
       (p.bhagyank !== p.mulank ? `<h3>${L(`भाग्यांक ${p.bhagyank} (${pl(p.bhagyank)}) का प्रभाव`, `Influence of ${p.bhagyank} (${pl(p.bhagyank)})`)}</h3><p>${DB.nat}</p><p>${DB.out}</p>` : "") +
+      (bh !== mu && Z("STR", bh) ? `<h3>${L(`भाग्यांक ${bh} से मिलने वाले गुण`, `Qualities life path ${bh} brings`)}</h3>${ZL("STR", bh)}` : "") +
       `<p class="sm">${L("मूलांक बताता है कि आप कैसे हैं, और भाग्यांक बताता है कि जीवन आपको किस ओर ले जाता है। दोनों का तालमेल जितना अच्छा हो, जीवन उतना सहज चलता है।", "The birth number shows who you are; the life path shows where life takes you. The better they agree, the smoother life runs.")}</p>`);
 
     if (nn) {
@@ -105,16 +113,31 @@
       <p>${L("ग्रिड में जो अंक मौजूद हैं, वे आपकी प्राकृतिक ताकत हैं। नीचे के छोटे उपाय इन्हें और प्रभावी बनाते हैं। अपनी सुविधा से कोई दो-तीन उपाय चुनकर नियमित करें।", "The numbers present in your grid are your natural strengths. The small practices below make them even more effective. Pick two or three that suit you and do them regularly.")}</p>
       <div class="g2">${present.map((n) => `<div class="box"><b>${n} · ${pl(n)}</b>${cnt[n] > 1 ? ` <small>(${cnt[n]} ${L("बार", "times")})</small>` : ""}<p>${H(X.ENH[n])}</p></div>`).join("")}</div>`);
 
-    add(L("करियर और धन", "Career and money"), `<h3>${L("करियर", "Career")}</h3>${sec(2)}<h3>${L("धन", "Money")}</h3>${sec(4)}
+    add(L("करियर और धन", "Career and money"), `<h3>${L("करियर", "Career")}</h3>${sec(2)}
+      ${Z("CAREERS", mu) ? `<div class="box"><b>${L(`मूलांक ${mu} के लिए उपयुक्त क्षेत्र`, `Suitable fields for birth number ${mu}`)}</b><p>${Z("CAREERS", mu)}</p>${bh !== mu && Z("CAREERS", bh) ? `<b>${L(`भाग्यांक ${bh} के अनुसार`, `By life path ${bh}`)}</b><p>${Z("CAREERS", bh)}</p>` : ""}</div>` : ""}
+      ${Z("BIZ", mu) ? `<h3>${L("नौकरी या व्यवसाय?", "Job or business?")}</h3><p>${Z("BIZ", mu)}</p>` : ""}<h3>${L("धन", "Money")}</h3>${sec(4)}
       ${p.bhagyank !== p.mulank ? `<h3>${L(`भाग्यांक ${p.bhagyank} के अनुसार करियर`, `Career by life path ${p.bhagyank}`)}</h3><p>${DB.career}</p>` : ""}`);
 
-    const cmp = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => { const m = N.match(p.mulank, n); return `<tr><td class="n">${n}</td><td>${pl(n)}</td><td class="m-${m.k}"><b>${m.t}</b></td></tr>`; }).join("");
-    add(L("प्रेम, विवाह और मेल", "Love, marriage and compatibility"), `${sec(3)}
-      <h3>${L(`मूलांक ${p.mulank} का दूसरे मूलांकों से मेल`, `How birth number ${p.mulank} matches other birth numbers`)}</h3>
-      <table class="t"><thead><tr><th>${L("मूलांक", "Birth no.")}</th><th>${L("ग्रह", "Planet")}</th><th>${L("मेल", "Match")}</th></tr></thead><tbody>${cmp}</tbody></table>
-      <p class="sm">${L("अंक मेल केवल एक संकेत है। विवाह के निर्णय में आपसी समझ, परिवार और कुंडली मिलान अधिक महत्वपूर्ण हैं।", "Number matching is only one signal. Mutual understanding, family and kundali matching matter more in a marriage decision.")}</p>`);
+    const cmp = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => { const m = N.match(mu, n); return `<tr><td class="n">${n}</td><td>${pl(n)}</td><td class="m-${m.k}"><b>${m.t}</b></td>${Z("PTRAIT", n) ? `<td>${L(`मूलांक ${n} का साथी`, `A number-${n} partner`)} ${Z("PTRAIT", n)}</td>` : ""}</tr>`; }).join("");
+    const best = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => N.match(mu, n).k === "good"), mid = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => N.match(mu, n).k === "mid");
+    add(L("प्रेम, विवाह और जीवनसाथी", "Love, marriage and your life partner"), `${sec(3)}
+      ${Z("LOVESTYLE", mu) ? `<h3>${L("आप प्रेम कैसे करते हैं", "How you love")}</h3><p>${Z("LOVESTYLE", mu)}</p>` : ""}
+      ${bh !== mu && Z("LOVESTYLE", bh) ? `<h3>${L(`भाग्यांक ${bh} का रिश्तों पर प्रभाव`, `How life path ${bh} shapes your relationships`)}</h3><p>${Z("LOVESTYLE", bh)}</p>` : ""}
+      ${Z("PNEED", mu) ? `<h3>${L("आपके लिए आदर्श जीवनसाथी के गुण", "Qualities of your ideal life partner")}</h3><div class="box"><p>${Z("PNEED", mu)}</p></div>` : ""}
+      ${Z("LOVECH", mu) ? `<h3>${L("रिश्ते में आपकी चुनौती", "Your challenge in a relationship")}</h3><p>${Z("LOVECH", mu)}</p>` : ""}
+      ${Z("LOVETIPS", mu) ? `<h3>${L("प्रेम को मज़बूत करने के तीन उपाय", "Three ways to strengthen your love")}</h3>${ZL("LOVETIPS", mu, "one")}` : ""}
+      <h3>${L(`मूलांक ${mu} का दूसरे मूलांकों से मेल — और हर साथी क्या लाता है`, `How birth number ${mu} matches others — and what each partner brings`)}</h3>
+      <table class="t"><thead><tr><th>${L("मूलांक", "No.")}</th><th>${L("ग्रह", "Planet")}</th><th>${L("मेल", "Match")}</th>${Y2.PTRAIT ? `<th>${L("साथी के गुण", "What the partner brings")}</th>` : ""}</tr></thead><tbody>${cmp}</tbody></table>
+      ${best.length ? `<p><b>${L("सबसे सहज मेल", "Easiest matches")}:</b> ${L("मूलांक", "birth numbers")} ${best.join(", ")} — ${L("इनके साथ स्वभाव जल्दी मिलता है।", "your temperaments agree quickly.")}</p>` : ""}
+      ${mid.length && Z("PCARE") ? `<p><b>${L("सामान्य मेल", "Average matches")} (${mid.join(", ")}):</b> ${Z("PCARE")}</p>` : ""}
+      <div class="box"><b>${L("साथी का मूलांक कैसे निकालें", "How to find a partner's birth number")}</b><p>${L("साथी की जन्म तारीख़ (केवल दिन) के अंकों को जोड़कर एक अंक बनाएँ। जैसे 23 तारीख़ → 2+3 = 5। फिर ऊपर की तालिका में वह पंक्ति देखें।", "Add the digits of the partner's day of birth to get one digit. For example the 23rd → 2+3 = 5. Then see that row in the table above.")}</p></div>
+      <p class="sm">${L("अंक मेल स्वभाव का संकेत है, भाग्य का फ़ैसला नहीं। कोई भी मेल 'बुरा' नहीं होता — समझ, सम्मान और बातचीत से हर रिश्ता मज़बूत होता है। विवाह के निर्णय में आपसी समझ, परिवार और कुंडली मिलान अधिक महत्वपूर्ण हैं।", "Number matching shows temperament, not destiny. No match is 'bad' — understanding, respect and conversation make every relationship stronger. Mutual understanding, family and kundali matching matter more in a marriage decision.")}</p>`);
 
     add(L("परिवार और सेहत", "Family and wellbeing"), `<h3>${L("परिवार", "Family")}</h3>${sec(5)}<h3>${L("सेहत की प्रवृत्ति", "Wellbeing tendencies")}</h3>${sec(6)}`);
+
+    if (Z("SPIRIT", mu)) add(L("आध्यात्मिक मार्ग और ग्रह-उपासना", "Spiritual path and planetary worship"), `<p>${Z("SPIRIT", mu)}</p>
+      ${bh !== mu && Z("SPIRIT", bh) ? `<h3>${L(`भाग्यांक ${bh} के लिए`, `For life path ${bh}`)}</h3><p>${Z("SPIRIT", bh)}</p>` : ""}
+      <p class="sm">${L("उपासना मन को स्थिर करती है और अनुशासन देती है। इसे भय से नहीं, श्रद्धा और नियमितता से करें; कोई महँगा अनुष्ठान आवश्यक नहीं है।", "Worship steadies the mind and builds discipline. Do it with faith and regularity, not fear; no costly ritual is needed.")}</p>`);
 
     const LS = C.LS && C.LS[p.mulank];
     add(L("आपके लिए शुभ", "Lucky for you"), `${sec(iLucky)}
@@ -179,12 +202,13 @@
     const toc = CH.map((c, i) => `<li><span>${L("अध्याय", "Chapter")} ${i + 1}</span>${c[0]}</li>`).join("");
     const box = (lbl, n, sub) => `<div class="cb"><small>${lbl}</small><b>${n}</b><span>${sub}</span></div>`;
     const title = L("विस्तृत अंक ज्योतिष रिपोर्ट", "Detailed Numerology Report");
-    const hd = `<div class="hd"><span>${L("ज्योतिष तर्क · अंक ज्योतिष", "Jyotish Tark · Numerology")}</span><span>${esc(M.name || "")} · ${p.d}-${p.mo}-${p.y}</span></div>`;
-    const body = CH.map((c, i) => `<section class="ch">${hd}<p class="chn">${L("अध्याय", "Chapter")} ${i + 1}</p><h2>${c[0]}</h2>${c[1]}</section>`).join("");
+    const ftr = `${L("ज्योतिष तर्क · अंक ज्योतिष", "Jyotish Tark · Numerology")} · ${String(M.name || "").replace(/["\\\n]/g, "")} · ${p.d}-${p.mo}-${p.y}`;
+    const pgCss = `@page{@bottom-left{content:"${ftr}";font:600 8.5pt Mukta,sans-serif;color:#7A1F1F}@bottom-right{content:"${L("पृष्ठ", "Page")} " counter(page);font:600 8.5pt Mukta,sans-serif;color:#7A1F1F}}@page:first{@bottom-left{content:none}@bottom-right{content:none}}`;
+    const body = CH.map((c, i) => `<section class="ch"><p class="chn">${L("अध्याय", "Chapter")} ${i + 1}</p><h2>${c[0]}</h2>${c[1]}</section>`).join("");
     return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)} — ${esc(M.name || "")} — Jyotish Tark</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
-<style>${CSS}</style></head><body><div class="wrap">
+<style>${CSS}${pgCss}</style></head><body><div class="wrap">
 <section class="cover"><div class="fr"></div><div class="fr2"></div>
   ${N.mandalaSvg()}
   <p class="k">॥ ${L("ज्योतिष तर्क", "JYOTISH TARK")} ॥</p>
@@ -195,7 +219,7 @@
   <div class="seal">${N.stampSvg(118)}</div>
   <p class="ft">${L("रिपोर्ट क्रमांक", "Report no.")} ${esc(rno)} · ${L("तैयार", "Prepared")}: ${dstr}<br>jyotishtark.in · ${L("ज्योतिषी ज्ञानेंद्र सिंह तोमर, लखनऊ", "Astrologer Gyanendra Singh Tomar, Lucknow")}</p>
 </section>
-<section class="ch toc">${hd}<h2>${L("विषय सूची", "Contents")}</h2><ol>${toc}</ol>
+<section class="toc"><h2>${L("विषय सूची", "Contents")}</h2><ol>${toc}</ol>
   <div class="box"><b>${L("इस रिपोर्ट को कैसे पढ़ें", "How to read this report")}</b><p>${L("पहले अध्याय 1 की तालिका देखें — यह पूरी रिपोर्ट का सार है। फिर अपने स्वभाव, करियर और वर्षफल के अध्याय पढ़ें। उपाय अध्याय के अंत में दिए हैं; उन्हें श्रद्धा और नियमितता से करें।", "Start with the table in chapter 1 — it is the summary of the whole report. Then read the chapters on your nature, career and year ahead. Remedies are at the end; follow them with faith and regularity.")}</p></div>
   <p class="sm">${L("यह रिपोर्ट कैल्डियन अंक पद्धति, लो शू ग्रिड और पारंपरिक ग्रह-मैत्री पर आधारित है।", "This report is based on the Chaldean number system, the Lo Shu grid and traditional planetary friendships.")}</p></section>
 ${body}
@@ -215,10 +239,10 @@ ${body}
 .cb{border:1px solid #E9C46A;border-radius:3mm;padding:4mm 2mm;background:rgba(0,0,0,.18)}.cb small{display:block;font-size:9.5pt;color:#E9C46A;font-weight:700}.cb b{display:block;font-size:26pt;line-height:1.15;color:#fff}.cb span{font-size:9.5pt;color:#F3DFAE}
 .seal{background:#FBF4E4;border-radius:50%;padding:3mm;display:inline-block}
 .cover .ft{position:absolute;bottom:15mm;left:0;right:0;font-size:9.8pt;color:#E9C46A;line-height:1.6}
-.ch{break-before:page}.toc ol{list-style:none;padding:0;margin:2mm 0 4mm}.toc li{padding:1.1mm 0;border-bottom:1px dotted #D9C6A0;font-size:11pt;line-height:1.45}.toc li span{display:inline-block;width:26mm;color:#7A5410;font-size:10pt}
+.ch{margin-top:9mm;padding-top:4mm;border-top:2px solid #C9A227}.toc{break-after:page}.toc+.ch{margin-top:0;border-top:0;padding-top:0}.toc ol{list-style:none;padding:0;margin:2mm 0 4mm}.toc li{padding:1.1mm 0;border-bottom:1px dotted #D9C6A0;font-size:11pt;line-height:1.45}.toc li span{display:inline-block;width:26mm;color:#7A5410;font-size:10pt}
 .hd{display:flex;justify-content:space-between;border-bottom:1.5px solid #C9A227;padding-bottom:2mm;margin-bottom:4mm;font-size:9.5pt;color:#7A1F1F;font-weight:700}
-.chn{margin:0;color:#B8892B;font-weight:700;letter-spacing:.08em;font-size:10pt;text-transform:uppercase}
-h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;color:#7A1F1F;font-size:19pt;margin:1mm 0 4mm;padding-bottom:2mm;border-bottom:.8px solid #E3D3B0;line-height:1.3}
+.chn{break-after:avoid;margin:0;color:#B8892B;font-weight:700;letter-spacing:.08em;font-size:10pt;text-transform:uppercase}
+h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;color:#7A1F1F;font-size:19pt;margin:1mm 0 4mm;padding-bottom:2mm;border-bottom:.8px solid #E3D3B0;line-height:1.3;break-after:avoid}
 h3{font-size:13pt;color:#7A1F1F;margin:5mm 0 1.5mm;break-after:avoid}h3 small{font-weight:400;color:#6B5444}
 p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:1mm 0}.sm,.nm-small{font-size:9.8pt;color:#5B4B37}
 table.t{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:10.8pt;break-inside:auto}table.t th{background:#7A1F1F;color:#fff;text-align:left;padding:2mm 2.5mm;font-weight:600}table.t td{border-bottom:1px solid #EADCC0;padding:2mm 2.5mm;vertical-align:top}table.t tr{break-inside:avoid}table.t td.n{font-weight:700;color:#7A1F1F;white-space:nowrap}table.t tr.cur td{background:#FFF6DD}
@@ -227,7 +251,7 @@ table.t{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:10.8pt;br
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
 .lts{display:flex;flex-wrap:wrap;gap:1.5mm;margin:2mm 0}.lt{border:1px solid #D9BE85;background:#FBF1DC;border-radius:1.5mm;min-width:9mm;text-align:center;padding:1mm 1.5mm}.lt b{display:block;font-size:12pt;color:#7A1F1F;line-height:1.2}.lt small{font-size:9pt}
 .note{border:.5mm solid #C9A227;border-radius:2mm;background:#FBF6EC;padding:4mm 5mm;font-size:11.5pt}
-.rem li{margin:1.5mm 0}
+.rem li{margin:1.5mm 0}.ck{list-style:none;padding-left:0;columns:2;column-gap:6mm}.ck.one{columns:1}.ck li{padding-left:5mm;position:relative;break-inside:avoid}.ck li::before{content:"✦";position:absolute;left:0;color:#B8892B;font-size:9pt}
 .nm-two,.nm-kv{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:2mm 0}.nm-kv{grid-template-columns:repeat(3,1fr)}
 .nm-two div,.nm-kv div{background:#FBF6EC;border:1px solid #EADCC0;border-radius:2mm;padding:2mm 3mm;break-inside:avoid}.nm-two small,.nm-kv small{display:block;font-size:9pt;color:#6B5444}
 .nm-fix li b{display:block}.nm-fix li span{color:#4A3628}

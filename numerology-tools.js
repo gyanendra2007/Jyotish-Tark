@@ -261,8 +261,8 @@
       ${S.map(([t, h]) => `<div class="nm-card"><h4>${t}</h4>${h}</div>`).join("")}
       <div class="nm-paid">
         <div><span class="nm-paid-tag">${L("विस्तृत रिपोर्ट · ₹299", "Detailed report · ₹299")}</span>
-        <h4>${L("20+ पेज की विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "20+ page detailed numerology report + name correction")}</h4>
-        <ul><li>${L("18 अध्याय — आत्मांक, बाह्यांक, कर्म अंक, जीवन के चार चरण, 9 वर्ष का चक्र", "18 chapters — soul urge, personality, karmic numbers, life stages, 9-year cycle")}</li><li>${L("नाम सुधार के विकल्प, मोबाइल नंबर, शुभ तारीख़ें और उपाय", "Name spelling options, mobile number, lucky dates and remedies")}</li><li>${L("भुगतान के तुरंत बाद इसी पेज पर PDF — इंतज़ार नहीं", "PDF on this page right after payment — no waiting")}</li></ul>
+        <h4>${L("16+ पेज की विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "16+ page detailed numerology report + name correction")}</h4>
+        <ul><li>${L("19 अध्याय — जीवनसाथी, आत्मांक, बाह्यांक, कर्म अंक, जीवन के चार चरण, 9 वर्ष का चक्र", "19 chapters — life partner, soul urge, personality, karmic numbers, life stages, 9-year cycle")}</li><li>${L("नाम सुधार के विकल्प, मोबाइल नंबर, शुभ तारीख़ें और उपाय", "Name spelling options, mobile number, lucky dates and remedies")}</li><li>${L("भुगतान के तुरंत बाद इसी पेज पर PDF — इंतज़ार नहीं", "PDF on this page right after payment — no waiting")}</li></ul>
         <div class="nm-plang" role="radiogroup" aria-label="${L("रिपोर्ट की भाषा", "Report language")}"><span>${L("रिपोर्ट की भाषा", "Report language")}:</span>
           <label><input type="radio" name="nmProLang" value="hi"${hi() ? " checked" : ""}> हिंदी</label><label><input type="radio" name="nmProLang" value="en"${hi() ? "" : " checked"}> English</label></div></div>
         <div><a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
