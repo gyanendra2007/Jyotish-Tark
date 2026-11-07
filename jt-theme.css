@@ -274,11 +274,11 @@ html body tbody[class*="divide-white"] > tr, html body [class*="divide-white"] >
 .jt-mobile-nav a { display: flex; align-items: center; min-height: 48px; padding: 0 12px; border-radius: 8px; color: var(--jt-ink) !important; font-size: 17px; font-weight: 500; text-decoration: none !important; }
 .jt-mobile-nav a:hover, .jt-mobile-nav a[aria-current="page"] { background: var(--jt-cream); color: var(--jt-maroon) !important; }
 .jt-mobile-nav .jt-cta { justify-content: center; margin-top: 10px; border-radius: 10px; }
-@media (max-width: 1140px) {
+@media (max-width: 1240px) {
   .jt-nav, .jt-header-row > .jt-cta { display: none; }
   .jt-menu-btn { display: inline-flex; }
 }
-@media (min-width: 1141px) { .jt-mobile-nav { display: none !important; } }
+@media (min-width: 1241px) { .jt-mobile-nav { display: none !important; } }
 @media (max-width: 420px) { .jt-brand-hi { font-size: 20px; } .jt-brand-en { font-size: 10.5px; } .jt-brand img { width: 40px; height: 40px; } }
 
 /* ==========================================================================
