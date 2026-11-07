@@ -137,6 +137,8 @@
   const chapter = (n, title, body, sub, newPage) => `<section class="ch${newPage ? " np" : ""}"><div class="chh"><span class="chn">अध्याय ${n}</span><h2>${title}</h2>${sub ? `<p class="chs">${sub}</p>` : ""}</div>${body}</section>`;
   const block = (title, html) => (html && html.replace(/<[^>]+>/g, "").trim() ? `<div class="blk">${title ? `<h3>${title}</h3>` : ""}<div class="src">${html}</div></div>` : "");
 
+  const CHAPTERS = ["जन्म विवरण, पंचांग, अवकहड़ा व नामाक्षर", "कुंडली चक्र — लग्न, चंद्र, चलित, नवांश, दशमांश, सप्तांश", "ग्रह स्पष्ट, भाव तालिका, षड्बल व अष्टकवर्ग", "आपका स्वभाव व व्यक्तित्व", "नौ ग्रहों का विस्तृत फल", "12 भावों का विस्तृत विश्लेषण", "शिक्षा व बुद्धि", "करियर व कार्यक्षेत्र", "धन, आय, संपत्ति व भाग्य", "विवाह व जीवनसाथी", "परिवार व संतान", "स्वास्थ्य व प्रकृति", "विदेश, यात्रा व आध्यात्मिकता", "दशा फल — वर्तमान व अगली महादशा", "अगले 10 वर्ष — वर्षवार संकेत", "योग व दोष", "वर्षफल 2027, उपाय व रत्न-विचार"];
+
   function build(opts) {
     opts = opts || {};
     const ctx = window.__jyotishLastCtx, vd = ctx && (ctx.vedicData || window.__jtVedicData);
@@ -183,7 +185,7 @@
     </section>`;
 
     // ---------------- contents ----------------
-    const CH = ["जन्म विवरण, पंचांग, अवकहड़ा व नामाक्षर", "कुंडली चक्र — लग्न, चंद्र, चलित, नवांश, दशमांश, सप्तांश", "ग्रह स्पष्ट, भाव तालिका, षड्बल व अष्टकवर्ग", "आपका स्वभाव व व्यक्तित्व", "नौ ग्रहों का विस्तृत फल", "12 भावों का विस्तृत विश्लेषण", "शिक्षा व बुद्धि", "करियर व कार्यक्षेत्र", "धन, आय, संपत्ति व भाग्य", "विवाह व जीवनसाथी", "परिवार व संतान", "स्वास्थ्य व प्रकृति", "विदेश, यात्रा व आध्यात्मिकता", "दशा फल — वर्तमान व अगली महादशा", "अगले 10 वर्ष — वर्षवार संकेत", "योग व दोष", "वर्षफल 2027, उपाय व रत्न-विचार"];
+    const CH = CHAPTERS;
     const toc = `<section class="toc"><h2>विषय सूची</h2><ol>${CH.map((t) => `<li>${t}</li>`).join("")}<li class="tnote">ज्योतिषी की टिप्पणी व आवश्यक सूचना</li></ol>
       <div class="howto"><h3>इस कुंडली के बारे में</h3><p>यह कुंडली लाहिड़ी अयनांश, उत्तर भारतीय शैली और विंशोत्तरी दशा पद्धति से तैयार की गई है। गणना आपके जन्म समय (${esc(tob)}) और जन्म स्थान (${esc(pob)}) पर आधारित है — जन्म समय में कुछ मिनट का अंतर भी लग्न और दशा की तारीखें बदल सकता है।</p><p>ज्योतिष जीवन की प्रवृत्तियाँ और समय के संकेत बताता है, गारंटी नहीं। स्वास्थ्य, क़ानून या धन से जुड़े बड़े फ़ैसलों में संबंधित विशेषज्ञ की सलाह अवश्य लें।</p></div></section>`;
 
@@ -460,6 +462,12 @@
       @media print { .page-wrap { padding: 0; } }`;
 
     const base = new URL(".", location.href).href;
+    if (opts.coverOnly) {
+      // just the cover page — used as a thumbnail in the ₹1,101 preview (no report content)
+      return `<!doctype html><html lang="hi"><head><meta charset="utf-8"><base href="${esc(base)}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;600;700&display=swap">
+      <style>${CSS} html,body{margin:0;background:#4A110E;overflow:hidden} .page-wrap{width:210mm;margin:0!important;padding:0!important;box-shadow:none!important} .cover{margin:0!important}</style></head><body><div class="page-wrap">${cover}</div></body></html>`;
+    }
     return `<!doctype html><html lang="hi"><head><meta charset="utf-8"><base href="${esc(base)}">
       <title>Sampurna-Kundali-${esc((ctx.name || "").replace(/\s+/g, "-"))}${reportNo ? "-" + esc(reportNo) : ""}</title>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;600;700&display=swap">
@@ -468,5 +476,5 @@
       </div><script>(function(){var mm=96/25.4;function k(){document.querySelectorAll(".bx,.two,table.kv,.akshar,.pl,.hs,.yg,.ad,.pbox,.yr,table.sub,ol.rank li").forEach(function(e){if(e.getBoundingClientRect().height<70*mm)e.classList.add("keep")});}if(document.readyState==="complete")k();else window.addEventListener("load",k);})();<\/script></body></html>`;
   }
 
-  window.JTSampurnaReport = { build };
+  window.JTSampurnaReport = { build, CH: CHAPTERS };
 })();

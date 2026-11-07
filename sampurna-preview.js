@@ -72,6 +72,14 @@
   .sp-hand a{color:#7A1F1F;font-weight:700}
   .sp-foot{margin:14px 16px 18px;font-size:13px;color:#6B5444;line-height:1.6;text-align:center}
   .sp-pay{margin:14px 16px 0}
+  .sp-real-in{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+  .sp-cov{flex:0 0 200px;height:283px;max-width:100%;margin:0 auto;overflow:hidden;border:1px solid #B8892B;box-shadow:0 4px 14px rgba(0,0,0,.18);background:#6E1C17;position:relative}
+  .sp-cov iframe{position:absolute;left:0;top:0;width:794px;height:1123px;border:0;transform-origin:0 0;pointer-events:none}
+  .sp-toc{flex:1 1 260px;min-width:0}
+  .sp-toc ol{margin:0 0 8px;padding-left:22px;font-size:15px;line-height:1.45;color:#2B1810}
+  .sp-toc li{padding:4px 0;border-bottom:1px dotted #D9C6A0}
+  .sp-toc li span{display:inline}.sp-toc li em{float:right;font-style:normal;font-size:13px;color:#7A5410;padding-left:8px;white-space:nowrap}
+  .sp-toc li::after{content:"";display:block;clear:both}
   @media (max-width:480px){.sp-top h2{font-size:27px}.sp-kv{gap:8px 10px}.sp table{font-size:14px}.sp th,.sp td{padding:6px 4px}.sp-pg{display:none}}
   @media print{#chapter-sampurna{display:none!important}}
   `;
@@ -128,6 +136,15 @@
 
     out.push(`<div class="sp-top"><p class="sp-om">॥ श्री गणेशाय नमः ॥</p><h2>सम्पूर्ण जन्म कुंडली</h2><p>${esc(ctx.name)} · ज्योतिष तर्क, लखनऊ</p><span class="sp-pill">35+ पेज · 17 अध्याय · PDF</span></div>`);
     out.push(`<div class="sp-ok"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><div><b>आपकी कुंडली की गणना पूरी हो गई है</b><span>हर अध्याय की कुछ बातें नीचे खुली हैं — पूरी रिपोर्ट ₹${PRICE.toLocaleString("en-IN")} में, भुगतान के तुरंत बाद।</span></div></div>`);
+
+    // what the customer actually receives: the real cover page and the 17-chapter contents
+    const PAGES = ["3–4", "5–6", "7–8", "9–11", "12–18", "19–25", "26", "26–27", "28–29", "30", "31", "31", "32–33", "34–37", "38–39", "40", "41–42"];
+    const CHS = (window.JTSampurnaReport && window.JTSampurnaReport.CH) || [];
+    out.push(`<section class="sp-sec hl sp-real"><h3>आपको मिलने वाली कुंडली</h3>
+      <div class="sp-real-in"><div class="sp-cov" id="spCover" aria-label="आपकी कुंडली का असली मुख-पृष्ठ"></div>
+      <div class="sp-toc"><p class="sp-t"><b>विषय सूची — 17 अध्याय, लगभग 40 पेज (A4 PDF)</b></p>
+      <ol>${CHS.map((c, i) => `<li><span>${esc(c)}</span><em>पेज ${PAGES[i] || ""}</em></li>`).join("")}<li class="sp-toc-n"><span>ज्योतिषी की टिप्पणी व आवश्यक सूचना</span><em>अंतिम पेज</em></li></ol>
+      <p class="sp-t" style="font-size:13.5px;color:#6B5444">पेज संख्या हर कुंडली में थोड़ी अलग हो सकती है। नीचे इसी कुंडली के कुछ हिस्सों की झलक है — बाकी भुगतान के बाद खुलेगा।</p></div></div></section>`);
 
     out.push(sec(1, "जन्म विवरण व अवकहड़ा चक्र", "1–2", `<div class="sp-kv">
       <div><small>नाम</small><b>${esc(ctx.name)}</b></div>
@@ -225,6 +242,17 @@
     css();
     teaser();
     host.innerHTML = `<div class="sp">${res.html}</div>`;
+    try {
+      const cv = host.querySelector("#spCover");
+      if (cv && window.JTSampurnaReport) {
+        const fr = document.createElement("iframe");
+        fr.title = "मुख-पृष्ठ"; fr.setAttribute("tabindex", "-1"); fr.setAttribute("aria-hidden", "true");
+        fr.srcdoc = window.JTSampurnaReport.build({ coverOnly: true, gender: (document.getElementById("userGender") || {}).value === "female" ? "female" : "male", status: (document.getElementById("spMarital") || {}).value || "single" });
+        cv.appendChild(fr);
+        const fit = () => { fr.style.transform = `scale(${(cv.clientWidth / 794).toFixed(4)})`; };
+        fit(); window.addEventListener("resize", fit);
+      } else if (cv) { cv.closest(".sp-real-in").removeChild(cv); }
+    } catch (e) { const cv = host.querySelector("#spCover"); if (cv) cv.remove(); }
     const pay = host.querySelector("#spPayBtn");
     pay.addEventListener("click", () => {
       const payHost = host.querySelector("#spPayHost");
