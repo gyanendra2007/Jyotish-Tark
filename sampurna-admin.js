@@ -83,29 +83,18 @@
       <div id="jtaBody" style="flex:1 1 100%;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end">
         <label style="flex:0 0 150px">लिंग<select id="jtaGender" class="jta-in"><option value="male">पुरुष</option><option value="female">स्त्री</option></select></label>
         <label style="flex:0 0 190px">वैवाहिक स्थिति<select id="jtaStatus" class="jta-in"><option value="single">अविवाहित</option><option value="married">विवाहित</option><option value="divorced">तलाक़शुदा</option><option value="widowed">विधुर / विधवा</option></select></label>
-        <label style="flex:1 1 220px">राशि नाम (सूची से चुनें या लिखें)<input id="jtaRname" class="jta-in" placeholder="जैसे: ${esc(syl)}…"></label>
-        <div style="flex:1 1 100%"><small>ज्योतिष टिप्पणी — ${NN ? "नक्षत्र के नाम (पहले चरण-अक्षर " + esc(syl) + " वाले):" : ""}</small><div id="jtaNames" class="jta-names"></div></div>
-        <label style="flex:1 1 320px">ज्योतिषी की टिप्पणी (रिपोर्ट के अंत में छपेगी)<textarea id="jtaNote" placeholder="जैसे: 2027 के मध्य में करियर में बदलाव के अच्छे योग हैं…"></textarea></label>
+        <label style="flex:1 1 320px">ज्योतिषी की टिप्पणी (खाली छोड़ें तो अपने-आप सामान्य, सावधान टिप्पणी छपेगी)<textarea id="jtaNote" placeholder="जैसे: 2027 के मध्य में करियर में बदलाव के अच्छे योग हैं…"></textarea></label>
         <button type="button" class="jta-btn g" id="jtaMake">रिपोर्ट बनाएँ</button></div>`;
     document.body.appendChild(b);
-    const gs = b.querySelector("#jtaGender"), ms = b.querySelector("#jtaStatus"), rn = b.querySelector("#jtaRname"), box = b.querySelector("#jtaNames");
+    const gs = b.querySelector("#jtaGender"), ms = b.querySelector("#jtaStatus");
     gs.value = g0 === "female" ? "female" : "male"; ms.value = m0;
-    const draw = () => {
-      if (!NN) { box.innerHTML = ""; return; }
-      const list = (gs.value === "female" ? NN.g : NN.b).split(",").map((x) => x.trim()).filter(Boolean);
-      const first = list.filter((n) => syl && n.startsWith(syl)), rest = list.filter((n) => !first.includes(n));
-      box.innerHTML = first.concat(rest).map((n) => `<button type="button" class="jta-chip${first.includes(n) ? " on" : ""}${rn.value === n ? " sel" : ""}" data-n="${esc(n)}">${esc(n)}</button>`).join("");
-    };
-    draw();
-    gs.addEventListener("change", draw);
-    box.addEventListener("click", (e) => { const t = e.target.closest("[data-n]"); if (!t) return; rn.value = t.dataset.n; draw(); });
     b.querySelector("#jtaToggle").addEventListener("click", (e) => { const body = b.querySelector("#jtaBody"); const open = body.style.display !== "none"; body.style.display = open ? "none" : "flex"; e.target.textContent = open ? "खोलें" : "छोटा करें"; e.target.setAttribute("aria-expanded", String(!open)); });
     b.querySelector("#jtaMake").addEventListener("click", make);
   }
 
   function make() {
     let html;
-    try { html = window.JTSampurnaReport.build({ note: document.getElementById("jtaNote").value, orderId: q.get("o") || "", gender: document.getElementById("jtaGender").value, status: document.getElementById("jtaStatus").value, rashiName: document.getElementById("jtaRname").value }); }
+    try { html = window.JTSampurnaReport.build({ note: document.getElementById("jtaNote").value, orderId: q.get("o") || "", gender: document.getElementById("jtaGender").value, status: document.getElementById("jtaStatus").value }); }
     catch (e) { alert(e.message || e); return; }
     const v = document.createElement("div");
     v.className = "jta-view";

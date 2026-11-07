@@ -127,7 +127,7 @@
     const out = [];
 
     out.push(`<div class="sp-top"><p class="sp-om">॥ श्री गणेशाय नमः ॥</p><h2>सम्पूर्ण जन्म कुंडली</h2><p>${esc(ctx.name)} · ज्योतिष तर्क, लखनऊ</p><span class="sp-pill">35+ पेज · 17 अध्याय · PDF</span></div>`);
-    out.push(`<div class="sp-ok"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><div><b>आपकी कुंडली की गणना पूरी हो गई है</b><span>हर अध्याय की कुछ बातें नीचे खुली हैं — पूरी रिपोर्ट ₹${PRICE.toLocaleString("en-IN")} में, 24 घंटे के अंदर।</span></div></div>`);
+    out.push(`<div class="sp-ok"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><div><b>आपकी कुंडली की गणना पूरी हो गई है</b><span>हर अध्याय की कुछ बातें नीचे खुली हैं — पूरी रिपोर्ट ₹${PRICE.toLocaleString("en-IN")} में, भुगतान के तुरंत बाद।</span></div></div>`);
 
     out.push(sec(1, "जन्म विवरण व अवकहड़ा चक्र", "1–2", `<div class="sp-kv">
       <div><small>नाम</small><b>${esc(ctx.name)}</b></div>
@@ -192,7 +192,7 @@
     out.push(sec(12, "योग, दोष, वर्षफल 2027 व उपाय", "26–30", `<p class="sp-t">${ys.length ? `आपकी कुंडली में <b style="color:#7A1F1F">${ys.length} शुभ योग</b> मिले — जिनमें एक <b>${esc(strip(ys[0].title))}</b> है।` : "आपकी कुंडली के योग और उनका फल पूरी रिपोर्ट में।"}${cs.length ? ` साथ ही <b>${cs.length} संवेदनशील बिंदु</b> जिन पर ध्यान देना है।` : ""}</p>${bars([72, 90, 58, 80])}${lock("सभी योगों का फल, दोष-विचार, 2027 का वर्षफल, मंत्र, दान व रत्न-विचार")}`));
 
     out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
-      <ol><li>Cashfree के सुरक्षित पेज पर ₹${PRICE.toLocaleString("en-IN")} का ऑनलाइन भुगतान करें</li><li>पेमेंट फ़ॉर्म में जन्म विवरण और ऑर्डर नंबर भरें</li><li>24 घंटे के अंदर पूरी कुंडली PDF में पाएँ</li></ol>
+      <ol><li>Cashfree के सुरक्षित पेज पर ₹${PRICE.toLocaleString("en-IN")} का ऑनलाइन भुगतान करें</li><li>पेमेंट फ़ॉर्म में जन्म विवरण और ऑर्डर नंबर भरें</li><li>भुगतान के तुरंत बाद पूरी कुंडली PDF में पाएँ</li></ol>
       <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
       <div class="sp-hand"><b>ज्योतिषी द्वारा हस्तनिर्मित कुंडली — ₹${HAND.toLocaleString("en-IN")}</b><p>ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली का अध्ययन करके लिखते हैं · 5–7 दिन में · <a href="#" id="spHandBtn">ऑर्डर करें</a></p></div>
@@ -209,7 +209,7 @@
       card = document.createElement("article");
       card.id = "chapter-sampurna";
       card.className = "no-print";
-      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,101) का प्रीव्यू तैयार है</b><span>35+ पेज · 17 अध्याय · 24 घंटे के अंदर PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
+      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>आपकी सम्पूर्ण कुंडली (₹1,101) का प्रीव्यू तैयार है</b><span>35+ पेज · 17 अध्याय · भुगतान के तुरंत बाद PDF — अलग पेज पर देखें</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>प्रीव्यू देखें</button></div></div>`;
     }
     const dk = document.getElementById("chapter-dakshina");
     const out = document.getElementById("masterDossierOutput");
@@ -229,11 +229,13 @@
     pay.addEventListener("click", () => {
       const payHost = host.querySelector("#spPayHost");
       if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock"><a href="${PAY_LINK}" target="_blank" rel="noopener">₹${PRICE} का ऑनलाइन भुगतान करें (Cashfree) →</a></p>`; return; }
-      const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, payLink: PAY_LINK, product: "सम्पूर्ण कुंडली", delivery: "24 घंटे के अंदर पूरी कुंडली PDF में WhatsApp पर भेजी जाएगी।" }, res.order);
+      const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, payLink: PAY_LINK, product: "सम्पूर्ण कुंडली", delivery: "भुगतान के तुरंत बाद इसी पेज पर पूरी कुंडली बन जाएगी — PDF डाउनलोड करें।" }, res.order);
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const g = (document.getElementById("userGender") || {}).value || "";
       const u = new URLSearchParams({ jtadmin: "1", o: order.orderId, n: order.name || "", g: g, m: (document.getElementById("spMarital") || {}).value || "", d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "" });
       order.adminLink = "https://jyotishtark.in/kundali-form.html?" + u.toString();
+      // saved in this browser so the report can be built automatically when Cashfree sends the customer back
+      try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: order.orderId, n: order.name || "", g: g, m: u.get("m"), d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now() })); } catch (e) { /* ignore */ }
       window.JTPay.render(payHost, order);
       try { if (window.gtag) window.gtag("event", "begin_checkout", { value: PRICE, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] }); } catch (e) { /* ignore */ }
     });

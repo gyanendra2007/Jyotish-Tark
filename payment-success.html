@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=4">
   <link rel="stylesheet" href="rashi.css?v=5">
-  <script src="jt-site.js?v=10" defer></script>
+  <script src="jt-site.js?v=11" defer></script>
 </head>
 <body>
   <header class="jt-header no-print">
@@ -84,15 +84,33 @@
   </header>
   <main id="main" class="rs-page">
     <section class="rs-hero"><div><p class="rs-kicker">॥ धन्यवाद ॥</p><h1>भुगतान सफल रहा</h1><p class="rs-lead">आपका भुगतान हमें मिल गया है। Cashfree की ओर से रसीद आपके ईमेल / SMS पर भेजी जाती है।</p></div></section>
+    <section class="rs-sec" id="jtConsultNext" hidden style="border:2px solid #15803D;border-radius:14px">
+      <h2>अंतिम चरण — WhatsApp पर संदेश भेजें</h2>
+      <p>आपका नाम, जन्म विवरण और चुना हुआ परामर्श संदेश में पहले से भरा है। नीचे का बटन दबाकर WhatsApp में <b>Send</b> दबाएँ — कॉल का समय वहीं तय होगा।</p>
+      <p><a class="rs-btn" id="jtConsultWa" href="https://wa.me/918318513814" target="_blank" rel="noopener" style="background:#15803D;border-color:#15803D">WhatsApp पर संदेश भेजें</a></p>
+    </section>
     <section class="rs-sec"><h2>आगे क्या होगा</h2>
       <ol>
         <li>अगर आपने भुगतान फ़ॉर्म में जन्मतिथि, जन्म समय और जन्म स्थान भर दिया है, तो कुछ और करने की ज़रूरत नहीं।</li>
         <li>अगर कोई जानकारी छूट गई हो, तो नीचे के बटन से WhatsApp पर भेज दें।</li>
-        <li>सम्पूर्ण कुंडली 24 घंटे में और हस्तनिर्मित कुंडली 5–7 दिन में WhatsApp व ईमेल पर भेजी जाती है। अंक ज्योतिष रिपोर्ट WhatsApp पर भेजी जाती है।</li>
+        <li>हस्तनिर्मित कुंडली 5–7 दिन में WhatsApp व ईमेल पर भेजी जाती है। अंक ज्योतिष रिपोर्ट WhatsApp पर भेजी जाती है। परामर्श का समय WhatsApp पर तय होता है।</li>
       </ol>
       <p><a class="rs-btn" href="https://wa.me/918318513814?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%2C%20%E0%A4%AE%E0%A5%88%E0%A4%82%E0%A4%A8%E0%A5%87%20Jyotish%20Tark%20%E0%A4%AA%E0%A4%B0%20%E0%A4%91%E0%A4%A8%E0%A4%B2%E0%A4%BE%E0%A4%87%E0%A4%A8%20%E0%A4%AD%E0%A5%81%E0%A4%97%E0%A4%A4%E0%A4%BE%E0%A4%A8%20%E0%A4%95%E0%A4%BF%E0%A4%AF%E0%A4%BE%20%E0%A4%B9%E0%A5%88%E0%A5%A4%20%E0%A4%AE%E0%A5%87%E0%A4%B0%E0%A4%BE%20%E0%A4%A8%E0%A4%BE%E0%A4%AE%2C%20%E0%A4%9C%E0%A4%A8%E0%A5%8D%E0%A4%AE%E0%A4%A4%E0%A4%BF%E0%A4%A5%E0%A4%BF%2C%20%E0%A4%9C%E0%A4%A8%E0%A5%8D%E0%A4%AE%20%E0%A4%B8%E0%A4%AE%E0%A4%AF%20%E0%A4%94%E0%A4%B0%20%E0%A4%9C%E0%A4%A8%E0%A5%8D%E0%A4%AE%20%E0%A4%B8%E0%A5%8D%E0%A4%A5%E0%A4%BE%E0%A4%A8%20%E0%A4%AF%E0%A4%B9%20%E0%A4%B9%E0%A5%88%3A" target="_blank" rel="noopener">WhatsApp पर जानकारी भेजें</a> <a class="rs-btn ghost" href="index.html">होम पेज पर जाएँ</a></p>
       <p class="rs-note">किसी भी समस्या में WhatsApp +91 83185 13814 पर संपर्क करें।</p></section>
-  </main>
+  <script>
+  (function () {
+    try {
+      var o = JSON.parse(localStorage.getItem("jt-consult") || "null");
+      if (!o || !o.msg || Date.now() - (o.ts || 0) > 2 * 864e5) return;
+      var s = document.getElementById("jtConsultNext"), a = document.getElementById("jtConsultWa");
+      a.href = "https://wa.me/918318513814?text=" + encodeURIComponent(o.msg);
+      s.hidden = false;
+      a.addEventListener("click", function () { try { localStorage.removeItem("jt-consult"); if (window.gtag) window.gtag("event", "consult_whatsapp_after_pay", { plan: o.id }); } catch (e) { /* ignore */ } });
+      try { if (window.gtag) window.gtag("event", "purchase", { currency: "INR", items: [{ item_name: o.id }] }); } catch (e) { /* ignore */ }
+    } catch (e) { /* ignore */ }
+  })();
+  </script>
+</main>
   <footer class="jt-footer no-print">
     <div class="jt-footer-cta">
       <div class="jt-wrap">
@@ -118,7 +136,7 @@
         <h2>सेवाएं</h2>
         <ul>
           <li><a href="kundali-form.html">मुफ़्त जन्म कुंडली</a></li>
-          <li><a href="sampurna-kundali.html">सम्पूर्ण कुंडली · ₹1,101</a></li><li><a href="consultation.html">परामर्श शुल्क · 5 मिनट मुफ़्त</a></li>
+          <li><a href="sampurna-kundali.html">सम्पूर्ण कुंडली · ₹1,101</a></li><li><a href="consultation.html">परामर्श · पहली कॉल मुफ़्त</a></li>
           <li><a href="rashifal.html">राशिफल</a></li>
           <li><a href="rashi.html">12 राशियां</a></li><li><a href="tyohar-2026.html">त्योहार 2026</a></li><li><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></li><li><a href="bhakti-sangrah.html">भक्ति संग्रह</a></li>
           <li><a href="panchang.html">पंचांग व मुहूर्त</a></li>

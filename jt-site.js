@@ -93,6 +93,7 @@
   var WA = "918318513814";
   var PAY = {a15: "https://payments.cashfree.com/forms/audiocall15", a30: "https://payments.cashfree.com/forms/audiocall30", a60: "https://payments.cashfree.com/forms/audiocall60", v30: "https://payments.cashfree.com/forms/videocall30", v60: "https://payments.cashfree.com/forms/videocall60", k15: "https://payments.cashfree.com/forms/call15kundali", k30: "https://payments.cashfree.com/forms/call30kundali", rem: "https://payments.cashfree.com/forms/remedy", p1: "https://payments.cashfree.com/forms/personalmeeting", p2: "https://payments.cashfree.com/forms/homevisit"};
   var PLANS = [
+    { id: "f5", g: "free", t: "पहली कॉल · 5 मिनट (एक नंबर पर एक बार)", p: "मुफ़्त" },
     { id: "a15", g: "call", t: "ऑडियो कॉल · 15 मिनट", p: "₹301" },
     { id: "a30", g: "call", t: "ऑडियो कॉल · 30 मिनट", p: "₹501" },
     { id: "a60", g: "call", t: "ऑडियो कॉल · 1 घंटा", p: "₹901" },
@@ -105,10 +106,10 @@
     { id: "p2", g: "meet", t: "ज्योतिषी आपके स्थान पर आएँ (पहले से अपॉइंटमेंट, यात्रा शुल्क नहीं)", p: "₹21,000" }
   ];
   var FAQ = [
-    ["पहले 5 मिनट मुफ़्त कैसे हैं?", "कॉल के पहले 5 मिनट मुफ़्त हैं — आप अपनी समस्या बताइए, और आगे बात करनी है या नहीं, यह आप तय करें।"],
-    ["भुगतान कब और कैसे करना है?", "ऑडियो/वीडियो कॉल और उपाय का भुगतान सेवा के बाद Cashfree के सुरक्षित लिंक से ऑनलाइन होता है। व्यक्तिगत भेंट (₹11,000 / ₹21,000) का भुगतान अपॉइंटमेंट पक्का करते समय पहले होता है।"],
+    ["पहली 5 मिनट की कॉल मुफ़्त कैसे है?", "पहली बार बात करने वालों के लिए 5 मिनट की एक कॉल मुफ़्त है — एक मोबाइल नंबर पर एक बार। अपनी समस्या बताइए, फिर आगे की कॉल चुनें।"],
+    ["भुगतान कब और कैसे करना है?", "पहली मुफ़्त कॉल को छोड़कर हर परामर्श का भुगतान पहले होता है — Cashfree के सुरक्षित पेज पर। भुगतान के बाद WhatsApp पर आपका विवरण पहले से भरा संदेश खुलेगा; वहीं समय तय होगा।"],
     ["अपॉइंटमेंट की तारीख बदल सकते हैं?", "हाँ, व्यक्तिगत भेंट की तारीख 48 घंटे पहले बताकर बदली जा सकती है। अग्रिम भुगतान का रिफ़ंड नहीं होता — केवल तारीख बदलने की सुविधा है।"],
-    ["कॉल का समय कैसे तय होगा?", "बुकिंग संदेश भेजने के बाद WhatsApp पर आपकी सुविधा के अनुसार समय तय किया जाता है।"],
+    ["कॉल का समय कैसे तय होगा?", "भुगतान के बाद WhatsApp संदेश भेजें — वहाँ आपकी सुविधा के अनुसार समय तय किया जाता है।"],
     ["कॉल के लिए क्या तैयार रखें?", "जन्म तिथि, जन्म का सही समय और जन्म स्थान — और अपने 2–3 मुख्य प्रश्न।"],
     ["क्या ज्योतिष से गारंटी मिलती है?", "नहीं। ज्योतिष मार्गदर्शन देता है, गारंटी नहीं। स्वास्थ्य, कानूनी या आर्थिक मामलों में संबंधित विशेषज्ञ (डॉक्टर, वकील) की सलाह ज़रूर लें।"]
   ];
@@ -126,7 +127,7 @@
       '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>' +
       '<span class="jt-bot-btn-t">सहायता</span></button>' +
       '<div class="jt-bot-panel" id="jtBot" role="dialog" aria-modal="false" aria-labelledby="jtBotTitle" hidden>' +
-      '<div class="jt-bot-head"><img src="logo.png" alt="" width="36" height="36"><div><b id="jtBotTitle">ज्योतिष तर्क सहायक</b><small>पहले 5 मिनट की बात मुफ़्त</small></div>' +
+      '<div class="jt-bot-head"><img src="logo.png" alt="" width="36" height="36"><div><b id="jtBotTitle">ज्योतिष तर्क सहायक</b><small>पहली 5 मिनट की कॉल मुफ़्त</small></div>' +
       '<button type="button" class="jt-bot-x" data-a="close" aria-label="बंद करें">×</button></div>' +
       '<div class="jt-bot-body" aria-live="polite"></div></div>';
     document.body.appendChild(wrap);
@@ -146,7 +147,7 @@
         '<a href="' + esc(direct) + '" target="_blank" rel="noopener">💬 सीधे WhatsApp पर बात करें</a></div>');
     }
     function priceList(pick) {
-      var g = { call: "ऑडियो / वीडियो कॉल", msg: "बिना कॉल", meet: "व्यक्तिगत भेंट" }, out = "", last = "";
+      var g = { free: "पहली बार", call: "ऑडियो / वीडियो कॉल", msg: "बिना कॉल", meet: "व्यक्तिगत भेंट" }, out = "", last = "";
       PLANS.forEach(function (x) {
         if (x.g !== last) { out += '<p class="jt-bot-g">' + g[x.g] + "</p>"; last = x.g; }
         out += pick ? '<button type="button" class="jt-bot-plan" data-a="plan" data-id="' + x.id + '"><span>' + x.t + "</span><b>" + x.p + "</b></button>"
@@ -156,17 +157,17 @@
     }
     var views = {
       home: home,
-      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>हर कॉल के पहले 5 मिनट मुफ़्त · कॉल का भुगतान बात के बाद ऑनलाइन (Cashfree)</small></p>' + priceList(true)); },
-      price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>हर कॉल के पहले 5 मिनट मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
+      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>पहली 5 मिनट की कॉल मुफ़्त · बाकी का भुगतान पहले (Cashfree)</small></p>' + priceList(true)); },
+      price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>पहली 5 मिनट की कॉल मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
       kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="sampurna-kundali.html">सम्पूर्ण कुंडली (35+ पेज) · ₹1,101</a><a href="kundali-form.html">हस्तनिर्मित कुंडली · ₹2,100</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली · ₹1,501</button></div>'); },
       daily: function () { say(back() + '<p class="jt-bot-msg">रोज़ की जानकारी</p><div class="jt-bot-opts"><a href="rashifal.html">आज का राशिफल</a><a href="panchang.html">आज का पंचांग</a><a href="ekadashi-list.html">एकादशी सूची 2026–27</a><a href="tyohar-2026.html">त्योहार 2026</a><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></div>'); },
       bhakti: function () { say(back() + '<p class="jt-bot-msg">भक्ति संग्रह</p><div class="jt-bot-opts"><a href="hanuman-chalisa.html">हनुमान चालीसा</a><a href="om-jai-jagdish-hare-aarti.html">ॐ जय जगदीश हरे</a><a href="sundarkand.html">सुंदरकांड</a><a href="ekadashi-vrat-katha.html">एकादशी व्रत कथा</a><a href="bhakti-sangrah.html">सभी पाठ, आरती व कथाएँ →</a></div>'); },
       faq: function () { say(back() + '<p class="jt-bot-msg">सामान्य प्रश्न</p>' + FAQ.map(function (q) { return "<details><summary>" + q[0] + "</summary><p>" + q[1] + "</p></details>"; }).join("") + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 परामर्श बुक करें</button></div>'); }
     };
     function form() {
-      var meet = plan.g === "meet";
+      var meet = plan.g === "meet", free = plan.g === "free" || !PAY[plan.id];
       say('<button type="button" class="jt-bot-back" data-a="book">← दूसरा विकल्प चुनें</button>' +
-        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (meet ? "व्यक्तिगत भेंट का भुगतान अपॉइंटमेंट पक्का होने पर पहले होता है (रिफ़ंड नहीं); 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "उपाय WhatsApp संदेश से भेजे जाएँगे; भुगतान उसके बाद Cashfree लिंक से।" : "पहले 5 मिनट मुफ़्त; भुगतान कॉल के बाद ऑनलाइन (Cashfree)।")) + (PAY[plan.id] ? ' <a href="' + PAY[plan.id] + '" target="_blank" rel="noopener">भुगतान लिंक →</a>' : "") + "</small></p>" +
+        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (free ? "पहली बार बात करने वालों के लिए मुफ़्त — एक मोबाइल नंबर पर एक बार। विवरण भरें, WhatsApp पर संदेश जाएगा और समय तय होगा।" : (meet ? "भुगतान पहले (Cashfree), फिर WhatsApp पर तारीख तय होगी। रिफ़ंड नहीं, पर 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "भुगतान पहले (Cashfree); उपाय WhatsApp संदेश से भेजे जाएँगे।" : "भुगतान पहले (Cashfree), फिर WhatsApp पर कॉल का समय तय होगा।"))) + "</small></p>" +
         '<form class="jt-bot-form" novalidate>' +
         '<label>आपका नाम<input name="n" autocomplete="name" required></label>' +
         '<label>जन्म तिथि<input name="d" type="date" required></label>' +
@@ -175,17 +176,24 @@
         (meet ? '<label>पसंद की तारीख व शहर<input name="w" placeholder="जैसे: 20 नवंबर, लखनऊ"></label>' : "") +
         '<label>मुख्य प्रश्न (वैकल्पिक)<textarea name="q" rows="2" placeholder="जैसे: करियर, विवाह, नौकरी"></textarea></label>' +
         '<p class="jt-bot-err" role="alert"></p>' +
-        '<button type="submit" class="jt-bot-send">WhatsApp पर बुकिंग भेजें</button>' +
-        "<small>आपकी जानकारी इस वेबसाइट पर सेव नहीं होती — सीधे WhatsApp संदेश में जाती है।</small></form>");
+        '<button type="submit" class="jt-bot-send">' + (free ? "WhatsApp पर बुकिंग भेजें" : plan.p + " का भुगतान करें") + '</button>' +
+        "<small>" + (free ? "आपकी जानकारी सीधे WhatsApp संदेश में जाती है।" : "भुगतान के बाद आप इसी वेबसाइट पर लौटेंगे और WhatsApp संदेश तैयार मिलेगा। जानकारी केवल आपके फ़ोन में रहती है।") + "</small></form>");
       body.querySelector("form").addEventListener("input", function (e) { e.currentTarget.querySelector(".jt-bot-err").textContent = ""; });
       body.querySelector("form").addEventListener("submit", function (e) {
         e.preventDefault();
         var f = e.target, v = function (k) { return f[k] ? f[k].value.trim() : ""; };
         if (!v("n") || !v("d")) { f.querySelector(".jt-bot-err").textContent = "कृपया नाम और जन्म तिथि भरें।"; (v("n") ? f.d : f.n).focus(); return; }
         var d = v("d").split("-"), dd = d.length === 3 ? d[2] + "-" + d[1] + "-" + d[0] : v("d");
-        var msg = "नमस्ते, मुझे परामर्श बुक करना है।\nसेवा: " + plan.t + " (" + plan.p + ")\nनाम: " + v("n") + "\nजन्म तिथि: " + dd +
+        var msg = (free ? "नमस्ते, मुझे पहली 5 मिनट की मुफ़्त कॉल बुक करनी है।" : "नमस्ते, मैंने परामर्श का भुगतान कर दिया है ✅ (Cashfree)।") + "\nसेवा: " + plan.t + " (" + plan.p + ")\nनाम: " + v("n") + "\nजन्म तिथि: " + dd +
           (v("t") ? "\nजन्म समय: " + v("t") : "") + (v("p") ? "\nजन्म स्थान: " + v("p") : "") + (v("w") ? "\nपसंद की तारीख/शहर: " + v("w") : "") +
           (v("q") ? "\nप्रश्न: " + v("q") : "") + "\n(jyotishtark.in से)";
+        if (!free) {
+          try { localStorage.setItem("jt-consult", JSON.stringify({ msg: msg, id: plan.id, ts: Date.now() })); } catch (err) { /* ignore */ }
+          try { if (window.gtag) window.gtag("event", "begin_checkout", { item_name: plan.t, currency: "INR" }); } catch (err) { /* ignore */ }
+          say('<p class="jt-bot-msg">Cashfree का सुरक्षित भुगतान पेज खुल रहा है… भुगतान के बाद आप इसी वेबसाइट पर लौटेंगे और WhatsApp संदेश तैयार मिलेगा।</p><div class="jt-bot-opts"><a href="' + PAY[plan.id] + '">भुगतान पेज न खुले तो यहाँ दबाएँ</a></div>');
+          location.href = PAY[plan.id];
+          return;
+        }
         window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
         say('<p class="jt-bot-msg">धन्यवाद 🙏 WhatsApp में संदेश तैयार है — वहाँ <b>Send</b> दबाएँ। समय वहीं तय होगा।</p><div class="jt-bot-opts"><button type="button" data-a="home">मुख्य मेनू</button></div>');
       });
@@ -247,10 +255,10 @@
         '<div class="jt-ad-box" role="dialog" aria-modal="true" aria-labelledby="jtAdT" aria-describedby="jtAdD">' +
         '<button type="button" class="jt-ad-x" data-ad-close aria-label="बंद करें"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
         '<div class="jt-ad-top"><img src="images/big-profile.JPG" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="64" height="64"><div><b>ज्योतिषी ज्ञानेंद्र सिंह तोमर</b><small>ज्योतिष तर्क · लखनऊ</small></div></div>' +
-        '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहले <span>5 मिनट मुफ़्त</span></h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — भुगतान बात के बाद ऑनलाइन (Cashfree)।</p></div>' +
+        '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहली <span>5 मिनट की कॉल</span> मुफ़्त</h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — पहली बार बात करने वालों के लिए।</p></div>' +
         '<div class="jt-ad-cards">' +
           '<div class="jt-ad-c jt-ad-c1"><p class="jt-ad-ct">कॉल परामर्श</p><p class="jt-ad-cp">ऑडियो <b>₹301</b> से · वीडियो <b>₹1,101</b> से</p><button type="button" class="jt-ad-b" data-jt-bot="book" data-ad-close>कॉल बुक करें</button></div>' +
-          '<div class="jt-ad-c"><p class="jt-ad-ct">सम्पूर्ण कुंडली</p><p class="jt-ad-cp"><b>₹1,101</b> · 35+ पेज PDF · 24 घंटे में</p><a class="jt-ad-b jt-ad-b2" href="kundali-form.html#sampurna">कुंडली बनवाएँ</a></div>' +
+          '<div class="jt-ad-c"><p class="jt-ad-ct">सम्पूर्ण कुंडली</p><p class="jt-ad-cp"><b>₹1,101</b> · 35+ पेज PDF · तुरंत</p><a class="jt-ad-b jt-ad-b2" href="kundali-form.html#sampurna">कुंडली बनवाएँ</a></div>' +
           '<div class="jt-ad-c"><p class="jt-ad-ct">मुफ़्त जन्म कुंडली</p><p class="jt-ad-cp">तुरंत, हिंदी में · लग्न, ग्रह, दशा</p><a class="jt-ad-b jt-ad-b3" href="kundali-form.html">मुफ़्त कुंडली देखें</a></div>' +
         '</div>' +
         '<p class="jt-ad-f"><a href="consultation.html">सभी परामर्श शुल्क देखें</a> · हस्तनिर्मित कुंडली ₹2,100</p>' +

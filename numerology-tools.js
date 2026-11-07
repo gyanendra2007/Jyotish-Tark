@@ -271,7 +271,7 @@
         <a class="nm-btn nm-wa" href="https://wa.me/?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener">${L("WhatsApp पर शेयर करें", "Share on WhatsApp")}</a>
         <a class="nm-btn nm-ghost" href="kundali-form.html">${L("मुफ़्त कुंडली देखें", "See free Kundali")}</a>
       </div>
-      <p class="nm-small">${L("अंक ज्योतिष सामान्य मार्गदर्शन है, गारंटी नहीं। व्यक्तिगत सलाह के लिए", "Numerology is general guidance, not a guarantee. For personal advice,")} <a href="consultation.html">${L("ज्योतिषी से बात करें — पहले 5 मिनट मुफ़्त", "talk to the astrologer — first 5 minutes free")}</a>.</p></div>`;
+      <p class="nm-small">${L("अंक ज्योतिष सामान्य मार्गदर्शन है, गारंटी नहीं। व्यक्तिगत सलाह के लिए", "Numerology is general guidance, not a guarantee. For personal advice,")} <a href="consultation.html">${L("ज्योतिषी से बात करें — पहली 5 मिनट की कॉल मुफ़्त", "talk to the astrologer — first 5-minute call free")}</a>.</p></div>`;
     out.querySelector("[data-pdf]").addEventListener("click", () => { pdf(M); track("numerology_pdf", { lang: LANG }); });
     out.querySelector("[data-paid]").addEventListener("click", () => track("numerology_paid_click", { price: 299 }));
     if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });

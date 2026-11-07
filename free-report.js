@@ -1349,7 +1349,7 @@
       <ul class="bul">${rem}</ul>
       <p class="note">${T("रत्न केवल पूर्ण कुंडली विश्लेषण के बाद धारण करें — गलत रत्न लाभ के स्थान पर हानि कर सकता है।", "Wear gemstones only after a full chart analysis — a wrong stone can harm instead of help.")}</p>
       <div class="offer">
-        <div class="oh">${T("सम्पूर्ण कुंडली — 35+ पेज, 24 घंटे में", "Sampurna Kundali — 20+ pages, within 24 hours")} <span class="price">${OPT.fullPrice}${OPT.fullPriceStrike ? ` <s>${OPT.fullPriceStrike}</s>` : ""}</span></div>
+        <div class="oh">${T("सम्पूर्ण कुंडली — 35+ पेज, तुरंत", "Sampurna Kundali — 35+ pages, instantly after payment")} <span class="price">${OPT.fullPrice}${OPT.fullPriceStrike ? ` <s>${OPT.fullPriceStrike}</s>` : ""}</span></div>
         <ul>${full.map((x) => `<li>✔ ${x}</li>`).join("")}</ul>
       </div>
       <div class="bigqr">

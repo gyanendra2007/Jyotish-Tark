@@ -154,7 +154,6 @@
     if (opts.gender) ctx.gender = opts.gender;
     const status = opts.status || "single";
     const STATUS = { single: "अविवाहित", married: "विवाहित", divorced: "तलाक़शुदा", widowed: "विधुर / विधवा" };
-    const rashiName = (opts.rashiName || "").trim();
     const A = window.JTAnalysis;
     const gender = ctx.gender === "female" ? "स्त्री" : (ctx.gender === "male" ? "पुरुष" : "—");
     const meta = c.meta || {};
@@ -171,7 +170,7 @@
         ${mandalaSvg()}
         <h1>सम्पूर्ण जन्म कुंडली</h1>
         <p class="csub">वैदिक जन्मपत्रिका · लाहिड़ी अयनांश · विंशोत्तरी दशा</p>
-        <div class="plaque"><span>जातक</span><b>${esc(ctx.name)}</b>${rashiName ? `<em>राशि नाम: ${esc(rashiName)}</em>` : ""}</div>
+        <div class="plaque"><span>जातक</span><b>${esc(ctx.name)}</b></div>
         <div class="cgrid">
           <div><small>जन्म तिथि</small><b>${dobTxt}</b></div>
           <div><small>जन्म समय</small><b>${esc(tob)}</b></div>
@@ -198,10 +197,9 @@
       <div>${kvTable([
         ["लग्न", `${RASHI[ascR]} (स्वामी ${PL[LORD[ascR]]})`], ["राशि", `${RASHI[moonR]} (स्वामी ${PL[LORD[moonR]]})`], ["नक्षत्र — चरण", `${NAK[moonNak - 1]} — ${c.Moon.pada || (m && m.moonPada) || ""}`], ["नक्षत्र स्वामी", PL[nakLord]],
         ["तिथि", esc(String(p.tithiHi || "").replace(/\s*\(.*?\)/g, ""))], ["योग", esc(hi(p.yogaName))], ["करण", esc(hi(p.karanaName))], ["वर्ण", esc(hi(p.varna))], ["योनि", esc(hi(p.yoni))], ["गण", esc(hi(p.gana))], ["नाड़ी", esc(hi(p.nadi))], ["पाया", esc(String(p.payaHi || "").split(" (")[0])]])}</div></div>
-      <div class="blk akshar"><h3>नामाक्षर व राशि नाम</h3>
+      <div class="blk akshar"><h3>नामाक्षर (राशि अक्षर)</h3>
         <div class="two"><div>${kvTable([["जन्म राशि", RASHI[moonR]], ["नक्षत्र — चरण", `${NAK[moonNak - 1]} — ${c.Moon.pada || (m && m.moonPada) || ""}`], ["नक्षत्र चरण का अक्षर", `<b class="big">${esc((m && m.syllable) || "")}</b>`], ["नक्षत्र देवता", esc((m && m.aksh && m.aksh.devataHi) || "")], ["राशि के सभी अक्षर", rk.a]])}</div>
-        <div>${rashiName ? `<div class="rname"><small>ज्योतिषी द्वारा चुना गया राशि नाम</small><b>${esc(rashiName)}</b></div>` : ""}<p>पारंपरिक रूप से राशि नाम (नामकरण का नाम) जन्म नक्षत्र के चरण के अक्षर से रखा जाता है; उसी राशि के दूसरे अक्षरों से भी नाम रखा जा सकता है।</p>
-        ${(() => { const NN = (window.JT_NAK_NAMES || {})[moonNak]; if (!NN) return ""; const list = (ctx.gender === "female" ? NN.g : NN.b).split(",").map((x) => x.trim()).filter(Boolean); return `<p><b>${NAK[moonNak - 1]} नक्षत्र के कुछ ${ctx.gender === "female" ? "बालिका" : "बालक"} नाम:</b> ${list.slice(0, 14).join(", ")}</p>`; })()}</div></div></div>
+        <div><p>पारंपरिक रूप से नामकरण जन्म नक्षत्र के चरण के अक्षर — <b>${esc((m && m.syllable) || "")}</b> — से किया जाता है। उसी राशि के दूसरे अक्षर (${rk.a}) भी शुभ माने जाते हैं।</p><p>यह केवल परंपरा की जानकारी है; पहले से चल रहा नाम बदलने की आवश्यकता नहीं है।</p></div></div></div>
       <div class="blk"><h3>आपके शुभ अंक, रंग, दिन और देवता</h3>${A.lucky(ctx, vd, m)}</div>`, "आपके जन्म के समय का पंचांग, अवकहड़ा चक्र और नाम का अक्षर", true);
 
     // ---------------- ch 2 ----------------
@@ -322,8 +320,21 @@
       ${A.remedies(ctx, vd, m)}
       <div class="yg"><h4>रत्न-विचार</h4><p>आपकी कुंडली के शुभ (त्रिकोण) ग्रह हैं — लग्नेश <b>${PL[lagL]}</b> (${GEM[lagL]}), पंचमेश <b>${PL[l5]}</b> (${GEM[l5]}) और नवमेश <b>${PL[l9]}</b> (${GEM[l9]})। सामान्यतः इन्हीं के रत्न विचारणीय होते हैं।${avoid.length ? ` <b>${avoid.map((k) => `${PL[k]} (${GEM[k]})`).join(", ")}</b> केवल अशुभ भावों के स्वामी होने से इनके रत्न बिना विशेष परामर्श के न पहनें।` : ""} रत्न केवल ज्योतिषी से सलाह लेकर, सही वज़न व धातु में और परीक्षण के बाद ही पहनें।</p></div>`, "आने वाले वर्ष के गोचर, आपके लिए चुने गए उपाय और रत्न");
 
+    // automatic astrologer's note (used when no personal note is written): positive but careful
+    function autoNote() {
+      const md = curMd >= 0 ? seq[curMd] : null;
+      const ad = md && (md.antardashas || []).find((a) => ms(a.start) <= now && ms(a.end) >= now);
+      const lines = [];
+      lines.push(`${ctx.name} जी, आपकी कुंडली ${RASHI[ascR]} लग्न और ${RASHI[moonR]} राशि की है। लग्नेश ${PL[LORD[ascR]]} आपके स्वभाव और जीवन की दिशा का मुख्य सूत्र है — इसकी शक्ति आपके अपने परिश्रम और अनुशासन से और बढ़ती है।`);
+      if (md) lines.push(`अभी ${PL[md.lord]} की महादशा${ad ? ` में ${PL[ad.lord]} की अंतर्दशा (${dmy(ad.end)} तक)` : ""} चल रही है। इस समय धैर्य, नियमित प्रयास और सोच-समझकर लिए गए निर्णय अच्छे परिणाम की संभावना बढ़ाते हैं; जल्दबाज़ी और दूसरों के दबाव में बड़े फ़ैसले न लें।`);
+      lines.push("ग्रह केवल प्रवृत्ति और समय का संकेत देते हैं, निश्चित भविष्य नहीं। कुंडली के शुभ योग तभी फल देते हैं जब आप स्वयं प्रयास करें, और कठिन योग सही आचरण, संयम और उपाय से हल्के होते हैं।");
+      lines.push("विवाह, निवेश, नौकरी बदलने या स्वास्थ्य से जुड़े किसी भी बड़े निर्णय से पहले अपनी परिस्थिति, परिवार और संबंधित विशेषज्ञ (डॉक्टर, वकील, वित्तीय सलाहकार) की सलाह अवश्य लें। रत्न केवल व्यक्तिगत परामर्श के बाद ही धारण करें।");
+      lines.push("सबसे सरल और सबसे प्रभावी उपाय — माता-पिता और गुरुजनों का सम्मान, सच्चा व्यवहार, नियमित पूजा या ध्यान, और ज़रूरतमंद की सहायता। शुभम् भवतु।");
+      return lines.join("\n\n");
+    }
+
     // ---------------- note & close ----------------
-    const note = (opts.note || "").trim();
+    const note = (opts.note || "").trim() || autoNote();
     const close = `<section class="ch close keep"><div class="chh"><h2>ज्योतिषी की टिप्पणी</h2></div>
       ${note ? `<div class="note-box">${esc(note).replace(/\n/g, "<br>")}</div>` : `<div class="note-box empty"></div>`}
       <div class="blk"><h3>आवश्यक सूचना</h3><ul>
