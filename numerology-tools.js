@@ -260,11 +260,13 @@
       <div class="nm-today"><span>${L("आज का आपका अंक", "Your number today")}</span><b>${M.pdToday}</b><p>${C2.PD ? H2(C2.PD[M.pdToday]) : ""}</p></div>
       ${S.map(([t, h]) => `<div class="nm-card"><h4>${t}</h4>${h}</div>`).join("")}
       <div class="nm-paid">
-        <div><span class="nm-paid-tag">${L("ज्योतिषी द्वारा · ₹299", "By the astrologer · ₹299")}</span>
-        <h4>${L("विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "Detailed numerology report + name correction")}</h4>
-        <ul><li>${L("आपके लिए जाँची हुई 2–3 सबसे अनुकूल नाम-स्पेलिंग", "2–3 best name spellings, checked for you")}</li><li>${L("मोबाइल नंबर, शुभ तारीख़ें और रंगों पर व्यक्तिगत सलाह", "Personal advice on mobile number, dates and colours")}</li><li>${L("आपके अंकों के अनुसार उपाय", "Remedies for your numbers")}</li><li>${L("WhatsApp पर भेजी जाएगी · सुरक्षित ऑनलाइन भुगतान", "Sent on WhatsApp · secure online payment")}</li></ul></div>
-        <a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" target="_blank" rel="noopener" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
-        <p class="nm-small" style="margin:.4rem 0 0">${L("भुगतान फ़ॉर्म में अपनी जन्म तिथि और पूरा नाम भरें। कोई प्रश्न हो तो", "Enter your date of birth and full name in the payment form. Questions?")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">WhatsApp</a>.</p>
+        <div><span class="nm-paid-tag">${L("विस्तृत रिपोर्ट · ₹299", "Detailed report · ₹299")}</span>
+        <h4>${L("20+ पेज की विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "20+ page detailed numerology report + name correction")}</h4>
+        <ul><li>${L("18 अध्याय — आत्मांक, बाह्यांक, कर्म अंक, जीवन के चार चरण, 9 वर्ष का चक्र", "18 chapters — soul urge, personality, karmic numbers, life stages, 9-year cycle")}</li><li>${L("नाम सुधार के विकल्प, मोबाइल नंबर, शुभ तारीख़ें और उपाय", "Name spelling options, mobile number, lucky dates and remedies")}</li><li>${L("भुगतान के तुरंत बाद इसी पेज पर PDF — इंतज़ार नहीं", "PDF on this page right after payment — no waiting")}</li></ul>
+        <div class="nm-plang" role="radiogroup" aria-label="${L("रिपोर्ट की भाषा", "Report language")}"><span>${L("रिपोर्ट की भाषा", "Report language")}:</span>
+          <label><input type="radio" name="nmProLang" value="hi"${hi() ? " checked" : ""}> हिंदी</label><label><input type="radio" name="nmProLang" value="en"${hi() ? "" : " checked"}> English</label></div></div>
+        <div><a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
+        <p class="nm-small" style="margin:.4rem 0 0">${M.name ? L("रिपोर्ट इसी नाम और जन्मतिथि से बनेगी। भुगतान उसी फ़ोन/ब्राउज़र से करें।", "The report uses this name and date of birth. Pay from this same phone/browser.") : L("विस्तृत रिपोर्ट के लिए ऊपर अपना पूरा नाम भी लिखें।", "For the detailed report, also enter your full name above.")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">${L("सहायता", "Help")}</a></p></div>
       </div>
       <div class="nm-actions">
         <button type="button" class="nm-btn" data-pdf>${L("PDF रिपोर्ट डाउनलोड करें", "Download PDF report")}</button>
@@ -273,7 +275,12 @@
       </div>
       <p class="nm-small">${L("अंक ज्योतिष सामान्य मार्गदर्शन है, गारंटी नहीं। व्यक्तिगत सलाह के लिए", "Numerology is general guidance, not a guarantee. For personal advice,")} <a href="consultation.html">${L("ज्योतिषी से बात करें — पहली 5 मिनट की कॉल मुफ़्त", "talk to the astrologer — first 5-minute call free")}</a>.</p></div>`;
     out.querySelector("[data-pdf]").addEventListener("click", () => { pdf(M); track("numerology_pdf", { lang: LANG }); });
-    out.querySelector("[data-paid]").addEventListener("click", () => track("numerology_paid_click", { price: 299 }));
+    out.querySelector("[data-paid]").addEventListener("click", (ev) => {
+      if (!M.name) { ev.preventDefault(); const nf = f.nm; nf.focus(); nf.scrollIntoView({ block: "center" }); return; }
+      const pl2 = (out.querySelector('input[name="nmProLang"]:checked') || {}).value || LANG;
+      try { localStorage.setItem("jt-nm-order", JSON.stringify({ dob: f.dob.value, name: M.name, lang: pl2, ts: Date.now() })); } catch (e2) { /* ignore */ }
+      track("numerology_paid_click", { price: 299, lang: pl2 });
+    });
     if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });
     track("numerology_report", { mulank: p.mulank, lang: LANG });
   }
@@ -498,5 +505,11 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
     }));
     if (LANG !== "hi") applyLang(); else document.querySelectorAll("[data-nm-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-nm-lang") === "hi")));
   }
+  // shared with numerology-pro.js (the ₹299 detailed report)
+  window.JT_NM = {
+    withLang(l, fn) { const o = LANG; LANG = l === "en" ? "en" : "hi"; try { return fn(); } finally { LANG = o; } },
+    lang: () => LANG, model, sections, nameSuggestions, nameNum, match, root, master, sumDigits, reduceSteps, compound, cName, cText,
+    pl, rel, esc, L, LUCKY, COLORS, DAYS, RUDRA, PM, MON, CHALD, LOSHU, PLANES, stampSvg, mandalaSvg, MOBILE: () => MOBILE,
+  };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
