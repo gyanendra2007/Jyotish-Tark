@@ -112,6 +112,7 @@
     // sign-chart houses (from lagna sign), Vedic aspects
     const lagS = c.cusps[1].sign;
     const rh = {}; Object.keys(P).forEach((p) => (rh[p] = hFrom(lagS, P[p].sign)));
+    const rhLocal = rh;
     const ASP = { Mars: [4, 7, 8], Jupiter: [5, 7, 9], Saturn: [3, 7, 10] };
     const aspectsOnSign = (sign) => PL7.filter((p) => (ASP[p] || [7]).some((a) => ((P[p].sign + a - 2) % 12) + 1 === sign));
     const aspectsOnPlanet = (q) => aspectsOnSign(P[q].sign).filter((p) => p !== q);
@@ -156,6 +157,25 @@
     const rl = P.Rahu.lon, side = PL7.map((p) => norm(P[p].lon - rl) < 180);
     if (side.every((x) => x) || side.every((x) => !x)) add("kaalSarp", false);
 
+
+    // ---- divisional charts, friendship, combustion, strength ----
+    const d9 = (lon) => (Math.floor(norm(lon) * 9 / 30) % 12) + 1;
+    const d10 = (lon) => { const sg = Math.floor(norm(lon) / 30), part = Math.floor((norm(lon) % 30) / 3); return ((sg % 2 === 0 ? sg : sg + 8) + part) % 12 + 1; };
+    const FR = { Sun: { f: ["Moon", "Mars", "Jupiter"], e: ["Venus", "Saturn"] }, Moon: { f: ["Sun", "Mercury"], e: [] }, Mars: { f: ["Sun", "Moon", "Jupiter"], e: ["Mercury"] }, Mercury: { f: ["Sun", "Venus"], e: ["Moon"] }, Jupiter: { f: ["Sun", "Moon", "Mars"], e: ["Mercury", "Venus"] }, Venus: { f: ["Mercury", "Saturn"], e: ["Sun", "Moon"] }, Saturn: { f: ["Mercury", "Venus"], e: ["Sun", "Moon", "Mars"] } };
+    const relSign = (p, sign) => { if (EXALT[p] === sign) return "ex"; if (DEBIL[p] === sign) return "deb"; if ((OWN[p] || []).includes(sign)) return "own"; const l = SIGN_LORD[sign - 1]; if (!FR[p]) return "neu"; return FR[p].f.includes(l) ? "fr" : FR[p].e.includes(l) ? "en" : "neu"; };
+    const COMB = { Moon: 12, Mars: 17, Mercury: 14, Jupiter: 11, Venus: 10, Saturn: 15 };
+    const combust = (p) => !!COMB[p] && Math.abs(((P[p].lon - P.Sun.lon + 540) % 360) - 180) < (P[p].retro && (p === "Mercury" || p === "Venus") ? COMB[p] - 2 : COMB[p]);
+    const lag9 = d9(c.cusps[1].lon), lag10 = d10(c.cusps[1].lon);
+    const div = {};
+    Object.keys(P).forEach((p) => { const s9 = d9(P[p].lon), s10 = d10(P[p].lon); div[p] = { d9: s9, d9h: hFrom(lag9, s9), d10: s10, d10h: hFrom(lag10, s10), varg: s9 === P[p].sign, r1: relSign(p, P[p].sign), r9: relSign(p, s9), comb: combust(p), mh: hFrom(P.Moon.sign, P[p].sign) }; });
+    const strength = (p) => {
+      const d = div[p], W = { ex: 2, own: 1.5, fr: 0.5, neu: 0, en: -0.5, deb: -2 };
+      let v = 3 + (W[d.r1] || 0) + (W[d.r9] || 0) * 0.4 + (d.varg ? 0.8 : 0) - (d.comb ? 1 : 0);
+      const h = rhLocal[p]; if ([1, 4, 7, 10, 5, 9].includes(h)) v += 0.5; if ([6, 8, 12].includes(h)) v -= 0.5;
+      if (["Sun", "Moon"].includes(p) && ["Rahu", "Ketu"].some((n) => P[n].sign === P[p].sign)) v -= 0.6;
+      if (d.r1 === "deb" && Y.some((y) => y.id === "neechaBhanga" && y.data.p === p)) v += 1.2;
+      return Math.max(1, Math.min(5, Math.round(v * 2) / 2));
+    };
     // ---- manglik ----
     const MH = [1, 4, 7, 8, 12];
     const mFrom = { lagna: rh.Mars, moon: hFrom(P.Moon.sign, P.Mars.sign), venus: hFrom(P.Venus.sign, P.Mars.sign) };
@@ -170,7 +190,7 @@
 
     return {
       panchang: { tithi: [tithiH, tithiE], paksha, tIdx, yoga: [YOGA_H[yIdx], YOGA_E[yIdx]], yIdx, karana: kar, vaar: [VAR_H[vaar], VAR_E[vaar]], vaarIdx: vaar, masa: masa != null ? [MASA_H[masa], MASA_E[masa]] : ["—", "—"], vs, rise: ss.rise, set: ss.set },
-      avak, rh, aspectsOnSign, aspectsOnPlanet, lordOfH, dign, yogas: Y, manglik, lagS,
+      avak, rh, div, lag9, lag10, strength, relSign, aspectsOnSign, aspectsOnPlanet, lordOfH, dign, yogas: Y, manglik, lagS,
       sadeSati: (from, to) => sadeSati(P.Moon.sign, from, to), signSegments, bodyLon,
     };
   }
