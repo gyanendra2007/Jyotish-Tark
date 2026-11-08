@@ -47,7 +47,7 @@
     const en = o.lang === "en", T = (h, e) => (en ? e : h);
     const v = document.createElement("div");
     v.className = "jtx-view";
-    v.innerHTML = `<div class="jtx-top"><b>${paid ? T("आपकी विस्तृत KP रिपोर्ट तैयार है 🙏", "Your detailed KP report is ready 🙏") : T("आपकी मुफ़्त KP कुंडली तैयार है", "Your free KP chart is ready")}<small>${T("\"PDF डाउनलोड करें\" दबाएँ, फिर प्रिंट विंडो में \"Save as PDF\" चुनें।", "Press \"Download PDF\", then choose \"Save as PDF\" in the print window.")}</small></b>
+    v.innerHTML = `<div class="jtx-top"><b>${paid ? T("आपकी विस्तृत KP जन्म कुण्डली तैयार है 🙏", "Your detailed KP Janm Kundali is ready 🙏") : T("आपकी मुफ़्त KP कुंडली तैयार है", "Your free KP chart is ready")}<small>${T("\"PDF डाउनलोड करें\" दबाएँ, फिर प्रिंट विंडो में \"Save as PDF\" चुनें।", "Press \"Download PDF\", then choose \"Save as PDF\" in the print window.")}</small></b>
       <button type="button" class="jtx-btn g" id="jtxPdf">${T("PDF डाउनलोड करें", "Download PDF")}</button>
       <a class="jtx-btn l" href="${wa(T(`नमस्ते, मेरी KP रिपोर्ट बन गई है (नाम ${o.name})। मुझे एक प्रश्न पूछना है।`, `Hello, my KP report is ready (name ${o.name}). I have a question.`))}" target="_blank" rel="noopener">${T("WhatsApp सहायता", "WhatsApp help")}</a>
       <button type="button" class="jtx-btn l" id="jtxClose">${T("बंद करें", "Close")}</button></div><iframe title="${T("KP रिपोर्ट", "KP report")}"></iframe>`;
@@ -62,13 +62,13 @@
 
   function ready(cb, fail) {
     let n = 0;
-    (function w() { if (window.JTKP && window.JTKPReport && window.BirthChartCalculator && typeof Astronomy !== "undefined") cb(); else if (++n < 100) setTimeout(w, 150); else fail(); })();
+    (function w() { if (window.JTKP && window.JTKPX && window.KPT && window.JTKPReport && window.BirthChartCalculator && typeof Astronomy !== "undefined") cb(); else if (++n < 100) setTimeout(w, 150); else fail(); })();
   }
 
   // ---------- form ----------
   function readForm(needAll) {
     const f = $("kpForm"); if (!f) return null;
-    const o = { name: f.kpName.value.trim(), dob: f.kpDob.value, time: f.kpTime.value, place: f.kpPlace.value.trim(), lat: parseFloat(f.kpPlace.dataset.lat), lng: parseFloat(f.kpPlace.dataset.lng), lang: (f.querySelector("input[name=kpLang]:checked") || {}).value || "hi" };
+    const o = { name: f.kpName.value.trim(), dob: f.kpDob.value, time: f.kpTime.value, place: f.kpPlace.value.trim(), lat: parseFloat(f.kpPlace.dataset.lat), lng: parseFloat(f.kpPlace.dataset.lng), lang: (f.querySelector("input[name=kpLang]:checked") || {}).value || "hi", gender: f.kpGender ? f.kpGender.value : "", status: f.kpStatus ? f.kpStatus.value : "single" };
     const err = $("kpErr");
     const miss = [];
     if (!o.name) miss.push("नाम");

@@ -124,7 +124,7 @@
     if (!B || !B._internal) throw new Error("engine not loaded");
     const r = B._internal.getTropicalLongitudesSpeedAndRetro(date, "mean");
     const ay = kpAyanamsa(date), out = {};
-    PL.forEach((p) => { out[p] = { lon: norm(r.longitudes[p] - ay), retro: !!r.retro[p] && p !== "Rahu" && p !== "Ketu" }; });
+    PL.forEach((p) => { out[p] = { lon: norm(r.longitudes[p] - ay), retro: !!r.retro[p] }; });
     return { pos: out, ay };
   }
 

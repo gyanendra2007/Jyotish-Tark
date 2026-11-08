@@ -1,354 +1,597 @@
-/* Jyotish Tark — KP (Krishnamurti Paddhati) reports.
-   JTKPReport.build({ name, dob, time, place, lat, lng, lang:"hi"|"en", paid:bool, orderId })
-   Free  = KP chart: chart, planet & cusp tables with star/sub lords, dasha, ruling planets, a short glimpse.
-   Paid  = everything + significators, 14 life areas by cuspal sub-lord, period timing, 3-year dasha guide, remedies.
-   Wording is cautious: KP shows promise and timing tendencies, not guarantees. */
+/* Jyotish Tark — KP Janm Kundali (Krishnamurti Paddhati).
+   JTKPReport.build({ name, dob, time, place, lat, lng, lang:"hi"|"en", gender:"male"|"female"|"", status:"single"|"married"|"", paid, orderId })
+   Paid = 24-chapter professional kundali with chart-based analysis. Free = KP chart (birth details, charts, tables, dasha) with a glimpse.
+   All judgements are computed from the chart with standard KP / Parashari rules and worded cautiously. */
 (function () {
   "use strict";
-  const PH = { Sun: "सूर्य", Moon: "चंद्र", Mars: "मंगल", Mercury: "बुध", Jupiter: "गुरु", Venus: "शुक्र", Saturn: "शनि", Rahu: "राहु", Ketu: "केतु" };
-  const PA = { Sun: ["सू", "Su"], Moon: ["चं", "Mo"], Mars: ["मं", "Ma"], Mercury: ["बु", "Me"], Jupiter: ["गु", "Ju"], Venus: ["शु", "Ve"], Saturn: ["श", "Sa"], Rahu: ["रा", "Ra"], Ketu: ["के", "Ke"] };
-  const SH = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"];
-  const SE = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
-  const NH = ["अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा", "पुनर्वसु", "पुष्य", "आश्लेषा", "मघा", "पूर्वा फाल्गुनी", "उत्तरा फाल्गुनी", "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा", "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा", "पूर्वा भाद्रपद", "उत्तरा भाद्रपद", "रेवती"];
-  const NE = ["Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"];
-  const MH = ["जन", "फ़र", "मार्च", "अप्रै", "मई", "जून", "जुला", "अग", "सित", "अक्टू", "नव", "दिस"];
-  const ME = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  // what each house is about (for dasha themes)
-  const HT = {
-    1: ["स्वयं, सेहत और आत्मविश्वास", "self, health and confidence"], 2: ["धन, परिवार और वाणी", "money, family and speech"], 3: ["साहस, संचार और छोटी यात्राएँ", "courage, communication and short trips"],
-    4: ["घर, माता, वाहन और पढ़ाई", "home, mother, vehicle and studies"], 5: ["बुद्धि, प्रेम, संतान और रचनात्मकता", "intellect, romance, children and creativity"], 6: ["नौकरी, प्रतियोगिता और ऋण", "service, competition and loans"],
-    7: ["विवाह, साझेदारी और समझौते", "marriage, partnership and agreements"], 8: ["अचानक बदलाव और बाधाएँ", "sudden changes and obstacles"], 9: ["भाग्य, धर्म, गुरु और लंबी यात्रा", "fortune, dharma, teachers and long travel"],
-    10: ["कर्म, करियर और प्रतिष्ठा", "work, career and status"], 11: ["लाभ, इच्छापूर्ति और मित्र", "gains, wishes and friends"], 12: ["खर्च, विदेश, निवेश और विश्राम", "expenses, foreign lands, investment and rest"],
-  };
-
-  // life areas judged by the cuspal sub-lord (KP rules)
-  const AREAS = [
-    { h: 1, pos: [1, 5, 11], neg: [6, 8, 12], t: ["स्वास्थ्य, ऊर्जा और व्यक्तित्व", "Health, energy and personality"],
-      w: ["पहले भाव का उप-स्वामी आपके शरीर की ऊर्जा, आत्मविश्वास और जीवन के प्रति दृष्टिकोण को बताता है।", "The sub-lord of the 1st cusp shows your physical energy, confidence and outlook on life."],
-      tip: ["नियमित दिनचर्या, पर्याप्त नींद और व्यायाम आपकी ऊर्जा का आधार हैं। किसी भी स्वास्थ्य समस्या में डॉक्टर की सलाह ही अंतिम है — ज्योतिष केवल सावधानी का संकेत देता है।", "A regular routine, enough sleep and exercise are the base of your energy. For any health problem the doctor's advice is final — astrology only gives a signal for care."] },
-    { h: 2, pos: [2, 6, 11], neg: [5, 8, 12], t: ["धन, बचत और परिवार", "Money, savings and family"],
-      w: ["दूसरे भाव का उप-स्वामी धन संचय, बैंक बैलेंस, परिवार और वाणी का संकेतक है।", "The sub-lord of the 2nd cusp indicates accumulated wealth, bank balance, family and speech."],
-      tip: ["हर महीने आय का एक तय हिस्सा अलग रखें और जोखिम भरे निवेश से पहले सलाह लें।", "Set aside a fixed part of income every month and take advice before risky investments."] },
-    { h: 3, pos: [3, 9, 11], neg: [4, 8, 12], t: ["साहस, भाई-बहन और संचार", "Courage, siblings and communication"],
-      w: ["तीसरा भाव पराक्रम, भाई-बहन, लेखन, मीडिया, छोटी यात्राओं और दस्तावेज़ों का है।", "The 3rd house rules initiative, siblings, writing, media, short trips and documents."],
-      tip: ["अपने विचार लिखने, बोलने और सीखने की आदत डालें — संचार आपकी प्रगति का माध्यम है।", "Build the habit of writing, speaking and learning — communication is a channel of your growth."] },
-    { h: 4, pos: [4, 9, 11], neg: [3, 8, 12], t: ["शिक्षा", "Education"],
-      w: ["KP में चौथे भाव का उप-स्वामी बुनियादी शिक्षा का, और 9-11 भाव से उसका जुड़ाव शिक्षा में सफलता का संकेत है। 3, 8, 12 से जुड़ाव पढ़ाई में रुकावट या विषय बदलने का संकेत देता है।", "In KP the 4th-cusp sub-lord shows basic education; its link with houses 9 and 11 shows success. A link with 3, 8 or 12 shows breaks or a change of subject."],
-      tip: ["नियमित अभ्यास और एक लक्ष्य पर टिके रहना ज़रूरी है; बार-बार विषय बदलने से बचें।", "Regular practice and staying on one goal matter; avoid changing subjects often."] },
-    { h: 4, pos: [4, 11, 12], neg: [3, 8], t: ["मकान, भूमि और वाहन", "House, land and vehicle"],
-      w: ["मकान या वाहन ख़रीदने के लिए चौथे भाव के उप-स्वामी का 4, 11 और 12 (निवेश) से जुड़ाव देखा जाता है। 3 भाव संपत्ति बेचने या बदलने का संकेत है।", "For buying a house or vehicle the 4th-cusp sub-lord should link with 4, 11 and 12 (investment). House 3 indicates selling or changing property."],
-      tip: ["संपत्ति के काग़ज़ात की पूरी जाँच करें और ख़रीद अनुकूल दशा काल में करें।", "Check property papers fully and buy during a supportive period."] },
-    { h: 5, pos: [2, 5, 11], neg: [1, 4, 10], t: ["संतान", "Children"],
-      w: ["पाँचवें भाव का उप-स्वामी संतान सुख का संकेतक है। 2, 5, 11 से जुड़ाव अनुकूल माना जाता है; 1, 4, 10 से जुड़ाव देरी का संकेत देता है।", "The 5th-cusp sub-lord indicates children. A link with 2, 5 and 11 is favourable; with 1, 4 and 10 it indicates delay."],
-      tip: ["यह विषय संवेदनशील है — ज्योतिष केवल समय का संकेत देता है। चिकित्सा संबंधी हर निर्णय डॉक्टर की सलाह से ही लें।", "This is a sensitive subject — astrology only indicates timing. Take every medical decision with a doctor's advice."] },
-    { h: 5, pos: [5, 7, 11], neg: [6, 10, 12], t: ["प्रेम और प्रेम विवाह", "Love and love marriage"],
-      w: ["पाँचवाँ भाव प्रेम का है। जब इसका उप-स्वामी 5, 7 और 11 से जुड़ा हो, तो प्रेम संबंध का विवाह में बदलना संभव माना जाता है।", "The 5th house is romance. When its sub-lord links with 5, 7 and 11, a relationship turning into marriage is considered possible."],
-      tip: ["रिश्ते में ईमानदारी और परिवार से खुली बात सबसे बड़ा उपाय है।", "Honesty in the relationship and open talk with family are the best remedy."] },
-    { h: 6, pos: [2, 6, 10, 11], neg: [5, 8, 12], t: ["नौकरी, प्रतियोगिता और ऋण", "Job, competition and loans"],
-      w: ["छठा भाव नौकरी, सेवा, प्रतियोगी परीक्षा और ऋण चुकाने का है। 2, 6, 10, 11 से जुड़ाव नौकरी मिलने और प्रतियोगिता में जीत का संकेत है।", "The 6th house is service, competitive exams and repaying loans. A link with 2, 6, 10 and 11 indicates getting a job and winning competition."],
-      tip: ["ऋण केवल ज़रूरत पर लें और समय पर चुकाएँ; प्रतियोगिता में निरंतर तैयारी ही सफलता देती है।", "Borrow only when needed and repay on time; steady preparation wins competition."] },
-    { h: 7, pos: [2, 7, 11], neg: [1, 6, 10], t: ["विवाह और वैवाहिक जीवन", "Marriage and married life"],
-      w: ["KP में सातवें भाव का उप-स्वामी विवाह का मुख्य निर्णायक है। 2, 7, 11 से जुड़ाव विवाह का वादा करता है; 1, 6, 10 से जुड़ाव देरी या मतभेद का संकेत देता है।", "In KP the 7th-cusp sub-lord is the main judge of marriage. A link with 2, 7 and 11 promises marriage; with 1, 6 and 10 it indicates delay or differences."],
-      tip: ["विवाह का निर्णय आपसी समझ, परिवार और पूर्ण कुंडली मिलान से लें। विवाहित हों तो धैर्य और संवाद रिश्ते को मज़बूत रखते हैं।", "Decide marriage with mutual understanding, family and full kundali matching. If married, patience and conversation keep the bond strong."] },
-    { h: 7, pos: [7, 10, 11], neg: [6, 8, 12], t: ["व्यवसाय और साझेदारी", "Business and partnership"],
-      w: ["सातवाँ भाव साझेदारी और ग्राहकों का भी है। 7, 10, 11 से जुड़ाव व्यापार और साझेदारी में लाभ का संकेत देता है।", "The 7th house is also partnership and clients. A link with 7, 10 and 11 indicates gain in business and partnership."],
-      tip: ["हर साझेदारी लिखित समझौते और साफ़ हिसाब से करें।", "Make every partnership with a written agreement and clear accounts."] },
-    { h: 9, pos: [9, 11, 3], neg: [8, 12], t: ["भाग्य, उच्च शिक्षा और धर्म", "Fortune, higher learning and dharma"],
-      w: ["नौवाँ भाव भाग्य, उच्च शिक्षा, गुरु, पिता और धार्मिक यात्राओं का है।", "The 9th house is fortune, higher learning, teachers, father and pilgrimages."],
-      tip: ["गुरुजनों और पिता का सम्मान, और सीखते रहना भाग्य को सक्रिय करता है।", "Respect for teachers and father, and continuous learning, activate fortune."] },
-    { h: 10, pos: [2, 6, 10, 11], neg: [5, 8, 12], t: ["करियर, पद और प्रतिष्ठा", "Career, position and status"],
-      w: ["दसवें भाव का उप-स्वामी करियर की दिशा, पदोन्नति और समाज में प्रतिष्ठा बताता है। 2, 6, 10, 11 से जुड़ाव उन्नति का संकेत है।", "The 10th-cusp sub-lord shows career direction, promotion and status. A link with 2, 6, 10 and 11 indicates progress."],
-      tip: ["अपने कौशल को लगातार बढ़ाएँ और अनुकूल दशा काल में बड़े कदम उठाएँ।", "Keep building your skills and take big steps in supportive periods."] },
-    { h: 11, pos: [2, 6, 11], neg: [5, 8, 12], t: ["लाभ और इच्छापूर्ति", "Gains and fulfilment of wishes"],
-      w: ["ग्यारहवाँ भाव हर प्रकार के लाभ, आय और इच्छाओं की पूर्ति का है। KP में किसी भी काम की सफलता के लिए 11 भाव का जुड़ाव ज़रूरी माना जाता है।", "The 11th house is every kind of gain, income and wish fulfilment. In KP a link with house 11 is needed for success in any matter."],
-      tip: ["अच्छे मित्रों और संपर्कों का दायरा बढ़ाएँ — लाभ अक्सर इन्हीं से आता है।", "Grow a circle of good friends and contacts — gains often come through them."] },
-    { h: 12, pos: [3, 9, 12], neg: [4, 11], t: ["विदेश यात्रा और विदेश में बसना", "Foreign travel and settling abroad"],
-      w: ["विदेश के लिए बारहवें भाव का उप-स्वामी 3, 9, 12 से जुड़ा होना चाहिए। चौथा भाव (अपना घर) जुड़ा हो तो विदेश जाकर लौटने का संकेत होता है।", "For foreign lands the 12th-cusp sub-lord should link with 3, 9 and 12. If house 4 (home) is linked, it indicates going and returning."],
-      tip: ["वीज़ा और नौकरी के काग़ज़ सही रखें; अनुकूल दशा काल में आवेदन करें।", "Keep visa and job papers in order; apply during a supportive period."] },
-  ];
-
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const MONH = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितम्बर", "अक्टूबर", "नवम्बर", "दिसम्बर"];
+  const MONE = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const HOUSE_SUBJ = { 1: ["स्वयं, शरीर, स्वभाव", "self, body, nature"], 2: ["धन, परिवार, वाणी", "wealth, family, speech"], 3: ["साहस, भाई-बहन, संचार", "courage, siblings, communication"], 4: ["माता, घर, वाहन, शिक्षा", "mother, home, vehicle, education"], 5: ["प्रेम, संतान, बुद्धि", "love, children, intellect"], 6: ["नौकरी, रोग, शत्रु, ऋण", "service, illness, rivals, debts"], 7: ["विवाह, जीवनसाथी, साझेदारी", "marriage, spouse, partnership"], 8: ["आयु, अचानक घटनाएँ, गुप्त विद्या", "longevity, sudden events, occult"], 9: ["भाग्य, धर्म, उच्च शिक्षा", "fortune, dharma, higher studies"], 10: ["कर्म, करियर, प्रतिष्ठा", "work, career, status"], 11: ["लाभ, इच्छापूर्ति, मित्र", "gains, wishes, friends"], 12: ["व्यय, विदेश, मोक्ष", "expenses, foreign lands, liberation"] };
+  const GROUPS = [["विवाह", "Marriage", 7, [2, 7, 11], [1, 6, 10]], ["नौकरी / करियर", "Job / career", 10, [2, 6, 10, 11], [5, 8, 12]], ["व्यवसाय", "Business", 7, [2, 7, 10, 11], [5, 8, 12]], ["शिक्षा", "Education", 4, [4, 9, 11], [3, 8, 12]], ["संतान", "Children", 5, [2, 5, 11], [1, 4, 10]], ["संपत्ति / वाहन", "Property / vehicle", 4, [4, 11, 12], [3, 5]], ["विदेश", "Foreign lands", 12, [3, 9, 12], [4]]];
+  const NH = ["अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा", "पुनर्वसु", "पुष्य", "आश्लेषा", "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी", "हस्त", "चित्रा", "स्वाति", "विशाखा", "अनुराधा", "ज्येष्ठा", "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा", "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"];
+  const NE = ["Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"];
 
   function stampSvg(size) {
-    const k = "#7A1F1F", s = size || 150;
-    const star = (cx, cy) => `<path d="M${cx} ${cy - 5}L${cx + 1.5} ${cy - 1.5}L${cx + 5} ${cy}L${cx + 1.5} ${cy + 1.5}L${cx} ${cy + 5}L${cx - 1.5} ${cy + 1.5}L${cx - 5} ${cy}L${cx - 1.5} ${cy - 1.5}Z" fill="${k}"/>`;
-    return `<svg width="${s}" height="${s}" viewBox="0 0 200 200" role="img" aria-label="Jyotish Tark"><defs><path id="kpT" d="M 38 100 A 62 62 0 0 1 162 100"/><path id="kpB" d="M 22 100 A 78 78 0 0 0 178 100"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="${k}" stroke-width="4.5"/><circle cx="100" cy="100" r="89.5" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="85" fill="none" stroke="${k}" stroke-width="1.6" stroke-dasharray="0.1 3.6" stroke-linecap="round"/><circle cx="100" cy="100" r="50" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="46" fill="none" stroke="${k}" stroke-width="2.6"/><text font-family="'Tiro Devanagari Hindi',serif" font-size="19" fill="${k}" letter-spacing="1.5"><textPath href="#kpT" startOffset="50%" text-anchor="middle">ज्योतिष तर्क</textPath></text><text font-family="Mukta,sans-serif" font-size="11.5" font-weight="700" fill="${k}" letter-spacing="2.2"><textPath href="#kpB" startOffset="50%" text-anchor="middle">JYOTISH TARK · LUCKNOW</textPath></text>${star(29, 100)}${star(171, 100)}<text x="100" y="117" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="48" fill="${k}">ॐ</text><text x="100" y="134" text-anchor="middle" font-family="Mukta,sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.2" fill="${k}">॥ शुभम् भवतु ॥</text></svg>`;
+    const k = "#7A1F1F", s = size || 120;
+    return `<svg width="${s}" height="${s}" viewBox="0 0 200 200" role="img" aria-label="Jyotish Tark"><defs><path id="kpT" d="M 38 100 A 62 62 0 0 1 162 100"/><path id="kpB" d="M 22 100 A 78 78 0 0 0 178 100"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="${k}" stroke-width="4.5"/><circle cx="100" cy="100" r="89.5" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="50" fill="none" stroke="${k}" stroke-width="1.2"/><circle cx="100" cy="100" r="46" fill="none" stroke="${k}" stroke-width="2.6"/><text font-family="'Tiro Devanagari Hindi',serif" font-size="19" fill="${k}" letter-spacing="1.5"><textPath href="#kpT" startOffset="50%" text-anchor="middle">ज्योतिष तर्क</textPath></text><text font-family="Mukta,sans-serif" font-size="11.5" font-weight="700" fill="${k}" letter-spacing="2.2"><textPath href="#kpB" startOffset="50%" text-anchor="middle">JYOTISH TARK · LUCKNOW</textPath></text><text x="100" y="117" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="48" fill="${k}">ॐ</text></svg>`;
   }
-  function mandalaSvg() {
+
+  function wheelSvg(signs) {
     let g = "";
-    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="47" rx="9.5" ry="27" transform="rotate(${i * 22.5} 100 100)" fill="none" stroke="#E9C46A" stroke-width="1"/>`;
-    for (let i = 0; i < 16; i++) g += `<ellipse cx="100" cy="66" rx="6" ry="15" transform="rotate(${i * 22.5 + 11.25} 100 100)" fill="rgba(233,196,106,.12)" stroke="#E9C46A" stroke-width=".8"/>`;
-    for (let i = 0; i < 48; i++) { const a = i * 7.5 * Math.PI / 180; g += `<circle cx="${(100 + 93 * Math.sin(a)).toFixed(2)}" cy="${(100 - 93 * Math.cos(a)).toFixed(2)}" r="1.3" fill="#E9C46A"/>`; }
-    return `<svg viewBox="0 0 200 200" width="210" height="210" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="#E9C46A" stroke-width="1.4"/><circle cx="100" cy="100" r="88" fill="none" stroke="#E9C46A" stroke-width=".6"/>${g}<circle cx="100" cy="100" r="42" fill="#5A1414" stroke="#E9C46A" stroke-width="1.6"/><text x="100" y="114" text-anchor="middle" font-family="Mukta,sans-serif" font-weight="700" font-size="34" fill="#F7E7C1">KP</text></svg>`;
+    const cx = 300, cy = 300;
+    for (let i = 0; i < 72; i++) { const a = (i * 5 - 90) * Math.PI / 180, r1 = 262, r2 = i % 6 === 0 ? 248 : 255; g += `<line x1="${(cx + r1 * Math.cos(a)).toFixed(1)}" y1="${(cy + r1 * Math.sin(a)).toFixed(1)}" x2="${(cx + r2 * Math.cos(a)).toFixed(1)}" y2="${(cy + r2 * Math.sin(a)).toFixed(1)}" stroke="#D4A84B" stroke-width="1"/>`; }
+    for (let i = 0; i < 12; i++) {
+      const a = (i * 30 - 90) * Math.PI / 180;
+      g += `<line x1="${(cx + 200 * Math.cos(a)).toFixed(1)}" y1="${(cy + 200 * Math.sin(a)).toFixed(1)}" x2="${(cx + 262 * Math.cos(a)).toFixed(1)}" y2="${(cy + 262 * Math.sin(a)).toFixed(1)}" stroke="#D4A84B" stroke-width="1.2"/>`;
+      const m = i * 30 + 15 - 90, am = m * Math.PI / 180, x = cx + 230 * Math.cos(am), y = cy + 230 * Math.sin(am);
+      g += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${(((m + 90) % 360 + 360) % 360 > 90 && ((m + 90) % 360 + 360) % 360 < 270 ? m - 90 : m + 90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" text-anchor="middle" dominant-baseline="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="22" fill="#F3D99A">${signs[i]}</text>`;
+      if (i % 2 === 0) g += `<circle cx="${(cx + 182 * Math.cos(am)).toFixed(1)}" cy="${(cy + 182 * Math.sin(am)).toFixed(1)}" r="5" fill="#F3D99A"/>`;
+    }
+    for (let i = 0; i < 24; i++) g += `<ellipse cx="${cx}" cy="${cy - 108}" rx="15" ry="44" transform="rotate(${i * 15} ${cx} ${cy})" fill="rgba(212,168,75,.16)" stroke="#D4A84B" stroke-width="1"/>`;
+    return `<svg viewBox="0 0 600 600" class="wheel" aria-hidden="true"><defs><radialGradient id="kg"><stop offset="0" stop-color="#F8E3A3"/><stop offset="1" stop-color="#C9962E"/></radialGradient></defs><circle cx="${cx}" cy="${cy}" r="292" fill="none" stroke="#D4A84B" stroke-width=".8" opacity=".6"/><circle cx="${cx}" cy="${cy}" r="262" fill="none" stroke="#D4A84B" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="200" fill="none" stroke="#D4A84B" stroke-width="1.6"/><circle cx="${cx}" cy="${cy}" r="160" fill="none" stroke="#D4A84B" stroke-width=".8"/>${g}<circle cx="${cx}" cy="${cy}" r="72" fill="url(#kg)" stroke="#F3D99A" stroke-width="2"/><text x="${cx}" y="${cy + 22}" text-anchor="middle" font-family="'Tiro Devanagari Hindi',serif" font-size="74" fill="#5A1414">ॐ</text></svg>`;
   }
 
   function build(o) {
-    const K = window.JTKP;
-    if (!K) throw new Error("KP engine not loaded");
+    const K = window.JTKP, KX = window.JTKPX, T = window.KPT;
+    if (!K || !KX || !T) throw new Error("KP engine not loaded");
     const hi = o.lang !== "en", L = (h, e) => (hi ? h : e), H = (pr) => (pr ? pr[hi ? 0 : 1] : "");
     const paid = !!o.paid;
     const c = K.compute({ dob: o.dob, time: o.time, lat: o.lat, lng: o.lng, tzZone: o.tzZone });
-    const P = c.planets, now = new Date();
-    const pn = (p) => (hi ? PH[p] : p), sn = (i) => (hi ? SH[i - 1] : SE[i - 1]), nk = (i) => (hi ? NH[i - 1] : NE[i - 1]);
-    const dms = (x) => { const d = Math.floor(x), m = Math.floor((x - d) * 60), s = Math.round(((x - d) * 60 - m) * 60); return `${String(d).padStart(2, "0")}°${String(m).padStart(2, "0")}'${String(s === 60 ? 59 : s).padStart(2, "0")}"`; };
-    const my = (d) => `${(hi ? MH : ME)[d.getMonth()]} ${d.getFullYear()}`;
-    const dmy = (d) => `${String(d.getDate()).padStart(2, "0")}-${String(d.getMonth() + 1).padStart(2, "0")}-${d.getFullYear()}`;
-    const hs = (arr) => (arr && arr.length ? arr.join(", ") : "—");
-    const [by, bm, bd] = o.dob.split("-").map(Number);
-    const dob = `${String(bd).padStart(2, "0")}-${String(bm).padStart(2, "0")}-${by}`;
-    const cur = K.currentDasha(c.dasha, now);
-    const RP = K.rulingPlanets(now, c.lat, c.lng);
-    const rno = o.orderId || ("JTKP-" + String(by).slice(2) + String(bm).padStart(2, "0") + String(bd).padStart(2, "0") + "-" + String(o.time || "").replace(":", ""));
-    const today = dmy(now);
-    const CH = [];
-    const add = (t, h) => CH.push([t, h]);
-
-    // ---------- verdict helpers ----------
+    const X = KX.compute(c, o);
+    const P = c.planets, now = new Date(), PL = K.PL;
+    const PL7 = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
+    const pn = (p) => H(T.PN[p]), sn = (i) => H(T.SIGN[i - 1]), nk = (i) => (hi ? NH[i - 1] : NE[i - 1]);
+    const numD = (n) => (hi ? String(n).split("").map((d) => (/\d/.test(d) ? T.NUMH[+d] : d)).join("") : String(n));
+    const num = (n) => String(n);
+    const ov = (h) => `${h}${({ 1: "ले", 2: "रे", 3: "रे", 4: "थे", 6: "ठे" })[h] || "वें"}`, ovn = (h) => `${h}${({ 1: "ला", 2: "रा", 3: "रा", 4: "था", 6: "ठा" })[h] || "वाँ"}`;
+    const dms = (x) => { const d = Math.floor(x), m = Math.floor((x - d) * 60), s = Math.floor(((x - d) * 60 - m) * 60); return `${String(d).padStart(2, "0")}°${String(m).padStart(2, "0")}'${String(s).padStart(2, "0")}"`; };
+    const tzMin = (c.tz && c.tz.tzMinutes) || 330;
+    const loc = (d) => new Date(d.getTime() + tzMin * 60000);
+    const dfull = (d) => { const x = loc(d); return `${x.getUTCDate()} ${(hi ? MONH : MONE)[x.getUTCMonth()]} ${x.getUTCFullYear()}`; };
+    const my = (d) => { const x = loc(d); return `${(hi ? MONH : MONE)[x.getUTCMonth()]} ${x.getUTCFullYear()}`; };
+    const hm = (d) => { if (!d) return "—"; const x = loc(d); return `${String(x.getUTCHours()).padStart(2, "0")}:${String(x.getUTCMinutes()).padStart(2, "0")}`; };
+    const yr = (d) => loc(d).getUTCFullYear();
+    const hs = (a) => (a && a.length ? a.join(", ") : "—");
+    const list = (arr) => arr.filter(Boolean).join(", ");
     const inter = (a, b) => a.filter((x) => b.includes(x));
-    function judge(A) {
-      const csl = c.cusps[A.h].sub, s = c.sig[csl];
-      const pStar = inter(s.viaStar, A.pos), nStar = inter(s.viaStar, A.neg), pSelf = inter(s.self, A.pos);
-      let k = "weak";
-      if (pStar.length && !nStar.length) k = "good"; else if (pStar.length) k = "mixed"; else if (pSelf.length) k = "mid";
-      return { csl, star: P[csl].star, s, k, pStar, nStar };
-    }
-    const VK = {
-      good: [["प्रबल वादा", "Strong promise"], "v-good"],
-      mixed: [["वादा है — बाधाओं के साथ", "Promised — with obstacles"], "v-mixed"],
-      mid: [["सामान्य / आंशिक", "Moderate / partial"], "v-mid"],
-      weak: [["अधिक प्रयास आवश्यक", "Needs more effort"], "v-weak"],
-    };
-    const vText = (k, t) => ({
-      good: L(`${t} के लिए उप-स्वामी अपने नक्षत्र स्वामी के माध्यम से अनुकूल भावों से जुड़ा है और विरोधी भावों से नहीं। KP के अनुसार यह इस विषय का स्पष्ट वादा है — अनुकूल दशा आने पर परिणाम मिलने की संभावना अच्छी है।`, `For ${t.toLowerCase()} the sub-lord connects, through its star lord, with the favourable houses and not with the opposing ones. In KP this is a clear promise — results are likely when a supportive period runs.`),
-      mixed: L(`${t} का वादा है, पर उप-स्वामी विरोधी भावों से भी जुड़ा है। इसका अर्थ है कि परिणाम मिलेगा, पर देरी, बदलाव या कुछ संघर्ष के बाद। धैर्य और सही समय का चुनाव यहाँ सबसे महत्वपूर्ण है।`, `${t} is promised, but the sub-lord is also linked to opposing houses. Results come, but after delay, change or some struggle. Patience and choosing the right time matter most here.`),
-      mid: L(`${t} के लिए उप-स्वामी स्वयं अनुकूल भावों से जुड़ा है, पर उसके नक्षत्र स्वामी का समर्थन कमज़ोर है। परिणाम मध्यम रहते हैं और मेहनत के अनुपात में मिलते हैं।`, `For ${t.toLowerCase()} the sub-lord itself touches the favourable houses, but its star lord gives weak support. Results are moderate and come in proportion to effort.`),
-      weak: L(`${t} के लिए उप-स्वामी अनुकूल भावों से सीधा नहीं जुड़ता। यह "नहीं होगा" का संकेत नहीं है — बल्कि यह बताता है कि इस विषय में स्वाभाविक सहजता कम है और अधिक प्रयास, धैर्य और सही मार्गदर्शन चाहिए।`, `For ${t.toLowerCase()} the sub-lord does not directly connect with the favourable houses. This is not a "never" — it shows less natural ease here, so more effort, patience and right guidance are needed.`),
-    }[k]);
+    const uniq = (a) => [...new Set(a)];
+    const [by, bm, bd] = o.dob.split("-").map(Number);
+    const [th, tm] = String(o.time || "12:00").split(":").map(Number);
+    const dobTxt = `${bd} ${(hi ? MONH : MONE)[bm - 1]} ${by}`;
+    const h12 = ((th + 11) % 12) + 1;
+    const tobTxt = hi ? `${th < 4 || th >= 20 ? "रात्रि" : th < 12 ? "प्रातः" : th < 16 ? "दोपहर" : "सायं"} ${h12}:${String(tm).padStart(2, "0")} बजे` : `${h12}:${String(tm).padStart(2, "0")} ${th < 12 ? "AM" : "PM"}`;
+    const place = String(o.place || "").split(",").slice(0, 2).join(",").trim();
+    const ageAt = (d) => (d - c.birthUTC) / (365.25 * 864e5);
+    const cur = K.currentDasha(c.dasha, now);
+    const rno = o.orderId || ("JTKP-" + String(by).slice(2) + String(bm).padStart(2, "0") + String(bd).padStart(2, "0"));
+    const lagS = c.cusps[1].sign, moonS = P.Moon.sign;
+    const L1 = KX.SIGN_LORD[lagS - 1], lordH = X.lordOfH;
+    const male = o.gender === "male", female = o.gender === "female";
+    const spWill = L(male ? "होगी" : female ? "होगा" : "होगा/होगी", "will be");
+    const married = o.status === "married";
+    const sigA = (p) => c.sig[p].all, sigS = (p) => c.sig[p].viaStar;
+    const csl = (h) => c.cusps[h].sub;
+    const occ = (h) => PL.filter((p) => P[p].house === h);
+    const sgnFrom = (base) => (h) => ((base + h - 2) % 12) + 1;
+    const Y = (n) => n * 365.25 * 864e5;
 
-    // supportive periods (antardasha level) in the next 20 years
-    function periods(A, max) {
-      const until = now.getTime() + 20 * 365.25 * 864e5, out = [];
+    // ---------- verdicts and periods ----------
+    function judge(h, pos, neg) {
+      const s = c.sig[csl(h)], pS = inter(s.viaStar, pos), nS = inter(s.viaStar, neg), pA = inter(s.all, pos);
+      let k = pS.length && !nS.length ? "good" : pS.length ? "mixed" : pA.length ? "mid" : "weak";
+      const cst = c.cusps[h].star, viaCS = k === "weak" && inter(sigA(cst), pos).length > 0;
+      if (viaCS) k = "mid";
+      return { csl: csl(h), star: P[csl(h)].star, s, k, pS, nS, pA, viaCS, cst };
+    }
+    function adPeriods(pos, neg, opt) {
+      opt = opt || {};
+      const from = opt.from || now, to = opt.to || new Date(now.getTime() + Y(20)), out = [];
       for (const m of c.dasha.md) for (const a of m.ad) {
-        if (a.end < now || a.start > until) continue;
-        const mOk = inter(c.sig[m.lord].all, A.pos).length, aOk = inter(c.sig[a.lord].all, A.pos);
-        const aNeg = inter(c.sig[a.lord].viaStar, A.neg);
-        if (mOk && aOk.length) out.push({ m: m.lord, a: a.lord, s: a.start < now ? now : a.start, e: a.end, n: aOk.length - (aNeg.length ? 1 : 0) });
+        if (a.end < from || a.start > to) continue;
+        const sA = inter(sigA(a.lord), pos), sS = inter(sigS(a.lord), pos), mA = inter(sigA(m.lord), pos), nS = inter(sigS(a.lord), neg || []);
+        if (!sA.length) continue;
+        const st = a.start < from ? from : a.start;
+        if (a.end - st < Y(0.4)) continue;
+        const mb = opt.bonus ? opt.bonus(m.lord, null) : 0;
+        const sc = sA.length + sS.length + mA.length * 0.5 + (mA.length ? 0 : (mb > 0 ? 0 : -0.75)) - nS.length * 0.75 + (opt.bonus ? opt.bonus(a.lord, m.lord) : 0) + mb * 0.5;
+        out.push({ m: m.lord, a: a.lord, ad: a, s: st, e: a.end, sc });
       }
-      return out.sort((x, y) => y.n - x.n || x.s - y.s).slice(0, max).sort((x, y) => x.s - y.s);
+      return out;
     }
+    // earliest periods that are strong enough; fall back to the strongest ones
+    const firstGood = (arr, n, th) => { const ok = arr.filter((x) => x.sc >= th).sort((x, y) => x.s - y.s).slice(0, n); return ok.length ? ok : arr.slice().sort((x, y) => y.sc - x.sc || x.s - y.s).slice(0, n).sort((x, y) => x.s - y.s); };
+    const top = (arr, n) => arr.slice().sort((x, y) => y.sc - x.sc || x.s - y.s).slice(0, n).sort((x, y) => x.s - y.s);
+    const VB = { good: [["प्रबल वादा", "Strong promise"], "v-good"], mixed: [["वादा है — कुछ बाधा के साथ", "Promised — with some obstacles"], "v-mixed"], mid: [["सामान्य", "Moderate"], "v-mid"], weak: [["अधिक प्रयास आवश्यक", "Needs more effort"], "v-weak"] };
+    const badge = (k) => `<span class="vb ${VB[k][1]}">${H(VB[k][0])}</span>`;
+    const calc = (h, j, pos, neg) => `<p class="calc">${L(`${ov(h)} कस्प का उप-स्वामी <b>${pn(j.csl)}</b> → नक्षत्र स्वामी <b>${pn(j.star)}</b> → कारक भाव <b>${hs(j.s.viaStar)}</b> (स्वयं ${hs(j.s.self)}) · शुभ भाव ${pos.join(", ")} · बाधक ${neg.join(", ")}`, `Cusp ${h} sub-lord <b>${j.csl}</b> → star lord <b>${j.star}</b> → houses <b>${hs(j.s.viaStar)}</b> (itself ${hs(j.s.self)}) · favourable ${pos.join(", ")} · opposing ${neg.join(", ")}`)}</p>`;
+    const sumBox = (lbl, txt) => `<div class="sum"><b>${lbl}:</b> ${txt}</div>`;
+    const noteBox = (title, body, red) => `<div class="nb${red ? " red" : ""}">${title ? `<b class="nt">${title}</b>` : ""}${body}</div>`;
+    const kv2 = (rows) => `<table class="kv2"><tbody>${rows.map((r) => `<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2] || ""}</td><td><b>${r[3] || ""}</b></td></tr>`).join("")}</tbody></table>`;
+    const tbl = (head, rows, cls) => `<table class="t ${cls || ""}"><thead><tr>${head.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr${r.cur ? ' class="cur"' : ""}>${(r.cells || r).map((x) => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+    const dl = (rows) => `<dl class="dl">${rows.map((r) => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl>`;
+    const chips = (arr) => `<div class="chips">${uniq(arr).map((x) => `<span>${x}</span>`).join("")}</div>`;
+    const bars = (rows) => `<div class="bars">${rows.map(([l, v]) => `<div class="br"><span>${l}</span><i><em style="width:${v}%"></em></i><b>${num(v)}%</b></div>`).join("")}</div>`;
+    const tl = (items) => `<div class="tl">${items.map((x) => `<div class="ti"><p class="tt">${x[0]}</p>${x[1]}</div>`).join("")}</div>`;
+    const CH = [];
+    const add = (t, h, tag) => CH.push([t, h, tag || ""]);
+    const det = L("विस्तृत", "detailed");
 
-    // ---------- North Indian chart (KP houses) ----------
-    function chart() {
-      const cen = { 1: [200, 95], 2: [100, 36], 3: [36, 100], 4: [100, 205], 5: [36, 300], 6: [100, 362], 7: [200, 305], 8: [300, 362], 9: [364, 300], 10: [300, 205], 11: [364, 100], 12: [300, 36] };
-      const num = { 1: [200, 165], 2: [100, 80], 3: [80, 100], 4: [162, 200], 5: [80, 300], 6: [100, 322], 7: [200, 240], 8: [300, 322], 9: [320, 300], 10: [238, 200], 11: [320, 100], 12: [300, 80] };
+    // ---------- charts ----------
+    const plab = (p) => pn(p) + (P[p].retro && p !== "Rahu" && p !== "Ketu" ? L("(व)", "(R)") : "");
+    function nchart(signOf, inHouse, lagnaMark) {
+      const cen = { 1: [200, 104], 2: [100, 44], 3: [44, 100], 4: [100, 200], 5: [44, 300], 6: [100, 356], 7: [200, 296], 8: [300, 356], 9: [356, 300], 10: [300, 200], 11: [356, 100], 12: [300, 44] };
+      const nm = { 1: [200, 180], 2: [100, 88], 3: [86, 100], 4: [178, 200], 5: [86, 300], 6: [100, 314], 7: [200, 222], 8: [300, 314], 9: [314, 300], 10: [222, 200], 11: [314, 100], 12: [300, 88] };
       let t = "";
       for (let h = 1; h <= 12; h++) {
-        const list = K.PL.filter((p) => P[p].house === h).map((p) => H(PA[p]) + (P[p].retro ? "ᴿ" : ""));
-        const [x, y] = cen[h], [nx, ny] = num[h];
-        t += `<text x="${nx}" y="${ny + 4}" class="cn">${c.cusps[h].sign}</text>`;
-        list.forEach((s, i) => { const row = Math.floor(i / 2), col = i % 2, cnt = Math.min(2, list.length - row * 2); t += `<text x="${x + (cnt === 2 ? (col ? 15 : -15) : 0)}" y="${y + row * 17 - (list.length > 2 ? 8 : 0)}" class="cp">${s}</text>`; });
+        const lst = (h === 1 && lagnaMark ? [L("लग्न", "Asc")] : []).concat(inHouse(h).map(plab));
+        const [x, y] = cen[h], [nx, ny] = nm[h];
+        t += `<text x="${nx}" y="${ny + 4}" class="cn">${signOf(h)}</text>`;
+        lst.forEach((s, i) => { t += `<text x="${x}" y="${(y + i * 16 - (lst.length - 1) * 8 + 5).toFixed(0)}" class="cp">${s}</text>`; });
       }
-      return `<svg viewBox="0 0 400 400" class="nchart" role="img" aria-label="${L("KP कुंडली", "KP chart")}"><rect x="2" y="2" width="396" height="396" fill="#FFFCF5" stroke="#7A1F1F" stroke-width="3"/><path d="M2 2L398 398M398 2L2 398M200 2L398 200L200 398L2 200Z" fill="none" stroke="#7A1F1F" stroke-width="2"/>${t}</svg>`;
+      return `<svg viewBox="0 0 400 400" class="nchart" role="img"><rect x="2" y="2" width="396" height="396" fill="#FFFCF5" stroke="#7A1F1F" stroke-width="3"/><path d="M200 2L299 101L200 200L101 101Z" fill="#F6E6CC"/><path d="M2 2L398 398M398 2L2 398M200 2L398 200L200 398L2 200Z" fill="none" stroke="#7A1F1F" stroke-width="1.6"/>${t}</svg>`;
     }
+    const d1 = nchart(sgnFrom(lagS), (h) => PL.filter((p) => X.rh[p] === h), true);
+    const chal = nchart((h) => c.cusps[h].sign, (h) => occ(h), false);
+    const chan = nchart(sgnFrom(moonS), (h) => PL.filter((p) => KX.hFrom(moonS, P[p].sign) === h), false);
+    const shifted = PL.filter((p) => X.rh[p] !== P[p].house).slice(0, 3);
 
-    // ---------- chapters ----------
-    const det = `<table class="t kv"><tbody>
-      <tr><td>${L("नाम", "Name")}</td><td><b>${esc(o.name)}</b></td><td>${L("जन्मतिथि", "Date of birth")}</td><td><b>${dob}</b></td></tr>
-      <tr><td>${L("जन्म समय", "Time of birth")}</td><td><b>${esc(o.time)}</b></td><td>${L("जन्म स्थान", "Place of birth")}</td><td><b>${esc(o.place || "")}</b></td></tr>
-      <tr><td>${L("अक्षांश / देशांतर", "Latitude / longitude")}</td><td>${(+c.lat).toFixed(2)}° / ${(+c.lng).toFixed(2)}°</td><td>${L("समय क्षेत्र", "Time zone")}</td><td>${esc(c.tz.tzLabel || "")}</td></tr>
-      <tr><td>${L("अयनांश", "Ayanamsa")}</td><td>KP (${L("कृष्णमूर्ति", "Krishnamurti")}) ${dms(c.ayanamsa)}</td><td>${L("भाव पद्धति", "House system")}</td><td>${L("प्लेसिडस", "Placidus")}</td></tr>
-    </tbody></table>`;
+    // ================= 1 — KP intro =================
+    add(L("के.पी. पद्धति — एक परिचय", "KP system — an introduction"), `
+      <p>${L("के.पी. यानी <b>कृष्णमूर्ति पद्धति</b> को प्रो. के. एस. कृष्णमूर्ति जी ने विकसित किया था। यह वैदिक ज्योतिष की ही एक अधिक सटीक शाखा है। पारंपरिक ज्योतिष में ग्रह किस राशि में है, इस पर ज़ोर होता है, जबकि के.पी. में यह देखा जाता है कि ग्रह <b>किस नक्षत्र में</b> है और उस नक्षत्र के <b>किस उप-भाग (सब)</b> में है।", "KP, or <b>Krishnamurti Paddhati</b>, was developed by Prof. K. S. Krishnamurti. It is a more precise branch of Vedic astrology. Traditional astrology stresses which sign a planet is in; KP looks at <b>which nakshatra</b> it is in and <b>which sub-division (sub)</b> of that nakshatra.")}</p>
+      <h3>${L("के.पी. के तीन मूल सिद्धांत", "Three basic principles of KP")}</h3>
+      <div class="cards3"><div><b>${L("१. नक्षत्र स्वामी", "1. Star lord")}</b><p>${L("ग्रह <b>क्या फल</b> देगा, यह उसके नक्षत्र स्वामी से तय होता है। ग्रह स्वयं एक माध्यम है, असली फल नक्षत्र स्वामी के भावों का मिलता है।", "The star lord decides <b>what result</b> a planet gives. The planet is the channel; the result comes from its star lord's houses.")}</p></div>
+      <div><b>${L("२. उप-स्वामी (सब लॉर्ड)", "2. Sub-lord")}</b><p>${L("फल <b>अच्छा होगा या बुरा</b>, होगा या नहीं — यह उप-स्वामी तय करता है। के.पी. में यही सबसे निर्णायक होता है।", "The sub-lord decides whether the result is <b>good or bad</b>, and whether it happens at all. In KP this is decisive.")}</p></div>
+      <div><b>${L("३. भाव कस्प", "3. House cusp")}</b><p>${L("हर भाव की शुरुआत (कस्प) का उप-स्वामी बताता है कि उस भाव से जुड़ा वादा (जैसे विवाह, नौकरी) कुण्डली में है या नहीं।", "The sub-lord of each house cusp tells whether that house's promise (marriage, job…) is in the chart.")}</p></div></div>
+      <h3>${L("भावों के समूह — के.पी. का आधार", "House groups — the basis of KP")}</h3>
+      ${tbl([L("विषय", "Subject"), L("शुभ भाव (फल देने वाले)", "Favourable houses"), L("बाधक भाव", "Opposing houses")], GROUPS.map((g) => [hi ? g[0] : g[1], g[3].join(", "), g[4].join(", ")]))}
+      <h3>${L("दशा ही समय बताती है", "The dasha tells the timing")}</h3>
+      <p>${L("कुण्डली में कोई वादा हो, तब भी वह फल तभी मिलता है जब उससे जुड़े ग्रहों की <b>विंशोत्तरी दशा–अंतर्दशा–प्रत्यंतर</b> चलती है और गोचर साथ देता है। इसलिए इस रिपोर्ट में हर बड़े विषय के साथ उसका संभावित समय भी दिया गया है।", "Even when the chart promises something, it comes only when the <b>Vimshottari dasha, bhukti and antara</b> of the connected planets run and transits support it. So each major subject here comes with its likely timing.")}</p>
+      ${noteBox(L("जन्म समय के बारे में एक ज़रूरी बात", "An important note on birth time"), `<p>${L(`के.पी. में भावों के उप-स्वामी बहुत संवेदनशील होते हैं — जन्म समय में 2–4 मिनट का अंतर भी कुछ कस्प का उप-स्वामी बदल सकता है। यह कुण्डली आपके दिए गए समय <b>${tobTxt}</b> पर आधारित है। यदि समय अस्पताल के रिकॉर्ड से है तो फल अधिक सटीक रहेंगे।`, `In KP the house sub-lords are very sensitive — a 2–4 minute difference in birth time can change some cusp sub-lords. This chart uses the time you gave, <b>${tobTxt}</b>. If it is from hospital records, results will be more accurate.`)}</p>`, true)}`);
 
-    add(L("KP पद्धति और आपका जन्म विवरण", "KP system and your birth details"), `
-      <p>${L("कृष्णमूर्ति पद्धति (KP) को प्रोफ़ेसर के. एस. कृष्णमूर्ति ने विकसित किया। यह वैदिक ज्योतिष पर आधारित है, पर इसमें हर भाव और ग्रह को राशि और नक्षत्र से आगे “उप-स्वामी” (Sub Lord) तक बाँटा जाता है। इसी सूक्ष्म विभाजन के कारण KP घटनाओं के होने या न होने और उनके समय का आकलन अधिक स्पष्ट रूप से करने के लिए जानी जाती है।", "Krishnamurti Paddhati (KP) was developed by Prof. K. S. Krishnamurti. It is based on Vedic astrology, but divides every house and planet beyond sign and nakshatra down to the “sub-lord”. This fine division is why KP is known for judging more clearly whether an event will happen and when.")}</p>
-      ${det}
-      <div class="box"><b>${L("KP के तीन मूल नियम", "Three basic rules of KP")}</b><ol>
-        <li>${L("ग्रह अपने <b>नक्षत्र स्वामी</b> के भावों का फल देता है — यानी परिणाम “क्या” मिलेगा, यह नक्षत्र स्वामी बताता है।", "A planet gives the results of the houses of its <b>star lord</b> — the star lord tells “what” the result will be.")}</li>
-        <li>${L("<b>उप-स्वामी</b> तय करता है कि वह परिणाम अनुकूल होगा या नहीं।", "The <b>sub-lord</b> decides whether that result will be favourable or not.")}</li>
-        <li>${L("किसी भाव के <b>आरंभ बिंदु (कस्प) का उप-स्वामी</b> बताता है कि उस भाव से जुड़ा विषय जीवन में मिलने का वादा है या नहीं; और दशा-भुक्ति बताती है कि कब।", "The <b>sub-lord of a house cusp</b> tells whether the matters of that house are promised in life; the dasha periods tell when.")}</li></ol></div>
-      <p class="sm">${L("KP जन्म समय के प्रति बहुत संवेदनशील है — लग्न का उप-स्वामी कुछ ही मिनटों में बदल सकता है। इसलिए सटीक जन्म समय (अस्पताल रिकॉर्ड या जन्म प्रमाणपत्र से) ही प्रयोग करें।", "KP is very sensitive to birth time — the sub-lord of the ascendant can change within a few minutes. Use an exact birth time (from hospital records or the birth certificate).")}</p>`);
+    // ================= 2 — birth details & panchang =================
+    const pc = X.panchang, av = X.avak;
+    const GANA = { D: ["देव", "Deva"], M: ["मनुष्य", "Manushya"], R: ["राक्षस", "Rakshasa"] }, NADI = { A: ["आदि", "Adi"], M: ["मध्य", "Madhya"], N: ["अन्त्य", "Antya"] };
+    const VARNA = [["ब्राह्मण", "Brahmin"], ["क्षत्रिय", "Kshatriya"], ["वैश्य", "Vaishya"], ["शूद्र", "Shudra"]], VASHYA = [["चतुष्पद", "Chatushpad"], ["मानव (द्विपद)", "Manav (biped)"], ["जलचर", "Jalachar"], ["वनचर", "Vanachar"], ["कीट", "Keet"]], TATVA = [["अग्नि", "Fire"], ["पृथ्वी", "Earth"], ["वायु", "Air"], ["जल", "Water"]];
+    const tzTxt0 = `${tzMin < 0 ? "-" : "+"}${String(Math.floor(Math.abs(tzMin) / 60)).padStart(2, "0")}:${String(Math.abs(tzMin) % 60).padStart(2, "0")}`;
+    const dm = (v) => `${Math.floor(Math.abs(v))}°${String(Math.round((Math.abs(v) % 1) * 60)).padStart(2, "0")}'`;
+    const latTxt = `${dm(c.lat)} ${c.lat >= 0 ? L("उ.", "N") : L("द.", "S")} / ${dm(c.lng)} ${c.lng >= 0 ? L("पू.", "E") : L("प.", "W")}`;
+    add(L("जन्म विवरण एवं पंचांग", "Birth details and panchang"), `
+      ${kv2([[L("जन्म तिथि", "Date of birth"), dobTxt, L("वार", "Weekday"), H(pc.vaar)], [L("जन्म समय", "Time of birth"), `${String(th).padStart(2, "0")}:${String(tm).padStart(2, "0")} (${tzMin === 330 ? "IST" : "UTC" + tzTxt0})`, L("समय क्षेत्र", "Time zone"), tzTxt0], [L("जन्म स्थान", "Place of birth"), esc(place), L("अक्षांश / देशांतर", "Latitude / longitude"), latTxt], [L("अयनांश (के.पी.)", "Ayanamsa (KP)"), dms(c.ayanamsa), L("भाव पद्धति", "House system"), L("प्लेसिडस", "Placidus")], [L("सूर्योदय / सूर्यास्त", "Sunrise / sunset"), `${hm(pc.rise)} / ${hm(pc.set)}`, L("विक्रम संवत", "Vikram Samvat"), pc.vs]])}
+      <h3>${L("पंचांग", "Panchang")}</h3>
+      ${kv2([[L("तिथि", "Tithi"), H(pc.tithi), L("मास", "Month"), H(pc.masa)], [L("नक्षत्र", "Nakshatra"), `${nk(P.Moon.nak)} (${L("चरण", "pada")} ${num(P.Moon.pada)})`, L("योग", "Yoga"), H(pc.yoga)], [L("करण", "Karana"), H(pc.karana), L("चंद्र राशि", "Moon sign"), sn(moonS)]])}
+      <h3>${L("अवकहड़ा चक्र (जन्म संबंधी मुख्य बिंदु)", "Avakahada chakra (key birth points)")}</h3>
+      ${kv2([[L("लग्न", "Ascendant"), `${sn(lagS)} (${L("स्वामी", "lord")} ${pn(L1)})`, L("लग्न नक्षत्र", "Ascendant star"), nk(c.cusps[1].nak)], [L("राशि", "Moon sign"), `${sn(moonS)} (${L("स्वामी", "lord")} ${pn(KX.SIGN_LORD[moonS - 1])})`, L("राशि नाम अक्षर", "Name syllable"), `“${H(av.syl)}”`], [L("नक्षत्र स्वामी", "Star lord"), pn(P.Moon.star), L("सूर्य राशि (निरयन)", "Sun sign (sidereal)"), sn(P.Sun.sign)], [L("गण", "Gana"), H(GANA[av.gana]), L("योनि", "Yoni"), H(av.yoni)], [L("नाड़ी", "Nadi"), H(NADI[av.nadi]), L("वर्ण", "Varna"), H(VARNA[av.varna])], [L("वश्य", "Vashya"), H(VASHYA[av.vashya]), L("तत्व (राशि)", "Element"), H(TATVA[av.tatva])], [L("जन्म दशा", "Dasha at birth"), `${pn(c.dasha.balance.lord)} (${L("शेष", "balance")} ${num(Math.round(c.dasha.balance.years))} ${L("वर्ष", "yrs")})`, L("वर्तमान दशा", "Current dasha"), cur ? `${pn(cur.md.lord)} – ${pn(cur.ad.lord)}` : "—"]])}
+      <p class="sm">${L(`इस नक्षत्र के नामाक्षर: ${av.sylAll[0].join(", ")} (आपका चरण: “${av.syl[0]}”)। गुण मिलान (विवाह के लिए कुण्डली मिलान) के समय गण, योनि और नाड़ी की यही जानकारी काम आएगी — इसे संभाल कर रखें।`, `Name syllables of this star: ${av.sylAll[1].join(", ")} (your pada: “${av.syl[1]}”). Gana, yoni and nadi are used in marriage matching — keep this safe.`)}</p>`);
 
-    const prow = K.PL.map((p) => { const x = P[p]; return `<tr><td><b>${pn(p)}</b>${x.retro ? ` <small>(${L("वक्री", "R")})</small>` : ""}</td><td>${sn(x.sign)}</td><td>${dms(x.deg)}</td><td>${nk(x.nak)} ${x.pada}</td><td>${pn(x.signLord)}</td><td>${pn(x.star)}</td><td><b>${pn(x.sub)}</b></td>${paid ? `<td>${pn(x.subSub)}</td>` : ""}<td class="n">${x.house}</td></tr>`; }).join("");
-    const crow = Array.from({ length: 12 }, (_, i) => i + 1).map((h) => { const x = c.cusps[h]; return `<tr><td class="n">${h}</td><td>${sn(x.sign)}</td><td>${dms(x.deg)}</td><td>${nk(x.nak)}</td><td>${pn(x.signLord)}</td><td>${pn(x.star)}</td><td><b>${pn(x.sub)}</b></td>${paid ? `<td>${pn(x.subSub)}</td>` : ""}</tr>`; }).join("");
+    // ================= 3 — charts =================
+    add(L("जन्म कुण्डली चक्र", "Birth charts"), `
+      <div class="charts"><figure>${d1}<figcaption>${L("लग्न (राशि) कुण्डली — D1", "Ascendant (sign) chart — D1")}</figcaption></figure><figure>${chal}<figcaption>${L("के.पी. भाव चलित कुण्डली (प्लेसिडस)", "KP bhava chalit chart (Placidus)")}</figcaption></figure>
+      <figure>${chan}<figcaption>${L("चंद्र कुण्डली", "Moon chart")}</figcaption></figure>
+      ${noteBox(L("चक्र कैसे पढ़ें", "How to read the charts"), `<p>${L("सबसे ऊपर बीच वाला खाना <b>पहला भाव (लग्न)</b> है, फिर घड़ी की उल्टी दिशा में बाकी भाव। सुनहरे अंक <b>राशि संख्या</b> हैं (1 = मेष … 12 = मीन)। “(व)” का अर्थ है ग्रह <b>वक्री</b> है।", "The top centre box is the <b>1st house (ascendant)</b>; the other houses follow anti-clockwise. Gold numbers are <b>sign numbers</b> (1 = Aries … 12 = Pisces). “(R)” means <b>retrograde</b>.")}</p>${shifted.length ? `<p>${L(`<b>ध्यान दें:</b> ${list(shifted.map((p) => `${pn(p)} राशि कुण्डली में ${ov(X.rh[p])} खाने में है पर भाव चलित में ${ov(P[p].house)} भाव में`))} आता है, क्योंकि प्लेसिडस भाव असमान होते हैं। के.पी. में फल भाव चलित से ही देखा जाता है।`, `<b>Note:</b> ${list(shifted.map((p) => `${p} is in house ${X.rh[p]} of the sign chart but house ${P[p].house} of the KP chart`))}, because Placidus houses are unequal. KP judges results from the bhava chart.`)}</p>` : ""}`)}</div>`);
 
-    add(L("KP कुंडली — भाव चलित (प्लेसिडस)", "KP chart — Placidus houses"), `
-      <div class="chw">${chart()}<div><p>${L("यह कुंडली KP के प्लेसिडस भावों पर बनी है। हर खाने में लिखी संख्या उस भाव के आरंभ बिंदु (कस्प) की राशि है, और ग्रह उसी भाव में दिखाए गए हैं जिसमें वे KP गणना से आते हैं — इसलिए यह सामान्य राशि-कुंडली से थोड़ी अलग हो सकती है।", "This chart uses KP Placidus houses. The number in each box is the sign of that house cusp, and planets are shown in the house they fall in by KP calculation — so it can differ a little from the ordinary sign chart.")}</p>
-      <table class="t kv"><tbody><tr><td>${L("लग्न", "Ascendant")}</td><td><b>${sn(c.cusps[1].sign)} ${dms(c.cusps[1].deg)}</b></td></tr><tr><td>${L("लग्न नक्षत्र", "Ascendant star")}</td><td><b>${nk(c.cusps[1].nak)}</b> (${pn(c.cusps[1].star)})</td></tr><tr><td>${L("लग्न उप-स्वामी", "Ascendant sub-lord")}</td><td><b>${pn(c.cusps[1].sub)}</b></td></tr><tr><td>${L("चंद्र राशि / नक्षत्र", "Moon sign / star")}</td><td><b>${sn(P.Moon.sign)} · ${nk(P.Moon.nak)}</b></td></tr></tbody></table>
-      <p class="sm">${L("ᴿ = वक्री ग्रह। सू सूर्य, चं चंद्र, मं मंगल, बु बुध, गु गुरु, शु शुक्र, श शनि, रा राहु, के केतु।", "ᴿ = retrograde. Su Sun, Mo Moon, Ma Mars, Me Mercury, Ju Jupiter, Ve Venus, Sa Saturn, Ra Rahu, Ke Ketu.")}</p></div></div>`);
+    // ================= 4–5 — planets & cusps =================
+    const retroPl = PL7.filter((p) => P[p].retro);
+    const prow = PL.map((p) => { const x = P[p]; return [`<b>${pn(p)}</b>${x.retro ? ` <span class="r">${L("व", "R")}</span>` : ""}`, sn(x.sign), dms(x.deg), `${nk(x.nak)} – ${numD(x.pada)}`, pn(x.signLord), pn(x.star), `<b>${pn(x.sub)}</b>`, pn(x.subSub), numD(x.house)]; });
+    add(L("ग्रह स्पष्ट", "Planetary positions"), `${tbl([L("ग्रह", "Planet"), L("राशि", "Sign"), L("अंश", "Degree"), L("नक्षत्र–चरण", "Star–pada"), L("राशि स्वामी", "Sign lord"), L("नक्षत्र स्वामी", "Star lord"), L("उप-स्वामी", "Sub lord"), L("उप-उप", "Sub-sub"), L("भाव", "House")], prow, "sm2")}
+      <p class="sm">${L(`व = वक्री। राहु-केतु सदा वक्री चलते हैं।${retroPl.length ? ` ${list(retroPl.map(pn))} जन्म के समय वक्री था।` : ""}`, `R = retrograde. Rahu and Ketu always move retrograde.${retroPl.length ? ` ${list(retroPl)} was retrograde at birth.` : ""}`)}</p>`);
+    const crow = Array.from({ length: 12 }, (_, i) => i + 1).map((h) => { const x = c.cusps[h]; return [`<b>${numD(h)}</b>`, sn(x.sign), dms(x.deg), nk(x.nak), pn(x.signLord), pn(x.star), `<b>${pn(x.sub)}</b>`, pn(x.subSub)]; });
+    add(L("भाव स्पष्ट (कस्प)", "House cusps"), tbl([L("भाव", "House"), L("राशि", "Sign"), L("अंश", "Degree"), L("नक्षत्र", "Star"), L("राशि स्वामी", "Sign lord"), L("नक्षत्र स्वामी", "Star lord"), L("उप-स्वामी", "Sub lord"), L("उप-उप", "Sub-sub")], crow, "sm2"));
 
-    add(L("ग्रह — राशि, नक्षत्र और उप-स्वामी", "Planets — sign, star and sub-lord"), `
-      <table class="t sm2"><thead><tr><th>${L("ग्रह", "Planet")}</th><th>${L("राशि", "Sign")}</th><th>${L("अंश", "Degree")}</th><th>${L("नक्षत्र पद", "Star · pada")}</th><th>${L("राशि स्वामी", "Sign lord")}</th><th>${L("नक्षत्र स्वामी", "Star lord")}</th><th>${L("उप-स्वामी", "Sub lord")}</th>${paid ? `<th>${L("उप-उप", "Sub-sub")}</th>` : ""}<th>${L("भाव", "House")}</th></tr></thead><tbody>${prow}</tbody></table>
-      <h3>${L("भाव आरंभ बिंदु (कस्प)", "House cusps")}</h3>
-      <table class="t sm2"><thead><tr><th>${L("भाव", "House")}</th><th>${L("राशि", "Sign")}</th><th>${L("अंश", "Degree")}</th><th>${L("नक्षत्र", "Star")}</th><th>${L("राशि स्वामी", "Sign lord")}</th><th>${L("नक्षत्र स्वामी", "Star lord")}</th><th>${L("उप-स्वामी", "Sub lord")}</th>${paid ? `<th>${L("उप-उप", "Sub-sub")}</th>` : ""}</tr></thead><tbody>${crow}</tbody></table>`);
-
-    if (paid) {
-      const own = (p) => (c.owns[p].length ? c.owns[p].join(", ") : "—");
-      const srow = K.PL.map((p) => `<tr><td><b>${pn(p)}</b></td><td class="n">${P[p].house}</td><td>${own(p)}</td><td>${pn(P[p].star)}</td><td>${hs(c.sig[p].viaStar)}</td><td><b>${hs(c.sig[p].all)}</b></td></tr>`).join("");
-      const hrow = Array.from({ length: 12 }, (_, i) => i + 1).map((h) => { const s = c.houseSig[h], f = (a) => (a.length ? a.map(pn).join(", ") : "—"); return `<tr><td class="n">${h}</td><td>${f(s.A)}</td><td>${f(s.B)}</td><td>${f(s.C)}</td><td>${f(s.D)}</td></tr>`; }).join("");
-      add(L("कारक ग्रह (Significators)", "Significators"), `
-        <p>${L("KP में हर ग्रह कुछ भावों का “कारक” होता है — यानी अपनी दशा में वह उन्हीं भावों के फल देता है। सबसे अधिक बल नक्षत्र स्वामी के भावों का होता है, फिर ग्रह के अपने भावों का।", "In KP every planet is a “significator” of some houses — in its period it gives the results of those houses. The star lord's houses carry the most weight, then the planet's own houses.")}</p>
-        <table class="t sm2"><thead><tr><th>${L("ग्रह", "Planet")}</th><th>${L("स्थित भाव", "In house")}</th><th>${L("स्वामित्व", "Owns")}</th><th>${L("नक्षत्र स्वामी", "Star lord")}</th><th>${L("नक्षत्र स्वामी से भाव", "Houses via star lord")}</th><th>${L("कुल कारक भाव", "All houses signified")}</th></tr></thead><tbody>${srow}</tbody></table>
-        <h3>${L("भाव अनुसार चार स्तर के कारक", "Four-level significators by house")}</h3>
-        <table class="t sm2"><thead><tr><th>${L("भाव", "House")}</th><th>A · ${L("स्थित ग्रहों के नक्षत्र में", "in star of occupants")}</th><th>B · ${L("भाव में स्थित", "occupants")}</th><th>C · ${L("स्वामी के नक्षत्र में", "in star of owner")}</th><th>D · ${L("भाव स्वामी", "owner")}</th></tr></thead><tbody>${hrow}</tbody></table>
-        <p class="sm">${L("A स्तर सबसे बलवान और D सबसे कमज़ोर माना जाता है। राहु-केतु अपनी राशि के स्वामी के प्रतिनिधि (एजेंट) के रूप में भी फल देते हैं।", "Level A is strongest and D weakest. Rahu and Ketu also act as agents of their sign lord.")}</p>`);
-    }
-
-    // ---------- life areas ----------
-    const verdicts = AREAS.map((A) => ({ A, j: judge(A) }));
-    const vBadge = (k) => `<span class="vb ${VK[k][1]}">${H(VK[k][0])}</span>`;
-    if (paid) {
-      const sumRows = verdicts.map(({ A, j }) => `<tr><td>${H(A.t)}</td><td class="n">${A.h}</td><td>${pn(j.csl)}</td><td>${vBadge(j.k)}</td></tr>`).join("");
-      add(L("जीवन के 14 विषय — एक नज़र में", "14 areas of life — at a glance"), `
-        <p>${L("नीचे हर विषय के लिए संबंधित भाव के उप-स्वामी (CSL) का निर्णय है। अगले अध्यायों में हर विषय का विस्तृत विश्लेषण और अनुकूल समय दिया गया है।", "Below is the verdict of the cuspal sub-lord (CSL) for each subject. The following chapters give each one in detail with supportive periods.")}</p>
-        <table class="t"><thead><tr><th>${L("विषय", "Area")}</th><th>${L("भाव", "Cusp")}</th><th>${L("उप-स्वामी", "Sub lord")}</th><th>${L("निर्णय", "Verdict")}</th></tr></thead><tbody>${sumRows}</tbody></table>
-        <div class="box"><b>${L("इन निर्णयों को कैसे समझें", "How to read these verdicts")}</b><p>${L("“प्रबल वादा” का अर्थ है स्वाभाविक सहजता; “बाधाओं के साथ” का अर्थ है देरी या संघर्ष के बाद परिणाम; “सामान्य” का अर्थ है मेहनत के अनुपात में फल; और “अधिक प्रयास आवश्यक” का अर्थ है कि इस विषय में सावधानी और धैर्य रखें। कोई भी निर्णय अंतिम भाग्य नहीं है — कर्म और सही समय परिणाम बदलते हैं।", "“Strong promise” means natural ease; “with obstacles” means results after delay or struggle; “moderate” means results in proportion to effort; and “needs more effort” means be careful and patient here. No verdict is final destiny — action and right timing change results.")}</p></div>`);
-
-      const parts = [[0, 3], [3, 7], [7, 10], [10, 14]], titles = [["स्वयं, धन, संचार और शिक्षा", "Self, money, communication and education"], ["घर, संतान, प्रेम और नौकरी", "Home, children, love and job"], ["विवाह, साझेदारी और भाग्य", "Marriage, partnership and fortune"], ["करियर, लाभ और विदेश", "Career, gains and foreign lands"]];
-      parts.forEach(([a, b], pi) => {
-        add(L(`विस्तृत विश्लेषण — ${titles[pi][0]}`, `Detailed analysis — ${titles[pi][1]}`), verdicts.slice(a, b).map(({ A, j }) => {
-          const per = periods(A, 4);
-          return `<div class="area"><h3>${H(A.t)} <small>· ${L("भाव", "cusp")} ${A.h}</small> ${vBadge(j.k)}</h3>
-            <p>${H(A.w)}</p>
-            <p class="calc">${L(`उप-स्वामी <b>${pn(j.csl)}</b> → नक्षत्र स्वामी <b>${pn(j.star)}</b> → कारक भाव <b>${hs(j.s.viaStar)}</b>; स्वयं ${hs(j.s.self)}। अनुकूल भाव ${A.pos.join(", ")} · विरोधी भाव ${A.neg.join(", ")}।`, `Sub-lord <b>${j.csl}</b> → star lord <b>${j.star}</b> → houses <b>${hs(j.s.viaStar)}</b>; itself ${hs(j.s.self)}. Favourable ${A.pos.join(", ")} · opposing ${A.neg.join(", ")}.`)}</p>
-            <p>${vText(j.k, H(A.t))}</p>
-            ${per.length ? `<p><b>${L("अगले वर्षों में सहायक समय (दशा–भुक्ति)", "Supportive periods ahead (dasha–bhukti)")}:</b></p><ul class="per">${per.map((x) => `<li>${pn(x.m)}–${pn(x.a)} · ${my(x.s)} – ${my(x.e)}</li>`).join("")}</ul>` : `<p class="sm">${L("अगले 20 वर्षों में इस विषय के लिए दशा और भुक्ति दोनों का एक साथ प्रबल समर्थन नहीं दिखता; ऐसे में गोचर और प्रश्न कुंडली से समय देखा जाता है।", "In the next 20 years no period shows strong support from both dasha and bhukti for this subject; timing is then checked by transits and a horary chart.")}</p>`}
-            <p class="tip">💡 ${H(A.tip)}</p></div>`;
-        }).join(""));
-      });
-    }
-
-    // ---------- dasha ----------
-    const mdRows = c.dasha.md.slice(0, 9).map((m) => `<tr${cur && m === cur.md ? ' class="cur"' : ""}><td><b>${pn(m.lord)}</b></td><td>${dmy(m.start)}</td><td>${dmy(m.end)}</td>${paid ? `<td>${hs(c.sig[m.lord].all)}</td>` : ""}</tr>`).join("");
-    const theme = (p) => c.sig[p].viaStar.slice(0, 3).map((h) => H(HT[h])).join("; ");
-    let dashaHtml = `<p>${L(`जन्म के समय चंद्रमा ${nk(P.Moon.nak)} नक्षत्र में था, इसलिए जीवन की शुरुआत ${pn(c.dasha.balance.lord)} की महादशा से हुई (शेष लगभग ${c.dasha.balance.years.toFixed(1)} वर्ष)। KP में दशा की गणना KP अयनांश और 365.25 दिन के वर्ष से की गई है।`, `At birth the Moon was in ${nk(P.Moon.nak)}, so life began in the ${c.dasha.balance.lord} period (about ${c.dasha.balance.years.toFixed(1)} years remaining). Dashas are calculated with KP ayanamsa and a 365.25-day year.`)}</p>
-      <table class="t"><thead><tr><th>${L("महादशा", "Mahadasha")}</th><th>${L("आरंभ", "From")}</th><th>${L("समाप्ति", "To")}</th>${paid ? `<th>${L("कारक भाव", "Houses signified")}</th>` : ""}</tr></thead><tbody>${mdRows}</tbody></table>`;
-    if (cur) {
-      dashaHtml += `<div class="box"><b>${L("अभी चल रहा समय", "Running now")}</b><p>${L(`महादशा <b>${pn(cur.md.lord)}</b> · अंतर्दशा <b>${pn(cur.ad.lord)}</b> (${dmy(cur.ad.start)} से ${dmy(cur.ad.end)}) · प्रत्यंतर <b>${pn(cur.pd.lord)}</b> (${dmy(cur.pd.end)} तक)`, `Mahadasha <b>${cur.md.lord}</b> · bhukti <b>${cur.ad.lord}</b> (${dmy(cur.ad.start)} to ${dmy(cur.ad.end)}) · antara <b>${cur.pd.lord}</b> (till ${dmy(cur.pd.end)})`)}</p>
-        <p>${L(`इस समय मुख्य रूप से इन विषयों पर ध्यान रहता है: <b>${theme(cur.ad.lord)}</b>।`, `This time mainly brings focus on: <b>${theme(cur.ad.lord)}</b>.`)}</p></div>`;
-    }
-    if (paid && cur) {
-      const adRows = cur.md.ad.map((a) => `<tr${a === cur.ad ? ' class="cur"' : ""}><td><b>${pn(cur.md.lord)}–${pn(a.lord)}</b></td><td>${dmy(a.start)}</td><td>${dmy(a.end)}</td><td>${hs(c.sig[a.lord].all)}</td></tr>`).join("");
-      const pdRows = cur.ad.pd.map((p) => `<tr${p === cur.pd ? ' class="cur"' : ""}><td>${pn(p.lord)}</td><td>${dmy(p.start)}</td><td>${dmy(p.end)}</td><td>${hs(c.sig[p.lord].viaStar)}</td></tr>`).join("");
-      dashaHtml += `<h3>${L(`${pn(cur.md.lord)} महादशा की सभी अंतर्दशाएँ`, `All bhuktis of the ${cur.md.lord} mahadasha`)}</h3>
-        <table class="t sm2"><thead><tr><th>${L("दशा–भुक्ति", "Dasha–bhukti")}</th><th>${L("आरंभ", "From")}</th><th>${L("समाप्ति", "To")}</th><th>${L("कारक भाव", "Houses")}</th></tr></thead><tbody>${adRows}</tbody></table>
-        <h3>${L("वर्तमान अंतर्दशा के प्रत्यंतर", "Antaras of the current bhukti")}</h3>
-        <table class="t sm2"><thead><tr><th>${L("प्रत्यंतर", "Antara")}</th><th>${L("आरंभ", "From")}</th><th>${L("समाप्ति", "To")}</th><th>${L("मुख्य भाव", "Main houses")}</th></tr></thead><tbody>${pdRows}</tbody></table>`;
-    }
-    add(L("विंशोत्तरी दशा", "Vimshottari dasha"), dashaHtml);
-
-    if (paid) {
-      // next 3 years, bhukti by bhukti
-      const end3 = now.getTime() + 3 * 365.25 * 864e5, rows = [];
-      for (const m of c.dasha.md) for (const a of m.ad) for (const p of a.pd) {
-        if (p.end < now || p.start > end3) continue;
-        rows.push({ m: m.lord, a: a.lord, p: p.lord, s: p.start < now ? now : p.start, e: p.end });
-      }
-      const good = (h) => [2, 6, 10, 11].includes(h), care = (h) => [8, 12].includes(h);
-      const items = rows.map((r) => {
-        const hsAll = [...new Set(c.sig[r.a].viaStar.concat(c.sig[r.p].viaStar))].sort((x, y) => x - y);
-        const g = hsAll.filter(good).length, w = hsAll.filter(care).length;
-        const tone = g >= 2 && !w ? ["अनुकूल", "Supportive", "t-good"] : w && g < 2 ? ["सावधानी", "Be careful", "t-care"] : ["मिश्रित", "Mixed", "t-mid"];
-        return `<tr><td>${my(r.s)} – ${my(r.e)}</td><td>${pn(r.a)}–${pn(r.p)}</td><td>${hsAll.slice(0, 4).map((h) => H(HT[h]).split(",")[0]).join(" · ")}</td><td class="${tone[2]}"><b>${hi ? tone[0] : tone[1]}</b></td></tr>`;
-      }).join("");
-      add(L("अगले 3 वर्ष — समय-समय पर क्या रहेगा", "Next 3 years — what each phase brings"), `
-        <p>${L("नीचे अगले तीन वर्षों के प्रत्यंतर काल दिए हैं। हर काल में अंतर्दशा और प्रत्यंतर के स्वामी जिन भावों के कारक हैं, उनसे उस समय के मुख्य विषय बनते हैं। 2, 6, 10, 11 भाव धन और काम के लिए अनुकूल, और 8, 12 भाव सावधानी के माने जाते हैं।", "Below are the antara periods of the next three years. The houses signified by the bhukti and antara lords shape the main themes of each phase. Houses 2, 6, 10 and 11 are supportive for money and work; 8 and 12 call for care.")}</p>
-        <table class="t sm2"><thead><tr><th>${L("समय", "Period")}</th><th>${L("भुक्ति–प्रत्यंतर", "Bhukti–antara")}</th><th>${L("मुख्य विषय", "Main themes")}</th><th>${L("स्वभाव", "Tone")}</th></tr></thead><tbody>${items}</tbody></table>
-        <p class="sm">${L("“सावधानी” का अर्थ अशुभ नहीं है — उस समय खर्च, यात्रा, स्वास्थ्य और बड़े जोखिमों में सावधानी रखें। अंतिम पुष्टि गोचर से होती है।", "“Be careful” does not mean bad — be careful with expenses, travel, health and big risks then. Final confirmation comes from transits.")}</p>`);
-    }
-
-    // ---------- ruling planets ----------
-    const rp = [[L("वार स्वामी", "Day lord"), RP.day], [L("चंद्र राशि स्वामी", "Moon sign lord"), RP.moonSign], [L("चंद्र नक्षत्र स्वामी", "Moon star lord"), RP.moonStar], [L("चंद्र उप-स्वामी", "Moon sub lord"), RP.moonSub], [L("लग्न राशि स्वामी", "Lagna sign lord"), RP.lagnaSign], [L("लग्न नक्षत्र स्वामी", "Lagna star lord"), RP.lagnaStar], [L("लग्न उप-स्वामी", "Lagna sub lord"), RP.lagnaSub]];
-    const rset = [...new Set(rp.map((x) => x[1]))];
-    add(L("शासक ग्रह (Ruling Planets)", "Ruling planets"), `
-      <p>${L(`शासक ग्रह KP की एक विशेष विधि है। जिस क्षण कोई प्रश्न पूछा जाता है या निर्णय लिया जाता है, उस समय के वार, चंद्र और लग्न के स्वामी उस विषय के परिणाम और समय की पुष्टि करते हैं। नीचे के शासक ग्रह इस रिपोर्ट के बनने के समय (${today}) और आपके जन्म स्थान के अनुसार हैं।`, `Ruling planets are a special KP method. At the moment a question is asked or a decision made, the lords of the day, Moon and ascendant confirm the outcome and timing. The ruling planets below are for the time this report was made (${today}) at your birth place.`)}</p>
-      <table class="t kv"><tbody>${rp.map(([a, b]) => `<tr><td>${a}</td><td><b>${pn(b)}</b></td></tr>`).join("")}</tbody></table>
-      <p><b>${L("शासक ग्रह", "Ruling planets")}:</b> ${rset.map(pn).join(", ")}</p>
-      ${paid ? `<p>${L("उपयोग: किसी विषय की दशा-भुक्ति चुनते समय उन ग्रहों को प्राथमिकता दें जो जन्म कुंडली में उस विषय के कारक भी हों और शासक ग्रहों में भी हों। विवाह, नौकरी या यात्रा का प्रश्न जिस दिन मन में आए, उस दिन के शासक ग्रह देखकर ज्योतिषी समय की पुष्टि करता है।", "Use: when picking the period for a matter, give priority to planets that signify it in the birth chart and are also among the ruling planets. When a question on marriage, job or travel comes to mind, an astrologer checks that day's ruling planets to confirm timing.")}</p>` : ""}`);
+    const mdRows = c.dasha.md.slice(0, 9).map((m, i) => ({ cur: cur && m === cur.md, cells: [`<b>${pn(m.lord)}</b>`, i === 0 ? `${dfull(c.birthUTC)} ${L("(जन्म)", "(birth)")}` : dfull(m.start), dfull(m.end)] }));
+    const adTable = (m) => tbl([L("अंतर्दशा", "Bhukti"), L("आरंभ", "From"), L("समाप्ति", "To")], m.ad.filter((a) => a.end > c.birthUTC).map((a) => ({ cur: cur && a === cur.ad, cells: [`${pn(m.lord)} – <b>${pn(a.lord)}</b>`, dfull(a.start < c.birthUTC ? c.birthUTC : a.start), dfull(a.end)] })), "sm2");
 
     if (!paid) {
-      const pick = [8, 11, 1].map((i) => verdicts[i]);
-      add(L("एक झलक — विवाह, करियर और धन", "A glimpse — marriage, career and money"), `
-        ${pick.map(({ A, j }) => `<div class="area"><h3>${H(A.t)} ${vBadge(j.k)}</h3><p class="calc">${L(`भाव ${A.h} का उप-स्वामी ${pn(j.csl)} · नक्षत्र स्वामी ${pn(j.star)} · कारक भाव ${hs(j.s.viaStar)}`, `Cusp ${A.h} sub-lord ${j.csl} · star lord ${j.star} · houses ${hs(j.s.viaStar)}`)}</p></div>`).join("")}
-        <div class="box up"><b>${L("₹299 की विस्तृत KP रिपोर्ट में", "In the ₹299 detailed KP report")}</b><ul>
-          <li>${L("जीवन के 14 विषयों का उप-स्वामी विश्लेषण — विवाह, नौकरी, करियर, धन, संतान, शिक्षा, मकान, विदेश आदि", "Sub-lord analysis of 14 areas — marriage, job, career, money, children, education, property, foreign lands and more")}</li>
-          <li>${L("हर विषय के लिए अगले 20 वर्षों के सहायक दशा-भुक्ति काल", "Supportive dasha periods for each area over the next 20 years")}</li>
-          <li>${L("चार स्तर के कारक ग्रह, उप-उप स्वामी और अगले 3 वर्षों का प्रत्यंतर अनुसार मार्गदर्शन", "Four-level significators, sub-sub lords and a phase-by-phase guide for the next 3 years")}</li></ul>
-          <p>${L("jyotishtark.in/kp-astrology.html पर भुगतान करें — PDF तुरंत मिलेगी।", "Pay at jyotishtark.in/kp-astrology.html — you get the PDF instantly.")}</p></div>`);
-    } else {
-      const strong = verdicts.filter((v) => v.j.k === "good").map((v) => H(v.A.t)), careA = verdicts.filter((v) => v.j.k === "weak").map((v) => H(v.A.t));
-      const best = K.PL.map((p) => ({ p, n: inter(c.sig[p].viaStar, [2, 6, 10, 11]).length - inter(c.sig[p].viaStar, [8, 12]).length })).sort((a, b) => b.n - a.n)[0].p;
-      const REM = { Sun: ["रविवार को सूर्य को जल अर्पण और पिता का सम्मान", "Offer water to the Sun on Sundays and respect your father"], Moon: ["सोमवार को शिव पूजा और माता की सेवा", "Worship Shiva on Mondays and serve your mother"], Mars: ["मंगलवार को हनुमान चालीसा और भाइयों से मधुर संबंध", "Recite the Hanuman Chalisa on Tuesdays and keep good ties with brothers"], Mercury: ["बुधवार को गणेश पूजा और वाणी पर संयम", "Worship Ganesha on Wednesdays and keep your speech gentle"], Jupiter: ["गुरुवार को विष्णु पूजा और गुरुजनों का सम्मान", "Worship Vishnu on Thursdays and respect teachers"], Venus: ["शुक्रवार को लक्ष्मी पूजा और स्त्रियों का सम्मान", "Worship Lakshmi on Fridays and respect women"], Saturn: ["शनिवार को ज़रूरतमंद की मदद और अनुशासन", "Help the needy on Saturdays and keep discipline"], Rahu: ["माँ दुर्गा की उपासना और नशे से दूरी", "Worship Durga and stay away from intoxicants"], Ketu: ["गणेश उपासना, ध्यान और कुत्तों की सेवा", "Worship Ganesha, meditate and care for dogs"] };
-      add(L("उपाय और ज्योतिषी की टिप्पणी", "Remedies and astrologer's note"), `
-        <p>${L("KP में उपायों का उद्देश्य उन ग्रहों को सक्रिय करना है जो शुभ भावों के कारक हैं, और चल रही दशा के स्वामी को संतुलित रखना है। नीचे के उपाय सरल हैं और कोई महँगा अनुष्ठान आवश्यक नहीं है।", "In KP, remedies aim to activate the planets that signify good houses and to keep the running period lord balanced. The remedies below are simple; no costly ritual is needed.")}</p>
-        <ol class="rem">
-          <li><b>${L(`आपका सबसे सहायक ग्रह — ${pn(best)}`, `Your most supportive planet — ${best}`)}:</b> ${H(REM[best])}.</li>
-          ${cur ? `<li><b>${L(`वर्तमान महादशा स्वामी — ${pn(cur.md.lord)}`, `Current mahadasha lord — ${cur.md.lord}`)}:</b> ${H(REM[cur.md.lord])}.</li>` : ""}
-          ${cur && cur.ad.lord !== cur.md.lord ? `<li><b>${L(`वर्तमान अंतर्दशा स्वामी — ${pn(cur.ad.lord)}`, `Current bhukti lord — ${cur.ad.lord}`)}:</b> ${H(REM[cur.ad.lord])}.</li>` : ""}
-          <li>${L("महत्वपूर्ण काम — नौकरी आवेदन, विवाह की बात, संपत्ति ख़रीद — ऊपर बताए गए सहायक दशा काल में और शासक ग्रहों के दिन करें।", "Do important things — job applications, marriage talks, property purchase — in the supportive periods above and on days of your ruling planets.")}</li>
-          <li>${L("रत्न धारण करने से पहले व्यक्तिगत परामर्श अवश्य लें; KP में गलत रत्न लाभ के बजाय नुकसान कर सकता है।", "Take personal advice before wearing any gemstone; in KP a wrong stone can harm rather than help.")}</li>
-        </ol>
-        <h3>${L("ज्योतिषी की टिप्पणी", "Astrologer's note")}</h3>
-        <div class="note"><p>${L(`${esc(o.name)} जी, आपका लग्न ${sn(c.cusps[1].sign)} है और लग्न का उप-स्वामी ${pn(c.cusps[1].sub)} है। ${strong.length ? `आपकी कुंडली में ${strong.slice(0, 3).join(", ")} जैसे विषयों का स्पष्ट वादा दिखता है।` : "आपकी कुंडली में अधिकांश विषय मेहनत और सही समय से फल देने वाले हैं।"} ${careA.length ? `${careA.slice(0, 2).join(" और ")} में धैर्य और अधिक प्रयास रखें।` : ""} ${cur ? `अभी ${pn(cur.md.lord)}–${pn(cur.ad.lord)} का समय चल रहा है, जो ${theme(cur.ad.lord)} पर ध्यान दिलाता है।` : ""}`, `${esc(o.name)}, your ascendant is ${sn(c.cusps[1].sign)} and its sub-lord is ${c.cusps[1].sub}. ${strong.length ? `Your chart shows a clear promise for areas such as ${strong.slice(0, 3).join(", ").toLowerCase()}.` : "In your chart most areas give results through effort and right timing."} ${careA.length ? `Keep patience and extra effort in ${careA.slice(0, 2).join(" and ").toLowerCase()}.` : ""} ${cur ? `The ${cur.md.lord}–${cur.ad.lord} period is running now, which brings focus on ${theme(cur.ad.lord)}.` : ""}`)}</p>
-        <p>${L("KP संभावना और समय का संकेत देती है, निश्चित भविष्य नहीं। बड़े निर्णय — विवाह, निवेश, नौकरी या स्वास्थ्य — से पहले अपनी परिस्थिति और संबंधित विशेषज्ञ की सलाह अवश्य लें। किसी विषय पर गहराई से प्रश्न हो तो व्यक्तिगत परामर्श लें। शुभम् भवतु।", "KP indicates possibility and timing, not a fixed future. Before big decisions — marriage, investment, job or health — consider your situation and take advice from the right expert. For a deeper question on any matter, take a personal consultation. Best wishes.")}</p></div>`);
+      add(L("विंशोत्तरी दशा", "Vimshottari dasha"), `<p>${L(`जन्म के समय चंद्रमा ${nk(P.Moon.nak)} नक्षत्र (स्वामी ${pn(P.Moon.star)}) में था, इसलिए जीवन <b>${pn(c.dasha.balance.lord)} महादशा</b> से शुरू हुआ।`, `At birth the Moon was in ${nk(P.Moon.nak)} (lord ${P.Moon.star}), so life began in the <b>${c.dasha.balance.lord} mahadasha</b>.`)}</p><div class="two"><div><h3>${L("महादशा", "Mahadasha")}</h3>${tbl([L("ग्रह", "Planet"), L("आरंभ", "From"), L("समाप्ति", "To")], mdRows, "sm2")}</div>${cur ? `<div><h3>${L(`${pn(cur.md.lord)} की अंतर्दशाएँ`, `Bhuktis of ${cur.md.lord}`)}</h3>${adTable(cur.md)}</div>` : ""}</div>`);
+      const g = [[7, [2, 7, 11], [1, 6, 10], L("विवाह", "Marriage")], [10, [2, 6, 10, 11], [5, 8, 12], L("करियर", "Career")], [2, [2, 6, 11], [5, 8, 12], L("धन", "Money")]];
+      add(L("एक झलक — विवाह, करियर और धन", "A glimpse — marriage, career and money"), g.map(([h, p, n, t]) => { const j = judge(h, p, n); return `<div class="area"><h3>${t} ${badge(j.k)}</h3>${calc(h, j, p, n)}</div>`; }).join("") + noteBox(L("₹299 की विस्तृत KP जन्म कुण्डली में", "In the ₹299 detailed KP Janm Kundali"), `<ul><li>${L("24 अध्याय — व्यक्तित्व, मन, जीवनसाथी (रूप, स्वभाव, पेशा, दिशा), विवाह का समय, मांगलिक विचार, प्रेम", "24 chapters — personality, mind, life partner (looks, nature, profession, direction), marriage timing, manglik check, love")}</li><li>${L("शिक्षा, करियर, धन, संपत्ति, स्वास्थ्य, परिवार, संतान, विदेश — हर विषय उप-स्वामी से और संभावित समय सहित", "Education, career, money, property, health, family, children, foreign — each by sub-lord with likely timing")}</li><li>${L("कारकत्व, विशेष योग, साढ़ेसाती, 20 वर्ष का दशा फल, शुभ अंक-रंग, रत्न और उपाय", "Significators, special yogas, sade sati, 20-year dasha forecast, lucky numbers and colours, gemstones and remedies")}</li></ul><p>${L("jyotishtark.in/kp-astrology.html पर भुगतान करें — PDF तुरंत मिलेगी।", "Pay at jyotishtark.in/kp-astrology.html — you get the PDF instantly.")}</p>`));
+      return wrap();
     }
 
+    // ================= 6 — significators =================
+    const own = (p) => c.owns[p];
+    const agentH = (p) => uniq([P[P[p].signLord].house].concat(own(P[p].signLord))).sort((a, b) => a - b);
+    const sRows = PL.map((p) => { const st = P[p].star; const nodeX = (p === "Rahu" || p === "Ketu") ? ` <small>(${L("राशि-स्वामी द्वारा", "via sign lord")}: ${hs(agentH(p))})</small>` : ""; return [`<b>${pn(p)}</b>`, pn(st), numD(P[st].house), numD(P[p].house), own(st).length ? own(st).join(", ") : "—", own(p).length ? own(p).join(", ") : "—", `<b>${hs(sigA(p))}</b>${nodeX}`]; });
+    const hRows = Array.from({ length: 12 }, (_, i) => i + 1).map((h) => { const s = c.houseSig[h], f = (a) => (a.length ? a.map(pn).join(", ") : "—"); return [`<b>${numD(h)}</b>`, `<small>${H(HOUSE_SUBJ[h])}</small>`, f(s.A), f(s.B), f(s.C), f(s.D)]; });
+    const agents = ["Rahu", "Ketu"].map((p) => L(`${pn(p)} ${pn(P[p].signLord)} की राशि (${sn(P[p].sign)}) में है और ${pn(P[p].signLord)} ${ov(P[P[p].signLord].house)} भाव में बैठा है, इसलिए ${pn(p)} उसके फल (${hs(agentH(p))}) भी देता है।`, `${p} is in ${P[p].signLord}'s sign (${sn(P[p].sign)}) and ${P[p].signLord} sits in house ${P[P[p].signLord].house}, so ${p} also gives its results (${hs(agentH(p))}).`)).join(" ");
+    add(L("कारकत्व (Significators)", "Significators"), `
+      <p>${L("के.पी. में हर ग्रह चार स्तर पर भावों का फल देता है — <b>(A)</b> नक्षत्र स्वामी जिस भाव में बैठा है, <b>(B)</b> ग्रह स्वयं जिस भाव में बैठा है, <b>(C)</b> नक्षत्र स्वामी जिन भावों का स्वामी है, <b>(D)</b> ग्रह स्वयं जिन भावों का स्वामी है। A सबसे बलवान, D सबसे कमज़ोर।", "In KP every planet gives results at four levels — <b>(A)</b> the house its star lord occupies, <b>(B)</b> the house it occupies, <b>(C)</b> houses its star lord owns, <b>(D)</b> houses it owns. A is strongest, D weakest.")}</p>
+      <h3>${L("ग्रह अनुसार कारकत्व", "Significations by planet")}</h3>
+      ${tbl([L("ग्रह", "Planet"), L("नक्षत्र स्वामी", "Star lord"), "A", "B", "C", "D", L("कुल भाव", "All houses")], sRows, "sm2")}
+      <h3>${L("भाव अनुसार कारक ग्रह", "Significators by house")}</h3>
+      ${tbl([L("भाव", "House"), L("विषय", "Subject"), L("स्तर 1 (स्थित ग्रह के नक्षत्र में)", "Level 1 (in star of occupants)"), L("स्तर 2 (स्थित ग्रह)", "Level 2 (occupants)"), L("स्तर 3 (स्वामी के नक्षत्र में)", "Level 3 (in star of owner)"), L("स्तर 4 (स्वामी)", "Level 4 (owner)")], hRows, "sm2")}
+      <p class="sm">${agents}</p>`);
+
+    // ================= 7 — personality =================
+    const LG = T.LAGNA[lagS - 1], in1 = occ(1);
+    const strP = (p) => { const d = X.dign(p); return d === "ex" ? 2 : d === "own" ? 1.5 : d === "deb" ? -1.5 : 0; };
+    const kend = (h) => [1, 4, 7, 10].includes(h), trik = (h) => [1, 5, 9].includes(h), dusth = (h) => [6, 8, 12].includes(h);
+    const clamp = (v) => Math.max(40, Math.min(94, Math.round(v)));
+    const fire = [1, 5, 9].includes(lagS), water = [4, 8, 12].includes(lagS), earth = [2, 6, 10].includes(lagS);
+    const marsOnLagna = [1, 7].includes(X.rh.Mars) || X.aspectsOnSign(lagS).includes("Mars");
+    const scoreConf = clamp(64 + strP("Sun") * 6 + strP(L1) * 4 + (kend(X.rh[L1]) || trik(X.rh[L1]) ? 6 : 0) - (dusth(X.rh[L1]) ? 6 : 0) + (fire ? 6 : 0) + ([1, 10].includes(X.rh.Sun) ? 4 : 0));
+    const scoreEmo = clamp(60 + (water ? 10 : 0) + ([4, 8, 12].includes(moonS) ? 10 : 0) + (dusth(P.Moon.house) || P.Moon.house === 4 ? 6 : 0) + (c.cusps[1].sub === "Moon" ? 6 : 0) - (earth ? 4 : 0));
+    const scoreInt = clamp(66 + strP("Mercury") * 5 + (P.Sun.sign === P.Mercury.sign ? 8 : 0) + (kend(X.rh.Jupiter) || trik(X.rh.Jupiter) ? 6 : 0) + (X.aspectsOnSign(sgnFrom(lagS)(5)).includes("Jupiter") ? 4 : 0));
+    const scoreLead = clamp(62 + (fire ? 8 : 0) + strP("Sun") * 4 + strP("Mars") * 3 + ([1, 10].includes(X.rh.Sun) || [1, 10].includes(X.rh.Mars) ? 6 : 0) + (marsOnLagna ? 4 : 0));
+    const scoreCre = clamp(62 + strP("Venus") * 5 + (P.Venus.star === "Venus" ? 5 : 0) + ([1, 5, 10].includes(X.rh.Venus) ? 6 : 0) + (c.cusps[1].star === "Venus" ? 5 : 0));
+    const scoreSpi = clamp(60 + ([9, 12].includes(moonS) ? 8 : 0) + ([1, 5, 9, 12].includes(X.rh.Jupiter) ? 8 : 0) + ([8, 12].includes(P.Moon.house) ? 6 : 0) + ([9, 12].includes(X.rh.Ketu) ? 6 : 0));
+    const scorePat = clamp(64 + strP("Saturn") * 5 + (earth ? 8 : 0) - (fire ? 6 : 0) - (marsOnLagna ? 8 : 0) - (dusth(P.Moon.house) ? 4 : 0));
+    const strengths = [[H(LG.str[0]), L(`${sn(lagS)} लग्न का स्वाभाविक गुण — ${H(LG.k[0])}।`, `A natural gift of ${sn(lagS)} ascendant — ${H(LG.k[0])}.`)]];
+    if (in1.includes("Jupiter")) strengths.push([L("ईमानदारी", "Integrity"), L("लग्न में गुरु — सच बोलने और नियम से चलने की आदत; लोग आप पर भरोसा करते हैं।", "Jupiter in the 1st — truthfulness and principled living; people trust you.")]);
+    if (P.Sun.sign === P.Mercury.sign || P.Sun.house === P.Mercury.house) strengths.push([L("तेज़ बुद्धि", "Sharp mind"), L("सूर्य-बुध का साथ — विश्लेषण, गणना और बात को जल्दी समझने की क्षमता।", "Sun with Mercury — analysis, reasoning and quick understanding.")]);
+    if ([8, 12].includes(P.Moon.house) || [4, 8, 12].includes(moonS)) strengths.push([L("अंतर्ज्ञान", "Intuition"), L(`चंद्र ${ov(P.Moon.house)} भाव में, ${nk(P.Moon.nak)} नक्षत्र — लोगों के मन की बात भाँप लेना।`, `Moon in house ${P.Moon.house}, ${nk(P.Moon.nak)} — sensing what others feel.`)]);
+    if (c.cusps[1].star === "Venus" || [1, 5].includes(X.rh.Venus) || P.Venus.star === "Venus") strengths.push([L("कलात्मकता", "Artistry"), L("शुक्र का प्रभाव — संगीत, डिज़ाइन, लेखन या किसी रचनात्मक काम में रुचि।", "Venus' influence — interest in music, design, writing or creative work.")]);
+    if ([12, 9, 4].includes(moonS)) strengths.push([L("दया व करुणा", "Kindness"), L(`${sn(moonS)} राशि का चंद्र — दूसरों का दुख देखकर पिघल जाना, मदद करने की इच्छा।`, `Moon in ${sn(moonS)} — moved by others' pain, eager to help.`)]);
+    if (strengths.length < 5) strengths.push([H(LG.str[1]), L("लग्न के स्वभाव से मिलने वाली ताकत।", "A strength from your ascendant.")]);
+    if (strengths.length < 5) strengths.push([H(LG.str[2]), L("इसे पहचानें और आगे बढ़ाएँ।", "Recognise it and build on it.")]);
+    const weak = [[H(LG.wk[0]), L(`${sn(lagS)} लग्न का स्वाभाविक दोष — कभी-कभी यह रिश्तों में दूरी ला सकता है।`, `A natural flaw of ${sn(lagS)} ascendant — it can sometimes strain relationships.`)]];
+    if (marsOnLagna) weak.push([L("गुस्सा", "Anger"), L("मंगल का लग्न से संबंध — गुस्सा जल्दी आता है, हालाँकि उतनी ही जल्दी उतर भी जाता है।", "Mars linked to the ascendant — anger rises fast, though it fades fast too.")]);
+    if (dusth(P.Moon.house) || X.yogas.some((y) => y.id === "shaniChandra")) weak.push([L("ज़्यादा सोचना", "Over-thinking"), L(`चंद्र ${ov(P.Moon.house)} भाव में — बातों को बार-बार मन में दोहराना, अनावश्यक चिंता।`, `Moon in house ${P.Moon.house} — replaying things in the mind, needless worry.`)]);
+    if ([1, 4, 5].includes(X.rh.Venus) || c.cusps[1].star === "Venus") weak.push([L("आलस्य/आराम", "Love of comfort"), L("शुक्र का प्रभाव — आरामदायक माहौल पसंद, कभी-कभी काम टालने की आदत।", "Venus' influence — fond of comfort, sometimes postponing work.")]);
+    if ([12, 9].includes(moonS)) weak.push([L("भरोसा", "Trusting quickly"), L(`${sn(moonS)} का चंद्र — जल्दी भरोसा कर लेना; लोगों को परखकर ही अपने राज़ बताएँ।`, `Moon in ${sn(moonS)} — trusting quickly; share secrets only after testing people.`)]);
+    if (weak.length < 4) weak.push([H(LG.wk[1]), L("लग्न से जुड़ी आदत — धैर्य से सुधारें।", "A habit tied to your ascendant — improve it patiently.")]);
+    const in1txt = in1.length ? list(in1.map((p) => H(T.IN1[p]))) : "";
+    add(L("आपका व्यक्तित्व", "Your personality"), `
+      <p>${L("के.पी. में व्यक्तित्व को समझने के लिए चार चीज़ें देखी जाती हैं — <b>लग्न राशि</b> (बाहरी रूप-रंग और स्वभाव), <b>लग्न का नक्षत्र स्वामी</b> (आपकी रुचियाँ और जीवन की दिशा), <b>लग्न का उप-स्वामी</b> (आपका असली अंदरूनी स्वभाव) और <b>चंद्रमा</b> (मन)। आपकी कुण्डली में ये चारों इस तरह हैं:", "In KP personality is read from four things — the <b>ascendant sign</b> (looks and nature), the <b>ascendant star lord</b> (interests and direction), the <b>ascendant sub-lord</b> (true inner nature) and the <b>Moon</b> (mind). In your chart:")}</p>
+      ${tbl([L("तत्व", "Factor"), L("आपकी कुण्डली में", "In your chart"), L("क्या बताता है", "What it shows")], [[L("लग्न राशि", "Ascendant sign"), `<b>${sn(lagS)}</b> (${L("स्वामी", "lord")} ${pn(L1)})`, H(LG.k[0])], [L("लग्न नक्षत्र स्वामी", "Ascendant star lord"), `<b>${pn(c.cusps[1].star)}</b> (${nk(c.cusps[1].nak)})`, H(T.STARL[c.cusps[1].star])], [L("लग्न उप-स्वामी", "Ascendant sub-lord"), `<b>${pn(c.cusps[1].sub)}</b> (${L(`${ov(P[c.cusps[1].sub].house)} भाव में`, `in house ${P[c.cusps[1].sub].house}`)})`, H(T.SUBL[c.cusps[1].sub])], [L("लग्न में ग्रह", "Planets in 1st"), in1.length ? `<b>${list(in1.map(pn))}</b>` : "—", in1.length ? L("नीचे देखें", "see below") : L("लग्नेश की स्थिति अधिक महत्वपूर्ण", "the ascendant lord matters more")], [L("चंद्र राशि / नक्षत्र", "Moon sign / star"), `<b>${sn(moonS)} / ${nk(P.Moon.nak)}</b>`, H(T.NAKN[P.Moon.nak - 1]).split("—")[1] || ""]])}
+      <h3>${L("1. बाहरी रूप और पहली छाप", "1. Appearance and first impression")}</h3>
+      <p>${L(`${sn(lagS)} लग्न ${in1.length ? `और लग्न में ${list(in1.map(pn))} ` : ""}के कारण: ${H(LG.look)}`, `Through ${sn(lagS)} ascendant${in1.length ? ` and ${list(in1)} in the 1st` : ""}: ${H(LG.look)}`)} ${in1.includes("Jupiter") ? L("गुरु लग्न में होने से उम्र के साथ शरीर थोड़ा भारी होने की प्रवृत्ति रहती है — इस पर ध्यान रखना अच्छा है।", "With Jupiter in the 1st the body tends to fill out with age — worth watching.") : ""}</p>
+      <p>${L(`लोग आपको पहली बार मिलकर ${fire ? "<b>आत्मविश्वासी और प्रभावशाली</b>" : earth ? "<b>गंभीर, समझदार और भरोसेमंद</b>" : water ? "<b>सौम्य, संवेदनशील और अपनापन देने वाला</b>" : "<b>मिलनसार, बुद्धिमान और सहज</b>"} मानते हैं। लग्न का नक्षत्र स्वामी ${pn(c.cusps[1].star)} होने से ${H(T.STARL[c.cusps[1].star])} दिखता है।`, `People first see you as ${fire ? "<b>confident and impressive</b>" : earth ? "<b>serious, sensible and reliable</b>" : water ? "<b>gentle, sensitive and warm</b>" : "<b>friendly, clever and easy-going</b>"}. With ${c.cusps[1].star} as the ascendant star lord there is ${H(T.STARL[c.cusps[1].star])}.`)}</p>
+      <h3>${L("2. आपका मूल स्वभाव", "2. Your basic nature")}</h3>
+      <p>${H(LG.nat)}</p>${in1txt ? `<p>${in1txt}।</p>` : ""}
+      <p>${L(`<b>लग्न का उप-स्वामी ${pn(c.cusps[1].sub)}</b> है — यह सबसे महत्वपूर्ण बात है। इसका मतलब है कि ${H(T.SUBL[c.cusps[1].sub])}।`, `<b>The ascendant sub-lord is ${c.cusps[1].sub}</b> — the most important point. It means ${H(T.SUBL[c.cusps[1].sub])}.`)}${c.cusps[1].sub === "Moon" && dusth(P.Moon.house) ? L(` चंद्रमा ${ov(P.Moon.house)} भाव में होने से यह संवेदनशीलता अक्सर दूसरों को दिखती नहीं — आप अपनी भावनाएँ अपने अंदर ही रखते हैं।`, ` With the Moon in house ${P.Moon.house}, this sensitivity is often hidden — you keep feelings inside.`) : ""}</p>
+      <h3>${L("3. आपकी सबसे बड़ी ताकतें", "3. Your greatest strengths")}</h3>${dl(strengths.slice(0, 6))}
+      <h3>${L("4. जिन बातों पर काम करना चाहिए", "4. Things to work on")}</h3>${dl(weak.slice(0, 5))}
+      <h3>${L("5. व्यक्तित्व एक नज़र में", "5. Personality at a glance")}</h3>
+      ${bars([[L("आत्मविश्वास", "Confidence"), scoreConf], [L("भावुकता / संवेदनशीलता", "Sensitivity"), scoreEmo], [L("बुद्धि व विश्लेषण", "Intellect"), scoreInt], [L("नेतृत्व क्षमता", "Leadership"), scoreLead], [L("रचनात्मकता", "Creativity"), scoreCre], [L("आध्यात्मिक रुचि", "Spiritual interest"), scoreSpi], [L("धैर्य", "Patience"), scorePat]])}
+      <p class="sm">${L("ये प्रतिशत ग्रह-बल के आधार पर एक सांकेतिक अनुमान हैं, कोई वैज्ञानिक माप नहीं।", "These percentages are an indicative estimate from planetary strength, not a scientific measure.")}</p>`, det);
+
+    // ================= 8 — mind =================
+    const satOnMoon = X.aspectsOnPlanet("Moon").includes("Saturn") || P.Saturn.sign === P.Moon.sign;
+    const l2 = lordH(2), asp2 = X.aspectsOnSign(sgnFrom(lagS)(2));
+    const in11 = occ(11);
+    const spiFac = [X.rh.Jupiter === 1 ? L("लग्न में गुरु", "Jupiter in the 1st") : "", [9, 12].includes(moonS) ? L(`${sn(moonS)} का चंद्र`, `Moon in ${sn(moonS)}`) : "", P.Rahu.house === 9 ? L("9वें भाव में राहु", "Rahu in the 9th") : "", [3, 9, 12].includes(P.Ketu.house) ? L(`${ov(P.Ketu.house)} भाव में केतु`, `Ketu in house ${P.Ketu.house}`) : "", [8, 12].includes(P.Moon.house) ? L(`${ov(P.Moon.house)} भाव का चंद्र`, `Moon in house ${P.Moon.house}`) : ""].filter(Boolean);
+    const speech = asp2.includes("Mars") || l2 === "Mars" ? L("आपकी बात <b>स्पष्ट और सीधी</b> होती है — आप घुमा-फिराकर बात करना पसंद नहीं करते। यह ईमानदारी की निशानी है, पर कभी-कभी आपकी सीधी बात दूसरों को कड़वी लग सकती है। गुस्से में बोलने से पहले रुकने की आदत आपके रिश्तों को बहुत बचाएगी।", "Your words are <b>clear and direct</b> — you dislike beating about the bush. It shows honesty, though it can sound harsh. Pausing before speaking in anger will protect your relationships.") : asp2.includes("Jupiter") || ["Jupiter", "Venus", "Mercury"].includes(l2) ? L("आपकी वाणी में <b>मिठास और समझदारी</b> है; लोग आपकी बात ध्यान से सुनते हैं।", "Your speech has <b>sweetness and sense</b>; people listen to you.") : asp2.includes("Saturn") || l2 === "Saturn" ? L("आप <b>सोच-समझकर और कम</b> बोलते हैं; आपकी बात में वज़न रहता है।", "You speak <b>little and thoughtfully</b>; your words carry weight.") : L("आप अपनी बात साफ़ ढंग से रखते हैं; सही समय पर सही शब्द आपकी ताकत हैं।", "You put your point across clearly; the right word at the right time is your strength.");
+    add(L("मन, भावनाएँ व छुपे गुण", "Mind, emotions and hidden qualities"), `
+      <h3>${L("चंद्रमा — आपका मन", "The Moon — your mind")}</h3>
+      <p>${L(`आपका चंद्रमा <b>${sn(moonS)} राशि, ${nk(P.Moon.nak)} नक्षत्र</b> में है। ${H(T.MOONS[moonS - 1])} ${nk(P.Moon.nak)} नक्षत्र का स्वभाव — ${H(T.NAKN[P.Moon.nak - 1]).split("—")[1].trim()}।`, `Your Moon is in <b>${sn(moonS)}, ${nk(P.Moon.nak)}</b>. ${H(T.MOONS[moonS - 1])} The nature of ${nk(P.Moon.nak)} — ${H(T.NAKN[P.Moon.nak - 1]).split("—")[1].trim()}.`)}</p>
+      <p>${L(`चंद्रमा ${pn(P.Moon.star)} के नक्षत्र में और ${pn(P.Moon.sub)} के उप में है। ${pn(P.Moon.star)} आपके मन में ${H(T.STARL[P.Moon.star])} देता है, और ${pn(P.Moon.sub)} का उप बताता है कि ${H(T.SUBL[P.Moon.sub])}।`, `The Moon is in ${P.Moon.star}'s star and ${P.Moon.sub}'s sub. ${P.Moon.star} gives your mind ${H(T.STARL[P.Moon.star])}, and the ${P.Moon.sub} sub shows ${H(T.SUBL[P.Moon.sub])}.`)}</p>
+      <h3>${L(`${ov(P.Moon.house)} भाव का चंद्रमा`, `The Moon in house ${P.Moon.house}`)}</h3><p>${H(T.MOONH[P.Moon.house])}</p>
+      ${satOnMoon ? `<h3>${L("शनि की चंद्रमा पर दृष्टि", "Saturn's aspect on the Moon")}</h3><p>${L(`${ov(X.rh.Saturn)} भाव में बैठा${P.Saturn.retro ? " वक्री" : ""} शनि चंद्रमा को देखता है। इससे आप उम्र से <b>पहले परिपक्व</b> हो जाते हैं, जीवन को गंभीरता से लेते हैं और ज़िम्मेदारी का एहसास जल्दी आ जाता है। नकारात्मक पहलू यह कि कभी-कभी अकेलापन या उदासी महसूस हो सकती है, और आप अपनी खुशी को दूसरों की ज़रूरतों के पीछे रख देते हैं।`, `${P.Saturn.retro ? "Retrograde " : ""}Saturn in house ${X.rh.Saturn} aspects the Moon. You <b>mature early</b>, take life seriously and feel responsibility young. The downside is occasional loneliness or low mood, and putting your happiness behind others' needs.`)}</p>` : ""}
+      <h3>${L("सूर्य — आपकी आत्मा", "The Sun — your soul")}</h3>
+      <p>${L(`${L1 === "Sun" ? "लग्न स्वामी " : ""}सूर्य <b>${sn(P.Sun.sign)} राशि, ${nk(P.Sun.nak)} नक्षत्र</b> में ${ov(P.Sun.house)} भाव में है। ${H(T.SUNH[P.Sun.house])}`, `${L1 === "Sun" ? "The ascendant lord, the " : "The "}Sun is in <b>${sn(P.Sun.sign)}, ${nk(P.Sun.nak)}</b>, in house ${P.Sun.house}. ${H(T.SUNH[P.Sun.house])}`)}</p>
+      <p>${L(`सूर्य ${pn(P.Sun.star)} के नक्षत्र में है और ${hs(sigA("Sun"))} भावों का कारक है — यानी ${list(uniq(sigS("Sun")).slice(0, 3).map((h) => H(T.EVT[h])))} आपके आत्मविश्वास से जुड़े हैं।`, `The Sun is in ${P.Sun.star}'s star and signifies ${hs(sigA("Sun"))} — so ${list(uniq(sigS("Sun")).slice(0, 3).map((h) => H(T.EVT[h])))} are tied to your confidence.`)}</p>
+      <h3>${L("बोलचाल और व्यवहार", "Speech and conduct")}</h3>
+      <p>${L(`दूसरे भाव (वाणी) का स्वामी ${pn(l2)} ${ov(X.rh[l2])} खाने में है${asp2.length ? ` और दूसरे भाव पर ${list(asp2.map(pn))} की दृष्टि है` : ""}।`, `The lord of the 2nd (speech), ${l2}, is in house ${X.rh[l2]}${asp2.length ? ` and ${list(asp2)} aspect the 2nd house` : ""}.`)} ${speech}</p>
+      <h3>${L("दोस्ती और सामाजिक जीवन", "Friends and social life")}</h3>
+      <p>${in11.length ? L(`11वें भाव (मित्र) में ${list(in11.map(pn))}। ${in11.includes("Saturn") ? "आपके दोस्त <b>कम लेकिन पक्के</b> होते हैं, अक्सर आपसे उम्र में बड़े या ज़्यादा गंभीर स्वभाव के। समय के साथ आपका सामाजिक दायरा मज़बूत और उपयोगी बनता है।" : in11.some((p) => ["Jupiter", "Venus", "Moon", "Mercury"].includes(p)) ? "आपका <b>मित्र-मंडल अच्छा और सहयोगी</b> रहता है; मित्रों से लाभ भी मिलता है।" : "मित्रों के बीच आप ऊर्जावान और सक्रिय रहते हैं; बस दोस्ती में जल्दबाज़ी के फ़ैसलों से बचें।"}`, `House 11 (friends) holds ${list(in11)}. ${in11.includes("Saturn") ? "Your friends are <b>few but firm</b>, often older or more serious. Your social circle grows stronger and more useful with time." : in11.some((p) => ["Jupiter", "Venus", "Moon", "Mercury"].includes(p)) ? "Your <b>circle of friends is good and supportive</b>; friends also bring gains." : "You are lively among friends; just avoid hasty decisions in friendship."}`) : L(`11वें भाव में कोई ग्रह नहीं; इसका स्वामी ${pn(lordH(11))} ${ov(X.rh[lordH(11)])} खाने में है — मित्रता उसी क्षेत्र के लोगों से अधिक बनती है।`, `No planet in house 11; its lord ${lordH(11)} is in house ${X.rh[lordH(11)]} — friendships form more with people of that sphere.`)}</p>
+      <h3>${L("आध्यात्मिकता", "Spirituality")}</h3>
+      <p>${spiFac.length >= 2 ? L(`${list(spiFac)} — यह संयोग बताता है कि आप भीतर से <b>गहरे आध्यात्मिक</b> हैं, भले ही यह रूप पारंपरिक पूजा-पाठ का न होकर ध्यान, ज्ञान या सेवा का हो।${P.Rahu.house === 9 ? " राहु 9वें भाव में होने से आप परंपराओं को बिना सोचे नहीं मानते — पहले तर्क से समझना चाहते हैं।" : ""} उम्र के साथ यह रुचि और गहरी होगी।`, `${list(spiFac)} — together these show you are <b>deeply spiritual</b> inside, through meditation, knowledge or service rather than ritual.${P.Rahu.house === 9 ? " Rahu in the 9th means you test traditions with reason before accepting them." : ""} This deepens with age.`) : L("आपकी आध्यात्मिकता व्यावहारिक है — कर्म और कर्तव्य को ही आप पूजा मानते हैं। उम्र के साथ यह रुचि गहरी होगी।", "Your spirituality is practical — you treat duty and work as worship. It deepens with age.")}</p>
+      ${sumBox(L("सारांश", "Summary"), L(`आप बाहर से ${sn(lagS)} लग्न के अनुसार ${H(LG.k[0])} वाले, और भीतर से ${sn(moonS)} राशि के चंद्र के अनुसार ${(H(T.MOONS[moonS - 1]).match(/मन को (.*?) बनाता/) || ["", "संवेदनशील"])[1]} हैं। आपकी सबसे बड़ी पूँजी — ${list(strengths.slice(0, 3).map((x) => x[0]))}। आपकी सबसे बड़ी चुनौती — ${list(weak.slice(0, 2).map((x) => x[0]))} पर नियंत्रण। जब आप इन दोनों को साध लेते हैं, तो आप सच्चे अर्थों में आगे बढ़ते हैं।`, `Outwardly you carry ${sn(lagS)} ascendant's ${H(LG.k[0])}; inwardly the ${sn(moonS)} Moon shapes your mind. Your greatest assets — ${list(strengths.slice(0, 3).map((x) => x[0]))}. Your main challenge — managing ${list(weak.slice(0, 2).map((x) => x[0].toLowerCase()))}. When you balance both, you truly rise.`))}`, det);
+
+    // ================= 9 — spouse =================
+    const c7 = c.cusps[7], SS = T.SP_SIGN[c7.sign - 1], in7 = occ(7);
+    const aspOn7 = X.aspectsOnSign(sgnFrom(lagS)(7)).filter((p) => ["Jupiter", "Saturn", "Mars"].includes(p) && X.rh[p] !== 7);
+    const venusTxt = `${hi ? "" : "in "}${sn(P.Venus.sign)}, ${P.Venus.star === "Venus" ? L("अपने ही नक्षत्र में", "in its own star") : L(`${pn(P.Venus.star)} के नक्षत्र में`, `in ${P.Venus.star}'s star`)}${X.aspectsOnPlanet("Venus").includes("Jupiter") ? L(", गुरु की दृष्टि", ", aspected by Jupiter") : ""}`;
+    const spTraits = [[L("स्वभाव", "Temperament"), `${sn(c7.sign)} ${L("राशि", "sign")} — ${H(SS.nat)}।`]];
+    uniq([c7.star, c7.sub].concat(in7)).forEach((p) => spTraits.push([pn(p), `${p === c7.star ? L("सप्तम नक्षत्र स्वामी", "7th star lord") : p === c7.sub ? L("सप्तम उप-स्वामी", "7th sub-lord") : L("सप्तम में स्थित", "in the 7th")} — ${H(T.P_SP[p])}।`]));
+    if (aspOn7.includes("Jupiter")) spTraits.push([L("संस्कारी", "Cultured"), L("गुरु की सप्तम पर दृष्टि — नैतिक मूल्य, बड़ों का सम्मान, धार्मिक झुकाव।", "Jupiter aspects the 7th — values, respect for elders, a religious leaning.")]);
+    const s7 = c.sig[c7.sub];
+    const working = s7.all.includes(10) || s7.all.includes(6);
+    const spFields = uniq([c7.sub, c7.star, c7.signLord].concat(in7)).slice(0, 4).flatMap((p) => T.FIELDS[p].slice(0, 2).map(H)).slice(0, 7);
+    const c8 = c.cusps[8];
+    const FAM = { Sun: L("परिवार प्रतिष्ठित और स्वाभिमानी होगा।", "a respected, proud family."), Moon: L("परिवार भावुक, स्नेही और घर से जुड़ा होगा।", "an emotional, loving, home-centred family."), Mars: L("परिवार ऊर्जावान, मेहनती और स्पष्टवादी होगा।", "an energetic, hardworking, frank family."), Mercury: L("परिवार पढ़ा-लिखा, व्यापार या नौकरी से जुड़ा होगा।", "an educated family linked to business or service."), Jupiter: L("परिवार सम्मानित, शिक्षित और धार्मिक मूल्यों वाला होगा।", "a respected, educated family with religious values."), Venus: L("परिवार सुसंस्कृत, कला-प्रेमी और सुख-सुविधा वाला होगा।", "a refined, art-loving, comfortable family."), Saturn: L("परिवार मेहनती, अनुशासित, मध्यमवर्गीय से ऊपर उठा हुआ; परंपराओं को मानने वाला।", "a hardworking, disciplined family that has risen through effort; traditional."), Rahu: L("परिवार किसी दूसरे शहर, राज्य या कुछ अलग सांस्कृतिक/सामाजिक पृष्ठभूमि से हो सकता है।", "the family may be from another city or state, or a different background."), Ketu: L("परिवार सादगी-पसंद और आध्यात्मिक झुकाव वाला होगा।", "a simple family with a spiritual leaning.") };
+    const spDir = uniq([H(T.DIR_S[(c7.sign - 1) % 4]), H(T.DIR_P[c7.star])]);
+    const st7h = P[c7.star].house, farHouse = [3, 9, 12].includes(st7h), nearHouse = [1, 2, 4].includes(st7h);
+    const meetH = uniq(s7.viaStar.concat(s7.self, [st7h])).filter((h) => T.MEET[h]).sort((a, b) => (b === 10) - (a === 10)).slice(0, 4);
+    add(L("आपका जीवनसाथी", "Your life partner"), `
+      <p>${L("के.पी. में जीवनसाथी को समझने के लिए <b>सप्तम भाव का कस्प, उसका नक्षत्र स्वामी, उप-स्वामी</b> और <b>सप्तम भाव में बैठे ग्रह</b> देखे जाते हैं। साथ ही विवाह के नैसर्गिक कारक <b>शुक्र</b> की स्थिति भी।", "In KP the partner is read from the <b>7th cusp, its star lord and sub-lord</b>, the <b>planets in the 7th</b>, and the position of <b>Venus</b>, the natural significator of marriage.")}</p>
+      ${tbl([L("तत्व", "Factor"), L("आपकी कुण्डली में", "In your chart"), L("जीवनसाथी के बारे में संकेत", "What it suggests")], [[L("सप्तम कस्प राशि", "7th cusp sign"), `<b>${sn(c7.sign)}</b> ${dms(c7.deg).slice(0, 6)} (${L("स्वामी", "lord")} ${pn(c7.signLord)})`, H(SS.nat)], [L("सप्तम नक्षत्र स्वामी", "7th star lord"), `<b>${pn(c7.star)}</b> (${nk(c7.nak)})`, H(T.P_SP[c7.star])], [L("सप्तम उप-स्वामी", "7th sub-lord"), `<b>${pn(c7.sub)}</b>`, H(T.P_SP[c7.sub])]].concat(in7.map((p) => [L("सप्तम में ग्रह", "Planet in 7th"), `<b>${pn(p)}</b> (${L(`${pn(P[p].star)} के नक्षत्र में`, `in ${P[p].star}'s star`)})`, H(T.P_SP[p])]), aspOn7.map((p) => [L("सप्तम पर दृष्टि", "Aspect on 7th"), `<b>${pn(p)}</b> (${X.rh[p] === 1 ? L("लग्न से 7वीं दृष्टि", "7th aspect from the ascendant") : L(`${ov(X.rh[p])} खाने से`, `from house ${X.rh[p]}`)})`, p === "Jupiter" ? L("संस्कारी, विवाह की रक्षा", "cultured; protects the marriage") : p === "Saturn" ? L("परिपक्वता; विवाह में धैर्य", "maturity; patience in marriage") : L("ऊर्जा; बहस में संयम", "energy; restraint in arguments")]), [[L("विवाह कारक शुक्र", "Venus (karaka)"), venusTxt, L("गृहस्थी और प्रेम का सुख", "the joy of home and love")]]))}
+      <h3>${L("1. रूप-रंग और व्यक्तित्व", "1. Looks and personality")}</h3>
+      <p>${L(`${sn(c7.sign)} राशि का सप्तम भाव जीवनसाथी को <b>${H(SS.look)}</b> देता है। उप-स्वामी ${pn(c7.sub)} होने से जीवनसाथी ${H(T.P_SP[c7.sub]).split(",").slice(0, 2).join(",")} ${spWill}।${in7.length ? ` सप्तम भाव में ${list(in7.map(pn))} होने से ${list(in7.map((p) => H(T.P_SP[p]).split(",")[0]))} गुण भी दिखेंगे।` : ""} ${["Rahu", "Ketu"].includes(c7.star) ? `${pn(c7.star)} का नक्षत्र होने से उनका स्टाइल या सोच कुछ <b>अलग और आधुनिक</b> हो सकती है — भीड़ से हटकर।` : ""}`, `A 7th house in ${sn(c7.sign)} gives a partner with <b>${H(SS.look)}</b>. With ${c7.sub} as sub-lord the partner is likely to be ${H(T.P_SP[c7.sub]).split(",").slice(0, 2).join(",")}.${in7.length ? ` With ${list(in7)} in the 7th, ${list(in7.map((p) => H(T.P_SP[p]).split(",")[0]))} qualities also show.` : ""} ${["Rahu", "Ketu"].includes(c7.star) ? `${c7.star}'s star suggests a somewhat <b>different, modern</b> style — away from the crowd.` : ""}`)}</p>
+      <p class="sm">${L("रूप-रंग के ये संकेत पारंपरिक ज्योतिष पर आधारित प्रवृत्तियाँ हैं, निश्चित वर्णन नहीं।", "These looks are traditional tendencies, not a fixed description.")}</p>
+      <h3>${L("2. स्वभाव", "2. Nature")}</h3>${dl(spTraits.slice(0, 6))}
+      <h3>${L("3. शिक्षा और पेशा", "3. Education and profession")}</h3>
+      <p>${working ? L(`सप्तम उप-स्वामी ${pn(c7.sub)} ${hs(s7.all)} भावों का कारक है और इसमें कर्म भाव (6/10) शामिल है। यह संकेत है कि जीवनसाथी <b>करियर-उन्मुख, पढ़ा-लिखा और संभवतः कामकाजी</b> ${spWill}। उनके संभावित क्षेत्र:`, `The 7th sub-lord ${c7.sub} signifies houses ${hs(s7.all)}, including work houses (6/10). The partner is likely <b>career-minded, educated and probably working</b>. Likely fields:`) : L(`सप्तम उप-स्वामी ${pn(c7.sub)} ${hs(s7.all)} भावों का कारक है। जीवनसाथी परिवार और घर को अधिक महत्व देने वाला ${spWill}; पढ़ाई या कार्य के संभावित क्षेत्र:`, `The 7th sub-lord ${c7.sub} signifies houses ${hs(s7.all)}. The partner is likely to value home and family strongly; likely fields of study or work:`)}</p>${chips(spFields)}
+      <h3>${L("4. परिवार और पृष्ठभूमि", "4. Family and background")}</h3>
+      <p>${L(`जीवनसाथी का परिवार आपकी कुण्डली के 8वें भाव (सप्तम से दूसरा) से देखा जाता है। 8वाँ कस्प ${sn(c8.sign)} राशि (स्वामी ${pn(c8.signLord)}), ${pn(c8.star)} के नक्षत्र और ${pn(c8.sub)} के उप में है:`, `The partner's family is read from your 8th house (2nd from the 7th). The 8th cusp is in ${sn(c8.sign)} (lord ${c8.signLord}), in ${c8.star}'s star and ${c8.sub}'s sub:`)}</p>
+      <ul>${uniq([c8.signLord, c8.star, c8.sub]).map((p) => `<li><b>${pn(p)}</b> — ${FAM[p]}</li>`).join("")}</ul>
+      ${X.rh[lordH(8)] === 1 || occ(8).includes("Jupiter") ? `<p>${L(`ससुराल से विवाह के बाद आर्थिक या भावनात्मक सहयोग मिलने के योग हैं${X.rh[lordH(8)] === 1 ? `, क्योंकि 8वें भाव का स्वामी ${pn(lordH(8))} आपके लग्न में बैठा है` : ""}।`, `There are signs of financial or emotional support from in-laws after marriage${X.rh[lordH(8)] === 1 ? `, as the 8th lord ${lordH(8)} sits in your ascendant` : ""}.`)}</p>` : ""}
+      <h3>${L("5. किस दिशा या स्थान से", "5. Direction or place")}</h3>
+      <p>${L(`सप्तम राशि ${sn(c7.sign)} <b>${H(T.DIR_S[(c7.sign - 1) % 4])}</b> दिशा की है और नक्षत्र स्वामी ${pn(c7.star)} <b>${H(T.DIR_P[c7.star])}</b> का। इसलिए जीवनसाथी के ${esc(place.split(",")[0])} से <b>${spDir.join(" या ")}</b> दिशा में होने की संभावना अधिक है। ${farHouse ? `सप्तम का नक्षत्र स्वामी ${ov(st7h)} भाव (दूर स्थान) में है, इसलिए जीवनसाथी आपके अपने शहर से <b>कुछ दूरी</b> का हो सकता है।` : nearHouse ? `सप्तम का नक्षत्र स्वामी ${ov(st7h)} भाव में है — जीवनसाथी के <b>पास के क्षेत्र या परिचित दायरे</b> से होने की संभावना है।` : ""}`, `The 7th sign ${sn(c7.sign)} points <b>${H(T.DIR_S[(c7.sign - 1) % 4])}</b> and its star lord ${c7.star} <b>${H(T.DIR_P[c7.star])}</b>. So the partner is more likely to be <b>${spDir.join(" or ")}</b> of ${esc(place.split(",")[0])}. ${farHouse ? `The 7th star lord is in house ${st7h} (distant places), so the partner may be from <b>some distance</b>.` : nearHouse ? `The 7th star lord is in house ${st7h} — the partner is likely from a <b>nearby area or known circle</b>.` : ""}`)}</p>
+      <h3>${L("6. आप दोनों की मुलाक़ात कैसे हो सकती है", "6. How you may meet")}</h3>
+      <p>${L(`सप्तम उप-स्वामी ${pn(c7.sub)} ${hs(s7.all)} भावों का कारक है और नक्षत्र स्वामी ${pn(c7.star)} ${ov(st7h)} भाव में है। इसके आधार पर मुलाक़ात के संभावित माध्यम:`, `The 7th sub-lord ${c7.sub} signifies houses ${hs(s7.all)} and the star lord ${c7.star} is in house ${st7h}. Likely ways of meeting:`)}</p>
+      <ul>${meetH.map((h, i) => `<li><b>${H(T.MEET[h])}</b> (${L(`${ovn(h)} भाव`, `house ${h}`)})${i === 0 ? L(" — सबसे प्रबल संभावना", " — the strongest possibility") : ""}।</li>`).join("")}</ul>`, det);
+
+    // ================= 10 — marriage =================
+    const jm = judge(7, [2, 7, 11], [1, 6, 10]);
+    const marPlanets = PL.filter((p) => inter(sigA(p), [2, 7, 11]).length >= 2 || in7.includes(p));
+    const winFrom = new Date(Math.max(now.getTime(), c.birthUTC.getTime() + Y(21))), winTo = new Date(Math.max(c.birthUTC.getTime() + Y(38), now.getTime() + Y(8)));
+    const marBonus = (a) => (a === c7.star || a === c7.sub ? 1.5 : in7.includes(a) || a === "Venus" ? 1 : a === c7.signLord ? 0.5 : 0);
+    const marAll = married ? [] : adPeriods([2, 7, 11], [1, 6, 10], { from: winFrom, to: winTo, bonus: marBonus }).sort((x, y) => x.s - y.s);
+    const best = marAll.find((x) => x.sc >= 2.5) || marAll.slice().sort((x, y) => y.sc - x.sc)[0];
+    const marPer = best ? uniq([best].concat(marAll.filter((x) => x !== best && x.s < best.s).slice(-1), marAll.filter((x) => x !== best && x.s > best.s && x.sc >= 2.5).slice(0, 1))).sort((x, y) => x.s - y.s) : [];
+    const bestPD = best ? best.ad.pd.filter((p) => p.end > now && inter(sigA(p.lord), [2, 7, 11]).length >= 2).slice(0, 3) : [];
+    let jupNote = "";
+    if (best) {
+      const mid = bestPD[0] ? new Date((Math.max(bestPD[0].start.getTime(), now.getTime()) + bestPD[0].end.getTime()) / 2) : new Date((best.s.getTime() + best.e.getTime()) / 2);
+      const js = KX.sgn(X.bodyLon("Jupiter", mid)), s7s = sgnFrom(lagS)(7);
+      const seen = [1, 5, 7, 9].map((k) => ((js + k - 2) % 12) + 1);
+      if (seen.includes(s7s) || seen.includes(lagS) || seen.includes(moonS)) jupNote = L(`इस समय गुरु का गोचर ${sn(js)} राशि में रहेगा, जहाँ से वह ${seen.includes(s7s) ? "आपके सप्तम भाव" : seen.includes(lagS) ? "आपके लग्न" : "आपकी चंद्र राशि"} को देखेगा — यह “दोहरी पुष्टि” है।`, `At this time Jupiter transits ${sn(js)}, from where it aspects ${seen.includes(s7s) ? "your 7th house" : seen.includes(lagS) ? "your ascendant" : "your Moon sign"} — a “double confirmation”.`);
+    }
+    const why = (a) => (a === c7.star ? L(" यह सप्तम कस्प का नक्षत्र स्वामी है।", " It is the 7th cusp star lord.") : a === c7.sub ? L(" यह सप्तम कस्प का उप-स्वामी है।", " It is the 7th cusp sub-lord.") : in7.includes(a) ? L(" यह सप्तम भाव में बैठा है।", " It sits in the 7th house.") : a === "Venus" ? L(" शुक्र विवाह का नैसर्गिक कारक है।", " Venus is the natural karaka of marriage.") : "");
+    const marTL = marPer.map((x) => [`${my(x.s)} – ${my(x.e)} · ${pn(x.m)}–${pn(x.a)} ${L("अंतर्दशा", "bhukti")}${x === best ? L(" ★ सबसे प्रबल", " ★ strongest") : ""}`, `<p>${L(`${pn(x.a)} ${hs(sigA(x.a))} भावों का कारक है (विवाह के भाव: ${hs(inter(sigA(x.a), [2, 7, 11]))})।`, `${x.a} signifies houses ${hs(sigA(x.a))} (marriage houses: ${hs(inter(sigA(x.a), [2, 7, 11]))}).`)}${why(x.a)} ${x === best ? L("<b>विवाह का सबसे प्रबल समय यही है।</b>", "<b>This is the strongest time for marriage.</b>") : L("किसी विशेष व्यक्ति से मुलाक़ात, रिश्ते की शुरुआत या रिश्ते की बात चलना संभव।", "Meeting someone special, a relationship starting or marriage talks are possible.")}</p>${x === best && bestPD.length ? `<p>${L("इसमें भी विशेष रूप से:", "Especially:")}</p><ul>${bestPD.map((p) => `<li><b>${my(p.start < now ? now : p.start)} – ${my(p.end)}</b> (${pn(x.a)}–${pn(p.lord)} ${L("प्रत्यंतर", "antara")}): ${L(`${pn(p.lord)} ${hs(inter(sigA(p.lord), [2, 7, 11]))} का कारक है${p.lord === c7.signLord ? " और सप्तम का स्वामी है" : ""}।`, `${p.lord} signifies ${hs(inter(sigA(p.lord), [2, 7, 11]))}${p.lord === c7.signLord ? " and rules the 7th" : ""}.`)}</li>`).join("")}</ul>${jupNote ? `<p>${jupNote}</p>` : ""}` : ""}`]);
+    const marLine = { good: L("कुण्डली में विवाह का स्पष्ट योग है।", "The chart clearly promises marriage."), mixed: L("कुण्डली में विवाह का योग है, पर कुछ देरी या सोच-विचार के बाद।", "Marriage is promised, though after some delay or deliberation."), mid: L("कुण्डली में विवाह का योग है। विवाह जल्दबाज़ी में नहीं, बल्कि थोड़ा सोच-समझकर और स्थिरता आने के आसपास होता है।", "Marriage is promised. It comes not in haste but after some thought, around the time life becomes stable."), weak: L("विवाह के लिए धैर्य और सही मिलान बहुत ज़रूरी है; जल्दबाज़ी न करें।", "Patience and the right match are very important for marriage; do not rush.") }[jm.k];
+    const sepRisk = inter(sigS(c7.sub), [1, 6, 10]).length >= 2 && !inter(sigS(c7.sub), [2, 7, 11]).length;
+    const bestAgeFrom = best ? Math.max(Math.floor(ageAt(bestPD[0] ? (bestPD[0].start < now ? now : bestPD[0].start) : best.s)), 18) : 0;
+    add(L("विवाह — योग, समय और दाम्पत्य सुख", "Marriage — promise, timing and married life"), `
+      <h3>${L("विवाह का वादा (Promise)", "The promise of marriage")} ${badge(jm.k)}</h3>
+      <p>${L("के.पी. का नियम है: यदि सप्तम कस्प का उप-स्वामी <b>2, 7 या 11</b> भाव का कारक हो, तो विवाह का वादा होता है। आपकी कुण्डली में:", "The KP rule: if the 7th cusp sub-lord signifies <b>2, 7 or 11</b>, marriage is promised. In your chart:")}</p>
+      ${calc(7, jm, [2, 7, 11], [1, 6, 10])}
+      <ul><li>${L(`सप्तम कस्प का <b>नक्षत्र स्वामी ${pn(c7.star)}</b> ${ov(st7h)} भाव में है और ${hs(sigA(c7.star))} का कारक है${["Rahu", "Ketu"].includes(c7.star) && P[P[c7.star].signLord].house === 7 ? ` — ${pn(c7.star)} ${pn(P[c7.star].signLord)} की राशि में है और ${pn(P[c7.star].signLord)} सप्तम में बैठा है, इसलिए ${pn(c7.star)} <b>सप्तम भाव का सीधा प्रतिनिधि</b> है` : ""}।`, `The 7th cusp <b>star lord ${c7.star}</b> is in house ${st7h} and signifies ${hs(sigA(c7.star))}${["Rahu", "Ketu"].includes(c7.star) && P[P[c7.star].signLord].house === 7 ? ` — it is in ${P[c7.star].signLord}'s sign and ${P[c7.star].signLord} sits in the 7th, so ${c7.star} <b>directly represents the 7th</b>` : ""}.`)}</li>
+      <li>${L(`सप्तम <b>उप-स्वामी ${pn(c7.sub)}</b>${c7.sub === "Venus" ? " स्वयं विवाह का नैसर्गिक कारक है;" : ""} ${hs(s7.all)} भावों का कारक है${jm.pS.length ? ` — विवाह के भाव ${hs(jm.pS)} नक्षत्र स्वामी से सीधे जुड़े हैं` : jm.pA.length ? ` — विवाह के भाव ${hs(jm.pA)} केवल स्वयं से जुड़े हैं, इसलिए विवाह <b>थोड़ा सोच-समझकर और सामान्य से कुछ देर से</b> होता है` : ""}।`, `The 7th <b>sub-lord ${c7.sub}</b>${c7.sub === "Venus" ? " is itself the natural karaka of marriage;" : ""} signifies houses ${hs(s7.all)}${jm.pS.length ? ` — marriage houses ${hs(jm.pS)} connect directly through its star lord` : jm.pA.length ? ` — marriage houses ${hs(jm.pA)} connect only through itself, so marriage comes <b>after some thought and a little later than usual</b>` : ""}.`)}</li>
+      ${jm.viaCS ? `<li>${L(`उप-स्वामी स्वयं 2-7-11 से नहीं जुड़ता, पर सप्तम कस्प का नक्षत्र स्वामी ${pn(jm.cst)} ${hs(inter(sigA(jm.cst), [2, 7, 11]))} का कारक है — इसलिए विवाह का वादा है, बस <b>सामान्य से कुछ देर से और सोच-समझकर</b>।`, `The sub-lord itself does not link to 2-7-11, but the 7th cusp star lord ${jm.cst} signifies ${hs(inter(sigA(jm.cst), [2, 7, 11]))} — so marriage is promised, just <b>a little later than usual and after thought</b>.`)}</li>` : ""}
+      ${aspOn7.includes("Jupiter") || X.aspectsOnPlanet("Mars").includes("Jupiter") && in7.includes("Mars") ? `<li>${L("<b>गुरु की सप्तम भाव पर दृष्टि</b> विवाह की रक्षा करती है।", "<b>Jupiter's aspect on the 7th</b> protects the marriage.")}</li>` : ""}
+      ${P[csl(5)].house === 7 || sigS(csl(5)).includes(7) ? `<li>${L(`5वें भाव (प्रेम) का उप-स्वामी ${pn(csl(5))} सप्तम से जुड़ा है — यानी <b>प्रेम और विवाह आपस में जुड़े</b> हैं।`, `The 5th (love) sub-lord ${csl(5)} links to the 7th — <b>love and marriage are connected</b>.`)}</li>` : ""}</ul>
+      ${sumBox(L("निष्कर्ष", "Conclusion"), `${marLine} ${sepRisk ? L("दाम्पत्य में धैर्य और संवाद पर विशेष ध्यान दें।", "Give special attention to patience and communication in marriage.") : L("तलाक़ या अलगाव का कोई प्रबल योग नहीं दिखता।", "No strong indication of divorce or separation is seen.")}`)}
+      ${married ? `<h3>${L("दाम्पत्य के लिए अनुकूल समय", "Supportive periods for married life")}</h3><p>${L("आपने बताया है कि आप विवाहित हैं। नीचे के समय वैवाहिक जीवन, साथ में बड़े निर्णय और परिवार-वृद्धि के लिए सहायक हैं:", "You are married. The periods below support married life, joint decisions and family growth:")}</p>${tl(top(adPeriods([2, 7, 11], [1, 6, 10], { bonus: marBonus }), 3).map((x) => [`${my(x.s)} – ${my(x.e)} · ${pn(x.m)}–${pn(x.a)}`, `<p>${L(`${pn(x.a)} ${hs(inter(sigA(x.a), [2, 7, 11]))} भावों का कारक।`, `${x.a} signifies ${hs(inter(sigA(x.a), [2, 7, 11]))}.`)}</p>`]))}` : `
+      <h3>${L("विवाह कब होगा — समय निर्धारण", "When — timing of marriage")}</h3>
+      <p>${L(`विवाह के मुख्य कारक ग्रह (2, 7, 11 भावों के कारक) आपकी कुण्डली में हैं: <b>${list(marPlanets.map(pn))}</b>। ${cur ? `अभी ${pn(cur.md.lord)} की महादशा चल रही है (${yr(cur.md.start)}–${yr(cur.md.end)})${inter(sigA(cur.md.lord), [2, 7, 11]).length ? ", जो स्वयं विवाह के भावों से जुड़ी है" : ""}।` : ""}`, `The main marriage significators (of houses 2, 7, 11) in your chart: <b>${list(marPlanets)}</b>. ${cur ? `The ${cur.md.lord} mahadasha is running (${yr(cur.md.start)}–${yr(cur.md.end)})${inter(sigA(cur.md.lord), [2, 7, 11]).length ? ", itself linked to marriage houses" : ""}.` : ""}`)}</p>
+      ${marTL.length ? tl(marTL) : `<p>${L("निकट वर्षों में दशा और अंतर्दशा दोनों का एक साथ प्रबल समर्थन नहीं दिखता; ऐसे में प्रश्न कुण्डली और गोचर से समय देखा जाता है।", "In the coming years no period shows strong support from both dasha and bhukti; timing is then checked by a horary chart and transits.")}</p>`}
+      ${best ? noteBox(L("सबसे संभावित विवाह आयु", "Most likely age of marriage"), `<p><b>${num(bestAgeFrom)} ${L("से", "to")} ${num(Math.max(bestAgeFrom + 1, Math.ceil(ageAt(best.e))))} ${L("वर्ष", "years")}</b> (${L("वर्ष", "years")} ${yr(best.s)} ${L("से", "to")} ${yr(best.e)}${bestPD[0] ? L(`, जिसमें ${yr(new Date((Math.max(bestPD[0].start.getTime(), now.getTime()) + bestPD[0].end.getTime()) / 2))} सबसे प्रबल वर्ष है`, `, with ${yr(new Date((Math.max(bestPD[0].start.getTime(), now.getTime()) + bestPD[0].end.getTime()) / 2))} the strongest year`) : ""})।</p><p class="sm">${L("यह दशा पर आधारित संभावना है; विवाह-प्रस्ताव के समय प्रश्न कुण्डली से अंतिम पुष्टि करें।", "This is a dasha-based likelihood; confirm with a horary chart when a proposal comes.")}</p>`) : ""}`}
+      <h3>${L("दाम्पत्य जीवन कैसा रहेगा", "How married life may be")}</h3>
+      <p><b>${L("सकारात्मक पक्ष", "Positives")}:</b> ${L(`शुक्र ${venusTxt}${inter(sigA("Venus"), [4, 11, 2]).length ? ` और ${hs(inter(sigA("Venus"), [2, 4, 11]))} का कारक है — यह एक <b>सुंदर, सुविधाजनक और प्रेमपूर्ण घर</b> का संकेत है।` : " — रिश्ते में स्नेह और सौंदर्य का भाव रहता है।"} ${sigA("Venus").includes(10) || s7.all.includes(10) ? "जीवनसाथी आपके करियर में भी सहायक हो सकता है।" : ""}`, `Venus is ${venusTxt}${inter(sigA("Venus"), [4, 11, 2]).length ? ` and signifies ${hs(inter(sigA("Venus"), [2, 4, 11]))} — a sign of a <b>beautiful, comfortable, loving home</b>.` : " — affection and grace in the relationship."} ${sigA("Venus").includes(10) || s7.all.includes(10) ? "The partner may also support your career." : ""}`)}</p>
+      <p><b>${L("चुनौतियाँ", "Challenges")}:</b> ${in7.includes("Mars") || [1, 5, 8].includes(lagS) ? L(`${in7.includes("Mars") ? `सप्तम में मंगल और आपका ${sn(lagS)} लग्न` : `आपका ${sn(lagS)} लग्न`} — स्वभाव की तेज़ी से शुरुआती 1–2 वर्षों में <b>अहंकार की टकराहट, छोटी बातों पर बहस</b> हो सकती है।`, `${in7.includes("Mars") ? `Mars in the 7th and your ${sn(lagS)} ascendant` : `Your ${sn(lagS)} ascendant`} — intensity may bring <b>ego clashes and arguments over small things</b> in the first 1–2 years.`) : in7.includes("Saturn") || in7.includes("Ketu") ? L("भावनाएँ व्यक्त करने में कमी कभी दूरी ला सकती है।", "Holding back feelings can sometimes create distance.") : L("दोनों का अपने-अपने काम में व्यस्त रहना कभी दूरी का कारण बन सकता है।", "Both being busy with work can sometimes create distance.")}</p>
+      ${noteBox(L("सुखी वैवाहिक जीवन के लिए सुझाव", "Tips for a happy married life"), `<ul><li>${L("बहस के समय “कौन सही है” से ज़्यादा “क्या सही है” पर ध्यान दें।", "In arguments focus on “what is right” rather than “who is right”.")}</li><li>${L(`जीवनसाथी को अपना स्पेस और स्वतंत्रता दें${[11, 3, 9].includes(c7.sign) ? ` — ${sn(c7.sign)} राशि का साथी नियंत्रण पसंद नहीं करता` : ""}।`, `Give your partner space and freedom${[11, 3, 9].includes(c7.sign) ? ` — a ${sn(c7.sign)} partner dislikes control` : ""}.`)}</li><li>${L("साथ में यात्रा करें — 3रा और 9वाँ भाव आपके रिश्ते को ताज़ा रखते हैं।", "Travel together — houses 3 and 9 keep the bond fresh.")}</li><li>${L("काम और परिवार के बीच समय का संतुलन रखें; हफ़्ते में एक दिन केवल परिवार के लिए।", "Balance time between work and family; keep one day a week for family.")}</li><li>${L("गुस्से में कभी कोई बड़ा फ़ैसला न लें, विशेषकर मंगल की अंतर्दशा या प्रत्यंतर में।", "Never decide big things in anger, especially in Mars periods.")}</li></ul>`)}`, det);
+
+    // ================= 11–12 — manglik & love =================
+    const M = X.manglik;
+    const MCAN = { ownSign: L("मंगल अपनी या उच्च राशि में है — दोष का प्रभाव कम होता है।", "Mars is in its own or exalted sign — the effect is reduced."), jupiterAspect: L("<b>गुरु की मंगल पर दृष्टि या युति</b> — यह मांगलिक दोष के प्रभाव को काफ़ी कम करने वाला शास्त्रीय नियम है।", "<b>Jupiter aspects or joins Mars</b> — a classical rule that greatly reduces the dosha."), jupiterStar: L(`मंगल गुरु के नक्षत्र (${nk(P.Mars.nak)}) में है, यानी मंगल का स्वभाव सुधरा हुआ और नैतिक है।`, `Mars is in Jupiter's star (${nk(P.Mars.nak)}), so its nature is refined.`), beneficKendra: L("गुरु या शुक्र केंद्र में हैं — यह दोष को संतुलित करता है।", "Jupiter or Venus is in a kendra — this balances the dosha.") };
+    const jl = judge(5, [5, 7, 11], [1, 6, 10]), s5 = sigA(csl(5));
+    const loveP = clamp(48 + inter(s5, [5, 7, 11]).length * 7 + (inter(s5, [5, 7]).length === 2 ? 6 : 0) - inter(sigS(csl(5)), [6, 10]).length * 4);
+    const famP = clamp(58 + inter(s5, [4, 9]).length * 6 + inter(sigA(csl(7)), [2, 11]).length * 4 - (s5.includes(12) ? 4 : 0));
+    const happyP = clamp(60 + (jm.k === "good" ? 10 : jm.k === "mixed" ? 4 : 0) + (aspOn7.includes("Jupiter") ? 6 : 0) - (in7.includes("Mars") ? 5 : 0) + (inter(sigA("Venus"), [4, 11, 2]).length ? 4 : 0));
+    const in5r = PL.filter((p) => X.rh[p] === 5);
+    const ssNow = X.sadeSati(new Date(now.getTime() - Y(8)), new Date(now.getTime() + Y(8))).episodes.find((e) => e.end > now && e.start < now);
+    add(L("मांगलिक विचार व प्रेम संबंध", "Manglik check and love life"), `
+      <h3>${L("क्या आप मांगलिक हैं?", "Are you manglik?")}</h3>
+      <p>${L("पारंपरिक नियम में मंगल यदि लग्न, चंद्र या शुक्र से 1, 4, 7, 8 या 12वें भाव में हो तो मांगलिक दोष माना जाता है। आपकी कुण्डली में:", "Traditionally Mars in the 1st, 4th, 7th, 8th or 12th from the ascendant, Moon or Venus is called manglik. In your chart:")}</p>
+      ${tbl([L("किससे देखा", "Counted from"), L("मंगल की स्थिति", "Mars position"), L("परिणाम", "Result")], [[L("लग्न से", "Ascendant"), L(`${ovn(M.from.lagna)} भाव`, `house ${M.from.lagna}`), M.flags.lagna ? L("मांगलिक", "Manglik") : L("मांगलिक नहीं", "Not manglik")], [L("चंद्र से", "Moon"), L(`${ovn(M.from.moon)} भाव`, `house ${M.from.moon}`), M.flags.moon ? L("मांगलिक", "Manglik") : L("मांगलिक नहीं", "Not manglik")], [L("शुक्र से", "Venus"), L(`${ovn(M.from.venus)} भाव`, `house ${M.from.venus}`), M.flags.venus ? L("मांगलिक", "Manglik") : L("मांगलिक नहीं", "Not manglik")]])}
+      <p>${M.level === "none" ? L("इस प्रकार <b>आपकी कुण्डली मांगलिक नहीं है</b>।", "So <b>your chart is not manglik</b>.") : M.flags.lagna || M.flags.moon ? L("इस प्रकार <b>आपकी कुण्डली मांगलिक है</b>।", "So <b>your chart is manglik</b>.") : L("इस प्रकार <b>आपकी कुण्डली में हल्का मांगलिक प्रभाव है</b> (केवल शुक्र से)।", "So <b>your chart has a mild manglik effect</b> (from Venus only).")}${M.level !== "none" && M.cancel.length ? L(" लेकिन इसके साथ दोष को कम करने वाले कारक भी हैं:", " But there are also factors that reduce it:") : ""}</p>
+      ${M.level !== "none" && M.cancel.length ? `<ul>${M.cancel.map((k) => `<li>${MCAN[k]}</li>`).join("")}<li>${L("दोष का प्रभाव सामान्यतः 28 वर्ष की आयु के बाद स्वतः कम माना जाता है।", "Traditionally the effect is considered to reduce after the age of 28.")}</li></ul>` : ""}
+      ${M.level !== "none" ? sumBox(L("सलाह", "Advice"), L(`${M.level === "mild" ? "दोष हल्का है और इससे डरने की ज़रूरत नहीं है। " : ""}विवाह के लिए किसी मांगलिक या जिसकी कुण्डली में मंगल/शनि का संतुलन हो, ऐसे साथी से मिलान अच्छा रहेगा।${best && ageAt(best.s) >= 25 ? " साथ ही 25 वर्ष के बाद विवाह होने से इसका असर स्वाभाविक रूप से और कम होता है।" : ""} कुण्डली मिलान अवश्य करवाएँ।`, `${M.level === "mild" ? "The dosha is mild — no need to fear it. " : ""}A match with a manglik partner, or one whose chart balances Mars/Saturn, is good.${best && ageAt(best.s) >= 25 ? " Marriage after 25 also naturally reduces its effect." : ""} Always do kundali matching.`)) : ""}
+      <h3>${L("प्रेम संबंध (Love Life)", "Love life")} ${badge(jl.k)}</h3>
+      <p>${L(`5वाँ भाव प्रेम का है। आपके 5वें कस्प का उप-स्वामी <b>${pn(csl(5))}</b> है, जो ${hs(s5)} भावों का कारक है। ${inter(s5, [5, 7]).length === 2 ? "इसमें <b>5 (प्रेम) और 7 (विवाह) दोनों</b> हैं — यानी आपकी कुण्डली में <b>प्रेम संबंध के विवाह में बदलने का अच्छा योग</b> है।" : inter(s5, [5, 11]).length ? "प्रेम संबंध का योग है; विवाह में बदलने के लिए परिवार की सहमति महत्वपूर्ण रहेगी।" : "प्रेम के मामलों में आप सावधान और सोच-समझकर चलने वाले हैं।"}`, `House 5 is love. Your 5th cusp sub-lord <b>${csl(5)}</b> signifies houses ${hs(s5)}. ${inter(s5, [5, 7]).length === 2 ? "It includes <b>both 5 (love) and 7 (marriage)</b> — a <b>good chance of love turning into marriage</b>." : inter(s5, [5, 11]).length ? "Romance is promised; family consent will matter for marriage." : "You are careful and thoughtful in matters of love."}`)}</p>
+      <p>${L(`राशि कुण्डली में 5वें खाने में ${in5r.length ? `${list(in5r.map(pn))} हैं` : "कोई ग्रह नहीं है"}${X.aspectsOnSign(sgnFrom(lagS)(5)).includes("Jupiter") ? " और उन पर गुरु की दृष्टि है" : ""}। ${in5r.some((p) => ["Venus", "Moon"].includes(p)) ? "इससे आप रोमांटिक, भावुक और अपने प्रेम के प्रति ईमानदार होते हैं। " : ""}आप दिखावे वाला प्रेम नहीं, बल्कि <b>सम्मान और समझ पर टिका</b> रिश्ता चाहते हैं।`, `In the sign chart house 5 holds ${in5r.length ? list(in5r) : "no planet"}${X.aspectsOnSign(sgnFrom(lagS)(5)).includes("Jupiter") ? ", aspected by Jupiter" : ""}. ${in5r.some((p) => ["Venus", "Moon"].includes(p)) ? "This makes you romantic, emotional and honest in love. " : ""}You want a relationship <b>built on respect and understanding</b>, not show.`)}</p>
+      <ul>${s5.includes(8) ? `<li>${L(`${pn(csl(5))} 8वें भाव का भी कारक है — किसी पुराने रिश्ते में <b>अचानक मोड़ या दिल टूटने</b> का अनुभव संभव है${ssNow ? `, विशेषकर शनि की साढ़ेसाती (${yr(ssNow.start)}–${yr(ssNow.end)}) के दौरान` : ""}।`, `${csl(5)} also signifies house 8 — a <b>sudden turn or heartbreak</b> in an old relationship is possible${ssNow ? `, especially during sade sati (${yr(ssNow.start)}–${yr(ssNow.end)})` : ""}.`)}</li>` : ""}${inter(s5, [4, 9]).length ? `<li>${L("4थे और 9वें भाव का संबंध बताता है कि <b>परिवार की सहमति</b> आपके लिए महत्वपूर्ण रहेगी। सबसे संभावित रूप है — <b>“लव-कम-अरेंज्ड” विवाह</b>, जिसमें आपकी पसंद को परिवार का आशीर्वाद मिले।", "The link with houses 4 and 9 shows <b>family consent</b> matters to you. The likeliest form is a <b>“love-cum-arranged” marriage</b> with the family's blessing.")}</li>` : ""}</ul>
+      ${bars([[L("प्रेम विवाह की संभावना", "Love-marriage likelihood"), loveP], [L("परिवार की सहमति", "Family consent"), famP], [L("वैवाहिक सुख", "Marital happiness"), happyP]])}`);
+
+    // ================= 13–14 — education & career =================
+    const je = judge(4, [4, 9, 11], [3, 8, 12]);
+    const stud = uniq([csl(4), csl(9), lordH(5), c.cusps[4].star]).flatMap((p) => T.STUDY[p].map(H)).slice(0, 6);
+    const exPer = firstGood(adPeriods([6, 11, 9, 10], [8, 12], { to: new Date(now.getTime() + Y(12)) }), 2, 1.5);
+    const jc = judge(10, [2, 6, 10, 11], [5, 8, 12]);
+    const s10 = c.sig[csl(10)];
+    const service = s10.all.includes(6), biz = s10.all.includes(7);
+    const govt = sigA("Sun").includes(10) || [csl(10), c.cusps[10].star].includes("Sun") || P.Sun.house === 10 || X.aspectsOnSign(sgnFrom(lagS)(10)).includes("Sun");
+    const carPer = firstGood(adPeriods([2, 6, 10, 11], [5, 8, 12], { bonus: (a) => (a === csl(10) || a === c.cusps[10].star ? 1 : 0) }), 3, 2);
+    const cs = carPer[0];
+    const fieldPl = uniq([csl(10), c.cusps[10].star, c.cusps[10].signLord].concat(occ(10), govt ? ["Sun"] : [])).slice(0, 5);
+    add(L("शिक्षा और करियर", "Education and career"), `
+      <h3>${L("शिक्षा", "Education")} ${badge(je.k)}</h3>
+      <p>${L(`4थे कस्प (मूल शिक्षा) का उप-स्वामी <b>${pn(csl(4))}</b> है, जो ${hs(sigA(csl(4)))} भावों का कारक है — ${je.k === "good" ? "यह <b>अच्छी पढ़ाई, तेज़ समझ और डिग्री पूरी होने</b> का संकेत है।" : je.k === "mixed" ? "पढ़ाई अच्छी होती है, पर बीच में कभी-कभी रुकावट, विषय बदलना या एक-दो साल का अंतराल संभव है; अंततः शिक्षा पूरी होती है।" : je.k === "mid" ? "यह <b>अच्छी पढ़ाई और डिग्री पूरी होने</b> का संकेत है, पर फल मेहनत के अनुपात में मिलता है।" : "पढ़ाई में धैर्य और सही मार्गदर्शन चाहिए; व्यावहारिक या कौशल-आधारित शिक्षा अधिक लाभ देगी।"}${je.k !== "mixed" && sigA(csl(4)).includes(8) ? " 8वें भाव का भी कारक होने से पढ़ाई में कभी-कभी रुकावट या विषय बदलना संभव है, पर अंततः शिक्षा पूरी होती है।" : ""}`, `The 4th cusp (basic education) sub-lord <b>${csl(4)}</b> signifies houses ${hs(sigA(csl(4)))} — ${je.k === "good" ? "a sign of <b>good studies, quick grasp and completing degrees</b>." : je.k === "mixed" ? "studies go well, though a break, change of subject or a gap year is possible; education is completed in the end." : je.k === "mid" ? "a sign of <b>good studies and completing a degree</b>, with results in proportion to effort." : "studies need patience and guidance; practical or skill-based learning helps more."}${je.k !== "mixed" && sigA(csl(4)).includes(8) ? " As it also signifies house 8, a break or change of subject is possible, but education gets completed." : ""}`)}</p>
+      <p>${L(`9वें कस्प (उच्च शिक्षा) का उप-स्वामी ${pn(csl(9))} ${hs(sigA(csl(9)))} का कारक है${sigA(csl(9)).includes(10) ? " — उच्च शिक्षा सीधे <b>करियर और नौकरी से जुड़ी</b> होगी" : sigA(csl(9)).includes(12) ? " — उच्च शिक्षा के लिए दूर स्थान या विदेश का योग" : ""}। आपकी बुद्धि के लिए उपयुक्त विषय:`, `The 9th cusp (higher studies) sub-lord ${csl(9)} signifies ${hs(sigA(csl(9)))}${sigA(csl(9)).includes(10) ? " — higher studies will be <b>tied to career</b>" : sigA(csl(9)).includes(12) ? " — a chance of studying far away or abroad" : ""}. Suitable subjects:`)}</p>${chips(stud)}
+      ${exPer.length ? `<p class="sm">${L(`प्रतियोगी परीक्षाओं के लिए ${list(exPer.map((x) => `${pn(x.m)}–${pn(x.a)} (${my(x.s)}–${my(x.e)})`))} अच्छे समय हैं, क्योंकि ये 6 (प्रतियोगिता) और 10/11 से जुड़े ग्रहों के बीच आते हैं।`, `Good periods for competitive exams: ${list(exPer.map((x) => `${x.m}–${x.a} (${my(x.s)}–${my(x.e)})`))}, as they link 6 (competition) with 10/11.`)}</p>` : ""}
+      <h3>${L("करियर — के.पी. विश्लेषण", "Career — KP analysis")} ${badge(jc.k)}</h3>
+      <p>${L(`10वाँ कस्प ${sn(c.cusps[10].sign)} राशि में है, नक्षत्र स्वामी <b>${pn(c.cusps[10].star)}</b> और उप-स्वामी <b>${pn(csl(10))}</b>। ${pn(csl(10))} ${hs(s10.all)} भावों का कारक है${inter(s10.all, [6, 10, 11]).length ? `। इसमें ${list(inter(s10.all, [6, 10, 11]).map((h) => ({ 6: "6 (नौकरी)", 10: "10 (कर्म)", 11: "11 (लाभ)" }[h])))} ${inter(s10.all, [6, 10, 11]).length === 3 ? "— तीनों" : ""} हैं` : ""}।`, `The 10th cusp is in ${sn(c.cusps[10].sign)}, star lord <b>${c.cusps[10].star}</b> and sub-lord <b>${csl(10)}</b>. ${csl(10)} signifies houses ${hs(s10.all)}${inter(s10.all, [6, 10, 11]).length ? ` — including ${list(inter(s10.all, [6, 10, 11]).map((h) => ({ 6: "6 (service)", 10: "10 (work)", 11: "11 (gains)" }[h])))}` : ""}.`)}</p>
+      ${sumBox(L("निष्कर्ष", "Conclusion"), service && biz ? L(`आपके लिए <b>नौकरी/सेवा क्षेत्र (Service)</b> पहली राह है और आगे चलकर <b>साझेदारी या अपना काम</b> भी संभव है।${cs ? ` उन्नति का अगला मज़बूत समय ${my(cs.s)}–${my(cs.e)} है।` : ""}`, `<b>Service</b> is your first path, and later <b>partnership or your own work</b> is also possible.${cs ? ` The next strong period for growth is ${my(cs.s)}–${my(cs.e)}.` : ""}`) : service ? L(`आपके लिए <b>नौकरी/सेवा क्षेत्र (Service)</b> पहली और सबसे सफल राह है। करियर ${jc.k === "good" ? "स्थिर और अच्छी गति से" : "धीमी लेकिन ठोस गति से"} बढ़ेगा।${cs ? ` उन्नति का अगला मज़बूत समय ${my(cs.s)}–${my(cs.e)} है।` : ""}`, `<b>Service (a job)</b> is your first and most successful path. Your career will grow ${jc.k === "good" ? "steadily and well" : "slowly but solidly"}.${cs ? ` The next strong period for growth is ${my(cs.s)}–${my(cs.e)}.` : ""}`) : biz ? L(`आपके लिए <b>व्यवसाय, साझेदारी या स्वतंत्र काम</b> अधिक अनुकूल है।${cs ? ` अगला मज़बूत समय ${my(cs.s)}–${my(cs.e)} है।` : ""}`, `<b>Business, partnership or independent work</b> suits you more.${cs ? ` The next strong period is ${my(cs.s)}–${my(cs.e)}.` : ""}`) : L(`करियर में आपकी प्रगति कौशल और लगातार प्रयास से होगी; विशेषज्ञता वाला काम चुनें।${cs ? ` अगला मज़बूत समय ${my(cs.s)}–${my(cs.e)} है।` : ""}`, `Your career grows through skill and steady effort; choose specialist work.${cs ? ` The next strong period is ${my(cs.s)}–${my(cs.e)}.` : ""}`))}
+      ${govt ? `<h4>${L("सरकारी नौकरी के योग", "Government job indications")}</h4><p>${L(`सूर्य (सरकार का कारक) ${sigA("Sun").includes(10) ? "10वें भाव का कारक है" : P.Sun.house === 10 ? "10वें भाव में है" : "10वें भाव से जुड़ा है"}${L1 === "Sun" ? " और लग्न का स्वामी है" : ""}। यह <b>सरकारी या सार्वजनिक क्षेत्र (PSU, बैंक, प्रशासन)</b> में नौकरी का अच्छा संकेत देता है। प्रयास करें तो सफलता की संभावना अच्छी है${cs ? `, विशेषकर ${yr(cs.s)}–${yr(cs.e)} के बीच` : ""}।`, `The Sun (karaka of government) ${sigA("Sun").includes(10) ? "signifies the 10th house" : P.Sun.house === 10 ? "sits in the 10th" : "links to the 10th"}${L1 === "Sun" ? " and rules the ascendant" : ""}. This is a good sign for <b>government or public-sector jobs (PSU, banks, administration)</b>. With effort the chances are good${cs ? `, especially ${yr(cs.s)}–${yr(cs.e)}` : ""}.`)}</p>` : ""}
+      <h4>${L("उपयुक्त करियर क्षेत्र", "Suitable career fields")}</h4>
+      ${tbl([L("ग्रह संकेत", "Planet"), L("क्षेत्र", "Fields")], fieldPl.map((p) => [`${pn(p)} <small>(${p === csl(10) ? L("10वें का उप-स्वामी", "10th sub-lord") : p === c.cusps[10].star ? L("10वें का नक्षत्र स्वामी", "10th star lord") : p === c.cusps[10].signLord ? L("10वें का राशि स्वामी", "10th sign lord") : occ(10).includes(p) ? L("10वें में स्थित", "in the 10th") : L("सरकार का कारक", "karaka of government")})</small>`, list(T.FIELDS[p].map(H))]))}
+      <h4>${L("कार्यशैली", "Work style")}</h4>
+      <p>${fire ? L("आप नेतृत्व की भूमिका में सबसे अच्छा प्रदर्शन करते हैं। आप ईमानदार और मेहनती कर्मचारी हैं, पर यदि अधिकारी आपकी कद्र न करें तो आपका मन जल्दी उचट जाता है।", "You perform best in a leading role. You are honest and hardworking, but if seniors do not value you, your interest drops quickly.") : earth ? L("आप व्यवस्थित, भरोसेमंद और लगातार मेहनत करने वाले कर्मचारी हैं; धीरे-धीरे ज़िम्मेदारी का पद पाते हैं।", "You are an organised, reliable, steady worker who rises to responsibility over time.") : water ? L("आप पूरे मन और लगन से काम करते हैं; सहयोगी माहौल मिलने पर अपना सर्वश्रेष्ठ देते हैं।", "You work wholeheartedly and give your best in a supportive environment.") : L("आप टीम में, संवाद और नए विचारों के साथ सबसे अच्छा काम करते हैं।", "You work best in teams, with communication and new ideas.")} ${s10.all.includes(8) || s10.all.includes(12) ? L("नौकरी बदलने से पहले हमेशा अगला विकल्प पक्का कर लें — अचानक छोड़ी गई नौकरी कुछ समय की अस्थिरता ला सकती है।", "Always secure the next option before changing jobs — leaving suddenly may bring some instability.") : ""}</p>`);
+
+    // ================= 15–16 — money, property, health =================
+    const s2 = c.sig[csl(2)], s11 = c.sig[csl(11)], wH = uniq(s2.all.concat(s11.all));
+    const SRC = { 10: L("आय का मुख्य स्रोत <b>आपका कर्म / नौकरी</b> (10) होगा।", "Your main source of income will be <b>your work / job</b> (10)."), 7: L("<b>व्यापार या साझेदारी</b> (7) से भी आय के योग।", "Income is also indicated from <b>business or partnership</b> (7)."), 6: L("<b>सेवा और वेतन</b> (6) से स्थिर आय।", "Steady income from <b>service and salary</b> (6)."), 4: L("धन का बड़ा हिस्सा <b>घर, वाहन और संपत्ति</b> (4) में लगेगा — यह अच्छा निवेश रहेगा।", "A large part of wealth will go into <b>home, vehicle and property</b> (4) — a good investment."), 3: L("<b>अपने प्रयास, संपर्क और संचार</b> (3) से कमाई।", "Earnings through <b>your own effort, contacts and communication</b> (3).") };
+    const risky = inter(s2.viaStar.concat(s11.viaStar, s2.self), [5, 8]).length > 0;
+    const wPer = firstGood(adPeriods([2, 6, 11], [5, 8, 12], { to: new Date(now.getTime() + Y(25)) }), 2, 1.25);
+    const in4 = occ(4), j4 = judge(4, [4, 11, 12], [3, 5]);
+    const prPer = firstGood(adPeriods([4, 11, 12], [3, 5], { bonus: (a) => (in4.includes(a) || a === csl(4) ? 1 : 0) }), 2, 2);
+    const s6 = c.sig[csl(6)];
+    const hRows2 = [[`${sn(lagS)} ${L("लग्न", "ascendant")}`, H(T.BODY[lagS - 1]), H(T.CARE_S[lagS - 1])]];
+    occ(1).forEach((p) => hRows2.push([L(`लग्न में ${pn(p)}`, `${p} in 1st`), H(T.P_HEALTH[p][0]), H(T.P_HEALTH[p][1])]));
+    if (dusth(P.Moon.house)) hRows2.push([L(`चंद्र ${ov(P.Moon.house)} भाव में`, `Moon in house ${P.Moon.house}`), H(T.P_HEALTH.Moon[0]), H(T.P_HEALTH.Moon[1])]);
+    if ([6, 7, 8].includes(P.Mars.house) && !occ(1).includes("Mars")) hRows2.push([L(`${ov(P.Mars.house)} भाव में मंगल`, `Mars in house ${P.Mars.house}`), H(T.P_HEALTH.Mars[0]), H(T.P_HEALTH.Mars[1])]);
+    if ([6, 8].includes(P.Saturn.house) && !occ(1).includes("Saturn")) hRows2.push([L(`${ov(P.Saturn.house)} भाव में शनि`, `Saturn in house ${P.Saturn.house}`), H(T.P_HEALTH.Saturn[0]), H(T.P_HEALTH.Saturn[1])]);
+    hRows2.push([L(`सूर्य ${sn(P.Sun.sign)} में`, `Sun in ${sn(P.Sun.sign)}`), H(T.BODY[P.Sun.sign - 1]), H(T.CARE_S[P.Sun.sign - 1])]);
+    const carePer = adPeriods([8, 12], [], { to: new Date(now.getTime() + Y(10)) }).filter((x) => inter(sigS(x.a), [8]).length).sort((a, b) => b.sc - a.sc)[0];
+    add(L("धन, संपत्ति और स्वास्थ्य", "Money, property and health"), `
+      <h3>${L("धन", "Money")}</h3>
+      <p>${L(`दूसरे कस्प (संचित धन) का उप-स्वामी <b>${pn(csl(2))}</b> है, जो ${hs(s2.all)} का कारक है। 11वें कस्प (आय) का उप-स्वामी <b>${pn(csl(11))}</b> ${hs(s11.all)} का कारक है। इसका अर्थ है:`, `The 2nd cusp (savings) sub-lord <b>${csl(2)}</b> signifies ${hs(s2.all)}. The 11th cusp (income) sub-lord <b>${csl(11)}</b> signifies ${hs(s11.all)}. This means:`)}</p>
+      <ul>${[10, 7, 6, 4, 3].filter((h) => wH.includes(h)).slice(0, 3).map((h) => `<li>${SRC[h]}</li>`).join("")}${risky ? `<li>${L("5 और 8 भाव का संबंध होने से <b>शेयर, सट्टा या जल्दी पैसा कमाने वाली योजनाओं से बचें</b> — अचानक हानि संभव है। सुरक्षित निवेश (FD, PPF, म्यूचुअल फ़ंड SIP, ज़मीन) आपके लिए बेहतर हैं।", "Links with houses 5 and 8 mean <b>avoid shares, speculation and get-rich-quick schemes</b> — sudden losses are possible. Safe investments (FD, PPF, mutual fund SIPs, land) suit you better.")}</li>` : ""}${wH.includes(8) ? `<li>${L("8वाँ भाव विरासत, बीमा या ससुराल से अचानक धन लाभ भी दिखाता है।", "House 8 also shows sudden gains from inheritance, insurance or in-laws.")}</li>` : ""}</ul>
+      ${wPer.length ? `<p><b>${L("आर्थिक रूप से सबसे अच्छे समय", "Best periods for money")}:</b> ${list(wPer.map((x) => `${pn(x.m)}–${pn(x.a)} (${my(x.s)} – ${my(x.e)})`))}। ${L(`${list(uniq(wPer.map((x) => x.a)).map(pn))} धन के भावों (2, 11) के कारक हैं।`, `${list(uniq(wPer.map((x) => x.a)))} signify the money houses (2, 11).`)}</p>` : ""}
+      <h3>${L("संपत्ति व वाहन", "Property and vehicle")} ${badge(j4.k)}</h3>
+      <p>${L(`${in4.length ? `4थे भाव में ${list(in4.map(pn))}${in4.length >= 2 ? ` — ${num(in4.length)} ग्रह` : ""}; ` : ""}4थे भाव के कारक ग्रह: ${list(uniq(c.houseSig[4].A.concat(c.houseSig[4].B, c.houseSig[4].C)).map(pn)) || "—"}। ${j4.k === "good" || in4.length >= 2 ? "यह <b>अपना घर, अच्छा वाहन और सुख-सुविधा</b> का प्रबल योग है।" : j4.k === "weak" ? "संपत्ति के मामलों में जल्दबाज़ी न करें; काग़ज़ात की पूरी जाँच करें।" : "अपना घर और वाहन मेहनत और सही समय पर मिलता है।"}`, `${in4.length ? `House 4 holds ${list(in4)}; ` : ""}significators of house 4: ${list(uniq(c.houseSig[4].A.concat(c.houseSig[4].B, c.houseSig[4].C))) || "—"}. ${j4.k === "good" || in4.length >= 2 ? "A strong sign of <b>your own home, a good vehicle and comforts</b>." : j4.k === "weak" ? "Do not rush property matters; check papers carefully." : "Home and vehicle come with effort at the right time."}`)} ${prPer.length ? L(`<b>वाहन या अपना मकान</b> ${list(prPer.map((x) => `${pn(x.m)}–${pn(x.a)} (${yr(x.s)}–${yr(x.e)})`))} में मिलने की अच्छी संभावना है।`, `A <b>vehicle or your own home</b> is likely in ${list(prPer.map((x) => `${x.m}–${x.a} (${yr(x.s)}–${yr(x.e)})`))}.`) : ""}</p>
+      <h3>${L("स्वास्थ्य", "Health")}</h3>
+      <p>${L(`6ठे कस्प (रोग) का उप-स्वामी <b>${pn(csl(6))}</b> है, जो ${hs(s6.all)} का कारक है। ${s6.all.includes(11) || s6.all.includes(5) ? "11 या 5 (रोग से मुक्ति) होने से <b>बीमारी आने पर जल्दी ठीक होने</b> की क्षमता अच्छी है।" : "नियमित दिनचर्या और समय पर जाँच आपके स्वास्थ्य की सबसे बड़ी सुरक्षा है।"} कुल मिलाकर स्वास्थ्य के लिए इन बातों पर ध्यान दें:`, `The 6th cusp (illness) sub-lord <b>${csl(6)}</b> signifies ${hs(s6.all)}. ${s6.all.includes(11) || s6.all.includes(5) ? "With 11 or 5 (recovery), your ability to <b>recover quickly</b> is good." : "A regular routine and timely check-ups are your best protection."} Overall, watch these:`)}</p>
+      ${tbl([L("ग्रह स्थिति", "Placement"), L("संवेदनशील क्षेत्र", "Sensitive areas"), L("सावधानी", "Care")], hRows2.slice(0, 6))}
+      <p class="sm">${carePer ? L(`${pn(carePer.m)}–${pn(carePer.a)} (${my(carePer.s)}–${my(carePer.e)}) में वाहन सावधानी से चलाएँ और नुकीली चीज़ों/आग से सतर्क रहें। `, `During ${carePer.m}–${carePer.a} (${my(carePer.s)}–${my(carePer.e)}) drive carefully and be careful with sharp objects and fire. `) : ""}${L("यह कोई चिकित्सीय निदान नहीं है — कोई समस्या हो तो डॉक्टर से ही परामर्श लें।", "This is not a medical diagnosis — for any problem consult a doctor.")}</p>`);
+
+    // ================= 17–19 — family, children, foreign =================
+    const jSib = judge(3, [3, 11, 2], [4, 8, 12]), jCh = judge(5, [2, 5, 11], [1, 4, 10]), jF = judge(12, [3, 9, 12], [4]);
+    const chPer = firstGood(adPeriods([2, 5, 11], [1, 4, 10], { from: new Date(Math.max(now.getTime(), (best ? best.s.getTime() : 0) + Y(1), c.birthUTC.getTime() + Y(24))), to: new Date(c.birthUTC.getTime() + Y(42)), bonus: (a) => (a === lordH(5) || a === "Jupiter" ? 1 : 0) }), 2, -0.5);
+    const fPer = firstGood(adPeriods([3, 9, 12], [4], {}), 1, 1.5);
+    add(L("परिवार, संतान और विदेश", "Family, children and foreign lands"), `
+      <h3>${L("माता", "Mother")}</h3>
+      <p>${L(`${in4.length ? `4थे भाव में ${list(in4.map(pn))}` : `4थे भाव का स्वामी ${pn(lordH(4))} ${ov(X.rh[lordH(4)])} खाने में`} — ${in4.length >= 2 || in4.includes("Moon") ? "<b>माता से गहरा भावनात्मक जुड़ाव</b> है। माता संस्कारी, समझदार और परिवार की धुरी हैं। आप घर के प्रति बहुत ज़िम्मेदार रहेंगे।" : in4.includes("Saturn") || in4.includes("Rahu") || in4.includes("Ketu") ? "माता से सम्मान का संबंध है; उनके स्वास्थ्य का ध्यान रखें।" : "माता से स्नेह और सहयोग मिलता है; घर में अपनापन रहता है।"}`, `${in4.length ? `House 4 holds ${list(in4)}` : `The 4th lord ${lordH(4)} is in house ${X.rh[lordH(4)]}`} — ${in4.length >= 2 || in4.includes("Moon") ? "a <b>deep emotional bond with your mother</b>. She is cultured, wise and the centre of the family. You will be very responsible towards home." : in4.includes("Saturn") || in4.includes("Rahu") || in4.includes("Ketu") ? "a respectful relationship with your mother; look after her health." : "affection and support from your mother; a warm home."}`)}</p>
+      <h3>${L("पिता", "Father")}</h3>
+      <p>${L(`9वें भाव ${occ(9).length ? `में ${list(occ(9).map(pn))} है` : `का स्वामी ${pn(lordH(9))} है`} और 9वें कस्प का उप-स्वामी ${pn(csl(9))} है। ${occ(9).includes("Rahu") ? "पिता मेहनती और व्यावहारिक हैं; आपसे उनके विचारों में कभी-कभी पीढ़ी का अंतर दिख सकता है, क्योंकि आप परंपराओं को तर्क से परखते हैं।" : X.dign("Sun") === "deb" ? "पिता से संबंधों में धैर्य रखें; उनका मार्गदर्शन आगे चलकर उपयोगी सिद्ध होगा।" : "पिता मेहनती और व्यावहारिक हैं; उनका सहयोग जीवन में मिलता है।"} ${sigA(csl(9)).includes(10) ? "पिता का सहयोग करियर में मिलता है।" : ""} ${occ(9).some((p) => ["Rahu", "Saturn", "Ketu"].includes(p)) ? "उनके स्वास्थ्य का ध्यान रखें, विशेषकर राहु-शनि से जुड़े समय में।" : ""}`, `House 9 ${occ(9).length ? `holds ${list(occ(9))}` : `is ruled by ${lordH(9)}`} and its cusp sub-lord is ${csl(9)}. ${occ(9).includes("Rahu") ? "Your father is hardworking and practical; there may be a generation gap in ideas, as you test traditions with reason." : X.dign("Sun") === "deb" ? "Keep patience with your father; his guidance proves useful later." : "Your father is hardworking and practical; his support comes through life."} ${sigA(csl(9)).includes(10) ? "His support helps your career." : ""} ${occ(9).some((p) => ["Rahu", "Saturn", "Ketu"].includes(p)) ? "Look after his health, especially in Rahu/Saturn periods." : ""}`)}</p>
+      <h3>${L("भाई-बहन", "Siblings")} ${badge(jSib.k)}</h3>
+      <p>${L(`3रे कस्प का उप-स्वामी ${pn(csl(3))} ${hs(sigA(csl(3)))} का कारक है — ${jSib.k !== "weak" ? "<b>भाई-बहनों से अच्छे संबंध और उनसे लाभ</b> का योग है।" : "भाई-बहनों के साथ संबंध में धैर्य और संवाद ज़रूरी है।"}${occ(3).length ? ` 3रे भाव में ${list(occ(3).map(pn))} होने से ${occ(3).some((p) => ["Ketu", "Saturn", "Rahu", "Mars"].includes(p)) ? "कभी-कभी आपसी बातचीत में दूरी या गलतफ़हमी हो सकती है, पर रिश्ते की नींव मज़बूत है।" : "रिश्ते में स्नेह बना रहता है।"}` : ""}`, `The 3rd cusp sub-lord ${csl(3)} signifies ${hs(sigA(csl(3)))} — ${jSib.k !== "weak" ? "<b>good ties with siblings and gains through them</b>." : "patience and communication are needed with siblings."}${occ(3).length ? ` With ${list(occ(3))} in the 3rd, ${occ(3).some((p) => ["Ketu", "Saturn", "Rahu", "Mars"].includes(p)) ? "there can be occasional distance or misunderstanding, but the bond is strong." : "affection stays in the relationship."}` : ""}`)}</p>
+      <h3>${L("संतान", "Children")} ${badge(jCh.k)}</h3>
+      <p>${L(`5वें कस्प का उप-स्वामी ${pn(csl(5))} ${hs(sigA(csl(5)))} का कारक है। ${sigA(csl(5)).includes(5) || jCh.k === "good" ? "5 (संतान) मौजूद है, इसलिए <b>संतान का स्पष्ट योग</b> है।" : jCh.k === "weak" ? "संतान के लिए धैर्य और सही समय ज़रूरी है।" : "संतान का योग है; सही समय पर फल मिलता है।"} ${sigA(csl(5)).includes(8) ? "8 का संबंध होने से पहली संतान के समय माँ के स्वास्थ्य पर अतिरिक्त ध्यान देना चाहिए।" : ""} ${["Mars", "Sun", "Jupiter"].includes(csl(5)) ? "संतान बुद्धिमान, ऊर्जावान और साहसी होगी।" : ["Mercury", "Venus", "Moon"].includes(csl(5)) ? "संतान बुद्धिमान, कलात्मक और स्नेही होगी।" : ""}`, `The 5th cusp sub-lord ${csl(5)} signifies ${hs(sigA(csl(5)))}. ${sigA(csl(5)).includes(5) || jCh.k === "good" ? "House 5 is present, so <b>children are clearly indicated</b>." : jCh.k === "weak" ? "Patience and right timing are needed." : "Children are indicated; results come at the right time."} ${sigA(csl(5)).includes(8) ? "A link with house 8 means extra care for the mother's health at the first child." : ""} ${["Mars", "Sun", "Jupiter"].includes(csl(5)) ? "Children will be intelligent, energetic and brave." : ["Mercury", "Venus", "Moon"].includes(csl(5)) ? "Children will be intelligent, artistic and loving." : ""}`)}</p>
+      ${chPer.length ? `<ul><li><b>${L("संतान का संभावित समय", "Likely time for children")}:</b> ${list(chPer.map((x) => `${pn(x.m)}–${pn(x.a)} ${L("अंतर्दशा", "bhukti")} (${my(x.s)} – ${my(x.e)})`))}${chPer.some((x) => x.a === lordH(5)) ? L(` — ${pn(lordH(5))} 5वें भाव का स्वामी है।`, ` — ${lordH(5)} rules the 5th house.`) : "।"}</li></ul>` : ""}
+      <p class="sm">${L("संतान से जुड़ा हर चिकित्सीय निर्णय डॉक्टर की सलाह से ही लें।", "Take every medical decision about children with a doctor's advice.")}</p>
+      <h3>${L("विदेश यात्रा", "Foreign travel")} ${badge(jF.k)}</h3>
+      <p>${L(`12वें कस्प (विदेश में रहना) का उप-स्वामी ${pn(csl(12))} ${hs(sigA(csl(12)))} का कारक है। ${sigA(csl(12)).includes(4) && !inter(sigS(csl(12)), [3, 9, 12]).length ? "4 (अपना देश) प्रबल होने से <b>स्थायी रूप से विदेश बसने का योग कमज़ोर</b> है।" : jF.k === "good" ? "<b>विदेश जाने और वहाँ काम करने का अच्छा योग</b> है।" : jF.k === "mixed" ? "विदेश यात्रा का योग है, पर लौटकर अपने देश में स्थिर होने की संभावना अधिक है।" : "विदेश से अधिक आपकी प्रगति अपने देश में होगी।"}`, `The 12th cusp (living abroad) sub-lord ${csl(12)} signifies ${hs(sigA(csl(12)))}. ${sigA(csl(12)).includes(4) && !inter(sigS(csl(12)), [3, 9, 12]).length ? "With house 4 (homeland) strong, <b>settling abroad permanently is weak</b>." : jF.k === "good" ? "There is a <b>good chance of going and working abroad</b>." : jF.k === "mixed" ? "Foreign travel is indicated, but returning and settling at home is more likely." : "Your progress lies more at home than abroad."}`)}</p>
+      <ul>${inter(sigA(csl(12)).concat(sigA(csl(3)), sigA(csl(9))), [3, 9, 12]).length ? `<li>${L(`<b>काम या घूमने के लिए विदेश यात्रा</b> का योग${fPer.length ? ` — विशेषकर ${pn(fPer[0].m)}–${pn(fPer[0].a)} (${yr(fPer[0].s)}–${yr(fPer[0].e)}) में` : ""}।`, `<b>Foreign travel for work or leisure</b> is indicated${fPer.length ? ` — especially in ${fPer[0].m}–${fPer[0].a} (${yr(fPer[0].s)}–${yr(fPer[0].e)})` : ""}.`)}</li>` : ""}${[7, 9, 10, 12].includes(P.Rahu.house) ? `<li>${L("किसी विदेशी कंपनी या विदेशी क्लाइंट के साथ काम करने का योग अच्छा है।", "Working with a foreign company or foreign clients is well indicated.")}</li>` : ""}${sigA(csl(12)).includes(4) ? `<li>${L("अंततः आपका जीवन अपने देश में, अपने घर के साथ ही स्थिर होगा।", "In the end, your life settles in your own country, with your own home.")}</li>` : ""}</ul>`);
+
+    // ================= 20–21 — yogas & sade sati =================
+    const yogaHtml = X.yogas.map((y) => { const t = T.YOGA[y.id]; if (!t) return ""; const rep = (s) => s.replace(/\{p\}/g, y.data.p ? pn(y.data.p) : "").replace(/\{a\}/g, typeof y.data.a === "string" ? pn(y.data.a) : "").replace(/\{b\}/g, typeof y.data.b === "string" ? pn(y.data.b) : "").replace(/\{y\}/g, H([KX.YOGA_H[y.data.y || 0], KX.YOGA_E[y.data.y || 0]])); return `<div class="yg${y.good ? "" : " care"}"><b>${rep(H(t[0]))}</b><p>${rep(H(t[1]))}</p></div>`; }).join("");
+    const ssAll = X.sadeSati(new Date(c.birthUTC.getTime()), new Date(now.getTime() + Y(35)));
+    const ep = ssAll.episodes.find((e) => e.end > now);
+    const inSS = !!(ep && ep.start <= now);
+    const phName = { 1: L("पहला चरण", "First phase"), 2: L("दूसरा चरण (शिखर)", "Second phase (peak)"), 3: L("तीसरा चरण", "Third phase") };
+    const phEff = { 1: L("खर्च, बेचैनी", "expenses, restlessness"), 2: L("मानसिक दबाव, मेहनत अधिक", "mental pressure, more effort"), 3: L("धन व परिवार पर ध्यान", "focus on money and family") };
+    const merged = ep ? [1, 2, 3].map((ph) => { const segs = ep.phases.filter((x) => x.ph === ph && x.end - x.start > 20 * 864e5); return segs.length ? { ph, sign: segs[0].sign, segs, start: segs[0].start, end: segs[segs.length - 1].end } : null; }).filter(Boolean) : [];
+    const curPh = inSS ? (ep.phases.find((x) => x.start <= now && x.end >= now) || {}).ph : null;
+    const satGood = inter(sigA("Saturn"), [6, 10, 11]).length >= 2;
+    const nextEp = ep ? ssAll.episodes.find((e) => e.start > ep.end) : null;
+    add(L("विशेष योग और साढ़ेसाती", "Special yogas and sade sati"), `
+      <h3>${L("कुण्डली के प्रमुख योग", "Main yogas in the chart")}</h3>${yogaHtml || `<p>${L("कुण्डली में कोई विशेष शास्त्रीय योग प्रमुख नहीं है; ग्रहों का संतुलित प्रभाव है।", "No special classical yoga dominates; the planets give a balanced effect.")}</p>`}
+      <h3>${L("शनि की साढ़ेसाती", "Saturn's sade sati")}</h3>
+      <p>${L(`आपकी राशि <b>${sn(moonS)}</b> है। शनि जब ${sn(((moonS + 10) % 12) + 1)}, ${sn(moonS)} और ${sn((moonS % 12) + 1)} राशि में गोचर करता है, तब साढ़ेसाती होती है।`, `Your Moon sign is <b>${sn(moonS)}</b>. Sade sati runs while Saturn transits ${sn(((moonS + 10) % 12) + 1)}, ${sn(moonS)} and ${sn((moonS % 12) + 1)}.`)}</p>
+      ${merged.length ? tbl([L("चरण", "Phase"), L("शनि का गोचर", "Saturn in"), L("अवधि (लगभग)", "Period (approx.)"), L("प्रभाव", "Effect")], merged.map((x) => ({ cur: x.ph === curPh, cells: [phName[x.ph], sn(x.sign), x.segs.map((g, i) => `${i ? L("फिर ", "again ") : ""}${my(g.start)} – ${my(g.end)}`).join(", "), phEff[x.ph]] }))) : ""}
+      <p>${inSS ? L(`<b>अभी (${my(now)}) आप साढ़ेसाती के ${phName[curPh] || ""} में हैं।</b> इस समय मेहनत के मुकाबले परिणाम धीमे लग सकते हैं, मन भारी रह सकता है और कुछ रिश्तों की परीक्षा हो सकती है।`, `<b>Right now (${my(now)}) you are in the ${(phName[curPh] || "").toLowerCase()} of sade sati.</b> Results may feel slow for the effort, the mind may feel heavy and some relationships may be tested.`) : ep ? L(`आपकी अगली साढ़ेसाती लगभग <b>${my(ep.start)} से ${my(ep.end)}</b> तक रहेगी।`, `Your next sade sati runs roughly <b>${my(ep.start)} to ${my(ep.end)}</b>.`) : L("निकट भविष्य में साढ़ेसाती नहीं है।", "There is no sade sati in the near future.")} ${satGood ? L(`पर ध्यान रखें — शनि आपकी कुण्डली में ${hs(sigA("Saturn"))} का कारक है${csl(10) === "Saturn" ? " और 10वें कस्प का उप-स्वामी है" : ""}, यानी आपके लिए यह <b>“तपाकर सोना बनाने”</b> वाली साढ़ेसाती है। इस दौरान की गई मेहनत बाद में करियर में बड़ा फल देगी।`, `But note — Saturn signifies ${hs(sigA("Saturn"))} in your chart${csl(10) === "Saturn" ? " and is the 10th cusp sub-lord" : ""}, so for you this sade sati <b>“turns iron into gold”</b>. Effort made now pays off in your career later.`) : L("अनुशासन, धैर्य और ईमानदारी इस समय की सबसे बड़ी ताकत हैं।", "Discipline, patience and honesty are your biggest strengths in this time.")}${inSS && nextEp ? L(` अगली साढ़ेसाती लगभग ${yr(nextEp.start)}–${yr(nextEp.end)} में।`, ` The next one is around ${yr(nextEp.start)}–${yr(nextEp.end)}.`) : ""}</p>
+      <p class="sm">${L("उपाय: शनिवार को हनुमान चालीसा, पीपल के नीचे सरसों के तेल का दीपक, ज़रूरतमंदों/मज़दूरों की मदद, और अनुशासित दिनचर्या।", "Remedy: Hanuman Chalisa on Saturdays, a mustard-oil lamp under a peepal tree, helping the needy and labourers, and a disciplined routine.")}</p>`);
+
+    // ================= 22 — dasha tables =================
+    const nextMD = cur ? c.dasha.md[c.dasha.md.indexOf(cur.md) + 1] : null;
+    add(L("विंशोत्तरी दशा", "Vimshottari dasha"), `
+      <p>${L(`जन्म के समय चंद्रमा ${nk(P.Moon.nak)} नक्षत्र (स्वामी ${pn(P.Moon.star)}) में था, इसलिए जीवन <b>${pn(c.dasha.balance.lord)} महादशा</b> से शुरू हुआ, जिसका लगभग ${num(Math.round(c.dasha.balance.years))} वर्ष शेष था।`, `At birth the Moon was in ${nk(P.Moon.nak)} (lord ${P.Moon.star}), so life began in the <b>${c.dasha.balance.lord} mahadasha</b> with about ${Math.round(c.dasha.balance.years)} years remaining.`)}</p>
+      <div class="two"><div><h4>${L("महादशा", "Mahadasha")}</h4>${tbl([L("ग्रह", "Planet"), L("आरंभ", "From"), L("समाप्ति", "To")], mdRows, "sm2")}</div>${cur ? `<div><h4>${L(`${pn(cur.md.lord)} महादशा की अंतर्दशाएँ`, `Bhuktis of ${cur.md.lord} mahadasha`)}</h4>${adTable(cur.md)}</div>` : ""}</div>
+      ${nextMD ? `<h4>${L(`${pn(nextMD.lord)} महादशा की अंतर्दशाएँ`, `Bhuktis of ${nextMD.lord} mahadasha`)}</h4>${adTable(nextMD)}` : ""}
+      <p class="sm">${L(`हल्के पीले रंग की पंक्ति वर्तमान समय दर्शाती है (${my(now)})।`, `The light-yellow row shows the present time (${my(now)}).`)}</p>`);
+
+    // ================= 23 — dasha forecast =================
+    const evt = (p) => { const x = sigS(p).length ? sigS(p) : sigA(p); return list(uniq(x).slice(0, 3).map((h) => H(T.EVT[h]))); };
+    const adPred = (a) => {
+      const S = sigA(a.lord), good = inter(S, [2, 6, 10, 11]).length, care = inter(sigS(a.lord), [8, 12]).length;
+      const tags = [];
+      if (best && a === best.ad) tags.push(L("<b>विवाह (सबसे प्रबल)</b>", "<b>marriage (strongest)</b>"));
+      else if (marPer.some((x) => x.ad === a)) tags.push(L("<b>प्रेम संबंध या रिश्ते की बात</b>", "<b>romance or marriage talks</b>"));
+      if (carPer.some((x) => x.ad === a)) tags.push(L("<b>करियर में स्थिरता/उन्नति</b>", "<b>career stability or growth</b>"));
+      if (prPer.some((x) => x.ad === a)) tags.push(L("वाहन या अपना घर", "vehicle or own home"));
+      if (chPer.some((x) => x.ad === a)) tags.push(L("<b>संतान सुख</b>", "<b>joy of children</b>"));
+      if (wPer.some((x) => x.ad === a)) tags.push(L("<b>आर्थिक रूप से उत्कृष्ट</b>", "<b>financially excellent</b>"));
+      if (ep && a.start <= ep.end && a.end >= ep.start && ep.start <= now) tags.push(L("साढ़ेसाती के साथ — धैर्य रखें", "alongside sade sati — keep patience"));
+      return `<p>${L(`${pn(a.lord)} ${hs(S)} का कारक।`, `${a.lord} signifies ${hs(S)}.`)} ${tags.length ? list(tags) + (hi ? "। " : ". ") : ""}${L(`मुख्य विषय: ${evt(a.lord)}।`, `Main themes: ${evt(a.lord)}.`)}${care && good < 2 ? L(" खर्च, यात्रा और स्वास्थ्य में सावधानी रखें।", " Be careful with expenses, travel and health.") : ""}</p>`;
+    };
+    const predItems = [];
+    if (cur) {
+      cur.md.ad.filter((a) => a.end > now).forEach((a) => predItems.push([`${my(a.start < now ? now : a.start)} – ${my(a.end)} · ${pn(cur.md.lord)}–${pn(a.lord)}${a === cur.ad ? L(" (वर्तमान)", " (current)") : ""}${best && a === best.ad ? " ★" : ""}`, adPred(a)]));
+      c.dasha.md.slice(c.dasha.md.indexOf(cur.md) + 1, c.dasha.md.indexOf(cur.md) + 3).forEach((m) => predItems.push([`${yr(m.start)} – ${yr(m.end)} · ${pn(m.lord)} ${L("महादशा", "mahadasha")}`, `<p>${L(`${pn(m.lord)} ${hs(sigA(m.lord))} का कारक। <b>${evt(m.lord)}</b> — इस महादशा के मुख्य विषय रहेंगे।${inter(sigS(m.lord), [8, 12]).length && !inter(sigS(m.lord), [2, 10, 11]).length ? " खर्चों और भावनात्मक संतुलन पर ध्यान रखें।" : ""}`, `${m.lord} signifies ${hs(sigA(m.lord))}. <b>${evt(m.lord)}</b> will be the main themes.${inter(sigS(m.lord), [8, 12]).length && !inter(sigS(m.lord), [2, 10, 11]).length ? " Watch expenses and emotional balance." : ""}`)}</p>`]));
+    }
+    add(L("दशा अनुसार भविष्यफल", "Forecast by dasha"), `
+      ${cur ? `<p>${L(`${pn(cur.md.lord)} महादशा (${yr(cur.md.start)}–${yr(cur.md.end)}) ${hs(sigA(cur.md.lord))} भावों के कारक ग्रह की दशा है — यह पूरी महादशा <b>${evt(cur.md.lord)}</b> की है।`, `The ${cur.md.lord} mahadasha (${yr(cur.md.start)}–${yr(cur.md.end)}) belongs to a planet signifying ${hs(sigA(cur.md.lord))} — this whole period is about <b>${evt(cur.md.lord)}</b>.`)}</p>` : ""}
+      ${tl(predItems)}`, det);
+
+    // ================= 24 — lucky things & remedies =================
+    const L5 = lordH(5), L9 = lordH(9);
+    const nums = uniq([L1, L5, L9].map((p) => T.NUM[p])).sort((a, b) => a - b);
+    const avoid = (T.ENEMY[L1] || []).filter((p) => ![L1, L5, L9].includes(p) && T.COLOR[p]).slice(0, 1).map((p) => H(T.COLOR[p]));
+    const gemRows = uniq([L1, L5, L9]).filter((p) => T.GEM[p]).slice(0, 3).map((p, i) => [`<b>${H(T.GEM[p])}</b> — ${i === 0 ? L("मुख्य", "main") : L("सहायक", "supporting")}`, pn(p), p === L1 ? L(`लग्न स्वामी; ${hs(sigA(p))} का कारक — आत्मविश्वास, स्वास्थ्य, प्रतिष्ठा`, `ascendant lord; signifies ${hs(sigA(p))} — confidence, health, standing`) : p === L5 ? L("5वें भाव का स्वामी — ज्ञान, संतान, बुद्धि", "lord of the 5th — knowledge, children, intellect") : L("9वें भाव का स्वामी — भाग्य, धर्म, गुरुजन", "lord of the 9th — fortune, dharma, teachers"), H(T.WEAR[p])]);
+    const remKeys = uniq([L1, "Moon", "Venus", inSS || (ep && ep.start - now < Y(3)) ? "Saturn" : null, "Jupiter", cur ? cur.md.lord : null, [1, 7, 9].includes(P.Rahu.house) ? "Rahu" : null].filter(Boolean)).slice(0, 7);
+    const sutras = [];
+    if (marsOnLagna || in7.includes("Mars")) sutras.push(L("<b>अपने गुस्से को अपनी ताकत में बदलें</b> — मंगल की ऊर्जा को खेल या व्यायाम में लगाएँ।", "<b>Turn anger into strength</b> — channel Mars' energy into sport or exercise."));
+    if (dusth(P.Moon.house) || satOnMoon || water || [4, 8, 12].includes(moonS)) sutras.push(L("<b>निर्णय लेने से पहले एक रात रुकें</b> — आपका मन जल्दी भावुक होता है, सुबह का दिमाग़ ज़्यादा साफ़ सोचता है।", "<b>Sleep on decisions</b> — your mind turns emotional quickly; the morning mind thinks clearer."));
+    if (risky) sutras.push(L("<b>सुरक्षित बचत की आदत</b> — सट्टे से दूर, नियमित निवेश से आप बहुत आगे जाएँगे।", "<b>Build safe savings</b> — avoid speculation; steady investing takes you far."));
+    const keyP = [best, cs].filter(Boolean).sort((a, b) => a.s - b.s);
+    if (keyP.length) sutras.push(L(`<b>${yr(keyP[0].s)}–${yr(new Date(Math.max(...keyP.map((x) => x.e.getTime()))))} को पूरा ज़ोर दें</b> — यह आपके ${best && cs ? "करियर और विवाह दोनों" : best ? "विवाह" : "करियर"} की नींव का समय है।`, `<b>Give ${yr(keyP[0].s)}–${yr(new Date(Math.max(...keyP.map((x) => x.e.getTime()))))} your all</b> — the foundation years for your ${best && cs ? "career and marriage" : best ? "marriage" : "career"}.`));
+    if ([8, 12].includes(P.Moon.house) || [12, 4, 8].includes(moonS)) sutras.push(L(`<b>अपने अंतर्ज्ञान पर भरोसा करें</b> — ${nk(P.Moon.nak)} नक्षत्र और ${ov(P.Moon.house)} भाव का चंद्र आपको अक्सर सही संकेत देते हैं।`, `<b>Trust your intuition</b> — the Moon in ${nk(P.Moon.nak)} and house ${P.Moon.house} often gives you the right signal.`));
+    if (sutras.length < 5) sutras.push(L("<b>सीखते रहें</b> — गुरु का आशीर्वाद ज्ञान से ही सक्रिय होता है।", "<b>Keep learning</b> — Jupiter's blessing activates through knowledge."));
+    if (sutras.length < 5) sutras.push(L("<b>स्वास्थ्य ही पूँजी है</b> — नियमित दिनचर्या आपके हर ग्रह को मज़बूत करती है।", "<b>Health is wealth</b> — a regular routine strengthens every planet."));
+    add(L("शुभ अंक, रंग, रत्न और उपाय", "Lucky numbers, colours, gemstones and remedies"), `
+      ${kv2([[L("शुभ अंक", "Lucky numbers"), nums.join(", "), L("शुभ दिन", "Lucky days"), list(uniq([L1, L5]).filter((p) => T.DAY[p]).map((p) => H(T.DAY[p])))], [L("शुभ रंग", "Lucky colours"), list(uniq([L1, L5]).map((p) => H(T.COLOR[p]))), L("कम उपयोग करें", "Use less"), avoid.length ? list(avoid) : "—"], [L("शुभ दिशा", "Lucky directions"), list(uniq([L1, L5]).map((p) => H(T.DIR_P[p]))), L("इष्ट देव", "Deities"), list(uniq([L1, L5]).map((p) => H(T.DEITY[p])))], [L("शुभ धातु", "Lucky metal"), H(T.METAL[L1]), L("मित्र राशि (लग्न)", "Friendly signs"), `${sn(sgnFrom(lagS)(9))}, ${sn(sgnFrom(lagS)(5))}`]])}
+      <h3>${L("रत्न", "Gemstones")}</h3>
+      ${tbl([L("रत्न", "Gemstone"), L("ग्रह", "Planet"), L("क्यों", "Why"), L("कैसे पहनें", "How to wear")], gemRows)}
+      <p class="sm">${L("रत्न पहनने से पहले किसी अनुभवी ज्योतिषी से असली रत्न व वज़न की पुष्टि कर लें, और कुछ दिन ट्रायल के रूप में पहनकर असर देखें। नीलम (शनि), गोमेद या लहसुनिया बिना जाँच के न पहनें।", "Before wearing a gemstone confirm the real stone and weight with an experienced astrologer, and wear it on trial for a few days. Do not wear Blue Sapphire, Hessonite or Cat's eye without testing.")}</p>
+      <h3>${L("ग्रह अनुसार सरल उपाय", "Simple remedies by planet")}</h3>
+      ${tbl([L("उद्देश्य", "Purpose"), L("उपाय", "Remedy")], remKeys.map((p) => [`${H(T.REM[p][0])} (${pn(p)})`, H(T.REM[p][1])]))}
+      <h3>${L("आपके लिए जीवन-सूत्र", "Life principles for you")}</h3>
+      ${noteBox("", `<ul>${sutras.slice(0, 5).map((s) => `<li>${s}</li>`).join("")}</ul>`)}
+      <p class="orn">✦ &nbsp; ❖ &nbsp; ✦</p>
+      <p class="fin">${L("यह कुण्डली स्विस एफ़ेमेरिस से मिलान की गई सटीक गणना और के.पी. सिद्धांतों पर तैयार की गई है। ज्योतिष संभावनाओं और प्रवृत्तियों का विज्ञान है; जीवन के बड़े निर्णय (विवाह, स्वास्थ्य, निवेश) लेते समय व्यावहारिक सलाह और अपने विवेक को भी समान महत्व दें।<br><b>शुभमस्तु ॥</b>", "This kundali is prepared with precise calculations checked against the Swiss Ephemeris and KP principles. Astrology is a science of possibilities and tendencies; for major decisions (marriage, health, investment) give equal weight to practical advice and your own judgement.<br><b>Shubham astu.</b>")}</p>`);
+
+    return wrap();
+
     // ---------- document ----------
-    const title = paid ? L("विस्तृत KP कुंडली रिपोर्ट", "Detailed KP Horoscope Report") : L("KP कुंडली", "KP Horoscope");
-    const toc = CH.map((x, i) => `<li><span>${L("अध्याय", "Chapter")} ${i + 1}</span>${x[0]}</li>`).join("");
-    const box = (l, v, s) => `<div class="cb"><small>${l}</small><b>${v}</b><span>${s}</span></div>`;
-    const ftr = `${L("ज्योतिष तर्क · KP", "Jyotish Tark · KP")} · ${String(o.name || "").replace(/["\\\n]/g, "")} · ${dob}`;
-    const pgCss = `@page{@bottom-left{content:"${ftr}";font:600 8.5pt Mukta,sans-serif;color:#7A1F1F}@bottom-right{content:"${L("पृष्ठ", "Page")} " counter(page);font:600 8.5pt Mukta,sans-serif;color:#7A1F1F}}@page:first{@bottom-left{content:none}@bottom-right{content:none}}`;
-    const body = CH.map((x, i) => `<section class="ch"><p class="chn">${L("अध्याय", "Chapter")} ${i + 1}</p><h2>${x[0]}</h2>${x[1]}</section>`).join("");
-    return `<!doctype html><html lang="${hi ? "hi" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    function wrap() {
+      const title = paid ? L("जन्म कुण्डली", "Janm Kundali") : L("KP कुण्डली", "KP Chart");
+      const ftrL = `${paid ? "Janm Kundali" : "KP Chart"}  |  KP Paddhati  |  ${bd} ${MONE[bm - 1].slice(0, 3)} ${by}, ${String(th).padStart(2, "0")}:${String(tm).padStart(2, "0")}, ${String(place.split(",")[0] || "").replace(/["\\\n]/g, "")}`;
+      const pgCss = `@page{@bottom-left{content:"${ftrL}";font:500 8pt Mukta,sans-serif;color:#9A7B4F}@bottom-right{content:counter(page) " / " counter(pages);font:500 8pt Mukta,sans-serif;color:#9A7B4F}}@page:first{@bottom-left{content:none}@bottom-right{content:none}}`;
+      const half = Math.ceil(CH.length / 2);
+      const tocCol = (arr, off) => `<ol>${arr.map((x, i) => `<li><span>${numD(i + 1 + off)}</span>${x[0]}</li>`).join("")}</ol>`;
+      const body = CH.map((x, i) => `<section class="ch"><p class="chn">${L("अ ध्या य", "CHAPTER")} ${numD(i + 1)}${x[2] ? ` · ${x[2]}` : ""}</p><h2>${x[0]}</h2>${x[1]}</section>`).join("");
+      const signs = T.SIGN.map((s) => s[hi ? 0 : 1]);
+      const out = `<!doctype html><html lang="${hi ? "hi" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)} — ${esc(o.name)} — Jyotish Tark</title>
-<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Tiro+Devanagari+Hindi&family=Yatra+One&display=swap" rel="stylesheet">
 <style>${CSS}${pgCss}</style></head><body>
-<section class="cover"><div class="fr"></div><div class="fr2"></div>${mandalaSvg()}
-  <p class="k">॥ ${L("ज्योतिष तर्क", "JYOTISH TARK")} ॥</p><h1>${esc(title)}</h1>
-  <p class="sub">${L("कृष्णमूर्ति पद्धति · प्लेसिडस भाव · उप-स्वामी विश्लेषण", "Krishnamurti Paddhati · Placidus houses · sub-lord analysis")}</p>
-  <p class="nm">${esc(o.name)}</p><p class="dob">${dob} · ${esc(o.time)} · ${esc(o.place || "")}</p>
-  <div class="cgrid">${box(L("लग्न", "Ascendant"), sn(c.cusps[1].sign), L("उप-स्वामी ", "sub ") + pn(c.cusps[1].sub))}${box(L("चंद्र नक्षत्र", "Moon star"), nk(P.Moon.nak), pn(P.Moon.star))}${box(L("महादशा", "Mahadasha"), cur ? pn(cur.md.lord) : "—", cur ? L("भुक्ति ", "bhukti ") + pn(cur.ad.lord) : "")}${box(L("शासक ग्रह", "Ruling"), rset.slice(0, 3).map((p) => H(PA[p])).join(" "), today)}</div>
-  <div class="seal">${stampSvg(110)}</div>
-  <p class="ft">${L("रिपोर्ट क्रमांक", "Report no.")} ${esc(rno)} · ${L("तैयार", "Prepared")}: ${today}<br>jyotishtark.in · ${L("ज्योतिषी ज्ञानेंद्र सिंह तोमर, लखनऊ", "Astrologer Gyanendra Singh Tomar, Lucknow")}</p>
+<section class="cover"><div class="fr"></div><div class="fr2"></div><i class="cn1"></i><i class="cn2"></i><i class="cn3"></i><i class="cn4"></i>
+  <p class="ganesh">॥ श्री गणेशाय नमः ॥</p>
+  ${wheelSvg(signs)}
+  <h1>${esc(title)}</h1>
+  <p class="sub">${paid ? L("कृष्णमूर्ति पद्धति (के.पी.) पर आधारित सम्पूर्ण एवं विस्तृत फलादेश", "A complete, detailed reading based on Krishnamurti Paddhati (KP)") : L("कृष्णमूर्ति पद्धति · प्लेसिडस भाव · नक्षत्र व उप-स्वामी", "Krishnamurti Paddhati · Placidus houses · star and sub-lords")}</p>
+  <p class="orn2">✦ &nbsp;❖&nbsp; ✦</p>
+  ${paid ? `<p class="tags">${L("व्यक्तित्व · जीवनसाथी व विवाह · करियर · धन · स्वास्थ्य · दशा फल · उपाय", "Personality · Partner & marriage · Career · Money · Health · Dasha · Remedies")}</p>` : ""}
+  <p class="nm">${esc(o.name)}</p>
+  <div class="cbox"><div><small>${L("जन्म तिथि", "Date of birth")}</small><b>${dobTxt}</b></div><div><small>${L("जन्म समय", "Time of birth")}</small><b>${tobTxt}</b></div><div><small>${L("जन्म स्थान", "Place of birth")}</small><b>${esc(place)}</b></div>
+  <div><small>${L("लग्न", "Ascendant")}</small><b>${sn(lagS)}</b></div><div><small>${L("राशि", "Moon sign")}</small><b>${sn(moonS)}</b></div><div><small>${L("नक्षत्र", "Nakshatra")}</small><b>${nk(P.Moon.nak)} (${L("चरण", "pada")} ${num(P.Moon.pada)})</b></div></div>
+  <p class="cft">${L("ज्योतिष तर्क, लखनऊ", "Jyotish Tark, Lucknow")} · jyotishtark.in · ${L("क्रमांक", "No.")} ${esc(rno)}</p>
 </section>
-<section class="toc"><h2>${L("विषय सूची", "Contents")}</h2><ol>${toc}</ol>
-  <div class="box"><b>${L("इस रिपोर्ट को कैसे पढ़ें", "How to read this report")}</b><p>${paid ? L("पहले अध्याय 1 में KP के तीन मूल नियम पढ़ें। फिर “जीवन के 14 विषय — एक नज़र में” देखें और उसके बाद अपने रुचि के विषय का विस्तृत विश्लेषण पढ़ें। दशा और अगले 3 वर्षों के अध्याय बताते हैं कि कौन-सा समय किस काम के लिए अच्छा है।", "First read the three basic KP rules in chapter 1. Then see “14 areas of life — at a glance” and read the detailed analysis of the areas you care about. The dasha and next-3-years chapters show which time suits which work.") : L("यह आपकी मूल KP कुंडली है — ग्रहों और भावों के नक्षत्र स्वामी और उप-स्वामी, दशा और शासक ग्रह। जीवन के हर विषय का विस्तृत विश्लेषण ₹299 की विस्तृत रिपोर्ट में है।", "This is your basic KP chart — star lords and sub-lords of planets and houses, dasha and ruling planets. A detailed analysis of every area of life is in the ₹299 detailed report.")}</p></div>
-  <p class="sm">${L("गणना: KP (कृष्णमूर्ति) अयनांश, प्लेसिडस भाव, मीन राहु, विंशोत्तरी दशा। ग्रह स्थिति astronomy-engine से, स्विस एफ़ेमेरिस से मिलान की गई।", "Calculation: KP (Krishnamurti) ayanamsa, Placidus houses, mean Rahu, Vimshottari dasha. Planet positions from astronomy-engine, checked against the Swiss Ephemeris.")}</p></section>
+<section class="toc"><p class="chn">${L("अ नु क्र म णि का", "CONTENTS")}</p><h2>${L("इस कुण्डली में क्या है", "What this kundali contains")}</h2>
+  <div class="tocg">${tocCol(CH.slice(0, half), 0)}${tocCol(CH.slice(half), half)}</div>
+  ${noteBox(L("इस रिपोर्ट को कैसे पढ़ें", "How to read this report"), `<p>${L("यह कुण्डली <b>के.पी. (कृष्णमूर्ति पद्धति)</b> से बनाई गई है, जिसमें ग्रहों की गणना <b>के.पी. अयनांश</b> और भावों की गणना <b>प्लेसिडस पद्धति</b> से की गई है। हर विषय पर पहले ज्योतिषीय कारण दिए गए हैं, फिर सरल भाषा में उसका अर्थ। जिन बातों पर ज़्यादा भरोसे के साथ कहा जा सकता है, उन्हें <b>मोटे अक्षरों</b> या लाल पट्टी में दिखाया गया है।", "This kundali uses <b>KP (Krishnamurti Paddhati)</b>: planets with the <b>KP ayanamsa</b> and houses by the <b>Placidus system</b>. Each subject gives the astrological reason first, then its meaning in plain words. Points that can be stated with more confidence are in <b>bold</b> or a red band.")}</p><p>${L("ज्योतिष संकेत देता है, अंतिम निर्णय आपके कर्म और विवेक का होता है। इस रिपोर्ट को मार्गदर्शन की तरह पढ़ें, डर या बंधन की तरह नहीं।", "Astrology indicates; the final decision belongs to your actions and judgement. Read this as guidance, not as fear or bondage.")}</p>`)}
+</section>
 ${body}
-<section class="close">${stampSvg(100)}<div><p><b>${L("ज्योतिष तर्क, लखनऊ", "Jyotish Tark, Lucknow")}</b><br>jyotishtark.in · WhatsApp +91 83185 13814</p>
-<p class="sm">${L("यह रिपोर्ट KP ज्योतिष पर आधारित सामान्य मार्गदर्शन है। यह किसी परिणाम की गारंटी नहीं है और चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।", "This report is general guidance based on KP astrology. It does not guarantee any result and is not a substitute for medical, legal or financial advice.")}</p></div></section>
+<section class="close">${stampSvg(96)}<div><p><b>${L("ज्योतिषी ज्ञानेंद्र सिंह तोमर · ज्योतिष तर्क, लखनऊ", "Astrologer Gyanendra Singh Tomar · Jyotish Tark, Lucknow")}</b><br>jyotishtark.in · WhatsApp +91 83185 13814 · ${L("तैयार", "Prepared")}: ${dfull(now)}</p>
+<p class="sm">${L("यह रिपोर्ट ज्योतिषीय गणना पर आधारित सामान्य मार्गदर्शन है। यह किसी परिणाम की गारंटी नहीं है और चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।", "This report is general guidance based on astrological calculation. It does not guarantee any result and is not a substitute for medical, legal or financial advice.")}</p></div></section>
 </body></html>`;
+      return hi ? out : out.replace(/।/g, ".");
+    }
   }
 
-  const CSS = `@page{size:A4;margin:14mm 13mm 16mm}@page:first{margin:0}
-*{box-sizing:border-box}html,body{margin:0;background:#fff;color:#2B1810;font-family:Mukta,'Noto Sans Devanagari',sans-serif;font-size:11.2pt;line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-@media screen{body{max-width:210mm;margin:0 auto;padding:0 0 10mm;background:#fff}.ch,.toc,.close{padding-left:12mm;padding-right:12mm}}
-.cover{width:210mm;height:297mm;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#8E2A2A 0%,#5A1414 55%,#3A0B0B 100%);color:#F7E7C1;text-align:center;break-after:page;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20mm}
-.cover .fr{position:absolute;inset:9mm;border:1.6px solid #E9C46A;border-radius:3mm}.cover .fr2{position:absolute;inset:12mm;border:.6px solid #E9C46A;border-radius:2mm}
-.cover .k{letter-spacing:.3em;font-size:11pt;color:#E9C46A;font-weight:700;margin:10px 0 4px}
-.cover h1{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:32pt;margin:4px 0;color:#FBEFD0;line-height:1.2}.cover .sub{margin:0;color:#F3DFAE;font-size:11pt}
-.cover .nm{font-family:'Tiro Devanagari Hindi',serif;font-size:23pt;margin:12px 0 2px;color:#fff}.cover .dob{font-size:12pt;color:#F3DFAE;margin:0}
-.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin:9mm 0 7mm;width:160mm}
-.cb{border:1px solid #E9C46A;border-radius:3mm;padding:3.5mm 2mm;background:rgba(0,0,0,.18)}.cb small{display:block;font-size:9.5pt;color:#E9C46A;font-weight:700}.cb b{display:block;font-size:16pt;line-height:1.25;color:#fff;margin:1mm 0}.cb span{font-size:9.5pt;color:#F3DFAE}
-.seal{background:#FBF4E4;border-radius:50%;padding:3mm;display:inline-block}
-.cover .ft{position:absolute;bottom:15mm;left:0;right:0;font-size:9.8pt;color:#E9C46A;line-height:1.6}
-.toc{break-after:page;padding-top:2mm}.toc ol{list-style:none;padding:0;margin:2mm 0 4mm}.toc li{padding:1.1mm 0;border-bottom:1px dotted #D9C6A0;font-size:11pt;line-height:1.45}.toc li span{display:inline-block;width:26mm;color:#7A5410;font-size:10pt}
-.ch{margin-top:8mm;padding-top:4mm;border-top:2px solid #C9A227}.toc+.ch{margin-top:0;border-top:0;padding-top:0}
-.chn{break-after:avoid;margin:0;color:#B8892B;font-weight:700;letter-spacing:.08em;font-size:10pt;text-transform:uppercase}
-h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;color:#7A1F1F;font-size:19pt;margin:1mm 0 4mm;padding-bottom:2mm;border-bottom:.8px solid #E3D3B0;line-height:1.3;break-after:avoid}
-h3{font-size:12.5pt;color:#7A1F1F;margin:4.5mm 0 1.5mm;break-after:avoid}h3 small{font-weight:400;color:#6B5444;font-size:10pt}
-p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:1mm 0}.sm{font-size:9.6pt;color:#5B4B37}
-table.t{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:10.6pt}table.t th{background:#7A1F1F;color:#fff;text-align:left;padding:1.8mm 2mm;font-weight:600}table.t td{border-bottom:1px solid #EADCC0;padding:1.6mm 2mm;vertical-align:top}table.t tr{break-inside:avoid}table.t td.n{font-weight:700;color:#7A1F1F;white-space:nowrap}table.t tr.cur td{background:#FFF6DD}
-table.sm2{font-size:9.8pt}table.sm2 th{font-size:9.4pt}table.kv td:nth-child(odd){color:#6B5444;width:22%}
-.box{border:1px solid #EADCC0;background:#FBF6EC;border-radius:2mm;padding:3mm 4mm;margin:2.5mm 0;break-inside:avoid}.box.up{border-color:#C9A227;background:#FFF8E6}
-.note{border:.5mm solid #C9A227;border-radius:2mm;background:#FBF6EC;padding:4mm 5mm}
-.chw{display:grid;grid-template-columns:86mm 1fr;gap:6mm;align-items:start}.nchart{width:86mm;height:86mm}.nchart .cn{font:600 13px Mukta,sans-serif;fill:#B8892B;text-anchor:middle}.nchart .cp{font:700 14px Mukta,sans-serif;fill:#7A1F1F;text-anchor:middle}
-.area{border-left:3px solid #C9A227;padding:1mm 0 1mm 4mm;margin:4mm 0 5mm}.area h3{margin-top:1mm}.calc{font-size:9.8pt;color:#4A3628;background:#FBF6EC;border-radius:1.5mm;padding:1.5mm 2.5mm}.tip{color:#14532D}
-.vb{display:inline-block;font-size:9pt;font-weight:700;border-radius:10mm;padding:.3mm 2.5mm;margin-left:1.5mm;vertical-align:middle}.v-good{background:#DCFCE7;color:#14532D}.v-mixed{background:#FEF3C7;color:#7A4A06}.v-mid{background:#E0E7FF;color:#1E3A8A}.v-weak{background:#FEE2E2;color:#7F1D1D}
-.per{columns:2;column-gap:6mm}.per li{break-inside:avoid}.t-good{color:#14532D}.t-care{color:#9A3412}.t-mid{color:#1E3A8A}
-.rem li{margin:1.5mm 0}
-.close{margin-top:9mm;display:flex;gap:6mm;align-items:center;border-top:1.5px solid #C9A227;padding-top:5mm;break-inside:avoid}`;
+  const CSS = `@page{size:A4;margin:16mm 14mm 17mm}@page:first{margin:0}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:#2B1810;font-family:'Noto Sans Devanagari',Mukta,sans-serif;font-size:10.6pt;line-height:1.72;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media screen{body{max-width:210mm;margin:0 auto;padding:0 0 10mm}.ch,.toc,.close{padding-left:13mm;padding-right:13mm}}
+.cover{width:210mm;height:297mm;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#5E1A22 0%,#43101A 55%,#2C0A10 100%);color:#F3D99A;text-align:center;break-after:page;display:flex;flex-direction:column;align-items:center;padding:13mm 18mm 0}
+.cover .fr{position:absolute;inset:7mm;border:1.4px solid #C9962E}.cover .fr2{position:absolute;inset:9.5mm;border:.6px solid #C9962E}
+.cover i{position:absolute;width:16mm;height:16mm;border:1.4px solid #C9962E}.cn1{top:5mm;left:5mm;border-right:0!important;border-bottom:0!important;border-radius:6mm 0 0 0}.cn2{top:5mm;right:5mm;border-left:0!important;border-bottom:0!important;border-radius:0 6mm 0 0}.cn3{bottom:5mm;left:5mm;border-right:0!important;border-top:0!important;border-radius:0 0 0 6mm}.cn4{bottom:5mm;right:5mm;border-left:0!important;border-top:0!important;border-radius:0 0 6mm 0}
+.ganesh{margin:3mm 0 2mm;font-size:12.5pt;color:#E9C46A;letter-spacing:.06em}
+.wheel{width:132mm;height:132mm}
+.cover h1{font-family:'Yatra One','Tiro Devanagari Hindi',serif;font-weight:400;font-size:40pt;margin:2mm 0 0;color:#F3D99A;line-height:1.25}
+.cover .sub{margin:1mm 0 0;font-size:12pt;color:#F1E3C2}.orn2{margin:2mm 0;color:#E9C46A;font-size:13pt}.tags{margin:0 0 1mm;font-size:10pt;color:#E3CFA2}
+.cover .nm{font-family:'Tiro Devanagari Hindi',serif;font-size:17pt;margin:1mm 0 3mm;color:#fff}
+.cbox{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm 4mm;border:1px solid #C9962E;padding:4mm 6mm;width:150mm}.cbox small{display:block;font-size:8.5pt;color:#D9BE85}.cbox b{display:block;font-size:11.5pt;color:#fff;line-height:1.35}
+.cover p{text-align:center}.cft{position:absolute;bottom:13mm;left:0;right:0;font-size:8.6pt;color:#C9962E;margin:0}
+.chn{break-after:avoid;margin:0;color:#B8892B;font-weight:700;letter-spacing:.12em;font-size:8.5pt}
+h2{font-family:'Yatra One','Tiro Devanagari Hindi',serif;font-weight:400;color:#7A1F1F;font-size:23pt;margin:0 0 5mm;padding-bottom:3mm;border-bottom:2px solid #B8892B;line-height:1.3;break-after:avoid}
+h3{font-family:'Yatra One','Tiro Devanagari Hindi',serif;font-weight:400;font-size:14.5pt;color:#7A1F1F;margin:6mm 0 2mm;break-after:avoid}h4{font-size:11pt;color:#5A1414;margin:4mm 0 1.5mm;break-after:avoid}
+p{margin:1.8mm 0;text-align:justify}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:1.2mm 0}.sm{font-size:9pt;color:#7A5A3A}
+.toc{break-after:page;padding-top:6mm}.tocg{display:grid;grid-template-columns:1fr 1fr;gap:0 10mm}.tocg ol{list-style:none;padding:0;margin:0}.tocg li{display:flex;gap:6mm;padding:2.2mm 0;border-bottom:1px dotted #D9C6A0;font-size:10.5pt;margin:0}.tocg li span{color:#B8892B;font-weight:700;width:7mm;flex:none}
+.ch{margin-top:10mm}.toc+.ch{margin-top:0}
+table{border-collapse:collapse;width:100%}table.t{margin:2.5mm 0 3.5mm;font-size:9.8pt}table.t th{background:#7A1F1F;color:#fff;text-align:left;padding:2.2mm 2.5mm;font-weight:600}table.t td{border-bottom:1px solid #EADCC0;padding:2mm 2.5mm;vertical-align:top}table.t tbody tr:nth-child(odd) td{background:#FFF9F0}table.t tr{break-inside:avoid}table.t tr.cur td{background:#F9E3B0!important;font-weight:600}
+table.sm2{font-size:9pt}table.sm2 th{font-size:8.6pt}
+table.kv2{border:1px solid #E5D3AE;margin:2.5mm 0 4mm;font-size:9.8pt}table.kv2 td{padding:2.3mm 3mm;border-bottom:1px solid #EFE2C8}table.kv2 td:nth-child(odd){color:#7A5A3A}table.kv2 td:nth-child(2){text-align:right;border-right:1px solid #E5D3AE}table.kv2 td:nth-child(4){text-align:right}table.kv2 tr{break-inside:avoid}
+.nb{border-left:3px solid #B8892B;background:#FCF3E4;padding:3.5mm 5mm;margin:4mm 0;break-inside:avoid}.nb.red{border-left-color:#7A1F1F;background:#FBEFEA}.nb .nt{display:block;color:#5A1414;margin-bottom:1mm}
+.sum{background:linear-gradient(90deg,#7A1F1F,#A5372A);color:#FFF4E2;padding:4mm 5mm;margin:4mm 0;break-inside:avoid;line-height:1.75}.sum b{color:#F7D58A}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin:3mm 0}.cards3>div{border:1px solid #E5D3AE;border-left:3px solid #B8892B;background:#FCF3E4;padding:3.5mm 4mm}.cards3 p{text-align:left;font-size:9.8pt}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:6mm 8mm;align-items:center}.charts figure{margin:0;text-align:center;break-inside:avoid}.charts figcaption{font-size:9pt;color:#7A1F1F;font-weight:600;margin-top:2mm}.charts .nb{margin:0}
+.nchart{width:100%;height:auto}.nchart .cn{font:600 13px Mukta,sans-serif;fill:#B8892B;text-anchor:middle}.nchart .cp{font:700 14px 'Noto Sans Devanagari',Mukta,sans-serif;fill:#5A1414;text-anchor:middle}
+.r{color:#B91C1C;font-weight:700;font-size:8.5pt}
+.dl{display:grid;grid-template-columns:34mm 1fr;gap:1.5mm 4mm;margin:2mm 0}.dl dt{color:#7A1F1F;font-weight:700}.dl dd{margin:0}
+.bars{margin:2mm 0}.br{display:grid;grid-template-columns:42mm 1fr 12mm;gap:4mm;align-items:center;margin:1.6mm 0;break-inside:avoid}.br span{font-size:9.6pt}.br i{display:block;height:3.4mm;border-radius:2mm;background:#F2E3C6;overflow:hidden}.br em{display:block;height:100%;border-radius:2mm;background:linear-gradient(90deg,#B8892B,#7A1F1F)}.br b{font-size:9pt;color:#7A5A3A;font-weight:500;text-align:right}
+.chips{display:flex;flex-wrap:wrap;gap:2mm;margin:2mm 0}.chips span{border:1px solid #D4B072;background:#FCF0D8;border-radius:5mm;padding:.6mm 3mm;font-size:9pt}
+.tl{border-left:2px solid #B8892B;margin:3mm 0 3mm 2mm;padding-left:6mm}.ti{position:relative;margin:0 0 4mm;break-inside:avoid}.ti:before{content:"";position:absolute;left:-8.4mm;top:1.2mm;width:3.6mm;height:3.6mm;border-radius:50%;background:#7A1F1F;border:1px solid #fff}.tt{margin:0;color:#7A1F1F;font-weight:700;font-size:9.8pt;text-align:left}.ti p{margin:.8mm 0}.ti ul{margin:1mm 0}
+.vb{display:inline-block;font-family:'Noto Sans Devanagari',Mukta,sans-serif;font-size:8.6pt;font-weight:700;border-radius:10mm;padding:.2mm 2.5mm;margin-left:2mm;vertical-align:middle}.v-good{background:#DCFCE7;color:#14532D}.v-mixed{background:#FEF3C7;color:#7A4A06}.v-mid{background:#E0E7FF;color:#1E3A8A}.v-weak{background:#FEE2E2;color:#7F1D1D}
+.calc{font-size:9.2pt;color:#4A3628;background:#FBF4E6;border-radius:1.5mm;padding:1.8mm 3mm;text-align:left}
+.area{margin:4mm 0}
+.yg{border-left:3px solid #B8892B;background:#FCF3E4;padding:3mm 5mm;margin:3mm 0;break-inside:avoid}.yg.care{border-left-color:#7A1F1F;background:#FBEFEA}.yg b{color:#5A1414}.yg p{margin:1mm 0 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.orn{text-align:center;color:#B8892B;margin:6mm 0 2mm}.fin{text-align:center;font-size:9pt;color:#5B4B37}
+.close{margin-top:8mm;display:flex;gap:6mm;align-items:center;border-top:1.5px solid #B8892B;padding-top:5mm;break-inside:avoid}.close p{text-align:left}`;
 
   window.JTKPReport = { build };
 })();
