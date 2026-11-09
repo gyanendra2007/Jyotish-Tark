@@ -33,14 +33,15 @@ window.JTPromo = (function () {
   .jtpr form{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
   .jtpr input{flex:1 1 160px;padding:10px 12px;border:1px solid #B9A88E;border-radius:10px;font:inherit;font-size:16px;text-transform:uppercase;min-height:46px;background:#fff;color:#2B1810}
   .jtpr button{min-height:46px;padding:8px 16px;border:0;border-radius:10px;background:#7A1F1F;color:#fff;font:inherit;font-weight:700;cursor:pointer}
-  .jtpr p{margin:6px 0 0;font-weight:600;color:#4A3628}
+  .jtpr p{margin:6px 0 0;font-weight:600;color:#4A3628}.jtpr-n{display:block;margin-top:6px;font-size:13px;opacity:.85}
   .sp-cta .jtpr{max-width:420px;margin:14px auto 0;border-top-color:rgba(241,217,154,.5)}.sp-cta .jtpr summary{color:#F1D99A}.sp-cta .jtpr p{color:#FBF6EC}.sp-cta .jtpr button{background:#F1D99A;color:#5A1414}`;
   function ui(host, product, onApply, lang) {
     if (!host) return;
     if (!document.getElementById("jtpr-css")) { const s = document.createElement("style"); s.id = "jtpr-css"; s.textContent = CSS; document.head.appendChild(s); }
     const en = lang === "en", T = (h, e) => (en ? e : h);
-    host.innerHTML = `<details class="jtpr"><summary>${T("प्रोमो कोड है?", "Have a promo code?")}</summary>
+    host.innerHTML = `<details class="jtpr"><summary>${T("🎟️ प्रोमो कोड है? यहीं लगाएँ", "🎟️ Have a promo code? Apply it here")}</summary>
       <form novalidate><input name="c" type="text" autocomplete="off" aria-label="${T("प्रोमो कोड", "Promo code")}" placeholder="${T("प्रोमो कोड", "Promo code")}"><button type="submit">${T("लागू करें", "Apply")}</button></form>
+      <small class="jtpr-n">${T("कोड इसी पेज पर डालें — Cashfree के भुगतान पेज पर कोड नहीं लगता।", "Enter the code on this page — it does not work on the Cashfree payment page.")}</small>
       <p aria-live="polite"></p></details>`;
     const f = host.querySelector("form"), msg = host.querySelector("p");
     f.addEventListener("submit", async (e) => {
