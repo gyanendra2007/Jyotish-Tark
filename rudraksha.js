@@ -27,7 +27,11 @@ window.JTR_PAY = Object.assign({
     "vidya": "jtr-vidya-combo", "vidya-c": "jtr-vidya-combo-cert",
     "dhan": "jtr-dhan-combo", "dhan-c": "jtr-dhan-combo-cert",
     "shakti": "jtr-shakti-combo", "shakti-c": "jtr-shakti-combo-cert",
-    "vivah": "jtr-vivah-combo", "vivah-c": "jtr-vivah-combo-cert"
+    "vivah": "jtr-vivah-combo", "vivah-c": "jtr-vivah-combo-cert",
+    "saraswati": "jtr-saraswati-bandh", "saraswati-c": "jtr-saraswati-bandh-cert",
+    "business": "jtr-business-bandh", "business-c": "jtr-business-bandh-cert",
+    "swasthya": "jtr-swasthya-bandh", "swasthya-c": "jtr-swasthya-bandh-cert",
+    "water": "jtr-water-beads", "water-c": "jtr-water-beads-cert"
   }
 }, window.JTR_PAY || {});
 
