@@ -257,12 +257,14 @@
         ${tile(L(`व्यक्तिगत वर्ष ${Y}`, `Personal year ${Y}`), py, PM[py][hi() ? 0 : 1], L("इस साल का विषय", "This year's theme"))}
       </div>
       <p class="nm-oneline"><b>${L("एक लाइन में", "In one line")}:</b> ${one}</p>
+      <div class="nm-upsell"><span><b>${L("17 पेज की विस्तृत रिपोर्ट — ₹299", "17-page detailed report — ₹299")}</b> · ${L("स्वभाव, करियर, विवाह, 12 महीने का फल, नाम सुधार", "nature, career, marriage, 12-month forecast, name correction")}</span><a href="#nm-paid-card">${L("नमूना देखें व बनवाएँ ↓", "See sample & order ↓")}</a></div>
       <div class="nm-today"><span>${L("आज का आपका अंक", "Your number today")}</span><b>${M.pdToday}</b><p>${C2.PD ? H2(C2.PD[M.pdToday]) : ""}</p></div>
       ${S.map(([t, h]) => `<div class="nm-card"><h4>${t}</h4>${h}</div>`).join("")}
-      <div class="nm-paid">
+      <div class="nm-paid" id="nm-paid-card">
         <div><span class="nm-paid-tag">${L("विस्तृत रिपोर्ट · ₹299", "Detailed report · ₹299")}</span>
-        <h4>${L("16+ पेज की विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "16+ page detailed numerology report + name correction")}</h4>
+        <h4>${L("17 पेज की विस्तृत अंक ज्योतिष रिपोर्ट + नाम सुधार", "17-page detailed numerology report + name correction")}</h4>
         <ul><li>${L("19 अध्याय — जीवनसाथी, आत्मांक, बाह्यांक, कर्म अंक, जीवन के चार चरण, 9 वर्ष का चक्र", "19 chapters — life partner, soul urge, personality, karmic numbers, life stages, 9-year cycle")}</li><li>${L("नाम सुधार के विकल्प, मोबाइल नंबर, शुभ तारीख़ें और उपाय", "Name spelling options, mobile number, lucky dates and remedies")}</li><li>${L("भुगतान के तुरंत बाद इसी पेज पर PDF — इंतज़ार नहीं", "PDF on this page right after payment — no waiting")}</li></ul>
+        <div class="nm-smp-mini" aria-label="${L("नमूना पेज", "Sample pages")}">${[1, 2, 3, 4, 5, 6, 7].map((k) => `<a href="#nm-sample"><img src="images/nm-sample-${hi() ? "hi" : "en"}-${k}.webp" width="74" height="105" alt="" loading="lazy"></a>`).join("")}</div>
         <div class="nm-plang" role="radiogroup" aria-label="${L("रिपोर्ट की भाषा", "Report language")}"><span>${L("रिपोर्ट की भाषा", "Report language")}:</span>
           <label><input type="radio" name="nmProLang" value="hi"${hi() ? " checked" : ""}> हिंदी</label><label><input type="radio" name="nmProLang" value="en"${hi() ? "" : " checked"}> English</label></div></div>
         <div><a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
@@ -490,6 +492,7 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
       el.setAttribute("placeholder", hi() ? el.getAttribute("data-ph-hi") : el.getAttribute("data-ph-en"));
     });
     document.querySelectorAll("option[data-en]").forEach(() => {});
+    document.querySelectorAll("img[data-nmsample]").forEach((im) => { im.src = `images/nm-sample-${hi() ? "hi" : "en"}-${im.getAttribute("data-nmsample")}.webp`; });
     document.querySelectorAll("[data-nm-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-nm-lang") === LANG)));
     const mo = document.getElementById("nmMainOut"); if (mo && mo.innerHTML.trim() && lastMain) mainReport();
     const no = document.getElementById("nmMobOut"); if (no && no.querySelector(".nm-res")) numberReport();
@@ -497,6 +500,11 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
   }
 
   function init() {
+    document.querySelectorAll("[data-nmgo]").forEach((a) => a.addEventListener("click", (e) => {
+      const pc = document.getElementById("nm-paid-card");
+      if (pc) { e.preventDefault(); pc.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+      setTimeout(() => { const d = document.querySelector('#nmMainForm input[name="dob"]'); if (d) d.focus({ preventScroll: true }); }, 500);
+    }));
     const mf = document.getElementById("nmMainForm"), nf = document.getElementById("nmMobForm"), lf = document.getElementById("nmMilForm");
     if (mf) mf.addEventListener("submit", mainReport);
     if (nf) {
