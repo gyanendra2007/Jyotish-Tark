@@ -11,7 +11,7 @@
      https://jyotishtark.in/rudraksha.html?jtpaid=rud
    ========================================================================== */
 window.JTR_PAY = Object.assign({
-  cashfreeReady: false,
+  cashfreeReady: true,
   base: "https://payments.cashfree.com/forms/",
   whatsapp: "918318513814",
   forms: {
