@@ -102,7 +102,7 @@
     try {
       if (!order.delivered) {
         order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order));
-        if (window.gtag) window.gtag("event", "purchase", { transaction_id: order.o || "", value: 1101, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] });
+        if (window.gtag) window.gtag("event", "purchase", { transaction_id: order.o || "", value: order.promo === 100 ? 0 : order.promo === 50 ? 550 : 1101, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] });
       }
     } catch (e) { /* ignore */ }
   }

@@ -210,7 +210,7 @@
 
     out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
       <ol><li>Cashfree के सुरक्षित पेज पर ₹${PRICE.toLocaleString("en-IN")} का ऑनलाइन भुगतान करें</li><li>पेमेंट फ़ॉर्म में जन्म विवरण और ऑर्डर नंबर भरें</li><li>भुगतान के तुरंत बाद पूरी कुंडली PDF में पाएँ</li></ol>
-      <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button></section>
+      <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button><div id="spPromoHost"></div></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
       <div class="sp-hand"><b>ज्योतिषी द्वारा हस्तनिर्मित कुंडली — ₹${HAND.toLocaleString("en-IN")}</b><p>ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली का अध्ययन करके लिखते हैं · 5–7 दिन में · <a href="#" id="spHandBtn">ऑर्डर करें</a></p></div>
       <p class="sp-foot">ज्योतिष मार्गदर्शन है, गारंटी नहीं। स्वास्थ्य संबंधी किसी भी विषय में डॉक्टर की सलाह सबसे पहले।</p>`);
@@ -266,6 +266,14 @@
       try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: order.orderId, n: order.name || "", g: g, m: u.get("m"), d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now() })); } catch (e) { /* ignore */ }
       window.JTPay.render(payHost, order);
       try { if (window.gtag) window.gtag("event", "begin_checkout", { value: PRICE, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] }); } catch (e) { /* ignore */ }
+    });
+    if (window.JTPromo) window.JTPromo.ui(host.querySelector("#spPromoHost"), "sampurna", (off, h, msg) => {
+      const o = res.order || {};
+      if (!o.dob || !o.name) { msg.textContent = "कोड सही है — पहले ऊपर जन्म विवरण भरकर कुंडली बनाएँ।"; return false; }
+      const pl = document.getElementById("birthPlace") || { dataset: {} };
+      const oid = (window.JTPay && window.JTPay.newOrderId) ? window.JTPay.newOrderId() : "JT" + Date.now().toString(36).toUpperCase();
+      try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: oid + (off === 100 ? "-P" : "-H"), n: o.name || "", g: (document.getElementById("userGender") || {}).value || "", m: (document.getElementById("spMarital") || {}).value || "", d: o.dob || "", t: o.tob || "", p: o.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now(), promo: off })); } catch (e) { /* ignore */ }
+      if (off === 100) { msg.textContent = "कोड लागू — आपकी सम्पूर्ण कुंडली बन रही है…"; setTimeout(() => { location.href = "kundali-form.html?jtpaid=sampurna"; }, 500); return false; }
     });
     host.querySelector("#spHandBtn").addEventListener("click", (e) => {
       e.preventDefault();

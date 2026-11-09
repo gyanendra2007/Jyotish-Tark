@@ -266,7 +266,7 @@
         <div class="nm-plang" role="radiogroup" aria-label="${L("रिपोर्ट की भाषा", "Report language")}"><span>${L("रिपोर्ट की भाषा", "Report language")}:</span>
           <label><input type="radio" name="nmProLang" value="hi"${hi() ? " checked" : ""}> हिंदी</label><label><input type="radio" name="nmProLang" value="en"${hi() ? "" : " checked"}> English</label></div></div>
         <div><a class="nm-btn nm-wa" href="https://payments.cashfree.com/forms/jyotishtarknumerology" data-paid>${L("₹299 का भुगतान करें", "Pay ₹299")}</a>
-        <p class="nm-small" style="margin:.4rem 0 0">${M.name ? L("रिपोर्ट इसी नाम और जन्मतिथि से बनेगी। भुगतान उसी फ़ोन/ब्राउज़र से करें।", "The report uses this name and date of birth. Pay from this same phone/browser.") : L("विस्तृत रिपोर्ट के लिए ऊपर अपना पूरा नाम भी लिखें।", "For the detailed report, also enter your full name above.")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">${L("सहायता", "Help")}</a></p></div>
+        <p class="nm-small" style="margin:.4rem 0 0">${M.name ? L("रिपोर्ट इसी नाम और जन्मतिथि से बनेगी। भुगतान उसी फ़ोन/ब्राउज़र से करें।", "The report uses this name and date of birth. Pay from this same phone/browser.") : L("विस्तृत रिपोर्ट के लिए ऊपर अपना पूरा नाम भी लिखें।", "For the detailed report, also enter your full name above.")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">${L("सहायता", "Help")}</a></p><div data-promo></div></div>
       </div>
       <div class="nm-actions">
         <button type="button" class="nm-btn" data-pdf>${L("PDF रिपोर्ट डाउनलोड करें", "Download PDF report")}</button>
@@ -281,6 +281,13 @@
       try { localStorage.setItem("jt-nm-order", JSON.stringify({ dob: f.dob.value, name: M.name, lang: pl2, ts: Date.now() })); } catch (e2) { /* ignore */ }
       track("numerology_paid_click", { price: 299, lang: pl2 });
     });
+    if (window.JTPromo) window.JTPromo.ui(out.querySelector("[data-promo]"), "nm", (off, h, msg) => {
+      if (!M.name) { msg.textContent = L("कोड सही है — पहले ऊपर अपना पूरा नाम लिखें।", "Code accepted — first enter your full name above."); return false; }
+      const pl2 = (out.querySelector('input[name="nmProLang"]:checked') || {}).value || LANG;
+      try { localStorage.setItem("jt-nm-order", JSON.stringify({ dob: f.dob.value, name: M.name, lang: pl2, ts: Date.now(), promo: off })); } catch (e2) { /* ignore */ }
+      track("numerology_promo", { off, lang: pl2 });
+      if (off === 100) { msg.textContent = L("कोड लागू — रिपोर्ट बन रही है…", "Code applied — making your report…"); setTimeout(() => { location.href = "numerology.html?jtpaid=nm"; }, 500); return false; }
+    }, LANG);
     if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });
     track("numerology_report", { mulank: p.mulank, lang: LANG });
   }

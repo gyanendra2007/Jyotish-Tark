@@ -64,7 +64,7 @@
     try {
       if (!order.delivered) {
         order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order));
-        if (window.gtag) window.gtag("event", "purchase", { value: 299, currency: "INR", items: [{ item_name: "Numerology report" }] });
+        if (window.gtag) window.gtag("event", "purchase", { value: order.promo === 100 ? 0 : order.promo === 50 ? 149 : 299, currency: "INR", items: [{ item_name: "Numerology report" }] });
       }
     } catch (e) { /* ignore */ }
   }

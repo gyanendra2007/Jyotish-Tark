@@ -157,10 +157,17 @@
       e.preventDefault();
       const msg = $("kpPromoMsg"), code = pf.kpPromo.value.trim().toUpperCase();
       if (!code) { msg.textContent = "कृपया कोड लिखें।"; return; }
-      let ok = false;
-      try { ok = (await sha256(code)) === PROMO_HASH; } catch (er) { ok = false; }
-      if (!ok) { msg.textContent = "यह कोड मान्य नहीं है।"; return; }
+      let off = 0;
+      try { off = window.JTPromo ? await window.JTPromo.check(code) : ((await sha256(code)) === PROMO_HASH ? 100 : 0); } catch (er) { off = 0; }
+      if (!off) { msg.textContent = "यह कोड मान्य नहीं है।"; return; }
       const o = readForm(); if (!o) { msg.textContent = "कोड सही है — पहले ऊपर का विवरण भरें।"; return; }
+      if (off === 50) {
+        const h = window.JTPromo.HALF.kp;
+        saveOrder(o, { promo: 50 }); ga("kp_promo50"); ga("begin_checkout", { value: h.price, currency: "INR", items: [{ item_name: "KP report (50% promo)" }] });
+        msg.textContent = `कोड सही है — 50% छूट। ₹${h.price} का भुगतान पेज खुल रहा है…`;
+        setTimeout(() => { location.href = h.link; }, 600);
+        return;
+      }
       msg.textContent = "कोड लागू — रिपोर्ट बन रही है।";
       const ord = saveOrder(o, { promo: 1, delivered: Date.now() });
       ga("kp_promo");
@@ -178,7 +185,7 @@
       return;
     }
     buildAndShow(order, true, order.oid);
-    try { if (!order.delivered) { order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order)); ga("purchase", { transaction_id: order.oid, value: 299, currency: "INR", items: [{ item_name: "KP report" }] }); } } catch (e) { /* ignore */ }
+    try { if (!order.delivered) { order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order)); ga("purchase", { transaction_id: order.oid, value: order.promo === 50 ? 149 : 299, currency: "INR", items: [{ item_name: "KP report" }] }); } } catch (e) { /* ignore */ }
   }
 
   function start() {
