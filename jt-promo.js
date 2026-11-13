@@ -51,7 +51,7 @@ window.JTPromo = (function () {
       const h = HALF[product];
       msg.textContent = off === 100 ? T("कोड सही है — 100% छूट।", "Code accepted — 100% off.") : T(`कोड सही है — 50% छूट, अब केवल ₹${h.price}।`, `Code accepted — 50% off, now only ₹${h.price}.`);
       try { if (window.gtag) window.gtag("event", "promo_apply", { product, off }); } catch (er) { /* ignore */ }
-      const r = onApply(off, h, msg);
+      const r = onApply(off, h, msg, f.c.value.trim().toUpperCase().replace(/\s+/g, ""));
       if (r === false) return;
       if (off === 50) setTimeout(() => { location.href = h.link; }, 600);
     });

@@ -71,6 +71,14 @@
   }
 
   function start() {
+    if (window.JTCheckout && window.JTCheckout.enabled() && !window.__nmVerified) {
+      window.JTCheckout.confirm("nm", (so, oid) => {
+        order = { dob: so.dob, name: so.name, lang: so.lang || "hi", ts: Date.now(), oid, promo: Number(so.amount) === 0 ? 100 : 0 };
+        try { localStorage.setItem(KEY, JSON.stringify(order)); } catch (e) { /* ignore */ }
+        window.__nmVerified = true; start();
+      }, order && order.lang);
+      return;
+    }
     const s = document.createElement("style"); s.textContent = CSS; document.head.appendChild(s);
     document.documentElement.classList.add("jtx-on");
     if (!order || !order.dob || !order.name) {

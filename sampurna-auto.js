@@ -109,6 +109,14 @@
   }
 
   function start() {
+    if (window.JTCheckout && window.JTCheckout.enabled() && !window.__spVerified) {
+      window.JTCheckout.confirm("sampurna", (so, oid) => {
+        order = { o: oid, n: so.name, g: so.gender, m: so.status || "single", d: so.dob, t: so.time, p: so.place, lat: String(so.lat), lng: String(so.lng), ts: Date.now(), promo: Number(so.amount) === 0 ? 100 : 0 };
+        try { localStorage.setItem(KEY, JSON.stringify(order)); } catch (e) { /* ignore */ }
+        window.__spVerified = true; start();
+      }, "hi");
+      return;
+    }
     css();
     if (!order || !order.n || !order.d || !order.t || !order.lat) { noOrder(); return; }
     overlay(`<div class="jtx-spin" aria-hidden="true"></div><h2>आपकी सम्पूर्ण कुंडली बन रही है…</h2><p>भुगतान के लिए धन्यवाद, ${esc(order.n)} जी। कृपया यह पेज बंद न करें — इसमें कुछ सेकंड लगते हैं।</p>`);

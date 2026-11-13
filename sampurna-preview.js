@@ -257,6 +257,11 @@
     const pay = host.querySelector("#spPayBtn");
     pay.addEventListener("click", () => {
       const payHost = host.querySelector("#spPayHost");
+      if (window.JTCheckout && window.JTCheckout.enabled()) {
+        const o = res.order || {}, pl0 = document.getElementById("birthPlace") || { dataset: {} };
+        window.JTCheckout.pay("sampurna", { name: o.name || "", dob: o.dob || "", time: o.tob || "", place: o.pob || "", lat: pl0.dataset.lat || "", lng: pl0.dataset.lng || "", gender: (document.getElementById("userGender") || {}).value || "", marital: (document.getElementById("spMarital") || {}).value || "single", lang: "hi" }, { title: "सम्पूर्ण कुंडली" });
+        return;
+      }
       if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock"><a href="${PAY_LINK}" target="_blank" rel="noopener">₹${PRICE} का ऑनलाइन भुगतान करें (Cashfree) →</a></p>`; return; }
       const order = Object.assign({ orderId: window.JTPay.newOrderId(), amount: PRICE, payLink: PAY_LINK, product: "सम्पूर्ण कुंडली", delivery: "भुगतान के तुरंत बाद इसी पेज पर पूरी कुंडली बन जाएगी — PDF डाउनलोड करें।" }, res.order);
       const pl = document.getElementById("birthPlace") || { dataset: {} };
@@ -268,9 +273,14 @@
       window.JTPay.render(payHost, order);
       try { if (window.gtag) window.gtag("event", "begin_checkout", { value: PRICE, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] }); } catch (e) { /* ignore */ }
     });
-    if (window.JTPromo) window.JTPromo.ui(host.querySelector("#spPromoHost"), "sampurna", (off, h, msg) => {
+    if (window.JTPromo) window.JTPromo.ui(host.querySelector("#spPromoHost"), "sampurna", (off, h, msg, code) => {
       const o = res.order || {};
       if (!o.dob || !o.name) { msg.textContent = "कोड सही है — पहले ऊपर जन्म विवरण भरकर कुंडली बनाएँ।"; return false; }
+      if (window.JTCheckout && window.JTCheckout.enabled()) {
+        const pl0 = document.getElementById("birthPlace") || { dataset: {} };
+        window.JTCheckout.pay("sampurna", { name: o.name || "", dob: o.dob || "", time: o.tob || "", place: o.pob || "", lat: pl0.dataset.lat || "", lng: pl0.dataset.lng || "", gender: (document.getElementById("userGender") || {}).value || "", marital: (document.getElementById("spMarital") || {}).value || "single", lang: "hi" }, { promo: code, title: "प्रोमो कोड से सम्पूर्ण कुंडली" });
+        return false;
+      }
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const oid = (window.JTPay && window.JTPay.newOrderId) ? window.JTPay.newOrderId() : "JT" + Date.now().toString(36).toUpperCase();
       try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: oid + (off === 100 ? "-P" : "-H"), n: o.name || "", g: (document.getElementById("userGender") || {}).value || "", m: (document.getElementById("spMarital") || {}).value || "", d: o.dob || "", t: o.tob || "", p: o.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now(), promo: off })); } catch (e) { /* ignore */ }

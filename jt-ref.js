@@ -42,7 +42,7 @@ window.JTRef = (function () {
   function note(p, lang) {
     const f = offer(p); if (!f) return "";
     const en = lang === "en";
-    return `<div class="jtref-n">🎁 ${en ? `Friend's code <b>${code()}</b> applied — 10% off, only <b>₹${f.price}</b> <s>₹${f.full}</s>. On the payment page, write <b>${code()}</b> in “Referral code”.` : `मित्र का कोड <b>${code()}</b> लागू — 10% छूट, केवल <b>₹${f.price}</b> <s>₹${f.full}</s>। भुगतान पेज पर “Referral code” में <b>${code()}</b> लिखें।`}</div>`;
+    return `<div class="jtref-n">🎁 ${en ? `Friend's code <b>${code()}</b> applied — 10% off, only <b>₹${f.price}</b> <s>₹${f.full}</s>. ${window.JTCheckout && window.JTCheckout.enabled() ? "The discount applies automatically." : `On the payment page, write <b>${code()}</b> in “Referral code”.`}` : `मित्र का कोड <b>${code()}</b> लागू — 10% छूट, केवल <b>₹${f.price}</b> <s>₹${f.full}</s>। ${window.JTCheckout && window.JTCheckout.enabled() ? "छूट अपने-आप लगेगी।" : `भुगतान पेज पर “Referral code” में <b>${code()}</b> लिखें।`}`}</div>`;
   }
   const CSS = `.jtref-n{margin:10px 0;padding:10px 12px;border:1.5px dashed #4F9D63;border-radius:12px;background:#EEF8F0;color:#14532D;font-size:15px;line-height:1.5}
   .jtref{position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483000;max-width:460px;margin:0 auto;background:#FFFBF2;border:2px solid #E6C98A;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.3);padding:14px 16px;color:#2B1810;font-family:Mukta,sans-serif}

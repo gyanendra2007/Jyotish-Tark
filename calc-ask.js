@@ -163,12 +163,20 @@
       e.preventDefault(); const t = $("#akTxt").value.trim(); if (!t) return; $("#akTxt").value = "";
       const k = ORDER.find((x) => Q[x].k.test(t));
       if (k) ask(k, t);
-      else { say(t, `<p>इस प्रश्न के लिए अभी तैयार उत्तर नहीं है। ऊपर के प्रश्नों में से चुनें, या यह प्रश्न सीधे ज्योतिषी ज्ञानेन्द्र सिंह तोमर से पूछें — <a href="${ASK_LINK}" target="_blank" rel="noopener">₹101 में एक प्रश्न →</a> (उत्तर 24 घंटे में WhatsApp पर)।</p>`); C.track("ask_unmatched", {}); }
+      else { say(t, `<p>इस प्रश्न के लिए अभी तैयार उत्तर नहीं है। ऊपर के प्रश्नों में से चुनें, या यह प्रश्न सीधे ज्योतिषी ज्ञानेन्द्र सिंह तोमर से पूछें — <a class="ak-paid" href="${ASK_LINK}" target="_blank" rel="noopener">₹101 में एक प्रश्न →</a> (उत्तर 24 घंटे में WhatsApp पर)।</p>`); C.track("ask_unmatched", {}); }
     });
-    $("#akPaid").addEventListener("click", () => C.track("ask_paid_click", {}));
+    $("#akPaid").addEventListener("click", (e) => { C.track("ask_paid_click", {}); paidAsk(e); });
     C.track("ask_open", { age: Math.floor(K.age) });
     ch.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+  // ₹101 question: verified checkout when the order backend is live, else the Cashfree form link
+  function paidAsk(e) {
+    const CO = window.JTCheckout; if (!CO || !CO.enabled()) return;
+    e.preventDefault();
+    const o = K ? K.o : {};
+    CO.pay("prashna", { name: o.name || "", dob: o.dob || "", time: o.time || "", place: o.place || "", lat: o.lat, lng: o.lng, gender: K ? (K.female ? "female" : "male") : "", marital: K && K.married ? "married" : "single", lang: "hi" }, { question: true, title: "ज्योतिषी से एक प्रश्न" });
+  }
+  document.addEventListener("click", (e) => { const a = e.target.closest && e.target.closest("a.ak-paid"); if (a) paidAsk(e); });
   function say(q, html) {
     const log = $("#akLog");
     log.insertAdjacentHTML("beforeend", `<div class="ak-me">${esc(q)}</div><div class="ak-bot">${html}</div>`);
@@ -180,5 +188,7 @@
     C.track("ask_q", { q: k });
   }
   // paid-question return
-  if (/[?&]jtpaid=ask/.test(location.search)) host.insertAdjacentHTML("afterbegin", `<div class="jc-big ok"><div class="v">🙏</div><div class="t"><b>भुगतान के लिए धन्यवाद!</b><br>आपका प्रश्न मिल गया है। ज्योतिषी ज्ञानेन्द्र सिंह तोमर 24 घंटे के भीतर आपके WhatsApp नंबर पर उत्तर भेजेंगे।</div></div>`);
+  const thanks = () => host.insertAdjacentHTML("afterbegin", `<div class="jc-big ok"><div class="v">🙏</div><div class="t"><b>भुगतान के लिए धन्यवाद!</b><br>आपका प्रश्न मिल गया है। ज्योतिषी ज्ञानेन्द्र सिंह तोमर 24 घंटे के भीतर आपके WhatsApp नंबर पर उत्तर भेजेंगे।</div></div>`);
+  if (/[?&]jtpaid=prashna/.test(location.search) && window.JTCheckout && window.JTCheckout.enabled()) window.JTCheckout.confirm("prashna", () => thanks(), "hi");
+  else if (/[?&]jtpaid=ask/.test(location.search)) host.insertAdjacentHTML("afterbegin", `<div class="jc-big ok"><div class="v">🙏</div><div class="t"><b>भुगतान के लिए धन्यवाद!</b><br>आपका प्रश्न मिल गया है। ज्योतिषी ज्ञानेन्द्र सिंह तोमर 24 घंटे के भीतर आपके WhatsApp नंबर पर उत्तर भेजेंगे।</div></div>`);
 })();

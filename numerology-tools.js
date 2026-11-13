@@ -270,7 +270,7 @@
         <div class="nm-smp-mini" aria-label="${L("नमूना पेज", "Sample pages")}">${[1, 2, 3, 4, 5, 6, 7].map((k) => `<a href="#nm-sample"><img src="images/nm-sample-${hi() ? "hi" : "en"}-${k}.webp" width="74" height="105" alt="" loading="lazy"></a>`).join("")}</div>
         <div class="nm-plang" role="radiogroup" aria-label="${L("रिपोर्ट की भाषा", "Report language")}"><span>${L("रिपोर्ट की भाषा", "Report language")}:</span>
           <label><input type="radio" name="nmProLang" value="hi"${hi() ? " checked" : ""}> हिंदी</label><label><input type="radio" name="nmProLang" value="en"${hi() ? "" : " checked"}> English</label></div></div>
-        <div><a class="nm-btn nm-wa" href="${(window.JTRef && window.JTRef.link("nm")) || "https://payments.cashfree.com/forms/jyotishtarknumerology"}" data-paid>${window.JTRef && window.JTRef.offer("nm") ? L("₹269 का भुगतान करें (मित्र छूट)", "Pay ₹269 (friend offer)") : L("₹299 का भुगतान करें", "Pay ₹299")}</a>${window.JTRef ? window.JTRef.note("nm", LANG) : ""}
+        <div><a class="nm-btn nm-wa" href="${(window.JTRef && window.JTRef.link("nm")) || "https://payments.cashfree.com/forms/jyotishtarknumerology"}" data-paid>${window.JTCheckout && window.JTCheckout.enabled() && window.JTCheckout.currency("nm") === "USD" ? `Pay ${window.JTCheckout.price("nm").txt}` : window.JTRef && window.JTRef.offer("nm") ? L("₹269 का भुगतान करें (मित्र छूट)", "Pay ₹269 (friend offer)") : L("₹299 का भुगतान करें", "Pay ₹299")}</a>${window.JTRef ? window.JTRef.note("nm", LANG) : ""}
         <p class="nm-small" style="margin:.4rem 0 0">${M.name ? L("रिपोर्ट इसी नाम और जन्मतिथि से बनेगी। भुगतान उसी फ़ोन/ब्राउज़र से करें।", "The report uses this name and date of birth. Pay from this same phone/browser.") : L("विस्तृत रिपोर्ट के लिए ऊपर अपना पूरा नाम भी लिखें।", "For the detailed report, also enter your full name above.")} <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(paidMsg)}" target="_blank" rel="noopener">${L("सहायता", "Help")}</a></p><div data-promo></div></div>
       </div>
       <div class="nm-actions">
@@ -285,12 +285,14 @@
       const pl2 = (out.querySelector('input[name="nmProLang"]:checked') || {}).value || LANG;
       try { localStorage.setItem("jt-nm-order", JSON.stringify({ dob: f.dob.value, name: M.name, lang: pl2, ts: Date.now(), ref: window.JTRef && window.JTRef.offer("nm") ? window.JTRef.code() : "" })); } catch (e2) { /* ignore */ }
       track("numerology_paid_click", { price: 299, lang: pl2 });
+      if (window.JTCheckout && window.JTCheckout.enabled()) { ev.preventDefault(); window.JTCheckout.pay("nm", { name: M.name, dob: f.dob.value, lang: pl2 }, { title: L("विस्तृत अंक ज्योतिष रिपोर्ट", "Detailed numerology report"), lang: pl2 }); }
     });
-    if (window.JTPromo) window.JTPromo.ui(out.querySelector("[data-promo]"), "nm", (off, h, msg) => {
+    if (window.JTPromo) window.JTPromo.ui(out.querySelector("[data-promo]"), "nm", (off, h, msg, code) => {
       if (!M.name) { msg.textContent = L("कोड सही है — पहले ऊपर अपना पूरा नाम लिखें।", "Code accepted — first enter your full name above."); return false; }
       const pl2 = (out.querySelector('input[name="nmProLang"]:checked') || {}).value || LANG;
       try { localStorage.setItem("jt-nm-order", JSON.stringify({ dob: f.dob.value, name: M.name, lang: pl2, ts: Date.now(), promo: off })); } catch (e2) { /* ignore */ }
       track("numerology_promo", { off, lang: pl2 });
+      if (window.JTCheckout && window.JTCheckout.enabled()) { window.JTCheckout.pay("nm", { name: M.name, dob: f.dob.value, lang: pl2 }, { promo: code, title: L("प्रोमो कोड से रिपोर्ट", "Report with promo code"), lang: pl2 }); return false; }
       if (off === 100) { msg.textContent = L("कोड लागू — रिपोर्ट बन रही है…", "Code applied — making your report…"); setTimeout(() => { location.href = "numerology.html?jtpaid=nm"; }, 500); return false; }
     }, LANG);
     if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });

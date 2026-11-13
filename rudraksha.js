@@ -98,6 +98,7 @@ window.JTR_PAY = Object.assign({
       `सर्टिफिकेट: ${o.cert ? "हाँ, लैब सर्टिफिकेट सहित" : "नहीं"}`,
       `कुल राशि: ₹${inr(o.amt)}`,
       `भुगतान: ${o.pay === "cod" ? "कैश ऑन डिलीवरी" : "ऑनलाइन (Cashfree)"}`,
+      o.partner ? `पार्टनर कोड: ${o.partner}` : "",
       ``,
       `नाम: ${o.name}`, `मोबाइल: ${o.phone}`, `पता: ${o.addr}`, `शहर: ${o.city}  पिन: ${o.pin}`, `राज्य: ${o.state}`
     ].join("\n");
@@ -149,6 +150,7 @@ window.JTR_PAY = Object.assign({
       store.set("jtr_addr", { name: o.name, phone: o.phone, addr: o.addr, city: o.city, pin: o.pin, state: o.state });
       store.set("jtr_last", o);
       track("rudraksha_order", { item: id, cert: o.cert, pay: o.pay, value: o.amt });
+      try { const CO = window.JTCheckout, pt = CO && CO.partner(); if (pt) o.partner = pt.c; if (CO) CO.lead("rudraksha", { name: o.name, phone: o.phone, details: { order: o.oid, item: id, cert: o.cert, amount: o.amt, pay: o.pay, address: `${o.addr}, ${o.city}, ${o.state} ${o.pin}`, partner: o.partner || "" } }); } catch (x) { /* ignore */ }
       if (o.pay === "online") showPay(o); else showCod(o);
     });
     open();

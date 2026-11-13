@@ -10,6 +10,8 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const wa = (t) => "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
   const ga = (n, p) => { try { if (window.gtag) window.gtag("event", n, p || {}); } catch (e) { /* ignore */ } };
+  const CO = () => (window.JTCheckout && window.JTCheckout.enabled() ? window.JTCheckout : null);
+  const det = (o) => ({ name: o.name, dob: o.dob, time: o.time, place: o.place, lat: o.lat, lng: o.lng, gender: o.gender, marital: o.status, lang: o.lang });
 
   const CSS = `
   .jtx-ov{position:fixed;inset:0;z-index:300;background:rgba(20,10,5,.78);display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Mukta',system-ui,sans-serif}
@@ -146,10 +148,12 @@
     f.addEventListener("input", () => { const e = $("kpErr"); if (e && !e.hidden && readForm(false)) { const o = readForm(false); if (o.name && o.dob && o.time && !isNaN(o.lat)) e.hidden = true; } });
     f.addEventListener("submit", (e) => { e.preventDefault(); const o = readForm(); if (o) { ga("kp_free"); buildAndShow(o, false); } });
     const pay = $("kpPay");
+    if (pay && CO() && CO().currency("kp") === "USD") pay.textContent = `💳 Pay ${CO().price("kp").txt} — international cards`;
     if (pay && window.JTRef && window.JTRef.offer("kp")) { pay.insertAdjacentHTML("beforebegin", window.JTRef.note("kp")); pay.textContent = "💳 ₹269 भुगतान करें (मित्र छूट) — Card / UPI"; }
     if (pay) pay.addEventListener("click", (e) => {
       e.preventDefault();
       const o = readForm(); if (!o) { $("kpForm").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+      if (CO()) { saveOrder(o, {}); CO().pay("kp", det(o), { title: o.lang === "en" ? "Detailed KP report" : "विस्तृत KP रिपोर्ट", lang: o.lang }); return; }
       const rl = window.JTRef && window.JTRef.link("kp");
       saveOrder(o, rl ? { ref: window.JTRef.code() } : {}); ga("begin_checkout", { value: rl ? 269 : 299, currency: "INR", items: [{ item_name: "KP report" }] });
       location.href = rl || PAY;
@@ -163,6 +167,7 @@
       try { off = window.JTPromo ? await window.JTPromo.check(code) : ((await sha256(code)) === PROMO_HASH ? 100 : 0); } catch (er) { off = 0; }
       if (!off) { msg.textContent = "यह कोड मान्य नहीं है।"; return; }
       const o = readForm(); if (!o) { msg.textContent = "कोड सही है — पहले ऊपर का विवरण भरें।"; return; }
+      if (CO()) { msg.textContent = off === 100 ? "कोड सही है — 100% छूट।" : "कोड सही है — 50% छूट।"; CO().pay("kp", det(o), { promo: code, title: "प्रोमो कोड से रिपोर्ट", lang: o.lang }); return; }
       if (off === 50) {
         const h = window.JTPromo.HALF.kp;
         saveOrder(o, { promo: 50 }); ga("kp_promo50"); ga("begin_checkout", { value: h.price, currency: "INR", items: [{ item_name: "KP report (50% promo)" }] });
@@ -179,6 +184,14 @@
 
   // ---------- after Cashfree payment ----------
   function afterPay() {
+    if (CO()) {
+      CO().confirm("kp", (so, oid) => {
+        const order = { name: so.name, dob: so.dob, time: so.time, place: so.place, lat: Number(so.lat), lng: Number(so.lng), gender: so.gender, status: so.status, lang: so.lang || "hi", oid };
+        buildAndShow(order, true, oid);
+        if (window.JTRef && Number(so.amount) > 0) window.JTRef.after("kp", order.lang);
+      }, (function () { try { return (JSON.parse(localStorage.getItem(KEY) || "{}").lang) || "hi"; } catch (e) { return "hi"; } })());
+      return;
+    }
     let order = null;
     try { order = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { order = null; }
     if (order && Date.now() - (order.ts || 0) > 30 * 864e5) order = null;
