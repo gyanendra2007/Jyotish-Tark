@@ -146,11 +146,13 @@
     f.addEventListener("input", () => { const e = $("kpErr"); if (e && !e.hidden && readForm(false)) { const o = readForm(false); if (o.name && o.dob && o.time && !isNaN(o.lat)) e.hidden = true; } });
     f.addEventListener("submit", (e) => { e.preventDefault(); const o = readForm(); if (o) { ga("kp_free"); buildAndShow(o, false); } });
     const pay = $("kpPay");
+    if (pay && window.JTRef && window.JTRef.offer("kp")) { pay.insertAdjacentHTML("beforebegin", window.JTRef.note("kp")); pay.textContent = "💳 ₹269 भुगतान करें (मित्र छूट) — Card / UPI"; }
     if (pay) pay.addEventListener("click", (e) => {
       e.preventDefault();
       const o = readForm(); if (!o) { $("kpForm").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-      saveOrder(o, {}); ga("begin_checkout", { value: 299, currency: "INR", items: [{ item_name: "KP report" }] });
-      location.href = PAY;
+      const rl = window.JTRef && window.JTRef.link("kp");
+      saveOrder(o, rl ? { ref: window.JTRef.code() } : {}); ga("begin_checkout", { value: rl ? 269 : 299, currency: "INR", items: [{ item_name: "KP report" }] });
+      location.href = rl || PAY;
     });
     const pf = $("kpPromoForm");
     if (pf) pf.addEventListener("submit", async (e) => {
@@ -185,7 +187,8 @@
       return;
     }
     buildAndShow(order, true, order.oid);
-    try { if (!order.delivered) { order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order)); ga("purchase", { transaction_id: order.oid, value: order.promo === 50 ? 149 : 299, currency: "INR", items: [{ item_name: "KP report" }] }); } } catch (e) { /* ignore */ }
+    if (window.JTRef) window.JTRef.after("kp", order.lang);
+    try { if (!order.delivered) { order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order)); ga("purchase", { transaction_id: order.oid, value: order.promo === 50 ? 149 : order.ref ? 269 : 299, currency: "INR", items: [{ item_name: "KP report" }] }); } } catch (e) { /* ignore */ }
   }
 
   function start() {

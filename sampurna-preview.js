@@ -8,8 +8,9 @@
    ========================================================================== */
 (function () {
   "use strict";
-  const PRICE = 1101, HAND = 2100;
-  const PAY_LINK = "https://payments.cashfree.com/forms/sampurnakundali";
+  const RO = window.JTRef && window.JTRef.offer("sampurna");
+  const PRICE = RO ? RO.price : 1101, HAND = 2100;
+  const PAY_LINK = (window.JTRef && window.JTRef.link("sampurna")) || "https://payments.cashfree.com/forms/sampurnakundali";
   const RASHI = [null, "मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"];
   const PL = { Asc: "लग्न", Sun: "सूर्य", Moon: "चंद्र", Mars: "मंगल", Mercury: "बुध", Jupiter: "गुरु", Venus: "शुक्र", Saturn: "शनि", Rahu: "राहु", Ketu: "केतु" };
   const PS = { Sun: "सू", Moon: "चं", Mars: "मं", Mercury: "बु", Jupiter: "गु", Venus: "शु", Saturn: "श", Rahu: "रा", Ketu: "के" };
@@ -210,7 +211,7 @@
 
     out.push(`<section class="sp-cta"><p class="k">पूरी सम्पूर्ण कुंडली — 35+ पेज, PDF में</p><p class="p">₹${PRICE.toLocaleString("en-IN")}</p>
       <ol><li>Cashfree के सुरक्षित पेज पर ₹${PRICE.toLocaleString("en-IN")} का ऑनलाइन भुगतान करें</li><li>पेमेंट फ़ॉर्म में जन्म विवरण और ऑर्डर नंबर भरें</li><li>भुगतान के तुरंत बाद पूरी कुंडली PDF में पाएँ</li></ol>
-      <button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button><div id="spPromoHost"></div></section>
+      ${RO ? window.JTRef.note("sampurna") : ""}<button type="button" class="sp-btn" id="spPayBtn">₹${PRICE.toLocaleString("en-IN")} भुगतान करें</button><div id="spPromoHost"></div></section>
       <div class="sp-pay" id="spPayHost" aria-live="polite"></div>
       <div class="sp-hand"><b>ज्योतिषी द्वारा हस्तनिर्मित कुंडली — ₹${HAND.toLocaleString("en-IN")}</b><p>ज्योतिषी ज्ञानेंद्र सिंह तोमर स्वयं आपकी कुंडली का अध्ययन करके लिखते हैं · 5–7 दिन में · <a href="#" id="spHandBtn">ऑर्डर करें</a></p></div>
       <p class="sp-foot">ज्योतिष मार्गदर्शन है, गारंटी नहीं। स्वास्थ्य संबंधी किसी भी विषय में डॉक्टर की सलाह सबसे पहले।</p>`);
@@ -263,7 +264,7 @@
       const u = new URLSearchParams({ jtadmin: "1", o: order.orderId, n: order.name || "", g: g, m: (document.getElementById("spMarital") || {}).value || "", d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "" });
       order.adminLink = "https://jyotishtark.in/kundali-form.html?" + u.toString();
       // saved in this browser so the report can be built automatically when Cashfree sends the customer back
-      try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: order.orderId, n: order.name || "", g: g, m: u.get("m"), d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now() })); } catch (e) { /* ignore */ }
+      try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: order.orderId, n: order.name || "", g: g, m: u.get("m"), d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ref: RO ? window.JTRef.code() : "", ts: Date.now() })); } catch (e) { /* ignore */ }
       window.JTPay.render(payHost, order);
       try { if (window.gtag) window.gtag("event", "begin_checkout", { value: PRICE, currency: "INR", items: [{ item_name: "Sampurna Kundali" }] }); } catch (e) { /* ignore */ }
     });

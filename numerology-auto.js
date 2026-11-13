@@ -61,10 +61,11 @@
     fr.srcdoc = html;
     v.querySelector("#jtxPdf").addEventListener("click", () => { printHtml(html, fr); try { if (window.gtag) window.gtag("event", "numerology_pro_pdf", {}); } catch (e) { /* ignore */ } });
     v.querySelector("#jtxClose").addEventListener("click", () => { v.remove(); document.documentElement.classList.remove("jtx-on"); });
+    if (window.JTRef && order.promo !== 100) window.JTRef.after("nm", order.lang);
     try {
       if (!order.delivered) {
         order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order));
-        if (window.gtag) window.gtag("event", "purchase", { value: order.promo === 100 ? 0 : order.promo === 50 ? 149 : 299, currency: "INR", items: [{ item_name: "Numerology report" }] });
+        if (window.gtag) window.gtag("event", "purchase", { value: order.promo === 100 ? 0 : order.promo === 50 ? 149 : order.ref ? 269 : 299, currency: "INR", items: [{ item_name: "Numerology report" }] });
       }
     } catch (e) { /* ignore */ }
   }
