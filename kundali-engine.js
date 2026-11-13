@@ -111,6 +111,9 @@
     12: { en: "distant/global horizons, capital investments, and contemplative peace",  hi: "सुदूर/वैश्विक संपर्क, पूंजीगत निवेश और आध्यात्मिक चिंतन" }
   };
 
+  // life-stage aware house themes for timed statements (jt-life.js): a 3-year-old's dasha is about health and family, not investments
+  const sphereAt = (h, lang, ageY) => { const LF = window.JTLife; const e = LF && ageY != null ? LF.evt(h, ageY, lang, null) : null; return e || BHAVA_SPHERES[h][lang]; };
+
   const LAGNA_FUNCTIONAL_MATRIX = {
     1:  { yogakaraka: [],         benefics: ["Sun", "Moon", "Mars", "Jupiter"], malefics: ["Mercury", "Venus", "Saturn"], marakas: ["Venus", "Saturn"], badhakaHouse: 11, badhakesh: "Saturn" },
     2:  { yogakaraka: ["Saturn"], benefics: ["Saturn", "Sun", "Mercury"],       malefics: ["Jupiter", "Venus", "Moon"],   marakas: ["Mars", "Jupiter"], badhakaHouse: 9,  badhakesh: "Saturn" },
@@ -1003,7 +1006,7 @@
         </p>
         <p>
           <strong>4. जैमिनी आरूढ़ पद (AL: ${arudhaData.hi}, भाव ${specialLagnas.arudhaHouseFromLagna}) एवं कारकांश आत्मा (${karakamsaData.hi}):</strong>
-          लग्न से ${ getBhavaFrom(ascR, lagnaLordInfo.d1) }वें स्थान पर स्थित लग्नेश से गणना करने पर आपका <strong>आरूढ़ लग्न (AL) ${arudhaData.hi} (लग्न से ${specialLagnas.arudhaHouseFromLagna}वें भाव)</strong> में स्थापित है, जबकि सर्वोच्च अंशों (${akInfo.formattedDeg}) वाले आत्मकारक <strong>${akInfo.meta.hi}</strong> नवांश (D9) में <strong>${karakamsaData.hi}</strong> में स्थित हैं। वर्तमान में सक्रिय <strong>${activeMdStrHi}</strong> के प्रभाव में जातक का जीवन-प्रवाह ${BHAVA_SPHERES[planetAnalysis[dasha?.ad || lagnaLordKey].bhava].hi} पर केंद्रित है।
+          लग्न से ${ getBhavaFrom(ascR, lagnaLordInfo.d1) }वें स्थान पर स्थित लग्नेश से गणना करने पर आपका <strong>आरूढ़ लग्न (AL) ${arudhaData.hi} (लग्न से ${specialLagnas.arudhaHouseFromLagna}वें भाव)</strong> में स्थापित है, जबकि सर्वोच्च अंशों (${akInfo.formattedDeg}) वाले आत्मकारक <strong>${akInfo.meta.hi}</strong> नवांश (D9) में <strong>${karakamsaData.hi}</strong> में स्थित हैं। वर्तमान में सक्रिय <strong>${activeMdStrHi}</strong> के प्रभाव में जातक का जीवन-प्रवाह ${sphereAt(planetAnalysis[dasha?.ad || lagnaLordKey].bhava, "hi", ls.integerAge)} पर केंद्रित है।
         </p>
       `;
     }
@@ -1027,7 +1030,7 @@
       </p>
       <p>
         <strong>4. Jaimini Arudha Pada (AL in ${arudhaData.en}, House ${specialLagnas.arudhaHouseFromLagna}) & Karakamsa Axis (${karakamsaData.en}):</strong>
-        Measured ${getBhavaFrom(ascR, lagnaLordInfo.d1)} signs from Lagna to ${lagnaLordKey}, the <strong>Arudha Lagna (AL) falls in ${arudhaData.en} (House ${specialLagnas.arudhaHouseFromLagna})</strong>, while highest-degree Atmakaraka <strong>${akKey} (${akInfo.formattedDeg})</strong> places the Karakamsa in <strong>${karakamsaData.en}</strong> in D9. Under the currently operating <strong>${activeMdStrEn}</strong>, immediate life themes revolve around ${BHAVA_SPHERES[planetAnalysis[dasha?.ad || lagnaLordKey].bhava].en}.
+        Measured ${getBhavaFrom(ascR, lagnaLordInfo.d1)} signs from Lagna to ${lagnaLordKey}, the <strong>Arudha Lagna (AL) falls in ${arudhaData.en} (House ${specialLagnas.arudhaHouseFromLagna})</strong>, while highest-degree Atmakaraka <strong>${akKey} (${akInfo.formattedDeg})</strong> places the Karakamsa in <strong>${karakamsaData.en}</strong> in D9. Under the currently operating <strong>${activeMdStrEn}</strong>, immediate life themes revolve around ${sphereAt(planetAnalysis[dasha?.ad || lagnaLordKey].bhava, "en", ls.integerAge)}.
       </p>
     `;
   }
@@ -2116,8 +2119,8 @@
           <strong>1. वर्तमान ${mdInfo.meta.hi}–${adInfo.meta.hi} दशा का पाराशरी संश्लेषण:</strong>
           महादशानाथ <strong>${mdInfo.meta.hi}</strong> (${mdInfo.ownedHouses.length ? `भाव ${mdInfo.ownedHouses.join("/")} का स्वामी, ` : ""}${mdInfo.bhava}वें भाव में) और अंतर्दशानाथ <strong>${adInfo.meta.hi}</strong> (${adInfo.ownedHouses.length ? `भाव ${adInfo.ownedHouses.join("/")} का स्वामी, ` : ""}${adInfo.bhava}वें भाव में) एक-दूसरे से <strong>${relativeHouseOfAD}वें स्थान</strong> पर स्थित हैं। ${
             difficultAxis
-              ? `परस्पर ${relativeHouseOfAD}वां (षडाष्टक/द्वादश) संबंध होने के कारण इस अंतर्दशा में ${BHAVA_SPHERES[mdInfo.bhava].hi} तथा ${BHAVA_SPHERES[adInfo.bhava].hi} से जुड़े निर्णयों में अतिरिक्त संयम आवश्यक है।`
-              : `यह संबंध ${BHAVA_SPHERES[mdInfo.bhava].hi} तथा ${BHAVA_SPHERES[adInfo.bhava].hi} के फलों को सीधे सक्रिय कर रहा है।`
+              ? `परस्पर ${relativeHouseOfAD}वां (षडाष्टक/द्वादश) संबंध होने के कारण इस अंतर्दशा में ${sphereAt(mdInfo.bhava, "hi", numData.age)} तथा ${sphereAt(adInfo.bhava, "hi", numData.age)} से जुड़े निर्णयों में अतिरिक्त संयम आवश्यक है।`
+              : `यह संबंध ${sphereAt(mdInfo.bhava, "hi", numData.age)} तथा ${sphereAt(adInfo.bhava, "hi", numData.age)} के फलों को सीधे सक्रिय कर रहा है।`
           }
         </p>
         ${domainCardsHtml}
@@ -2148,8 +2151,8 @@
         <strong>1. Active ${dasha.md}–${dasha.ad} Dasha Synthesis:</strong>
         Mahadasha lord <strong>${mdInfo.meta.en}</strong> (${mdInfo.ownedHouses.length ? `ruler of House ${mdInfo.ownedHouses.join("/")} ` : ""}in House ${mdInfo.bhava}) and Antardasha lord <strong>${adInfo.meta.en}</strong> (${adInfo.ownedHouses.length ? `ruler of House ${adInfo.ownedHouses.join("/")} ` : ""}in House ${adInfo.bhava}) sit in a <strong>${relativeHouseOfAD}th-house angle</strong> from each other. ${
           difficultAxis
-            ? `Because ${dasha.md} and ${dasha.ad} form a ${relativeHouseOfAD}th (6/8/12) axis, measured pacing is required across ${BHAVA_SPHERES[mdInfo.bhava].en} and ${BHAVA_SPHERES[adInfo.bhava].en}.`
-            : `This ${relativeHouseOfAD}th alignment directly activates ${BHAVA_SPHERES[mdInfo.bhava].en} and ${BHAVA_SPHERES[adInfo.bhava].en}.`
+            ? `Because ${dasha.md} and ${dasha.ad} form a ${relativeHouseOfAD}th (6/8/12) axis, measured pacing is required across ${sphereAt(mdInfo.bhava, "en", numData.age)} and ${sphereAt(adInfo.bhava, "en", numData.age)}.`
+            : `This ${relativeHouseOfAD}th alignment directly activates ${sphereAt(mdInfo.bhava, "en", numData.age)} and ${sphereAt(adInfo.bhava, "en", numData.age)}.`
         }
       </p>
       ${domainCardsHtml}

@@ -37,6 +37,7 @@
     const pin = [root(m1 + d1) || 9, root(d1 + y1) || 9, 0, root(m1 + y1) || 9]; pin[2] = root(pin[0] + pin[1]) || 9;
     const ch = [Math.abs(m1 - d1), Math.abs(d1 - y1), 0, Math.abs(m1 - y1)]; ch[2] = Math.abs(ch[0] - ch[1]);
     const a1 = 36 - lp1, ages = [[0, a1], [a1 + 1, a1 + 9], [a1 + 10, a1 + 18], [a1 + 19, null]];
+    const JL = window.JTLife, AGx = JL ? JL.age(new Date(p.y, p.mo - 1, p.d)) : Y - p.y, NK = JL ? JL.numKey(AGx) : null;
     const ageNow = Y - p.y, curPin = ages.findIndex(([s, e]) => ageNow >= s && (e === null || ageNow <= e));
     const pyOf = (yr) => root(p.d + p.mo + root(yr)) || 9;
     const luckyDates = Array.from({ length: 31 }, (_, i) => i + 1).filter((d) => N.LUCKY[p.mulank].includes(root(d) || 9));
@@ -148,19 +149,19 @@
         ${LS && LS.dir ? `<tr><td>${L(`अंक ${p.mulank} की दिशा`, `Direction of ${p.mulank}`)}</td><td><b>${H(LS.dir)}</b></td></tr>` : ""}
         <tr><td>${L("रुद्राक्ष", "Rudraksha")}</td><td><b>${H(N.RUDRA[p.mulank])}</b></td></tr>
       </tbody></table>
-      <p class="sm">${L("महत्वपूर्ण काम — इंटरव्यू, नई शुरुआत, बड़ी ख़रीद — संभव हो तो शुभ तारीख और शुभ दिन पर करें। रत्न या रुद्राक्ष धारण करने से पहले व्यक्तिगत परामर्श अवश्य लें।", "Where possible, do important things — interviews, new starts, big purchases — on a lucky date and day. Take personal advice before wearing any gemstone or rudraksha.")}</p>`);
+      <p class="sm">${AGx < 18 ? L("परीक्षा, प्रतियोगिता या कोई नई शुरुआत संभव हो तो शुभ तारीख और शुभ दिन पर करें। बच्चों को रत्न पहनाना उचित नहीं माना जाता।", "Where possible, keep exams, contests and new starts on a lucky date and day. Gemstones are not advised for children.") : L("महत्वपूर्ण काम — इंटरव्यू, नई शुरुआत, बड़ी ख़रीद — संभव हो तो शुभ तारीख और शुभ दिन पर करें। रत्न या रुद्राक्ष धारण करने से पहले व्यक्तिगत परामर्श अवश्य लें।", "Where possible, do important things — interviews, new starts, big purchases — on a lucky date and day. Take personal advice before wearing any gemstone or rudraksha.")}</p>`);
 
     const prow = pin.map((n, i) => `<tr${i === curPin ? ' class="cur"' : ""}><td>${i + 1}</td><td>${ages[i][0]}–${ages[i][1] === null ? L("आगे", "on") : ages[i][1]} ${L("वर्ष", "yrs")}</td><td class="n">${n}</td><td>${H(X.PINN[n])}</td><td class="n">${ch[i]}</td></tr>`).join("");
     add(L("जीवन के चार चरण — शिखर और चुनौतियाँ", "The four stages of life — pinnacles and challenges"), `
       <p>${L("अंक ज्योतिष में जीवन को चार बड़े चरणों में बाँटा जाता है। हर चरण का एक 'शिखर अंक' होता है जो उस समय के अवसर बताता है, और एक 'चुनौती अंक' जो सीखने का पाठ बताता है।", "Numerology divides life into four big stages. Each has a 'pinnacle number' showing the opportunities of that time, and a 'challenge number' showing the lesson to learn.")}</p>
       <table class="t"><thead><tr><th>#</th><th>${L("आयु", "Age")}</th><th>${L("शिखर", "Pinnacle")}</th><th>${L("इस चरण का स्वभाव", "Nature of this stage")}</th><th>${L("चुनौती", "Challenge")}</th></tr></thead><tbody>${prow}</tbody></table>
-      ${curPin >= 0 ? `<h3>${L(`अभी आप चरण ${curPin + 1} में हैं (आयु लगभग ${ageNow})`, `You are now in stage ${curPin + 1} (age about ${ageNow})`)}</h3><p>${H(X.PINN[pin[curPin]])}</p><p><b>${L("इस चरण की चुनौती", "Challenge of this stage")}:</b> ${H(X.CHAL[ch[curPin]])}</p>` : ""}
+      ${curPin >= 0 ? `<h3>${L(`अभी आप चरण ${curPin + 1} में हैं (आयु लगभग ${ageNow})`, `You are now in stage ${curPin + 1} (age about ${ageNow})`)}</h3>${AGx < 18 ? `<p>${L(`यह बचपन और पढ़ाई का चरण है। शिखर अंक ${pin[curPin]} का गुण अभी स्वभाव, रुचियों और पढ़ाई के तरीक़े में दिखेगा; करियर और धन से जुड़े इसके फल बड़े होने पर मिलेंगे।`, `This is the stage of childhood and studies. Pinnacle ${pin[curPin]} shows now in nature, interests and the way of studying; its career and money results come in adult life.`)}</p>` : `<p>${H(X.PINN[pin[curPin]])}</p>`}<p><b>${L("इस चरण की चुनौती", "Challenge of this stage")}:</b> ${H(X.CHAL[ch[curPin]])}</p>` : ""}
       <h3>${L("आपकी मुख्य जीवन-चुनौती", "Your main life challenge")} (${ch[2]})</h3><p>${H(X.CHAL[ch[2]])}</p>`);
 
     const cyc = Array.from({ length: 9 }, (_, i) => Y + i).map((yr) => { const n = pyOf(yr); return `<tr${yr === Y ? ' class="cur"' : ""}><td>${yr}</td><td class="n">${n}</td><td>${H(N.PM[n])}</td></tr>`; }).join("");
     add(L(`वर्षफल — ${Y} और ${Y + 1}`, `Year ahead — ${Y} and ${Y + 1}`), `
       <h3>${Y} — ${L("व्यक्तिगत वर्ष", "personal year")} ${M.py}</h3>${sec(iYear)}
-      <h3>${Y + 1} — ${L("व्यक्तिगत वर्ष", "personal year")} ${pyOf(Y + 1)}</h3><p>${H(C.PY2 && C.PY2[pyOf(Y + 1)])}</p>
+      <h3>${Y + 1} — ${L("व्यक्तिगत वर्ष", "personal year")} ${pyOf(Y + 1)}</h3><p>${NK ? JL.NUM.PY[NK][pyOf(Y + 1)][lang === "en" ? 1 : 0] : H(C.PY2 && C.PY2[pyOf(Y + 1)])}</p>
       <h3>${L("आपका 9 वर्ष का चक्र", "Your 9-year cycle")}</h3>
       <table class="t"><thead><tr><th>${L("वर्ष", "Year")}</th><th>${L("अंक", "No.")}</th><th>${L("मुख्य विषय", "Main theme")}</th></tr></thead><tbody>${cyc}</tbody></table>
       <p class="sm">${L("व्यक्तिगत वर्ष 1 नई शुरुआत का और 9 पूर्णता का वर्ष होता है। अपने बड़े काम इसी चक्र के अनुसार योजना बनाकर करें।", "Personal year 1 is for new starts and 9 for completion. Plan your big moves along this cycle.")}</p>`);
@@ -196,7 +197,7 @@
       </ol>
       <h3>${L("ज्योतिषी की टिप्पणी", "Astrologer's note")}</h3>
       <div class="note"><p>${L(`${esc(M.name)} जी, आपका मूलांक ${p.mulank} (${pl(p.mulank)}) आपको ${kw(p.mulank)} का गुण देता है और भाग्यांक ${p.lp} जीवन को ${kw(p.bhagyank)} की ओर ले जाता है। ${Y} में आपका व्यक्तिगत वर्ष ${M.py} है — ${H(N.PM[M.py])} का समय।`, `${esc(M.name)}, your birth number ${p.mulank} (${pl(p.mulank)}) gives you the quality of ${kw(p.mulank)}, and life path ${p.lp} leads your life towards ${kw(p.bhagyank)}. In ${Y} your personal year is ${M.py} — a time of ${H(N.PM[M.py]).toLowerCase()}.`)}</p>
-      <p>${L("अंक केवल प्रवृत्ति और समय का संकेत देते हैं, निश्चित भविष्य नहीं। अपनी ताकत पहचानें, कमज़ोरियों पर धीरे-धीरे काम करें और बड़े निर्णय — विवाह, निवेश, नौकरी या स्वास्थ्य — से पहले अपनी परिस्थिति और संबंधित विशेषज्ञ की सलाह अवश्य लें। शुभम् भवतु।", "Numbers show tendencies and timing, not a fixed future. Know your strengths, work slowly on your weak spots, and before big decisions — marriage, investment, job or health — consider your situation and take advice from the right expert. Best wishes.")}</p></div>`);
+      <p>${L(AGx < 18 ? "अंक केवल प्रवृत्ति और समय का संकेत देते हैं, निश्चित भविष्य नहीं। इस आयु में अच्छी पढ़ाई, सेहत, खेल और अच्छे संस्कार ही सबसे बड़ा उपाय हैं — बच्चे की ताकत पहचानें और उसे प्यार से निखारें। शुभम् भवतु।" : "अंक केवल प्रवृत्ति और समय का संकेत देते हैं, निश्चित भविष्य नहीं। अपनी ताकत पहचानें, कमज़ोरियों पर धीरे-धीरे काम करें और बड़े निर्णय — विवाह, निवेश, नौकरी या स्वास्थ्य — से पहले अपनी परिस्थिति और संबंधित विशेषज्ञ की सलाह अवश्य लें। शुभम् भवतु।", "Numbers show tendencies and timing, not a fixed future. Know your strengths, work slowly on your weak spots, and before big decisions — marriage, investment, job or health — consider your situation and take advice from the right expert. Best wishes.")}</p></div>`);
 
     // ---- document ----
     const toc = CH.map((c, i) => `<li><span>${L("अध्याय", "Chapter")} ${i + 1}</span>${c[0]}</li>`).join("");

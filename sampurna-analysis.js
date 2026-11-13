@@ -158,12 +158,12 @@
 
   const DIG_TXT = { ex: "उच्च राशि में होने से यह ग्रह बहुत बलवान है और अपने पूरे शुभ फल देता है।", own: "अपनी राशि में होने से यह ग्रह मज़बूत है और भरोसेमंद फल देता है।", fr: "मित्र राशि में होने से इसके फल सहज और अनुकूल मिलते हैं।", ne: "सम राशि में होने से इसके फल सामान्य रहते हैं — जैसी संगति, वैसा फल।", en: "शत्रु राशि में होने से इसके फल पाने में अधिक मेहनत और धैर्य लगता है।", deb: "नीच राशि में होने से इसके फल संघर्ष या देरी के बाद मिलते हैं; इससे जुड़े उपाय विशेष लाभ देते हैं।" };
 
-  function nextPeriod(ctx, k, years) {
+  function nextPeriod(ctx, k, years, minAge) {
     const seq = (ctx.dasha && ctx.dasha.fullSeq) || [];
-    const now = Date.now(), end = now + (years || 10) * 31557600000;
+    const now0 = Date.now(), now = Math.max(now0, minAge ? ms(ctx.dob) + minAge * 31557600000 : 0), end = now + (years || 10) * 31557600000;
     for (const md of seq) {
       if (ms(md.end) < now) continue;
-      if (md.lord === k && ms(md.start) <= end) return `${PL[k]} की महादशा ${ms(md.start) <= now ? "अभी चल रही है" : my(md.start) + " से शुरू होगी"} (${my(md.start)} – ${my(md.end)})`;
+      if (md.lord === k && ms(md.start) <= end) return `${PL[k]} की महादशा ${ms(md.start) <= now0 ? "अभी चल रही है" : ms(md.start) <= now ? "चल रही होगी" : my(md.start) + " से शुरू होगी"} (${my(Math.max(ms(md.start), ms(ctx.dob)))} – ${my(md.end)})`;
       for (const a of md.antardashas || []) if (a.lord === k && ms(a.end) >= now && ms(a.start) <= end) return `${PL[k]} की अगली अंतर्दशा: ${my(Math.max(ms(a.start), now))} – ${my(a.end)} (${PL[md.lord]} महादशा में)`;
     }
     return "";
@@ -210,7 +210,7 @@
       const conn = `<span class="muted">${RASHI[X.signOfHouse(h)]} राशि · स्वामी ${PL[l]} ${ORD[lh]} भाव में${occ.length ? ` · भाव में ${occ.map((x) => PL[x]).join(", ")}` : " · भाव ख़ाली"}${asp.length ? ` · दृष्टि ${asp.map((x) => PL[x]).join(", ")}` : ""}${b != null ? ` · अष्टकवर्ग ${b} बिंदु` : ""}</span>`;
       const lordLine = lh === h ? `इस भाव का स्वामी अपने ही भाव में है — ${HOUSE_SHORT[h]} से जुड़े विषय आपके जीवन में मज़बूत और स्वतंत्र रूप से फलते हैं।` : `इस भाव का स्वामी ${ORD[lh]} भाव में है, इसलिए ${HOUSE_SHORT[h]} के फल ${HOUSE_SHORT[lh]} के माध्यम से मिलते हैं।`;
       const occLine = occ.length ? occ.map((k) => `<b>${PL[k]}:</b> ${PIH[k][h]}`).join(" ") : "";
-      const np = nextPeriod(ctx, l, 10);
+      const np = nextPeriod(ctx, l, 10, ({ 2: 18, 7: 21, 10: 18, 11: 18 })[h] || 0);
       out.push({ h, lvl, title: `${ORDN[h]} भाव — ${HOUSE_NAME[h]}`, sub: HOUSE_SHORT[h], html: `<p class="conn">${conn}</p><p>${base}</p><p>${lordLine}</p>${occLine ? `<p>${occLine}</p>` : ""}<p><b>सुझाव:</b> ${HOUSE_TIP[h]}${np ? ` <b>फल का समय:</b> भावेश ${np}।` : ""}</p>` });
     }
     return out;
@@ -252,7 +252,7 @@
       <p><b>आपके लिए अनुकूल क्षेत्र:</b> ${fields.map((k) => FIELD[k]).join("; ")}।</p>
       <p><b>नौकरी या व्यापार:</b> ${business && !job ? "कुंडली व्यापार या अपने काम के लिए अच्छी है — साझेदारी या अपना काम लाभ देता है।" : (job && !business ? "नौकरी या संस्था के साथ काम करना आपके लिए अधिक स्थिर और लाभदायक है; बाद में अनुभव के साथ स्वतंत्र काम भी कर सकते हैं।" : "नौकरी और अपना काम दोनों के योग हैं — शुरुआत नौकरी से करके अनुभव के बाद अपना काम शुरू करना सबसे अच्छा रहेगा।")}</p>
       ${d10asc ? `<p>दशमांश (D10) कुंडली ${RASHI[d10asc]} लग्न की है — कार्यस्थल पर आप ${SPOUSE[d10asc]} व्यक्ति के रूप में जाने जाते हैं।</p>` : ""}
-      ${periods(ctx, X, [l10, ...occ10, m && m.amk].filter(Boolean), 8, "करियर में प्रगति के समय")}`;
+      ${(X.age >= 62 ? `<p class="muted">${Math.floor(X.age)} वर्ष की आयु में करियर का यह भाग आपके कर्म-जीवन का स्वभाव बताता है; आगे का समय अनुभव बाँटने और मान-सम्मान का है।</p>` : (X.age < 18 ? `<p class="muted">आयु अभी ${Math.floor(X.age)} वर्ष है — ऊपर बताया गया काम का स्वभाव बड़े होने पर दिखेगा; अभी इसका उपयोग विषय और रुचियाँ चुनने में करें। नीचे के समय-संकेत 18 वर्ष की आयु के बाद के हैं।</p>` : "") + periods(ctx, X, [l10, ...occ10, m && m.amk].filter(Boolean), X.age < 18 ? 18 - X.age + 8 : 8, "करियर में प्रगति के समय", { minAge: 18, maxAge: 62 }))}`;
   }
 
   // ---------- wealth & luck ----------
@@ -263,7 +263,7 @@
     return `<h3>धन व संपत्ति</h3>
       <p>${X.strength(l2) + X.strength(l11) >= 3.5 ? "धन कमाने और जोड़ने के अच्छे योग हैं। समय के साथ आर्थिक स्थिति मज़बूत होती जाती है।" : "धन मेहनत से और धीरे-धीरे आता है; बचत और योजना से आप अच्छी स्थिति बना सकते हैं।"} धन का स्वामी ${PL[l2]} ${ORD[X.house(l2)]} भाव में है — कमाई का बड़ा हिस्सा ${HOUSE_SHORT[X.house(l2)]} से जुड़कर आता है। आय का स्वामी ${PL[l11]} ${ORD[X.house(l11)]} भाव में है।</p>
       <p>${s2 != null && s11 != null ? (s11 > s2 + 3 ? "आपकी आय अच्छी रहती है, पर ख़र्च भी साथ-साथ चलते हैं — इसलिए बचत को नियमित आदत बनाएँ।" : (s2 > s11 + 3 ? "आप में धन बचाने की अच्छी आदत है; आय बढ़ाने के लिए नए स्रोत और संपर्क बनाएँ।" : "आय और बचत का संतुलन ठीक है।")) : ""} ${X.house("Jupiter") === 2 || X.house("Jupiter") === 11 || X.house("Venus") === 2 || X.house("Venus") === 11 ? "गुरु/शुक्र का धन-भावों से संबंध सुख-सुविधा और धन का अच्छा संकेत है।" : ""} ${X.inHouse(4).length || X.strength(X.lordOf(4)) >= 1.8 ? "अपना घर, ज़मीन या वाहन बनने के योग अच्छे हैं।" : "घर-संपत्ति के लिए योजना बनाकर चलें; सही दशा में यह काम पूरा होता है।"}</p>
-      ${periods(ctx, X, [l2, l11, "Jupiter"], 8, "धन-लाभ के अनुकूल समय")}
+      ${(X.age < 18 ? `<p class="muted">आयु अभी ${Math.floor(X.age)} वर्ष है — धन की ये बातें वयस्क जीवन की क्षमता हैं; समय-संकेत 18 वर्ष की आयु के बाद के हैं।</p>` : "") + periods(ctx, X, [l2, l11, "Jupiter"], X.age < 18 ? 18 - X.age + 8 : 8, "धन-लाभ के अनुकूल समय", { minAge: 18 })}
       <h3>भाग्य</h3>
       <p>${X.strength(l9) >= 1.8 ? "भाग्य अच्छा साथ देता है — सही समय पर सही लोग और अवसर मिलते हैं।" : "भाग्य आपकी मेहनत के साथ खुलता है; बड़ों और गुरु का सम्मान आपके भाग्य को बल देता है।"} भाग्येश ${PL[l9]} ${ORD[X.house(l9)]} भाव में है, इसलिए ${HOUSE_SHORT[X.house(l9)]} से जुड़े काम आपके भाग्योदय का माध्यम बनते हैं। ${X.inHouse(9).length ? `भाग्य भाव में ${X.inHouse(9).map((k) => PL[k]).join(", ")} हैं — ${X.inHouse(9).some((k) => ["Jupiter", "Venus", "Moon", "Mercury"].includes(k)) ? "जो धर्म, यात्रा और बड़ों से लाभ देते हैं।" : "जो भाग्य को मेहनत और संघर्ष से जोड़ते हैं।"}` : ""}</p>`;
   }
@@ -278,7 +278,7 @@
     const nature = `<p>आपके जीवनसाथी का स्वभाव <b>${SPOUSE[s7]}</b> होने के संकेत हैं। ${PL[l7]} (सप्तमेश) ${ORD[X.house(l7)]} भाव में होने से ${X.house(l7) === 12 || X.house(l7) === 9 ? "जीवनसाथी का संबंध दूसरे शहर या दूर स्थान से हो सकता है।" : (X.house(l7) === 10 ? "जीवनसाथी करियर में सहायक और प्रतिष्ठित हो सकता है।" : (X.house(l7) === 11 || X.house(l7) === 3 ? "परिचय मित्रों, सहकर्मियों या सामाजिक दायरे से होने के योग हैं।" : `रिश्ता ${HOUSE_SHORT[X.house(l7)]} से जुड़कर आगे बढ़ता है।`))} ${occ.length ? `सप्तम भाव में ${occ.map((k) => PL[k]).join(", ")} होने से — ${occ.map((k) => PIH[k][7]).join(" ")}` : ""}</p>
       <p>${PL[karaka]} (${ctx.gender === "female" ? "पति" : "पत्नी"} का कारक) ${ORD[X.house(karaka)]} भाव में ${({ ex: "उच्च", own: "स्वराशि", fr: "मित्र राशि", ne: "सम राशि", en: "शत्रु राशि", deb: "नीच राशि" })[X.dig(karaka)]} में है — ${X.strength(karaka) >= 1.8 ? "दांपत्य सुख का अच्छा संकेत।" : "रिश्ते में आपसी समझ और धैर्य बनाए रखने से सुख बढ़ता है।"}</p>
       ${manglik ? `<p><b>मांगलिक विचार:</b> मंगल ${ORD[X.house("Mars")]} भाव में होने से कुंडली मांगलिक मानी जाती है${mCancel ? ", पर मंगल की स्थिति से इसका प्रभाव काफ़ी कम (परिहार) हो जाता है" : ""}। विवाह से पहले कुंडली मिलान अवश्य करें — दोनों की कुंडली देखकर ही निर्णय लें।</p>` : ""}`;
-    const agePeriods = periods(ctx, X, [l7, karaka, ...occ, "Rahu"], 10, "विवाह के अनुकूल समय", { minAge: 21, maxAge: 45 });
+    const agePeriods = (X.age < 21 ? `<p class="muted">आयु अभी ${Math.floor(X.age)} वर्ष है — विवाह के समय-संकेत 21 वर्ष की आयु के बाद के दिए गए हैं।</p>` : "") + periods(ctx, X, [l7, karaka, ...occ, "Rahu"], X.age < 21 ? 21 - X.age + 12 : 10, "विवाह के अनुकूल समय", { minAge: 21, maxAge: 45 });
     if (status === "married") return nature + `<h3>दांपत्य जीवन</h3><p>${X.strength(l7) + X.strength(karaka) >= 3.2 ? "आपका दांपत्य जीवन सामान्यतः सुखी और सहयोगी रहता है।" : "दांपत्य जीवन में समय-समय पर मतभेद आ सकते हैं — खुली बातचीत, धैर्य और एक-दूसरे के लिए समय निकालना रिश्ते को मज़बूत रखता है।"} ${X.inHouse(7).some((k) => ["Saturn", "Rahu", "Ketu", "Mars", "Sun"].includes(k)) ? "अहं, गुस्से और शक से रिश्ते को बचाएँ।" : ""}</p>${periods(ctx, X, [l7, karaka], 8, "रिश्ते में सुख और सहयोग का समय")}`;
     if (status === "divorced" || status === "widowed") return nature + `<h3>आगे का वैवाहिक जीवन</h3><p>${X.inHouse(11).length || X.strength(X.lordOf(11)) >= 1.5 ? "दूसरे विवाह या नए साथी के योग कुंडली में हैं।" : "नया रिश्ता सोच-समझकर और समय लेकर बनाना आपके लिए बेहतर रहेगा।"} पिछले अनुभवों से सीखकर, परिवार की सलाह और कुंडली मिलान के साथ आगे बढ़ें।</p>${agePeriods}`;
     return nature + agePeriods;
@@ -319,8 +319,10 @@
       const hit = want.includes(a.lord) || (want.includes(md.lord) && ["Jupiter", "Venus", "Mercury", "Moon"].includes(a.lord));
       if (!hit) return;
       const ageS = (Math.max(s, now) - dob) / 31557600000, ageE = (e - dob) / 31557600000;
-      if (lim && (ageE < lim.minAge || ageS > lim.maxAge)) return;
-      rows.push(`<li><b>${my(Math.max(s, now))} – ${my(e)}</b> (${PL[md.lord]} महादशा में ${PL[a.lord]} की अंतर्दशा)</li>`);
+      if (lim && (ageE < (lim.minAge || 0) || ageS > (lim.maxAge || 200))) return;
+      const st = Math.max(s, now, lim && lim.minAge ? dob + lim.minAge * 31557600000 : 0);
+      if (e - st < 0.25 * 31557600000) return;
+      rows.push(`<li><b>${my(st)} – ${my(e)}</b> (${PL[md.lord]} महादशा में ${PL[a.lord]} की अंतर्दशा)</li>`);
     }));
     if (!rows.length) return `<p class="muted">अगले ${years} वर्षों में इसके लिए कोई विशेष दशा-काल नहीं है — सामान्य प्रयास से फल मिलेंगे।</p>`;
     return `<p><b>${title}:</b></p><ul>${rows.slice(0, 4).join("")}</ul>`;
@@ -357,7 +359,7 @@
       const tone = X.funcGood(k) && !DUSTHANA.includes(h) ? ["अनुकूल", "good"] : (X.funcBad(k) || DUSTHANA.includes(h) ? ["मेहनत", "care"] : ["मिश्रित", "mixed"]);
       const a1 = Math.max(0, Math.floor((ms(md.start) - dob) / 31557600000)), a2 = Math.floor((ms(md.end) - dob) / 31557600000);
       const past = ms(md.end) < now, cur = ms(md.start) <= now && ms(md.end) >= now;
-      return `<tr${cur ? ' class="now"' : ""}><td><b>${PL[k]}</b>${cur ? "<br><small>अभी</small>" : ""}</td><td>${a1}–${a2} वर्ष<br><small>${my(md.start)} – ${my(md.end)}</small></td><td>${[...new Set([h].concat(own))].map((x) => HOUSE_SHORT[x].split(",")[0]).join(", ")} ${past ? "से जुड़े अनुभव रहे।" : "से जुड़े विषय मुख्य रहेंगे।"}</td><td><span class="tag ${tone[1]}">${tone[0]}</span></td></tr>`;
+      return `<tr${cur ? ' class="now"' : ""}><td><b>${PL[k]}</b>${cur ? "<br><small>अभी</small>" : ""}</td><td>${a1}–${a2} वर्ष<br><small>${my(md.start)} – ${my(md.end)}</small></td><td>${[...new Set([...new Set([h].concat(own))].map((x) => (LF ? LF.evt(x, Math.max(0, (ms(md.start) + ms(md.end)) / 2 - dob) / 31557600000, "hi", HOUSE_SHORT[x]) : HOUSE_SHORT[x]).split(",")[0]))].join(", ")} ${past ? "से जुड़े अनुभव रहे।" : "से जुड़े विषय मुख्य रहेंगे।"}</td><td><span class="tag ${tone[1]}">${tone[0]}</span></td></tr>`;
     }).join("");
     return `<table class="grid"><thead><tr><th>महादशा</th><th>आयु / समय</th><th>जीवन के मुख्य विषय</th><th>स्वभाव</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
@@ -501,7 +503,17 @@
     return "mixed";
   }
   const TAG = { good: "अनुकूल", care: "सावधानी", mixed: "मिश्रित" };
-  const topicsOf = (X, k) => [...new Set([X.house(k)].concat(X.owns(k)))].map((x) => HT[x]);
+  // age-aware house themes: a period at age 9 is about school, at 70 about family and peace (see jt-life.js)
+  const LF = window.JTLife;
+  const ageOn = (ctx, t) => (ms(t) - ms(ctx.dob)) / 31557600000;
+  const topicsOf = (X, k, ageY) => [...new Set([...new Set([X.house(k)].concat(X.owns(k)))].map((x) => (LF && ageY != null ? LF.evt(x, ageY, "hi", HT[x]) : HT[x])))];
+  const ADV = {
+    child: { good: "पढ़ाई, खेल और नई चीज़ें सीखने के लिए अच्छा समय है।", care: "सेहत, चोट और पढ़ाई की निरंतरता पर विशेष ध्यान रखें; माता-पिता का साथ सबसे बड़ा सहारा है।", mixed: "रोज़ की दिनचर्या और पढ़ाई नियमित रखें।" },
+    teen: { good: "पढ़ाई, परीक्षा और करियर की दिशा तय करने के लिए अनुकूल समय है।", care: "पढ़ाई में निरंतरता, सेहत और संगति पर ध्यान रखें; जल्दबाज़ी के फ़ैसले न लें।", mixed: "मेहनत का फल धीरे मिलेगा — पढ़ाई का नियमित समय बनाए रखें।" },
+    young: { good: "पढ़ाई पूरी करने, पहली नौकरी या नए काम की शुरुआत के लिए अच्छा समय है।", care: "पढ़ाई और करियर के फ़ैसले सोच-समझकर लें; सेहत, ख़र्च और संगति पर ध्यान रखें।", mixed: "मेहनत का फल धीरे मिलेगा — कौशल बढ़ाने पर ध्यान दें।" },
+    senior: { good: "परिवार, धर्म-कर्म और मन की शांति के लिए अच्छा समय है।", care: "सेहत, नियमित जाँच और ख़र्च पर विशेष ध्यान रखें; विवादों से दूर रहें।", mixed: "दिनचर्या नियमित रखें और परिवार के साथ समय बिताएँ।" }
+  };
+  const advFor = (t, ageY, dflt) => { const st = LF ? (ageY >= 18 && ageY < 21 ? "young" : ageY < 18 ? LF.stage(ageY) : ageY >= 60 ? "senior" : "adult") : "adult"; return ADV[st] ? ADV[st][t] : dflt; };
 
   // ---------- 9 planets — full ----------
   function planetsDeep(ctx, vd, m) {
@@ -580,8 +592,9 @@
       const moonView = `चंद्र कुंडली से देखें तो ${HT[h]} का भाव ${RASHI[mSign]} राशि में पड़ता है${mOcc.length ? `, जहाँ ${mOcc.map((k) => PL[k]).join(", ")} ${mOcc.length > 1 ? "हैं" : "है"} — ${mOcc.some((k) => ["Jupiter", "Venus", "Mercury"].includes(k)) ? "इस विषय से मन को संतोष और सहयोग मिलता है।" : (mOcc.some((k) => ["Saturn", "Rahu", "Ketu", "Mars"].includes(k)) ? "यह विषय मन पर कुछ दबाव या ज़िम्मेदारी जैसा महसूस होता है।" : "यह विषय मन में लगातार सक्रिय रहता है।")}` : " और वहाँ कोई ग्रह नहीं है — इसलिए इस विषय को लेकर मन सहज और सामान्य रहता है।"}`;
       void mh;
       const subRows = HOUSE_SUB[h].map(([name, kk]) => { const ks = X.strength(kk); let v = sc * 0.6 + (ks - 1.5) * 1.0; if (ks < 1 && v >= 1) v = 0.5; const lv = lvlOf(v); return `<tr><td>${name}</td><td><span class="lv ${lv === "good" ? "g" : (lv === "weak" ? "w" : "m")}">${SUB_TXT[lv]}</span></td><td class="muted">कारक ${PL[kk]} ${X.strength(kk) >= 1.8 ? "बलवान" : (X.strength(kk) < 1 ? "कमज़ोर" : "सामान्य")}</td></tr>`; }).join("");
-      const np = nextPeriod(ctx, l, 12);
-      const occP = occ.map((k) => nextPeriod(ctx, k, 12)).filter(Boolean);
+      const hMin = ({ 2: 18, 7: 21, 10: 18, 11: 18 })[h] || 0;
+      const np = nextPeriod(ctx, l, 12, hMin);
+      const occP = occ.map((k) => nextPeriod(ctx, k, 12, hMin)).filter(Boolean);
       out.push({ h, lvl, title: `${ORDN[h]} भाव — ${HOUSE_NAME[h]}`, sub: HOUSE_SHORT[h], html: `<p class="conn">${conn}</p>
         <p><b>फल:</b> ${base}</p>
         <p class="why"><b>यह निष्कर्ष क्यों:</b> ${why.join("; ")}।</p>
@@ -642,6 +655,7 @@
     const s4 = houseScore(X, 4), s5 = houseScore(X, 5), s9 = houseScore(X, 9), s6 = houseScore(X, 6);
     const l5 = X.lordOf(5);
     const base = career(ctx, vd, m).split("<h3>करियर</h3>")[0].replace("<h3>शिक्षा व बुद्धि</h3>", "");
+    const pastNote = X.age >= 30 ? `<p class="muted">${Math.floor(X.age)} वर्ष की आयु में यह अध्याय आपकी बुद्धि और सीखने के स्वभाव को बताता है — शिक्षा के योग बीते जीवन में कैसे रहे, और आज नया कौशल सीखने या बच्चों की पढ़ाई में मार्गदर्शन देने में यह क्षमता कैसे काम आती है।</p>` : "";
     const comp = s6 + (["Mars", "Sun", "Saturn"].filter((k) => [3, 6, 10, 11].includes(X.house(k))).length * 0.6);
     const row = (t, v, g, mm, w) => `<tr><td>${t}</td><td><span class="lv ${lvlOf(v) === "good" ? "g" : (lvlOf(v) === "weak" ? "w" : "m")}">${SUB_TXT[lvlOf(v)]}</span></td><td>${lvlOf(v) === "good" ? g : (lvlOf(v) === "weak" ? w : mm)}</td></tr>`;
     const tbl = `<table class="grid sub"><thead><tr><th>पहलू</th><th>स्थिति</th><th>अर्थ</th></tr></thead><tbody>
@@ -652,10 +666,10 @@
       ${row("याददाश्त व एकाग्रता (बुध-चंद्र)", (X.strength("Mercury") + X.strength("Moon")) / 2 - 1.2, "याददाश्त अच्छी है।", "याददाश्त सामान्य; दोहराने की आदत रखें।", "ध्यान जल्दी भटकता है; पढ़ाई के समय फ़ोन दूर रखें।")}
       </tbody></table>`;
     const young = X.age < 26;
-    return `<p>${base.replace(/<\/?p>/g, " ")}</p>${tbl}
+    return `${pastNote}<p>${base.replace(/<\/?p>/g, " ")}</p>${tbl}
       <p><b>पढ़ाई का आपका तरीका:</b> ${STUDY_TIP[ELEM[X.moon]]}</p>
       <p><b>विषय चुनने का संकेत:</b> पंचमेश ${PL[l5]} और बुध-गुरु की स्थिति के अनुसार ${["Mercury", "Jupiter"].includes(l5) ? "भाषा, गणित, वाणिज्य, क़ानून या अध्यापन" : (["Mars", "Saturn"].includes(l5) ? "इंजीनियरिंग, तकनीक, विज्ञान, चिकित्सा-तकनीक या शोध" : (["Venus", "Moon"].includes(l5) ? "कला, डिज़ाइन, मीडिया, नर्सिंग-चिकित्सा, होटल या मानविकी" : "प्रशासन, प्रबंधन, राजनीति-विज्ञान या विज्ञान"))} आपके स्वभाव से मेल खाते हैं। ${X.house("Jupiter") === 9 || X.house("Jupiter") === 5 || X.house("Jupiter") === 1 ? "गुरु की शुभ स्थिति से अध्यापन, परामर्श या शोध की ओर भी झुकाव होता है।" : ""}</p>
-      ${young ? periods(ctx, X, [X.lordOf(4), l5, X.lordOf(9), "Mercury", "Jupiter"], 8, "पढ़ाई और डिग्री के अनुकूल समय") : `<p>${s5 >= 0 ? "अब भी नया कौशल, कोर्स या प्रमाणपत्र आपकी आय और प्रतिष्ठा बढ़ा सकता है — सीखना आपकी कुंडली में लाभ देने वाला गुण है।" : "आगे नया सीखने के लिए व्यावहारिक, छोटे कोर्स आपके लिए बेहतर हैं।"}</p>${periods(ctx, X, [l5, "Mercury", "Jupiter"], 6, "नया सीखने के अनुकूल समय")}`}`;
+      ${young ? periods(ctx, X, [X.lordOf(4), l5, X.lordOf(9), "Mercury", "Jupiter"], 8, X.age < 14 ? "पढ़ाई और बुद्धि-विकास के अनुकूल समय" : "पढ़ाई और डिग्री के अनुकूल समय") : `<p>${s5 >= 0 ? "अब भी नया कौशल, कोर्स या प्रमाणपत्र आपकी आय और प्रतिष्ठा बढ़ा सकता है — सीखना आपकी कुंडली में लाभ देने वाला गुण है।" : "आगे नया सीखने के लिए व्यावहारिक, छोटे कोर्स आपके लिए बेहतर हैं।"}</p>${periods(ctx, X, [l5, "Mercury", "Jupiter"], 6, "नया सीखने के अनुकूल समय")}`}`;
   }
 
   // ---------- career — full ----------
@@ -762,7 +776,7 @@
       <p><b>विवाह का समय (प्रवृत्ति):</b> ${delay >= 2 ? "कुंडली में विवाह में कुछ देरी के संकेत हैं — सामान्यतः 27–28 वर्ष के बाद विवाह अधिक स्थिर रहता है। देरी को अशुभ न मानें; सही समय पर किया गया विवाह ही टिकाऊ होता है।" : (early ? "विवाह सामान्य समय पर, बिना बड़ी रुकावट के होने के संकेत हैं।" : "विवाह सामान्य समय पर होता है; सही दशा आने पर बात जल्दी आगे बढ़ती है।")}</p>` : ""}
       <div class="two"><div class="pbox good"><h4>रिश्ते की ताकत</h4><ul>${(strengths.length ? strengths : ["एक-दूसरे का साथ निभाने की इच्छा"]).map((x) => `<li>${x}</li>`).join("")}${X.strength(karaka) >= 1.8 ? `<li>${PL[karaka]} (विवाह कारक) बलवान</li>` : ""}</ul></div>
       <div class="pbox care"><h4>किस बात का ध्यान रखें</h4><ul>${(challenges.length ? challenges : ["रोज़मर्रा की व्यस्तता में एक-दूसरे को समय न दे पाना"]).map((x) => `<li>${x}</li>`).join("")}</ul></div></div>
-      <p><b>ससुराल पक्ष:</b> ${s8 >= 1 ? "ससुराल से अच्छे संबंध और समय पर सहयोग मिलने के संकेत हैं।" : (s8 <= -0.8 ? "ससुराल पक्ष के साथ तालमेल के लिए धैर्य और सम्मान ज़रूरी है — छोटी बातों को बढ़ने न दें।" : "ससुराल से संबंध सामान्य रहते हैं; आपसी सम्मान से रिश्ते मधुर रहते हैं।")}</p>
+      ${X.age < 21 ? "" : `<p><b>ससुराल पक्ष:</b> ${s8 >= 1 ? "ससुराल से अच्छे संबंध और समय पर सहयोग मिलने के संकेत हैं।" : (s8 <= -0.8 ? "ससुराल पक्ष के साथ तालमेल के लिए धैर्य और सम्मान ज़रूरी है — छोटी बातों को बढ़ने न दें।" : "ससुराल से संबंध सामान्य रहते हैं; आपसी सम्मान से रिश्ते मधुर रहते हैं।")}</p>`}
       <p><b>विवाह की स्थिरता (उपपद):</b> उपपद लग्न ${RASHI[ul]} राशि में है${ul2occ.length ? ` और उससे दूसरे भाव में ${ul2occ.map((k) => PL[k]).join(", ")} ${ul2occ.length > 1 ? "हैं" : "है"} — ${ul2occ.some((k) => ["Jupiter", "Venus", "Mercury", "Moon"].includes(k)) && !ul2occ.some((k) => ["Saturn", "Rahu", "Ketu"].includes(k)) ? "जो विवाह को टिकाऊ और सहयोगी बनाता है।" : (ul2occ.some((k) => ["Saturn", "Rahu", "Ketu", "Mars", "Sun"].includes(k)) ? "जो बताता है कि रिश्ते को टिकाऊ रखने के लिए लगातार समझ और प्रयास ज़रूरी है।" : "जिससे विवाह सामान्य रूप से स्थिर रहता है।")}` : " और उससे दूसरा भाव ख़ाली है — विवाह की स्थिरता मुख्य रूप से उपपद के स्वामी और आपसी व्यवहार पर निर्भर करती है।"}</p>
       <p class="tip"><b>सुखी दांपत्य के लिए:</b> ${HARM[ELEM[s7]]}</p>`;
   }
@@ -816,7 +830,7 @@
     const PRAC = ["सूर्य नमस्कार, मंत्र-जप और व्रत जैसी सक्रिय साधना", "नियमित पूजा, सेवा और दान जैसी व्यावहारिक साधना", "स्वाध्याय, ध्यान और ज्ञान की खोज", "भक्ति, कीर्तन, तीर्थ और जल-स्थलों पर ध्यान"];
     return `<h3>विदेश और दूर स्थान</h3>
       <p>${f >= 3 ? "आपकी कुंडली में <b>विदेश जाने, वहाँ काम करने या लंबे समय तक रहने</b> के प्रबल योग हैं। जन्मस्थान से दूर जाकर आपकी प्रगति तेज़ होती है।" : (f >= 1 ? "<b>विदेश यात्रा या दूर स्थान पर काम</b> के अच्छे योग हैं — स्थायी निवास के लिए सही दशा और प्रयास दोनों चाहिए।" : "आपका जीवन मुख्य रूप से अपने देश और क्षेत्र में आगे बढ़ता है; यात्राएँ काम या घूमने के लिए होती हैं।")} ${X.house(l12) === 4 || X.inHouse(4).length === 0 && X.strength(l4) < 1 ? "जन्मस्थान से दूर अपना घर बनने के योग भी हैं।" : ""}</p>
-      ${periods(ctx, X, [l12, "Rahu", l9], 10, "विदेश / दूर यात्रा के अनुकूल समय")}
+      ${periods(ctx, X, [l12, "Rahu", l9], X.age < 16 ? 16 - X.age + 10 : 10, "विदेश / दूर यात्रा के अनुकूल समय", { minAge: 16 })}
       <h3>यात्राएँ</h3><p>${houseScore(X, 3) >= 0 ? "छोटी यात्राएँ आपके लिए लाभदायक रहती हैं — काम के सिलसिले में आना-जाना बना रहता है।" : "छोटी यात्राओं में थकान या अड़चन आ सकती है — योजना बनाकर चलें।"} ${houseScore(X, 9) >= 0.5 ? "तीर्थ और लंबी यात्राएँ आपके भाग्य को जगाती हैं।" : "लंबी यात्राएँ सीख देती हैं; तीर्थ यात्रा से मन को विशेष शांति मिलती है।"}</p>
       <h3>आध्यात्मिक मार्ग</h3>
       <p>${spirit >= 3 ? "आपकी कुंडली में गहरा आध्यात्मिक संस्कार है — जीवन के दूसरे भाग में साधना, सेवा या गुरु-मार्ग आपको बड़ी शांति और पहचान दे सकता है।" : (spirit >= 1 ? "आपमें आस्था और आध्यात्मिक जिज्ञासा है; नियमित छोटी साधना आपके जीवन में संतुलन लाती है।" : "आप कर्म-प्रधान हैं — आपके लिए ईमानदार कर्म, परिवार की सेवा और दान ही सबसे बड़ी साधना है।")} आपके स्वभाव के अनुसार <b>${PRAC[ELEM[X.moon]]}</b> सबसे सहज रहती है।</p>
@@ -834,15 +848,16 @@
       const k = md.lord, t = mdTone(X, k);
       const a1 = Math.max(0, Math.floor((ms(md.start) - dob) / 31557600000)), a2 = Math.floor((ms(md.end) - dob) / 31557600000);
       return `<div class="bx keep md ${t}"><h4>${PL[k]} महादशा · ${my(md.start)} – ${my(md.end)} <span class="muted">(आयु ${a1}–${a2})</span> <span class="tag ${t}">${TAG[t]}</span></h4>
-        <p>${cur ? "यह आपकी वर्तमान महादशा है।" : "यह आपकी अगली महादशा है।"} ${PL[k]} आपकी कुंडली में ${ORD[X.house(k)]} भाव में ${RASHI[X.sgn(k)]} राशि में है${X.owns(k).length ? ` और ${X.owns(k).map((x) => ORD[x]).join(", ")} भाव का स्वामी है` : ""}। इसलिए इस पूरे दौर में <b>${topicsOf(X, k).join("; ")}</b> से जुड़े विषय जीवन के केंद्र में रहते हैं।</p>
-        <p>${PIH[k][X.house(k)]} ${t === "good" ? "कुल मिलाकर यह दौर प्रगति, स्थिरता और अवसर देने वाला है — इसका पूरा लाभ उठाने के लिए बड़े लक्ष्य तय करें।" : (t === "care" ? "यह दौर मेहनत, धैर्य और आत्म-सुधार का है। जल्दबाज़ी के फ़ैसले, उधार और विवाद से बचें — इसी समय की सीख आगे बड़ी सफलता की नींव बनती है।" : "यह दौर मिले-जुले फल देता है — कुछ क्षेत्रों में अच्छी प्रगति, कुछ में धैर्य की ज़रूरत।")}</p>
+        <p>${cur ? "यह आपकी वर्तमान महादशा है।" : "यह आपकी अगली महादशा है।"} ${PL[k]} आपकी कुंडली में ${ORD[X.house(k)]} भाव में ${RASHI[X.sgn(k)]} राशि में है${X.owns(k).length ? ` और ${X.owns(k).map((x) => ORD[x]).join(", ")} भाव का स्वामी है` : ""}। इसलिए इस पूरे दौर में <b>${topicsOf(X, k, ageOn(ctx, Math.max(ms(md.start), now))).join("; ")}</b> से जुड़े विषय जीवन के केंद्र में रहते हैं।</p>
+        <p>${(() => { const ay = ageOn(ctx, Math.max(ms(md.start), now)), st = LF ? LF.stage(ay) : "adult", dflt = t === "good" ? "कुल मिलाकर यह दौर प्रगति, स्थिरता और अवसर देने वाला है — इसका पूरा लाभ उठाने के लिए बड़े लक्ष्य तय करें।" : (t === "care" ? "यह दौर मेहनत, धैर्य और आत्म-सुधार का है। जल्दबाज़ी के फ़ैसले, उधार और विवाद से बचें — इसी समय की सीख आगे बड़ी सफलता की नींव बनती है।" : "यह दौर मिले-जुले फल देता है — कुछ क्षेत्रों में अच्छी प्रगति, कुछ में धैर्य की ज़रूरत।"); return st === "child" || st === "teen" ? advFor(t, ay, dflt) : `${PIH[k][X.house(k)]} ${st === "senior" ? advFor(t, ay, dflt) : dflt}`; })()}</p>
         <p class="tip"><b>इस महादशा में:</b> ${PRACT[k]}</p></div>`;
     };
     const adPara = (md, a) => {
       const t = mdTone(X, a.lord), r = X.hFrom(X.sgn(md.lord), X.sgn(a.lord));
       const relT = md.lord === a.lord ? "महादशा और अंतर्दशा का स्वामी एक ही है — इस ग्रह के फल पूरी तीव्रता से मिलते हैं।" : ([6, 8, 12].includes(r) ? `${PL[md.lord]} और ${PL[a.lord]} आपस में ${r === 12 ? "2-12" : "6-8"} की स्थिति में हैं — इस अवधि में तालमेल की कुछ कमी रहती है, इसलिए योजना बनाकर चलें।` : ([1, 5, 9].includes(r) ? `${PL[md.lord]} और ${PL[a.lord]} आपस में त्रिकोण में हैं — यह अवधि सहज तालमेल और अच्छे परिणाम देती है।` : ([4, 7, 10].includes(r) ? `${PL[md.lord]} और ${PL[a.lord]} आपस में केंद्र में हैं — इस अवधि में काम तेज़ी से आगे बढ़ते हैं।` : `${PL[md.lord]} और ${PL[a.lord]} का आपसी संबंध सामान्य है।`)));
-      const adv = t === "good" ? "नए काम, निवेश, यात्रा या बड़े फ़ैसले के लिए यह समय अनुकूल है।" : (t === "care" ? "सेहत, ख़र्च और वाद-विवाद पर विशेष ध्यान रखें; बड़े जोखिम टालें।" : "रोज़मर्रा के काम ठीक चलते हैं; बड़े निर्णय सोच-समझकर लें।");
-      return `<div class="ad ${t}"><p><b>${PL[md.lord]}–${PL[a.lord]}: ${my(a.start)} – ${my(a.end)}</b> <span class="tag ${t}">${TAG[t]}</span></p><p>इस अवधि में <b>${topicsOf(X, a.lord).join("; ")}</b> से जुड़े विषय सक्रिय होते हैं। ${relT} ${adv}</p></div>`;
+      const ay = ageOn(ctx, Math.max(ms(a.start), now));
+      const adv = advFor(t, ay, t === "good" ? "नए काम, निवेश, यात्रा या बड़े फ़ैसले के लिए यह समय अनुकूल है।" : (t === "care" ? "सेहत, ख़र्च और वाद-विवाद पर विशेष ध्यान रखें; बड़े जोखिम टालें।" : "रोज़मर्रा के काम ठीक चलते हैं; बड़े निर्णय सोच-समझकर लें।"));
+      return `<div class="ad ${t}"><p><b>${PL[md.lord]}–${PL[a.lord]}: ${my(a.start)} – ${my(a.end)}</b> <span class="tag ${t}">${TAG[t]}</span></p><p>इस अवधि में <b>${topicsOf(X, a.lord, ay).join("; ")}</b> से जुड़े विषय सक्रिय होते हैं। ${relT} ${adv}</p></div>`;
     };
     const cur = seq[i], nxt = seq[i + 1];
     const curAds = (cur.antardashas || []).filter((a) => ms(a.end) >= now);
@@ -851,5 +866,5 @@
       ${nxt ? `${mdBlock(nxt, false)}<h3>${PL[nxt.lord]} महादशा की अंतर्दशाएँ — विस्तार से</h3>${nxtAds.map((a) => adPara(nxt, a)).join("")}` : ""}`;
   }
 
-  window.JTAnalysis = { planets: planetsDeep, houses: housesDeep, personality: personalityDeep, career: careerDeep, education, wealth: wealthDeep, marriage: marriageDeep, family, children, health: healthDeep, travelSpirit, dashaResults, dashaDeep, yogas, remedies, lifePhases, lucky, make, mdTone, houseScore, HT, TAG, topicsOf, PRACT };
+  window.JTAnalysis = { ageOn, advFor, planets: planetsDeep, houses: housesDeep, personality: personalityDeep, career: careerDeep, education, wealth: wealthDeep, marriage: marriageDeep, family, children, health: healthDeep, travelSpirit, dashaResults, dashaDeep, yogas, remedies, lifePhases, lucky, make, mdTone, houseScore, HT, TAG, topicsOf, PRACT };
 })();
