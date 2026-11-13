@@ -12,9 +12,9 @@ window.JTRef = (function () {
   "use strict";
   // Set a form link once it exists in Cashfree; a product without a link shows no friend discount.
   const FORMS = {
-    kp: { link: "", price: 269, full: 299, name: "KP रिपोर्ट" },
-    nm: { link: "", price: 269, full: 299, name: "अंक ज्योतिष रिपोर्ट" },
-    sampurna: { link: "", price: 991, full: 1101, name: "सम्पूर्ण कुंडली" }
+    kp: { link: "https://payments.cashfree.com/forms/jyotishtarkkpref", price: 269, full: 299, name: "KP रिपोर्ट" },
+    nm: { link: "https://payments.cashfree.com/forms/jyotishtarknumerologyref", price: 269, full: 299, name: "अंक ज्योतिष रिपोर्ट" },
+    sampurna: { link: "https://payments.cashfree.com/forms/sampurnakundaliref", price: 991, full: 1101, name: "सम्पूर्ण कुंडली" }
   };
   const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html" };
   const WA = "918318513814";

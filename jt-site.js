@@ -280,4 +280,4 @@
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=1";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
+(function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=2";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
