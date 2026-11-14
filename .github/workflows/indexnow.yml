@@ -1,0 +1,42 @@
+name: IndexNow ping
+# Tells Bing, Yandex and other IndexNow search engines about new/changed pages
+# after every push. Run it manually ("Run workflow") to submit the whole sitemap.
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'sitemap.xml']
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - name: Wait for GitHub Pages to publish
+        run: sleep 90
+      - name: Submit URLs
+        env:
+          KEY: 1774c7c7632b479c308c65ef626b03ec
+          HOST: jyotishtark.in
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's#</\?loc>##g' > urls.txt
+          else
+            git diff --name-only --diff-filter=AM HEAD~1 HEAD -- '*.html' \
+              | grep -v '^tools/' | sed "s#^#https://$HOST/#" > urls.txt || true
+          fi
+          sed -i 's#/index.html$#/#' urls.txt
+          n=$(wc -l < urls.txt); echo "URLs: $n"; [ "$n" -gt 0 ] || exit 0
+          python3 - <<'PY'
+          import json, os, urllib.request
+          urls = [u.strip() for u in open("urls.txt") if u.strip()][:10000]
+          body = json.dumps({"host": os.environ["HOST"], "key": os.environ["KEY"],
+                             "keyLocation": f"https://{os.environ['HOST']}/{os.environ['KEY']}.txt",
+                             "urlList": urls}).encode()
+          req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
+                                       headers={"Content-Type": "application/json; charset=utf-8"})
+          try:
+              print("IndexNow:", urllib.request.urlopen(req, timeout=30).status)
+          except urllib.error.HTTPError as e:
+              print("IndexNow error:", e.code, e.read()[:300]); raise SystemExit(1)
+          PY
