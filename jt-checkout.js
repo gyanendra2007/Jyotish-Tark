@@ -24,7 +24,8 @@ window.JTCheckout = (function () {
     let tz = ""; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) { /* */ }
     return !!tz && !/^Asia\/(Kolkata|Calcutta)$/.test(tz);
   }
-  const currency = (p) => (nri() && PRICES[p] && PRICES[p].usd && enabled() ? "USD" : "INR");
+  const currency = () => "INR"; // everyone pays in ₹; foreign cards are converted by the card's bank
+  const USD_RATE = 94; // approx. ₹ per US$ (Nov 2026), only for the "about $" hint
   const price = (p, off) => { const c = currency(p), base = c === "USD" ? PRICES[p].usd : PRICES[p].inr, v = off ? (c === "USD" ? Math.round(base * (100 - off)) / 100 : Math.round(base * (100 - off) / 100)) : base; return { c, v, txt: c === "USD" ? "$" + v : "₹" + v.toLocaleString("en-IN"), base: c === "USD" ? "$" + base : "₹" + base.toLocaleString("en-IN") }; };
   const setCurrency = (c) => { ls.set("jt_cur", c); };
 
@@ -75,7 +76,7 @@ window.JTCheckout = (function () {
     const ov = document.createElement("div"); ov.className = "jco"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
     ov.innerHTML = `<div class="jco-c"><h3>${esc(opts.title || T("भुगतान", "Payment"))}</h3>
       ${opts.promo ? `<p>${T("प्रोमो कोड लागू होगा।", "Your promo code will be applied.")}</p>` : `<div class="jco-p">${pr.txt}${off ? `<s>${pr.base}</s>` : ""}</div>${off ? `<p>${pt ? T(`पार्टनर कोड ${esc(pt.c)} — ${off}% छूट`, `Partner code ${esc(pt.c)} — ${off}% off`) : T(`मित्र का कोड ${esc(ref)} — 10% छूट`, `Friend's code ${esc(ref)} — 10% off`)}</p>` : ""}`}
-      ${PRICES[product].usd ? `<p class="jco-cur">${pr.c === "USD" ? `${T("विदेश से भुगतान (USD)।", "Paying from abroad (USD).")} <a data-c="INR">${T("भारत से भुगतान करें (₹)", "Pay in ₹ instead")}</a>` : `<a data-c="USD">${T("विदेश में हैं? USD में भुगतान करें", "Outside India? Pay in USD")}</a>`}</p>` : ""}
+      ${nri() ? `<p class="jco-cur">${T(`विदेश से? कीमत ₹ में है — आपका कार्ड अपने-आप आपकी मुद्रा में बदल देगा (लगभग $${Math.max(1, Math.round(pr.v / USD_RATE))})। भारत का UPI भी चलता है।`, `Abroad? The price is in ₹ — your card converts it automatically (about $${Math.max(1, Math.round(pr.v / USD_RATE))}). Indian UPI also works.`)}</p>` : ""}
       ${opts.question ? `<label for="jcoQ">${T("आपका प्रश्न", "Your question")}</label><textarea id="jcoQ" rows="3" maxlength="600" placeholder="${T("जैसे: मेरी सरकारी नौकरी कब लगेगी?", "e.g. When will I get a government job?")}"></textarea>` : ""}
       <label for="jcoPh">${T("मोबाइल नंबर (WhatsApp)", "Mobile number (WhatsApp)")}</label><input id="jcoPh" type="tel" inputmode="tel" autocomplete="tel" placeholder="${pr.c === "USD" ? "+1 415 555 0100" : "98XXXXXXXX"}" value="${esc(saved.p || "")}">
       <label for="jcoEm">${T("ईमेल (रसीद के लिए, वैकल्पिक)", "Email (for the receipt, optional)")}</label><input id="jcoEm" type="email" autocomplete="email" value="${esc(saved.e || "")}">
