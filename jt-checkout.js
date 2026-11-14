@@ -9,7 +9,7 @@
    ========================================================================== */
 window.JTCheckout = (function () {
   "use strict";
-  const API = ""; // ← Apps Script web-app URL (…/exec). Empty = old payment forms.
+  const API = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec"; // order backend (Apps Script). Empty = old payment forms.
   const SDK = "https://sdk.cashfree.com/js/v3/cashfree.js";
   const PRICES = { kp: { inr: 299, usd: 19 }, nm: { inr: 299, usd: 19 }, sampurna: { inr: 1101, usd: null }, prashna: { inr: 101, usd: 9 } };
   const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html" };
