@@ -22,7 +22,8 @@ const PRODUCTS = {
   kp:       { name: "KP report",          page: "kp-astrology.html",       inr: 299,  usd: 19 },
   nm:       { name: "Numerology report",  page: "numerology.html",         inr: 299,  usd: 19 },
   sampurna: { name: "Sampurna Kundali",   page: "kundali-form.html",       inr: 1101, usd: null },
-  prashna:  { name: "One question",       page: "kundali-se-poochho.html", inr: 101,  usd: 9 }
+  prashna:  { name: "One question",       page: "kundali-se-poochho.html", inr: 101,  usd: 9 },
+  test:     { name: "Setup test (Rs 1)",   page: "my-report.html",          inr: 1,    usd: null }  // unlocks nothing; used once to test the setup
 };
 // promo codes: SHA-256 of the UPPER-CASE code → % off (same list as jt-promo.js)
 const PROMO = {
