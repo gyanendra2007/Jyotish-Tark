@@ -254,7 +254,7 @@
       o.innerHTML =
         '<div class="jt-ad-box" role="dialog" aria-modal="true" aria-labelledby="jtAdT" aria-describedby="jtAdD">' +
         '<button type="button" class="jt-ad-x" data-ad-close aria-label="बंद करें"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
-        '<div class="jt-ad-top"><img src="images/big-profile.JPG" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="64" height="64"><div><b>ज्योतिषी ज्ञानेंद्र सिंह तोमर</b><small>ज्योतिष तर्क · लखनऊ</small></div></div>' +
+        '<div class="jt-ad-top"><img src="images/profile.jpg?v=2" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="64" height="64"><div><b>ज्योतिषी ज्ञानेंद्र सिंह तोमर</b><small>ज्योतिष तर्क · लखनऊ</small></div></div>' +
         '<div class="jt-ad-hero"><p class="jt-ad-k">पहली बात बिल्कुल मुफ़्त</p><h2 id="jtAdT">पहली <span>5 मिनट की कॉल</span> मुफ़्त</h2><p id="jtAdD">अपनी कुंडली, करियर, विवाह, संतान या किसी भी उलझन पर ज्योतिषी से सीधी बात करें — पहली बार बात करने वालों के लिए।</p></div>' +
         '<div class="jt-ad-cards">' +
           '<div class="jt-ad-c jt-ad-c1"><p class="jt-ad-ct">कॉल परामर्श</p><p class="jt-ad-cp">ऑडियो <b>₹301</b> से · वीडियो <b>₹1,101</b> से</p><button type="button" class="jt-ad-b" data-jt-bot="book" data-ad-close>कॉल बुक करें</button></div>' +
