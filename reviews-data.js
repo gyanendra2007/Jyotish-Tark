@@ -16,8 +16,8 @@ window.JT_CONFIG = {
 
   // Your current Google rating. Leave null until you have at least 5 reviews;
   // update these two numbers once a month from your Business Profile.
-  googleRating: 5.0, // shown once googleCount is 5 or more
-  googleCount: 2,
+  googleRating: 5.0, // total from Google Business Profile (checked 14 Nov 2026)
+  googleCount: 4,
 
   // Email delivery through EmailJS (the same account the kundali order form uses).
   // Create two templates in EmailJS and paste their IDs here. While an ID is
@@ -47,6 +47,10 @@ window.JT_CONFIG = {
      service: "Kundali", text: "..." },
    -------------------------------------------------------------------------- */
 window.JT_REVIEWS = [
+  { name: "Devendra Prajapati", city: "", date: "2026-11", stars: 5, source: "google", service: "",
+    text: "I had a wonderful experience with Joytishtark. The website is user-friendly, the service is impressive, and the overall experience was smooth and satisfying. Everything was explained clearly, and I really appreciate the effort and professionalism. Highly recommended to anyone looking for a reliable astrology-related service!" },
+  { name: "Saurabh Prajapati", city: "", date: "2026-11", stars: 5, source: "google", service: "",
+    text: "Excellent experience with Jyotish Tark! The website is informative, well-organized, and easy to navigate. The content is insightful and explained in a simple, understandable way. I really appreciate the effort and knowledge behind this platform. Highly recommended to anyone interested in astrology and traditional wisdom. Keep up the great work!" },
   { name: "Abhishek Singh", city: "", date: "2026-11", stars: 5, source: "google", service: "",
     text: "सटीक गणना और बहुत अच्छे उपाय। यहाँ की गई भविष्यवाणियां मेरे जीवन की परिस्थितियों से पूरी तरह मेल खाती हैं। समस्याओं के समाधान के लिए सरल और प्रभावशाली उपाय बताने के लिए आपका बहुत-बहुत धन्यवाद। मैं यहाँ के काम से पूरी तरह संतुष्ट हूँ।🫡" }
 ];

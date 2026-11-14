@@ -141,14 +141,14 @@
 
   function renderWidget(host) {
     const list = LIVE.concat(REVIEWS).filter((r) => r && r.name && r.text)
-      .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+      .sort((a, b) => ((b.source === "google") - (a.source === "google")) || String(b.date || "").localeCompare(String(a.date || "")));
     const limit = Number(host.getAttribute("data-limit")) || 6;
-    const showBadge = CFG.googleRating && CFG.googleCount >= 5 && CFG.googleProfileUrl;
+    const showBadge = CFG.googleRating && CFG.googleCount >= 1 && CFG.googleProfileUrl;
     host.innerHTML = `<div class="jtr-outer"><section class="jtr-wrap" aria-labelledby="jtr-title">
       <div class="jtr-head">
         <h2 id="jtr-title">${esc(host.getAttribute("data-title") || "जातकों के अनुभव • Client Reviews")}</h2>
         <p>हमारे परामर्श के बाद लोगों ने जो लिखा — बिना किसी बदलाव के।</p>
-        ${LIVE_N >= 3 ? `<span class="jtr-badge"><b>${Number(LIVE_AVG).toFixed(1)} ★</b> वेबसाइट पर ${LIVE_N} रिव्यू</span> ` : ""}${showBadge ? `<a class="jtr-badge" href="${esc(CFG.googleProfileUrl)}" target="_blank" rel="noopener">${GOOGLE_G} <b>${Number(CFG.googleRating).toFixed(1)} ★</b> Google पर • ${Number(CFG.googleCount)} रिव्यू →</a>` : ""}
+        ${showBadge ? `<a class="jtr-badge" href="${esc(CFG.googleProfileUrl)}" target="_blank" rel="noopener">${GOOGLE_G} <b>${Number(CFG.googleRating).toFixed(1)} ${"★".repeat(Math.round(Number(CFG.googleRating)))}</b> Google रेटिंग • ${Number(CFG.googleCount)} रिव्यू →</a> ` : ""}${LIVE_N >= 3 ? `<span class="jtr-badge"><b>${Number(LIVE_AVG).toFixed(1)} ★</b> वेबसाइट पर ${LIVE_N} रिव्यू</span>` : ""}
       </div>
       ${list.length ? `<div class="jtr-grid">${list.slice(0, limit).map(card).join("")}</div>` : `<p class="jtr-empty">आपका अनुभव दूसरों को सही मार्गदर्शन चुनने में मदद करता है। पहला रिव्यू आप लिखें! 🙏</p>`}
       <div class="jtr-actions">
