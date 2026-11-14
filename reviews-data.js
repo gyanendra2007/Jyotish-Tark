@@ -26,7 +26,7 @@ window.JT_CONFIG = {
   // reviewsApi = the order backend URL. googleClientId = OAuth client ID from Google Cloud
   // (public, not a secret). While googleClientId is empty the old WhatsApp review form is used.
   reviewsApi: "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec",
-  googleClientId: "",
+  googleClientId: "815352371264-hiiv378orre3n4btgl2pa5unap470c6k.apps.googleusercontent.com",
 
   emailjs: {
     publicKey: "o-tnka-_5VrrqMgQs",
