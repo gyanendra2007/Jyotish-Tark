@@ -22,6 +22,12 @@ window.JT_CONFIG = {
   // Email delivery through EmailJS (the same account the kundali order form uses).
   // Create two templates in EmailJS and paste their IDs here. While an ID is
   // empty, that form sends the message to your WhatsApp instead, so nothing is lost.
+  // Website reviews with Google sign-in (stored in the "Reviews" tab of the orders sheet).
+  // reviewsApi = the order backend URL. googleClientId = OAuth client ID from Google Cloud
+  // (public, not a secret). While googleClientId is empty the old WhatsApp review form is used.
+  reviewsApi: "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec",
+  googleClientId: "",
+
   emailjs: {
     publicKey: "o-tnka-_5VrrqMgQs",
     serviceId: "service_6w2tj0r",

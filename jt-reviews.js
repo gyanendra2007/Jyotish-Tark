@@ -17,8 +17,12 @@
     googleProfileUrl: "",
     googleRating: null,
     googleCount: null,
-    emailjs: {}
+    emailjs: {},
+    reviewsApi: "",      // order backend URL (Apps Script /exec) — stores and serves website reviews
+    googleClientId: ""   // Google sign-in client ID — reviewers sign in with Google like on Blogger
   }, window.JT_CONFIG || {});
+  let LIVE = [], LIVE_AVG = null, LIVE_N = 0;
+  const signInOn = () => !!(CFG.reviewsApi && CFG.googleClientId);
   const REVIEWS = Array.isArray(window.JT_REVIEWS) ? window.JT_REVIEWS.slice() : [];
   const MONTHS = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
 
@@ -103,6 +107,12 @@
   .jtr-x{background:transparent;color:#cbd5e1;border:1px solid #475569}
   .jtr-msg{margin-top:.75rem;font-size:.9rem}
   .jtr-msg.err{color:#fca5a5}.jtr-msg.ok{color:#86efac}
+  .jtr-ph{width:44px;height:44px;border-radius:50%;flex-shrink:0;object-fit:cover}
+  .jtr-ver{display:inline-block;font-size:.72rem;font-weight:700;color:#14532D;background:#E3F4E7;border:1px solid #9BD3AA;border-radius:999px;padding:0 .45rem;margin-left:.35rem;vertical-align:middle}
+  .jtr-reply{background:rgba(184,137,43,.12);border-left:3px solid #B8892B;border-radius:.4rem;padding:.5rem .7rem;font-size:.88rem;color:inherit}
+  .jtr-box [hidden]{display:none!important}.jtr-box .jtr-msg.ok{color:#15803D}.jtr-box .jtr-msg.err{color:#B42318}
+  .jtr-me{display:flex;align-items:center;gap:.6rem;margin:0 0 1rem;padding:.6rem .8rem;background:rgba(255,255,255,.06);border-radius:.6rem}
+  .jtr-me img{width:36px;height:36px;border-radius:50%}.jtr-gbtn{display:flex;justify-content:center;margin:.5rem 0 1rem;min-height:44px}
   `;
   function injectCss() {
     if (document.getElementById("jtr-css")) return;
@@ -118,18 +128,19 @@
     const meta = [r.city, r.service, fmtDate(r.date)].filter(Boolean).map(esc).join(" • ");
     const src = r.source === "google"
       ? `${GOOGLE_G} Google रिव्यू${CFG.googleProfileUrl ? ` • <a href="${esc(CFG.googleProfileUrl)}" target="_blank" rel="noopener">Google पर देखें</a>` : ""}`
-      : `✍ वेबसाइट पर दिया गया अनुभव`;
+      : r.source === "site" ? `${GOOGLE_G} Google खाते से साइन इन करके लिखा गया` : `✍ वेबसाइट पर दिया गया अनुभव`;
     return `<article class="jtr-card">
-      <div class="jtr-top"><div class="jtr-av" aria-hidden="true">${initial}</div>
-        <div><div class="jtr-name">${esc(r.name)}</div><div class="jtr-meta">${meta}</div></div></div>
+      <div class="jtr-top">${r.photo && /^https:\/\//.test(r.photo) ? `<img class="jtr-ph" src="${esc(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<div class="jtr-av" aria-hidden="true">${initial}</div>`}
+        <div><div class="jtr-name">${esc(r.name)}${r.verified ? '<span class="jtr-ver">✔ सत्यापित ग्राहक</span>' : ""}</div><div class="jtr-meta">${meta}</div></div></div>
       <div aria-label="${Number(r.stars) || 5} में से 5 स्टार">${stars(Number(r.stars) || 5)}</div>
       <p class="jtr-text">“${esc(r.text)}”</p>
+      ${r.reply ? `<div class="jtr-reply"><b>ज्योतिष तर्क का उत्तर:</b> ${esc(r.reply)}</div>` : ""}
       <div class="jtr-src">${src}</div>
     </article>`;
   }
 
   function renderWidget(host) {
-    const list = REVIEWS.filter((r) => r && r.name && r.text)
+    const list = LIVE.concat(REVIEWS).filter((r) => r && r.name && r.text)
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const limit = Number(host.getAttribute("data-limit")) || 6;
     const showBadge = CFG.googleRating && CFG.googleCount >= 5 && CFG.googleProfileUrl;
@@ -137,7 +148,7 @@
       <div class="jtr-head">
         <h2 id="jtr-title">${esc(host.getAttribute("data-title") || "जातकों के अनुभव • Client Reviews")}</h2>
         <p>हमारे परामर्श के बाद लोगों ने जो लिखा — बिना किसी बदलाव के।</p>
-        ${showBadge ? `<a class="jtr-badge" href="${esc(CFG.googleProfileUrl)}" target="_blank" rel="noopener">${GOOGLE_G} <b>${Number(CFG.googleRating).toFixed(1)} ★</b> Google पर • ${Number(CFG.googleCount)} रिव्यू →</a>` : ""}
+        ${LIVE_N >= 3 ? `<span class="jtr-badge"><b>${Number(LIVE_AVG).toFixed(1)} ★</b> वेबसाइट पर ${LIVE_N} रिव्यू</span> ` : ""}${showBadge ? `<a class="jtr-badge" href="${esc(CFG.googleProfileUrl)}" target="_blank" rel="noopener">${GOOGLE_G} <b>${Number(CFG.googleRating).toFixed(1)} ★</b> Google पर • ${Number(CFG.googleCount)} रिव्यू →</a>` : ""}
       </div>
       ${list.length ? `<div class="jtr-grid">${list.slice(0, limit).map(card).join("")}</div>` : `<p class="jtr-empty">आपका अनुभव दूसरों को सही मार्गदर्शन चुनने में मदद करता है। पहला रिव्यू आप लिखें! 🙏</p>`}
       <div class="jtr-actions">
@@ -209,14 +220,88 @@
     return modal;
   }
   let lastFocus = null;
-  function open() { lastFocus = document.activeElement; buildModal().classList.add("open"); setTimeout(() => modal.querySelector("input[name=name]").focus(), 30); }
+  function open() { if (signInOn()) { openSignIn(); return; } lastFocus = document.activeElement; buildModal().classList.add("open"); setTimeout(() => modal.querySelector("input[name=name]").focus(), 30); }
+
+  /* ---------- review with Google sign-in (stored on our backend, shown after approval) ---------- */
+  let smodal = null, cred = "", rating2 = 0;
+  const api = (body) => fetch(CFG.reviewsApi, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) }).then((r) => r.json());
+  const jwt = (t) => { try { return JSON.parse(decodeURIComponent(escape(atob(t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))))); } catch (e) { return {}; } };
+  function loadGis() {
+    if (window.google && window.google.accounts && window.google.accounts.id) return Promise.resolve();
+    return new Promise((res, rej) => { const sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+  }
+  function openSignIn() {
+    lastFocus = document.activeElement;
+    if (!smodal) {
+      smodal = document.createElement("div"); smodal.className = "jtr-modal"; smodal.setAttribute("role", "dialog"); smodal.setAttribute("aria-modal", "true"); smodal.setAttribute("aria-labelledby", "jtr-s-title");
+      smodal.innerHTML = `<div class="jtr-box"><h3 id="jtr-s-title">अपना अनुभव लिखें</h3>
+        <p class="jtr-sub">Google खाते से साइन इन करें — इससे हर रिव्यू असली व्यक्ति का होता है। आपका ईमेल प्रकाशित नहीं होगा; नाम और फ़ोटो रिव्यू के साथ दिखेंगे।</p>
+        <div data-step="1"><div class="jtr-gbtn" id="jtrGbtn"></div><p class="jtr-msg" data-m1></p></div>
+        <form data-step="2" hidden novalidate>
+          <div class="jtr-me" data-me></div>
+          <div class="jtr-f"><span>रेटिंग *</span><div class="jtr-rate" role="radiogroup" aria-label="रेटिंग">${[1, 2, 3, 4, 5].map((n) => `<button type="button" role="radio" aria-checked="false" aria-label="${n} स्टार" data-v="${n}">★</button>`).join("")}</div></div>
+          <label class="jtr-f"><span>कौन-सी सेवा ली?</span><select name="service"><option>निःशुल्क कुंडली</option><option>सम्पूर्ण कुंडली (₹1,101)</option><option>KP विस्तृत रिपोर्ट</option><option>अंक ज्योतिष रिपोर्ट</option><option>ज्योतिषी से प्रश्न</option><option>परामर्श (Consultation)</option><option>रुद्राक्ष</option><option>मुफ़्त कैलकुलेटर</option><option>अन्य</option></select></label>
+          <label class="jtr-f"><span>शहर</span><input name="city" maxlength="40" autocomplete="address-level2"></label>
+          <label class="jtr-f"><span>आपका अनुभव * (कम से कम 15 अक्षर)</span><textarea name="text" required maxlength="1500"></textarea></label>
+          <div class="jtr-row"><button type="button" class="jtr-btn jtr-x" data-jtr-close>रद्द करें</button><button type="submit" class="jtr-btn jtr-btn-w">रिव्यू भेजें</button></div>
+          <div class="jtr-msg" aria-live="polite" data-m2></div>
+        </form>
+        <div class="jtr-row" data-step="1"><button type="button" class="jtr-btn jtr-x" data-jtr-close>बंद करें</button></div></div>`;
+      document.body.appendChild(smodal);
+      smodal.addEventListener("click", (e) => { if (e.target === smodal || e.target.hasAttribute("data-jtr-close")) closeS(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && smodal.classList.contains("open")) closeS(); });
+      const rb = smodal.querySelectorAll(".jtr-rate button");
+      rb.forEach((b) => b.addEventListener("click", () => { rating2 = Number(b.dataset.v); rb.forEach((x) => { x.classList.toggle("on", Number(x.dataset.v) <= rating2); x.setAttribute("aria-checked", String(Number(x.dataset.v) === rating2)); }); }));
+      const f = smodal.querySelector("form");
+      f.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const m = smodal.querySelector("[data-m2]"), btn = f.querySelector('button[type="submit"]');
+        m.className = "jtr-msg err";
+        if (!rating2) { m.textContent = "कृपया स्टार चुनकर रेटिंग दें।"; return; }
+        if (f.text.value.trim().length < 15) { m.textContent = "कृपया अपना अनुभव थोड़ा विस्तार से लिखें (कम से कम 15 अक्षर)।"; return; }
+        btn.disabled = true; m.className = "jtr-msg"; m.textContent = "भेजा जा रहा है…";
+        let r; try { r = await api({ action: "reviewAdd", credential: cred, stars: rating2, text: f.text.value.trim(), service: f.service.value, city: f.city.value.trim(), page: location.pathname }); } catch (x) { r = { ok: false, error: "net" }; }
+        btn.disabled = false;
+        if (r && r.ok) {
+          f.innerHTML = `<p class="jtr-msg ok" style="font-size:1rem">🙏 धन्यवाद! आपका रिव्यू मिल गया है। जाँच के बाद यह वेबसाइट पर दिखाई देगा।</p>${googleWriteUrl() ? `<p style="margin-top:.8rem;opacity:.8;font-size:.9rem">यही अनुभव Google पर भी लिख दें तो और लोगों तक पहुँचेगा:</p><a class="jtr-btn jtr-btn-g" href="${esc(googleWriteUrl())}" target="_blank" rel="noopener">${GOOGLE_G} Google पर भी लिखें</a>` : ""}<div class="jtr-row" style="margin-top:1rem"><button type="button" class="jtr-btn jtr-x" data-jtr-close>बंद करें</button></div>`;
+          try { if (window.gtag) window.gtag("event", "review_submit", { stars: rating2 }); } catch (x) { /* */ }
+        } else {
+          m.className = "jtr-msg err";
+          m.textContent = r && r.error === "signin" ? "साइन इन की अवधि समाप्त हो गई — कृपया दोबारा साइन इन करें।" : r && r.error === "limit" ? "आज आप पहले ही रिव्यू भेज चुके हैं — धन्यवाद!" : "रिव्यू नहीं भेजा जा सका — थोड़ी देर बाद दोबारा कोशिश करें।";
+          if (r && r.error === "signin") { smodal.querySelector('form[data-step="2"]').hidden = true; smodal.querySelectorAll('[data-step="1"]').forEach((x) => (x.hidden = false)); }
+        }
+      });
+    }
+    smodal.classList.add("open");
+    const m1 = smodal.querySelector("[data-m1]");
+    loadGis().then(() => {
+      window.google.accounts.id.initialize({ client_id: CFG.googleClientId, callback: (resp) => {
+        cred = resp.credential; const u = jwt(cred);
+        smodal.querySelector("[data-me]").innerHTML = `${u.picture ? `<img src="${esc(u.picture)}" alt="" referrerpolicy="no-referrer">` : ""}<div><b>${esc(u.name || "")}</b><br><small style="color:#94a3b8">Google से साइन इन</small></div>`;
+        smodal.querySelectorAll('[data-step="1"]').forEach((x) => (x.hidden = true));
+        smodal.querySelector('form[data-step="2"]').hidden = false;
+      } });
+      window.google.accounts.id.renderButton(document.getElementById("jtrGbtn"), { theme: "outline", size: "large", text: "signin_with", shape: "pill", locale: "hi" });
+    }).catch(() => { m1.className = "jtr-msg err"; m1.textContent = "Google साइन इन लोड नहीं हुआ — इंटरनेट जाँचें।"; });
+  }
+  function closeS() { if (smodal) smodal.classList.remove("open"); if (lastFocus) lastFocus.focus(); }
   function close() { if (!modal) return; modal.classList.remove("open"); modal.querySelector(".jtr-msg").textContent = ""; if (lastFocus) lastFocus.focus(); }
   window.JTReviews = { open, close };
 
   /* ---------- boot ---------- */
   function boot() {
     injectCss();
-    document.querySelectorAll("#jt-reviews, [data-jt-reviews]").forEach(renderWidget);
+    const hosts = document.querySelectorAll("#jt-reviews, [data-jt-reviews]");
+    hosts.forEach(renderWidget);
+    if (CFG.reviewsApi && hosts.length) {
+      fetch(CFG.reviewsApi, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ action: "reviews" }) })
+        .then((r) => r.json()).then((d) => {
+          if (!d || !d.ok) return;
+          LIVE = (d.reviews || []).map((r) => Object.assign({ source: "site" }, r));
+          LIVE_AVG = d.avg; LIVE_N = d.count || 0;
+          if (LIVE.length) hosts.forEach(renderWidget);
+        }).catch(() => { /* static reviews stay */ });
+    }
     document.addEventListener("click", (e) => {
       const t = e.target.closest("[data-jtr-open]");
       if (t) { e.preventDefault(); open(); }

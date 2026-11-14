@@ -8,10 +8,12 @@
  *   3. lookup  : "get my report again" — order ID + phone returns the saved birth details.
  *   4. partner : a partner's sales and commission (code + PIN).
  *   5. lead    : records rudraksha / consultation enquiries.
+ *   6. reviews : visitors sign in with Google and write a review; it appears on the
+ *                website after you type "yes" in the Approved column of the Reviews tab.
  *
  * Setup (once): see SETUP.md in the same folder.
  * Secrets live in Project Settings → Script properties, never in this file:
- *   CF_APP_ID, CF_SECRET, CF_MODE (production | sandbox)
+ *   CF_APP_ID, CF_SECRET, CF_MODE (production | sandbox), GOOGLE_CLIENT_ID (for review sign-in)
  */
 
 const SHEET_ORDERS = "Orders", SHEET_PARTNERS = "Partners", SHEET_LEADS = "Leads";
@@ -39,6 +41,8 @@ const HEAD = ["Created", "Order ID", "Product", "Status", "Amount", "Currency", 
   "Extra", "Paid at", "Cashfree status", "Referrer code (own)"];
 const PHEAD = ["Code", "Name", "Phone", "Type", "Commission %", "Customer discount %", "PIN", "Active", "Notes"];
 const LHEAD = ["Time", "Type", "Name", "Phone", "Details", "Page"];
+const SHEET_REVIEWS = "Reviews";
+const RHEAD = ["Time", "Approved (yes/no)", "Name", "Email", "Photo", "Stars", "Review", "Service", "City", "Page", "Verified buyer", "Your reply", "ID"];
 
 function doGet(e) { return out({ ok: true, service: "jyotish-tark-orders" }); }
 
@@ -52,6 +56,8 @@ function doPost(e) {
     if (b.action === "partner") return out(partnerStats(String(b.code || ""), String(b.pin || "")));
     if (b.action === "lead") return out(lead(b));
     if (b.action === "partnerCheck") return out(partnerCheck(String(b.code || "")));
+    if (b.action === "reviewAdd") return out(reviewAdd(b));
+    if (b.action === "reviews") return out(reviewList());
     return out({ ok: false, error: "unknown action" });
   } catch (x) {
     return out({ ok: false, error: String(x && x.message || x) });
@@ -157,6 +163,52 @@ function lead(b) {
   return { ok: true };
 }
 
+// ------------------------------------------------------------------ reviews
+// The browser sends Google's sign-in token; Google itself confirms who wrote the review.
+function googleUser(token) {
+  const cid = PropertiesService.getScriptProperties().getProperty("GOOGLE_CLIENT_ID");
+  if (!cid || !token) return null;
+  const r = UrlFetchApp.fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(token), { muteHttpExceptions: true });
+  if (r.getResponseCode() !== 200) return null;
+  let j = {}; try { j = JSON.parse(r.getContentText()); } catch (x) { return null; }
+  if (j.aud !== cid || String(j.email_verified) !== "true" || Number(j.exp) * 1000 < Date.now()) return null;
+  return { email: String(j.email || "").toLowerCase(), name: j.name || j.given_name || "", picture: j.picture || "" };
+}
+function reviewAdd(b) {
+  const u = googleUser(String(b.credential || ""));
+  if (!u) return { ok: false, error: "signin" };
+  const stars = Math.round(Number(b.stars));
+  const text = clip(b.text, 1500).trim();
+  if (!(stars >= 1 && stars <= 5)) return { ok: false, error: "stars" };
+  if (text.length < 15) return { ok: false, error: "text" };
+  const sh = sheet(SHEET_REVIEWS, RHEAD), v = sh.getDataRange().getValues(), day = Date.now() - 864e5;
+  let recent = 0;
+  for (let i = 1; i < v.length; i++) if (String(v[i][3]).toLowerCase() === u.email && new Date(v[i][0]).getTime() > day) recent++;
+  if (recent >= 2) return { ok: false, error: "limit" };
+  // verified buyer = this Google email paid for an order
+  let buyer = "";
+  const o = sheet(SHEET_ORDERS, HEAD).getDataRange().getValues();
+  for (let i = 1; i < o.length; i++) if (String(o[i][14]).toLowerCase() === u.email && (o[i][3] === "PAID")) { buyer = "yes"; break; }
+  sh.appendRow([new Date(), "", clip(u.name, 80), u.email, clip(u.picture, 300), stars, text, clip(b.service, 60), clip(b.city, 40), clip(b.page, 200), buyer, "", "R" + Date.now().toString(36).toUpperCase() + rand(3)]);
+  CacheService.getScriptCache().remove("reviews");
+  return { ok: true, pending: true, name: u.name };
+}
+function reviewList() {
+  const c = CacheService.getScriptCache(), hit = c.get("reviews");
+  if (hit) return JSON.parse(hit);
+  const v = sheet(SHEET_REVIEWS, RHEAD).getDataRange().getValues(), list = [];
+  for (let i = 1; i < v.length; i++) {
+    if (String(v[i][1]).trim().toLowerCase() !== "yes") continue;
+    const parts = String(v[i][2]).trim().split(/\s+/);
+    list.push({ name: parts[0] + (parts.length > 1 ? " " + parts[parts.length - 1].charAt(0) + "." : ""), photo: v[i][4], stars: Number(v[i][5]) || 5, text: String(v[i][6]), service: v[i][7], city: v[i][8], date: Utilities.formatDate(new Date(v[i][0]), "Asia/Kolkata", "yyyy-MM-dd"), verified: String(v[i][10]).toLowerCase() === "yes", reply: String(v[i][11] || ""), id: v[i][12] });
+  }
+  list.reverse();
+  const avg = list.length ? Math.round(list.reduce(function (a, r) { return a + r.stars; }, 0) / list.length * 10) / 10 : null;
+  const res = { ok: true, count: list.length, avg: avg, reviews: list.slice(0, 60) };
+  c.put("reviews", JSON.stringify(res), 300);
+  return res;
+}
+
 // ------------------------------------------------------------------ helpers
 function details(v) {
   let extra = {}; try { extra = JSON.parse(v[23] || "{}"); } catch (x) { extra = {}; }
@@ -207,7 +259,7 @@ function fmtTime(t) { return t instanceof Date ? Utilities.formatDate(t, "Asia/K
 
 // Run once from the editor: creates the three sheets and a small dashboard.
 function setup() {
-  sheet(SHEET_ORDERS, HEAD); sheet(SHEET_PARTNERS, PHEAD); sheet(SHEET_LEADS, LHEAD);
+  sheet(SHEET_ORDERS, HEAD); sheet(SHEET_PARTNERS, PHEAD); sheet(SHEET_LEADS, LHEAD); sheet(SHEET_REVIEWS, RHEAD);
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const o = ss.getSheetByName(SHEET_ORDERS);
   o.getRange("P:Q").setNumberFormat("@"); // keep DOB / time as text
@@ -229,4 +281,9 @@ function setup() {
   d.getRange("H7").setValue("Partner commission owed (paid orders)").setFontWeight("bold");
   d.getRange("H8").setFormula('=QUERY(Orders!A:L,"select K, count(B), sum(E), sum(L) where K <> \'\' and D = \'PAID\' group by K label K \'Partner\', count(B) \'Orders\', sum(E) \'Sales\', sum(L) \'Commission\'",1)');
   d.autoResizeColumns(1, 12);
+}
+
+// Approving a review in the sheet shows it on the website straight away (no 5-minute cache wait).
+function onEdit(e) {
+  try { if (e && e.range && e.range.getSheet().getName() === SHEET_REVIEWS) CacheService.getScriptCache().remove("reviews"); } catch (x) { /* ignore */ }
 }
