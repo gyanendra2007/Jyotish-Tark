@@ -126,6 +126,7 @@ window.JTCheckout = (function () {
       show(`<div class="jco-s" aria-hidden="true"></div><h3>${T("भुगतान की पुष्टि हो रही है…", "Confirming your payment…")}</h3><p>${T("कृपया यह पेज बंद न करें।", "Please keep this page open.")}</p>`);
       verify(oid).then((r) => {
         if (r && r.ok && r.paid) { ov.remove(); ga("purchase_verified", { product, transaction_id: oid }); onPaid(r.order, oid); return; }
+        if (r && r.ok === false) { fail(T("यह ऑर्डर नहीं मिला", "Order not found"), T("इस ऑर्डर नंबर का कोई भुगतान नहीं मिला। अगर आपका पैसा कटा है तो भुगतान का स्क्रीनशॉट WhatsApp पर भेजें।", "No payment was found for this order number. If money was deducted, send the payment screenshot on WhatsApp.")); return; }
         if (tries++ < 5) { setTimeout(run, 3000); return; }
         fail(T("भुगतान अभी पूरा नहीं हुआ", "Payment not completed yet"), T("Cashfree से अभी भुगतान की पुष्टि नहीं मिली। कुछ मिनट बाद “दोबारा जाँचें” दबाएँ। पैसा कट गया हो तो WhatsApp करें।", "Cashfree has not confirmed the payment yet. Tap “Check again” in a few minutes. If money was deducted, WhatsApp us."));
       }).catch(() => { if (tries++ < 5) setTimeout(run, 3000); else fail(T("इंटरनेट की समस्या", "Connection problem"), T("पुष्टि नहीं हो सकी — इंटरनेट जाँचकर दोबारा कोशिश करें।", "Could not confirm — check your connection and try again.")); });
