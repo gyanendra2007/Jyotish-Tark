@@ -25,6 +25,7 @@ const PRODUCTS = {
   nm:       { name: "Numerology report",  page: "numerology.html",         inr: 299,  usd: 19 },
   sampurna: { name: "Sampurna Kundali",   page: "kundali-form.html",       inr: 1101, usd: null },
   prashna:  { name: "One question",       page: "kundali-se-poochho.html", inr: 101,  usd: 9 },
+  mobile:   { name: "Mobile number report", page: "mobile-number-numerology.html", inr: 199, usd: null },
   test:     { name: "Setup test (Rs 1)",   page: "my-report.html",          inr: 1,    usd: null }  // unlocks nothing; used once to test the setup
 };
 // promo codes: SHA-256 of the UPPER-CASE code → % off (same list as jt-promo.js)

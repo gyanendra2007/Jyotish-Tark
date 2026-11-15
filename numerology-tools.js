@@ -395,21 +395,12 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
     9: [["ऊर्जा और साहस", "मंगल का यह नंबर जोश और तेज़ी देता है।", "खेल, सुरक्षा, ज़मीन-जायदाद, इंजीनियरिंग", "ग़ुस्से में बात न करें।"], ["Energy and courage", "A Mars number — it brings drive and speed.", "Sports, security, property, engineering", "Don't talk in anger."]]
   };
   const PURPOSE = { business: [5, 6, 1, 3], job: [1, 3, 5, 8], creative: [6, 2, 3, 5], personal: [] };
-  function numberReport(e) {
-    if (e) e.preventDefault();
-    const f = document.getElementById("nmMobForm"), out = document.getElementById("nmMobOut");
-    if (!f || !out) return;
-    const kind = (f.kind && f.kind.value) || "mobile";
-    const raw = (f.mob.value || "").toUpperCase();
-    let digits = raw.replace(/\D/g, "");
-    if (kind === "mobile") {
-      digits = digits.replace(/^(91|0)(?=\d{10}$)/, "");
-      if (digits.length !== 10) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया 10 अंकों का मोबाइल नंबर लिखें।", "Please enter a 10-digit mobile number.")}</p>`; f.mob.focus(); return; }
-    } else if (!digits.length || digits.length > 12) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया सही नंबर लिखें।", "Please enter a valid number.")}</p>`; f.mob.focus(); return; }
+  // pure calculation shared by the free check and the ₹199 mobile report (mobile-report.js)
+  function numCalc(digits, dob, name, purpose) {
+    purpose = PURPOSE[purpose] ? purpose : "personal";
     const D = digits.split("").map(Number), total = D.reduce((a, b) => a + b, 0), r = root(total) || 9;
     const counts = Array.from({ length: 10 }, (_, d) => D.filter((x) => x === d).length);
-    const last = D[D.length - 1], p = fromDob(f.dob.value), nn = nameNum(f.nm ? f.nm.value : "");
-    const purpose = f.purpose ? f.purpose.value : "personal";
+    const last = D[D.length - 1], p = fromDob(dob), nn = nameNum(name || "");
     const cp = total >= 10 && total <= 52 ? compound(total) : null;
     const pairs = []; for (let i = 0; i < D.length - 1; i++) if (D[i] && D[i + 1]) pairs.push({ a: D[i], b: D[i + 1], k: pairKind(D[i], D[i + 1]) });
     const pc = { f: 0, n: 0, m: 0, e: 0 }; pairs.forEach((x) => pc[x.k]++);
@@ -427,11 +418,26 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
       if (m1.k === "mid" && m2.k === "mid" && score > 58) { sc.push([L("मूलांक-भाग्यांक दोनों से सामान्य मेल (सीमा)", "Average match with both (cap)"), 58 - score]); score = 58; }
     }
     const band = score == null ? null : (score >= 80 ? [L("बहुत अनुकूल", "Very favourable"), "good"] : (score >= 62 ? [L("अनुकूल", "Favourable"), "good"] : (score >= 45 ? [L("सामान्य", "Average"), "ok"] : [L("कम अनुकूल", "Less favourable"), "mid"])));
+    let sugg = [];
+    if (p) { const common = LUCKY[p.mulank].filter((x) => LUCKY[p.bhagyank].includes(x)); sugg = (common.length ? common : LUCKY[p.mulank]).slice(); const pur = PURPOSE[purpose]; if (pur.length) sugg.sort((a, b) => (pur.includes(b) ? 1 : 0) - (pur.includes(a) ? 1 : 0)); }
+    return { D, total, r, counts, last, p, nn, purpose, cp, pairs, pc, score, sc, band, sugg };
+  }
+  function numberReport(e) {
+    if (e) e.preventDefault();
+    const f = document.getElementById("nmMobForm"), out = document.getElementById("nmMobOut");
+    if (!f || !out) return;
+    const kind = (f.kind && f.kind.value) || "mobile";
+    const raw = (f.mob.value || "").toUpperCase();
+    let digits = raw.replace(/\D/g, "");
+    if (kind === "mobile") {
+      digits = digits.replace(/^(91|0)(?=\d{10}$)/, "");
+      if (digits.length !== 10) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया 10 अंकों का मोबाइल नंबर लिखें।", "Please enter a 10-digit mobile number.")}</p>`; f.mob.focus(); return; }
+    } else if (!digits.length || digits.length > 12) { out.innerHTML = `<p class="nm-err" role="alert">${L("कृपया सही नंबर लिखें।", "Please enter a valid number.")}</p>`; f.mob.focus(); return; }
+    const purpose = f.purpose ? f.purpose.value : "personal";
+    const { D, total, r, counts, last, p, nn, cp, pairs, score, sc, band, sugg } = numCalc(digits, f.dob.value, f.nm ? f.nm.value : "", purpose);
     const M = MOBILE[r][hi() ? 0 : 1];
     const lbl = { mobile: L("मोबाइल नंबर", "Mobile number"), vehicle: L("गाड़ी नंबर", "Vehicle number"), house: L("मकान नंबर", "House number") }[kind];
     const shown = kind === "mobile" ? `${digits.slice(0, 5)} ${digits.slice(5)}` : raw.replace(/[^A-Z0-9 -]/g, "").trim();
-    let sugg = [];
-    if (p) { const common = LUCKY[p.mulank].filter((x) => LUCKY[p.bhagyank].includes(x)); sugg = (common.length ? common : LUCKY[p.mulank]).slice(); const pur = PURPOSE[purpose]; if (pur.length) sugg.sort((a, b) => (pur.includes(b) ? 1 : 0) - (pur.includes(a) ? 1 : 0)); }
     const verdict = score == null ? L("जन्मतिथि भी डालें — तब यह भी दिखेगा कि यह नंबर आपसे कितना मेल खाता है।", "Add your date of birth to see how well this number suits you.")
       : (score >= 62 ? L("यह नंबर आपके लिए अनुकूल है। बदलने की ज़रूरत नहीं।", "This number suits you. No need to change it.")
         : (score >= 45 ? L("यह नंबर ठीक है। चालू नंबर बदलना ज़रूरी नहीं।", "This number is fine. No need to change it.")
@@ -467,6 +473,7 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
     if (again) again.addEventListener("click", () => { f.mob.value = ""; f.mob.focus(); });
     if (e) out.scrollIntoView({ behavior: "smooth", block: "start" });
     track("mobile_numerology", { kind, root: r, score });
+    if (kind === "mobile" && window.JTMobileReport) window.JTMobileReport.after({ digits, dob: f.dob.value, name: f.nm ? f.nm.value : "", purpose, score, r, lang: LANG });
   }
 
   // =================== 3) MULANK MILAN ===================
@@ -529,7 +536,7 @@ p{margin:1.5mm 0}ul,ol{margin:1.5mm 0;padding-left:6mm}li{margin:.8mm 0}
   window.JT_NM = {
     withLang(l, fn) { const o = LANG; LANG = l === "en" ? "en" : "hi"; try { return fn(); } finally { LANG = o; } },
     lang: () => LANG, model, sections, nameSuggestions, nameNum, match, root, master, sumDigits, reduceSteps, compound, cName, cText,
-    pl, rel, esc, L, LUCKY, COLORS, DAYS, RUDRA, PM, MON, CHALD, LOSHU, PLANES, stampSvg, mandalaSvg, MOBILE: () => MOBILE,
+    pl, rel, esc, L, LUCKY, COLORS, DAYS, RUDRA, PM, MON, CHALD, LOSHU, PLANES, stampSvg, mandalaSvg, MOBILE: () => MOBILE, numCalc, fromDob, pairKind, PURPOSE,
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
