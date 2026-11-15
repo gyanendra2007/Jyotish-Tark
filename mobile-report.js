@@ -271,18 +271,30 @@ table.t{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:10.6pt}ta
       ${d.dob ? "" : `<div class="mr-row" style="margin-top:8px"><label>${T("जन्मतिथि (ज़रूरी)", "Date of birth (required)")}<input id="mrDob" type="date"></label></div>`}
       <p class="mr-err" id="mrErr" aria-live="polite"></p>
       <div class="mr-row"><span class="mr-price">₹${PRICE}<s>₹499</s></span><button type="button" class="mr-buy" id="mrBuy">${T(`₹${PRICE} में रिपोर्ट पाएँ →`, `Get the report for ₹${PRICE} →`)}</button></div>
+      <div data-promo></div>
       <p class="mr-sm">${T("UPI, कार्ड, नेट बैंकिंग · भुगतान के तुरंत बाद इसी पेज पर रिपोर्ट खुलेगी · बाद में 'मेरी रिपोर्ट' पेज से दोबारा डाउनलोड करें", "UPI, card, net banking · the report opens on this page right after paying · download again later from 'My report'")}</p></div>`;
     const old = document.getElementById("mrOffer"); if (old) old.remove();
     const anchor = out.querySelector(".nm-actions");
     if (anchor) anchor.parentNode.insertBefore(box, anchor); else out.appendChild(box);
-    box.querySelector("#mrBuy").addEventListener("click", () => {
+    const read = () => {
       const name = box.querySelector("#mrName").value.trim(), lang = box.querySelector("#mrLang").value, dob = d.dob || (box.querySelector("#mrDob") || {}).value || "";
       const err = box.querySelector("#mrErr"); err.textContent = "";
-      if (name.length < 2) { err.textContent = T("कृपया रिपोर्ट के लिए नाम लिखें।", "Please enter a name for the report."); box.querySelector("#mrName").focus(); return; }
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) { err.textContent = T("कृपया जन्मतिथि भरें — रिपोर्ट के लिए ज़रूरी है।", "Please enter the date of birth — the report needs it."); return; }
+      if (name.length < 2) { err.textContent = T("कृपया रिपोर्ट के लिए नाम लिखें।", "Please enter a name for the report."); box.querySelector("#mrName").focus(); return null; }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) { err.textContent = T("कृपया जन्मतिथि भरें — रिपोर्ट के लिए ज़रूरी है।", "Please enter the date of birth — the report needs it."); return null; }
       ls.set(KEY, JSON.stringify({ mobile: d.digits, dob, name, purpose: d.purpose || "personal", lang, ts: Date.now() }));
+      return { name, dob, lang, extra: { mobile: d.digits, purpose: d.purpose || "personal" } };
+    };
+    if (window.JTPromo && window.JTCheckout && window.JTCheckout.enabled()) window.JTPromo.ui(box.querySelector("[data-promo]"), "mobile", (off, h, msg, code) => {
+      const o = read(); if (!o) { msg.textContent = T("कोड सही है — पहले ऊपर नाम और जन्मतिथि भरें।", "Code accepted — first fill in the name and date of birth above."); return false; }
+      ga("mobile_report_promo", { off });
+      window.JTCheckout.pay("mobile", o, { promo: code, title: T("प्रोमो कोड से रिपोर्ट", "Report with promo code"), lang: o.lang });
+      return false;
+    }, d.lang);
+    box.querySelector("#mrBuy").addEventListener("click", () => {
+      const o = read(); if (!o) return;
+      const { name, dob, lang } = o;
       ga("mobile_report_click", { score: d.score });
-      if (window.JTCheckout && window.JTCheckout.enabled()) window.JTCheckout.pay("mobile", { name, dob, lang, extra: { mobile: d.digits, purpose: d.purpose || "personal" } }, { title: T("मोबाइल नंबर रिपोर्ट — ₹199", "Mobile number report — ₹199"), lang });
+      if (window.JTCheckout && window.JTCheckout.enabled()) window.JTCheckout.pay("mobile", o, { title: T("मोबाइल नंबर रिपोर्ट — ₹199", "Mobile number report — ₹199"), lang });
       else location.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(T(`नमस्ते, मुझे ₹199 की मोबाइल नंबर रिपोर्ट चाहिए। नंबर: ${d.digits}, नाम: ${name}, जन्मतिथि: ${dob}`, `Hello, I want the ₹199 mobile number report. Number: ${d.digits}, name: ${name}, DOB: ${dob}`));
     });
   }
