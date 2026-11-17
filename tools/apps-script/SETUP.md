@@ -54,6 +54,16 @@ Cashfree may ask you to whitelist the domain **jyotishtark.in** for checkout
 - **Leads** — rudraksha orders (COD and online) with address and partner code.
 - A customer who lost a report: `jyotishtark.in/my-report.html` (order ID + phone).
 
+## Rudraksha with partner codes
+Rudraksha orders now go through the same checkout as reports (product `rud`).
+- Price comes from the `RUD` table at the top of Code.gs — if you change a price on
+  rudraksha.html, change it there too.
+- Any active partner code gives the customer **10% off** on rudraksha and the partner
+  **15% commission** (`RUD_PARTNER_OFF`, `RUD_PARTNER_COMM`). Promo codes don't apply.
+- Online payments appear in **Orders** as PAID automatically.
+- Cash-on-delivery orders appear in **Orders** with status **COD**. When the cash is
+  received, change `COD` to `PAID` — only then it counts in the partner's commission.
+
 ## If you change the script later
 Deploy → **Manage deployments** → edit (pencil) → Version: **New version** →
 Deploy. The URL stays the same.

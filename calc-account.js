@@ -6,7 +6,7 @@
   C.css();
   const host = $("#calcHost"), mode = host.dataset.mode || document.body.dataset.mode;
   const off = !CO || !CO.enabled();
-  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html" };
+  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html", rud: "rudraksha.html" };
   const inp = (id, label, type, ph, ac) => `<label>${label}<input id="${id}" type="${type}" placeholder="${ph}" autocomplete="${ac || "off"}" style="width:100%;font:inherit;font-size:16px;border:1.5px solid #D9C6A0;border-radius:10px;padding:.55rem .75rem;min-height:46px"></label>`;
 
   if (mode === "report") {
@@ -43,9 +43,9 @@
       let disc = typeof r.discountPct === "number" ? r.discountPct : null;
       if (disc === null) { try { const c = await CO.post("partnerCheck", { code }); if (c && c.ok && typeof c.discount === "number") disc = c.discount; } catch (e2) { /* ignore */ } }
       const link = (pg) => `https://jyotishtark.in/${pg}?p=${encodeURIComponent(code)}`;
-      $("#ptR").innerHTML = `<div class="jc-big ok"><div class="v">${r.count}</div><div class="t"><b>नमस्ते ${esc(r.name)} जी</b><br>आपके कोड से <b>${r.count}</b> भुगतान हुए — बिक्री ₹${r.sales.toLocaleString("en-IN")}, आपका कमीशन (${r.commissionPct}%) <b>₹${r.commission.toLocaleString("en-IN")}</b>।</div></div>
+      $("#ptR").innerHTML = `<div class="jc-big ok"><div class="v">${r.count}</div><div class="t"><b>नमस्ते ${esc(r.name)} जी</b><br>आपके कोड से <b>${r.count}</b> भुगतान हुए — बिक्री ₹${r.sales.toLocaleString("en-IN")}, आपका कमीशन (रिपोर्ट पर ${r.commissionPct}%, रुद्राक्ष पर 15%) <b>₹${r.commission.toLocaleString("en-IN")}</b>।</div></div>
         <h3>आपके लिंक${disc ? ` (ग्राहक को ${disc}% छूट)` : ""}</h3><div class="jc-tw"><table class="jc-tbl"><tbody>
-        ${[["होम पेज", ""], ["सम्पूर्ण कुंडली ₹1,101", "kundali-form.html"], ["KP रिपोर्ट ₹299", "kp-astrology.html"], ["अंक ज्योतिष रिपोर्ट ₹299", "numerology.html"], ["मोबाइल नंबर रिपोर्ट ₹199", "mobile-number-numerology.html"], ["रुद्राक्ष", "rudraksha.html"], ["गुण मिलान (मुफ़्त)", "guna-milan-calculator.html"]].map(([t, pg]) => `<tr><td>${t}</td><td style="word-break:break-all"><code>${link(pg)}</code></td></tr>`).join("")}</tbody></table></div>
+        ${[["होम पेज", ""], ["सम्पूर्ण कुंडली ₹1,101", "kundali-form.html"], ["KP रिपोर्ट ₹299", "kp-astrology.html"], ["अंक ज्योतिष रिपोर्ट ₹299", "numerology.html"], ["मोबाइल नंबर रिपोर्ट ₹199", "mobile-number-numerology.html"], ["रुद्राक्ष (10% छूट)", "rudraksha.html"], ["गुण मिलान (मुफ़्त)", "guna-milan-calculator.html"]].map(([t, pg]) => `<tr><td>${t}</td><td style="word-break:break-all"><code>${link(pg)}</code></td></tr>`).join("")}</tbody></table></div>
         <h3>हाल की बिक्री</h3>${r.rows.length ? `<div class="jc-tw"><table class="jc-tbl"><thead><tr><th>तारीख़</th><th>उत्पाद</th><th>राशि</th><th>कमीशन</th></tr></thead><tbody>${r.rows.map((x) => `<tr><td>${esc(x.date)}</td><td>${esc(x.product)}</td><td>${x.currency === "USD" ? "$" : "₹"}${x.amount}</td><td>${x.currency === "USD" ? "$" : "₹"}${x.commission}</td></tr>`).join("")}</tbody></table></div>` : "<p>अभी कोई बिक्री नहीं — ऊपर के लिंक अपने ग्राहकों को भेजें।</p>"}
         <p class="jc-note">कमीशन हर महीने की 5 तारीख़ तक पिछले महीने की पक्की बिक्री पर UPI से भेजा जाता है।</p>`;
       C.track("partner_dash", { code });

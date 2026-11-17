@@ -46,6 +46,33 @@ window.JTR_PAY = Object.assign({
   const track = (name, p) => { try { window.gtag && gtag("event", name, p || {}); } catch (e) {} };
 
   const total = (id, cert) => D.items[id].price + (cert ? D.items[id].cert : 0);
+  // partner code: 10% off on rudraksha (commission 15% — worked out on the server)
+  const RUD_OFF = 10, CO = window.JTCheckout;
+  const online = () => !!(CO && CO.enabled && CO.enabled());
+  let PT = null; // {c, n} once the code is confirmed by the server
+  try { const p0 = CO && CO.partner(); if (p0 && p0.d != null) PT = p0; } catch (e) { /* ignore */ }
+  const pay = (id, cert) => PT ? Math.round(total(id, cert) * (100 - RUD_OFF) / 100) : total(id, cert);
+  const amtHtml = (id, cert) => PT ? `<s style="opacity:.6;font-weight:500">₹${inr(total(id, cert))}</s> ₹${inr(pay(id, cert))}` : `₹${inr(total(id, cert))}`;
+  function refreshCards() { $$(".rd-card").forEach((card) => { const id = card.dataset.id, el = $(".rd-buyamt", card); if (el && D.items[id]) el.innerHTML = amtHtml(id, certOf(id)); }); strip(); }
+  function strip() {
+    let b = $("#rdPt");
+    if (!PT) { if (b) b.remove(); return; }
+    if (!b) {
+      b = document.createElement("div"); b.id = "rdPt"; b.setAttribute("role", "status");
+      b.style.cssText = "position:relative;z-index:60;padding:9px 14px;background:linear-gradient(90deg,#14532D,#15803D);color:#fff;font:600 15px/1.4 Mukta,system-ui,sans-serif;text-align:center";
+      document.body.insertBefore(b, document.body.firstChild);
+    }
+    b.innerHTML = `🎁 ${PT.n ? esc(PT.n) + " जी के लिंक से — " : `पार्टनर कोड ${esc(PT.c)} — `}सभी रुद्राक्ष पर <b style="color:#FDE68A">${RUD_OFF}% छूट</b> · ऑर्डर में अपने-आप लगेगी`;
+  }
+  async function usePartner(code) {
+    code = String(code || "").trim().toUpperCase();
+    if (!code) { PT = null; refreshCards(); return true; }
+    if (PT && PT.c === code) return true;
+    if (!CO || !CO.checkPartner) return false;
+    let o = null; try { o = await CO.checkPartner(code); } catch (e) { o = null; }
+    PT = o; refreshCards(); return !!o;
+  }
+  if (!PT && CO && CO.partner) { const p1 = CO.partner(); if (p1 && p1.c) usePartner(p1.c); }
   const formUrl = (id, cert) => { const code = CFG.forms[id + (cert ? "-c" : "")]; return CFG.cashfreeReady && code ? CFG.base + code : ""; };
   const certOf = (id) => { const r = $(`input[name="c-${id}"]:checked`); return !!(r && r.value === "1"); };
   const imgOf = (id) => { const im = $(`#p-${id} .rd-img img`); return im ? im.getAttribute("src") : "images/rud-five.webp"; };
@@ -54,7 +81,7 @@ window.JTR_PAY = Object.assign({
   $$(".rd-card").forEach((card) => {
     const id = card.dataset.id;
     $$(`input[name="c-${id}"]`, card).forEach((r) => r.addEventListener("change", () => {
-      $(".rd-buyamt", card).textContent = "₹" + inr(total(id, certOf(id)));
+      $(".rd-buyamt", card).innerHTML = amtHtml(id, certOf(id));
     }));
   });
 
@@ -96,8 +123,8 @@ window.JTR_PAY = Object.assign({
       `Order ID: ${o.oid}`,
       `📿 ${it.name}${it.sub ? ` (${it.sub})` : ""}`,
       `सर्टिफिकेट: ${o.cert ? "हाँ, लैब सर्टिफिकेट सहित" : "नहीं"}`,
-      `कुल राशि: ₹${inr(o.amt)}`,
-      `भुगतान: ${o.pay === "cod" ? "कैश ऑन डिलीवरी" : "ऑनलाइन (Cashfree)"}`,
+      `कुल राशि: ₹${inr(o.amt)}${o.partner && o.list && o.list !== o.amt ? ` (मूल ₹${inr(o.list)} — ${RUD_OFF}% छूट)` : ""}`,
+      `भुगतान: ${o.pay === "cod" ? "कैश ऑन डिलीवरी" : o.paid ? "ऑनलाइन — भुगतान हो चुका ✅" : "ऑनलाइन (Cashfree)"}`,
       o.partner ? `पार्टनर कोड: ${o.partner}` : "",
       ``,
       `नाम: ${o.name}`, `मोबाइल: ${o.phone}`, `पता: ${o.addr}`, `शहर: ${o.city}  पिन: ${o.pin}`, `राज्य: ${o.state}`
@@ -107,12 +134,12 @@ window.JTR_PAY = Object.assign({
 
   function showForm(id, cert) {
     const it = D.items[id], last = store.get("jtr_addr") || {};
-    const onlineAny = !!(formUrl(id, false) || formUrl(id, true));
+    const onlineAny = online() || !!(formUrl(id, false) || formUrl(id, true));
     body.innerHTML = `
       <div class="rd-sum"><img src="${esc(imgOf(id))}" alt=""><div><b>${esc(it.name)}</b><br><small>${esc(it.sub)} · मुफ़्त: ${esc(it.gift)}, लाल धागा, धारण विधि</small></div></div>
       <div class="rd-opt" role="radiogroup" aria-label="सर्टिफिकेट">
-        <label class="rd-pill"><input type="radio" name="dc" value="0" ${cert ? "" : "checked"}><span><small>बिना सर्टिफिकेट</small><b>₹${inr(total(id, false))}</b></span></label>
-        <label class="rd-pill"><input type="radio" name="dc" value="1" ${cert ? "checked" : ""}><span><small>लैब सर्टिफिकेट सहित</small><b>₹${inr(total(id, true))}</b></span><em>+₹${inr(it.cert)}</em></label>
+        <label class="rd-pill"><input type="radio" name="dc" value="0" ${cert ? "" : "checked"}><span><small>बिना सर्टिफिकेट</small><b data-p="0">₹${inr(pay(id, false))}</b></span></label>
+        <label class="rd-pill"><input type="radio" name="dc" value="1" ${cert ? "checked" : ""}><span><small>लैब सर्टिफिकेट सहित</small><b data-p="1">₹${inr(pay(id, true))}</b></span><em>+₹${inr(it.cert)}</em></label>
       </div>
       <form class="rd-f" id="rdForm" novalidate>
         <label>नाम<input name="name" autocomplete="name" required value="${esc(last.name || "")}"></label>
@@ -125,6 +152,7 @@ window.JTR_PAY = Object.assign({
           <label class="rd-pill"><input type="radio" name="pay" value="online" ${onlineAny ? "checked" : "disabled"}><span><small>${onlineAny ? "UPI · कार्ड · नेट-बैंकिंग" : "जल्द उपलब्ध"}</small><b>ऑनलाइन भुगतान</b></span></label>
           <label class="rd-pill"><input type="radio" name="pay" value="cod" ${onlineAny ? "" : "checked"}><span><small>डिलीवरी पर भुगतान</small><b>कैश ऑन डिलीवरी</b></span></label>
         </div>
+        ${CO && CO.checkPartner ? `<label class="rd-full">पार्टनर कोड (अगर है)<span style="display:flex;gap:8px"><input name="pcode" autocomplete="off" maxlength="12" style="text-transform:uppercase;flex:1" placeholder="जैसे DEV20" value="${esc(PT ? PT.c : "")}"><button type="button" class="rd-btn" id="rdPc" style="flex:0 0 auto">लागू करें</button></span><small id="rdPcM" aria-live="polite" style="font-weight:600;color:#14532D"></small></label>` : ""}
         <div class="rd-full rd-tot"><span>कुल राशि <small>(मुफ़्त डिलीवरी)</small></span><b id="rdTot">₹${inr(total(id, cert))}</b></div>
         <p class="rd-full rd-err" id="rdErr" role="alert"></p>
         <button class="rd-buy rd-full" type="submit">आगे बढ़ें <span class="rd-buyamt" id="rdTot2">₹${inr(total(id, cert))}</span></button>
@@ -132,25 +160,43 @@ window.JTR_PAY = Object.assign({
       </form>`;
     const curCert = () => $('input[name="dc"]:checked', body).value === "1";
     const upd = () => {
-      const c = curCert(), a = "₹" + inr(total(id, c));
-      $("#rdTot").textContent = a; $("#rdTot2").textContent = a;
-      const on = $('input[name="pay"][value="online"]', body), ok = !!formUrl(id, c);
+      const c = curCert(), a = "₹" + inr(pay(id, c));
+      $("#rdTot").innerHTML = amtHtml(id, c); $("#rdTot2").textContent = a;
+      $$("[data-p]", body).forEach((b) => { b.textContent = "₹" + inr(pay(id, b.dataset.p === "1")); });
+      const m = $("#rdPcM", body); if (m) m.textContent = PT ? `✓ ${PT.n ? esc(PT.n) + " जी का " : ""}कोड लागू — ${RUD_OFF}% छूट` : "";
+      const on = $('input[name="pay"][value="online"]', body), ok = online() || !!formUrl(id, c);
       on.disabled = !ok; if (!ok && on.checked) $('input[name="pay"][value="cod"]', body).checked = true;
       on.nextElementSibling.querySelector("small").textContent = ok ? "UPI · कार्ड · नेट-बैंकिंग" : "जल्द उपलब्ध";
     };
     $$('input[name="dc"]', body).forEach((r) => r.addEventListener("change", upd));
+    const pcIn = $('input[name="pcode"]', body), pcBtn = $("#rdPc", body);
+    const applyPc = async () => { const ok = await usePartner(pcIn.value); upd(); if (!ok && pcIn.value.trim()) $("#rdPcM", body).innerHTML = '<span style="color:#B42318">यह कोड मान्य नहीं है।</span>'; return ok || !pcIn.value.trim(); };
+    if (pcBtn) { pcBtn.addEventListener("click", applyPc); pcIn.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyPc(); } }); }
     upd();
-    $("#rdForm").addEventListener("submit", (e) => {
+    $("#rdForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (pcIn && pcIn.value.trim().toUpperCase() !== (PT ? PT.c : "") && !(await applyPc())) { $("#rdErr").textContent = "पार्टनर कोड मान्य नहीं है — हटा दें या सही लिखें।"; return; }
       const f = new FormData(e.target), v = (k) => String(f.get(k) || "").trim();
       const o = { id, cert: curCert(), name: v("name"), phone: v("phone").replace(/[^\d+]/g, ""), addr: v("addr"), city: v("city"), pin: v("pin"), state: v("state"), pay: v("pay") || "cod" };
       const bad = !o.name ? "नाम भरें।" : !/^(\+?91)?[6-9]\d{9}$/.test(o.phone) ? "सही 10 अंकों का मोबाइल नंबर भरें।" : o.addr.length < 8 ? "पूरा पता भरें।" : !o.city ? "शहर भरें।" : !/^\d{6}$/.test(o.pin) ? "6 अंकों का पिनकोड भरें।" : !o.state ? "राज्य भरें।" : "";
       if (bad) { $("#rdErr").textContent = bad; return; }
-      o.oid = newId(); o.amt = total(id, o.cert); o.at = Date.now();
+      o.oid = newId(); o.list = total(id, o.cert); o.amt = pay(id, o.cert); o.at = Date.now(); if (PT) o.partner = PT.c;
       store.set("jtr_addr", { name: o.name, phone: o.phone, addr: o.addr, city: o.city, pin: o.pin, state: o.state });
       store.set("jtr_last", o);
       track("rudraksha_order", { item: id, cert: o.cert, pay: o.pay, value: o.amt });
-      try { const CO = window.JTCheckout, pt = CO && CO.partner(); if (pt) o.partner = pt.c; if (CO) CO.lead("rudraksha", { name: o.name, phone: o.phone, details: { order: o.oid, item: id, cert: o.cert, amount: o.amt, pay: o.pay, address: `${o.addr}, ${o.city}, ${o.state} ${o.pin}`, partner: o.partner || "" } }); } catch (x) { /* ignore */ }
+      try { if (CO) CO.lead("rudraksha", { name: o.name, phone: o.phone, details: { order: o.oid, item: id, cert: o.cert, amount: o.amt, pay: o.pay, address: `${o.addr}, ${o.city}, ${o.state} ${o.pin}`, partner: o.partner || "" } }); } catch (x) { /* ignore */ }
+      if (online()) {
+        // verified checkout: the server sets the price (and the partner discount/commission) and records the order
+        const btn = $(".rd-buy", body); btn.disabled = true; btn.textContent = "कृपया रुकें…";
+        const r = await CO.start("rud", { name: o.name, phone: o.phone, partner: o.partner || "", cod: o.pay === "cod", lang: "hi",
+          extra: { item: id, cert: o.cert, address: o.addr, city: o.city, pin: o.pin, state: o.state, local: o.oid } });
+        if (r && r.ok && r.order_id) { o.oid = r.order_id; o.amt = r.amount != null ? r.amount : o.amt; store.set("jtr_last", o); }
+        if (r && r.redirect) return; // Cashfree is opening
+        btn.disabled = false; btn.innerHTML = `आगे बढ़ें <span class="rd-buyamt" id="rdTot2">₹${inr(o.amt)}</span>`;
+        if ((r && r.ok && r.cod) || o.pay === "cod") { showCod(o); return; }  // COD still works through WhatsApp if the server is unreachable
+        $("#rdErr").textContent = r && r.error === "phone" ? "मोबाइल नंबर सही नहीं है।" : "ऑर्डर शुरू नहीं हो सका — दोबारा कोशिश करें, या कैश ऑन डिलीवरी चुनें / WhatsApp करें: 83185 13814";
+        return;
+      }
       if (o.pay === "online") showPay(o); else showCod(o);
     });
     open();
@@ -186,7 +232,27 @@ window.JTR_PAY = Object.assign({
   $$("[data-buy]").forEach((b) => b.addEventListener("click", () => { $("#rdDlgT").textContent = "ऑर्डर करें"; showForm(b.dataset.buy, certOf(b.dataset.buy)); }));
 
   // ---------- return from Cashfree ----------
-  if (new URLSearchParams(location.search).get("jtpaid") === "rud") {
+  const QS = new URLSearchParams(location.search);
+  if (QS.get("jtpaid") === "rud" && QS.get("order_id") && CO) {
+    const oid = QS.get("order_id"), o = store.get("jtr_last");
+    $("#rdDlgT").textContent = "भुगतान की जाँच हो रही है…";
+    body.innerHTML = `<div class="rd-ok"><p>कृपया कुछ सेकंड रुकें…</p></div>`; open();
+    (async () => {
+      let r = null;
+      for (let i = 0; i < 4; i++) { try { r = await CO.verify(oid); } catch (e) { r = null; } if (r && r.ok && r.paid) break; await new Promise((z) => setTimeout(z, 2500)); }
+      const ok = r && r.ok && r.paid, mine = o && o.oid === oid && D.items[o.id];
+      if (mine) { o.paid = !!ok; store.set("jtr_last", o); }
+      $("#rdDlgT").textContent = ok ? "भुगतान के लिए धन्यवाद 🙏" : "भुगतान पूरा नहीं हुआ";
+      body.innerHTML = ok ? `<div class="rd-ok">
+        <p>✅ भुगतान मिल गया। ऑर्डर नंबर <span class="rd-oid">${esc(oid)}</span>${mine ? ` — ${esc(D.items[o.id].name)}${o.cert ? " (सर्टिफिकेट सहित)" : ""}, ₹${inr(o.amt)}` : ""}।</p>
+        <p>आपका पता ऑर्डर के साथ मिल गया है। पुष्टि के लिए यह संदेश WhatsApp पर भी भेज दें:</p>
+        <a class="rd-btn rd-btn-p rd-wa" href="${esc(mine ? waLink(o) : `https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent("रुद्राक्ष ऑर्डर " + oid)}`)}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> ऑर्डर विवरण WhatsApp पर भेजें</a>
+        <p class="rd-note">दाना अभिमंत्रित करके ${mine && o.cert ? "लैब सर्टिफिकेट के साथ 5–9" : "3–5"} दिन में भेजा जाएगा।</p></div>`
+        : `<div class="rd-ok"><p>भुगतान पूरा नहीं दिख रहा (ऑर्डर ${esc(oid)})। अगर पैसे कट गए हैं तो चिंता न करें — WhatsApp करें, हम जाँच कर ऑर्डर भेज देंगे।</p>
+        <a class="rd-btn rd-btn-p rd-wa" href="https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent("नमस्ते, रुद्राक्ष ऑर्डर " + oid + " का भुगतान जाँच दें।")}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp करें</a></div>`;
+      track(ok ? "rudraksha_paid" : "rudraksha_unpaid", mine ? { item: o.id, value: o.amt } : {});
+    })();
+  } else if (QS.get("jtpaid") === "rud") {
     const o = store.get("jtr_last");
     $("#rdDlgT").textContent = "भुगतान के लिए धन्यवाद";
     body.innerHTML = o && D.items[o.id] ? `<div class="rd-ok">
@@ -198,4 +264,5 @@ window.JTR_PAY = Object.assign({
     open();
     track("rudraksha_paid_return", o ? { item: o.id, value: o.amt } : {});
   }
+  refreshCards();
 })();

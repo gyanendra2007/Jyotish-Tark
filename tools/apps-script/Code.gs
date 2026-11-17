@@ -26,8 +26,32 @@ const PRODUCTS = {
   sampurna: { name: "Sampurna Kundali",   page: "kundali-form.html",       inr: 1101, usd: null },
   prashna:  { name: "One question",       page: "kundali-se-poochho.html", inr: 101,  usd: 9 },
   mobile:   { name: "Mobile number report", page: "mobile-number-numerology.html", inr: 199, usd: null },
+  rud:      { name: "Rudraksha",          page: "rudraksha.html",          inr: 0,    usd: null },  // price per item from RUD
   test:     { name: "Setup test (Rs 1)",   page: "my-report.html",          inr: 1,    usd: null }  // unlocks nothing; used once to test the setup
 };
+// rudraksha (product "rud"): the price comes from this table — keep it the same as rudraksha.html
+// id: [price, certificate extra, name]
+const RUD = {
+  "5": [499, 500, "5 Mukhi Rudraksha"],
+  "4": [999, 500, "4 Mukhi Rudraksha"],
+  "3": [1499, 500, "3 Mukhi Rudraksha"],
+  "6": [1499, 500, "6 Mukhi Rudraksha"],
+  "7": [1999, 500, "7 Mukhi Rudraksha"],
+  "8": [3999, 500, "8 Mukhi Rudraksha"],
+  "9": [4999, 500, "9 Mukhi Rudraksha"],
+  "2": [9999, 500, "2 Mukhi Rudraksha"],
+  "gs": [15499, 500, "Gauri Shankar Rudraksha"],
+  "vidya": [2199, 1000, "4 मुखी + 6 मुखी"],
+  "dhan": [5299, 1000, "7 मुखी + 8 मुखी"],
+  "shakti": [5799, 1000, "3 मुखी + 9 मुखी"],
+  "vivah": [22999, 1000, "2 मुखी + गौरी शंकर"],
+  "saraswati": [3099, 1500, "4 मुखी + 4 मुखी + 6 मुखी"],
+  "business": [6999, 1500, "7 मुखी + 7 मुखी + 8 मुखी"],
+  "swasthya": [3999, 2500, "3 + 3 + 5 + 5 + 5 मुखी"],
+  "water": [1299, 1500, "3 पंचमुखी दाने"]
+};
+const RUD_PARTNER_OFF = 10;   // % off on rudraksha with any partner code
+const RUD_PARTNER_COMM = 15;  // partner commission % on rudraksha
 // promo codes: SHA-256 of the UPPER-CASE code → % off (same list as jt-promo.js)
 const PROMO = {
   "b251f8f5de603aadf41602d17bdae5808745d0b637d6bc9f3275019d7878ca6a": 100,
@@ -70,7 +94,9 @@ function create(b) {
   const P = PRODUCTS[b.product];
   if (!P) return { ok: false, error: "unknown product" };
   const cur = b.currency === "USD" && P.usd ? "USD" : "INR";
-  const list = cur === "USD" ? P.usd : P.inr;
+  let list = cur === "USD" ? P.usd : P.inr;
+  const isRud = b.product === "rud", ex = b.extra && typeof b.extra === "object" ? b.extra : {};
+  if (isRud) { const it = RUD[String(ex.item || "")]; if (!it) return { ok: false, error: "item" }; list = it[0] + (ex.cert ? it[1] : 0); }
   const phone = cleanPhone(b.phone);
   if (!phone) return { ok: false, error: "phone" };
   const name = clip(b.name, 100);
@@ -78,11 +104,11 @@ function create(b) {
 
   // discount: promo beats partner beats friend referral (only one applies)
   let off = 0, ctype = "", code = "", partner = "", commPct = 0;
-  const promo = String(b.promo || "").trim().toUpperCase().replace(/\s+/g, "");
+  const promo = isRud ? "" : String(b.promo || "").trim().toUpperCase().replace(/\s+/g, "");  // promo codes are for reports only
   if (promo) { const p = PROMO[sha256(promo)]; if (!p) return { ok: false, error: "promo" }; off = p; ctype = "promo"; code = promo.slice(0, 3) + "***"; }
   const pc = String(b.partner || "").trim().toUpperCase();
-  if (!off && pc) { const row = partnerRow(pc); if (row && row.active) { off = row.disc; ctype = "partner"; code = pc; partner = pc; commPct = row.comm; } }
-  const rc = String(b.ref || "").trim().toUpperCase();
+  if (!off && pc) { const row = partnerRow(pc); if (row && row.active) { off = isRud ? RUD_PARTNER_OFF : row.disc; ctype = "partner"; code = pc; partner = pc; commPct = isRud ? RUD_PARTNER_COMM : row.comm; } }
+  const rc = isRud ? "" : String(b.ref || "").trim().toUpperCase();
   if (!off && /^JT[A-HJ-NP-Z2-9]{5}$/.test(rc) && rc !== String(b.own || "").toUpperCase()) { off = FRIEND_OFF; ctype = "referral"; code = rc; }
   const amount = cur === "USD" ? Math.round(list * (100 - off)) / 100 : Math.round(list * (100 - off) / 100);
   const oid = "JT" + b.product.toUpperCase() + Utilities.formatDate(new Date(), "Asia/Kolkata", "yyMMddHHmmss") + rand(4);
@@ -91,6 +117,7 @@ function create(b) {
     partner ? round2(amount * commPct / 100) : "", name, phone, clip(b.email, 100), clip(b.dob, 10), clip(b.time, 5), clip(b.place, 120),
     num(b.lat), num(b.lng), clip(b.gender, 10), clip(b.marital, 12), b.lang === "en" ? "en" : "hi", extra, "", "", clip(b.own, 7)];
 
+  if (isRud && b.cod) { row[3] = "COD"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, cod: true, order_id: oid, amount: amount, list: list }; }  // mark PAID by hand once the cash is received
   if (off >= 100) { row[3] = "FREE"; row[24] = new Date(); sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, free: true, order_id: oid }; }
 
   const ret = SITE + P.page + "?jtpaid=" + b.product + "&order_id=" + oid;
@@ -98,7 +125,7 @@ function create(b) {
     order_id: oid, order_amount: amount, order_currency: cur,
     customer_details: { customer_id: "c" + phone.replace(/\D/g, "").slice(-12), customer_phone: phone, customer_name: name.length >= 3 ? name : name + " ji", customer_email: validEmail(b.email) ? b.email : undefined },
     order_meta: { return_url: ret },
-    order_note: P.name + (code ? " | " + ctype + " " + code : ""),
+    order_note: P.name + (isRud ? " " + RUD[String(ex.item)][2] + (ex.cert ? " + certificate" : "") : "") + (code ? " | " + ctype + " " + code : ""),
     order_tags: { product: b.product, code_type: ctype || "none", code: code || "none" }
   };
   const r = cf("post", "/pg/orders", body);

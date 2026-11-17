@@ -12,7 +12,7 @@ window.JTCheckout = (function () {
   const API = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec"; // order backend (Apps Script). Empty = old payment forms.
   const SDK = "https://sdk.cashfree.com/js/v3/cashfree.js";
   const PRICES = { kp: { inr: 299, usd: 19 }, nm: { inr: 299, usd: 19 }, sampurna: { inr: 1101, usd: null }, prashna: { inr: 101, usd: 9 }, mobile: { inr: 199, usd: null } };
-  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html" };
+  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html", rud: "rudraksha.html" };
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* */ } } };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const ga = (n, p) => { try { if (window.gtag) window.gtag("event", n, p || {}); } catch (e) { /* */ } };
@@ -193,5 +193,16 @@ window.JTCheckout = (function () {
 
   capturePartner();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", banner); else banner();
-  return { API, enabled, pay, confirm, verify, lookup, lead, post, price, currency, nri, setCurrency, partner, orderParam, PRICES };
+  /* start(product, body) — create the order and open Cashfree straight away (for pages that collect
+     the contact details themselves, e.g. the rudraksha order form). Resolves with the server reply
+     when no redirect happens (error, cod, free). */
+  async function start(product, b) {
+    let r;
+    try { r = await post("create", Object.assign({ product, currency: "INR" }, b)); } catch (e) { r = { ok: false, error: "network" }; }
+    if (!r || !r.ok || r.cod || r.free) return r;
+    ga("begin_checkout", { value: r.amount || 0, currency: "INR", items: [{ item_name: product }] });
+    try { const cf = (await loadSdk())({ mode: r.mode === "sandbox" ? "sandbox" : "production" }); cf.checkout({ paymentSessionId: r.payment_session_id, redirectTarget: "_self" }); return Object.assign({ redirect: true }, r); }
+    catch (e) { return { ok: false, error: "sdk" }; }
+  }
+  return { API, enabled, pay, start, confirm, verify, lookup, lead, post, price, currency, nri, setCurrency, partner, checkPartner, orderParam, PRICES };
 })();
