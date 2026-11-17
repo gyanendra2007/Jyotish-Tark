@@ -32,6 +32,7 @@ window.JTCheckout = (function () {
   // ---------- partner code (?p=CODE) ----------
   function capturePartner() {
     let q = ""; try { q = (new URLSearchParams(location.search).get("p") || "").toUpperCase().trim(); } catch (e) { /* */ }
+    if (q === "OFF") { ls.set("jt_partner", ""); return; }  // ?p=off clears a saved partner code (handy for testing)
     if (!/^[A-Z0-9]{3,12}$/.test(q)) return;
     ls.set("jt_partner", JSON.stringify({ c: q, t: Date.now() }));
     ga("partner_open", { code: q });
@@ -59,7 +60,9 @@ window.JTCheckout = (function () {
     b.querySelector("button").addEventListener("click", () => { b.remove(); try { sessionStorage.setItem("jco_ban_x", "1"); } catch (e) { /* */ } });
     document.body.insertBefore(b, document.body.firstChild);
   }
-  function partner() { try { const o = JSON.parse(ls.get("jt_partner") || "null"); if (o && o.c && Date.now() - o.t < 90 * 864e5) return o; } catch (e) { /* */ } return null; }
+  // a partner link counts for PARTNER_HOURS after it was opened; then the visitor sees normal prices again
+  const PARTNER_HOURS = 24;
+  function partner() { try { const o = JSON.parse(ls.get("jt_partner") || "null"); if (o && o.c && Date.now() - o.t < PARTNER_HOURS * 36e5) return o; if (o) ls.set("jt_partner", ""); } catch (e) { /* */ } return null; }
 
   // ---------- backend ----------
   function post(action, body) {
