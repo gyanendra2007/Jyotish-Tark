@@ -47,7 +47,7 @@ window.JTCheckout = (function () {
   const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "kundali-se-poochho.html": "prashna" };
   function banner() {
     const pt = partner();
-    if (!pt || !pt.d || document.getElementById("jcoBan")) return;
+    if (!pt || !pt.d || document.getElementById("jcoBan") || /rudraksha/.test(location.pathname)) return; // partner discount is for reports only
     try { if (sessionStorage.getItem("jco_ban_x")) return; } catch (e) { /* */ }
     const en = document.documentElement.lang === "en", T = (h, e) => (en ? e : h);
     const prod = PAGE_PRODUCT[(location.pathname.split("/").pop() || "index.html")];
