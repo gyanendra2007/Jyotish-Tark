@@ -155,7 +155,7 @@ function partnerStats(code, pin) {
     sales += Number(v[i][4]) || 0; comm += Number(v[i][11]) || 0;
     rows.push({ date: Utilities.formatDate(new Date(v[i][0]), "Asia/Kolkata", "dd MMM yyyy"), product: PRODUCTS[v[i][2]] ? PRODUCTS[v[i][2]].name : v[i][2], amount: v[i][4], currency: v[i][5], commission: v[i][11], customer: String(v[i][12]).split(" ")[0] });
   }
-  return { ok: true, name: p.name, commissionPct: p.comm, count: rows.length, sales: round2(sales), commission: round2(comm), rows: rows.slice(-50).reverse() };
+  return { ok: true, name: p.name, commissionPct: p.comm, discountPct: p.disc, count: rows.length, sales: round2(sales), commission: round2(comm), rows: rows.slice(-50).reverse() };
 }
 
 // ------------------------------------------------------------------ leads
