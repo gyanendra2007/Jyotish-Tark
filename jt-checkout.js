@@ -35,7 +35,29 @@ window.JTCheckout = (function () {
     if (!/^[A-Z0-9]{3,12}$/.test(q)) return;
     ls.set("jt_partner", JSON.stringify({ c: q, t: Date.now() }));
     ga("partner_open", { code: q });
-    if (enabled()) post("partnerCheck", { code: q }).then((r) => { if (r && r.ok) ls.set("jt_partner", JSON.stringify({ c: q, t: Date.now(), n: r.name, d: r.discount })); else ls.set("jt_partner", ""); }).catch(() => { /* */ });
+    if (enabled()) checkPartner(q).then(banner).catch(() => { /* */ });
+  }
+  function checkPartner(code) {
+    return post("partnerCheck", { code }).then((r) => {
+      if (r && r.ok) { const o = { c: code, t: Date.now(), n: r.name, d: Number(r.discount) || 0 }; ls.set("jt_partner", JSON.stringify(o)); return o; }
+      return null;
+    });
+  }
+  // a slim strip so a visitor who came through a partner link sees the discount before paying
+  const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "kundali-se-poochho.html": "prashna" };
+  function banner() {
+    const pt = partner();
+    if (!pt || !pt.d || document.getElementById("jcoBan")) return;
+    try { if (sessionStorage.getItem("jco_ban_x")) return; } catch (e) { /* */ }
+    const en = document.documentElement.lang === "en", T = (h, e) => (en ? e : h);
+    const prod = PAGE_PRODUCT[(location.pathname.split("/").pop() || "index.html")];
+    const pr = prod ? price(prod, pt.d) : null;
+    const st = document.createElement("style"); st.textContent = `.jco-ban{position:relative;z-index:60;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 10px;padding:9px 44px 9px 14px;background:linear-gradient(90deg,#14532D,#15803D);color:#fff;font:600 15px/1.4 Mukta,system-ui,sans-serif;text-align:center}.jco-ban b{color:#FDE68A}.jco-ban s{opacity:.75}.jco-ban button{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;border-radius:8px;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer}`;
+    document.head.appendChild(st);
+    const b = document.createElement("div"); b.id = "jcoBan"; b.className = "jco-ban"; b.setAttribute("role", "status");
+    b.innerHTML = `<span>🎁 ${pt.n ? T(`${esc(pt.n)} जी के लिंक से —`, `Via ${esc(pt.n)} —`) : ""} ${T(`सभी रिपोर्ट पर <b>${pt.d}% छूट</b>`, `<b>${pt.d}% off</b> all reports`)}${pr ? T(` · इस पेज की रिपोर्ट <s>${pr.base}</s> <b>${pr.txt}</b>`, ` · this report <s>${pr.base}</s> <b>${pr.txt}</b>`) : ""} · ${T("भुगतान के समय अपने-आप लगेगी", "applied automatically at payment")}</span><button type="button" aria-label="${T("बंद करें", "Close")}">×</button>`;
+    b.querySelector("button").addEventListener("click", () => { b.remove(); try { sessionStorage.setItem("jco_ban_x", "1"); } catch (e) { /* */ } });
+    document.body.insertBefore(b, document.body.firstChild);
   }
   function partner() { try { const o = JSON.parse(ls.get("jt_partner") || "null"); if (o && o.c && Date.now() - o.t < 90 * 864e5) return o; } catch (e) { /* */ } return null; }
 
@@ -61,6 +83,7 @@ window.JTCheckout = (function () {
   .jco-b{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.jco-b button{flex:1 1 140px;min-height:48px;border:0;border-radius:10px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;background:#7A1F1F;color:#fff}.jco-b button.l{background:#fff;color:#7A1F1F;border:1.5px solid #7A1F1F}
   .jco-e{color:#B42318;font-weight:600;min-height:1.2em}.jco-p{font-size:26px;font-weight:800;color:#7A1F1F}.jco-p s{font-size:16px;color:#8A7A6A;font-weight:500;margin-left:6px}
   .jco-s{width:42px;height:42px;margin:6px auto 14px;border:4px solid #E9D9B4;border-top-color:#7A1F1F;border-radius:50%;animation:jcos 1s linear infinite}@keyframes jcos{to{transform:rotate(360deg)}}.jco-c.ctr{text-align:center}.jco-c a.wa{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:8px 16px;border-radius:10px;background:#15803D;color:#fff;font-weight:700;text-decoration:none;margin-top:6px}
+  .jco-cd{display:flex;gap:8px}.jco-cd input{flex:1;text-transform:uppercase}.jco-cd button{flex:0 0 auto;min-height:46px;padding:0 16px;border:1.5px solid #7A1F1F;border-radius:10px;background:#fff;color:#7A1F1F;font:inherit;font-weight:700;cursor:pointer}.jco-cm{min-height:1.1em;font-size:14px!important;margin:4px 0 0!important;font-weight:600;color:#14532D!important}
   .jco-cur{font-size:13px;margin-top:6px}.jco-cur a{color:#7A1F1F;cursor:pointer;text-decoration:underline}`;
   function css() { if (!document.getElementById("jco-css")) { const s = document.createElement("style"); s.id = "jco-css"; s.textContent = CSS; document.head.appendChild(s); } }
 
@@ -71,11 +94,15 @@ window.JTCheckout = (function () {
     opts = opts || {}; css();
     const en = (opts.lang || d.lang) === "en", T = (h, e) => (en ? e : h);
     const ref = window.JTRef ? window.JTRef.code() : "", own = window.JTRef ? (ls.get("jt_ref_me") || "") : "", pt = partner();
-    const off = opts.promo ? 0 : pt && pt.d != null ? pt.d : pt ? 10 : ref ? 10 : 0;
+    // one discount at a time: promo code > partner code > friend referral (the server applies the same order)
+    const st = { promo: opts.promo || "", promoOff: 0, pt: pt && pt.d != null ? pt : null };
+    const curOff = () => (st.promo ? st.promoOff : st.pt ? st.pt.d : ref ? 10 : 0);
+    const off = curOff();
     const pr = price(product, off), saved = JSON.parse(ls.get("jt_contact") || "{}");
     const ov = document.createElement("div"); ov.className = "jco"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
     ov.innerHTML = `<div class="jco-c"><h3>${esc(opts.title || T("भुगतान", "Payment"))}</h3>
-      ${opts.promo ? `<p>${T("प्रोमो कोड लागू होगा।", "Your promo code will be applied.")}</p>` : `<div class="jco-p">${pr.txt}${off ? `<s>${pr.base}</s>` : ""}</div>${off ? `<p>${pt ? T(`पार्टनर कोड ${esc(pt.c)} — ${off}% छूट`, `Partner code ${esc(pt.c)} — ${off}% off`) : T(`मित्र का कोड ${esc(ref)} — 10% छूट`, `Friend's code ${esc(ref)} — 10% off`)}</p>` : ""}`}
+      <div data-price></div>
+      ${opts.promo ? "" : `<label for="jcoCd">${T("कूपन / पार्टनर कोड (अगर है)", "Coupon / partner code (if any)")}</label><div class="jco-cd"><input id="jcoCd" type="text" autocomplete="off" autocapitalize="characters" maxlength="20" placeholder="${T("जैसे DEV20", "e.g. DEV20")}" value="${esc(st.pt ? st.pt.c : "")}"><button type="button" data-cd>${T("लागू करें", "Apply")}</button></div><p class="jco-cm" aria-live="polite"></p>`}
       ${nri() ? `<p class="jco-cur">${T(`विदेश से? कीमत ₹ में है (लगभग $${Math.max(1, Math.round(pr.v / USD_RATE))})। NRE/NRO खाते वाला UPI — विदेशी मोबाइल नंबर पर भी — या भारतीय कार्ड से भुगतान करें। केवल विदेशी कार्ड हो तो <a href="https://wa.me/918318513814?text=${encodeURIComponent("नमस्ते, मैं विदेश से रिपोर्ट लेना चाहता/चाहती हूँ — भुगतान का तरीका बताएँ।")}" target="_blank" rel="noopener">WhatsApp करें</a>।`, `Abroad? The price is in ₹ (about $${Math.max(1, Math.round(pr.v / USD_RATE))}). Pay with UPI from an NRE/NRO account — international mobile numbers work too — or an Indian card. Only have a foreign card? <a href="https://wa.me/918318513814?text=${encodeURIComponent("Hello, I am abroad and want a report. How can I pay?")}" target="_blank" rel="noopener">WhatsApp us</a>.`)}</p>` : ""}
       ${opts.question ? `<label for="jcoQ">${T("आपका प्रश्न", "Your question")}</label><textarea id="jcoQ" rows="3" maxlength="600" placeholder="${T("जैसे: मेरी सरकारी नौकरी कब लगेगी?", "e.g. When will I get a government job?")}"></textarea>` : ""}
       <label for="jcoPh">${T("मोबाइल नंबर (WhatsApp)", "Mobile number (WhatsApp)")}</label><input id="jcoPh" type="tel" inputmode="tel" autocomplete="tel" placeholder="${pr.c === "USD" ? "+1 415 555 0100" : "98XXXXXXXX"}" value="${esc(saved.p || "")}">
@@ -85,6 +112,33 @@ window.JTCheckout = (function () {
       <p style="font-size:13px;margin-top:10px">${T("Cashfree का सुरक्षित पेज — UPI, कार्ड, नेट बैंकिंग। भुगतान के बाद आप अपने-आप इसी पेज पर लौटेंगे।", "Secure Cashfree checkout — UPI, cards, net banking. You return here automatically after paying.")}</p></div>`;
     document.body.appendChild(ov);
     const err = ov.querySelector(".jco-e"), go = ov.querySelector("[data-go]");
+    const priceBox = ov.querySelector("[data-price]"), cdIn = ov.querySelector("#jcoCd"), cdMsg = ov.querySelector(".jco-cm");
+    const showPrice = () => {
+      const o = curOff(), p2 = price(product, o);
+      const why = st.promo ? (st.promoOff ? T(`प्रोमो कोड — ${o}% छूट`, `Promo code — ${o}% off`) : T("प्रोमो कोड लागू होगा।", "Your promo code will be applied.")) : st.pt ? T(`पार्टनर कोड ${esc(st.pt.c)} — ${o}% छूट`, `Partner code ${esc(st.pt.c)} — ${o}% off`) : ref ? T(`मित्र का कोड ${esc(ref)} — 10% छूट`, `Friend's code ${esc(ref)} — 10% off`) : "";
+      priceBox.innerHTML = (opts.promo && !st.promoOff ? "" : `<div class="jco-p">${o >= 100 ? T("मुफ़्त", "Free") : p2.txt}${o ? `<s>${p2.base}</s>` : ""}</div>`) + (why ? `<p>${why}</p>` : "");
+    };
+    showPrice();
+    // checks a typed code: our promo codes first (checked locally by hash), then partner codes (server)
+    async function applyCode() {
+      if (!cdIn) return true;
+      const c = cdIn.value.trim().toUpperCase().replace(/\s+/g, "");
+      cdMsg.textContent = "";
+      if (!c) { st.promo = ""; st.promoOff = 0; showPrice(); return true; }
+      if (st.pt && st.pt.c === c && !st.promo) { showPrice(); return true; }
+      const po = window.JTPromo ? await window.JTPromo.check(c) : 0;
+      if (po) { st.promo = c; st.promoOff = po; showPrice(); cdMsg.textContent = T("✓ कोड लागू हो गया।", "✓ Code applied."); return true; }
+      cdMsg.textContent = T("जाँच रहे हैं…", "Checking…");
+      let o = null; try { o = await checkPartner(c); } catch (e) { o = null; }
+      if (o) { st.promo = ""; st.promoOff = 0; st.pt = o; showPrice(); cdMsg.textContent = T(`✓ ${o.n ? esc(o.n) + " जी का " : ""}कोड लागू हो गया।`, `✓ ${o.n ? esc(o.n) + "'s " : ""}code applied.`); ga("partner_code_typed", { code: c }); return true; }
+      if (!window.JTPromo) { st.promo = c; st.promoOff = 0; st.pt = null; showPrice(); cdMsg.textContent = T("कोड भुगतान शुरू करते समय जाँचा जाएगा।", "The code will be checked when you continue."); return true; }
+      cdMsg.textContent = T("यह कोड मान्य नहीं है।", "This code is not valid."); return false;
+    }
+    if (cdIn) {
+      ov.querySelector("[data-cd]").addEventListener("click", applyCode);
+      cdIn.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyCode(); } });
+      if (pt && pt.d == null) checkPartner(pt.c).then((o) => { if (o && !st.promo) { st.pt = o; showPrice(); } }).catch(() => { /* */ });
+    }
     ov.querySelector("[data-x]").addEventListener("click", () => ov.remove());
     ov.querySelectorAll("[data-c]").forEach((a) => a.addEventListener("click", () => { setCurrency(a.dataset.c); ov.remove(); pay(product, d, opts); }));
     go.addEventListener("click", async () => {
@@ -92,11 +146,12 @@ window.JTCheckout = (function () {
       const digits = phone.replace(/\D/g, "");
       if (opts.question && q.length < 5) { err.textContent = T("कृपया अपना प्रश्न लिखें।", "Please write your question."); return; }
       if (!(digits.length === 10 || (phone.startsWith("+") && digits.length >= 8) || (digits.length === 12 && digits.startsWith("91")))) { err.textContent = T("कृपया सही मोबाइल नंबर लिखें (विदेश का नंबर + के साथ)।", "Please enter a valid mobile number (international with +)."); return; }
+      if (cdIn && cdIn.value.trim() && !(await applyCode())) return;
       ls.set("jt_contact", JSON.stringify({ p: phone, e: email }));
       go.disabled = true; go.textContent = T("कृपया रुकें…", "Please wait…"); err.textContent = "";
       const extra = Object.assign({}, d.extra || {}, q ? { question: q } : {});
       let r;
-      try { r = await post("create", { product, currency: pr.c, name: d.name, phone, email, dob: d.dob, time: d.time, place: d.place, lat: d.lat, lng: d.lng, gender: d.gender, marital: d.marital, lang: d.lang, promo: opts.promo || "", ref: off && !pt ? ref : "", partner: pt ? pt.c : "", own, extra }); }
+      try { r = await post("create", { product, currency: pr.c, name: d.name, phone, email, dob: d.dob, time: d.time, place: d.place, lat: d.lat, lng: d.lng, gender: d.gender, marital: d.marital, lang: d.lang, promo: st.promo || "", ref: !st.promo && !st.pt ? ref : "", partner: !st.promo && st.pt ? st.pt.c : "", own, extra }); }
       catch (e) { r = { ok: false, error: "network" }; }
       if (!r || !r.ok) {
         go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay");
@@ -137,5 +192,6 @@ window.JTCheckout = (function () {
   const orderParam = () => { try { return new URLSearchParams(location.search).get("order_id") || ""; } catch (e) { return ""; } };
 
   capturePartner();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", banner); else banner();
   return { API, enabled, pay, confirm, verify, lookup, lead, post, price, currency, nri, setCurrency, partner, orderParam, PRICES };
 })();
