@@ -193,7 +193,8 @@ window.JTR_PAY = Object.assign({
         if (r && r.ok && r.order_id) { o.oid = r.order_id; o.amt = r.amount != null ? r.amount : o.amt; store.set("jtr_last", o); }
         if (r && r.redirect) return; // Cashfree is opening
         btn.disabled = false; btn.innerHTML = `आगे बढ़ें <span class="rd-buyamt" id="rdTot2">₹${inr(o.amt)}</span>`;
-        if ((r && r.ok && r.cod) || o.pay === "cod") { showCod(o); return; }  // COD still works through WhatsApp if the server is unreachable
+        if ((r && r.ok && r.cod) || o.pay === "cod") { showCod(o); return; }
+        if (r && r.error === "unknown product" && formUrl(id, o.cert)) { o.amt = o.list; store.set("jtr_last", o); showPay(o); return; }  // backend not updated yet → old fixed-price form  // COD still works through WhatsApp if the server is unreachable
         $("#rdErr").textContent = r && r.error === "phone" ? "मोबाइल नंबर सही नहीं है।" : "ऑर्डर शुरू नहीं हो सका — दोबारा कोशिश करें, या कैश ऑन डिलीवरी चुनें / WhatsApp करें: 83185 13814";
         return;
       }
