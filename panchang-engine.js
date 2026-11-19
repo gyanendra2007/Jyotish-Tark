@@ -122,7 +122,7 @@
     var out = [], key = y + '-' + pad(m) + '-' + pad(d), pv = shift(y, m, d, -1), p = core(pv[0], pv[1], pv[2], loc);
     if (FIXED[key]) out.push(FIXED[key]);
     var t = c.tIdx, dow = parts(c.s.rise, loc.tz).dow;
-    if (y === 2026 || y === 2027) { if (EKLIST[key]) out.push(EKLIST[key] + ' एकादशी'); }
+    if ((y === 2026 || y === 2027) && loc.tz === 'Asia/Kolkata') { if (EKLIST[key]) out.push(EKLIST[key] + ' एकादशी'); }
     else {
       if ((t === 10 || t === 25) && p.tIdx !== t && p.tSkip !== t) out.push(EKADASHI[c.purni][t === 10 ? 1 : 0] + ' एकादशी');
       if (c.tSkip === 10 || c.tSkip === 25) out.push(EKADASHI[c.tSkip === 10 ? c.amanta : (c.amanta + 1) % 12][c.tSkip === 10 ? 1 : 0] + ' एकादशी');
@@ -200,8 +200,9 @@
   function parana(y, m, d, loc) {
     loc = loc || CITIES.lucknow;
     var ek = core(y, m, d, loc), nx = shift(y, m, d, 1), c = core(nx[0], nx[1], nx[2], loc), sr = c.s.rise;
-    var dwIdx = ek.tIdx + 1;                                   // 11 (shukla) or 26 (krishna)
-    var dwStart = findCross(elong, (dwIdx * 12) % 360, new Date(sr.getTime() - 34 * 3600000), 40);
+    var dwIdx = ek.tIdx < 15 ? 11 : 26;                        // dwadashi of the same paksha
+    var dwStart = findCross(elong, (dwIdx * 12) % 360, new Date(sr.getTime() - 34 * 3600000), 60);
+    if (!dwStart) return null;
     var dwEnd = findCross(elong, ((dwIdx + 1) * 12) % 360, dwStart, 40);
     if (!dwStart || !dwEnd) return null;
     var hariEnd = new Date(dwStart.getTime() + (dwEnd - dwStart) / 4);

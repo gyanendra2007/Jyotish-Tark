@@ -26,6 +26,7 @@ const PRODUCTS = {
   sampurna: { name: "Sampurna Kundali",   page: "kundali-form.html",       inr: 1101, usd: null },
   prashna:  { name: "One question",       page: "kundali-se-poochho.html", inr: 101,  usd: 9 },
   mobile:   { name: "Mobile number report", page: "mobile-number-numerology.html", inr: 199, usd: null },
+  vp:       { name: "Varshphal 2027 report", page: "mera-2027.html", inr: 299, usd: null },
   rud:      { name: "Rudraksha",          page: "rudraksha.html",          inr: 0,    usd: null },  // price per item from RUD
   test:     { name: "Setup test (Rs 1)",   page: "my-report.html",          inr: 1,    usd: null }  // unlocks nothing; used once to test the setup
 };

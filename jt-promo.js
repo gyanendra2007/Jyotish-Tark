@@ -18,7 +18,8 @@ window.JTPromo = (function () {
     kp: { link: "https://payments.cashfree.com/forms/jyotishtarkkp50", price: 149, full: 299 },
     nm: { link: "https://payments.cashfree.com/forms/jyotishtarknumerology50", price: 149, full: 299 },
     sampurna: { link: "https://payments.cashfree.com/forms/sampurnakundali50", price: 550, full: 1101 },
-    mobile: { link: "", price: 100, full: 199 }   // paid through the verified checkout, which applies the code itself
+    mobile: { link: "", price: 100, full: 199 },  // paid through the verified checkout, which applies the code itself
+    vp: { link: "", price: 150, full: 299 }
   };
   async function sha256(t) {
     const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));

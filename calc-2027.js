@@ -84,9 +84,11 @@
       <h3>महीनेवार ग्राफ़</h3><p class="jc-note">ऊँचा = आपके लिए अधिक अनुकूल। हरा = सबसे अच्छे, नारंगी = सावधानी वाले महीने।</p><div style="display:grid;grid-template-columns:repeat(12,1fr);gap:4px;align-items:end;height:120px;margin:6px 0 4px">${ms.map((x) => { const v = Math.round(15 + 85 * (x.s - lo) / (hi - lo || 1)); const c = best.includes(x) ? "#4F9D63" : hard.includes(x) ? "#C2410C" : "#D9B56A"; return `<div title="${MON[x.i]}" style="height:${v}%;border-radius:6px 6px 0 0;background:${c}"></div>`; }).join("")}</div><div style="display:grid;grid-template-columns:repeat(12,1fr);gap:4px;font-size:12px;text-align:center">${MON.map((m) => m.slice(0, 3)).join("</div><div>").replace(/^/, "<div>")}</div></div>
       ${P0 ? `<h3>अंक ज्योतिष: आपका पर्सनल ईयर ${py} — “${P0[0]}”</h3><p>${P0[1]} <b>2027 का शुभ रंग:</b> ${P0[2]}।</p>` : ""}
       <div class="jc-act"><button class="jc-btn" type="button" id="yrShare">📲 मेरा 2027 कार्ड शेयर करें</button><a class="jc-btn l" href="${SLUG[R - 1]}-rashifal-2027.html">${R0} राशिफल 2027 विस्तार से</a></div>
+      <div id="vpHost"></div>
       <div class="jc-up"><b>राशि सबकी एक जैसी होती है, कुण्डली नहीं।</b> 2027 में आपकी अपनी दशा कैसी है? — <a href="kp-astrology.html">KP विस्तृत रिपोर्ट ₹299 →</a> · <a href="numerology.html#nm-sample">अंक ज्योतिष रिपोर्ट →</a></div>
       <p class="jc-note">यह गणना 2027 के वास्तविक ग्रह-गोचर (KP अयनांश) को आपकी चंद्र राशि से देखकर की गई है। यह सामान्य मार्गदर्शन है, गारंटी नहीं।</p>`;
     $("#yrShare").addEventListener("click", () => C.share({ title: "मेरा 2027 ✨", sub: `${o.name ? o.name + " · " : ""}${R0} राशि`, big: theme.replace(" का वर्ष", ""), bigSize: theme.length > 14 ? 70 : 84, bigSub: "का वर्ष", lines: [`अच्छे महीने: ${best.map((x) => MON[x.i]).join(", ")}`, `सावधानी: ${hard.map((x) => MON[x.i]).join(", ")}`].concat(P0 ? [`पर्सनल ईयर ${py} — ${P0[0]} · रंग: ${P0[2]}`] : []), foot: "आप भी देखें — मुफ़्त “आपका 2027”" }, "mera-2027"));
+    if (window.JTVarshphal) window.JTVarshphal.offer($("#vpHost"), () => { const r = C.read("yr", { name: true, time: true, place: true }); return mode === "birth" ? r : { o: {}, miss: ["\"जन्म विवरण\" टैब में नाम", "जन्म समय", "जन्म स्थान"] }; });
     $("#yrRes").scrollIntoView({ behavior: "smooth", block: "start" });
     C.track("calc_2027", { rashi: R });
   }

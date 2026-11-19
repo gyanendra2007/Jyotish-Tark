@@ -11,8 +11,8 @@ window.JTCheckout = (function () {
   "use strict";
   const API = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec"; // order backend (Apps Script). Empty = old payment forms.
   const SDK = "https://sdk.cashfree.com/js/v3/cashfree.js";
-  const PRICES = { kp: { inr: 299, usd: 19 }, nm: { inr: 299, usd: 19 }, sampurna: { inr: 1101, usd: null }, prashna: { inr: 101, usd: 9 }, mobile: { inr: 199, usd: null } };
-  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html", rud: "rudraksha.html" };
+  const PRICES = { kp: { inr: 299, usd: 19 }, nm: { inr: 299, usd: 19 }, sampurna: { inr: 1101, usd: null }, prashna: { inr: 101, usd: 9 }, mobile: { inr: 199, usd: null }, vp: { inr: 299, usd: null } };
+  const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html", vp: "mera-2027.html", rud: "rudraksha.html" };
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* */ } } };
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const ga = (n, p) => { try { if (window.gtag) window.gtag("event", n, p || {}); } catch (e) { /* */ } };
@@ -45,7 +45,7 @@ window.JTCheckout = (function () {
     });
   }
   // a slim strip so a visitor who came through a partner link sees the discount before paying
-  const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "kundali-se-poochho.html": "prashna" };
+  const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "mera-2027.html": "vp", "kundali-se-poochho.html": "prashna" };
   function banner() {
     const pt = partner();
     if (!pt || !pt.d || document.getElementById("jcoBan") || /rudraksha/.test(location.pathname)) return; // partner discount is for reports only

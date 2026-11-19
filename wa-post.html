@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>WhatsApp पोस्ट मेकर — Jyotish Tark</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf6ec;--card:#fff;--ink:#2b1d14;--muted:#6b5a4a;--maroon:#7a1f1f;--gold:#c9a227;--green:#128c4a;--line:#eadfc8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17110c;--card:#221912;--ink:#f3e9da;--muted:#bfae98;--line:#3a2c20}}
+:root[data-theme="dark"]{--bg:#17110c;--card:#221912;--ink:#f3e9da;--muted:#bfae98;--line:#3a2c20}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Mukta,system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:8px 0 4px;color:var(--maroon)}p.sub{margin:0 0 14px;color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 16px}
+select,input[type=date]{font:inherit;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.tabs{display:flex;gap:6px;margin-bottom:12px}.tabs button{flex:1}
+button{font:inherit;font-weight:700;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;background:var(--maroon);color:#fff}
+button.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}button.green{background:var(--green)}
+button[aria-pressed="true"]{outline:3px solid var(--gold)}
+.post{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 14px}
+.post pre{white-space:pre-wrap;word-wrap:break-word;font-family:inherit;font-size:1rem;margin:0 0 12px}
+.post .acts{display:flex;flex-wrap:wrap;gap:8px}.post h3{margin:0 0 8px;font-size:1rem;color:var(--muted)}
+.tip{font-size:.9rem;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px;margin:0 0 16px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:999px;opacity:0;transition:.2s;pointer-events:none}
+.toast.on{opacity:1}canvas{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📲 WhatsApp चैनल पोस्ट मेकर</h1>
+  <p class="sub">हर दिन का पंचांग-पोस्ट अपने-आप बनता है। <b>कॉपी करें → WhatsApp चैनल खोलें → पेस्ट करें।</b> बस 20 सेकंड।</p>
+  <div class="tip">💡 सुझाव: सुबह 6–7 बजे "आज" वाला पोस्ट डालें। एकादशी/त्योहार से एक दिन पहले पोस्ट में अपने-आप रिमाइंडर जुड़ जाता है। फ़ोटो वाला पोस्ट ज़्यादा देखा जाता है — "इमेज डाउनलोड" दबाकर फ़ोटो के साथ टेक्स्ट पेस्ट करें। यह पेज Google में नहीं दिखता (सिर्फ़ आपके लिए)।</div>
+  <div class="bar">
+    <select id="city" aria-label="शहर"></select>
+    <input type="date" id="date" aria-label="तारीख">
+  </div>
+  <div class="tabs" role="group" aria-label="प्रकार">
+    <button type="button" class="alt" data-mode="day" aria-pressed="true">आज का पोस्ट</button>
+    <button type="button" class="alt" data-mode="week" aria-pressed="false">अगले 7 दिन</button>
+    <button type="button" class="alt" data-mode="vrat" aria-pressed="false">व्रत कैलेंडर (महीना)</button>
+  </div>
+  <div id="out"></div>
+  <canvas id="cv" width="1080" height="1350"></canvas>
+</div>
+<div class="toast" id="toast">कॉपी हो गया ✅</div>
+<script src="astronomy.min.js?v=1"></script>
+<script src="panchang-engine.js?v=4"></script>
+<script>
+(function(){
+var J=window.JTP, SITE='https://jyotishtark.in/';
+var CITIES=[['lucknow','लखनऊ',26.8467,80.9462,'Asia/Kolkata','panchang'],['delhi','दिल्ली',28.6139,77.209,'Asia/Kolkata'],['mumbai','मुंबई',19.076,72.8777,'Asia/Kolkata'],['kolkata','कोलकाता',22.5726,88.3639,'Asia/Kolkata'],['patna','पटना',25.5941,85.1376,'Asia/Kolkata'],['varanasi','वाराणसी',25.3176,82.9739,'Asia/Kolkata'],['jaipur','जयपुर',26.9124,75.7873,'Asia/Kolkata'],['new-jersey','न्यू जर्सी',40.7357,-74.1724,'America/New_York'],['london','लंदन',51.5072,-0.1276,'Europe/London']];
+var KATHA={'सफला':'saphala','पौष पुत्रदा':'paush-putrada','षटतिला':'shattila','जया':'jaya','विजया':'vijaya','आमलकी':'amalaki','पापमोचनी':'papmochani','कामदा':'kamada','वरूथिनी':'varuthini','मोहिनी':'mohini','अपरा':'apara','निर्जला':'nirjala','योगिनी':'yogini','देवशयनी':'devshayani','कामिका':'kamika','श्रावण पुत्रदा':'shravan-putrada','अजा':'aja','परिवर्तिनी':'parivartini','इंदिरा':'indira','पापांकुशा':'papankusha','रमा':'rama','देवउठनी (प्रबोधिनी)':'devuthani','उत्पन्ना':'utpanna','मोक्षदा':'mokshada'};
+var FEST={'लोहड़ी':'lohri-2027','मकर संक्रांति':'makar-sankranti-2027','वसंत पंचमी':'vasant-panchami-2027','महाशिवरात्रि':'mahashivratri-2027','होलिका दहन':'holi-2027','होली':'holi-2027','प्रदोष':'pradosh-vrat-katha','पूर्णिमा व्रत':'satyanarayan-vrat-katha'};
+var PROMO=['🌟 अपना 2027 कैसा रहेगा? मुफ़्त वर्षफल कार्ड: '+SITE+'mera-2027.html','🔮 मुफ़्त कुंडली बनाएँ: '+SITE+'kundali-form.html','💑 शादी से पहले मुफ़्त कुंडली मिलान: '+SITE+'kundali-milan.html','🔢 आपका मोबाइल नंबर आपके लिए शुभ है? '+SITE+'mobile-number-numerology.html','📿 सभी आरती, चालीसा और कथा: '+SITE+'bhakti-sangrah.html','🙏 ज्योतिषी से सीधे बात करें (WhatsApp): https://wa.me/918318513814'];
+var sel=document.getElementById('city'),dt=document.getElementById('date'),out=document.getElementById('out'),mode='day';
+CITIES.forEach(function(c,i){var o=document.createElement('option');o.value=i;o.textContent=c[1];sel.appendChild(o);});
+try{var sv=localStorage.getItem('jt_wa_city');if(sv)sel.value=sv;}catch(e){}
+function loc(){var c=CITIES[+sel.value];return {hi:c[1],lat:c[2],lng:c[3],tz:c[4],slug:c[0],page:c[5]?c[5]+'.html':'aaj-ka-panchang-'+c[0]+'.html'};}
+var pad=function(n){return(n<10?'0':'')+n};
+function setToday(){var t=J.todayIn(loc().tz);dt.value=t[0]+'-'+pad(t[1])+'-'+pad(t[2]);}
+function add(a,n){var t=new Date(Date.UTC(a[0],a[1]-1,a[2]+n));return[t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()];}
+function cur(){return dt.value.split('-').map(Number);}
+function link(f){var e=f.match(/^(.+) एकादशी$/);if(e&&KATHA[e[1]])return SITE+KATHA[e[1]]+'-ekadashi-vrat-katha.html';for(var k in FEST)if(f.indexOf(k)>=0)return SITE+FEST[k]+'.html';return '';}
+function short(s){return s.replace(/\s*\(\d+ \w+\)/g,'').replace('उपरांत','फिर');}
+function paranaTxt(a,L){var p=J.parana(a[0],a[1],a[2],L);if(!p)return '';var q=J.parts(p.start,L.tz);return q.d+' '+J.MON_HI[q.m-1]+', '+J.fmtTime(p.start,L.tz)+' – '+J.fmtTime(p.end,L.tz);}
+function dayPost(a){
+  var L=loc(),r=J.day(a[0],a[1],a[2],L),p=r.p,tm=J.day.apply(null,add(a,1).concat([L])),L2=[];
+  L2.push('🌅 *आज का पंचांग — '+r.dateHindi+'*');L2.push('📍 '+L.hi);L2.push('');
+  if(r.festivals.length){L2.push('🪔 *आज:* '+r.festivals.join(', '));r.festivals.forEach(function(f){if(/एकादशी/.test(f)){var pt=paranaTxt(a,L);if(pt)L2.push('   पारण (कल): '+pt);}});L2.push('');}
+  L2.push('📿 तिथि: '+short(p.tithi));L2.push('⭐ नक्षत्र: '+short(p.nakshatra));L2.push('🌙 चंद्र राशि: '+p.moonSign.split(' (')[0]+' · '+p.masa.replace(' (पूर्णिमांत)','')+', '+p.paksha);
+  L2.push('🌞 सूर्योदय '+p.sunrise+' · सूर्यास्त '+p.sunset);
+  L2.push('✅ अभिजित मुहूर्त: '+p.abhijitMuhurat.replace('बुधवार को अभिजित वर्जित','वर्जित (बुधवार)'));var am=p.amritKaal.replace(' (अमृत चौघड़िया)','');if(am!==p.rahuKaal)L2.push('✅ अमृत चौघड़िया: '+am);
+  L2.push('⛔ राहु काल: '+p.rahuKaal);
+  if(tm.festivals.length){L2.push('');L2.push('🔔 *कल ('+tm.dateHindi.split(',')[1].trim()+'):* '+tm.festivals.join(', '));tm.festivals.forEach(function(f){if(/एकादशी/.test(f)){L2.push('   व्रत कल, पारण: '+paranaTxt(add(a,1),L));}var u=link(f);if(u)L2.push('   📖 कथा व विधि: '+u);});}
+  else r.festivals.forEach(function(f){var u=link(f);if(u)L2.push('📖 कथा व विधि: '+u);});
+  var doy=Math.floor((Date.UTC(a[0],a[1]-1,a[2])-Date.UTC(a[0],0,0))/864e5);
+  L2.push('');L2.push(PROMO[doy%PROMO.length]);L2.push('📅 अपने शहर का पंचांग: '+SITE+L.page);
+  L2.push('');L2.push('_— Jyotish Tark, लखनऊ_');
+  return {title:r.dateHindi,text:L2.join('\n'),r:r,L:L};
+}
+function vratPost(a){
+  var L=loc(),lines=['🗓️ *व्रत-त्योहार कैलेंडर — '+J.MON_HI[a[1]-1]+' '+a[0]+'*','📍 '+L.hi,''],d=[a[0],a[1],1];
+  while(d[1]===a[1]){var r=J.day(d[0],d[1],d[2],L);if(r.festivals.length)lines.push('• '+d[2]+' '+J.MON_HI[d[1]-1]+' ('+r.dateHindi.split(',')[0]+') — '+r.festivals.join(', '));d=add(d,1);}
+  lines.push('');lines.push('🔔 एकादशी का पारण समय और कथा: '+SITE+'ekadashi-list.html');lines.push('📅 रोज़ का पंचांग: '+SITE+L.page);lines.push('');lines.push('_— Jyotish Tark, लखनऊ_');
+  return {title:'व्रत कैलेंडर',text:lines.join('\n')};
+}
+function card(o,i,withImg){
+  var div=document.createElement('div');div.className='post';
+  div.innerHTML='<h3></h3><pre></pre><div class="acts"><button type="button" class="green" data-a="copy">📋 कॉपी करें</button><button type="button" class="alt" data-a="wa">WhatsApp में खोलें</button>'+(withImg?'<button type="button" class="alt" data-a="img">🖼️ इमेज डाउनलोड</button>':'')+'</div>';
+  div.querySelector('h3').textContent=o.title;div.querySelector('pre').textContent=o.text;
+  div.querySelector('[data-a=copy]').onclick=function(){copy(o.text)};
+  div.querySelector('[data-a=wa]').onclick=function(){window.open('https://wa.me/?text='+encodeURIComponent(o.text),'_blank')};
+  if(withImg)div.querySelector('[data-a=img]').onclick=function(){img(o)};
+  return div;
+}
+function copy(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}).finally(function(){var x=document.getElementById('toast');x.classList.add('on');setTimeout(function(){x.classList.remove('on')},1400);});}
+function img(o){
+  var c=document.getElementById('cv'),g=c.getContext('2d'),r=o.r,p=r.p,W=1080,H=1350;
+  var bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#7a1f1f');bg.addColorStop(1,'#3d0f0f');g.fillStyle=bg;g.fillRect(0,0,W,H);
+  g.strokeStyle='#c9a227';g.lineWidth=6;g.strokeRect(30,30,W-60,H-60);
+  g.fillStyle='#f6d77a';g.textAlign='center';g.font='700 46px Mukta';g.fillText('॥ आज का पंचांग ॥',W/2,120);
+  g.fillStyle='#fff';g.font='800 58px Mukta';g.fillText(r.dateHindi,W/2,200);g.font='500 38px Mukta';g.fillStyle='#f3e3c3';g.fillText('📍 '+o.L.hi,W/2,255);
+  var y=330;if(r.festivals.length){g.fillStyle='#c9a227';roundRect(g,80,y-55,W-160,90,20);g.fill();g.fillStyle='#3d0f0f';g.font='800 44px Mukta';fit(g,'🪔 '+r.festivals.join(', '),W/2,y+5,W-200);y+=110;}
+  var rows=[['तिथि',short(p.tithi)],['नक्षत्र',short(p.nakshatra)],['योग',short(p.yoga)],['सूर्योदय / सूर्यास्त',p.sunrise+' / '+p.sunset],['अभिजित मुहूर्त',p.abhijitMuhurat.replace('बुधवार को अभिजित वर्जित','वर्जित')],['ब्रह्म मुहूर्त',p.brahmaMuhurat],['राहु काल',p.rahuKaal]];
+  g.textAlign='left';rows.forEach(function(rw){g.fillStyle='#f6d77a';g.font='700 34px Mukta';g.fillText(rw[0],100,y);g.fillStyle='#fff';g.font='500 38px Mukta';fit(g,rw[1],100,y+50,W-200,'left');y+=118;});
+  g.textAlign='center';g.fillStyle='#f6d77a';g.font='800 40px Mukta';g.fillText('ज्योतिष तर्क · jyotishtark.in',W/2,H-80);
+  var a=document.createElement('a');a.download='panchang-'+dt.value+'.png';a.href=c.toDataURL('image/png');a.click();
+}
+function fit(g,t,x,y,max,al){var s=parseInt(g.font.match(/(\d+)px/)[1]);while(g.measureText(t).width>max&&s>22){s-=2;g.font=g.font.replace(/\d+px/,s+'px');}g.textAlign=al||'center';g.fillText(t,x,y);}
+function roundRect(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+function render(){
+  out.innerHTML='';var a=cur();
+  try{
+    if(mode==='day')out.appendChild(card(dayPost(a),0,true));
+    else if(mode==='week'){for(var i=0;i<7;i++)out.appendChild(card(dayPost(add(a,i)),i,true));}
+    else out.appendChild(card(vratPost(a),0,false));
+  }catch(e){out.textContent='गणना में समस्या: '+e.message;}
+}
+document.querySelectorAll('[data-mode]').forEach(function(b){b.onclick=function(){mode=b.getAttribute('data-mode');document.querySelectorAll('[data-mode]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});render();};});
+sel.onchange=function(){try{localStorage.setItem('jt_wa_city',sel.value)}catch(e){}setToday();render();};dt.onchange=render;
+setToday();(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(render);
+})();
+</script>
+</body>
+</html>
