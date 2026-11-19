@@ -16,7 +16,7 @@
 h1{font-size:1.5rem;margin:8px 0 4px;color:var(--maroon)}p.sub{margin:0 0 14px;color:var(--muted)}
 .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 16px}
 select,input[type=date]{font:inherit;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.tabs{display:flex;gap:6px;margin-bottom:12px}.tabs button{flex:1}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px}@media(min-width:620px){.tabs{grid-template-columns:repeat(4,1fr)}}
 button{font:inherit;font-weight:700;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;background:var(--maroon);color:#fff}
 button.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}button.green{background:var(--green)}
 button[aria-pressed="true"]{outline:3px solid var(--gold)}
@@ -40,6 +40,7 @@ button[aria-pressed="true"]{outline:3px solid var(--gold)}
   <div class="tabs" role="group" aria-label="प्रकार">
     <button type="button" class="alt" data-mode="day" aria-pressed="true">आज का पोस्ट</button>
     <button type="button" class="alt" data-mode="week" aria-pressed="false">अगले 7 दिन</button>
+    <button type="button" class="alt" data-mode="rashi" aria-pressed="false">राशिफल (सभी 12)</button>
     <button type="button" class="alt" data-mode="vrat" aria-pressed="false">व्रत कैलेंडर (महीना)</button>
   </div>
   <div id="out"></div>
@@ -81,6 +82,44 @@ function dayPost(a){
   L2.push('');L2.push('_— Jyotish Tark, लखनऊ_');
   return {title:r.dateHindi,text:L2.join('\n'),r:r,L:L};
 }
+var RS=[['♈','मेष',9,'लाल','mesh'],['♉','वृषभ',6,'सफ़ेद','vrishabh'],['♊','मिथुन',5,'हरा','mithun'],['♋','कर्क',2,'सफ़ेद / चाँदी','kark'],['♌','सिंह',1,'सुनहरा / नारंगी','singh'],['♍','कन्या',5,'हल्का हरा','kanya'],['♎','तुला',6,'गुलाबी','tula'],['♏','वृश्चिक',9,'मैरून','vrishchik'],['♐','धनु',3,'केसरिया','dhanu'],['♑','मकर',8,'नीला','makar'],['♒','कुंभ',8,'आसमानी','kumbh'],['♓','मीन',3,'पीला','meen']];
+var HF={1:['✨','आत्मविश्वास का दिन','चंद्रमा आपकी राशि में — आत्मविश्वास अच्छा रहेगा, ज़रूरी काम ख़ुद आगे बढ़कर करें; ज़्यादा सोचने से बचें।','चंदन या केसर का तिलक लगाएँ'],
+2:['💰','धन और परिवार','धन और परिवार के मामलों में अनुकूलता; रुका पैसा मिल सकता है। वाणी में मिठास रखें।','पर्स में चाँदी का सिक्का रखें'],
+3:['💪','साहस और नई पहल','मेहनत और नई पहल का अच्छा दिन; संपर्क और छोटी यात्राएँ लाभ दे सकती हैं।','पक्षियों को दाना डालें'],
+4:['🏠','घर-परिवार पर ध्यान','ध्यान घर-परिवार पर रहेगा; पुराने काम निपटाएँ, जोखिम वाले निवेश आज टालें।','शिवलिंग पर जल चढ़ाएँ, माता का आशीर्वाद लें'],
+5:['💡','नए विचार','पढ़ाई, रचनात्मक काम और नए विचारों के लिए अच्छा दिन; संतान से सुख।','गायत्री मंत्र का 27 बार जप'],
+6:['🏆','चुनौतियों पर जीत','प्रतियोगिता और कठिन कामों में अच्छा प्रदर्शन; पुराने बकाया निपटाने का अच्छा समय।','हनुमान चालीसा का पाठ'],
+7:['🤝','साझेदारी में लाभ','साझेदारी, क्लाइंट और रिश्तों के लिए अनुकूल दिन; बातचीत से काम बनेंगे।','मंदिर में मिश्री अर्पित करें'],
+8:['⚠️','सावधानी का दिन','चंद्रमा आठवें भाव में — नया निवेश, उधार और विवाद टालें; रूटीन के काम करें।','“ॐ नमः शिवाय” का जप'],
+9:['🙏','भाग्य का साथ','भाग्य और बड़ों का साथ मिलेगा; रुके काम आगे बढ़ सकते हैं।','बड़ों का आशीर्वाद लेकर दिन शुरू करें'],
+10:['🚀','करियर में प्रगति','काम और करियर के लिए बहुत अच्छा दिन; ज़िम्मेदारी लें, मेहनत दिखेगी।','काम से पहले इष्ट देव का स्मरण'],
+11:['🌟','लाभ का दिन','आय और लाभ के योग; मित्रों और नेटवर्क से अच्छे अवसर मिल सकते हैं।','आय का छोटा हिस्सा गौ सेवा में दें'],
+12:['🌙','ख़र्च पर नियंत्रण','ख़र्च बढ़ सकते हैं, बजट बनाकर चलें; बिना पढ़े काग़ज़ पर हस्ताक्षर न करें।','सिरहाने ताँबे के पात्र में जल रखें']};
+function rashiPost(a){
+  var L=loc(),r=J.day(a[0],a[1],a[2],L),p=r.p,mi=r.moonSignIndex,lines=[];
+  lines.push('🔮 *आज का राशिफल — '+r.dateHindi+'*');
+  lines.push('🌙 चंद्रमा: '+p.moonSign.replace(/ \([A-Za-z]+\)/g,'')+' · नक्षत्र: '+p.nakshatra.split(' (')[0]);
+  lines.push('⛔ राहु काल: '+p.rahuKaal+' ('+L.hi+')');lines.push('');
+  var rows=RS.map(function(z,i){var h=((mi-i+12)%12)+1,f=HF[h],lucky=((z[2]+a[2]+r.nakshatraIndex)%9)+1;return {z:z,h:h,f:f,lucky:lucky};});
+  rows.forEach(function(x){lines.push(x.z[0]+' *'+x.z[1]+':* '+x.f[0]+' '+x.f[2]);lines.push('   उपाय: '+x.f[3]+' · शुभ अंक '+x.lucky+' · रंग '+x.z[3]);});
+  lines.push('');lines.push('_राशिफल चंद्र राशि से, सूर्योदय के समय के चंद्रमा के अनुसार। यह सामान्य मार्गदर्शन है — आपकी अपनी कुंडली अलग हो सकती है।_');
+  lines.push('📖 विस्तार से: '+SITE+'rashifal.html');lines.push('🔮 अपनी कुंडली से 2027: '+SITE+'mera-2027.html');lines.push('');lines.push('_— Jyotish Tark, लखनऊ_');
+  return {title:'राशिफल — '+r.dateHindi,text:lines.join('\n'),r:r,L:L,rows:rows,kind:'rashi'};
+}
+function rashiImg(o){
+  var c=document.getElementById('cv'),g=c.getContext('2d'),W=1080,H=1350;
+  var bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#7a1f1f');bg.addColorStop(1,'#3d0f0f');g.fillStyle=bg;g.fillRect(0,0,W,H);
+  g.strokeStyle='#c9a227';g.lineWidth=6;g.strokeRect(30,30,W-60,H-60);
+  g.textAlign='center';g.fillStyle='#f6d77a';g.font='700 44px Mukta';g.fillText('॥ आज का राशिफल ॥',W/2,105);
+  g.fillStyle='#fff';g.font='800 50px Mukta';g.fillText(o.r.dateHindi,W/2,170);
+  var y=250;o.rows.forEach(function(x,i){
+    g.fillStyle=i%2?'rgba(255,255,255,.04)':'rgba(255,255,255,.09)';g.fillRect(70,y-52,W-140,80);
+    g.textAlign='left';g.fillStyle='#f6d77a';g.font='800 40px Mukta';g.fillText(x.z[1],100,y);
+    g.fillStyle='#fff';g.font='600 38px Mukta';fit(g,x.f[0]+' '+x.f[1],330,y,W-450,'left');
+    g.textAlign='right';g.fillStyle='#f3e3c3';g.font='500 30px Mukta';g.fillText('अंक '+x.lucky,W-100,y);y+=86;});
+  g.textAlign='center';g.fillStyle='#f6d77a';g.font='800 40px Mukta';g.fillText('ज्योतिष तर्क · jyotishtark.in',W/2,H-70);
+  var a=document.createElement('a');a.download='rashifal-'+dt.value+'.png';a.href=c.toDataURL('image/png');a.click();
+}
 function vratPost(a){
   var L=loc(),lines=['🗓️ *व्रत-त्योहार कैलेंडर — '+J.MON_HI[a[1]-1]+' '+a[0]+'*','📍 '+L.hi,''],d=[a[0],a[1],1];
   while(d[1]===a[1]){var r=J.day(d[0],d[1],d[2],L);if(r.festivals.length)lines.push('• '+d[2]+' '+J.MON_HI[d[1]-1]+' ('+r.dateHindi.split(',')[0]+') — '+r.festivals.join(', '));d=add(d,1);}
@@ -93,7 +132,7 @@ function card(o,i,withImg){
   div.querySelector('h3').textContent=o.title;div.querySelector('pre').textContent=o.text;
   div.querySelector('[data-a=copy]').onclick=function(){copy(o.text)};
   div.querySelector('[data-a=wa]').onclick=function(){window.open('https://wa.me/?text='+encodeURIComponent(o.text),'_blank')};
-  if(withImg)div.querySelector('[data-a=img]').onclick=function(){img(o)};
+  if(withImg)div.querySelector('[data-a=img]').onclick=function(){o.kind==='rashi'?rashiImg(o):img(o)};
   return div;
 }
 function copy(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}).finally(function(){var x=document.getElementById('toast');x.classList.add('on');setTimeout(function(){x.classList.remove('on')},1400);});}
@@ -116,6 +155,7 @@ function render(){
   try{
     if(mode==='day')out.appendChild(card(dayPost(a),0,true));
     else if(mode==='week'){for(var i=0;i<7;i++)out.appendChild(card(dayPost(add(a,i)),i,true));}
+    else if(mode==='rashi')out.appendChild(card(rashiPost(a),0,true));
     else out.appendChild(card(vratPost(a),0,false));
   }catch(e){out.textContent='गणना में समस्या: '+e.message;}
 }
