@@ -59,7 +59,8 @@ const PROMO = {
   "f0bc24ddac32c6f318381a0fec3ae4e09d23557a0ef3049d0f7b9bb2835da189": 100
 };
 const FRIEND_OFF = 10;      // % off with a customer referral code (JTxxxxx)
-const PARTNER_OFF = 10;     // % off with a partner code (default; a partner row can override)
+const PARTNER_OFF = 20;     // % off on reports with a partner code (default; a partner row can override)
+const PARTNER_COMM = 40;    // partner commission % on reports (default; a partner row can override)
 
 const HEAD = ["Created", "Order ID", "Product", "Status", "Amount", "Currency", "List price", "Discount", "Code type", "Code",
   "Partner", "Commission", "Name", "Phone", "Email", "DOB", "Time", "Place", "Lat", "Lng", "Gender", "Marital", "Lang",
@@ -167,7 +168,7 @@ function lookup(oid, phone) {
 function partnerRow(code) {
   const sh = sheet(SHEET_PARTNERS, PHEAD), v = sh.getDataRange().getValues();
   for (let i = 1; i < v.length; i++) if (String(v[i][0]).trim().toUpperCase() === code) {
-    return { code: code, name: v[i][1], comm: Number(v[i][4]) || 15, disc: v[i][5] === "" ? PARTNER_OFF : Number(v[i][5]) || 0, pin: String(v[i][6]), active: String(v[i][7]).toLowerCase() !== "no" };
+    return { code: code, name: v[i][1], comm: v[i][4] === "" ? PARTNER_COMM : Number(v[i][4]) || 0, disc: v[i][5] === "" ? PARTNER_OFF : Number(v[i][5]) || 0, pin: String(v[i][6]), active: String(v[i][7]).toLowerCase() !== "no" };
   }
   return null;
 }
