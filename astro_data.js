@@ -95,7 +95,7 @@ function buildComputedDay(dateKey, r) {
     const baseScore = r.caution ? 52 : ([0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 25, 26].includes(r.nakshatraIndex) ? 88 : 74);
     const statusType = baseScore >= 75 ? "good" : (baseScore >= 55 ? "caution" : "bad");
     const moonSignName = RASHI_LIST[r.moonSignIndex];
-    const festivalLine = r.hasFestival ? `आज ${r.dateEnglish.replace(' 2026', '')} को ${r.festival} है।` : `आज ${r.festival} है।`;
+    const festivalLine = r.hasFestival ? `आज ${r.dateEnglish.replace(/ \d{4}$/, '')} को ${r.festival} है।` : `आज ${r.festival} है।`;
     return {
         dateHindi: r.dateHindi,
         dateEnglish: r.dateEnglish,
@@ -159,7 +159,8 @@ function buildComputedDay(dateKey, r) {
     };
 }
 
-Object.keys(PANCHANG_2026).forEach(k => { ASTRO_DATABASE[k] = buildComputedDay(k, PANCHANG_2026[k]); });
+// Pre-computed Lucknow table is used only for Lucknow; other cities (window.JT_LOC) are computed live.
+if (!window.JT_LOC) Object.keys(PANCHANG_2026).forEach(k => { ASTRO_DATABASE[k] = buildComputedDay(k, PANCHANG_2026[k]); });
 
 // ============================================================================
 // DYNAMIC ASTRONOMICAL FALLBACK ENGINE (For dates after 31 December 2026)
@@ -253,7 +254,10 @@ const ASTRO_DATA_PROXY = new Proxy(ASTRO_DATABASE, {
     get: function(target, prop) {
         if (typeof prop === "string" && /^\d{4}-\d{2}-\d{2}$/.test(prop)) {
             if (!target[prop]) {
-                target[prop] = generateDynamicAstroFallback(prop);
+                const q = prop.split('-').map(Number);
+                let live = null;
+                try { if (window.JTP) live = buildComputedDay(prop, window.JTP.day(q[0], q[1], q[2], window.JT_LOC)); } catch (e) { console.warn('JTP', e); }
+                target[prop] = live || generateDynamicAstroFallback(prop);
             }
             return target[prop];
         }
