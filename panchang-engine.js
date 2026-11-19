@@ -132,8 +132,8 @@
     if (t === 3 && p.tIdx !== 3) out.push('विनायक चतुर्थी');
     if (c.tMid === 28 && p.tMid !== 28 && !/महाशिवरात्रि/.test(FIXED[key] || '')) out.push('मासिक शिवरात्रि');
     if (c.tSet === 14 && t !== 14) out.push(MASA[c.purni] + ' पूर्णिमा व्रत');
-    if (t === 14 && p.tIdx !== 14) out.push(MASA[c.purni] + ' पूर्णिमा (स्नान-दान)');
-    if (t === 29 && p.tIdx !== 29) out.push(MASA[c.purni] + ' अमावस्या');
+    if ((t === 14 && p.tIdx !== 14 && p.tSkip !== 14) || c.tSkip === 14) out.push(MASA[c.tSkip === 14 ? c.amanta : c.purni] + ' पूर्णिमा (स्नान-दान)');
+    if ((t === 29 && p.tIdx !== 29 && p.tSkip !== 29) || c.tSkip === 29) out.push(MASA[c.tSkip === 29 ? (c.amanta + 1) % 12 : c.purni] + ' अमावस्या');
     if (c.sunRashiNext !== c.sunRashi) out.push(RASHI[c.sunRashiNext].split(' ')[0] + ' संक्रांति');
     return out;
   }
