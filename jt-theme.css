@@ -457,3 +457,9 @@ html.jt-ad-open, html.jt-ad-open body { overflow: hidden; }
 .cp-note { margin: 0 0 16px; color: var(--jt-body, #4A3628); font-size: 15.5px; line-height: 1.6; flex: 1; }
 .cp-btn { display: block; text-align: center; padding: 11px 14px; border-radius: 12px; background: var(--jt-maroon, #7A1F1F); color: #FFFFFF !important; font-weight: 700; text-decoration: none; }
 .cp-btn:hover { background: var(--jt-maroon-dark, #5A1414); }
+/* Header search bar (replaces header WhatsApp button; WhatsApp help stays in the floating "सहायता" button) */
+.jts-bar{display:inline-flex;align-items:center;gap:8px;flex:0 1 215px;min-width:110px;height:46px;margin-left:6px;padding:0 14px;border-radius:999px;border:1.5px solid rgba(122,31,31,.28);background:#FFFFFF;color:#6B5A4A;font:inherit;font-size:14px;cursor:pointer;text-align:left;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.jts-bar svg{color:var(--jt-maroon);flex-shrink:0}.jts-bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jts-bar:hover,.jts-bar:focus-visible{border-color:var(--jt-maroon);color:#2B1D14;outline:none}
+@media (max-width: 1240px){.jt-header-row{flex-wrap:wrap;row-gap:0;min-height:0;padding-top:10px}.jts-bar{order:3;flex:1 1 100%;min-width:0;margin:2px 0 12px;height:48px;font-size:16px}}
+@media (min-width: 1241px){.jt-header .jt-wrap{max-width:1380px}.jt-nav a{padding:0 8px}.jts-bar{flex:1 1 300px;max-width:340px;min-width:170px}}

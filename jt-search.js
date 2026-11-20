@@ -107,6 +107,8 @@
     setTimeout(function () { inp.focus(); }, 30);
   }
   function headerButton() {
+    var bars = document.querySelectorAll("[data-jts-open]");
+    if (bars.length) { for (var i = 0; i < bars.length; i++) bars[i].onclick = overlay; return; }
     var row = document.querySelector(".jt-header-row") || document.querySelector("header .jt-wrap") || null;
     if (!row || row.querySelector(".jts-btn")) return;
     addCss();
