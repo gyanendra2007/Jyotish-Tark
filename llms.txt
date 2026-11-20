@@ -4,7 +4,7 @@
 
 ## Panchang & muhurat
 - [Aaj ka Panchang (Lucknow)](https://jyotishtark.in/panchang.html): daily tithi, nakshatra, yoga, karana, Rahu Kaal, Abhijit, Choghadiya
-- [City panchang — Delhi](https://jyotishtark.in/aaj-ka-panchang-delhi.html): 26 Indian cities and 10 NRI cities (New Jersey, Chicago, Houston, Bay Area, Toronto, London, Dubai, Singapore, Sydney, Melbourne) in local time with 2027 Ekadashi dates and parana times
+- [City panchang — Delhi](https://jyotishtark.in/aaj-ka-panchang-delhi.html): 65 Indian cities, 5 Nepal cities (Kathmandu, Pokhara…) and 35 cities abroad (USA, Canada, UK, Gulf, Australia, Mauritius, Fiji, Trinidad…) in local time with 2027 Ekadashi dates and parana times
 - [How we calculate the panchang](https://jyotishtark.in/panchang-method.html): full method, formulas and rules
 - [Ekadashi list 2026–27](https://jyotishtark.in/ekadashi-list.html)
 - [Festivals 2027](https://jyotishtark.in/tyohar-2027.html): Lohri, Makar Sankranti, Vasant Panchami, Mahashivratri, Holi with Lucknow muhurat
