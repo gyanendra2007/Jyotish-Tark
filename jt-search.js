@@ -1,0 +1,121 @@
+/* Jyotish Tark — site search with live suggestions (Hindi + Hinglish).
+   - Adds a 🔍 button to the site header on every page (overlay search).
+   - Any <input data-jt-search> gets a suggestion dropdown too (e.g. bhakti page).
+   Index: search-index.js (built by tools/search/build_index.py), loaded on first use. */
+(function () {
+  "use strict";
+  if (window.JTSearch) return;
+  var IDX = null, loading = null;
+  function load() {
+    if (IDX) return Promise.resolve(IDX);
+    if (loading) return loading;
+    loading = new Promise(function (res) {
+      var s = document.createElement("script"); s.src = "search-index.js?v=1"; s.async = true;
+      s.onload = function () { IDX = (window.JT_SEARCH || []).map(prep); res(IDX); };
+      s.onerror = function () { IDX = []; res(IDX); };
+      document.head.appendChild(s);
+    });
+    return loading;
+  }
+  // normalise so common spelling variants match: "hanumaan"≈"hanuman", "chaalisa"≈"chalisa", ँ≈ं, nukta ignored
+  function norm(s) {
+    return String(s || "").toLowerCase().normalize("NFC")
+      .replace(/[़]/g, "").replace(/ँ/g, "ं")
+      .replace(/aa/g, "a").replace(/ee/g, "i").replace(/oo/g, "u").replace(/sh/g, "s").replace(/w/g, "v").replace(/ph/g, "f")
+      .replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
+  }
+  function prep(r) { return { u: r[0], t: r[1], c: r[2], tt: norm(r[1]), tw: norm(r[1]).split(" "), kw: norm(r[1] + " " + r[3]).split(" ") }; }
+  function search(q, n) {
+    var qs = norm(q).split(" ").filter(Boolean); if (!qs.length || !IDX) return [];
+    var out = [], part = [];
+    for (var i = 0; i < IDX.length; i++) {
+      var r = IDX[i], sc = 0, ok = true, hits = 0;
+      for (var j = 0; j < qs.length; j++) {
+        var w = qs[j], hitT = false, hitK = false, sub = false;
+        for (var a = 0; a < r.tw.length; a++) if (r.tw[a].indexOf(w) === 0) { hitT = true; break; }
+        if (!hitT) for (var b = 0; b < r.kw.length; b++) if (r.kw[b].indexOf(w) === 0) { hitK = true; break; } else if (w.length >= 5 && r.kw[b].indexOf(w) > 0) { hitK = sub = true; }
+        if (!hitT && !hitK) { ok = false; continue; }
+        hits++; sc += hitT ? 3 : sub ? 0.4 : 1;
+      }
+      if (!ok) { if (hits) part.push([hits * 2 + sc / 10 - r.t.length / 300, r]); continue; }
+      if (r.tt.indexOf(qs.join(" ")) === 0) sc += 5;
+      if (r.c === "पंचांग" && r.u !== "panchang.html" && qs.length < 2) sc -= 1.5; // city pages after main pages, unless the city is typed
+      if (r.c === "पेज") sc -= 0.5;
+      sc -= r.t.length / 200;
+      out.push([sc, r]);
+    }
+    if (!out.length) out = part; // nothing matched every word → closest pages
+    out.sort(function (x, y) { return y[0] - x[0]; });
+    return out.slice(0, n || 8).map(function (x) { return x[1]; });
+  }
+  var css = ".jts-wrap{position:relative}.jts-list{position:absolute;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:1px solid #e3d5b8;border-radius:14px;box-shadow:0 12px 30px rgba(60,30,10,.18);z-index:2147483100;max-height:min(60vh,440px);overflow:auto;text-align:left}" +
+    ".jts-list li a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;color:#2b1d14;text-decoration:none;font-size:16px;line-height:1.3}.jts-list li a[aria-selected=true],.jts-list li a:hover{background:#fff3d6}" +
+    ".jts-c{flex:none;font-size:12px;font-weight:700;color:#7a1f1f;background:#fbecd0;border-radius:999px;padding:2px 8px}.jts-none{padding:10px;color:#6b5a4a;font-size:15px}" +
+    ".jts-btn{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;border:1px solid rgba(122,31,31,.25);background:#fff;color:#7a1f1f;font-size:18px;cursor:pointer;flex:none;margin:0 8px}" +
+    ".jts-ov{position:fixed;inset:0;z-index:2147483000;background:rgba(20,10,5,.55);display:flex;justify-content:center;align-items:flex-start;padding:70px 14px 14px}.jts-box{width:100%;max-width:640px;background:#fffdf8;border-radius:18px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.3)}" +
+    ".jts-box input{width:100%;font:inherit;font-size:18px;padding:12px 14px;border-radius:12px;border:2px solid #c9a227;outline:none;background:#fff;color:#2b1d14}.jts-box .jts-list{position:static;box-shadow:none;border:0;margin-top:8px;max-height:60vh}" +
+    ".jts-top{display:flex;justify-content:space-between;align-items:center;margin:0 2px 8px;color:#7a1f1f;font-weight:700}.jts-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#7a1f1f}.jts-hint{font-size:13px;color:#6b5a4a;margin:8px 2px 0}";
+  function addCss() { if (document.getElementById("jts-css")) return; var s = document.createElement("style"); s.id = "jts-css"; s.textContent = css; document.head.appendChild(s); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function attach(input, opts) {
+    if (!input || input.__jts) return; input.__jts = 1; opts = opts || {}; addCss();
+    var list = document.createElement("ul"); list.className = "jts-list"; list.setAttribute("role", "listbox"); list.hidden = true;
+    var id = "jts" + Math.random().toString(36).slice(2, 7); list.id = id;
+    input.setAttribute("role", "combobox"); input.setAttribute("aria-autocomplete", "list"); input.setAttribute("aria-controls", id); input.setAttribute("aria-expanded", "false"); input.setAttribute("autocomplete", "off");
+    var host = opts.container || input.parentNode;
+    if (!opts.container) { host.classList.add("jts-wrap"); }
+    host.appendChild(list);
+    var sel = -1, items = [];
+    function render() {
+      var q = input.value.trim();
+      if (!q) { list.hidden = true; input.setAttribute("aria-expanded", "false"); return; }
+      load().then(function () {
+        if (input.value.trim() !== q) return;
+        items = search(q, opts.max || 8); sel = -1;
+        list.innerHTML = items.length ? items.map(function (r, i) { return '<li role="none"><a role="option" id="' + id + i + '" href="' + r.u + '"><span class="jts-c">' + esc(r.c) + "</span><span>" + esc(r.t) + "</span></a></li>"; }).join("")
+          : '<li class="jts-none">कोई पेज नहीं मिला — दूसरा शब्द लिखें (जैसे "हनुमान", "aarti", "panchang")</li>';
+        list.hidden = false; input.setAttribute("aria-expanded", "true");
+      });
+    }
+    function mark() { var as = list.querySelectorAll("a[role=option]"); for (var i = 0; i < as.length; i++) as[i].setAttribute("aria-selected", i === sel ? "true" : "false"); if (as[sel]) { as[sel].scrollIntoView({ block: "nearest" }); input.setAttribute("aria-activedescendant", as[sel].id); } }
+    input.addEventListener("input", render);
+    input.addEventListener("focus", function () { load(); if (input.value.trim()) render(); });
+    input.addEventListener("keydown", function (e) {
+      if (list.hidden) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); sel = Math.min(sel + 1, items.length - 1); mark(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); sel = Math.max(sel - 1, 0); mark(); }
+      else if (e.key === "Enter") { var r = items[sel >= 0 ? sel : 0]; if (r) { e.preventDefault(); location.href = r.u; } }
+      else if (e.key === "Escape") { list.hidden = true; input.setAttribute("aria-expanded", "false"); }
+    });
+    if (!opts.container) document.addEventListener("click", function (e) { if (!host.contains(e.target)) { list.hidden = true; input.setAttribute("aria-expanded", "false"); } });
+    list.addEventListener("click", function (e) { var a = e.target.closest("a"); if (a) try { if (window.gtag) gtag("event", "site_search", { search_term: input.value, page: a.getAttribute("href") }); } catch (x) {} });
+  }
+
+  function overlay() {
+    addCss();
+    var ov = document.createElement("div"); ov.className = "jts-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "वेबसाइट पर खोजें");
+    ov.innerHTML = '<div class="jts-box"><div class="jts-top"><span>🔍 पूरी वेबसाइट में खोजें</span><button class="jts-x" type="button" aria-label="बंद करें">×</button></div>' +
+      '<input type="search" placeholder="जैसे: हनुमान चालीसा, ekadashi, aaj ka panchang, कुंडली…"><div class="jts-res"></div><p class="jts-hint">हिंदी या English (Hinglish) — दोनों में लिखें। एक अक्षर से ही सुझाव आने लगेंगे।</p></div>';
+    document.body.appendChild(ov);
+    var inp = ov.querySelector("input"); attach(inp, { container: ov.querySelector(".jts-res"), max: 12 });
+    function close() { ov.remove(); document.removeEventListener("keydown", k); }
+    function k(e) { if (e.key === "Escape") close(); }
+    document.addEventListener("keydown", k);
+    ov.addEventListener("click", function (e) { if (e.target === ov) close(); });
+    ov.querySelector(".jts-x").onclick = close;
+    setTimeout(function () { inp.focus(); }, 30);
+  }
+  function headerButton() {
+    var row = document.querySelector(".jt-header-row") || document.querySelector("header .jt-wrap") || null;
+    if (!row || row.querySelector(".jts-btn")) return;
+    addCss();
+    var b = document.createElement("button"); b.type = "button"; b.className = "jts-btn"; b.setAttribute("aria-label", "वेबसाइट पर खोजें"); b.title = "खोजें"; b.textContent = "🔍";
+    b.onclick = overlay;
+    var toggle = row.querySelector(".jt-nav-toggle, .jt-menu-btn, button[aria-controls]");
+    if (toggle) row.insertBefore(b, toggle); else row.appendChild(b);
+  }
+  function init() { headerButton(); document.querySelectorAll("input[data-jt-search]").forEach(function (i) { attach(i); }); }
+  window.JTSearch = { attach: attach, open: overlay, search: function (q) { return load().then(function () { return search(q); }); } };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
