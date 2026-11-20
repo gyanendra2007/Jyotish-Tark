@@ -158,7 +158,7 @@ window.JTCheckout = (function () {
       catch (e) { r = { ok: false, error: "network" }; }
       if (!r || !r.ok) {
         go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay");
-        err.textContent = r && r.error === "promo" ? T("यह प्रोमो कोड मान्य नहीं है।", "This promo code is not valid.") : r && r.error === "phone" ? T("मोबाइल नंबर सही नहीं है।", "The mobile number is not valid.") : r && r.error === "cashfree" && r.currency === "USD" ? T("USD भुगतान अभी उपलब्ध नहीं — ₹ में भुगतान करें (विदेशी कार्ड भी चलते हैं)।", "USD checkout is not available right now — please pay in ₹ (international cards work).") : T("भुगतान शुरू नहीं हो सका। दोबारा कोशिश करें या WhatsApp करें: 83185 13814", "Could not start the payment. Try again or WhatsApp +91 83185 13814.");
+        err.textContent = r && r.error === "unknown product" ? T("यह रिपोर्ट अभी सर्वर पर चालू नहीं हुई है — कृपया WhatsApp करें: 83185 13814", "This report is not live on the server yet — please WhatsApp +91 83185 13814.") : r && r.error === "promo" ? T("यह प्रोमो कोड मान्य नहीं है।", "This promo code is not valid.") : r && r.error === "phone" ? T("मोबाइल नंबर सही नहीं है।", "The mobile number is not valid.") : r && r.error === "cashfree" && r.currency === "USD" ? T("USD भुगतान अभी उपलब्ध नहीं — ₹ में भुगतान करें (विदेशी कार्ड भी चलते हैं)।", "USD checkout is not available right now — please pay in ₹ (international cards work).") : T("भुगतान शुरू नहीं हो सका। दोबारा कोशिश करें या WhatsApp करें: 83185 13814", "Could not start the payment. Try again or WhatsApp +91 83185 13814.");
         ga("checkout_error", { product, e: r && r.error });
         return;
       }
