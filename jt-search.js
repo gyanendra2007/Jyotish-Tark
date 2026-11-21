@@ -10,7 +10,7 @@
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
     loading = new Promise(function (res) {
-      var s = document.createElement("script"); s.src = "search-index.js?v=1"; s.async = true;
+      var s = document.createElement("script"); s.src = "search-index.js?v=4"; s.async = true;
       s.onload = function () { IDX = (window.JT_SEARCH || []).map(prep); res(IDX); };
       s.onerror = function () { IDX = []; res(IDX); };
       document.head.appendChild(s);
@@ -20,11 +20,21 @@
   // normalise so common spelling variants match: "hanumaan"≈"hanuman", "chaalisa"≈"chalisa", ँ≈ं, nukta ignored
   function norm(s) {
     return String(s || "").toLowerCase().normalize("NFC")
-      .replace(/[़]/g, "").replace(/ँ/g, "ं")
+      .replace(/[़]/g, "").replace(/ँ/g, "ं").replace(/[नमङणञ]्(?=[क-ह])/g, "ं")
       .replace(/aa/g, "a").replace(/ee/g, "i").replace(/oo/g, "u").replace(/sh/g, "s").replace(/w/g, "v").replace(/ph/g, "f")
       .replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
   }
-  function prep(r) { return { u: r[0], t: r[1], c: r[2], tt: norm(r[1]), tw: norm(r[1]).split(" "), kw: norm(r[1] + " " + r[3]).split(" ") }; }
+  // consonant skeleton for Roman words, so spelling variants match: mahalaxmi≈mahalakshmi, astkam≈ashtakam, sunderkand≈sundarkand
+  function skel(w) {
+    if (!/^[a-z0-9]+$/.test(w)) return "";
+    return w.replace(/x/g, "ks").replace(/q/g, "k").replace(/z/g, "j").replace(/ck/g, "k").replace(/(?<=.)[nm](?=[bcdfgjklpqrstvz])/g, "").replace(/[aeiouyh]/g, "").replace(/(.)\1+/g, "$1");
+  }
+  function prep(r) {
+    var kw = norm(r[1] + " " + r[3]).split(" "), sk = [];
+    for (var i = 0; i < kw.length; i++) { var s = skel(kw[i]); if (s.length >= 2) sk.push(s); }
+    var sl = norm(r[0].split("#")[0].replace(/\.html$/, "").replace(/-/g, " "));
+    return { u: r[0], t: r[1], c: r[2], tt: norm(r[1]), tw: norm(r[1]).split(" "), kw: kw, sk: sk, sl: sl, sks: sl.split(" ").map(skel).join(" ") };
+  }
   function search(q, n) {
     var qs = norm(q).split(" ").filter(Boolean); if (!qs.length || !IDX) return [];
     var out = [], part = [];
@@ -34,11 +44,14 @@
         var w = qs[j], hitT = false, hitK = false, sub = false;
         for (var a = 0; a < r.tw.length; a++) if (r.tw[a].indexOf(w) === 0) { hitT = true; break; }
         if (!hitT) for (var b = 0; b < r.kw.length; b++) if (r.kw[b].indexOf(w) === 0) { hitK = true; break; } else if (w.length >= 5 && r.kw[b].indexOf(w) > 0) { hitK = sub = true; }
+        if (!hitT && !hitK && w.length >= 2) { var ws = skel(w); if (ws.length >= 2) for (var c = 0; c < r.sk.length; c++) if (r.sk[c].indexOf(ws) === 0) { hitK = sub = true; break; } }
         if (!hitT && !hitK) { ok = false; continue; }
-        hits++; sc += hitT ? 3 : sub ? 0.4 : 1;
+        hits++; sc += hitT ? 3 : sub ? 0.6 : 1;
       }
       if (!ok) { if (hits) part.push([hits * 2 + sc / 10 - r.t.length / 300, r]); continue; }
-      if (r.tt.indexOf(qs.join(" ")) === 0) sc += 5;
+      var qj = qs.join(" "), qsk = qs.map(skel).join(" ");
+      if (r.tt.indexOf(qj) === 0) sc += 5;
+      if (r.sl === qj || (qsk.replace(/ /g, "") && r.sks === qsk)) sc += 8; else if (r.sl.indexOf(qj) === 0) sc += 2;
       if (r.c === "पंचांग" && r.u !== "panchang.html" && qs.length < 2) sc -= 1.5; // city pages after main pages, unless the city is typed
       if (r.c === "पेज") sc -= 0.5;
       sc -= r.t.length / 200;
