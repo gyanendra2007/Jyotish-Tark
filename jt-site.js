@@ -141,11 +141,13 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
   // any leftover link to an old Cashfree payment form opens the UPI box instead
   document.addEventListener("click", function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href*="payments.cashfree.com/forms/"]') : null;
-    if (!a) return;
+    if (!a || e.defaultPrevented) return;          // the page's own checkout already handled this click
     var slug = (a.getAttribute("href").split("/forms/")[1] || "").split(/[?#]/)[0].toLowerCase(), f = UPI_FORMS[slug] || [0, "भुगतान"];
-    e.preventDefault(); e.stopPropagation();
+    // report links (KP, numerology, sampurna, prashna …) open the report checkout, which asks for the mobile number
+    if (window.JTCheckout && window.JTCheckout.enabled && window.JTCheckout.enabled() && /^(jyotishtark(kp|numerology|prashna)|sampurnakundali)/.test(slug)) return;
+    e.preventDefault();
     upiBox({ amount: f[0], title: f[1] });
-  }, true);
+  });
 
   var PAY = {a15: "https://payments.cashfree.com/forms/audiocall15", a30: "https://payments.cashfree.com/forms/audiocall30", a60: "https://payments.cashfree.com/forms/audiocall60", v30: "https://payments.cashfree.com/forms/videocall30", v60: "https://payments.cashfree.com/forms/videocall60", k15: "https://payments.cashfree.com/forms/call15kundali", k30: "https://payments.cashfree.com/forms/call30kundali", rem: "https://payments.cashfree.com/forms/remedy", p1: "https://payments.cashfree.com/forms/personalmeeting", p2: "https://payments.cashfree.com/forms/homevisit"};
   var PLANS = [
