@@ -8,6 +8,8 @@
  *   3. lookup  : "get my report again" — order ID + phone returns the saved birth details.
  *   4. partner : a partner's sales and commission (code + PIN).
  *   5. lead    : records rudraksha / consultation enquiries.
+ *   7. utr     : (UPI mode) the customer sends the UPI reference number after paying; you get
+ *                an email with a one-tap "mark paid" link, and the report unlocks for the customer.
  *   6. reviews : visitors sign in with Google and write a review; it appears on the
  *                website after you type "yes" in the Approved column of the Reviews tab.
  *
@@ -15,6 +17,13 @@
  * Secrets live in Project Settings → Script properties, never in this file:
  *   CF_APP_ID, CF_SECRET, CF_MODE (production | sandbox), GOOGLE_CLIENT_ID (for review sign-in)
  */
+
+// How customers pay: "upi" = straight to your UPI ID (you confirm each payment with one tap),
+// "cashfree" = Cashfree checkout (needs CF_APP_ID / CF_SECRET). Cashfree closed our account in Nov 2026.
+const PAY_MODE = "upi";
+// this web app's own /exec address (used in the "mark paid" email link). Redeploy with
+// Manage deployments → Edit → New version so the address stays the same.
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec";
 
 const SHEET_ORDERS = "Orders", SHEET_PARTNERS = "Partners", SHEET_LEADS = "Leads";
 const SITE = "https://jyotishtark.in/";
@@ -71,13 +80,18 @@ const LHEAD = ["Time", "Type", "Name", "Phone", "Details", "Page"];
 const SHEET_REVIEWS = "Reviews";
 const RHEAD = ["Time", "Approved (yes/no)", "Name", "Email", "Photo", "Stars", "Review", "Service", "City", "Page", "Verified buyer", "Your reply", "ID"];
 
-function doGet(e) { return out({ ok: true, service: "jyotish-tark-orders" }); }
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  if (p.a === "paid") return markPaidPage(String(p.o || ""), String(p.k || ""));
+  return out({ ok: true, service: "jyotish-tark-orders" });
+}
 
 function doPost(e) {
   let b = {};
   try { b = JSON.parse((e && e.postData && e.postData.contents) || "{}"); } catch (x) { return out({ ok: false, error: "bad json" }); }
   try {
     if (b.action === "create") return out(create(b));
+    if (b.action === "utr") return out(utr(String(b.order_id || ""), String(b.utr || "")));
     if (b.action === "verify") return out(verify(String(b.order_id || "")));
     if (b.action === "lookup") return out(lookup(String(b.order_id || ""), String(b.phone || "")));
     if (b.action === "partner") return out(partnerStats(String(b.code || ""), String(b.pin || "")));
@@ -122,6 +136,8 @@ function create(b) {
   if (isRud && b.cod) { row[3] = "COD"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, cod: true, order_id: oid, amount: amount, list: list }; }  // mark PAID by hand once the cash is received
   if (off >= 100) { row[3] = "FREE"; row[24] = new Date(); sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, free: true, order_id: oid }; }
 
+  if (PAY_MODE === "upi") { row[3] = "UPI_PENDING"; row[25] = "UPI"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, upi: true, order_id: oid, amount: amount, currency: cur, list: list }; }
+
   const ret = SITE + P.page + "?jtpaid=" + b.product + "&order_id=" + oid;
   const body = {
     order_id: oid, order_amount: amount, order_currency: cur,
@@ -145,7 +161,7 @@ function verify(oid) {
   if (!f) return { ok: false, error: "not found" };
   const v = f.values;
   let status = v[3];
-  if (status !== "PAID" && status !== "FREE") {
+  if (status !== "PAID" && status !== "FREE" && PAY_MODE !== "upi" && !/^UPI/.test(status)) {
     const r = cf("get", "/pg/orders/" + encodeURIComponent(oid));
     const cs = r.json && r.json.order_status;
     f.sh.getRange(f.row, 26).setValue(cs || ("HTTP " + r.code));
@@ -240,6 +256,58 @@ function reviewList() {
 }
 
 // ------------------------------------------------------------------ helpers
+// ------------------------------------------------------------------ UPI: customer sends the reference number
+function utr(oid, ref) {
+  oid = oid.trim().toUpperCase(); ref = ref.replace(/\s+/g, "");
+  if (!/^JT[A-Z]+\d{12}[A-Z0-9]{4}$/.test(oid)) return { ok: false, error: "order" };
+  if (!/^[A-Za-z0-9]{6,30}$/.test(ref)) return { ok: false, error: "utr" };
+  const f = findOrder(oid);
+  if (!f) return { ok: false, error: "not found" };
+  const v = f.values;
+  if (v[3] === "PAID" || v[3] === "FREE") return { ok: true, paid: true };
+  const prev = String(v[25] || "");
+  if (prev.indexOf(ref) >= 0) return { ok: true, paid: false };      // same number sent twice: no second email
+  f.sh.getRange(f.row, 26).setValue(clip((prev && prev !== "UPI" ? prev + " | " : "") + "UTR " + ref, 200));
+  f.sh.getRange(f.row, 4).setValue("UPI_CHECK");
+  try {
+    const link = WEBAPP_URL + "?a=paid&o=" + encodeURIComponent(oid) + "&k=" + sign(oid);
+    const P = PRODUCTS[v[2]] || { name: v[2] };
+    MailApp.sendEmail({
+      to: Session.getEffectiveUser().getEmail(),
+      subject: "UPI check: ₹" + v[4] + " — " + P.name + " — " + v[12],
+      htmlBody: "<p><b>" + esc(v[12]) + "</b> (" + esc(v[13]) + ") says they paid <b>₹" + v[4] + "</b> for <b>" + esc(P.name) + "</b>.</p>" +
+        "<p>UPI reference (UTR): <b style='font-size:18px'>" + esc(ref) + "</b><br>Order: " + oid + "</p>" +
+        "<p>1. Open your bank / UPI app and check that ₹" + v[4] + " with this reference has arrived.<br>2. If yes, tap:</p>" +
+        "<p><a href='" + link + "' style='display:inline-block;padding:12px 18px;background:#7A1F1F;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold'>✓ Payment received — unlock the report</a></p>" +
+        "<p style='color:#666'>Do not tap if the money has not arrived. The customer's report opens only after this.</p>"
+    });
+  } catch (x) { /* email is a convenience; the row in the sheet is the record */ }
+  return { ok: true, paid: false };
+}
+
+// one-tap "mark paid" link from the email (signed, so nobody else can make it)
+function markPaidPage(oid, k) {
+  const page = (title, body) => HtmlService.createHtmlOutput("<meta name='viewport' content='width=device-width,initial-scale=1'><div style='font:16px/1.6 system-ui,sans-serif;max-width:460px;margin:24px auto;padding:0 16px'><h2>" + title + "</h2>" + body + "</div>").setTitle("Jyotish Tark");
+  if (!/^JT[A-Z]+\d{12}[A-Z0-9]{4}$/.test(oid) || k !== sign(oid)) return page("Link not valid", "<p>This link is not valid.</p>");
+  const f = findOrder(oid);
+  if (!f) return page("Order not found", "<p>" + oid + "</p>");
+  const v = f.values;
+  if (v[3] !== "PAID" && v[3] !== "FREE") { f.sh.getRange(f.row, 4).setValue("PAID"); f.sh.getRange(f.row, 25).setValue(new Date()); }
+  const P = PRODUCTS[v[2]] || { page: "" };
+  const url = SITE + P.page + "?jtpaid=" + v[2] + "&order_id=" + oid;
+  const ph = String(v[13]).replace(/\D/g, ""), wa = ph.length === 10 ? "91" + ph : ph;
+  const msg = "नमस्ते " + v[12] + " जी, आपका भुगतान मिल गया है 🙏 आपकी रिपोर्ट इस लिंक पर खुलेगी: " + url + " — ज्योतिष तर्क";
+  return page("✓ Marked as paid", "<p><b>" + esc(v[12]) + "</b> — ₹" + v[4] + " — " + oid + "</p><p>The report now opens for the customer. If their page was open it unlocks by itself; otherwise send them the link:</p>" +
+    "<p><a href='https://wa.me/" + wa + "?text=" + encodeURIComponent(msg) + "' style='display:inline-block;padding:12px 18px;background:#1f8f4e;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold'>Send report link on WhatsApp</a></p><p style='word-break:break-all;color:#555'>" + url + "</p>");
+}
+function sign(s) {
+  const pr = PropertiesService.getScriptProperties();
+  let key = pr.getProperty("ADMIN_KEY");
+  if (!key) { key = Utilities.getUuid() + Utilities.getUuid(); pr.setProperty("ADMIN_KEY", key); }
+  return Utilities.computeHmacSha256Signature(s, key).map((b) => ((b + 256) % 256).toString(16).padStart(2, "0")).join("").slice(0, 32);
+}
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
 function details(v) {
   let extra = {}; try { extra = JSON.parse(v[23] || "{}"); } catch (x) { extra = {}; }
   return { order_id: v[1], product: v[2], amount: v[4], currency: v[5], name: v[12], phone: v[13], email: v[14], dob: fmtDate(v[15]), time: fmtTime(v[16]), place: v[17], lat: Number(v[18]), lng: Number(v[19]), gender: v[20], status: v[21], lang: v[22], extra: extra };

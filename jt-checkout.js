@@ -11,6 +11,9 @@ window.JTCheckout = (function () {
   "use strict";
   const API = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec"; // order backend (Apps Script). Empty = old payment forms.
   const SDK = "https://sdk.cashfree.com/js/v3/cashfree.js";
+  // ---- UPI (Cashfree closed our account in Nov 2026; customers now pay straight to this UPI ID) ----
+  // the UPI ID itself is set once, at the top of jt-site.js (window.JT_UPI)
+  const upiCfg = () => window.JT_UPI || { id: "", name: "Jyotish Tark" };
   const PRICES = { kp: { inr: 299, usd: 19 }, nm: { inr: 299, usd: 19 }, sampurna: { inr: 1101, usd: null }, prashna: { inr: 101, usd: 9 }, mobile: { inr: 199, usd: null }, vp: { inr: 299, usd: null } };
   const PAGE = { kp: "kp-astrology.html", nm: "numerology.html", sampurna: "kundali-form.html", prashna: "kundali-se-poochho.html", mobile: "mobile-number-numerology.html", vp: "mera-2027.html", rud: "rudraksha.html" };
   const ls = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* */ } } };
@@ -87,6 +90,11 @@ window.JTCheckout = (function () {
   .jco-e{color:#B42318;font-weight:600;min-height:1.2em}.jco-p{font-size:26px;font-weight:800;color:#7A1F1F}.jco-p s{font-size:16px;color:#8A7A6A;font-weight:500;margin-left:6px}
   .jco-s{width:42px;height:42px;margin:6px auto 14px;border:4px solid #E9D9B4;border-top-color:#7A1F1F;border-radius:50%;animation:jcos 1s linear infinite}@keyframes jcos{to{transform:rotate(360deg)}}.jco-c.ctr{text-align:center}.jco-c a.wa{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:8px 16px;border-radius:10px;background:#15803D;color:#fff;font-weight:700;text-decoration:none;margin-top:6px}
   .jco-cd{display:flex;gap:8px}.jco-cd input{flex:1;text-transform:uppercase}.jco-cd button{flex:0 0 auto;min-height:46px;padding:0 16px;border:1.5px solid #7A1F1F;border-radius:10px;background:#fff;color:#7A1F1F;font:inherit;font-weight:700;cursor:pointer}.jco-cm{min-height:1.1em;font-size:14px!important;margin:4px 0 0!important;font-weight:600;color:#14532D!important}
+  .jco-upi{text-align:center}.jco-upi .qr{display:inline-block;padding:8px;background:#fff;border:1px solid #D9C6A0;border-radius:12px;margin:6px 0}.jco-upi .qr svg{display:block;width:200px;height:200px}
+  .jco-upi a.app{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:10px;background:#7A1F1F;color:#fff;font-weight:700;font-size:17px;text-decoration:none;margin:8px 0 4px}
+  .jco-upi .id{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:15px;margin:4px 0}.jco-upi .id code{font-size:16px;font-weight:700;background:#fff;border:1px dashed #B8892B;border-radius:8px;padding:4px 10px;user-select:all}
+  .jco-upi .id button{border:1.5px solid #7A1F1F;background:#fff;color:#7A1F1F;border-radius:8px;padding:4px 10px;font:inherit;font-weight:700;cursor:pointer}
+  .jco-upi .st{margin:14px 0 4px;padding-top:12px;border-top:1px dashed #D9C6A0;text-align:left}.jco-upi .sm{font-size:13px!important;color:#6B5444!important}
   .jco-cur{font-size:13px;margin-top:6px}.jco-cur a{color:#7A1F1F;cursor:pointer;text-decoration:underline}`;
   function css() { if (!document.getElementById("jco-css")) { const s = document.createElement("style"); s.id = "jco-css"; s.textContent = CSS; document.head.appendChild(s); } }
 
@@ -164,11 +172,71 @@ window.JTCheckout = (function () {
       }
       ga("begin_checkout", { value: r.amount || 0, currency: r.currency || pr.c, items: [{ item_name: product }] });
       if (r.free) { location.href = `${PAGE[product]}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`; return; }
+      if (r.upi) { upiScreen(ov, r, product, en); return; }
       try { const cf = (await loadSdk())({ mode: r.mode === "sandbox" ? "sandbox" : "production" }); cf.checkout({ paymentSessionId: r.payment_session_id, redirectTarget: "_self" }); }
       catch (e) { go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay"); err.textContent = T("भुगतान पेज नहीं खुल सका — इंटरनेट जाँचें।", "Checkout could not open — check your connection."); }
     });
     setTimeout(() => { const f = ov.querySelector(opts.question ? "#jcoQ" : "#jcoPh"); if (f) f.focus(); }, 50);
   }
+
+  /* UPI screen: QR + "pay in UPI app" button + UPI ID, then the customer types the UPI reference
+     number (UTR). The backend emails the astrologer a one-tap "payment received" link; this screen
+     keeps checking and opens the report as soon as the payment is marked received. */
+  function upiScreen(ov, r, product, en) {
+    const T = (h, e) => (en ? e : h), oid = r.order_id, amt = Number(r.amount) || 0;
+    const back = `${SITE_ROOT()}${PAGE[product] || ""}?jtpaid=${product}&order_id=${encodeURIComponent(oid)}`;
+    const waL = (t) => `https://wa.me/918318513814?text=${encodeURIComponent(t)}`;
+    ls.set("jt_upi_last", JSON.stringify({ o: oid, p: product, a: amt, t: Date.now() }));
+    ga("upi_shown", { product, value: amt, currency: "INR" });
+    const box = ov.querySelector(".jco-c") || ov.appendChild(document.createElement("div"));
+    box.className = "jco-c jco-upi";
+    const UPI_ID = upiCfg().id, UPI_NAME = upiCfg().name || "Jyotish Tark";
+    if (!UPI_ID) {
+      box.innerHTML = `<h3>${T("भुगतान", "Payment")} — ₹${amt}</h3><p>${T("ऑर्डर नंबर", "Order number")}: <b>${esc(oid)}</b></p><p>${T("भुगतान का तरीका जानने के लिए WhatsApp करें — ऑर्डर नंबर अपने आप भर जाएगा।", "WhatsApp us for the payment details — the order number is filled in for you.")}</p>
+        <a class="app" href="${waL(T(`नमस्ते, मुझे ₹${amt} का भुगतान करना है। ऑर्डर: ${oid}`, `Hello, I want to pay ₹${amt}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp: 83185 13814</a>
+        <p class="sm">${T("भुगतान की पुष्टि के बाद रिपोर्ट इस लिंक पर खुलेगी", "After payment is confirmed your report opens at this link")}: <a href="${back}">${T("मेरी रिपोर्ट", "My report")}</a></p>
+        <div class="jco-b"><button type="button" class="l" data-x>${T("बंद करें", "Close")}</button></div>`;
+      box.querySelector("[data-x]").addEventListener("click", () => ov.remove());
+      return;
+    }
+    const uri = `upi://pay?pa=${String(UPI_ID).replace(/[^A-Za-z0-9.\-_@]/g, "")}&pn=${encodeURIComponent(UPI_NAME)}&am=${amt.toFixed(2)}&cu=INR&tn=${encodeURIComponent(oid)}`;
+    const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+    box.innerHTML = `<h3>${T("UPI से भुगतान करें", "Pay by UPI")}</h3>
+      <p class="jco-p" style="margin:2px 0">₹${amt}</p><p class="sm">${T("ऑर्डर", "Order")}: ${esc(oid)}</p>
+      ${mobile ? `<a class="app" href="${uri}" data-app>${T(`UPI ऐप से ₹${amt} भुगतान करें`, `Pay ₹${amt} in your UPI app`)}</a><p class="sm">PhonePe · Google Pay · Paytm · BHIM</p>` : ""}
+      <div class="qr">${window.JTQR ? window.JTQR(uri, 200) : ""}</div>
+      <p class="sm">${mobile ? T("दूसरे फ़ोन से स्कैन करें, या स्क्रीनशॉट लेकर UPI ऐप में गैलरी से स्कैन करें।", "Scan from another phone, or screenshot it and scan from the gallery in your UPI app.") : T("फ़ोन के किसी भी UPI ऐप से स्कैन करें।", "Scan with any UPI app on your phone.")}</p>
+      <div class="id"><span>UPI ID:</span><code>${esc(UPI_ID)}</code><button type="button" data-cp>${T("कॉपी", "Copy")}</button></div>
+      <div class="st"><label for="jcoUtr">${T("भुगतान के बाद: UPI Ref / UTR नंबर (12 अंक) लिखें", "After paying: type the UPI Ref / UTR number (12 digits)")}</label>
+      <input id="jcoUtr" type="text" inputmode="numeric" autocomplete="off" maxlength="30" placeholder="${T("जैसे 4123 5678 9012", "e.g. 4123 5678 9012")}">
+      <p class="sm">${T("यह नंबर UPI ऐप में भुगतान के विवरण (Transaction details) में मिलता है।", "You will find it in the payment's transaction details in your UPI app.")}</p>
+      <p class="jco-e" role="alert"></p>
+      <div class="jco-b"><button type="button" data-s>${T("भुगतान हो गया — भेजें", "I have paid — send")}</button></div></div>
+      <p class="sm" style="margin-top:10px">${T("कोई दिक्कत? ", "Any problem? ")}<a href="${waL(T(`नमस्ते, ₹${amt} के भुगतान में मदद चाहिए। ऑर्डर: ${oid}`, `Hello, I need help paying ₹${amt}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp 83185 13814</a></p>`;
+    const err = box.querySelector(".jco-e"), inp = box.querySelector("#jcoUtr"), sb = box.querySelector("[data-s]");
+    const app = box.querySelector("[data-app]"); if (app) app.addEventListener("click", () => ga("upi_app_open", { product }));
+    box.querySelector("[data-cp]").addEventListener("click", (e) => { try { navigator.clipboard.writeText(UPI_ID); e.target.textContent = "✓"; } catch (x) { /* */ } });
+    const waiting = (utr) => {
+      box.innerHTML = `<div class="jco-s" aria-hidden="true"></div><h3>${T("धन्यवाद! भुगतान की जाँच हो रही है", "Thank you! Your payment is being checked")}</h3>
+        <p>${T("ज्योतिषी जी अपने बैंक में भुगतान देखकर पुष्टि करेंगे — आम तौर पर कुछ मिनटों से कुछ घंटों में। यह पेज खुला रहे तो रिपोर्ट अपने आप खुल जाएगी।", "The astrologer checks the payment in the bank and confirms it — usually within minutes to a few hours. Keep this page open and the report opens by itself.")}</p>
+        <p class="sm">${T("पेज बंद कर दिया? बाद में यह लिंक खोलें (WhatsApp पर भी भेजा जाएगा)", "Closed the page? Open this link later (we will also send it on WhatsApp)")}:<br><a href="${back}" style="word-break:break-all">${back}</a></p>
+        <a class="wa" href="${waL(T(`नमस्ते, मैंने ₹${amt} UPI से भेजे हैं। ऑर्डर: ${oid}, UTR: ${utr}`, `Hello, I have paid ₹${amt} by UPI. Order: ${oid}, UTR: ${utr}`))}" target="_blank" rel="noopener">${T("WhatsApp पर भी बताएँ", "Also tell us on WhatsApp")}</a>`;
+      let n = 0;
+      const poll = () => { if (!document.body.contains(ov)) return; verify(oid).then((v) => { if (v && v.ok && v.paid) { location.href = back; return; } if (n++ < 90) setTimeout(poll, 20000); }).catch(() => { if (n++ < 90) setTimeout(poll, 20000); }); };
+      setTimeout(poll, 15000);
+    };
+    sb.addEventListener("click", async () => {
+      const u = inp.value.replace(/\s+/g, "");
+      if (!/^[A-Za-z0-9]{6,30}$/.test(u)) { err.textContent = T("कृपया सही UTR / Ref नंबर लिखें (आम तौर पर 12 अंक)।", "Please type the correct UTR / Ref number (usually 12 digits)."); return; }
+      sb.disabled = true; err.textContent = "";
+      let x; try { x = await post("utr", { order_id: oid, utr: u }); } catch (e) { x = null; }
+      if (x && x.ok && x.paid) { location.href = back; return; }
+      if (!x || !x.ok) { sb.disabled = false; err.textContent = T("नंबर भेजा नहीं जा सका — इंटरनेट जाँचें या WhatsApp पर स्क्रीनशॉट भेजें।", "Could not send — check your connection or WhatsApp us a screenshot."); return; }
+      ga("upi_utr_sent", { product, value: amt, currency: "INR" });
+      waiting(u);
+    });
+  }
+  const SITE_ROOT = () => { try { return location.origin.indexOf("http") === 0 ? location.origin + "/" : "https://jyotishtark.in/"; } catch (e) { return "https://jyotishtark.in/"; } };
 
   /* After Cashfree sends the customer back (?jtpaid=…&order_id=…): confirm with the backend,
      then call onPaid(order, orderId) with the birth details saved at checkout. */
@@ -186,6 +254,7 @@ window.JTCheckout = (function () {
       verify(oid).then((r) => {
         if (r && r.ok && r.paid) { ov.remove(); ga("purchase_verified", { product, transaction_id: oid }); try { const k = "jt-buy-" + oid; if (!localStorage.getItem(k)) { localStorage.setItem(k, "1"); const o = r.order || {}, amt = Number(o.amount) || ((PRICES[product] || {}).inr || 0); if (amt > 0) ga("purchase", { transaction_id: oid, value: amt, currency: o.currency || "INR", items: [{ item_name: product, price: amt, quantity: 1 }] }); } } catch (e) { /* ignore */ } onPaid(r.order, oid); return; }
         if (r && r.ok === false) { fail(T("यह ऑर्डर नहीं मिला", "Order not found"), T("इस ऑर्डर नंबर का कोई भुगतान नहीं मिला। अगर आपका पैसा कटा है तो भुगतान का स्क्रीनशॉट WhatsApp पर भेजें।", "No payment was found for this order number. If money was deducted, send the payment screenshot on WhatsApp.")); return; }
+        if (r && r.ok && /^UPI/.test(r.status || "")) { fail(T("भुगतान की जाँच हो रही है", "Your payment is being checked"), T("आपका UPI भुगतान ज्योतिषी जी स्वयं जाँचते हैं — आम तौर पर कुछ घंटों में। पुष्टि होते ही यही लिंक खोलने पर रिपोर्ट खुल जाएगी, और यह लिंक आपको WhatsApp पर भी भेजा जाएगा। अगर अभी तक UTR नंबर नहीं भेजा है तो WhatsApp पर भुगतान का स्क्रीनशॉट भेजें।", "Your UPI payment is checked by hand — usually within a few hours. Once confirmed, this same link opens your report, and we will also send it to you on WhatsApp. If you have not sent the UTR number yet, WhatsApp us a screenshot of the payment.")); return; }
         if (tries++ < 5) { setTimeout(run, 3000); return; }
         fail(T("भुगतान अभी पूरा नहीं हुआ", "Payment not completed yet"), T("Cashfree से अभी भुगतान की पुष्टि नहीं मिली। कुछ मिनट बाद “दोबारा जाँचें” दबाएँ। पैसा कट गया हो तो WhatsApp करें।", "Cashfree has not confirmed the payment yet. Tap “Check again” in a few minutes. If money was deducted, WhatsApp us."));
       }).catch(() => { if (tries++ < 5) setTimeout(run, 3000); else fail(T("इंटरनेट की समस्या", "Connection problem"), T("पुष्टि नहीं हो सकी — इंटरनेट जाँचकर दोबारा कोशिश करें।", "Could not confirm — check your connection and try again.")); });
@@ -194,6 +263,7 @@ window.JTCheckout = (function () {
   }
   const orderParam = () => { try { return new URLSearchParams(location.search).get("order_id") || ""; } catch (e) { return ""; } };
 
+  if (!window.JTQR) { try { const s = document.createElement("script"); s.src = "jt-qr.js?v=1"; s.defer = true; document.head.appendChild(s); } catch (e) { /* */ } }
   capturePartner();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", banner); else banner();
   /* start(product, body) — create the order and open Cashfree straight away (for pages that collect
@@ -204,6 +274,7 @@ window.JTCheckout = (function () {
     try { r = await post("create", Object.assign({ product, currency: "INR" }, b)); } catch (e) { r = { ok: false, error: "network" }; }
     if (!r || !r.ok || r.cod || r.free) return r;
     ga("begin_checkout", { value: r.amount || 0, currency: "INR", items: [{ item_name: product }] });
+    if (r.upi) { css(); const ov = document.createElement("div"); ov.className = "jco"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); document.body.appendChild(ov); upiScreen(ov, r, product, b && b.lang === "en"); return Object.assign({ redirect: true }, r); }
     try { const cf = (await loadSdk())({ mode: r.mode === "sandbox" ? "sandbox" : "production" }); cf.checkout({ paymentSessionId: r.payment_session_id, redirectTarget: "_self" }); return Object.assign({ redirect: true }, r); }
     catch (e) { return { ok: false, error: "sdk" }; }
   }

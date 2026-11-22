@@ -67,3 +67,21 @@ Rudraksha orders now go through the same checkout as reports (product `rud`).
 ## If you change the script later
 Deploy → **Manage deployments** → edit (pencil) → Version: **New version** →
 Deploy. The URL stays the same.
+
+
+## UPI mode (since Nov 2026 — Cashfree closed the account)
+
+`PAY_MODE = "upi"` at the top of Code.gs. Customers pay straight to your UPI ID
+(set once at the top of `jt-site.js`: `window.JT_UPI = { id: "...", name: "..." }`).
+
+1. The customer pays (QR / UPI app button) and types the UPI reference number (UTR).
+2. You get an email: "UPI check: ₹… — product — name", with the UTR.
+3. Check your bank / UPI app. If the money with that UTR has arrived, tap **"Payment received — unlock the report"**.
+4. The report unlocks for the customer (their open page opens it by itself). The page after the tap
+   has a button to send the customer their report link on WhatsApp.
+
+The Orders sheet shows `UPI_PENDING` (order made, no UTR yet), `UPI_CHECK` (UTR sent — check it) and `PAID`.
+You can also type `PAID` in the Status column by hand.
+
+**After updating Code.gs:** Deploy → Manage deployments → ✏️ Edit → Version: *New version* → Deploy.
+Google will ask once for permission to send email — allow it. Keep the same deployment so the /exec URL stays the same.

@@ -1,6 +1,6 @@
 /* ==========================================================================
    JYOTISH TARK — KUNDALI PAYMENT SCREEN
-   All payments go through Cashfree payment forms (no direct UPI ID / QR).
+   Payments go straight to our UPI ID (window.JT_UPI in jt-site.js); Cashfree closed our account in Nov 2026.
    Default: ₹2,100 handmade kundali (order form on kundali-form.html).
    An order may carry its own amount / product / delivery (e.g. the ₹1,101
    sampurna kundali from sampurna-preview.js).
@@ -82,8 +82,8 @@ window.JT_PAY = Object.assign({
         <li><div>
           <b>₹${A} का सुरक्षित ऑनलाइन भुगतान करें</b>
           <div class="jtp-amt" style="margin:.2rem 0 .5rem">₹${A}</div>
-          <a class="jtp-btn jtp-gold" id="jtpOnline" href="${esc(payLink(order))}" target="_blank" rel="noopener">💳 भुगतान करें — Card / UPI / Net Banking</a>
-          <p class="jtp-note">Cashfree का सुरक्षित पेमेंट पेज खुलेगा। उसमें अपना नाम, फ़ोन, जन्म विवरण और ऑर्डर नंबर <b>${esc(order.orderId)}</b> भरें। भुगतान की रसीद आपके ईमेल पर आएगी — स्क्रीनशॉट भेजने की ज़रूरत नहीं।</p>
+          <a class="jtp-btn jtp-gold" id="jtpOnline" href="${esc(payLink(order))}" target="_blank" rel="noopener">📱 UPI से भुगतान करें</a>
+          <p class="jtp-note">QR स्कैन करें या UPI ऐप से भुगतान करें, फिर WhatsApp पर भुगतान का स्क्रीनशॉट भेजें — आपका ऑर्डर नंबर <b>${esc(order.orderId)}</b> और जन्म विवरण संदेश में पहले से भरे होंगे।</p>
         </div></li>
         <li><div>
           <b>आपकी ${esc(order.product || P.product)}</b>
@@ -92,7 +92,8 @@ window.JT_PAY = Object.assign({
         </div></li>
       </ol>
     </div>`;
-    host.querySelector("#jtpOnline").addEventListener("click", () => {
+    host.querySelector("#jtpOnline").addEventListener("click", (ev) => {
+      if (window.JTUPIBox) { ev.preventDefault(); ev.stopPropagation(); window.JTUPIBox({ amount: amt(order), title: order.product || P.product, msg: whatsappText(order) + "\n\nमैंने ₹" + amt(order) + " UPI से भेजे हैं — स्क्रीनशॉट साथ में।" }); }
       try { if (window.gtag) window.gtag("event", "cashfree_open", { value: amt(order), currency: "INR", item_name: order.product || P.product }); } catch (e) { /* ignore */ }
     });
     try { sessionStorage.setItem("jt-last-order", JSON.stringify(order)); } catch (e) { /* ignore */ }

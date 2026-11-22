@@ -1,4 +1,6 @@
 /* Jyotish Tark — shared behaviour: mobile menu, share bar, help bot, offer card. Loaded on every page. */
+// ---- UPI payments (Cashfree closed our account in Nov 2026). Put the UPI ID here — one place for the whole site. ----
+window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
 (function () {
   "use strict";
   function menu() {
@@ -91,6 +93,60 @@
 
   /* ---------- Help bot (menu based, no data stored; booking goes to WhatsApp) ---------- */
   var WA = "918318513814";
+  // ---------- simple UPI box (consultation, handmade kundali, dakshina, any old payment-form link) ----------
+  // o: {amount (0 = customer chooses), title, msg (WhatsApp text sent after paying)}
+  var UPI_FORMS = { audiocall15: [301, "ऑडियो कॉल · 15 मिनट"], audiocall30: [501, "ऑडियो कॉल · 30 मिनट"], audiocall60: [901, "ऑडियो कॉल · 1 घंटा"], videocall30: [1101, "वीडियो कॉल · 30 मिनट"], videocall60: [2101, "वीडियो कॉल · 1 घंटा"], call15kundali: [1301, "15 मिनट कॉल + सम्पूर्ण कुंडली"], call30kundali: [1501, "30 मिनट कॉल + सम्पूर्ण कुंडली"], remedy: [199, "उपाय (WhatsApp संदेश)"], personalmeeting: [11000, "व्यक्तिगत भेंट"], homevisit: [0, "ज्योतिषी आपके स्थान पर"], handmadekundali: [2100, "हस्तनिर्मित कुंडली"], jyotishtarkdakshina: [0, "गुरु दक्षिणा"], jyotishtarkkp: [299, "KP रिपोर्ट"], jyotishtarknumerology: [299, "अंक ज्योतिष रिपोर्ट"], sampurnakundali: [1101, "सम्पूर्ण कुंडली"], jyotishtarkprashna: [101, "एक प्रश्न"] };
+  function loadQR(cb) {
+    if (window.JTQR) { cb(); return; }
+    var s = document.createElement("script"); s.src = "jt-qr.js?v=1"; s.onload = cb; s.onerror = cb; document.head.appendChild(s);
+  }
+  function upiBox(o) {
+    o = o || {};
+    var U = window.JT_UPI || {}, amt = Math.round(Number(o.amount) || 0), title = o.title || "भुगतान";
+    var msg = o.msg || ("नमस्ते, मैंने " + (amt ? "₹" + amt + " " : "") + "UPI से भेजे हैं — " + title + "। स्क्रीनशॉट भेज रहा/रही हूँ।");
+    var waT = "https://wa.me/" + WA + "?text=";
+    try { if (window.gtag) window.gtag("event", "upi_shown", { item_name: title, value: amt, currency: "INR" }); } catch (e) { /* ignore */ }
+    loadQR(function () {
+      var old = document.getElementById("jtUpi"); if (old) old.remove();
+      var ov = document.createElement("div"); ov.id = "jtUpi"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", title);
+      ov.style.cssText = "position:fixed;inset:0;z-index:2147483200;background:rgba(20,10,5,.7);display:flex;align-items:center;justify-content:center;padding:16px;font-family:Mukta,system-ui,sans-serif";
+      var mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+      var btn = "display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:10px;font-weight:700;font-size:17px;text-decoration:none;margin:8px 0 4px;";
+      var h;
+      if (!U.id) {
+        h = "<h3 style='margin:0 0 6px;color:#7A1F1F;font-size:21px'>" + esc(title) + (amt ? " — ₹" + amt : "") + "</h3><p style='font-size:15px;line-height:1.55;color:#4A3628'>भुगतान का तरीका जानने के लिए WhatsApp करें।</p>" +
+          "<a href='" + waT + encodeURIComponent("नमस्ते, मुझे भुगतान करना है — " + title + (amt ? " (₹" + amt + ")" : "")) + "' target='_blank' rel='noopener' style='" + btn + "background:#1f8f4e;color:#fff'>WhatsApp: 83185 13814</a>";
+      } else {
+        var uri = "upi://pay?pa=" + String(U.id).replace(/[^A-Za-z0-9.\-_@]/g, "") + "&pn=" + encodeURIComponent(U.name || "Jyotish Tark") + (amt ? "&am=" + amt.toFixed(2) : "") + "&cu=INR&tn=" + encodeURIComponent((o.note || "Jyotish Tark").replace(/[^ -~]/g, "").slice(0, 40) || "Jyotish Tark");
+        h = "<h3 style='margin:0 0 2px;color:#7A1F1F;font-size:21px'>" + esc(title) + "</h3>" +
+          (amt ? "<p style='margin:0;font-size:28px;font-weight:800;color:#7A1F1F'>₹" + amt + "</p>" : "<p style='margin:4px 0;font-size:15px;color:#4A3628'>अपनी इच्छा से राशि भरें</p>") +
+          (mobile ? "<a href='" + uri + "' style='" + btn + "background:#7A1F1F;color:#fff'>UPI ऐप से भुगतान करें</a><p style='margin:0;font-size:13px;color:#6B5444'>PhonePe · Google Pay · Paytm · BHIM</p>" : "") +
+          "<div style='display:inline-block;padding:8px;background:#fff;border:1px solid #D9C6A0;border-radius:12px;margin:8px 0'>" + (window.JTQR ? window.JTQR(uri, 190) : "") + "</div>" +
+          "<p style='margin:0 0 6px;font-size:13px;color:#6B5444'>" + (mobile ? "दूसरे फ़ोन से स्कैन करें, या स्क्रीनशॉट लेकर UPI ऐप में गैलरी से स्कैन करें।" : "फ़ोन के किसी भी UPI ऐप से स्कैन करें।") + "</p>" +
+          "<p style='margin:0;font-size:15px'>UPI ID: <b style='user-select:all'>" + esc(U.id) + "</b></p>" +
+          "<p style='margin:12px 0 0;padding-top:10px;border-top:1px dashed #D9C6A0;font-size:15px;line-height:1.5;color:#4A3628;text-align:left'><b>भुगतान के बाद:</b> नीचे दबाकर WhatsApp पर भुगतान का स्क्रीनशॉट भेजें — पुष्टि के बाद आगे की बात होगी।</p>" +
+          "<a href='" + waT + encodeURIComponent(msg) + "' target='_blank' rel='noopener' data-sent style='" + btn + "background:#1f8f4e;color:#fff'>भुगतान हो गया — WhatsApp पर भेजें</a>";
+      }
+      ov.innerHTML = "<div style='width:100%;max-width:420px;max-height:92vh;overflow:auto;background:#FBF6EC;border:3px double #B8892B;border-radius:16px;padding:20px;color:#2B1810;text-align:center'>" + h +
+        "<button type='button' data-x style='margin-top:10px;min-height:44px;width:100%;border:1.5px solid #7A1F1F;border-radius:10px;background:#fff;color:#7A1F1F;font:inherit;font-weight:700;cursor:pointer'>बंद करें</button></div>";
+      document.body.appendChild(ov);
+      ov.querySelector("[data-x]").addEventListener("click", function () { ov.remove(); });
+      ov.addEventListener("click", function (e) { if (e.target === ov) ov.remove(); });
+      var s = ov.querySelector("[data-sent]");
+      if (s) s.addEventListener("click", function () { try { if (window.gtag) window.gtag("event", "generate_lead", { lead_type: "upi_paid_claim", value: amt, currency: "INR", item_name: title }); } catch (e) { /* ignore */ } });
+    });
+  }
+  window.JTUPIBox = upiBox;
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  // any leftover link to an old Cashfree payment form opens the UPI box instead
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="payments.cashfree.com/forms/"]') : null;
+    if (!a) return;
+    var slug = (a.getAttribute("href").split("/forms/")[1] || "").split(/[?#]/)[0].toLowerCase(), f = UPI_FORMS[slug] || [0, "भुगतान"];
+    e.preventDefault(); e.stopPropagation();
+    upiBox({ amount: f[0], title: f[1] });
+  }, true);
+
   var PAY = {a15: "https://payments.cashfree.com/forms/audiocall15", a30: "https://payments.cashfree.com/forms/audiocall30", a60: "https://payments.cashfree.com/forms/audiocall60", v30: "https://payments.cashfree.com/forms/videocall30", v60: "https://payments.cashfree.com/forms/videocall60", k15: "https://payments.cashfree.com/forms/call15kundali", k30: "https://payments.cashfree.com/forms/call30kundali", rem: "https://payments.cashfree.com/forms/remedy", p1: "https://payments.cashfree.com/forms/personalmeeting", p2: "https://payments.cashfree.com/forms/homevisit"};
   var PLANS = [
     { id: "f5", g: "free", t: "पहली कॉल · 5 मिनट (एक नंबर पर एक बार)", p: "मुफ़्त" },
@@ -184,14 +240,14 @@
         var f = e.target, v = function (k) { return f[k] ? f[k].value.trim() : ""; };
         if (!v("n") || !v("d")) { f.querySelector(".jt-bot-err").textContent = "कृपया नाम और जन्म तिथि भरें।"; (v("n") ? f.d : f.n).focus(); return; }
         var d = v("d").split("-"), dd = d.length === 3 ? d[2] + "-" + d[1] + "-" + d[0] : v("d");
-        var msg = (free ? "नमस्ते, मुझे पहली 5 मिनट की मुफ़्त कॉल बुक करनी है।" : "नमस्ते, मैंने परामर्श का भुगतान कर दिया है ✅ (Cashfree)।") + "\nसेवा: " + plan.t + " (" + plan.p + ")\nनाम: " + v("n") + "\nजन्म तिथि: " + dd +
+        var msg = (free ? "नमस्ते, मुझे पहली 5 मिनट की मुफ़्त कॉल बुक करनी है।" : "नमस्ते, मैंने परामर्श का भुगतान UPI से कर दिया है ✅ (स्क्रीनशॉट साथ में)।") + "\nसेवा: " + plan.t + " (" + plan.p + ")\nनाम: " + v("n") + "\nजन्म तिथि: " + dd +
           (v("t") ? "\nजन्म समय: " + v("t") : "") + (v("p") ? "\nजन्म स्थान: " + v("p") : "") + (v("w") ? "\nपसंद की तारीख/शहर: " + v("w") : "") +
           (v("q") ? "\nप्रश्न: " + v("q") : "") + "\n(jyotishtark.in से)";
         if (!free) {
           try { localStorage.setItem("jt-consult", JSON.stringify({ msg: msg, id: plan.id, v: parseInt(String(plan.p).replace(/[^0-9]/g, ""), 10) || 0, ts: Date.now() })); } catch (err) { /* ignore */ }
           try { if (window.gtag) window.gtag("event", "begin_checkout", { item_name: plan.t, currency: "INR" }); } catch (err) { /* ignore */ }
-          say('<p class="jt-bot-msg">Cashfree का सुरक्षित भुगतान पेज खुल रहा है… भुगतान के बाद आप इसी वेबसाइट पर लौटेंगे और WhatsApp संदेश तैयार मिलेगा।</p><div class="jt-bot-opts"><a href="' + PAY[plan.id] + '">भुगतान पेज न खुले तो यहाँ दबाएँ</a></div>');
-          location.href = PAY[plan.id];
+          say('<p class="jt-bot-msg">UPI से भुगतान करें, फिर "भुगतान हो गया" दबाकर WhatsApp पर स्क्रीनशॉट भेजें — आपका विवरण संदेश में पहले से भरा होगा।</p>');
+          upiBox({ amount: parseInt(String(plan.p).replace(/[^0-9]/g, ""), 10) || 0, title: plan.t, msg: msg });
           return;
         }
         try { if (window.gtag) window.gtag("event", "generate_lead", { lead_type: "free_call", currency: "INR", value: 0 }); } catch (err) { /* ignore */ }
@@ -281,6 +337,6 @@
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=13";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=14";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
