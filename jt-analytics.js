@@ -17,8 +17,8 @@
     const a = e.target.closest && e.target.closest("a[href]");
     if (a) {
       const href = a.getAttribute("href") || "";
-      if (/wa\.me|whatsapp/i.test(href)) track("whatsapp_click", { page: page, link_text: (a.textContent || "").trim().slice(0, 60) });
-      else if (/^tel:/i.test(href)) track("call_click", { page: page });
+      if (/wa\.me|whatsapp/i.test(href)) { if (/wa\.me\/(91)?8318513814/.test(href)) track("generate_lead", { lead_type: "whatsapp", page: page }); track("whatsapp_click", { page: page, link_text: (a.textContent || "").trim().slice(0, 60) }); }
+      else if (/^tel:/i.test(href)) { track("generate_lead", { lead_type: "call", page: page }); track("call_click", { page: page }); }
       else if (/^upi:/i.test(href)) track("upi_app_click", { page: page });
       else if (/g\.page\/r\/|google\.com\/maps|share\.google/i.test(href)) track("google_profile_click", { page: page });
     }

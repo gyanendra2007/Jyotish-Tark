@@ -188,12 +188,13 @@
           (v("t") ? "\nजन्म समय: " + v("t") : "") + (v("p") ? "\nजन्म स्थान: " + v("p") : "") + (v("w") ? "\nपसंद की तारीख/शहर: " + v("w") : "") +
           (v("q") ? "\nप्रश्न: " + v("q") : "") + "\n(jyotishtark.in से)";
         if (!free) {
-          try { localStorage.setItem("jt-consult", JSON.stringify({ msg: msg, id: plan.id, ts: Date.now() })); } catch (err) { /* ignore */ }
+          try { localStorage.setItem("jt-consult", JSON.stringify({ msg: msg, id: plan.id, v: parseInt(String(plan.p).replace(/[^0-9]/g, ""), 10) || 0, ts: Date.now() })); } catch (err) { /* ignore */ }
           try { if (window.gtag) window.gtag("event", "begin_checkout", { item_name: plan.t, currency: "INR" }); } catch (err) { /* ignore */ }
           say('<p class="jt-bot-msg">Cashfree का सुरक्षित भुगतान पेज खुल रहा है… भुगतान के बाद आप इसी वेबसाइट पर लौटेंगे और WhatsApp संदेश तैयार मिलेगा।</p><div class="jt-bot-opts"><a href="' + PAY[plan.id] + '">भुगतान पेज न खुले तो यहाँ दबाएँ</a></div>');
           location.href = PAY[plan.id];
           return;
         }
+        try { if (window.gtag) window.gtag("event", "generate_lead", { lead_type: "free_call", currency: "INR", value: 0 }); } catch (err) { /* ignore */ }
         window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
         say('<p class="jt-bot-msg">धन्यवाद 🙏 WhatsApp में संदेश तैयार है — वहाँ <b>Send</b> दबाएँ। समय वहीं तय होगा।</p><div class="jt-bot-opts"><button type="button" data-a="home">मुख्य मेनू</button></div>');
       });
@@ -280,6 +281,6 @@
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=10";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=13";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
