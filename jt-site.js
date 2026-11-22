@@ -1,6 +1,6 @@
 /* Jyotish Tark — shared behaviour: mobile menu, share bar, help bot, offer card. Loaded on every page. */
 // ---- UPI payments (Cashfree closed our account in Nov 2026). Put the UPI ID here — one place for the whole site. ----
-window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
+window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Singh Tomar" };
 (function () {
   "use strict";
   function menu() {
@@ -163,7 +163,7 @@ window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
   ];
   var FAQ = [
     ["पहली 5 मिनट की कॉल मुफ़्त कैसे है?", "पहली बार बात करने वालों के लिए 5 मिनट की एक कॉल मुफ़्त है — एक मोबाइल नंबर पर एक बार। अपनी समस्या बताइए, फिर आगे की कॉल चुनें।"],
-    ["भुगतान कब और कैसे करना है?", "पहली मुफ़्त कॉल को छोड़कर हर परामर्श का भुगतान पहले होता है — Cashfree के सुरक्षित पेज पर। भुगतान के बाद WhatsApp पर आपका विवरण पहले से भरा संदेश खुलेगा; वहीं समय तय होगा।"],
+    ["भुगतान कब और कैसे करना है?", "पहली मुफ़्त कॉल को छोड़कर हर परामर्श का भुगतान पहले होता है — सुरक्षित ऑनलाइन भुगतान पेज पर। भुगतान के बाद WhatsApp पर आपका विवरण पहले से भरा संदेश खुलेगा; वहीं समय तय होगा।"],
     ["अपॉइंटमेंट की तारीख बदल सकते हैं?", "हाँ, व्यक्तिगत भेंट की तारीख 48 घंटे पहले बताकर बदली जा सकती है। अग्रिम भुगतान का रिफ़ंड नहीं होता — केवल तारीख बदलने की सुविधा है।"],
     ["कॉल का समय कैसे तय होगा?", "भुगतान के बाद WhatsApp संदेश भेजें — वहाँ आपकी सुविधा के अनुसार समय तय किया जाता है।"],
     ["कॉल के लिए क्या तैयार रखें?", "जन्म तिथि, जन्म का सही समय और जन्म स्थान — और अपने 2–3 मुख्य प्रश्न।"],
@@ -213,7 +213,7 @@ window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
     }
     var views = {
       home: home,
-      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>पहली 5 मिनट की कॉल मुफ़्त · बाकी का भुगतान पहले (Cashfree)</small></p>' + priceList(true)); },
+      book: function () { say(back() + '<p class="jt-bot-msg">कौन सा परामर्श चाहिए? <small>पहली 5 मिनट की कॉल मुफ़्त · बाकी का भुगतान पहले (UPI)</small></p>' + priceList(true)); },
       price: function () { say(back() + '<p class="jt-bot-msg">परामर्श शुल्क <small>पहली 5 मिनट की कॉल मुफ़्त</small></p>' + priceList(false) + '<div class="jt-bot-opts"><button type="button" data-a="book">📞 अभी बुक करें</button><a href="consultation.html">पूरी जानकारी देखें →</a></div>'); },
       kundali: function () { say(back() + '<p class="jt-bot-msg">कुंडली</p><div class="jt-bot-opts"><a href="kundali-form.html">मुफ़्त जन्म कुंडली बनाएँ</a><a href="sampurna-kundali.html">सम्पूर्ण कुंडली (35+ पेज) · ₹1,101</a><a href="kundali-form.html">हस्तनिर्मित कुंडली · ₹2,100</a><a href="kundali-milan.html">मुफ़्त कुंडली मिलान</a><button type="button" data-a="plan" data-id="k30">30 मिनट ऑडियो कॉल + सम्पूर्ण कुंडली · ₹1,501</button></div>'); },
       daily: function () { say(back() + '<p class="jt-bot-msg">रोज़ की जानकारी</p><div class="jt-bot-opts"><a href="rashifal.html">आज का राशिफल</a><a href="panchang.html">आज का पंचांग</a><a href="ekadashi-list.html">एकादशी सूची 2026–27</a><a href="tyohar-2026.html">त्योहार 2026</a><a href="vivah-muhurat-2026.html">विवाह मुहूर्त 2026</a></div>'); },
@@ -223,7 +223,7 @@ window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
     function form() {
       var meet = plan.g === "meet", free = plan.g === "free" || !PAY[plan.id];
       say('<button type="button" class="jt-bot-back" data-a="book">← दूसरा विकल्प चुनें</button>' +
-        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (free ? "पहली बार बात करने वालों के लिए मुफ़्त — एक मोबाइल नंबर पर एक बार। विवरण भरें, WhatsApp पर संदेश जाएगा और समय तय होगा।" : (meet ? "भुगतान पहले (Cashfree), फिर WhatsApp पर तारीख तय होगी। रिफ़ंड नहीं, पर 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "भुगतान पहले (Cashfree); उपाय WhatsApp संदेश से भेजे जाएँगे।" : "भुगतान पहले (Cashfree), फिर WhatsApp पर कॉल का समय तय होगा।"))) + "</small></p>" +
+        '<p class="jt-bot-msg"><b>' + plan.t + "</b> · " + plan.p + "<small>" + (free ? "पहली बार बात करने वालों के लिए मुफ़्त — एक मोबाइल नंबर पर एक बार। विवरण भरें, WhatsApp पर संदेश जाएगा और समय तय होगा।" : (meet ? "भुगतान पहले (UPI), फिर WhatsApp पर तारीख तय होगी। रिफ़ंड नहीं, पर 48 घंटे पहले बताकर तारीख बदली जा सकती है।" : (plan.g === "msg" ? "भुगतान पहले (UPI); उपाय WhatsApp संदेश से भेजे जाएँगे।" : "भुगतान पहले (UPI), फिर WhatsApp पर कॉल का समय तय होगा।"))) + "</small></p>" +
         '<form class="jt-bot-form" novalidate>' +
         '<label>आपका नाम<input name="n" autocomplete="name" required></label>' +
         '<label>जन्म तिथि<input name="d" type="date" required></label>' +
@@ -337,6 +337,6 @@ window.JT_UPI = window.JT_UPI || { id: "", name: "Jyotish Tark" };
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=14";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=15";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();

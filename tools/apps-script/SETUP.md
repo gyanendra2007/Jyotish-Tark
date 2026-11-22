@@ -85,3 +85,16 @@ You can also type `PAID` in the Status column by hand.
 
 **After updating Code.gs:** Deploy → Manage deployments → ✏️ Edit → Version: *New version* → Deploy.
 Google will ask once for permission to send email — allow it. Keep the same deployment so the /exec URL stays the same.
+
+
+## Razorpay (automatic payments)
+
+1. Razorpay Dashboard → switch to **Test mode** → Account & Settings → **API Keys** → Generate key.
+2. Apps Script → ⚙️ Project Settings → **Script properties** → add `RZP_KEY_ID` (rzp_test_…) and `RZP_KEY_SECRET`.
+   The secret stays only here — never in the code, the website or a chat.
+3. Paste the new Code.gs → Save → Deploy → Manage deployments → ✏️ Edit → **New version** → Deploy.
+4. Test on the website with **your own number (8318513814)** — only that number gets the test checkout;
+   all other customers keep getting UPI. In the test checkout pay with UPI ID `success@razorpay`.
+   The report should open by itself, and the Orders sheet row should say PAID.
+5. After Razorpay approves the account: generate **Live** keys and replace both Script properties. No code change.
+   From then on every customer gets Razorpay checkout (UPI, cards, net banking) and reports unlock automatically.

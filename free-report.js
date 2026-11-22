@@ -208,7 +208,7 @@
   const VARA_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const DEFAULTS = {
-    qrSrc: "qr-code.png",
+    qrSrc: "qr-code.png?v=2",
     logoSrc: "logo.png",
     phone: "+91 8318513814",
     waNumber: "918318513814",
@@ -1356,7 +1356,7 @@
         ${OPT.qrData ? `<img src="${OPT.qrData}" alt="QR">` : `<div class="qrph">Pay<br>online</div>`}
         <div>
           <div class="bq1">🙏 ${T("गुरु-दक्षिणा / पूर्ण कुंडली हेतु स्कैन करें", "Scan for Guru-Dakshina / Full Kundali")}</div>
-          <p>${T("QR स्कैन करें — Cashfree का सुरक्षित पेज खुलेगा, जहाँ Card, UPI ऐप या Net Banking से गुरु-दक्षिणा दे सकते हैं। पूर्ण कुंडली के लिए jyotishtark.in/sampurna-kundali.html देखें।", "Scan the QR to open our secure Cashfree page and offer Guru-Dakshina by card, UPI app or net banking. For the full kundali, visit jyotishtark.in/sampurna-kundali.html.")}</p>
+          <p>${T("किसी भी UPI ऐप (PhonePe, Google Pay, Paytm, BHIM) से QR स्कैन करके गुरु-दक्षिणा दे सकते हैं — UPI ID: 8318513814@ptsbi। पूर्ण कुंडली के लिए jyotishtark.in/sampurna-kundali.html देखें।", "Scan the QR with any UPI app (PhonePe, Google Pay, Paytm, BHIM) to offer Guru-Dakshina — UPI ID: 8318513814@ptsbi. For the full kundali, visit jyotishtark.in/sampurna-kundali.html.")}</p>
           <p class="contact">📱 ${esc(OPT.phone)} • ✉ ${esc(OPT.email)} • 🌐 ${esc(OPT.site)}</p>
           <p class="sig">${T(OPT.acharyaHi, OPT.acharyaEn)}<br><small>${T("ज्योतिष तर्क", "Jyotish Tark")}</small></p>
         </div>

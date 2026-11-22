@@ -4,7 +4,7 @@
  * What it does
  *   1. create  : makes a Cashfree order for a report (price, promo, referral and partner
  *                discounts are decided HERE, not in the browser) and records it in the sheet.
- *   2. verify  : asks Cashfree whether the order is PAID. Reports unlock only after this.
+ *   2. verify  : asks Razorpay (or Cashfree) whether the order is PAID. Reports unlock only after this.
  *   3. lookup  : "get my report again" — order ID + phone returns the saved birth details.
  *   4. partner : a partner's sales and commission (code + PIN).
  *   5. lead    : records rudraksha / consultation enquiries.
@@ -15,16 +15,28 @@
  *
  * Setup (once): see SETUP.md in the same folder.
  * Secrets live in Project Settings → Script properties, never in this file:
- *   CF_APP_ID, CF_SECRET, CF_MODE (production | sandbox), GOOGLE_CLIENT_ID (for review sign-in)
+ *   RZP_KEY_ID, RZP_KEY_SECRET (Razorpay → Account & Settings → API keys; test keys start rzp_test_)
+ *   PAY_MODE (optional: razorpay | upi — overrides the default below)
+ *   CF_APP_ID, CF_SECRET, CF_MODE (old Cashfree, not used now), GOOGLE_CLIENT_ID (for review sign-in)
  */
 
-// How customers pay: "upi" = straight to your UPI ID (you confirm each payment with one tap),
-// "cashfree" = Cashfree checkout (needs CF_APP_ID / CF_SECRET). Cashfree closed our account in Nov 2026.
-const PAY_MODE = "upi";
+// How customers pay:
+//   "razorpay" = Razorpay checkout, confirmed automatically (needs RZP_KEY_ID / RZP_KEY_SECRET in Script properties)
+//   "upi"      = straight to your UPI ID; you confirm each payment with one tap in an email
+// Default: Razorpay when its keys are set, otherwise UPI. A Script property PAY_MODE overrides this.
+// (Cashfree closed our account in Nov 2026; its code is kept below but no longer used.)
+function payMode() {
+  const pr = PropertiesService.getScriptProperties();
+  const want = String(pr.getProperty("PAY_MODE") || "").toLowerCase();
+  const rzp = !!(pr.getProperty("RZP_KEY_ID") && pr.getProperty("RZP_KEY_SECRET"));
+  if (want === "upi") return "upi";
+  return rzp ? "razorpay" : "upi";
+}
 // this web app's own /exec address (used in the "mark paid" email link). Redeploy with
 // Manage deployments → Edit → New version so the address stays the same.
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec";
 
+const OWNER_PHONE = "8318513814";   // test-mode Razorpay checkout is shown only to this number
 const SHEET_ORDERS = "Orders", SHEET_PARTNERS = "Partners", SHEET_LEADS = "Leads";
 const SITE = "https://jyotishtark.in/";
 
@@ -136,7 +148,20 @@ function create(b) {
   if (isRud && b.cod) { row[3] = "COD"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, cod: true, order_id: oid, amount: amount, list: list }; }  // mark PAID by hand once the cash is received
   if (off >= 100) { row[3] = "FREE"; row[24] = new Date(); sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, free: true, order_id: oid }; }
 
-  if (PAY_MODE === "upi") { row[3] = "UPI_PENDING"; row[25] = "UPI"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, upi: true, order_id: oid, amount: amount, currency: cur, list: list }; }
+  let PM = payMode();
+  const keyId = PropertiesService.getScriptProperties().getProperty("RZP_KEY_ID") || "";
+  // while testing with rzp_test_ keys, only the owner's own number gets the (fake-money) test checkout;
+  // every real customer keeps paying by UPI, so nobody can unlock a report with a test payment
+  if (PM === "razorpay" && /^rzp_test_/.test(keyId) && phone.replace(/\D/g, "").slice(-10) !== OWNER_PHONE) PM = "upi";
+  if (PM === "razorpay") {
+    const r = rzp("post", "/orders", { amount: Math.round(amount * 100), currency: cur, receipt: oid,
+      notes: { product: b.product, name: clip(name, 60), phone: clip(phone, 20), code: code ? ctype + " " + code : "" } });
+    if (r.code >= 300 || !r.json.id) return { ok: false, error: "razorpay", detail: (r.json && r.json.error && r.json.error.description) || r.code, currency: cur };
+    row[3] = "CREATED"; row[25] = "RZP " + r.json.id; sheet(SHEET_ORDERS, HEAD).appendRow(row);
+    return { ok: true, razorpay: true, order_id: oid, rzp_order_id: r.json.id, key_id: keyId, amount: amount, currency: cur, list: list,
+      name: name, phone: phone, email: validEmail(b.email) ? b.email : "", desc: P.name, test: /^rzp_test_/.test(keyId) };
+  }
+  if (PM === "upi") { row[3] = "UPI_PENDING"; row[25] = "UPI"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, upi: true, order_id: oid, amount: amount, currency: cur, list: list }; }
 
   const ret = SITE + P.page + "?jtpaid=" + b.product + "&order_id=" + oid;
   const body = {
@@ -161,7 +186,14 @@ function verify(oid) {
   if (!f) return { ok: false, error: "not found" };
   const v = f.values;
   let status = v[3];
-  if (status !== "PAID" && status !== "FREE" && PAY_MODE !== "upi" && !/^UPI/.test(status)) {
+  const rz = String(v[25] || "").match(/RZP (order_[A-Za-z0-9]+)/);
+  if (status !== "PAID" && status !== "FREE" && rz) {
+    const r = rzp("get", "/orders/" + rz[1]);
+    const st = r.json && r.json.status;   // created | attempted | paid
+    if (st === "paid") { status = "PAID"; f.sh.getRange(f.row, 4).setValue("PAID"); f.sh.getRange(f.row, 25).setValue(new Date()); }
+    else if (st) f.sh.getRange(f.row, 4).setValue(st === "attempted" ? "ATTEMPTED" : "CREATED");
+  }
+  if (status !== "PAID" && status !== "FREE" && !rz && !/^UPI/.test(status) && String(v[25] || "") !== "UPI" && PropertiesService.getScriptProperties().getProperty("CF_APP_ID")) {
     const r = cf("get", "/pg/orders/" + encodeURIComponent(oid));
     const cs = r.json && r.json.order_status;
     f.sh.getRange(f.row, 26).setValue(cs || ("HTTP " + r.code));
@@ -325,6 +357,18 @@ function cf(method, path, body) {
   const res = UrlFetchApp.fetch(base + path, {
     method: method, contentType: "application/json", muteHttpExceptions: true,
     headers: { "x-client-id": pr.getProperty("CF_APP_ID"), "x-client-secret": pr.getProperty("CF_SECRET"), "x-api-version": "2023-08-01" },
+    payload: body ? JSON.stringify(body) : undefined
+  });
+  let j = {}; try { j = JSON.parse(res.getContentText()); } catch (x) { j = {}; }
+  return { code: res.getResponseCode(), json: j };
+}
+// Razorpay REST API (Basic auth with the key id + secret from Script properties)
+function rzp(method, path, body) {
+  const pr = PropertiesService.getScriptProperties();
+  const auth = Utilities.base64Encode(pr.getProperty("RZP_KEY_ID") + ":" + pr.getProperty("RZP_KEY_SECRET"));
+  const res = UrlFetchApp.fetch("https://api.razorpay.com/v1" + path, {
+    method: method, contentType: "application/json", muteHttpExceptions: true,
+    headers: { Authorization: "Basic " + auth },
     payload: body ? JSON.stringify(body) : undefined
   });
   let j = {}; try { j = JSON.parse(res.getContentText()); } catch (x) { j = {}; }

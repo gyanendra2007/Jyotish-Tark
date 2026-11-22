@@ -124,7 +124,7 @@ window.JTR_PAY = Object.assign({
       `📿 ${it.name}${it.sub ? ` (${it.sub})` : ""}`,
       `सर्टिफिकेट: ${o.cert ? "हाँ, लैब सर्टिफिकेट सहित" : "नहीं"}`,
       `कुल राशि: ₹${inr(o.amt)}${o.partner && o.list && o.list !== o.amt ? ` (मूल ₹${inr(o.list)} — ${RUD_OFF}% छूट)` : ""}`,
-      `भुगतान: ${o.pay === "cod" ? "कैश ऑन डिलीवरी" : o.paid ? "ऑनलाइन — भुगतान हो चुका ✅" : "ऑनलाइन (Cashfree)"}`,
+      `भुगतान: ${o.pay === "cod" ? "कैश ऑन डिलीवरी" : o.paid ? "ऑनलाइन — भुगतान हो चुका ✅" : "ऑनलाइन (UPI)"}`,
       o.partner ? `पार्टनर कोड: ${o.partner}` : "",
       ``,
       `नाम: ${o.name}`, `मोबाइल: ${o.phone}`, `पता: ${o.addr}`, `शहर: ${o.city}  पिन: ${o.pin}`, `राज्य: ${o.state}`
@@ -210,7 +210,7 @@ window.JTR_PAY = Object.assign({
     body.innerHTML = `<div class="rd-ok">
       <p>ऑर्डर नंबर <span class="rd-oid">${esc(o.oid)}</span> — ${esc(it.name)}${o.cert ? " (सर्टिफिकेट सहित)" : ""}</p>
       <ol>
-        <li><b>₹${inr(o.amt)} का भुगतान करें।</b> Cashfree का सुरक्षित पेज खुलेगा — वहाँ ‘Order ID’ में <span class="rd-oid">${esc(o.oid)}</span> लिखें।<br>
+        <li><b>₹${inr(o.amt)} का भुगतान करें।</b> सुरक्षित भुगतान पेज खुलेगा — वहाँ ‘Order ID’ में <span class="rd-oid">${esc(o.oid)}</span> लिखें।<br>
           <a class="rd-btn rd-btn-p" style="margin-top:.6rem" href="${esc(formUrl(o.id, o.cert))}" target="_blank" rel="noopener" id="rdPayBtn"><i class="fas fa-lock"></i> ₹${inr(o.amt)} ऑनलाइन भुगतान करें</a></li>
         <li><b>भुगतान के बाद पता WhatsApp पर भेजें</b> ताकि डिलीवरी तुरंत शुरू हो सके।<br>
           <a class="rd-btn rd-btn-p rd-wa" style="margin-top:.6rem" href="${esc(waLink(o))}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> ऑर्डर विवरण भेजें</a></li>
@@ -257,7 +257,7 @@ window.JTR_PAY = Object.assign({
     const o = store.get("jtr_last");
     $("#rdDlgT").textContent = "भुगतान के लिए धन्यवाद";
     body.innerHTML = o && D.items[o.id] ? `<div class="rd-ok">
-      <p>🙏 आपका भुगतान Cashfree से पूरा हुआ। ऑर्डर नंबर <span class="rd-oid">${esc(o.oid)}</span> — ${esc(D.items[o.id].name)}, ₹${inr(o.amt)}।</p>
+      <p>🙏 आपका भुगतान पूरा हुआ। ऑर्डर नंबर <span class="rd-oid">${esc(o.oid)}</span> — ${esc(D.items[o.id].name)}, ₹${inr(o.amt)}।</p>
       <p>अगर आपने अभी तक पता नहीं भेजा है, तो कृपया यह बटन दबाएँ:</p>
       <a class="rd-btn rd-btn-p rd-wa" href="${esc(waLink(o))}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> ऑर्डर विवरण WhatsApp पर भेजें</a>
       <p class="rd-note">दाना अभिमंत्रित करके ${o.cert ? "लैब सर्टिफिकेट के साथ 5–9" : "3–5"} दिन में भेजा जाएगा।</p></div>`

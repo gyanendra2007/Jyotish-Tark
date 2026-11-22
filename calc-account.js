@@ -11,7 +11,7 @@
 
   if (mode === "report") {
     host.innerHTML = `<form id="mrF" class="jc-f" novalidate>${inp("mrO", "ऑर्डर नंबर *", "text", "जैसे JTKP2611131530ABCD")}${inp("mrP", "भुगतान वाला मोबाइल नंबर *", "tel", "98XXXXXXXX", "tel")}
-      <div class="jc-full"><button class="jc-btn" type="submit">मेरी रिपोर्ट खोलें</button><p class="jc-note">ऑर्डर नंबर Cashfree की रसीद (SMS / ईमेल) और रिपोर्ट के पहले पेज पर लिखा होता है।</p><p class="jc-err" id="mrE" hidden></p></div></form>`;
+      <div class="jc-full"><button class="jc-btn" type="submit">मेरी रिपोर्ट खोलें</button><p class="jc-note">ऑर्डर नंबर भुगतान की रसीद (SMS / ईमेल) और रिपोर्ट के पहले पेज पर लिखा होता है।</p><p class="jc-err" id="mrE" hidden></p></div></form>`;
     $("#mrF").addEventListener("submit", async (e) => {
       e.preventDefault();
       const oid = $("#mrO").value.trim().toUpperCase(), ph = $("#mrP").value.trim(), er = $("#mrE");

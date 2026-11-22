@@ -120,7 +120,7 @@ window.JTCheckout = (function () {
       <label for="jcoEm">${T("ईमेल (रसीद के लिए, वैकल्पिक)", "Email (for the receipt, optional)")}</label><input id="jcoEm" type="email" autocomplete="email" value="${esc(saved.e || "")}">
       <p class="jco-e" aria-live="polite"></p>
       <div class="jco-b"><button type="button" class="l" data-x>${T("रद्द करें", "Cancel")}</button><button type="button" data-go>${T("भुगतान पर जाएँ", "Continue to pay")}</button></div>
-      <p style="font-size:13px;margin-top:10px">${T("Cashfree का सुरक्षित पेज — UPI, कार्ड, नेट बैंकिंग। भुगतान के बाद आप अपने-आप इसी पेज पर लौटेंगे।", "Secure Cashfree checkout — UPI, cards, net banking. You return here automatically after paying.")}</p></div>`;
+      <p style="font-size:13px;margin-top:10px">${T("सुरक्षित ऑनलाइन भुगतान। भुगतान की पुष्टि के बाद रिपोर्ट इसी वेबसाइट पर खुलेगी।", "Secure online payment. Your report opens on this website once the payment is confirmed.")}</p></div>`;
     document.body.appendChild(ov);
     const err = ov.querySelector(".jco-e"), go = ov.querySelector("[data-go]");
     const priceBox = ov.querySelector("[data-price]"), cdIn = ov.querySelector("#jcoCd"), cdMsg = ov.querySelector(".jco-cm");
@@ -168,11 +168,25 @@ window.JTCheckout = (function () {
         go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay");
         err.textContent = r && r.error === "unknown product" ? T("यह रिपोर्ट अभी सर्वर पर चालू नहीं हुई है — कृपया WhatsApp करें: 83185 13814", "This report is not live on the server yet — please WhatsApp +91 83185 13814.") : r && r.error === "promo" ? T("यह प्रोमो कोड मान्य नहीं है।", "This promo code is not valid.") : r && r.error === "phone" ? T("मोबाइल नंबर सही नहीं है।", "The mobile number is not valid.") : r && r.error === "cashfree" && r.currency === "USD" ? T("USD भुगतान अभी उपलब्ध नहीं — ₹ में भुगतान करें (विदेशी कार्ड भी चलते हैं)।", "USD checkout is not available right now — please pay in ₹ (international cards work).") : T("भुगतान शुरू नहीं हो सका। दोबारा कोशिश करें या WhatsApp करें: 83185 13814", "Could not start the payment. Try again or WhatsApp +91 83185 13814.");
         ga("checkout_error", { product, e: r && r.error });
+        // online checkout not available (Cashfree closed) → pay by UPI and send the screenshot; we send the report by hand
+        if (r && r.error === "cashfree" && window.JTUPIBox) {
+          const nm = { kp: "KP रिपोर्ट", nm: "अंक ज्योतिष रिपोर्ट", sampurna: "सम्पूर्ण कुंडली", prashna: "एक प्रश्न", mobile: "मोबाइल नंबर रिपोर्ट", vp: "वर्षफल 2027 रिपोर्ट" }[product] || product;
+          const amt = price(product, curOff()).v;
+          const msg = `नमस्ते, मैंने ${nm} के लिए ₹${amt} UPI से भेजे हैं (स्क्रीनशॉट साथ में)।\nनाम: ${d.name || ""}\nजन्म तिथि: ${d.dob || ""}${d.time ? "\nजन्म समय: " + d.time : ""}${d.place ? "\nजन्म स्थान: " + d.place : ""}${q ? "\nप्रश्न: " + q : ""}\nमोबाइल: ${phone}\n(jyotishtark.in से)`;
+          ov.remove();
+          window.JTUPIBox({ amount: amt, title: nm, msg, note: "JT " + product });
+          return;
+        }
         return;
       }
       ga("begin_checkout", { value: r.amount || 0, currency: r.currency || pr.c, items: [{ item_name: product }] });
       if (r.free) { location.href = `${PAGE[product]}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`; return; }
       if (r.upi) { upiScreen(ov, r, product, en); return; }
+      if (r.razorpay) {
+        const ok = await openRazorpay(r, product, en, () => { go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay"); });
+        if (!ok) { go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay"); err.textContent = T("भुगतान पेज नहीं खुल सका — इंटरनेट जाँचें।", "Checkout could not open — check your connection."); }
+        return;
+      }
       try { const cf = (await loadSdk())({ mode: r.mode === "sandbox" ? "sandbox" : "production" }); cf.checkout({ paymentSessionId: r.payment_session_id, redirectTarget: "_self" }); }
       catch (e) { go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay"); err.textContent = T("भुगतान पेज नहीं खुल सका — इंटरनेट जाँचें।", "Checkout could not open — check your connection."); }
     });
@@ -236,6 +250,32 @@ window.JTCheckout = (function () {
       waiting(u);
     });
   }
+  /* Razorpay checkout. After a successful payment the customer goes to the product page with
+     ?jtpaid=…&order_id=…, where confirm() asks our backend — which asks Razorpay — before unlocking. */
+  let rzpLoading = null;
+  function loadRazorpay() {
+    if (window.Razorpay) return Promise.resolve(window.Razorpay);
+    if (!rzpLoading) rzpLoading = new Promise((res, rej) => { const s = document.createElement("script"); s.src = "https://checkout.razorpay.com/v1/checkout.js"; s.onload = () => res(window.Razorpay); s.onerror = () => { rzpLoading = null; rej(new Error("rzp")); }; document.head.appendChild(s); });
+    return rzpLoading;
+  }
+  async function openRazorpay(r, product, en, onClose) {
+    let R; try { R = await loadRazorpay(); } catch (e) { return false; }
+    if (!R) return false;
+    const back = `${SITE_ROOT()}${PAGE[product] || ""}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`;
+    try {
+      const rz = new R({
+        key: r.key_id, order_id: r.rzp_order_id, amount: Math.round((Number(r.amount) || 0) * 100), currency: r.currency || "INR",
+        name: "Jyotish Tark", description: r.desc || product, image: SITE_ROOT() + "logo.png",
+        prefill: { name: r.name || "", contact: r.phone || "", email: r.email || "" },
+        notes: { order: r.order_id }, theme: { color: "#7A1F1F" },
+        handler: () => { ga("rzp_success", { product }); location.href = back; },
+        modal: { ondismiss: () => { ga("rzp_dismiss", { product }); if (onClose) onClose(); } }
+      });
+      rz.on("payment.failed", () => ga("rzp_failed", { product }));
+      rz.open();
+      return true;
+    } catch (e) { return false; }
+  }
   const SITE_ROOT = () => { try { return location.origin.indexOf("http") === 0 ? location.origin + "/" : "https://jyotishtark.in/"; } catch (e) { return "https://jyotishtark.in/"; } };
 
   /* After Cashfree sends the customer back (?jtpaid=…&order_id=…): confirm with the backend,
@@ -256,7 +296,7 @@ window.JTCheckout = (function () {
         if (r && r.ok === false) { fail(T("यह ऑर्डर नहीं मिला", "Order not found"), T("इस ऑर्डर नंबर का कोई भुगतान नहीं मिला। अगर आपका पैसा कटा है तो भुगतान का स्क्रीनशॉट WhatsApp पर भेजें।", "No payment was found for this order number. If money was deducted, send the payment screenshot on WhatsApp.")); return; }
         if (r && r.ok && /^UPI/.test(r.status || "")) { fail(T("भुगतान की जाँच हो रही है", "Your payment is being checked"), T("आपका UPI भुगतान ज्योतिषी जी स्वयं जाँचते हैं — आम तौर पर कुछ घंटों में। पुष्टि होते ही यही लिंक खोलने पर रिपोर्ट खुल जाएगी, और यह लिंक आपको WhatsApp पर भी भेजा जाएगा। अगर अभी तक UTR नंबर नहीं भेजा है तो WhatsApp पर भुगतान का स्क्रीनशॉट भेजें।", "Your UPI payment is checked by hand — usually within a few hours. Once confirmed, this same link opens your report, and we will also send it to you on WhatsApp. If you have not sent the UTR number yet, WhatsApp us a screenshot of the payment.")); return; }
         if (tries++ < 5) { setTimeout(run, 3000); return; }
-        fail(T("भुगतान अभी पूरा नहीं हुआ", "Payment not completed yet"), T("Cashfree से अभी भुगतान की पुष्टि नहीं मिली। कुछ मिनट बाद “दोबारा जाँचें” दबाएँ। पैसा कट गया हो तो WhatsApp करें।", "Cashfree has not confirmed the payment yet. Tap “Check again” in a few minutes. If money was deducted, WhatsApp us."));
+        fail(T("भुगतान अभी पूरा नहीं हुआ", "Payment not completed yet"), T("भुगतान की पुष्टि अभी नहीं मिली। कुछ मिनट बाद “दोबारा जाँचें” दबाएँ। पैसा कट गया हो तो WhatsApp करें।", "The payment is not confirmed yet. Tap “Check again” in a few minutes. If money was deducted, WhatsApp us."));
       }).catch(() => { if (tries++ < 5) setTimeout(run, 3000); else fail(T("इंटरनेट की समस्या", "Connection problem"), T("पुष्टि नहीं हो सकी — इंटरनेट जाँचकर दोबारा कोशिश करें।", "Could not confirm — check your connection and try again.")); });
     };
     run();
@@ -274,6 +314,7 @@ window.JTCheckout = (function () {
     try { r = await post("create", Object.assign({ product, currency: "INR" }, b)); } catch (e) { r = { ok: false, error: "network" }; }
     if (!r || !r.ok || r.cod || r.free) return r;
     ga("begin_checkout", { value: r.amount || 0, currency: "INR", items: [{ item_name: product }] });
+    if (r.razorpay) { const ok = await openRazorpay(r, product, b && b.lang === "en", () => { /* closed */ }); return ok ? Object.assign({ redirect: true }, r) : { ok: false, error: "sdk" }; }
     if (r.upi) { css(); const ov = document.createElement("div"); ov.className = "jco"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); document.body.appendChild(ov); upiScreen(ov, r, product, b && b.lang === "en"); return Object.assign({ redirect: true }, r); }
     try { const cf = (await loadSdk())({ mode: r.mode === "sandbox" ? "sandbox" : "production" }); cf.checkout({ paymentSessionId: r.payment_session_id, redirectTarget: "_self" }); return Object.assign({ redirect: true }, r); }
     catch (e) { return { ok: false, error: "sdk" }; }

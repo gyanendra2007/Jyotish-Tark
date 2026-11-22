@@ -41,7 +41,7 @@ window.JT_PAY = Object.assign({
       `Place: ${o.pob || "-"}`,
       `Phone: ${o.phone || "-"}  Email: ${o.email || "-"}`,
       ``,
-      `Paid online through Cashfree (order ID entered in the payment form).`
+      `Paid by UPI (screenshot attached).`
     ].concat(o.adminLink ? ["", `रिपोर्ट लिंक (ज्योतिष तर्क उपयोग हेतु): ${o.adminLink}`] : []).join("\n");
   }
 

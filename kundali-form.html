@@ -379,7 +379,7 @@
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=8">
-  <script src="jt-site.js?v=17" defer></script>
+  <script src="jt-site.js?v=18" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -855,7 +855,7 @@
             <div class="lg:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-900">
               <div class="text-xs font-extrabold uppercase tracking-wider text-purple-800 mb-2 text-center">Scan to Pay · UPI</div>
               <div class="w-52 h-52 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-md flex items-center justify-center bg-gray-50">
-                <img src="qr-code.png" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Guru Dakshina:</strong><br>payments.cashfree.com/forms/jyotishtarkdakshina</div>';">
+                <img src="qr-code.png?v=2" alt="Jyotish Tark Guru Dakshina QR Code" width="208" height="208" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center text-xs text-gray-700\'><i class=\'fas fa-qrcode text-5xl text-purple-700 mb-2 block\'></i><strong>Guru Dakshina:</strong><br>payments.cashfree.com/forms/jyotishtarkdakshina</div>';">
               </div>
               <p class="text-sm font-bold text-slate-900 mt-3">Gyanendra Singh Tomar • Jyotish Tark</p>
               <p class="text-xs text-gray-500 mb-3"><a href="https://payments.cashfree.com/forms/jyotishtarkdakshina" target="_blank" rel="noopener" class="text-purple-700 font-bold underline">Pay Guru Dakshina by UPI →</a></p>
@@ -1070,7 +1070,7 @@
           <label for="consent" class="ml-2 block text-sm text-gray-300">I agree to the <a href="privacy-policy.html" class="text-purple-400 hover:text-purple-300">privacy policy</a> and understand that I will be contacted for consultation confirmation.</label>
         </div>
         <button type="submit" class="primary-button w-full"><i class="fas fa-paper-plane mr-2"></i> Submit Details &amp; Pay ₹2,100</button>
-        <p class="text-center text-xs text-gray-400 mt-2"><i class="fas fa-lock mr-1"></i> अगले चरण में Cashfree के सुरक्षित पेज पर ₹2,100 का ऑनलाइन भुगतान — फिर 5–7 दिन में आपकी हस्तनिर्मित कुंडली।</p>
+        <p class="text-center text-xs text-gray-400 mt-2"><i class="fas fa-lock mr-1"></i> अगले चरण में सुरक्षित ऑनलाइन भुगतान पेज पर ₹2,100 का ऑनलाइन भुगतान — फिर 5–7 दिन में आपकी हस्तनिर्मित कुंडली।</p>
       </form>
       <div id="submissionResponse" class="mt-6 p-4 rounded-lg text-center font-semibold text-lg hidden"></div>
     </div>
@@ -1198,11 +1198,11 @@
   <script src="timing-engine.js"></script>
   <script src="narrative-rules.js"></script>
   <script src="kundali-engine.js?v=3"></script>
-  <script src="free-report.js?v=5"></script>
+  <script src="free-report.js?v=6"></script>
   <script src="jt-promo.js?v=6"></script>
   <script src="jt-ref.js?v=3"></script>
-  <script src="jt-checkout.js?v=14"></script>
-  <script src="sampurna-preview.js?v=15"></script>
+  <script src="jt-checkout.js?v=15"></script>
+  <script src="sampurna-preview.js?v=16"></script>
   <script src="sampurna-names.js?v=1"></script>
   <script src="jt-life.js?v=1"></script>
   <script src="sampurna-analysis.js?v=5"></script>
@@ -2018,7 +2018,7 @@
       const safeName = (ctx.name || 'Seeker').replace(/[^\w\u0900-\u097F]+/g, '_');
 
       try {
-        const html = await window.FreeReport.buildDocument(ctx, window.__jtVedicData, { qrSrc: 'qr-code.png', logoSrc: 'logo.png' });
+        const html = await window.FreeReport.buildDocument(ctx, window.__jtVedicData, { qrSrc: 'qr-code.png?v=2', logoSrc: 'logo.png' });
         if (api) {
           const response = await fetch(api, {
             method: 'POST',
