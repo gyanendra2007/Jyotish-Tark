@@ -103,6 +103,7 @@ function doPost(e) {
   try { b = JSON.parse((e && e.postData && e.postData.contents) || "{}"); } catch (x) { return out({ ok: false, error: "bad json" }); }
   try {
     if (b.action === "create") return out(create(b));
+    if (b.action === "claim") return out(claim(String(b.order_id || "")));
     if (b.action === "utr") return out(utr(String(b.order_id || ""), String(b.utr || "")));
     if (b.action === "verify") return out(verify(String(b.order_id || "")));
     if (b.action === "lookup") return out(lookup(String(b.order_id || ""), String(b.phone || "")));
@@ -288,6 +289,29 @@ function reviewList() {
 }
 
 // ------------------------------------------------------------------ helpers
+// ------------------------------------------------------------------ UPI: customer taps "I have paid"
+// The report opens at once (no checking step). The row is marked PAID with the note
+// "UPI — not checked", so you can match it with your bank SMS later; you get a short email too.
+function claim(oid) {
+  oid = oid.trim().toUpperCase();
+  if (!/^JT[A-Z]+\d{12}[A-Z0-9]{4}$/.test(oid)) return { ok: false, error: "order" };
+  const f = findOrder(oid);
+  if (!f) return { ok: false, error: "not found" };
+  const v = f.values;
+  if (v[3] === "PAID" || v[3] === "FREE") return { ok: true, paid: true };
+  if (!/^UPI/.test(String(v[3]))) return { ok: false, error: "not upi" };   // Razorpay orders are confirmed by Razorpay only
+  f.sh.getRange(f.row, 4).setValue("PAID");
+  f.sh.getRange(f.row, 25).setValue(new Date());
+  f.sh.getRange(f.row, 26).setValue("UPI — not checked");
+  try {
+    const P = PRODUCTS[v[2]] || { name: v[2] };
+    MailApp.sendEmail(Session.getEffectiveUser().getEmail(), "New UPI order: ₹" + v[4] + " — " + P.name + " — " + v[12],
+      v[12] + " (" + v[13] + ") says they paid ₹" + v[4] + " by UPI for " + P.name + ".\nOrder: " + oid +
+      "\nThe report has opened for them. Please match it with your bank SMS; if the money never came, the order is in the Orders sheet (\"UPI — not checked\").");
+  } catch (x) { /* email is optional */ }
+  return { ok: true, paid: true };
+}
+
 // ------------------------------------------------------------------ UPI: customer sends the reference number
 function utr(oid, ref) {
   oid = oid.trim().toUpperCase(); ref = ref.replace(/\s+/g, "");

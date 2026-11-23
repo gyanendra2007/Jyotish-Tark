@@ -125,7 +125,8 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
           "<p style='margin:0 0 6px;font-size:13px;color:#6B5444'>" + (mobile ? "दूसरे फ़ोन से स्कैन करें, या स्क्रीनशॉट लेकर UPI ऐप में गैलरी से स्कैन करें।" : "फ़ोन के किसी भी UPI ऐप से स्कैन करें।") + "</p>" +
           "<p style='margin:0;font-size:15px'>UPI ID: <b style='user-select:all'>" + esc(U.id) + "</b></p>" +
           "<p style='margin:12px 0 0;padding-top:10px;border-top:1px dashed #D9C6A0;font-size:15px;line-height:1.5;color:#4A3628;text-align:left'><b>भुगतान के बाद:</b> नीचे दबाकर WhatsApp पर भुगतान का स्क्रीनशॉट भेजें — पुष्टि के बाद आगे की बात होगी।</p>" +
-          "<a href='" + waT + encodeURIComponent(msg) + "' target='_blank' rel='noopener' data-sent style='" + btn + "background:#1f8f4e;color:#fff'>भुगतान हो गया — WhatsApp पर भेजें</a>";
+          "<a href='" + waT + encodeURIComponent(msg) + "' target='_blank' rel='noopener' data-sent style='" + btn + "background:#1f8f4e;color:#fff'>भुगतान हो गया — WhatsApp पर भेजें</a>" +
+          "<p style='margin:12px 0 0;padding-top:10px;border-top:1px dashed #D9C6A0;font-size:14px;line-height:1.5;color:#4A3628'><b>भारत के बाहर हैं, या भारतीय UPI नहीं है?</b> <a href='" + waT + encodeURIComponent("नमस्ते, मैं भारत के बाहर से हूँ / मेरे पास UPI नहीं है। " + title + (amt ? " (₹" + amt + ")" : "") + " के भुगतान के लिए खाते का विवरण भेजें।") + "' target='_blank' rel='noopener' style='color:#15803D;font-weight:700'>WhatsApp पर खाते का विवरण माँगें</a></p>";
       }
       ov.innerHTML = "<div style='width:100%;max-width:420px;max-height:92vh;overflow:auto;background:#FBF6EC;border:3px double #B8892B;border-radius:16px;padding:20px;color:#2B1810;text-align:center'>" + h +
         "<button type='button' data-x style='margin-top:10px;min-height:44px;width:100%;border:1.5px solid #7A1F1F;border-radius:10px;background:#fff;color:#7A1F1F;font:inherit;font-weight:700;cursor:pointer'>बंद करें</button></div>";
@@ -339,6 +340,6 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=15";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=16";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();

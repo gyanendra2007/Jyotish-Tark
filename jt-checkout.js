@@ -193,61 +193,62 @@ window.JTCheckout = (function () {
     setTimeout(() => { const f = ov.querySelector(opts.question ? "#jcoQ" : "#jcoPh"); if (f) f.focus(); }, 50);
   }
 
-  /* UPI screen: QR + "pay in UPI app" button + UPI ID, then the customer types the UPI reference
-     number (UTR). The backend emails the astrologer a one-tap "payment received" link; this screen
-     keeps checking and opens the report as soon as the payment is marked received. */
+  /* UPI screen: QR + "pay in UPI app" button + UPI ID. After paying, the customer taps
+     "भुगतान हो गया" and the report opens at once (the order is noted as "UPI — not checked" so it
+     can be matched with the bank SMS later). Customers outside India / without UPI are sent to
+     WhatsApp for bank details; their report is sent on WhatsApp. */
   function upiScreen(ov, r, product, en) {
     const T = (h, e) => (en ? e : h), oid = r.order_id, amt = Number(r.amount) || 0;
     const back = `${SITE_ROOT()}${PAGE[product] || ""}?jtpaid=${product}&order_id=${encodeURIComponent(oid)}`;
     const waL = (t) => `https://wa.me/918318513814?text=${encodeURIComponent(t)}`;
+    const NAME = { kp: "KP Report", nm: "Numerology Report", sampurna: "Sampurna Kundali", prashna: "One Question", mobile: "Mobile Number Report", vp: "Varshphal 2027", rud: "Rudraksha" }[product] || product;
+    let tzIndia = true; try { tzIndia = /Calcutta|Kolkata/.test(Intl.DateTimeFormat().resolvedOptions().timeZone || ""); } catch (e) { /* */ }
     ls.set("jt_upi_last", JSON.stringify({ o: oid, p: product, a: amt, t: Date.now() }));
-    ga("upi_shown", { product, value: amt, currency: "INR" });
+    ga("upi_shown", { product, value: amt, currency: "INR", abroad: tzIndia ? 0 : 1 });
     const box = ov.querySelector(".jco-c") || ov.appendChild(document.createElement("div"));
     box.className = "jco-c jco-upi";
     const UPI_ID = upiCfg().id, UPI_NAME = upiCfg().name || "Jyotish Tark";
+    const nriMsg = T(`नमस्ते, मैं भारत के बाहर से हूँ / मेरे पास UPI नहीं है। मुझे ${NAME} (₹${amt}) चाहिए। कृपया भुगतान के लिए खाते का विवरण भेजें।\nऑर्डर: ${oid}`, `Hello, I am outside India / I don't have UPI. I would like the ${NAME} (₹${amt}). Please send me your account details for payment.\nOrder: ${oid}`);
+    const nri = `<div class="st" style="text-align:center"><p style="margin:0 0 4px;font-weight:700">${T("भारत के बाहर हैं, या भारतीय UPI नहीं है?", "Outside India, or no Indian UPI?")}</p>
+      <p class="sm" style="margin:0">${T("WhatsApp करें — हम खाते का विवरण भेजेंगे। भुगतान के बाद आपकी रिपोर्ट WhatsApp पर भेजी जाएगी।", "Message us on WhatsApp — we will send our account details. After payment your report is sent to you on WhatsApp.")}</p>
+      <a class="wa" href="${waL(nriMsg)}" target="_blank" rel="noopener" data-nri>${T("WhatsApp पर खाते का विवरण माँगें", "Ask for account details on WhatsApp")}</a></div>`;
     if (!UPI_ID) {
-      box.innerHTML = `<h3>${T("भुगतान", "Payment")} — ₹${amt}</h3><p>${T("ऑर्डर नंबर", "Order number")}: <b>${esc(oid)}</b></p><p>${T("भुगतान का तरीका जानने के लिए WhatsApp करें — ऑर्डर नंबर अपने आप भर जाएगा।", "WhatsApp us for the payment details — the order number is filled in for you.")}</p>
-        <a class="app" href="${waL(T(`नमस्ते, मुझे ₹${amt} का भुगतान करना है। ऑर्डर: ${oid}`, `Hello, I want to pay ₹${amt}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp: 83185 13814</a>
-        <p class="sm">${T("भुगतान की पुष्टि के बाद रिपोर्ट इस लिंक पर खुलेगी", "After payment is confirmed your report opens at this link")}: <a href="${back}">${T("मेरी रिपोर्ट", "My report")}</a></p>
-        <div class="jco-b"><button type="button" class="l" data-x>${T("बंद करें", "Close")}</button></div>`;
+      box.innerHTML = `<h3>${T("भुगतान", "Payment")} — ₹${amt}</h3><p>${T("ऑर्डर नंबर", "Order number")}: <b>${esc(oid)}</b></p>${nri}<div class="jco-b"><button type="button" class="l" data-x>${T("बंद करें", "Close")}</button></div>`;
       box.querySelector("[data-x]").addEventListener("click", () => ov.remove());
       return;
     }
     const uri = `upi://pay?pa=${String(UPI_ID).replace(/[^A-Za-z0-9.\-_@]/g, "")}&pn=${encodeURIComponent(UPI_NAME)}&am=${amt.toFixed(2)}&cu=INR&tn=${encodeURIComponent(oid)}`;
     const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
-    box.innerHTML = `<h3>${T("UPI से भुगतान करें", "Pay by UPI")}</h3>
-      <p class="jco-p" style="margin:2px 0">₹${amt}</p><p class="sm">${T("ऑर्डर", "Order")}: ${esc(oid)}</p>
+    const upiPart = `<h3>${T("UPI से भुगतान करें", "Pay by UPI")}</h3>
+      <p class="jco-p" style="margin:2px 0">₹${amt}</p><p class="sm">${esc(NAME)} · ${T("ऑर्डर", "Order")}: ${esc(oid)}</p>
       ${mobile ? `<a class="app" href="${uri}" data-app>${T(`UPI ऐप से ₹${amt} भुगतान करें`, `Pay ₹${amt} in your UPI app`)}</a><p class="sm">PhonePe · Google Pay · Paytm · BHIM</p>` : ""}
       <div class="qr">${window.JTQR ? window.JTQR(uri, 200) : ""}</div>
       <p class="sm">${mobile ? T("दूसरे फ़ोन से स्कैन करें, या स्क्रीनशॉट लेकर UPI ऐप में गैलरी से स्कैन करें।", "Scan from another phone, or screenshot it and scan from the gallery in your UPI app.") : T("फ़ोन के किसी भी UPI ऐप से स्कैन करें।", "Scan with any UPI app on your phone.")}</p>
       <div class="id"><span>UPI ID:</span><code>${esc(UPI_ID)}</code><button type="button" data-cp>${T("कॉपी", "Copy")}</button></div>
-      <div class="st"><label for="jcoUtr">${T("भुगतान के बाद: UPI Ref / UTR नंबर (12 अंक) लिखें", "After paying: type the UPI Ref / UTR number (12 digits)")}</label>
-      <input id="jcoUtr" type="text" inputmode="numeric" autocomplete="off" maxlength="30" placeholder="${T("जैसे 4123 5678 9012", "e.g. 4123 5678 9012")}">
-      <p class="sm">${T("यह नंबर UPI ऐप में भुगतान के विवरण (Transaction details) में मिलता है।", "You will find it in the payment's transaction details in your UPI app.")}</p>
+      <div class="st"><p style="margin:0 0 6px">${T(`<b>₹${amt}</b> भेजने के बाद नीचे दबाएँ — आपकी रिपोर्ट तुरंत खुल जाएगी।`, `After sending <b>₹${amt}</b>, tap below — your report opens straight away.`)}</p>
       <p class="jco-e" role="alert"></p>
-      <div class="jco-b"><button type="button" data-s>${T("भुगतान हो गया — भेजें", "I have paid — send")}</button></div></div>
-      <p class="sm" style="margin-top:10px">${T("कोई दिक्कत? ", "Any problem? ")}<a href="${waL(T(`नमस्ते, ₹${amt} के भुगतान में मदद चाहिए। ऑर्डर: ${oid}`, `Hello, I need help paying ₹${amt}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp 83185 13814</a></p>`;
-    const err = box.querySelector(".jco-e"), inp = box.querySelector("#jcoUtr"), sb = box.querySelector("[data-s]");
+      <div class="jco-b"><button type="button" data-s disabled>${T("✓ भुगतान हो गया — रिपोर्ट खोलें", "✓ I have paid — open my report")}</button></div></div>`;
+    box.innerHTML = (tzIndia ? upiPart + nri : nri + upiPart) +
+      `<p class="sm" style="margin-top:10px">${T("कोई दिक्कत? ", "Any problem? ")}<a href="${waL(T(`नमस्ते, ₹${amt} के भुगतान में मदद चाहिए। ऑर्डर: ${oid}`, `Hello, I need help paying ₹${amt}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp 83185 13814</a></p>`;
+    const err = box.querySelector(".jco-e"), sb = box.querySelector("[data-s]");
     const app = box.querySelector("[data-app]"); if (app) app.addEventListener("click", () => ga("upi_app_open", { product }));
+    const nb = box.querySelector("[data-nri]"); if (nb) nb.addEventListener("click", () => ga("generate_lead", { lead_type: "nri_payment", product, value: amt, currency: "INR" }));
     box.querySelector("[data-cp]").addEventListener("click", (e) => { try { navigator.clipboard.writeText(UPI_ID); e.target.textContent = "✓"; } catch (x) { /* */ } });
-    const waiting = (utr) => {
-      box.innerHTML = `<div class="jco-s" aria-hidden="true"></div><h3>${T("धन्यवाद! भुगतान की जाँच हो रही है", "Thank you! Your payment is being checked")}</h3>
-        <p>${T("ज्योतिषी जी अपने बैंक में भुगतान देखकर पुष्टि करेंगे — आम तौर पर कुछ मिनटों से कुछ घंटों में। यह पेज खुला रहे तो रिपोर्ट अपने आप खुल जाएगी।", "The astrologer checks the payment in the bank and confirms it — usually within minutes to a few hours. Keep this page open and the report opens by itself.")}</p>
-        <p class="sm">${T("पेज बंद कर दिया? बाद में यह लिंक खोलें (WhatsApp पर भी भेजा जाएगा)", "Closed the page? Open this link later (we will also send it on WhatsApp)")}:<br><a href="${back}" style="word-break:break-all">${back}</a></p>
-        <a class="wa" href="${waL(T(`नमस्ते, मैंने ₹${amt} UPI से भेजे हैं। ऑर्डर: ${oid}, UTR: ${utr}`, `Hello, I have paid ₹${amt} by UPI. Order: ${oid}, UTR: ${utr}`))}" target="_blank" rel="noopener">${T("WhatsApp पर भी बताएँ", "Also tell us on WhatsApp")}</a>`;
-      let n = 0;
-      const poll = () => { if (!document.body.contains(ov)) return; verify(oid).then((v) => { if (v && v.ok && v.paid) { location.href = back; return; } if (n++ < 90) setTimeout(poll, 20000); }).catch(() => { if (n++ < 90) setTimeout(poll, 20000); }); };
-      setTimeout(poll, 15000);
-    };
+    // the "paid" button wakes up after a few seconds, so it is not tapped before paying
+    let left = 12; const label = sb.textContent;
+    const tick = () => { if (!document.body.contains(sb)) return; if (left <= 0) { sb.disabled = false; sb.textContent = label; return; } sb.textContent = `${label} (${left})`; left--; setTimeout(tick, 1000); };
+    tick();
     sb.addEventListener("click", async () => {
-      const u = inp.value.replace(/\s+/g, "");
-      if (!/^[A-Za-z0-9]{6,30}$/.test(u)) { err.textContent = T("कृपया सही UTR / Ref नंबर लिखें (आम तौर पर 12 अंक)।", "Please type the correct UTR / Ref number (usually 12 digits)."); return; }
       sb.disabled = true; err.textContent = "";
-      let x; try { x = await post("utr", { order_id: oid, utr: u }); } catch (e) { x = null; }
-      if (x && x.ok && x.paid) { location.href = back; return; }
-      if (!x || !x.ok) { sb.disabled = false; err.textContent = T("नंबर भेजा नहीं जा सका — इंटरनेट जाँचें या WhatsApp पर स्क्रीनशॉट भेजें।", "Could not send — check your connection or WhatsApp us a screenshot."); return; }
-      ga("upi_utr_sent", { product, value: amt, currency: "INR" });
-      waiting(u);
+      let x; try { x = await post("claim", { order_id: oid }); } catch (e) { x = null; }
+      if (x && x.ok && x.paid) {
+        ga("purchase", { transaction_id: oid, value: amt, currency: "INR", items: [{ item_name: product, price: amt, quantity: 1 }], method: "upi_claim" });
+        try { localStorage.setItem("jt-buy-" + oid, "1"); } catch (e) { /* */ }
+        location.href = back; return;
+      }
+      // backend not updated / offline → finish on WhatsApp
+      sb.disabled = false;
+      err.innerHTML = T(`रिपोर्ट अभी अपने-आप नहीं खुल सकी। <a href="${waL(`नमस्ते, मैंने ${NAME} के लिए ₹${amt} UPI से भेजे हैं (स्क्रीनशॉट साथ में)। ऑर्डर: ${oid}`)}" target="_blank" rel="noopener">WhatsApp पर स्क्रीनशॉट भेजें</a> — रिपोर्ट वहीं भेज दी जाएगी।`, `The report could not open by itself. <a href="${waL(`Hello, I paid ₹${amt} by UPI for the ${NAME} (screenshot attached). Order: ${oid}`)}" target="_blank" rel="noopener">Send the screenshot on WhatsApp</a> — we will send the report there.`);
     });
   }
   /* Razorpay checkout. After a successful payment the customer goes to the product page with
