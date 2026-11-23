@@ -168,8 +168,8 @@ window.JTCheckout = (function () {
         go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay");
         err.textContent = r && r.error === "unknown product" ? T("यह रिपोर्ट अभी सर्वर पर चालू नहीं हुई है — कृपया WhatsApp करें: 83185 13814", "This report is not live on the server yet — please WhatsApp +91 83185 13814.") : r && r.error === "promo" ? T("यह प्रोमो कोड मान्य नहीं है।", "This promo code is not valid.") : r && r.error === "phone" ? T("मोबाइल नंबर सही नहीं है।", "The mobile number is not valid.") : r && r.error === "cashfree" && r.currency === "USD" ? T("USD भुगतान अभी उपलब्ध नहीं — ₹ में भुगतान करें (विदेशी कार्ड भी चलते हैं)।", "USD checkout is not available right now — please pay in ₹ (international cards work).") : T("भुगतान शुरू नहीं हो सका। दोबारा कोशिश करें या WhatsApp करें: 83185 13814", "Could not start the payment. Try again or WhatsApp +91 83185 13814.");
         ga("checkout_error", { product, e: r && r.error });
-        // online checkout not available (Cashfree closed) → pay by UPI and send the screenshot; we send the report by hand
-        if (r && r.error === "cashfree" && window.JTUPIBox) {
+        // server problem → still let the customer pay by UPI and send the screenshot on WhatsApp (we send the report)
+        if (window.JTUPIBox && !(r && /^(phone|name|promo|item|partner)$/.test(String(r.error || "")))) {
           const nm = { kp: "KP रिपोर्ट", nm: "अंक ज्योतिष रिपोर्ट", sampurna: "सम्पूर्ण कुंडली", prashna: "एक प्रश्न", mobile: "मोबाइल नंबर रिपोर्ट", vp: "वर्षफल 2027 रिपोर्ट" }[product] || product;
           const amt = price(product, curOff()).v;
           const msg = `नमस्ते, मैंने ${nm} के लिए ₹${amt} UPI से भेजे हैं (स्क्रीनशॉट साथ में)।\nनाम: ${d.name || ""}\nजन्म तिथि: ${d.dob || ""}${d.time ? "\nजन्म समय: " + d.time : ""}${d.place ? "\nजन्म स्थान: " + d.place : ""}${q ? "\nप्रश्न: " + q : ""}\nमोबाइल: ${phone}\n(jyotishtark.in से)`;

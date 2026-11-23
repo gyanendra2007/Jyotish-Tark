@@ -145,7 +145,7 @@ function create(b) {
   if (!off && pc) { const row = partnerRow(pc); if (row && row.active) { off = isRud ? RUD_PARTNER_OFF : row.disc; ctype = "partner"; code = pc; partner = pc; commPct = isRud ? RUD_PARTNER_COMM : row.comm; } }
   const rc = isRud ? "" : String(b.ref || "").trim().toUpperCase();
   if (!off && /^JT[A-HJ-NP-Z2-9]{5}$/.test(rc) && rc !== String(b.own || "").toUpperCase()) { off = FRIEND_OFF; ctype = "referral"; code = rc; }
-  const amount = cur === "USD" ? Math.round(list * (100 - off)) / 100 : Math.round(list * (100 - off) / 100);
+  let amount = cur === "USD" ? Math.round(list * (100 - off)) / 100 : Math.round(list * (100 - off) / 100);
   const oid = "JT" + b.product.toUpperCase() + Utilities.formatDate(new Date(), "Asia/Kolkata", "yyMMddHHmmss") + rand(4);
   const extra = clip(typeof b.extra === "string" ? b.extra : JSON.stringify(b.extra || {}), 4000);
   const row = [new Date(), oid, b.product, "CREATED", amount, cur, list, off ? off + "%" : "", ctype, code, partner,
