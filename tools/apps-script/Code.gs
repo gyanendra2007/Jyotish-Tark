@@ -8,6 +8,8 @@
  *   3. lookup  : "get my report again" — order ID + phone returns the saved birth details.
  *   4. partner : a partner's sales and commission (code + PIN).
  *   5. lead    : records rudraksha / consultation enquiries.
+ *   8. sms     : your iPhone Shortcut forwards each bank "credited" SMS (with SMS_KEY); the order whose
+ *                amount matches to the paise is marked PAID and the customer's report opens by itself.
  *   7. utr     : (UPI mode) the customer sends the UPI reference number after paying; you get
  *                an email with a one-tap "mark paid" link, and the report unlocks for the customer.
  *   6. reviews : visitors sign in with Google and write a review; it appears on the
@@ -17,6 +19,7 @@
  * Secrets live in Project Settings → Script properties, never in this file:
  *   RZP_KEY_ID, RZP_KEY_SECRET (Razorpay → Account & Settings → API keys; test keys start rzp_test_)
  *   PAY_MODE (optional: razorpay | upi — overrides the default below)
+ *   SMS_KEY  (any long secret word; the same word goes into the iPhone Shortcut)
  *   CF_APP_ID, CF_SECRET, CF_MODE (old Cashfree, not used now), GOOGLE_CLIENT_ID (for review sign-in)
  */
 
@@ -103,6 +106,7 @@ function doPost(e) {
   try { b = JSON.parse((e && e.postData && e.postData.contents) || "{}"); } catch (x) { return out({ ok: false, error: "bad json" }); }
   try {
     if (b.action === "create") return out(create(b));
+    if (b.action === "sms") return out(sms(b));
     if (b.action === "claim") return out(claim(String(b.order_id || "")));
     if (b.action === "utr") return out(utr(String(b.order_id || ""), String(b.utr || "")));
     if (b.action === "verify") return out(verify(String(b.order_id || "")));
@@ -162,7 +166,23 @@ function create(b) {
     return { ok: true, razorpay: true, order_id: oid, rzp_order_id: r.json.id, key_id: keyId, amount: amount, currency: cur, list: list,
       name: name, phone: phone, email: validEmail(b.email) ? b.email : "", desc: P.name, test: /^rzp_test_/.test(keyId) };
   }
-  if (PM === "upi") { row[3] = "UPI_PENDING"; row[25] = "UPI"; sheet(SHEET_ORDERS, HEAD).appendRow(row); return { ok: true, upi: true, order_id: oid, amount: amount, currency: cur, list: list }; }
+  if (PM === "upi") {
+    // every waiting UPI order gets its own paise (₹299.07, ₹299.38 …) so the bank SMS tells us which order was paid
+    const lock = LockService.getScriptLock(); lock.waitLock(20000);
+    try {
+      const sh = sheet(SHEET_ORDERS, HEAD), last = sh.getLastRow(), used = {};
+      if (last >= 2) {
+        const n = Math.min(400, last - 1), rows = sh.getRange(last - n + 1, 1, n, 5).getValues(), since = Date.now() - 48 * 3600 * 1000;
+        rows.forEach((x) => { if (/^UPI/.test(String(x[3])) && new Date(x[0]).getTime() > since && Math.floor(Number(x[4])) === Math.floor(amount)) used[Math.round((Number(x[4]) % 1) * 100)] = 1; });
+      }
+      const free = []; for (let p = 1; p <= 99; p++) if (!used[p]) free.push(p);
+      const paise = free.length ? free[Math.floor(Math.random() * free.length)] : 1 + Math.floor(Math.random() * 99);
+      amount = Math.round((Math.floor(amount) + paise / 100) * 100) / 100;
+      row[4] = amount; row[3] = "UPI_PENDING"; row[25] = "UPI";
+      sh.appendRow(row);
+    } finally { lock.releaseLock(); }
+    return { ok: true, upi: true, order_id: oid, amount: amount, currency: cur, list: list };
+  }
 
   const ret = SITE + P.page + "?jtpaid=" + b.product + "&order_id=" + oid;
   const body = {
@@ -290,8 +310,7 @@ function reviewList() {
 
 // ------------------------------------------------------------------ helpers
 // ------------------------------------------------------------------ UPI: customer taps "I have paid"
-// The report opens at once (no checking step). The row is marked PAID with the note
-// "UPI — not checked", so you can match it with your bank SMS later; you get a short email too.
+// Nothing unlocks here — the order waits (UPI_WAIT) until your bank SMS confirms the exact amount (see sms()).
 function claim(oid) {
   oid = oid.trim().toUpperCase();
   if (!/^JT[A-Z]+\d{12}[A-Z0-9]{4}$/.test(oid)) return { ok: false, error: "order" };
@@ -299,17 +318,51 @@ function claim(oid) {
   if (!f) return { ok: false, error: "not found" };
   const v = f.values;
   if (v[3] === "PAID" || v[3] === "FREE") return { ok: true, paid: true };
-  if (!/^UPI/.test(String(v[3]))) return { ok: false, error: "not upi" };   // Razorpay orders are confirmed by Razorpay only
-  f.sh.getRange(f.row, 4).setValue("PAID");
-  f.sh.getRange(f.row, 25).setValue(new Date());
-  f.sh.getRange(f.row, 26).setValue("UPI — not checked");
+  if (v[3] === "UPI_PENDING") f.sh.getRange(f.row, 4).setValue("UPI_WAIT");
+  return { ok: true, paid: false };
+}
+
+// ------------------------------------------------------------------ UPI: bank SMS from your iPhone Shortcut
+// The Shortcut sends {action:"sms", key:<SMS_KEY>, text:<the SMS>}. We read the credited amount (with paise)
+// and the UPI reference, find the waiting order with exactly that amount, and mark it PAID.
+// Every SMS is logged in the "SMS" sheet. The same reference number is never used twice.
+function sms(b) {
+  const key = PropertiesService.getScriptProperties().getProperty("SMS_KEY");
+  if (!key || String(b.key || "") !== key) return { ok: false, error: "key" };
+  const text = String(b.text || "").replace(/\s+/g, " ").trim();
+  const log = sheet("SMS", ["Time", "Amount", "UPI ref", "Matched order", "Result", "SMS"]);
+  const p = parseSms(text);
+  if (!p.credit || !p.amount) { log.appendRow([new Date(), p.amount || "", p.ref || "", "", "not a credit SMS", clip(text, 300)]); return { ok: true, matched: null, reason: "not credit" }; }
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
-    const P = PRODUCTS[v[2]] || { name: v[2] };
-    MailApp.sendEmail(Session.getEffectiveUser().getEmail(), "New UPI order: ₹" + v[4] + " — " + P.name + " — " + v[12],
-      v[12] + " (" + v[13] + ") says they paid ₹" + v[4] + " by UPI for " + P.name + ".\nOrder: " + oid +
-      "\nThe report has opened for them. Please match it with your bank SMS; if the money never came, the order is in the Orders sheet (\"UPI — not checked\").");
-  } catch (x) { /* email is optional */ }
-  return { ok: true, paid: true };
+    const sh = sheet(SHEET_ORDERS, HEAD), last = sh.getLastRow();
+    if (last < 2) { log.appendRow([new Date(), p.amount, p.ref, "", "no orders", clip(text, 300)]); return { ok: true, matched: null }; }
+    const n = Math.min(600, last - 1), first = last - n + 1, rows = sh.getRange(first, 1, n, HEAD.length).getValues(), since = Date.now() - 48 * 3600 * 1000;
+    if (p.ref) for (let i = 0; i < rows.length; i++) if (String(rows[i][25]).indexOf("SMS ref " + p.ref) >= 0) { log.appendRow([new Date(), p.amount, p.ref, rows[i][1], "same SMS again", clip(text, 300)]); return { ok: true, matched: rows[i][1], dup: true }; }
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const x = rows[i];
+      if (!/^UPI_(PENDING|WAIT)$/.test(String(x[3]))) continue;
+      if (new Date(x[0]).getTime() < since) break;
+      if (Math.abs(Number(x[4]) - p.amount) > 0.001) continue;
+      sh.getRange(first + i, 4).setValue("PAID");
+      sh.getRange(first + i, 25).setValue(new Date());
+      sh.getRange(first + i, 26).setValue(clip("SMS ref " + (p.ref || "?") + (p.from ? " from " + p.from : ""), 200));
+      log.appendRow([new Date(), p.amount, p.ref, x[1], "PAID", clip(text, 300)]);
+      return { ok: true, matched: x[1] };
+    }
+    log.appendRow([new Date(), p.amount, p.ref, "", "no waiting order with this amount", clip(text, 300)]);
+    return { ok: true, matched: null };
+  } finally { lock.releaseLock(); }
+}
+function parseSms(t) {
+  const credit = /credit|cr\.?\b|received|deposited|जमा/i.test(t) && !/debited|\bdr\.?\b.*?\bto\b|sent to|paid to/i.test(t.replace(/credited/ig, ""));
+  let m = t.match(/(?:credited|received|deposited)[^0-9]{0,30}?(?:rs\.?|inr|₹)\s*([0-9,]+(?:\.[0-9]{1,2})?)/i) ||
+          t.match(/(?:rs\.?|inr|₹)\s*([0-9,]+(?:\.[0-9]{1,2})?)[^.]{0,40}?(?:credited|received|deposited)/i) ||
+          t.match(/(?:rs\.?|inr|₹)\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
+  const amount = m ? Number(m[1].replace(/,/g, "")) : 0;
+  const r = t.match(/(?:upi\s*ref(?:erence)?|ref(?:erence)?\s*(?:no|number)?|rrn|utr|txn\s*id)[\s.:#-]*([0-9]{9,14})/i) || t.match(/\b([0-9]{12})\b/);
+  const fr = t.match(/(?:trf from|transfer from|from|VPA)\s+([A-Za-z][A-Za-z0-9@._ -]{2,40}?)(?:\s+(?:ref|refno|on|upi|via)|[.,(]|$)/i);
+  return { credit: credit, amount: amount, ref: r ? r[1] : "", from: fr ? fr[1].trim() : "" };
 }
 
 // ------------------------------------------------------------------ UPI: customer sends the reference number

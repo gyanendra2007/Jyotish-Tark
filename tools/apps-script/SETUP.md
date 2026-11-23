@@ -98,3 +98,18 @@ Google will ask once for permission to send email — allow it. Keep the same de
    The report should open by itself, and the Orders sheet row should say PAID.
 5. After Razorpay approves the account: generate **Live** keys and replace both Script properties. No code change.
    From then on every customer gets Razorpay checkout (UPI, cards, net banking) and reports unlock automatically.
+
+## Automatic UPI confirmation with the bank SMS (iPhone Shortcut)
+
+Each UPI order gets its own paise (₹299.07, ₹299.38 …). When the bank SMS "credited by Rs299.07" arrives,
+an iPhone Shortcut sends the SMS text to this script, which marks that order PAID; the customer's open page
+then opens the report by itself. Every SMS is logged in the "SMS" sheet.
+
+1. Script properties → add `SMS_KEY` = any long secret word you make up (e.g. 20+ letters/numbers).
+2. Redeploy (Manage deployments → Edit → New version).
+3. iPhone → Shortcuts → Automation → + → **Message** → *Message Contains*: `credited` → **Run Immediately** → Next →
+   New Blank Automation → add **Get Contents of URL**:
+   - URL: the web app /exec address
+   - Method: POST · Request Body: JSON
+   - fields: `action` = `sms` · `key` = your SMS_KEY · `text` = Shortcut Input → **Content**
+4. The phone must be on, online and receiving the bank SMS. If an SMS is missed, type PAID in the order's Status.
