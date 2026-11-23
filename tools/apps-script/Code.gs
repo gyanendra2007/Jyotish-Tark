@@ -107,6 +107,8 @@ function doPost(e) {
   try {
     if (b.action === "create") return out(create(b));
     if (b.action === "sms") return out(sms(b));
+    if (b.action === "pending") return out(pending(b));
+    if (b.action === "markpaid") return out(markPaid(b));
     if (b.action === "claim") return out(claim(String(b.order_id || "")));
     if (b.action === "utr") return out(utr(String(b.order_id || ""), String(b.utr || "")));
     if (b.action === "verify") return out(verify(String(b.order_id || "")));
@@ -353,6 +355,40 @@ function sms(b) {
     log.appendRow([new Date(), p.amount, p.ref, "", "no waiting order with this amount", clip(text, 300)]);
     return { ok: true, matched: null };
   } finally { lock.releaseLock(); }
+}
+// ------------------------------------------------------------------ owner page (jyotishtark.in/orders.html)
+// Lists UPI orders waiting for payment; one tap marks an order PAID. Needs the same secret word (SMS_KEY).
+function ownerOk(b) { const key = PropertiesService.getScriptProperties().getProperty("SMS_KEY"); return !!key && String(b.key || "") === key; }
+function pending(b) {
+  if (!ownerOk(b)) return { ok: false, error: "key" };
+  const sh = sheet(SHEET_ORDERS, HEAD), last = sh.getLastRow(), list = [], recent = [];
+  if (last < 2) return { ok: true, list: list, recent: recent };
+  const n = Math.min(500, last - 1), rows = sh.getRange(last - n + 1, 1, n, HEAD.length).getValues(), since = Date.now() - 72 * 3600 * 1000;
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const x = rows[i], t0 = new Date(x[0]).getTime();
+    if (t0 < since) break;
+    const P = PRODUCTS[x[2]] || { name: x[2] };
+    const o = { order_id: x[1], product: P.name, amount: Number(x[4]), status: String(x[3]), name: String(x[12] || ""), phone: String(x[13] || ""), at: t0, note: String(x[25] || "") };
+    if (/^UPI_(PENDING|WAIT)$/.test(o.status)) list.push(o);
+    else if (o.status === "PAID" && recent.length < 10) recent.push(o);
+  }
+  return { ok: true, list: list, recent: recent };
+}
+function markPaid(b) {
+  if (!ownerOk(b)) return { ok: false, error: "key" };
+  const oid = String(b.order_id || "").trim().toUpperCase();
+  const f = findOrder(oid);
+  if (!f) return { ok: false, error: "not found" };
+  const v = f.values;
+  if (v[3] !== "PAID" && v[3] !== "FREE") {
+    f.sh.getRange(f.row, 4).setValue("PAID");
+    f.sh.getRange(f.row, 25).setValue(new Date());
+    f.sh.getRange(f.row, 26).setValue("UPI — confirmed by you on orders page");
+  }
+  const P = PRODUCTS[v[2]] || { page: "", name: v[2] };
+  const url = SITE + P.page + "?jtpaid=" + v[2] + "&order_id=" + oid;
+  const ph = String(v[13]).replace(/\D/g, ""), wa = ph.length === 10 ? "91" + ph : ph;
+  return { ok: true, url: url, wa: wa, name: String(v[12] || "") };
 }
 function parseSms(t) {
   const credit = /credit|cr\.?\b|received|deposited|जमा/i.test(t) && !/debited|\bdr\.?\b.*?\bto\b|sent to|paid to/i.test(t.replace(/credited/ig, ""));

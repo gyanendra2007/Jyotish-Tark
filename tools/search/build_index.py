@@ -8,7 +8,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 os.chdir(ROOT)
 bs = open('bhakti-sangrah.html', encoding='utf-8').read()
 DQ = {u: q for u, q in re.findall(r'<a href="([a-z0-9-]+\.html)" data-q="([^"]*)"', bs)}
-SKIP = {'wa-post.html', '404.html', 'blog-post.html', 'google'}
+SKIP = {'wa-post.html', '404.html', 'blog-post.html', 'google', 'orders.html', 'sampurna-admin.html'}
 # extra Hinglish / common-spelling aliases
 ALIAS = {'chalisa': 'chalisa chaalisa चालीसा', 'aarti': 'aarti arti aarati आरती', 'hanuman': 'hanuman hanumaan bajrangbali हनुमान बजरंगबली',
          'shiv': 'shiv shiva mahadev bholenath शिव महादेव भोलेनाथ', 'durga': 'durga maa durge दुर्गा माँ', 'lakshmi': 'lakshmi laxmi लक्ष्मी',
