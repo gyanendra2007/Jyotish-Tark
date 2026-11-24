@@ -47,7 +47,7 @@
         <h3>आपके लिंक${disc ? ` (ग्राहक को ${disc}% छूट)` : ""}</h3><div class="jc-tw"><table class="jc-tbl"><tbody>
         ${[["होम पेज", ""], ["सम्पूर्ण कुंडली ₹1,101", "kundali-form.html"], ["KP रिपोर्ट ₹299", "kp-astrology.html"], ["अंक ज्योतिष रिपोर्ट ₹299", "numerology.html"], ["मोबाइल नंबर रिपोर्ट ₹199", "mobile-number-numerology.html"], ["रुद्राक्ष (10% छूट)", "rudraksha.html"], ["गुण मिलान (मुफ़्त)", "guna-milan-calculator.html"]].map(([t, pg]) => `<tr><td>${t}</td><td style="word-break:break-all"><code>${link(pg)}</code></td></tr>`).join("")}</tbody></table></div>
         <h3>हाल की बिक्री</h3>${r.rows.length ? `<div class="jc-tw"><table class="jc-tbl"><thead><tr><th>तारीख़</th><th>उत्पाद</th><th>राशि</th><th>कमीशन</th></tr></thead><tbody>${r.rows.map((x) => `<tr><td>${esc(x.date)}</td><td>${esc(x.product)}</td><td>${x.currency === "USD" ? "$" : "₹"}${x.amount}</td><td>${x.currency === "USD" ? "$" : "₹"}${x.commission}</td></tr>`).join("")}</tbody></table></div>` : "<p>अभी कोई बिक्री नहीं — ऊपर के लिंक अपने ग्राहकों को भेजें।</p>"}
-        <p class="jc-note">कमीशन हर महीने की 5 तारीख़ तक पिछले महीने की पक्की बिक्री पर UPI से भेजा जाता है।</p>`;
+        <p class="jc-note">हर पक्की बिक्री का कमीशन 1–2 दिन में UPI से भेजा जाता है।</p>`;
       C.track("partner_dash", { code });
     } catch (x) { er.textContent = "इंटरनेट की समस्या — दोबारा कोशिश करें।"; er.hidden = false; }
   });
