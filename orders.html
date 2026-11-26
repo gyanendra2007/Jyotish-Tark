@@ -88,7 +88,7 @@
     return h < 24 ? h + " घंटे पहले" : Math.round(h / 24) + " दिन पहले";
   }
   function waLink(r) {
-    var msg = "नमस्ते " + (r.name || "") + " जी, आपका भुगतान मिल गया है 🙏 आपकी रिपोर्ट इस लिंक पर खुलेगी: " + r.url + " — ज्योतिष तर्क";
+    var msg = "नमस्ते " + (r.name || "") + " जी, आपका भुगतान मिल गया है 🙏 आपकी रिपोर्ट इस लिंक पर खुलेगी: " + r.url + " — रिपोर्ट पढ़ने के बाद अपना सच्चा अनुभव ज़रूर लिखें: https://g.page/r/CZT7zaDR-9K8EAI/review — ज्योतिष तर्क";
     return "https://wa.me/" + r.wa + "?text=" + encodeURIComponent(msg);
   }
   function showKey(msg) { $("app").hidden = true; $("refresh").hidden = true; $("keyBox").hidden = false; $("keyErr").textContent = msg || ""; }

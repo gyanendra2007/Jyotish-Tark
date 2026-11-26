@@ -334,12 +334,29 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
     }, 1500);
   }
 
-  function init() { menu(); try { share(); } catch (e) {} try { helpBot(); offer(); } catch (e) {} }
+  // WhatsApp channel strip above the footer on every page
+  var CHANNEL = "https://whatsapp.com/channel/0029Vb8h2fV1t90Z79nyAi23";
+  window.JT_CHANNEL = CHANNEL;
+  function channel() {
+    if (document.getElementById("jtChan") || document.body.hasAttribute("data-no-share")) return;
+    var f = document.querySelector("footer.jt-footer, footer");
+    if (!f) return;
+    var d = document.createElement("div");
+    d.id = "jtChan";
+    d.className = "no-print";
+    d.style.cssText = "max-width:880px;margin:24px auto 0;padding:0 16px;font-family:Mukta,system-ui,sans-serif";
+    d.innerHTML = "<div style='display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between;background:#E8F6EC;border:1px solid #9AD3AB;border-radius:12px;padding:14px 16px'>" +
+      "<div style='flex:1 1 260px;min-width:0'><b style='font-size:17px;color:#14532D'>रोज़ का पंचांग, राशिफल और व्रत-त्योहार — WhatsApp पर</b><br><span style='font-size:14.5px;color:#3F5F49'>ज्योतिष तर्क का WhatsApp चैनल फ़ॉलो करें। मुफ़्त, कोई स्पैम नहीं।</span></div>" +
+      "<a href='" + CHANNEL + "' target='_blank' rel='noopener' data-chan style='flex:0 0 auto;display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;background:#1f8f4e;color:#fff;font-weight:800;text-decoration:none'>चैनल फ़ॉलो करें</a></div>";
+    f.parentNode.insertBefore(d, f);
+    d.querySelector("[data-chan]").addEventListener("click", function () { try { if (window.gtag) window.gtag("event", "channel_follow_click", { page: location.pathname }); } catch (e) { /* */ } });
+  }
+  function init() { menu(); try { share(); } catch (e) {} try { channel(); } catch (e) {} try { helpBot(); offer(); } catch (e) {} }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=18";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=19";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();

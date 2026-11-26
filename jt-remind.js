@@ -1,7 +1,7 @@
 /* WhatsApp vrat-reminder box. Renders into any element with [data-jt-remind].
    Primary: follow the WhatsApp Channel (no data needed). Secondary: leave number → Leads sheet (type "remind"). */
 (function () {
-  var CHANNEL = ''; // ← WhatsApp Channel link (https://whatsapp.com/channel/...) — paste once the channel is created
+  var CHANNEL = 'https://whatsapp.com/channel/0029Vb8h2fV1t90Z79nyAi23';
   var API = 'https://script.google.com/macros/s/AKfycbw1dACJE9HKwOxwmsMlTJQWP3mQ2BsoIXme2FpHO1WnWut2O3_4slsNQkM1RlKCfgNr/exec';
   var nodes = document.querySelectorAll('[data-jt-remind]');
   if (!nodes.length) return;

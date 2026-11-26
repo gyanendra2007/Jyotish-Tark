@@ -295,6 +295,29 @@ window.JTCheckout = (function () {
   }
   const SITE_ROOT = () => { try { return location.origin.indexOf("http") === 0 ? location.origin + "/" : "https://jyotishtark.in/"; } catch (e) { return "https://jyotishtark.in/"; } };
 
+  /* A gentle, one-time request for an honest review, a little after the report opens. */
+  function askReview(oid, en) {
+    const k = "jt-rev-ask-" + oid;
+    if (ls.get(k)) return;
+    ls.set(k, "1");
+    const G = "https://g.page/r/CZT7zaDR-9K8EAI/review", T = (h, e) => (en ? e : h);
+    setTimeout(() => {
+      if (document.getElementById("jtRevAsk")) return;
+      const d = document.createElement("div");
+      d.id = "jtRevAsk"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", T("अपना अनुभव लिखें", "Write a review"));
+      d.style.cssText = "position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483100;max-width:440px;margin:0 auto;background:#FBF6EC;border:2px solid #B8892B;border-radius:14px;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-family:Mukta,system-ui,sans-serif;color:#2B1810";
+      d.innerHTML = `<b style="font-size:17px;color:#7A1F1F">${T("रिपोर्ट कैसी लगी?", "How was your report?")}</b>
+        <p style="margin:4px 0 10px;font-size:15px;line-height:1.5">${T("आपका सच्चा अनुभव — अच्छा या सुधार लायक — दूसरों को सही फ़ैसला लेने में मदद करता है। 1 मिनट लगेगा।", "Your honest experience — good or needs work — helps others decide. Takes a minute.")}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><a href="${G}" target="_blank" rel="noopener" data-r="google" style="flex:1 1 160px;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:10px;background:#7A1F1F;color:#fff;font-weight:700;text-decoration:none">${T("Google पर लिखें", "Review on Google")}</a>
+        <a href="index.html#jt-reviews" target="_blank" rel="noopener" data-r="site" style="flex:1 1 140px;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:10px;border:1.5px solid #7A1F1F;color:#7A1F1F;font-weight:700;text-decoration:none;background:#fff">${T("वेबसाइट पर लिखें", "Review on website")}</a></div>
+        <button type="button" data-x style="margin-top:8px;width:100%;min-height:36px;border:0;background:transparent;color:#6B5444;font:inherit;cursor:pointer">${T("बाद में", "Later")}</button>`;
+      document.body.appendChild(d);
+      d.querySelector("[data-x]").addEventListener("click", () => d.remove());
+      d.querySelectorAll("[data-r]").forEach((a) => a.addEventListener("click", () => { ga("review_ask_click", { where: a.getAttribute("data-r") }); setTimeout(() => d.remove(), 300); }));
+      ga("review_ask_shown", {});
+    }, 90000);
+  }
+
   /* After Cashfree sends the customer back (?jtpaid=…&order_id=…): confirm with the backend,
      then call onPaid(order, orderId) with the birth details saved at checkout. */
   function confirm(product, onPaid, lang) {
@@ -309,7 +332,7 @@ window.JTCheckout = (function () {
     const run = () => {
       show(`<div class="jco-s" aria-hidden="true"></div><h3>${T("भुगतान की पुष्टि हो रही है…", "Confirming your payment…")}</h3><p>${T("कृपया यह पेज बंद न करें।", "Please keep this page open.")}</p>`);
       verify(oid).then((r) => {
-        if (r && r.ok && r.paid) { ov.remove(); ga("purchase_verified", { product, transaction_id: oid }); try { const k = "jt-buy-" + oid; if (!localStorage.getItem(k)) { localStorage.setItem(k, "1"); const o = r.order || {}, amt = Number(o.amount) || ((PRICES[product] || {}).inr || 0); if (amt > 0) ga("purchase", { transaction_id: oid, value: amt, currency: o.currency || "INR", items: [{ item_name: product, price: amt, quantity: 1 }] }); } } catch (e) { /* ignore */ } onPaid(r.order, oid); return; }
+        if (r && r.ok && r.paid) { ov.remove(); ga("purchase_verified", { product, transaction_id: oid }); try { const k = "jt-buy-" + oid; if (!localStorage.getItem(k)) { localStorage.setItem(k, "1"); const o = r.order || {}, amt = Number(o.amount) || ((PRICES[product] || {}).inr || 0); if (amt > 0) ga("purchase", { transaction_id: oid, value: amt, currency: o.currency || "INR", items: [{ item_name: product, price: amt, quantity: 1 }] }); } } catch (e) { /* ignore */ } onPaid(r.order, oid); askReview(oid, lang === "en"); return; }
         if (r && r.ok === false) { fail(T("यह ऑर्डर नहीं मिला", "Order not found"), T("इस ऑर्डर नंबर का कोई भुगतान नहीं मिला। अगर आपका पैसा कटा है तो भुगतान का स्क्रीनशॉट WhatsApp पर भेजें।", "No payment was found for this order number. If money was deducted, send the payment screenshot on WhatsApp.")); return; }
         if (r && r.ok && /^UPI/.test(r.status || "")) { fail(T("भुगतान की जाँच हो रही है", "Your payment is being checked"), T("आपके UPI भुगतान की पुष्टि अभी नहीं हुई है। पुष्टि होते ही यही लिंक खोलने पर रिपोर्ट खुल जाएगी — कुछ मिनट बाद पेज दोबारा खोलें। भुगतान कर दिया है और देर हो रही है, तो WhatsApp पर भुगतान का स्क्रीनशॉट भेजें — रिपोर्ट वहीं भेज दी जाएगी।", "Your UPI payment is not confirmed yet. Once it is, this same link opens your report — open it again in a few minutes. If you have paid and it is taking long, WhatsApp us the payment screenshot and we will send the report there.")); return; }
         if (tries++ < 5) { setTimeout(run, 3000); return; }
