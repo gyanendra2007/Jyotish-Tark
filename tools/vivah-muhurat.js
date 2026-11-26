@@ -339,7 +339,8 @@ ${monthSecs}
       <div class="fx-days">
         <a href="vivah-muhurat-2026.html"><span class="fx-d">नवंबर–दिसंबर 2026</span><b>विवाह मुहूर्त 2026</b><small>इस साल की बची तारीखें</small></a>
         <a href="kundali-milan.html"><span class="fx-d">मुफ़्त टूल</span><b>कुंडली मिलान</b><small>36 गुण, मंगल व नाड़ी दोष</small></a>
-        <a href="gochar-2027.html"><span class="fx-d">2027</span><b>गोचर 2027</b><small>शनि, गुरु, राहु-केतु, मंगल</small></a>
+        <a href="griha-pravesh-muhurat-${YEAR}.html"><span class="fx-d">पूरा वर्ष</span><b>गृह प्रवेश मुहूर्त ${YEAR}</b><small>नए घर के शुभ दिन</small></a>
+        <a href="shubh-muhurat-${YEAR}.html"><span class="fx-d">सभी मुहूर्त</span><b>शुभ मुहूर्त ${YEAR}</b><small>विवाह, गृह प्रवेश, वाहन</small></a>
         <a href="mangal-dosha-nivaran.html"><span class="fx-d">लेख</span><b>मंगल दोष</b><small>पहचान और सही उपाय</small></a>
       </div>
       <p class="rs-updated">लेखक: <a href="about.html">ज्योतिषी ज्ञानेंद्र सिंह तोमर</a>, Jyotish Tark, लखनऊ · अपडेट: ${Number(today.slice(8))} ${MON[Number(today.slice(5, 7)) - 1]} ${today.slice(0, 4)} · समय लखनऊ (IST) के लिए, लाहिड़ी अयनांश। रोज़ का <a href="panchang.html">पंचांग यहाँ देखें</a>।</p>

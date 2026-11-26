@@ -10,7 +10,7 @@
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
     loading = new Promise(function (res) {
-      var s = document.createElement("script"); s.src = "search-index.js?v=7"; s.async = true;
+      var s = document.createElement("script"); s.src = "search-index.js?v=8"; s.async = true;
       s.onload = function () { IDX = (window.JT_SEARCH || []).map(prep); res(IDX); };
       s.onerror = function () { IDX = []; res(IDX); };
       document.head.appendChild(s);
