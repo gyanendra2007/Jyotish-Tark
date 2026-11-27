@@ -305,6 +305,22 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
   function offer() {
     if (document.body.hasAttribute("data-no-offer") || /consultation\.html$/.test(location.pathname) || /[?&]jtadmin=/.test(location.search)) return;
     if (store("sessionStorage", "jt-ad-seen")) return;
+    // show only after the visitor has engaged (40% scroll or 35 s), never on first paint
+    var fired = false, timer = null;
+    function arm() {
+      if (fired) return; fired = true;
+      window.removeEventListener("scroll", onScroll);
+      if (timer) clearTimeout(timer);
+      showOffer();
+    }
+    function onScroll() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0 && window.scrollY / h >= 0.4) arm();
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    timer = setTimeout(arm, 35000);
+  }
+  function showOffer() {
     setTimeout(function () {
       if (document.getElementById("jtAd") || document.documentElement.classList.contains("jt-bot-open")) return;
       store("sessionStorage", "jt-ad-seen", "1");
@@ -331,7 +347,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
       document.addEventListener("keydown", adKeys, true);
       var first = o.querySelector(".jt-ad-c1 .jt-ad-b"); if (first) first.focus({ preventScroll: true });
       try { if (window.gtag) window.gtag("event", "welcome_ad_shown"); } catch (e) { /* ignore */ }
-    }, 1500);
+    }, 300);
   }
 
   // WhatsApp channel strip above the footer on every page
@@ -359,4 +375,4 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
 /* referral link capture (?ref=) on any page */
 (function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=19";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
-(function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=7";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
+(function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=8";s.defer=true;document.head.appendChild(s);}}catch(e){}})();

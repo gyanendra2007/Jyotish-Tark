@@ -287,6 +287,133 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
   console.log("wrote", slug, "—", total, "dates:", summary);
 }
 
+// ======================= generic page (mundan, namkaran) =======================
+function genericPage(cfg) {
+  const { slug, list: L_, M, label, kicker, h1a, h1b, lead, rules, closed, faq, waMsg, bandH, bandP, bandBtn, see, extra } = cfg;
+  const total = L_.length, summary = M.withM.map((i) => `${MON[i]} ${M.counts[i]}`).join(", ");
+  const desc = cfg.desc(total, summary);
+  const wrap = shell({ slug, title: cfg.title, h1: `${h1a} — ${h1b}`, desc, crumb: h1a, faq, waMsg });
+  const main = `<main id="main" class="rs-page fx-page">
+${crumbNav(h1a)}
+
+${hero(kicker, h1a, h1b, lead(total), M)}
+
+${toc(M, [["table", "पूरी सूची"], ...(closed ? [["kab-nahi", "कब नहीं"]] : []), ["niyam", "मुहूर्त कैसे चुना"], ["faq", "प्रश्न-उत्तर"]])}
+
+${monthSections(L_, M, label)}
+
+    <section class="rs-sec" id="table">
+      <h2>एक नज़र में — सभी ${total} मुहूर्त</h2>
+      <p class="rs-note">रात 12 बजे के बाद वाला समय पंचांग में उसी दिन का माना जाता है, क्योंकि पंचांग का दिन सूर्योदय से अगले सूर्योदय तक चलता है।</p>
+${fullTable(L_, `${h1a}, लखनऊ (IST)`)}
+    </section>
+${closed ? `
+    <section class="rs-sec" id="kab-nahi">
+      <h2>${YEAR} में कब ${label.replace(" मुहूर्त", "")} नहीं होगा</h2>
+      <div class="vm-table-wrap">
+        <table class="vm-table">
+          <thead><tr><th scope="col">अवधि</th><th scope="col">कारण</th></tr></thead>
+          <tbody>${closed.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </section>` : ""}
+
+    <section class="rs-sec" id="niyam">
+      <h2>ये मुहूर्त कैसे निकाले गए</h2>
+      <p>हर मिनट को हमारे पंचांग इंजन से लखनऊ (26.85° N, 80.95° E) के लिए लाहिड़ी अयनांश से जांचा गया है। एक समय तभी शुभ माना गया जब ये सभी शर्तें पूरी हों:</p>
+      <ol class="fx-steps">
+${rules.map((r) => `        <li>${r}</li>`).join("\n")}
+        <li><strong>30 मिनट से छोटे समय छोड़े गए।</strong></li>
+      </ol>
+    </section>
+${extra || ""}
+${faqHtml(faq)}
+
+${band(bandH, bandP, waMsg, bandBtn)}
+
+${seeAlso(see)}
+  </main>`;
+  fs.writeFileSync(path.join(ROOT, slug), wrap(main));
+  console.log("wrote", slug, "—", total, "dates:", summary);
+}
+const COMMON_RULE = "<strong>भद्रा, अशुभ योग और गंडांत नहीं:</strong> विष्टि करण, व्यतीपात, वैधृति, विष्कम्भ, अतिगण्ड, शूल, गण्ड, व्याघात, वज्र, परिघ योग और नक्षत्र-संधि का समय हटाया गया।";
+
+// ---- MUNDAN ----
+const MU_NAK = [0, 4, 6, 7, 12, 13, 14, 17, 21, 22, 23, 26], MU_TI = [1, 2, 4, 6, 9, 10, 12];
+const MUR = { nak: new Set(MU_NAK), tithi: (t) => t < 15 ? MU_TI.includes(t % 15) : MU_TI.includes(t % 15) && (t % 15) <= 9, vara: (d) => [1, 3, 4, 5].includes(d), kharmas: 1, chaturmas: 1, asta: 1, bhadra: 1, yoga: 1, gandanta: 1 };
+const MUL = C.compute(YEAR, MUR), MUM = monthData(MUL);
+genericPage({
+  slug: `mundan-muhurat-${YEAR}.html`, list: MUL, M: MUM, label: "मुंडन मुहूर्त",
+  title: `मुंडन मुहूर्त ${YEAR}: बच्चे के मुंडन संस्कार की शुभ तारीखें व समय (लखनऊ) | Jyotish Tark`,
+  desc: (t, s) => `मुंडन मुहूर्त ${YEAR}: चूड़ाकर्म संस्कार की कुल ${t} शुभ तारीखें — ${s}। लखनऊ के अनुसार समय, नक्षत्र और तिथि, और खरमास-चातुर्मास में कब नहीं।`,
+  kicker: "॥ चूड़ाकर्म संस्कार ॥", h1a: `मुंडन मुहूर्त ${YEAR}`, h1b: "बच्चे के मुंडन की शुभ तारीखें",
+  lead: (t) => `${YEAR} में मुंडन (चूड़ाकर्म) संस्कार के लिए कुल <b>${t} शुभ तारीखें</b> हैं। खरमास, चातुर्मास और गुरु-शुक्र अस्त के समय मुंडन नहीं किया जाता, इसलिए जुलाई से नवंबर की शुरुआत तक विराम है। नीचे हर तारीख का लखनऊ के अनुसार समय, नक्षत्र और तिथि दी गई है।`,
+  rules: [
+    `<strong>शुभ नक्षत्र:</strong> ${nakNames(MU_NAK)}।`,
+    "<strong>तिथि:</strong> द्वितीया, तृतीया, पंचमी, सप्तमी, दशमी, एकादशी और त्रयोदशी। कृष्ण पक्ष में केवल दशमी तक।",
+    "<strong>वार:</strong> सोमवार, बुधवार, गुरुवार या शुक्रवार।",
+    COMMON_RULE,
+    "<strong>समय:</strong> खरमास, चातुर्मास, और गुरु या शुक्र अस्त का समय छोड़ा गया।",
+  ],
+  closed: [
+    [`1 जनवरी – ${C.fdt(S_MAKAR.t, true)}`, "खरमास (सूर्य धनु राशि में)।"],
+    [`${C.fdt(S_MEEN.t, true)} – ${C.fdt(S_MESH.t, true)}`, "मीन खरमास (सूर्य मीन राशि में)।"],
+    ...SA.map((r) => [`${C.fdt(r.s)} – ${C.fdt(r.e)}`, "शुक्र अस्त।"]),
+    [`${C.fd(CH[0])} – ${C.fd(CH[1])}`, "चातुर्मास (देवशयनी से देवउठनी एकादशी तक)।"],
+    ...GA.map((r) => [`${C.fdt(r.s)} – ${C.fdt(r.e)}`, "गुरु अस्त, चातुर्मास के अंदर।"]),
+    [`${C.fdt(S_DHANU.t, true)} से`, `खरमास फिर शुरू, जनवरी ${YEAR + 1} तक।`],
+  ],
+  extra: `
+    <section class="rs-sec" id="umar">
+      <h2>मुंडन किस उम्र में किया जाता है</h2>
+      <p>परंपरा में मुंडन बच्चे के पहले, तीसरे या पाँचवें वर्ष में — यानी विषम वर्ष में — करना शुभ माना जाता है। कई परिवार कुल-देवता के स्थान या किसी तीर्थ पर मुंडन करवाते हैं, तो कई परिवारों की अपनी अलग परंपरा होती है। अपने परिवार की रीति को प्राथमिकता दें।</p>
+      <p class="rs-note">बच्चे का स्वास्थ्य सबसे पहले है। अगर बच्चा बीमार है या उसे सर्दी-बुखार है, तो मुहूर्त के लिए ज़िद न करें — अगली शुभ तारीख चुनें, और ज़रूरत हो तो डॉक्टर से पूछ लें।</p>
+    </section>
+`,
+  faq: [
+    ...MUM.withM.map((i) => [`${MON[i]} ${YEAR} में मुंडन के शुभ मुहूर्त कौन से हैं?`, `${MON[i]} ${YEAR} में ${MUM.counts[i]} शुभ तारीखें हैं — ${MUM.by[i].map((x) => `${C.dnum(x.d.rise)} ${MON[i]} (${VAR[C.ist(x.d.rise).getUTCDay()]})`).join(", ")}।`]),
+    ["दूसरी वेबसाइट पर मार्च के आख़िरी दिन और जुलाई की तारीखें क्यों दिखती हैं?", `${C.fdt(S_MEEN.t)} से ${C.fdt(S_MESH.t)} तक मीन खरमास है और ${SA[0] ? C.fdt(SA[0].s) : "जुलाई"} से शुक्र अस्त है। परंपरा में इन समयों में मुंडन जैसे संस्कार नहीं किए जाते, इसलिए हमने ये दिन नहीं दिए।`],
+    ["क्या ये समय हर शहर के लिए एक जैसे हैं?", "तारीखें लगभग पूरे भारत में एक ही रहती हैं, पर शुरुआत और अंत का समय शहर-शहर कुछ मिनट बदलता है। ऊपर दिए समय लखनऊ के हैं।"],
+  ],
+  waMsg: `नमस्ते, मुझे अपने बच्चे के मुंडन (${YEAR}) के लिए शुभ तारीख निकलवानी है।`,
+  bandH: "बच्चे की कुंडली के अनुसार मुंडन की तारीख निकलवाएं", bandP: "बच्चे की जन्म तिथि, समय और स्थान भेजें। ज्योतिषी ज्ञानेंद्र सिंह तोमर इन तारीखों में से उपयुक्त दिन बताएंगे।", bandBtn: "तारीख निकलवाएं",
+  see: [[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `शुभ मुहूर्त ${YEAR}`, "विवाह, गृह प्रवेश, वाहन"], [`namkaran-muhurat-${YEAR}.html`, "पूरा वर्ष", `नामकरण मुहूर्त ${YEAR}`, "बच्चे के नामकरण के दिन"], ["naam-akshar-calculator.html", "मुफ़्त टूल", "नाम अक्षर", "नक्षत्र से नाम का पहला अक्षर"], ["panchang.html", "रोज़", "आज का पंचांग", "तिथि, नक्षत्र, राहुकाल"]],
+});
+
+// ---- NAMKARAN ----
+const NA_NAK = [0, 3, 4, 6, 7, 11, 12, 13, 14, 16, 20, 21, 22, 23, 25, 26], NA_TI = [1, 2, 4, 6, 9, 10, 11, 12];
+const NAR = { nak: new Set(NA_NAK), tithi: (t) => NA_TI.includes(t % 15), vara: (d) => [1, 3, 4, 5].includes(d), bhadra: 1, yoga: 1, gandanta: 1 };
+const NAL = C.compute(YEAR, NAR), NAM = monthData(NAL);
+genericPage({
+  slug: `namkaran-muhurat-${YEAR}.html`, list: NAL, M: NAM, label: "नामकरण मुहूर्त",
+  title: `नामकरण मुहूर्त ${YEAR}: बच्चे के नामकरण संस्कार की शुभ तारीखें व समय (लखनऊ) | Jyotish Tark`,
+  desc: (t, s) => `नामकरण मुहूर्त ${YEAR}: बच्चे के नामकरण संस्कार की कुल ${t} शुभ तारीखें — ${s}। लखनऊ के अनुसार समय, नक्षत्र और तिथि।`,
+  kicker: "॥ नामकरण संस्कार ॥", h1a: `नामकरण मुहूर्त ${YEAR}`, h1b: "बच्चे के नामकरण की शुभ तारीखें",
+  lead: (t) => `परंपरा में नामकरण जन्म के 11वें या 12वें दिन होता है। अगर उस दिन संभव न हो, तो ${YEAR} में नामकरण के लिए कुल <b>${t} शुभ तारीखें</b> हैं — हर महीने कुछ न कुछ दिन। नीचे हर तारीख का लखनऊ के अनुसार समय, नक्षत्र और तिथि दी गई है।`,
+  rules: [
+    `<strong>शुभ नक्षत्र:</strong> ${nakNames(NA_NAK)}।`,
+    "<strong>तिथि:</strong> द्वितीया, तृतीया, पंचमी, सप्तमी, दशमी, एकादशी, द्वादशी और त्रयोदशी (दोनों पक्ष)।",
+    "<strong>वार:</strong> सोमवार, बुधवार, गुरुवार या शुक्रवार।",
+    COMMON_RULE,
+  ],
+  closed: null,
+  extra: `
+    <section class="rs-sec" id="naam">
+      <h2>नाम का पहला अक्षर कैसे चुनें</h2>
+      <p>परंपरा में नाम का पहला अक्षर बच्चे के जन्म-नक्षत्र के चरण से लिया जाता है। बच्चे की जन्म तिथि, समय और स्थान से <a href="naam-akshar-calculator.html">नाम अक्षर कैलकुलेटर</a> पर मुफ़्त में अक्षर देखें, और <a href="naam-akshar-calculator.html">उसी अक्षर से शुरू होने वाले नाम</a> चुनें।</p>
+      <p class="rs-note">खरमास और चातुर्मास में भी नामकरण किया जाता है, क्योंकि यह जन्म से जुड़ा संस्कार है — इसलिए यह सूची पूरे साल की है।</p>
+    </section>
+`,
+  faq: [
+    ...NAM.withM.map((i) => [`${MON[i]} ${YEAR} में नामकरण के शुभ मुहूर्त कौन से हैं?`, `${MON[i]} ${YEAR} में ${NAM.counts[i]} शुभ तारीखें हैं — ${NAM.by[i].map((x) => `${C.dnum(x.d.rise)} ${MON[i]}`).join(", ")}।`]),
+    ["नामकरण किस दिन करना चाहिए?", "परंपरा में जन्म के 11वें या 12वें दिन नामकरण होता है। उस दिन के लिए अलग से मुहूर्त देखने की ज़रूरत आम तौर पर नहीं मानी जाती। बाद में करना हो, तो ऊपर की तारीखों में से चुनें।"],
+    ["क्या ये समय हर शहर के लिए एक जैसे हैं?", "तारीखें लगभग पूरे भारत में एक ही रहती हैं, पर शुरुआत और अंत का समय शहर-शहर कुछ मिनट बदलता है। ऊपर दिए समय लखनऊ के हैं।"],
+  ],
+  waMsg: `नमस्ते, मुझे अपने बच्चे के नामकरण (${YEAR}) के लिए शुभ तारीख और नाम अक्षर जानना है।`,
+  bandH: "बच्चे की कुंडली और नाम अक्षर निकलवाएं", bandP: "बच्चे की जन्म तिथि, समय और स्थान भेजें। ज्योतिषी ज्ञानेंद्र सिंह तोमर नाम का शुभ अक्षर और नामकरण की तारीख बताएंगे।", bandBtn: "नाम अक्षर पूछें",
+  see: [[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `शुभ मुहूर्त ${YEAR}`, "विवाह, गृह प्रवेश, वाहन"], [`mundan-muhurat-${YEAR}.html`, "पूरा वर्ष", `मुंडन मुहूर्त ${YEAR}`, "चूड़ाकर्म संस्कार"], ["naam-akshar-calculator.html", "मुफ़्त टूल", "नाम अक्षर", "नक्षत्र से नाम का पहला अक्षर"], ["kundali-form.html", "मुफ़्त", "जन्म कुंडली", "बच्चे की कुंडली बनाएं"]],
+});
+
 // ======================= HUB =======================
 {
   const slug = `shubh-muhurat-${YEAR}.html`;
@@ -295,7 +422,7 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
   const vMonths = [...vivah.matchAll(/<section class="rs-sec" id="([a-z]+)">\s*<h2>[^<]*?\((\d+) तारीखें\)/g)].map((m) => [MON_EN.indexOf(m[1]), Number(m[2])]);
   const row = (name, href, counts) => `<tr><th scope="row"><a href="${href}">${name}</a></th>${MON.map((m, i) => { const c = counts[i] || 0; return `<td${c ? "" : ' class="mz"'}>${c || "–"}</td>`; }).join("")}</tr>`;
   const vc = MON.map(() => 0); vMonths.forEach(([i, n]) => { if (i >= 0) vc[i] = n; });
-  const desc = `शुभ मुहूर्त ${YEAR}: विवाह (${vTotal} तारीखें), गृह प्रवेश (${GL.length}) और वाहन खरीद (${VL.length}) के पूरे साल के मुहूर्त एक जगह — महीने के हिसाब से, लखनऊ के समय के साथ।`;
+  const desc = `शुभ मुहूर्त ${YEAR}: विवाह (${vTotal} तारीखें), गृह प्रवेश (${GL.length}), वाहन खरीद (${VL.length}), मुंडन (${MUL.length}) और नामकरण (${NAL.length}) के पूरे साल के मुहूर्त एक जगह — महीने के हिसाब से, लखनऊ के समय के साथ।`;
   const h1 = `शुभ मुहूर्त ${YEAR} — विवाह, गृह प्रवेश, वाहन`;
   const wrap = shell({ slug, title: `शुभ मुहूर्त ${YEAR}: विवाह, गृह प्रवेश, वाहन खरीद की सभी तारीखें | Jyotish Tark`, h1, desc, crumb: `शुभ मुहूर्त ${YEAR}`, faq: [], waMsg: `नमस्ते, मुझे ${YEAR} के किसी शुभ काम के लिए मुहूर्त निकलवाना है।` });
   const main = `<main id="main" class="rs-page fx-page">
@@ -304,7 +431,7 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
     <section class="rs-hero fx-hero">
       <div>
         <p class="rs-kicker">॥ शुभस्य शीघ्रम् ॥</p>
-        <h1>शुभ मुहूर्त ${YEAR} — <span>विवाह, गृह प्रवेश, वाहन</span></h1>
+        <h1>शुभ मुहूर्त ${YEAR} — <span>विवाह, गृह प्रवेश, वाहन, मुंडन, नामकरण</span></h1>
         <p class="rs-lead">${YEAR} के बड़े शुभ कामों के पूरे साल के मुहूर्त एक जगह। हर तारीख हमारे पंचांग इंजन से लखनऊ के लिए निकाली गई है, और हर पेज पर लिखा है कि कौन से नियम लगाए गए।</p>
       </div>
     </section>
@@ -315,6 +442,8 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
         <a href="vivah-muhurat-${YEAR}.html"><span class="fx-d">${vTotal} तारीखें</span><b>विवाह मुहूर्त ${YEAR}</b><small>शादी की शुभ तारीखें व समय</small></a>
         <a href="griha-pravesh-muhurat-${YEAR}.html"><span class="fx-d">${GL.length} तारीखें</span><b>गृह प्रवेश मुहूर्त ${YEAR}</b><small>नए घर में प्रवेश</small></a>
         <a href="vahan-kharid-muhurat-${YEAR}.html"><span class="fx-d">${VL.length} तारीखें</span><b>वाहन खरीद मुहूर्त ${YEAR}</b><small>कार, बाइक, कोई भी वाहन</small></a>
+        <a href="mundan-muhurat-${YEAR}.html"><span class="fx-d">${MUL.length} तारीखें</span><b>मुंडन मुहूर्त ${YEAR}</b><small>चूड़ाकर्म संस्कार</small></a>
+        <a href="namkaran-muhurat-${YEAR}.html"><span class="fx-d">${NAL.length} तारीखें</span><b>नामकरण मुहूर्त ${YEAR}</b><small>बच्चे का नामकरण</small></a>
         <a href="gochar-2027.html"><span class="fx-d">${YEAR}</span><b>गोचर ${YEAR}</b><small>शनि, गुरु, राहु-केतु, मंगल</small></a>
       </div>
     </section>
@@ -326,7 +455,7 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
         <table class="vm-table">
           <caption>शुभ मुहूर्त ${YEAR}: महीने के हिसाब से संख्या</caption>
           <thead><tr><th scope="col">मुहूर्त</th>${MON.map((m) => `<th scope="col">${m}</th>`).join("")}</tr></thead>
-          <tbody>${row("विवाह", `vivah-muhurat-${YEAR}.html`, vc)}${row("गृह प्रवेश", `griha-pravesh-muhurat-${YEAR}.html`, GM.counts)}${row("वाहन", `vahan-kharid-muhurat-${YEAR}.html`, VM.counts)}</tbody>
+          <tbody>${row("विवाह", `vivah-muhurat-${YEAR}.html`, vc)}${row("गृह प्रवेश", `griha-pravesh-muhurat-${YEAR}.html`, GM.counts)}${row("वाहन", `vahan-kharid-muhurat-${YEAR}.html`, VM.counts)}${row("मुंडन", `mundan-muhurat-${YEAR}.html`, MUM.counts)}${row("नामकरण", `namkaran-muhurat-${YEAR}.html`, NAM.counts)}</tbody>
         </table>
       </div>
     </section>
@@ -338,7 +467,7 @@ ${seeAlso([[`shubh-muhurat-${YEAR}.html`, "सभी मुहूर्त", `�
         <li><b>चातुर्मास:</b> ${C.fd(CH[0])} (देवशयनी एकादशी) – ${C.fd(CH[1])} (देवउठनी एकादशी)।</li>
         ${SA.map((r) => `<li><b>शुक्र अस्त:</b> ${C.fdt(r.s)} – ${C.fdt(r.e)}</li>`).join("")}${GA.map((r) => `<li><b>गुरु अस्त:</b> ${C.fdt(r.s)} – ${C.fdt(r.e)}</li>`).join("")}
       </ul>
-      <p class="rs-note">इन समयों में विवाह और गृह प्रवेश नहीं होते। वाहन खरीदने पर यह रोक आम तौर पर नहीं मानी जाती।</p>
+      <p class="rs-note">इन समयों में विवाह, गृह प्रवेश और मुंडन नहीं होते। वाहन खरीदने और नामकरण पर यह रोक आम तौर पर नहीं मानी जाती।</p>
     </section>
 
 ${band("किसी भी शुभ काम का मुहूर्त अपनी कुंडली से निकलवाएं", "सामान्य मुहूर्त सबके लिए एक जैसे होते हैं। आपके लिए सबसे अच्छा दिन और समय आपकी कुंडली के चंद्र बल, तारा बल और लग्न से तय होता है।", `नमस्ते, मुझे ${YEAR} के किसी शुभ काम के लिए मुहूर्त निकलवाना है।`, "मुहूर्त पूछें")}

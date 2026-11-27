@@ -97,13 +97,36 @@ window.JTR_PAY = Object.assign({
   $$(".rd-tab").forEach((b) => b.addEventListener("click", () => filter(b.dataset.f)));
 
   // ---------- finder ----------
-  $$(".rd-q").forEach((b) => b.addEventListener("click", () => {
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-go]"); if (!b) return;
     filter("all");
     const card = $("#p-" + b.dataset.go);
     $$(".rd-hl").forEach((c) => c.classList.remove("rd-hl"));
     if (card) { card.classList.add("rd-hl"); card.scrollIntoView({ behavior: "smooth", block: "center" }); }
-    track("rudraksha_finder", { item: b.dataset.go });
-  }));
+    track("rudraksha_finder", { item: b.dataset.go, by: b.dataset.by || "need" });
+  });
+
+  // ---------- by rashi (traditional: rudraksha of the rashi lord) ----------
+  const RR = {
+    mesh: ["मंगल", "3", "तीन मुखी"], vrishchik: ["मंगल", "3", "तीन मुखी"],
+    vrishabh: ["शुक्र", "6", "छह मुखी"], tula: ["शुक्र", "6", "छह मुखी"],
+    mithun: ["बुध", "4", "चार मुखी"], kanya: ["बुध", "4", "चार मुखी"],
+    kark: ["चंद्र", "2", "दो मुखी"], dhanu: ["गुरु", "5", "पंचमुखी"], meen: ["गुरु", "5", "पंचमुखी"],
+    makar: ["शनि", "7", "सात मुखी"], kumbh: ["शनि", "7", "सात मुखी"],
+  };
+  const rs = $("#rdRashi"), ro = $("#rdRashiOut");
+  if (rs && ro) rs.addEventListener("change", () => {
+    const v = rs.value, name = rs.options[rs.selectedIndex].text;
+    if (!v) { ro.hidden = true; return; }
+    ro.hidden = false;
+    if (v === "singh") {
+      ro.innerHTML = `<b>${name}</b> राशि के स्वामी सूर्य हैं। परंपरा में सूर्य के लिए एक मुखी या बारह मुखी रुद्राक्ष बताया जाता है — ये अभी हमारे संग्रह में नहीं हैं। पंचमुखी रुद्राक्ष हर राशि के लोग पहनते हैं। <button type="button" class="rd-rbtn" data-go="5" data-by="rashi">पंचमुखी देखें</button>`;
+    } else {
+      const [lord, go, mk] = RR[v];
+      ro.innerHTML = `<b>${name}</b> राशि के स्वामी ${lord} हैं। परंपरा में ${lord} के लिए <b>${mk} रुद्राक्ष</b> पहना जाता है। <button type="button" class="rd-rbtn" data-go="${go}" data-by="rashi">${mk} देखें</button>`;
+    }
+    track("rudraksha_rashi", { rashi: v });
+  });
 
   // ---------- order dialog ----------
   const dlg = $("#rdDlg"), body = $("#rdDlgBody");

@@ -537,7 +537,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="tailwind.css?v=1">
     <link rel="stylesheet" href="jt-theme.css?v=8">
-    <script src="jt-site.js?v=23" defer></script>
+    <script src="jt-site.js?v=24" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -576,6 +576,12 @@
     .rd-strip ul{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;list-style:none;margin:0;padding:0;font-size:.92rem}
     .rd-strip li{display:flex;gap:.6rem;align-items:center;justify-content:center;text-align:left}.rd-strip i{color:#F5C46B;font-size:1.25rem}
     /* finder */
+.rd-rashi{margin:22px auto 0;max-width:640px;background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px 18px}
+.rd-rashi label{display:block;margin-bottom:8px}
+.rd-rashi select{width:100%;min-height:48px;border:1px solid var(--ln);border-radius:10px;padding:0 12px;font:inherit;font-size:17px;background:#fff;color:var(--ink)}
+.rd-rout{margin:12px 0 0;font-size:16.5px;line-height:1.6}
+.rd-rbtn{display:inline-block;margin-left:6px;min-height:40px;padding:0 14px;border-radius:10px;border:0;background:#7A1F1F;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.rd-rnote{margin:10px 0 0;font-size:14px;color:#6B5444}
     .rd-qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .rd-q{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px 18px;text-align:left;cursor:pointer;display:grid;grid-template-columns:44px 1fr;column-gap:12px;font-family:inherit;color:var(--ink);transition:.15s}
     .rd-q:hover,.rd-q:focus-visible{border-color:var(--gd);box-shadow:0 8px 24px rgba(122,31,31,.10);transform:translateY(-2px)}
@@ -794,6 +800,12 @@
       <h2>आपकी ज़रूरत क्या है?</h2>
       <p class="rd-lead">अपनी मुख्य ज़रूरत चुनें — हम परंपरा के अनुसार सबसे उपयुक्त रुद्राक्ष या कॉम्बो दिखा देंगे। कुंडली के अनुसार सटीक सलाह के लिए WhatsApp पर जन्म-विवरण भेजें।</p>
       <div class="rd-qgrid"><button type="button" class="rd-q" data-go="5"><span class="rd-qi">🕉️</span><b>मन की शांति, जप-ध्यान</b><small>पहली बार धारण करने वालों के लिए → पंचमुखी रुद्राक्ष</small></button><button type="button" class="rd-q" data-go="vidya"><span class="rd-qi">📚</span><b>पढ़ाई, परीक्षा, इंटरव्यू</b><small>एकाग्रता और स्मरण → विद्या कॉम्बो</small></button><button type="button" class="rd-q" data-go="dhan"><span class="rd-qi">💼</span><b>व्यापार, धन, शनि साढ़ेसाती</b><small>स्थिरता और विघ्न-निवारण → धन-व्यापार कॉम्बो</small></button><button type="button" class="rd-q" data-go="shakti"><span class="rd-qi">🔥</span><b>डर, आत्मविश्वास की कमी</b><small>साहस और आत्मबल → शक्ति-रक्षा कॉम्बो</small></button><button type="button" class="rd-q" data-go="vivah"><span class="rd-qi">💑</span><b>विवाह व दाम्पत्य सुख</b><small>प्रेम और एकता → विवाह-सुख कॉम्बो</small></button><button type="button" class="rd-q" data-go="8"><span class="rd-qi">🚧</span><b>बार-बार रुकावट, राहु</b><small>नई शुरुआत → आठ मुखी रुद्राक्ष</small></button></div>
+      <div class="rd-rashi">
+        <label for="rdRashi"><b>या अपनी राशि से चुनें</b> <small>(चंद्र राशि)</small></label>
+        <select id="rdRashi"><option value="">राशि चुनें</option><option value="mesh">मेष</option><option value="vrishabh">वृषभ</option><option value="mithun">मिथुन</option><option value="kark">कर्क</option><option value="singh">सिंह</option><option value="kanya">कन्या</option><option value="tula">तुला</option><option value="vrishchik">वृश्चिक</option><option value="dhanu">धनु</option><option value="makar">मकर</option><option value="kumbh">कुंभ</option><option value="meen">मीन</option></select>
+        <p id="rdRashiOut" class="rd-rout" hidden></p>
+        <p class="rd-rnote">अपनी राशि नहीं पता? <a href="kundali-form.html">मुफ़्त कुंडली</a> में जन्म विवरण डालकर देखें। राशि वाला सुझाव परंपरा पर आधारित है; व्यक्तिगत सलाह कुंडली देखकर दी जाती है।</p>
+      </div>
     </div>
   </section>
 
@@ -1295,7 +1307,7 @@
   </footer>
 <script>window.JTR_DATA = {"cert": 500, "items": {"5": {"name": "पंचमुखी रुद्राक्ष", "price": 499, "cert": 500, "sub": "5 Mukhi Rudraksha", "gift": "महाकाल कड़ा"}, "4": {"name": "चार मुखी रुद्राक्ष", "price": 999, "cert": 500, "sub": "4 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "3": {"name": "तीन मुखी रुद्राक्ष", "price": 1499, "cert": 500, "sub": "3 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "6": {"name": "छह मुखी रुद्राक्ष", "price": 1499, "cert": 500, "sub": "6 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "7": {"name": "सात मुखी रुद्राक्ष", "price": 1999, "cert": 500, "sub": "7 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "8": {"name": "आठ मुखी रुद्राक्ष", "price": 3999, "cert": 500, "sub": "8 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "9": {"name": "नौ मुखी रुद्राक्ष", "price": 4999, "cert": 500, "sub": "9 Mukhi Rudraksha", "gift": "रुद्राक्ष जप-माला"}, "2": {"name": "दो मुखी रुद्राक्ष", "price": 9999, "cert": 500, "sub": "2 Mukhi Rudraksha", "gift": "तीन मुखी रुद्राक्ष"}, "gs": {"name": "गौरी शंकर रुद्राक्ष", "price": 15499, "cert": 500, "sub": "Gauri Shankar Rudraksha", "gift": "तीन मुखी रुद्राक्ष"}, "vidya": {"name": "विद्या कॉम्बो", "price": 2199, "cert": 1000, "sub": "4 मुखी + 6 मुखी", "gift": "रुद्राक्ष जप-माला"}, "dhan": {"name": "धन-व्यापार कॉम्बो", "price": 5299, "cert": 1000, "sub": "7 मुखी + 8 मुखी", "gift": "रुद्राक्ष जप-माला"}, "shakti": {"name": "शक्ति-रक्षा कॉम्बो", "price": 5799, "cert": 1000, "sub": "3 मुखी + 9 मुखी", "gift": "रुद्राक्ष जप-माला"}, "vivah": {"name": "विवाह-सुख कॉम्बो", "price": 22999, "cert": 1000, "sub": "2 मुखी + गौरी शंकर", "gift": "रुद्राक्ष जप-माला"}, "saraswati": {"name": "सरस्वती बंध", "price": 3099, "cert": 1500, "sub": "4 मुखी + 4 मुखी + 6 मुखी", "gift": "रुद्राक्ष जप-माला"}, "business": {"name": "व्यापार बंध", "price": 6999, "cert": 1500, "sub": "7 मुखी + 7 मुखी + 8 मुखी", "gift": "रुद्राक्ष जप-माला"}, "swasthya": {"name": "स्वास्थ्य बंध", "price": 3999, "cert": 2500, "sub": "3 + 3 + 5 + 5 + 5 मुखी", "gift": "रुद्राक्ष जप-माला"}, "water": {"name": "जल-रुद्राक्ष", "price": 1299, "cert": 1500, "sub": "3 पंचमुखी दाने", "gift": "रुद्राक्ष जप-माला"}}};</script>
 <script src="jt-checkout.js?v=18" defer></script>
-<script src="rudraksha.js?v=7" defer></script>
+<script src="rudraksha.js?v=8" defer></script>
 <script src="reviews-data.js?v=4"></script>
 <script src="jt-reviews.js?v=4" defer></script>
 </body>

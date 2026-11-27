@@ -1161,7 +1161,7 @@
           </div>
 
           <div class="lg:col-span-4 bg-slate-950/95 p-6 rounded-2xl border-2 border-amber-400/60 text-center space-y-4 shadow-2xl">
-            <div class="text-xs font-bold uppercase tracking-widest text-amber-400">Next Step for 99.9% Clarity</div>
+            <div class="text-xs font-bold uppercase tracking-widest text-amber-400">अगला कदम: कुंडली से गहरी समझ</div>
             <h4 class="text-lg font-bold text-white">अपनी जन्म कुंडली से इसका स्थायी समाधान जानें</h4>
             <a href="kundali-form.html" class="primary-button w-full text-sm py-3.5 px-5 shadow-xl">
               <i class="fas fa-key mr-2"></i> अपनी 45-Min फ्री कुंडली पढ़ें
@@ -1193,7 +1193,7 @@
         </div>
 
         <div class="lg:col-span-4 bg-slate-950/95 p-6 rounded-2xl border-2 border-amber-400/60 text-center space-y-4 shadow-2xl">
-          <div class="text-xs font-bold uppercase tracking-widest text-amber-400">Unlock 99.9% Root-Cause Clarity</div>
+          <div class="text-xs font-bold uppercase tracking-widest text-amber-400">कुंडली से असली कारण समझें</div>
           <h4 class="text-lg font-bold text-white">Check Your Permanent Kundali & Dasha Solution</h4>
           <a href="kundali-form.html" class="primary-button w-full text-sm py-3.5 px-5 shadow-xl">
             <i class="fas fa-key mr-2"></i> Read Free 45-Min Kundali Dossier

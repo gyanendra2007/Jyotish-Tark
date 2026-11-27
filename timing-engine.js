@@ -482,9 +482,9 @@
       return `
         <tr class="hover:bg-white/5">
           <td class="py-2.5 px-3 font-bold text-white"><div class="flex items-center gap-2"><i class="fas ${icon} ${color}"></i><span>${title}</span></div><div class="mt-1">${badge}</div></td>
-          <td class="py-2.5 px-3 text-center"><div class="text-sm font-extrabold text-amber-300 whitespace-nowrap">${L(pw.ageSpanHi, pw.ageSpanEn)}</div><div class="text-[11px] font-mono text-purple-200 whitespace-nowrap">${L(pw.periodStrHi, pw.periodStr)}</div></td>
-          <td class="py-2.5 px-3"><div class="font-bold text-cyan-200 text-xs">${L(pw.adLabelHi, pw.adLabel)}</div>${pd}${sec}</td>
-          <td class="py-2.5 px-3 text-xs text-gray-200">${reason}</td>
+          <td class="py-2.5 px-3 text-center" data-l="${L("आयु व अवधि", "Age & period")}"><div class="text-sm font-extrabold text-amber-300 whitespace-nowrap">${L(pw.ageSpanHi, pw.ageSpanEn)}</div><div class="text-[11px] font-mono text-purple-200 whitespace-nowrap">${L(pw.periodStrHi, pw.periodStr)}</div></td>
+          <td class="py-2.5 px-3" data-l="${L("दशा", "Dasha")}"><div class="font-bold text-cyan-200 text-xs">${L(pw.adLabelHi, pw.adLabel)}</div>${pd}${sec}</td>
+          <td class="py-2.5 px-3 text-xs text-gray-200" data-l="${L("आधार", "Basis")}">${reason}</td>
         </tr>`;
     }).join("");
 
@@ -504,7 +504,7 @@
           <span class="px-3 py-1 rounded-full bg-purple-600/30 border border-purple-400/50 text-amber-200 text-xs font-extrabold self-start sm:self-auto">${L(ls.badgeHi, ls.badgeEn)}</span>
         </div>
         <div class="overflow-x-auto rounded-xl border border-white/15">
-          <table class="w-full text-xs">
+          <table class="w-full text-xs jt-mtable">
             <thead class="bg-slate-900 text-amber-300 border-b border-white/10"><tr>
               <th class="py-2.5 px-3 text-left">${L("जीवन-पड़ाव", "Milestone")}</th>
               <th class="py-2.5 px-3 text-center">${L("संभावित आयु व अवधि", "Probable Age & Period")}</th>

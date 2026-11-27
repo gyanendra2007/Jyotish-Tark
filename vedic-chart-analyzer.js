@@ -911,200 +911,136 @@
     return `${pName}${digArrow}${deg ? " " + deg : ""}${rMark}${cMark}${vMark}`;
   }
 
+  // ---- chart theme (v2, Nov 2026): one calm maroon/gold palette for every varga, readable on phones ----
+  const JT_CH = { line: "#7A1F1F", soft: "#C9A227", bg: "#FFFDF7", lagna: "#FBEFD2", ink: "#3B2A20", mute: "#8A7563" };
+  const PLANET_HI_SHORT = { Sun: "सू", Moon: "चं", Mars: "मं", Mercury: "बु", Jupiter: "गु", Venus: "शु", Saturn: "श", Rahu: "रा", Ketu: "के" };
+  const PLANET_INK = { Sun: "#B4430E", Moon: "#1E4FA8", Mars: "#B42318", Mercury: "#0F7A4F", Jupiter: "#9A6700", Venus: "#A3195B", Saturn: "#36307F", Rahu: "#5B2A86", Ketu: "#5C534D" };
+  const svgEsc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  function planetParts(chart, p, vargaKey, lang) {
+    const pRashi = chart[p][vargaKey] || chart[p].rashi || 1;
+    const isVargottama = chart[p].d1 && chart[p].d9 && chart[p].d1 === chart[p].d9;
+    const ex = EXALTED_SIGN[p] === pRashi, db = DEBILITATED_SIGN[p] === pRashi;
+    const deg = (vargaKey === "rashi" && chart[p].longitude !== undefined) ? Math.floor(chart[p].longitude % 30) + "°" : "";
+    const marks = (ex ? "↑" : db ? "↓" : "") +
+      ((chart[p].retro && p !== "Rahu" && p !== "Ketu") ? (lang === "hi" ? "व" : "R") : "") +
+      (chart[p].combust ? (lang === "hi" ? "अ" : "C") : "") + (isVargottama ? "★" : "");
+    return { name: lang === "hi" ? PLANET_HI_SHORT[p] : PLANET_SHORT[p], deg, marks, color: PLANET_INK[p] || JT_CH.ink };
+  }
+  function planetTspans(pp, fs) {
+    return `<tspan fill="${pp.color}" font-weight="700">${pp.name}</tspan>` +
+      (pp.deg ? `<tspan fill="${pp.color}" font-size="${(fs * 0.72).toFixed(1)}" font-weight="600" dx="2">${pp.deg}</tspan>` : "") +
+      (pp.marks ? `<tspan fill="${JT_CH.line}" font-size="${(fs * 0.68).toFixed(1)}" font-weight="700" dx="1" dy="${(-fs * 0.3).toFixed(1)}">${pp.marks}</tspan><tspan dy="${(fs * 0.3).toFixed(1)}">​</tspan>` : "");
+  }
+  function chartFrame(W, H, title, legend, userName, body) {
+    return `<svg class="jt-kundali-svg" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kundali chart" style="width:100%;max-width:520px;height:auto;display:block;margin:0 auto;background:${JT_CH.bg};font-family:'Mukta','Hind','Noto Sans Devanagari','Inter',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="14" fill="${JT_CH.bg}" stroke="${JT_CH.soft}" stroke-width="1.5"/>
+        <text x="${W / 2}" y="30" font-size="18" fill="${JT_CH.line}" text-anchor="middle" font-weight="700">${svgEsc(title)}</text>
+        ${body}
+        <text x="20" y="${H - 14}" font-size="11.5" fill="${JT_CH.mute}" font-weight="600">${legend}</text>
+        <text x="${W - 20}" y="${H - 14}" font-size="11.5" fill="${JT_CH.line}" text-anchor="end" font-weight="700">${svgEsc(userName ? userName.substring(0, 20) + " · " : "")}ज्योतिष तर्क</text>
+      </svg>`;
+  }
+  const LEGEND = (lang) => lang === "hi" ? "↑उच्च ↓नीच व=वक्री अ=अस्त ★वर्गोत्तम" : "↑Exalt ↓Debil R=Retro C=Combust ★Vargottama";
+
   function renderRoyalNorthIndianChart(chart, opts) {
     enrichChartWithVargasAndStates(chart);
     const lang = opts?.lang || "en";
     const chartType = opts?.chartType || "D1";
     const userName = opts?.userName || "";
     const vargaProp = VARGA_PROP_MAP[chartType] || "rashi";
-    const isAltTheme = chartType === "D9" || chartType === "D7";
-
     const ascRashi = chart.Asc[vargaProp] || chart.Asc.rashi || 1;
 
-    const W_SVG = 500, H_SVG = 536, X0 = 20, Y0 = 40, BOX = 460;
-    const X1 = X0 + BOX, Y1 = Y0 + BOX, CX = X0 + BOX / 2, CY = Y0 + BOX / 2;
-
-    const houseRashis = {};
-    for (let h = 1; h <= 12; h++) {
-      houseRashis[h] = ((ascRashi + h - 2) % 12) + 1;
-    }
-
-    const planetsByHouse = {};
-    const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    planets.forEach(p => {
-      const pRashi = chart[p][vargaProp] || chart[p].rashi || 1;
-      const h = ((pRashi - ascRashi + 12) % 12) + 1;
-      if (!planetsByHouse[h]) planetsByHouse[h] = [];
-      planetsByHouse[h].push(p);
+    const W = 440, H = 500, S = 400, X = 20, Y = 46; // chart square
+    const P = (fx, fy) => [X + fx * S, Y + fy * S];
+    const q = S / 4;
+    // house polygons (classic North Indian) + label anchor + rashi-number anchor
+    const HOUSES = {
+      1: { poly: [[.5, 0], [.25, .25], [.5, .5], [.75, .25]], c: [.5, .25], n: [.5, .44], diamond: true },
+      2: { poly: [[0, 0], [.5, 0], [.25, .25]], c: [.25, .095], n: [.25, .205] },
+      3: { poly: [[0, 0], [.25, .25], [0, .5]], c: [.085, .25], n: [.2, .25] },
+      4: { poly: [[0, .5], [.25, .25], [.5, .5], [.25, .75]], c: [.25, .5], n: [.44, .5], diamond: true },
+      5: { poly: [[0, .5], [.25, .75], [0, 1]], c: [.085, .75], n: [.2, .75] },
+      6: { poly: [[0, 1], [.25, .75], [.5, 1]], c: [.25, .905], n: [.25, .795] },
+      7: { poly: [[.5, 1], [.25, .75], [.5, .5], [.75, .75]], c: [.5, .75], n: [.5, .56], diamond: true },
+      8: { poly: [[.5, 1], [.75, .75], [1, 1]], c: [.75, .905], n: [.75, .795] },
+      9: { poly: [[1, 1], [.75, .75], [1, .5]], c: [.915, .75], n: [.8, .75] },
+      10: { poly: [[1, .5], [.75, .75], [.5, .5], [.75, .25]], c: [.75, .5], n: [.56, .5], diamond: true },
+      11: { poly: [[1, .5], [.75, .25], [1, 0]], c: [.915, .25], n: [.8, .25] },
+      12: { poly: [[1, 0], [.75, .25], [.5, 0]], c: [.75, .095], n: [.75, .205] },
+    };
+    const byHouse = {};
+    ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].forEach((p) => {
+      const r = chart[p][vargaProp] || chart[p].rashi || 1;
+      const h = ((r - ascRashi + 12) % 12) + 1;
+      (byHouse[h] = byHouse[h] || []).push(p);
     });
 
-    const houseCoords = {
-      1:  { rx: 250, ry: 242, px: 250, py: 145, isDiamond: true  },
-      2:  { rx: 135, ry: 132, px: 135, py: 74,  isDiamond: false },
-      3:  { rx: 106, ry: 159, px: 58,  py: 155, isDiamond: false },
-      4:  { rx: 218, ry: 274, px: 128, py: 270, isDiamond: true  },
-      5:  { rx: 106, ry: 389, px: 58,  py: 385, isDiamond: false },
-      6:  { rx: 135, ry: 418, px: 135, py: 468, isDiamond: false },
-      7:  { rx: 250, ry: 308, px: 250, py: 400, isDiamond: true  },
-      8:  { rx: 365, ry: 418, px: 365, py: 468, isDiamond: false },
-      9:  { rx: 394, ry: 389, px: 442, py: 385, isDiamond: false },
-      10: { rx: 282, ry: 274, px: 372, py: 270, isDiamond: true  },
-      11: { rx: 394, ry: 159, px: 442, py: 155, isDiamond: false },
-      12: { rx: 365, ry: 132, px: 365, py: 74,  isDiamond: false }
-    };
+    let body = "";
+    // lagna fill
+    body += `<polygon points="${HOUSES[1].poly.map(([a, b]) => P(a, b).join(",")).join(" ")}" fill="${JT_CH.lagna}"/>`;
+    // lines
+    const [x0, y0] = P(0, 0), [x1, y1] = P(1, 1), [cx, cy] = P(.5, .5);
+    body += `<rect x="${x0}" y="${y0}" width="${S}" height="${S}" fill="none" stroke="${JT_CH.line}" stroke-width="2.4"/>`;
+    body += `<path d="M${x0} ${y0}L${x1} ${y1}M${x1} ${y0}L${x0} ${y1}M${cx} ${y0}L${x1} ${cy}L${cx} ${y1}L${x0} ${cy}Z" fill="none" stroke="${JT_CH.line}" stroke-width="1.6" stroke-linejoin="round"/>`;
 
-    const PLANET_COLORS = {
-      Sun: "#c2410c", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
-      Jupiter: "#a16207", Venus: "#be185d", Saturn: "#312e81", Rahu: "#6b21a8", Ketu: "#334155"
-    };
-
-    const primaryStroke = isAltTheme ? "#6b21a8" : "#9a3412";
-    const secondaryStroke = isAltTheme ? "#b45309" : "#7e22ce";
-    const chartBg = isAltTheme ? "#faf5ff" : "#fffbeb";
-    const rashiBadgeBg = isAltTheme ? "#f3e8ff" : "#fef3c7";
-
-    const houseElements = Object.keys(houseCoords).map(hStr => {
-      const h = parseInt(hStr, 10);
-      const { rx, ry, px, py, isDiamond } = houseCoords[h];
-      const rashiNum = houseRashis[h];
-      const pList = planetsByHouse[h] || [];
-
-      const labels = pList.map(p => ({
-        text: formatPlanetSvgGlyph(chart, p, vargaProp, lang),
-        color: PLANET_COLORS[p] || "#111827"
-      }));
-
-      const perLine = isDiamond ? 2 : (labels.length >= 3 ? 2 : 1);
+    for (let h = 1; h <= 12; h++) {
+      const H_ = HOUSES[h], rashi = ((ascRashi + h - 2) % 12) + 1;
+      const [nx, ny] = P(H_.n[0], H_.n[1]);
+      body += `<text x="${nx}" y="${ny + 5}" font-size="13" fill="${JT_CH.mute}" text-anchor="middle" font-weight="600">${rashi}</text>`;
+      const list = (byHouse[h] || []).map((p) => planetParts(chart, p, vargaProp, lang));
+      if (!list.length) continue;
+      const perLine = H_.diamond ? 2 : ([2, 12, 6, 8].includes(h) ? 2 : 1);
       const lines = [];
-      for (let i = 0; i < labels.length; i += perLine) {
-        lines.push(labels.slice(i, i + perLine));
-      }
-
-      const fontSize = lines.length >= 3 ? 10.5 : (isDiamond ? 12.5 : 11);
-      const lineStep = lines.length >= 3 ? 13 : 15.5;
-      const startY = py - ((lines.length - 1) * (lineStep / 2));
-
-      const lagnaHeader = (h === 1)
-        ? `<text x="${px}" y="${Y0 + 36}" font-size="11" fill="${primaryStroke}" text-anchor="middle" font-weight="800">॥ ${chartType} ${lang === "hi" ? "लग्न" : "ASC"} ॥</text>`
-        : "";
-
-      return `
-        <g>
-          <path d="M ${rx - 11},${ry - 4} a 11,11 0 1,0 22,0 a 11,11 0 1,0 -22,0" fill="${rashiBadgeBg}" stroke="${primaryStroke}" stroke-width="1.5"/>
-          <text x="${rx}" y="${ry}" font-size="11" fill="${primaryStroke}" text-anchor="middle" font-weight="800">${rashiNum}</text>
-          ${lagnaHeader}
-          ${lines.map((lnArr, idx) => `
-            <text x="${px}" y="${startY + idx * lineStep}" font-size="${fontSize}" text-anchor="middle" font-weight="800">
-              ${lnArr.map((item, cIdx) => `<tspan fill="${item.color}">${cIdx > 0 ? "  " : ""}${item.text}</tspan>`).join("")}
-            </text>
-          `).join("")}
-        </g>
-      `;
-    }).join("");
-
+      for (let i = 0; i < list.length; i += perLine) lines.push(list.slice(i, i + perLine));
+      const fs = H_.diamond ? 19 : (lines.length >= 3 ? 15 : 16.5);
+      const step = fs * 1.25;
+      const [lx, ly] = P(H_.c[0], H_.c[1]);
+      const top = ly - ((lines.length - 1) * step) / 2 + fs * 0.35 - (H_.diamond ? 8 : 0);
+      lines.forEach((ln, i) => {
+        body += `<text x="${lx}" y="${(top + i * step).toFixed(1)}" font-size="${fs}" text-anchor="middle">${ln.map((pp, k) => (k ? `<tspan dx="4"> </tspan>` : "") + planetTspans(pp, fs)).join("")}</text>`;
+      });
+    }
+    if (chartType === "D1" || true) {
+      const [lx, ly] = P(.5, .025);
+      body += `<text x="${lx}" y="${ly + 12}" font-size="11.5" fill="${JT_CH.line}" text-anchor="middle" font-weight="700" opacity=".8">${lang === "hi" ? "लग्न" : "ASC"}</text>`;
+    }
     const vTitle = VARGA_TITLES[chartType] || VARGA_TITLES.D1;
-    const titleBanner = lang === "hi"
-      ? `${vTitle.hi} — ${RASHI_NAMES_HI[ascRashi - 1]}`
-      : `${vTitle.en} — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`;
-
-    const outerSquarePath = `M ${X0} ${Y0} L ${X1} ${Y0} L ${X1} ${Y1} L ${X0} ${Y1} Z`;
-    const innerFramePath  = `M ${X0 + 4} ${Y0 + 4} L ${X1 - 4} ${Y0 + 4} L ${X1 - 4} ${Y1 - 4} L ${X0 + 4} ${Y1 - 4} Z`;
-    const diagonalsPath   = `M ${X0} ${Y0} L ${X1} ${Y1} M ${X1} ${Y0} L ${X0} ${Y1}`;
-    const diamondPath     = `M ${CX} ${Y0} L ${X1} ${CY} L ${CX} ${Y1} L ${X0} ${CY} Z`;
-
-    return `
-      <svg class="jt-kundali-svg" viewBox="0 0 ${W_SVG} ${H_SVG}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;height:auto;display:block;margin:0 auto;background:#fffdf9;font-family:'Hind','Inter',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
-        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} ${H_SVG - 2} L 4 ${H_SVG - 2} Z" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5"/>
-        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} 32 L 4 32 Z" fill="${primaryStroke}"/>
-        <text x="${CX}" y="22" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="800">ॐ JYOTISH TARK • ${titleBanner}</text>
-        <path d="${outerSquarePath}" fill="${chartBg}" stroke="${primaryStroke}" stroke-width="3"/>
-        <path d="${innerFramePath}" fill="none" stroke="${secondaryStroke}" stroke-width="1" stroke-opacity="0.5"/>
-        <path d="${diagonalsPath}" fill="none" stroke="${primaryStroke}" stroke-width="2.2"/>
-        <path d="${diamondPath}" fill="none" stroke="${secondaryStroke}" stroke-width="2.5"/>
-        ${houseElements}
-        <text x="${X0}" y="${H_SVG - 11}" font-size="10" fill="#334155" font-weight="700">${lang === "hi" ? "↑उच्च ↓नीच (व)वक्री (अ)अस्त ★वर्गोत्तम" : "↑Exalt ↓Debil (R)Retro (C)Combust ★Vargottama"}</text>
-        <text x="${X1}" y="${H_SVG - 11}" font-size="10" fill="${primaryStroke}" text-anchor="end" font-weight="800">${userName.substring(0, 22)}</text>
-      </svg>
-    `;
+    const title = lang === "hi" ? `${vTitle.hi} — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `${vTitle.en} — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`;
+    return chartFrame(W, H, title, LEGEND(lang), userName, body);
   }
 
-  // SOUTH INDIAN 4x4 CLOCKWISE FIXED-RASHI SVG CHART
+  // SOUTH INDIAN 4x4 FIXED-RASHI CHART
   function renderRoyalSouthIndianChart(chart, opts) {
     enrichChartWithVargasAndStates(chart);
     const lang = opts?.lang || "en";
     const chartType = opts?.chartType || "D1";
     const userName = opts?.userName || "";
     const vargaProp = VARGA_PROP_MAP[chartType] || "rashi";
-    const isAltTheme = chartType === "D9" || chartType === "D7";
-
     const ascRashi = chart.Asc[vargaProp] || chart.Asc.rashi || 1;
-    const W_SVG = 500, H_SVG = 536, X0 = 20, Y0 = 40, BOX = 460, CELL = BOX / 4; // 115px
-
-    const primaryStroke = isAltTheme ? "#6b21a8" : "#9a3412";
-    const chartBg = isAltTheme ? "#faf5ff" : "#fffbeb";
-
-    // Fixed Rashi grid positions (col 0..3, row 0..3) starting with Pisces (12) at top-left
-    const rashiGridPos = {
-      12: [0, 0], 1:  [1, 0], 2:  [2, 0], 3: [3, 0],
-      11: [0, 1],                         4: [3, 1],
-      10: [0, 2],                         5: [3, 2],
-      9:  [0, 3], 8:  [1, 3], 7:  [2, 3], 6: [3, 3]
-    };
-
-    const planetsByRashi = {};
-    const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    planets.forEach(p => {
-      const r = chart[p][vargaProp] || chart[p].rashi || 1;
-      if (!planetsByRashi[r]) planetsByRashi[r] = [];
-      planetsByRashi[r].push(p);
+    const W = 440, H = 500, S = 400, X = 20, Y = 46, C = S / 4;
+    const POS = { 12: [0, 0], 1: [1, 0], 2: [2, 0], 3: [3, 0], 11: [0, 1], 4: [3, 1], 10: [0, 2], 5: [3, 2], 9: [0, 3], 8: [1, 3], 7: [2, 3], 6: [3, 3] };
+    const byR = {};
+    ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].forEach((p) => {
+      const r = chart[p][vargaProp] || chart[p].rashi || 1; (byR[r] = byR[r] || []).push(p);
     });
-
-    const PLANET_COLORS = {
-      Sun: "#c2410c", Moon: "#1d4ed8", Mars: "#b91c1c", Mercury: "#047857",
-      Jupiter: "#a16207", Venus: "#be185d", Saturn: "#312e81", Rahu: "#6b21a8", Ketu: "#334155"
-    };
-
-    const cellsSvg = Object.keys(rashiGridPos).map(rStr => {
-      const r = parseInt(rStr, 10);
-      const [col, row] = rashiGridPos[r];
-      const cx = X0 + col * CELL;
-      const cy = Y0 + row * CELL;
-      const isAsc = (r === ascRashi);
-      const pList = planetsByRashi[r] || [];
-
-      const ascDiagonal = isAsc
-        ? `<path d="M ${cx} ${cy + 26} L ${cx + 26} ${cy}" stroke="${primaryStroke}" stroke-width="2"/><text x="${cx + 30}" y="${cy + 14}" font-size="10" fill="${primaryStroke}" font-weight="800">${lang === "hi" ? "लग्न" : "Asc"}</text>`
-        : "";
-
-      const rashiLabel = `${r}. ${lang === "hi" ? RASHI_NAMES_HI[r - 1] : RASHI_NAMES_EN[r - 1]}`;
-      const lines = pList.map((p, idx) => {
-        const txt = formatPlanetSvgGlyph(chart, p, vargaProp, lang);
-        return `<text x="${cx + CELL / 2}" y="${cy + 36 + idx * 15}" font-size="11.5" fill="${PLANET_COLORS[p]}" text-anchor="middle" font-weight="800">${txt}</text>`;
-      }).join("");
-
-      return `
-        <g>
-          <path d="M ${cx} ${cy} L ${cx + CELL} ${cy} L ${cx + CELL} ${cy + CELL} L ${cx} ${cy + CELL} Z" fill="${isAsc ? '#fef3c7' : chartBg}" stroke="${primaryStroke}" stroke-width="2"/>
-          ${ascDiagonal}
-          <text x="${cx + CELL - 6}" y="${cy + 14}" font-size="9.5" fill="#64748b" text-anchor="end" font-weight="700">${rashiLabel}</text>
-          ${lines}
-        </g>
-      `;
-    }).join("");
-
+    let body = `<rect x="${X}" y="${Y}" width="${S}" height="${S}" fill="none" stroke="${JT_CH.line}" stroke-width="2.4"/>`;
+    for (const r of Object.keys(POS).map(Number)) {
+      const [col, row] = POS[r], x = X + col * C, y = Y + row * C, isAsc = r === ascRashi;
+      body += `<rect x="${x}" y="${y}" width="${C}" height="${C}" fill="${isAsc ? JT_CH.lagna : "none"}" stroke="${JT_CH.line}" stroke-width="1.4"/>`;
+      body += `<text x="${x + C - 6}" y="${y + 15}" font-size="11.5" fill="${JT_CH.mute}" text-anchor="end" font-weight="600">${lang === "hi" ? RASHI_NAMES_HI[r - 1] : RASHI_NAMES_EN[r - 1].slice(0, 4)}</text>`;
+      if (isAsc) body += `<path d="M${x} ${y + 22}L${x + 22} ${y}" stroke="${JT_CH.line}" stroke-width="1.6"/><text x="${x + 5}" y="${y + C - 7}" font-size="11.5" fill="${JT_CH.line}" font-weight="700">${lang === "hi" ? "लग्न" : "Asc"}</text>`;
+      const list = (byR[r] || []).map((p) => planetParts(chart, p, vargaProp, lang));
+      const fs = list.length > 3 ? 14 : 16, step = fs * 1.2;
+      const lines = []; for (let i = 0; i < list.length; i += list.length > 3 ? 2 : 1) lines.push(list.slice(i, i + (list.length > 3 ? 2 : 1)));
+      const top = y + C / 2 - ((lines.length - 1) * step) / 2 + fs * 0.35 + 4;
+      lines.forEach((ln, i) => { body += `<text x="${x + C / 2}" y="${(top + i * step).toFixed(1)}" font-size="${fs}" text-anchor="middle">${ln.map((pp, k) => (k ? `<tspan dx="3"> </tspan>` : "") + planetTspans(pp, fs)).join("")}</text>`; });
+    }
     const vTitle = VARGA_TITLES[chartType] || VARGA_TITLES.D1;
-    return `
-      <svg class="jt-kundali-svg" viewBox="0 0 ${W_SVG} ${H_SVG}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;height:auto;display:block;margin:0 auto;background:#fffdf9;font-family:'Hind','Inter',sans-serif;">
-        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} ${H_SVG - 2} L 4 ${H_SVG - 2} Z" fill="#fffdf9" stroke="${primaryStroke}" stroke-width="2.5"/>
-        <path d="M 4 2 L ${W_SVG - 4} 2 L ${W_SVG - 4} 32 L 4 32 Z" fill="${primaryStroke}"/>
-        <text x="250" y="22" font-size="12.5" fill="#ffffff" text-anchor="middle" font-weight="800">ॐ SOUTH INDIAN • ${lang === "hi" ? vTitle.hi : vTitle.en}</text>
-        ${cellsSvg}
-        <text x="250" y="255" font-size="15" fill="${primaryStroke}" text-anchor="middle" font-weight="800">${lang === "hi" ? vTitle.hi : vTitle.en}</text>
-        <text x="250" y="278" font-size="12" fill="#475569" text-anchor="middle" font-weight="700">${lang === "hi" ? RASHI_NAMES_HI[ascRashi - 1] + " लग्न" : RASHI_NAMES_EN[ascRashi - 1] + " Ascendant"}</text>
-        <text x="250" y="298" font-size="11" fill="#6b21a8" text-anchor="middle" font-weight="700">${userName.substring(0, 26)}</text>
-        <text x="${X0}" y="${H_SVG - 11}" font-size="10" fill="#334155" font-weight="700">${lang === "hi" ? "↑उच्च ↓नीच (व)वक्री (अ)अस्त ★वर्गोत्तम" : "↑Exalt ↓Debil (R)Retro (C)Combust ★Vargottama"}</text>
-      </svg>
-    `;
+    body += `<text x="${X + S / 2}" y="${Y + S / 2 - 6}" font-size="17" fill="${JT_CH.line}" text-anchor="middle" font-weight="700">${lang === "hi" ? RASHI_NAMES_HI[ascRashi - 1] + " लग्न" : RASHI_NAMES_EN[ascRashi - 1] + " Asc"}</text>`;
+    body += `<text x="${X + S / 2}" y="${Y + S / 2 + 18}" font-size="12.5" fill="${JT_CH.mute}" text-anchor="middle" font-weight="600">${chartType} · ${lang === "hi" ? "दक्षिण भारतीय" : "South Indian"}</text>`;
+    const title = lang === "hi" ? `${vTitle.hi} — ${RASHI_NAMES_HI[ascRashi - 1]} लग्न` : `${vTitle.en} — ${RASHI_NAMES_EN[ascRashi - 1]} Asc`;
+    return chartFrame(W, H, title, LEGEND(lang), userName, body);
   }
 
   function renderD1NorthChart(chart, opts)  { return renderRoyalNorthIndianChart(chart, { ...opts, chartType: "D1" }); }
@@ -1204,9 +1140,9 @@
       </div>
     `).join("");
 
-    const sadeSatiAlertClass = p.isSadeSatiOrDhaiya
-      ? "bg-red-950/90 border-red-500 text-red-100"
-      : "bg-emerald-950/75 border-emerald-400/50 text-emerald-100";
+    const sadeSatiAlertStyle = p.isSadeSatiOrDhaiya
+      ? "background:#FDECEC;border-color:#E5A3A3;color:#8A1C1C"
+      : "background:#EAF6EE;border-color:#9AD3AB;color:#14532D";
 
     return `
       <div class="pdf-keep-together rounded-3xl bg-slate-950/90 border border-amber-400/40 p-4 md:p-6 mt-5">
@@ -1217,7 +1153,7 @@
           <span class="text-xs text-purple-300 font-semibold">${lang === "hi" ? "सूर्य-चंद्र स्पष्ट अंशों से निर्मित" : "Computed from Exact Sun-Moon Longitudes"}</span>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3.5">${gridHtml}</div>
-        <div class="p-3 rounded-xl border-2 ${sadeSatiAlertClass} text-xs md:text-sm font-bold flex items-center justify-between gap-3">
+        <div class="p-3 rounded-xl border-2 text-xs md:text-sm font-bold flex items-center justify-between gap-3" style="${sadeSatiAlertStyle}">
           <div>
             <span class="uppercase tracking-wider block text-[10px] opacity-80">${lang === "hi" ? "वर्तमान लाइव शनि गोचर (साढ़ेसाती / ढैय्या) निदान:" : "Live Saturn Transit (Sade-Sati / Dhaiya) Verdict:"}</span>
             <span>${lang === "hi" ? p.shaniStatusHi : p.shaniStatusEn}</span>
