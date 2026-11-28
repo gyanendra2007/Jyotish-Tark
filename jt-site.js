@@ -99,7 +99,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
      Visitors outside India (time zone not IST) are sent to the English page when one exists;
      everyone can switch with the हिं / EN button, and the choice is remembered. Bots are never redirected. */
   var EN = (document.documentElement.getAttribute("lang") || "").toLowerCase() === "en" && /\/en\//.test(location.pathname);
-  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html" };
+  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html", "kundali-form.html": "en/kundali-form.html", "guna-milan-calculator.html": "en/guna-milan-calculator.html" };
   function siteRoot() { return location.pathname.replace(/(\/en)?\/[^\/]*$/, "/"); }
   function langPair() {
     var file = location.pathname.split("/").pop() || "";

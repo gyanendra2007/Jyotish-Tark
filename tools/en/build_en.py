@@ -11,7 +11,7 @@ JH_CSS = open(os.path.join(ROOT, 'tools/home/new-top.css'), encoding='utf-8').re
 WA = 'https://wa.me/918318513814?text='
 def wa(msg): return WA + urllib.parse.quote(msg)
 
-NAV = [('index.html', 'Home', './'), ('kundali', 'Free Kundali', '../kundali-form.html?lang=en'), ('sampurna-kundali.html', 'Full Kundali Report', 'sampurna-kundali.html'),
+NAV = [('index.html', 'Home', './'), ('kundali', 'Free Kundali', 'kundali-form.html'), ('sampurna-kundali.html', 'Full Kundali Report', 'sampurna-kundali.html'), ('milan', 'Kundali Matching', 'guna-milan-calculator.html'),
        ('consultation.html', 'Consultation', 'consultation.html'), ('about', 'About', '../about.html'), ('contact', 'Contact', '../contact.html')]
 
 def head(slug, hi_slug, title, desc, ld=None):
@@ -82,9 +82,10 @@ FOOTER = f'''
     <div class="jt-wrap jt-footer-grid">
       <div><p class="jt-foot-brand">Jyotish Tark</p><p>Vedic astrology in plain language, from Lucknow. Founded by astrologer Gyanendra Singh Tomar.</p></div>
       <div><h2>Services</h2><ul>
-        <li><a href="../kundali-form.html?lang=en">Free birth chart (kundali)</a></li>
+        <li><a href="kundali-form.html">Free birth chart (kundali)</a></li>
         <li><a href="sampurna-kundali.html">Full Kundali Report · ₹1,101</a></li>
         <li><a href="consultation.html">Consultation · first call free</a></li>
+        <li><a href="guna-milan-calculator.html">Kundali matching (36 gunas)</a></li>
         <li><a href="../rudraksha.html">Rudraksha (Hindi)</a></li>
         <li><a href="../">हिंदी वेबसाइट</a></li></ul></div>
       <div><h2>Information</h2><ul>
@@ -120,11 +121,11 @@ HOME_FORM = '''<form class="jh-form" id="enQuick">
   <div class="row"><div><label for="enDob">Date of birth</label><input type="date" id="enDob" required></div>
   <div><label for="enLang">Report language</label><select id="enLang"><option value="en">English</option><option value="hi">हिंदी</option></select></div></div>
   <button type="submit" class="jh-btn p">See my kundali →</button>
-  <div class="alt"><a href="../kundali-form.html?lang=en">Full chart with birth time &amp; place</a><a href="sampurna-kundali.html">Full report ₹1,101</a></div>
+  <div class="alt"><a href="kundali-form.html">Full chart with birth time &amp; place</a><a href="sampurna-kundali.html">Full report ₹1,101</a></div>
 </form>
 <script>document.getElementById('enQuick').addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('enName').value.trim(),d=document.getElementById('enDob').value,l=document.getElementById('enLang').value;if(!n||!d)return;
 try{localStorage.setItem('jt_prefill_dossier',JSON.stringify({name:n,dob:d,lang:l,autoRun:true}));}catch(x){}
-location.href='../kundali-form.html?name='+encodeURIComponent(n)+'&dob='+encodeURIComponent(d)+'&lang='+l+'&autorun=1';});</script>'''
+location.href='kundali-form.html?name='+encodeURIComponent(n)+'&dob='+encodeURIComponent(d)+'&lang='+l+'&autorun=1';});</script>'''
 
 HOME = f'''<main id="main"><style>{JH_CSS}</style>
 <div class="jh">
@@ -133,7 +134,7 @@ HOME = f'''<main id="main"><style>{JH_CSS}</style>
     <span class="jh-k">JYOTISH TARK · LUCKNOW</span>
     <h1 class="jh-h">Vedic astrology, <span>explained with reason</span></h1>
     <p class="lead">Understand your birth chart in plain language — free kundali, compatibility, panchang and detailed reports, and a direct conversation with astrologer Gyanendra Singh Tomar when you need it.</p>
-    <div class="jh-cta"><a class="jh-btn p" href="../kundali-form.html?lang=en">Make my free kundali</a><a class="jh-btn s" href="consultation.html">Talk to the astrologer</a></div>
+    <div class="jh-cta"><a class="jh-btn p" href="kundali-form.html">Make my free kundali</a><a class="jh-btn s" href="consultation.html">Talk to the astrologer</a></div>
     <ul class="jh-chips"><li>Since 2020</li><li>100+ happy clients</li><li>English &amp; Hindi</li><li>Free tools</li></ul>
   </div>
   <div class="jh-arch"><div class="fr"><picture><source srcset="../images/ui/gyanendra-namaste.webp" type="image/webp"><img src="../images/ui/gyanendra-namaste.jpg" alt="Astrologer Gyanendra Singh Tomar" width="720" height="720" fetchpriority="high"></picture></div>
@@ -143,9 +144,9 @@ HOME = f'''<main id="main"><style>{JH_CSS}</style>
 <div class="jh-trust"><ul><li>Serving since <b>2020</b></li><li><b>100+</b> happy clients</li><li>Consultations on WhatsApp, audio &amp; video</li><li>English &amp; Hindi</li></ul></div>
 
 <section class="jh-sec"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">OUR SERVICES</span><h2 class="jh-h">For every question you carry</h2><p>Start with a free tool; go deeper with a detailed report or a direct conversation.</p></div><div class="jh-grid">
-{card('../kundali-form.html?lang=en', '../images/ui/card-kundali', 'Free birth chart', 'Lagna, navamsa, planets, dasha and a 12-chapter reading.', 'Free', alt='Birth chart')}
-{card('../kundali-milan.html', '../images/ui/card-milan', 'Kundali matching', '36-point guna milan, manglik and nadi dosha — before marriage. (Page in Hindi)', 'Free', alt='Kundali matching')}
-{card('sampurna-kundali.html', '../images/ui/card-career', 'Full Kundali Report', '35+ page PDF: career, money, marriage, dasha timeline and remedies.', '₹1,101', alt='Full kundali report')}
+{card('kundali-form.html', '../images/ui/card-kundali', 'Free birth chart', 'Lagna, navamsa, planets, dasha and a 12-chapter reading.', 'Free', alt='Birth chart')}
+{card('guna-milan-calculator.html', '../images/ui/card-milan', 'Kundali matching', '36-point guna milan, manglik and nadi dosha — before marriage.', 'Free', alt='Kundali matching')}
+{card('sampurna-kundali.html', '../images/ui/card-career', 'Full Kundali Report', '35+ page PDF (in Hindi): career, money, marriage, dasha timeline and remedies.', '₹1,101', alt='Full kundali report')}
 {card('consultation.html', '../images/ui/gyanendra', 'Talk to the astrologer', 'Audio or video call — the first 5 minutes are free.', 'From ₹301', alt='Astrologer Gyanendra Singh Tomar')}
 {card('../rudraksha.html', '../images/ui/card-rudraksha', 'Genuine rudraksha', 'Nepali beads, with an option of a lab certificate. (Page in Hindi)', 'View store', alt='Rudraksha')}
 {card('../numerology.html', '', 'Numerology', 'Root number, destiny number and name number. (Page in Hindi)', 'Free')}
@@ -180,7 +181,7 @@ if('IntersectionObserver' in window){{var io=new IntersectionObserver(function(e
 <section class="jh-sec"><div class="jh-wrap" style="max-width:860px"><div class="jh-st"><span class="jh-k">FAQ</span><h2 class="jh-h">Common questions</h2></div>
 <div class="rs-faq">
 <details><summary>Is the birth chart really free?</summary><p>Yes. The online kundali with lagna chart, navamsa, planets, dasha and a 12-chapter reading is free, and you can save it as a PDF on your phone. Paid options are the 35+ page Full Kundali Report (₹1,101) and consultations.</p></details>
-<details><summary>Can I get my reading in English?</summary><p>Yes. Choose “English” as the report language on the kundali page. Consultations are available in English or Hindi.</p></details>
+<details><summary>Can I get my reading in English?</summary><p>Yes — the free kundali reading is available in English (choose “English” as the report language), and consultations are in English or Hindi. The 35+ page Full Kundali Report PDF is currently in Hindi.</p></details>
 <details><summary>I live outside India. How do I pay?</summary><p>Prices are in Indian rupees. If you have an Indian UPI account you can pay directly; otherwise message us on WhatsApp and we will share bank details. Your report or call link is sent on WhatsApp.</p></details>
 <details><summary>Does astrology guarantee results?</summary><p>No. Astrology offers guidance, not guarantees. For health, legal or financial decisions please consult a qualified doctor, lawyer or financial adviser.</p></details>
 </div></div></section>
@@ -214,7 +215,7 @@ CONSULT = f'''<main id="main" class="rs-page fx-page">
   </div></section>
   <section class="rs-sec"><h2>Audio and video calls</h2><div class="fx-two" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">{''.join(plan_card(*p) for p in PLANS)}</div></section>
   <section class="rs-sec"><h2>Calls with the Full Kundali Report, and remedies</h2><div class="fx-two" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">{''.join(plan_card(t, '', p, s).replace('<h3 style="margin:0"></h3>', '') for t, p, s in COMBOS)}</div>
-    <p class="rs-note">Only want a report? <a href="sampurna-kundali.html">Full Kundali Report ₹1,101</a> · or start free: <a href="../kundali-form.html?lang=en">birth chart</a>.</p></section>
+    <p class="rs-note">Only want a report? <a href="sampurna-kundali.html">Full Kundali Report ₹1,101</a> · or start free: <a href="kundali-form.html">birth chart</a>.</p></section>
   <section class="rs-sec"><h2>In-person meetings (by appointment)</h2><div class="fx-two">
     {plan_card('In person — Lucknow', 'By appointment', '₹11,000', 'Meet the astrologer face to face in Lucknow.')}
     {plan_card('Astrologer at your place', 'By appointment', '₹21,000', 'Gyanendra Singh Tomar visits your home or place — no extra travel charge.')}
@@ -260,14 +261,15 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
   <section class="rs-hero fx-hero"><div>
     <p class="rs-kicker">35+ PAGES · 17 CHAPTERS · PDF</p>
     <h1>Full Kundali Report — <span>₹1,101, as a PDF</span></h1>
+    <p class="rs-note" style="margin:0 0 8px">Note: the report PDF is in Hindi for now.</p>
     <p class="rs-lead">Read your birth chart in detail — lagna and navamsa charts, every planet, career, money, partner and marriage, children, dasha dates, varshphal 2027 and remedies. First make your free kundali; a preview of the full report appears below it, with a few lines of every chapter unlocked.</p>
-    <div class="rs-row"><a class="rs-btn" href="../kundali-form.html?lang=en">Make my kundali — free</a><a class="rs-btn ghost" href="#contents">See what's inside</a></div>
+    <div class="rs-row"><a class="rs-btn" href="kundali-form.html">Make my kundali — free</a><a class="rs-btn ghost" href="#contents">See what's inside</a></div>
   </div></section>
   <section class="rs-sec" id="contents"><h2>What the report contains (17 chapters)</h2>
     <div class="vm-table-wrap"><table class="vm-table"><thead><tr><th scope="col">#</th><th scope="col">Chapter</th><th scope="col">What you get</th></tr></thead><tbody>
     {''.join(f'<tr><td>{i}</td><td><b>{a}</b></td><td>{b}</td></tr>' for i, (a, b) in enumerate(CH, 1))}
     </tbody></table></div>
-    <p class="rs-note">The report can be read in English or Hindi — choose the language on the kundali page.</p></section>
+    <p class="rs-note"><b>Language:</b> the Full Kundali Report PDF is currently written in Hindi. Your free kundali reading, and consultations, are available in English. An English version of the full report is being prepared.</p></section>
   <section class="rs-sec" id="compare"><h2>Free, Full and Hand-written kundali — compared</h2>
     <div class="vm-table-wrap"><table class="vm-table"><thead><tr><th scope="col"></th><th scope="col">Free kundali</th><th scope="col">Full Kundali Report</th><th scope="col">Hand-written kundali</th></tr></thead><tbody>
     <tr><td>Price</td><td>₹0</td><td>₹1,101</td><td>₹2,100</td></tr>
@@ -278,7 +280,7 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
     <tr><td>Remedies</td><td>General</td><td>Mantra, charity, gemstone advice</td><td>Personal, by the astrologer</td></tr>
     </tbody></table></div></section>
   <section class="rs-sec" id="how"><h2>How to order</h2><ol class="fx-steps">
-    <li><strong>Make your kundali</strong> on the <a href="../kundali-form.html?lang=en">free kundali page</a> with name, date, time and place of birth.</li>
+    <li><strong>Make your kundali</strong> on the <a href="kundali-form.html">free kundali page</a> with name, date, time and place of birth.</li>
     <li><strong>See the preview</strong> of the full report below your free reading.</li>
     <li><strong>Pay ₹1,101</strong> by UPI (from outside India, ask for bank details on WhatsApp).</li>
     <li><strong>Send the screenshot</strong> on WhatsApp — once the payment is confirmed, your report link opens the full PDF.</li></ol></section>
@@ -288,7 +290,7 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
     <details><summary>Does the report guarantee the future?</summary><p>No. Astrology gives guidance, not guarantees. For health, legal or financial decisions please consult the right professional.</p></details>
   </div></section>
   <section class="rs-band" aria-label="Start"><div><h2>Make your kundali now</h2><p>Free kundali instantly; the Full Kundali Report for ₹1,101.</p></div>
-    <div class="rs-row"><a class="rs-btn ivory" href="../kundali-form.html?lang=en">Make free kundali</a><a class="rs-btn ghost" href="consultation.html">Talk to the astrologer</a></div></section>
+    <div class="rs-row"><a class="rs-btn ivory" href="kundali-form.html">Make free kundali</a><a class="rs-btn ghost" href="consultation.html">Talk to the astrologer</a></div></section>
 </main>'''
 page('sampurna-kundali.html', 'sampurna-kundali.html', 'sampurna-kundali.html', 'Full Kundali Report in English — 35+ Page PDF, ₹1,101 | Jyotish Tark',
      'A 35+ page birth chart report in English: lagna and navamsa, planets, career, money, marriage, dasha dates, varshphal 2027 and remedies. ₹1,101.', SAMPURNA)
