@@ -11,7 +11,7 @@ JH_CSS = open(os.path.join(ROOT, 'tools/home/new-top.css'), encoding='utf-8').re
 WA = 'https://wa.me/918318513814?text='
 def wa(msg): return WA + urllib.parse.quote(msg)
 
-NAV = [('index.html', 'Home', './'), ('kundali', 'Free Kundali', 'kundali-form.html'), ('sampurna-kundali.html', 'Full Kundali Report', 'sampurna-kundali.html'), ('milan', 'Kundali Matching', 'guna-milan-calculator.html'),
+NAV = [('index.html', 'Home', './'), ('kundali', 'Free Kundali', 'kundali-form.html'), ('sampurna-kundali.html', 'Full Kundali Report', 'sampurna-kundali.html'), ('milan', 'Kundali Matching', 'guna-milan-calculator.html'), ('rashifal', 'Horoscope', 'rashifal.html'),
        ('consultation.html', 'Consultation', 'consultation.html'), ('about', 'About', '../about.html'), ('contact', 'Contact', '../contact.html')]
 
 def head(slug, hi_slug, title, desc, ld=None):
@@ -63,7 +63,7 @@ def header(cur):
     <div class="jt-wrap jt-header-row">
       <a class="jt-brand" href="./" aria-label="Jyotish Tark — Home">
         <img src="../logo.png" alt="" width="46" height="46">
-        <span class="jt-brand-text"><span class="jt-brand-hi">Jyotish Tark</span><span class="jt-brand-en">VEDIC ASTROLOGY · LUCKNOW</span></span>
+        <span class="jt-brand-text"><span class="jt-brand-hi">Jyotish Tark</span><span class="jt-brand-en">JYOTISH TARK · LUCKNOW</span></span>
       </a>
       <nav class="jt-nav" aria-label="Main menu">{links}</nav>
       <button id="menuToggle" class="jt-menu-btn" type="button" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
@@ -127,16 +127,17 @@ HOME_FORM = '''<form class="jh-form" id="enQuick">
 try{localStorage.setItem('jt_prefill_dossier',JSON.stringify({name:n,dob:d,lang:l,autoRun:true}));}catch(x){}
 location.href='kundali-form.html?name='+encodeURIComponent(n)+'&dob='+encodeURIComponent(d)+'&lang='+l+'&autorun=1';});</script>'''
 
-HOME = f'''<main id="main"><style>{JH_CSS}</style>
+HOME = f'''<main id="main"><style>{JH_CSS}
+@media (min-width:981px){{.jh-hero-t h1{{font-size:44px}}}}</style>
 <div class="jh">
 <section class="jhB" aria-label="Jyotish Tark">
 <div class="jh-sky" aria-hidden="true"><i style="left:6%;top:14%;animation-delay:0s"></i><i style="left:18%;top:62%;animation-delay:1.1s"></i><i style="left:33%;top:22%;animation-delay:2.2s"></i><i style="left:47%;top:8%;animation-delay:0.6s"></i><i style="left:58%;top:48%;animation-delay:1.7s"></i><i style="left:71%;top:16%;animation-delay:2.8s"></i><i style="left:86%;top:58%;animation-delay:0.3s"></i><i style="left:93%;top:24%;animation-delay:1.4s"></i><i style="left:26%;top:86%;animation-delay:2.5s"></i><i style="left:64%;top:84%;animation-delay:0.9s"></i></div>
   <div class="jh-wrap"><div class="jh-hero-t">
-    <span class="jh-k">JYOTISH TARK · LUCKNOW</span>
-    <h1 class="jh-h">Vedic astrology, <span>explained with reason</span></h1>
-    <p class="lead">Understand your birth chart in plain language — free kundali, compatibility, panchang and detailed reports, and a direct conversation with astrologer Gyanendra Singh Tomar when you need it.</p>
+    <span class="jh-k">॥ JYOTISH TARK · LUCKNOW ॥</span>
+    <h1 class="jh-h">Your kundali, <span>in your language</span></h1>
+    <p class="lead">Vedic astrology with reason, in plain English — free kundali, kundali matching, horoscope and panchang, and a direct talk with astrologer Gyanendra Singh Tomar when you need it.</p>
     <div class="jh-cta"><a class="jh-btn p" href="kundali-form.html">Make my free kundali</a><a class="jh-btn s" href="consultation.html">Talk to the astrologer</a></div>
-    <ul class="jh-chips"><li>Since 2020</li><li>100+ happy clients</li><li>English &amp; Hindi</li><li>Free tools</li></ul>
+    <ul class="jh-chips"><li>Since 2020</li><li>100+ happy clients</li><li>Hindi &amp; English</li><li>40+ free tools</li></ul>
   </div>
   <div class="jh-arch"><div class="fr"><picture><source srcset="../images/ui/gyanendra-namaste.webp" type="image/webp"><img src="../images/ui/gyanendra-namaste.jpg" alt="Astrologer Gyanendra Singh Tomar" width="720" height="720" fetchpriority="high"></picture></div>
   <div class="nm"><b>Gyanendra Singh Tomar</b><small>Vedic astrologer, Lucknow</small></div></div></div>
