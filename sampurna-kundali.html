@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=8">
   <link rel="stylesheet" href="rashi.css?v=5">
-  <script src="jt-site.js?v=24" defer></script>
+  <script src="jt-site.js?v=25" defer></script>
   <style>
   .sp{max-width:760px;margin:0 auto;background:#F6EEDC;color:#2B1810;border-radius:6px;font-family:'Mukta',system-ui,sans-serif;overflow:hidden;border:3px double #B8892B;text-align:left}
   .sp *{box-sizing:border-box}
@@ -217,6 +217,47 @@
           <tr><td>उपाय</td><td>सामान्य</td><td>मंत्र, दान, रत्न-विचार</td><td>ज्योतिषी द्वारा व्यक्तिगत</td></tr>
         </tbody>
       </table></div>
+    </section>
+
+    <section class="rs-sec" id="combo">
+      <h2>कॉम्बो: सम्पूर्ण कुंडली + वर्षफल 2027 — ₹1,000</h2>
+      <div class="jt-combo">
+        <div class="jt-combo-l">
+          <p class="jt-combo-p"><b>₹1,000</b> <s>₹1,400</s> <span>₹400 की बचत</span></p>
+          <ul>
+            <li><b>सम्पूर्ण कुंडली</b> (₹1,101) — 35+ पेज की PDF: लग्न-नवांश, ग्रह, दशा, करियर, विवाह, उपाय</li>
+            <li><b>वर्षफल 2027 रिपोर्ट</b> (₹299) — आपका 2027 महीने-दर-महीने</li>
+          </ul>
+          <p class="jt-combo-n">भुगतान के बाद WhatsApp पर स्क्रीनशॉट भेजें। पुष्टि होते ही दोनों रिपोर्ट WhatsApp पर भेज दी जाएंगी।</p>
+        </div>
+        <form class="jt-combo-f" id="jtComboF" novalidate>
+          <label>पूरा नाम<input name="n" required autocomplete="name"></label>
+          <label>जन्म तिथि<input name="d" type="date" required></label>
+          <label>जन्म समय<input name="t" type="time" required></label>
+          <label>जन्म स्थान (शहर)<input name="p" required placeholder="जैसे: लखनऊ"></label>
+          <p class="jt-combo-e" aria-live="polite"></p>
+          <button type="submit">₹1,000 में दोनों लें</button>
+        </form>
+      </div>
+      <style>
+        .jt-combo{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;background:#FFFDF7;border:2px solid #C9A227;border-radius:18px;padding:20px}
+        .jt-combo-p{font-size:30px;margin:0 0 8px;color:#7A1F1F}.jt-combo-p s{font-size:20px;color:#8A7563;margin:0 6px}.jt-combo-p span{font-size:15px;background:#14532D;color:#fff;border-radius:999px;padding:3px 10px;vertical-align:middle}
+        .jt-combo ul{margin:0 0 10px;padding-left:20px;line-height:1.65}.jt-combo-n{font-size:15px;color:#6B5444;margin:0}
+        .jt-combo-f{display:grid;gap:10px}.jt-combo-f label{display:grid;gap:4px;font-weight:600;font-size:15px}
+        .jt-combo-f input{min-height:46px;border:1px solid #D9C6A0;border-radius:10px;padding:0 12px;font:inherit;font-size:16px;background:#fff}
+        .jt-combo-f button{min-height:52px;border:0;border-radius:12px;background:#7A1F1F;color:#fff;font:inherit;font-weight:800;font-size:18px;cursor:pointer}
+        .jt-combo-e{color:#B42318;margin:0;font-size:14px;min-height:0}
+        @media (max-width:760px){.jt-combo{grid-template-columns:1fr;padding:16px}}
+      </style>
+      <script>
+      (function(){var f=document.getElementById('jtComboF');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();
+        var v=function(k){return (f.elements[k].value||'').trim();},er=f.querySelector('.jt-combo-e');
+        if(!v('n')||!v('d')||!v('t')||!v('p')){er.textContent='कृपया नाम, जन्म तिथि, समय और स्थान भरें।';return;}er.textContent='';
+        var msg='नमस्ते, मैंने कॉम्बो (सम्पूर्ण कुंडली + वर्षफल 2027) के लिए ₹1,000 UPI से भेजे हैं (स्क्रीनशॉट साथ में)।\nनाम: '+v('n')+'\nजन्म तिथि: '+v('d')+'\nजन्म समय: '+v('t')+'\nजन्म स्थान: '+v('p');
+        try{if(window.gtag)window.gtag('event','begin_checkout',{value:1000,currency:'INR',items:[{item_name:'combo_sampurna_vp'}]});}catch(x){}
+        if(window.JTUPIBox)window.JTUPIBox({amount:1000,title:'कॉम्बो: सम्पूर्ण कुंडली + वर्षफल 2027',msg:msg,note:'JT combo'});
+        else location.href='https://wa.me/918318513814?text='+encodeURIComponent(msg.replace('भेजे हैं (स्क्रीनशॉट साथ में)','भेजना चाहता/चाहती हूँ'));});})();
+      </script>
     </section>
 
     <section class="rs-sec" id="how">

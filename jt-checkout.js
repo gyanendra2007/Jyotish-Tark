@@ -227,9 +227,9 @@ window.JTCheckout = (function () {
       <p class="sm">${mobile ? T("दूसरे फ़ोन से स्कैन करें, या स्क्रीनशॉट लेकर UPI ऐप में गैलरी से स्कैन करें।", "Scan from another phone, or screenshot it and scan from the gallery in your UPI app.") : T("फ़ोन के किसी भी UPI ऐप से स्कैन करें।", "Scan with any UPI app on your phone.")}</p>
       <div class="id"><span>UPI ID:</span><code>${esc(UPI_ID)}</code><button type="button" data-cp>${T("कॉपी", "Copy")}</button></div>
       ${paise ? `<p class="sm" style="margin-top:6px">${T(`कृपया ठीक <b>₹${rs}</b> ही भेजें — अंत के पैसे (${paise}) से आपका भुगतान अपने-आप पहचाना जाता है।`, `Please send exactly <b>₹${rs}</b> — the paise (${paise}) let us recognise your payment automatically.`)}</p>` : ""}
-      <div class="st"><p style="margin:0 0 6px">${T(`<b>₹${rs}</b> भेजने के बाद नीचे दबाएँ — भुगतान की पुष्टि होते ही रिपोर्ट अपने-आप खुल जाएगी (आम तौर पर 1–2 मिनट)।`, `After sending <b>₹${rs}</b>, tap below — your report opens by itself as soon as the payment is confirmed (usually 1–2 minutes).`)}</p>
+      <div class="st"><p style="margin:0 0 6px">${T(`<b>₹${rs}</b> भेजने के बाद नीचे दबाएँ और WhatsApp पर भुगतान का स्क्रीनशॉट भेजें। भुगतान की पुष्टि होते ही आपकी रिपोर्ट का लिंक WhatsApp पर भेज दिया जाएगा।`, `After sending <b>₹${rs}</b>, tap below and send the payment screenshot on WhatsApp. Once the payment is confirmed, your report link is sent to you on WhatsApp.`)}</p>
       <p class="jco-e" role="alert"></p>
-      <div class="jco-b"><button type="button" data-s disabled>${T("✓ भुगतान हो गया — रिपोर्ट खोलें", "✓ I have paid — open my report")}</button></div></div>`;
+      <div class="jco-b"><button type="button" data-s disabled>${T("✓ भुगतान हो गया — WhatsApp पर भेजें", "✓ I have paid — send on WhatsApp")}</button></div></div>`;
     box.innerHTML = (tzIndia ? upiPart + nri : nri + upiPart) +
       `<p class="sm" style="margin-top:10px">${T("कोई दिक्कत? ", "Any problem? ")}<a href="${waL(T(`नमस्ते, ₹${rs} के भुगतान में मदद चाहिए। ऑर्डर: ${oid}`, `Hello, I need help paying ₹${rs}. Order: ${oid}`))}" target="_blank" rel="noopener">WhatsApp 83185 13814</a></p>`;
     const err = box.querySelector(".jco-e"), sb = box.querySelector("[data-s]");
@@ -246,25 +246,20 @@ window.JTCheckout = (function () {
     const check = () => verify(oid).then((v) => { if (v && v.ok && v.paid) opened(); }).catch(() => {});
     const bg = () => { if (done || !document.body.contains(ov)) return; check(); if (quiet++ < 220) setTimeout(bg, 8000); };
     setTimeout(bg, 15000);
-    sb.addEventListener("click", async () => {
+    // payment is confirmed by hand (owner sets the order to PAID in the Orders sheet and sends the link);
+    // if that happens while this page is still open, the report opens here too
+    sb.addEventListener("click", () => {
       sb.disabled = true; err.textContent = "";
-      try { await post("claim", { order_id: oid }); } catch (e) { /* the SMS still confirms it */ }
+      post("claim", { order_id: oid }).catch(() => { /* older backend: fine */ });
       ga("upi_claim", { product, value: amt, currency: "INR" });
+      const waMsg = T(`नमस्ते, मैंने ${NAME} के लिए ₹${rs} UPI से भेजे हैं (स्क्रीनशॉट साथ में)।\nऑर्डर: ${oid}\nरिपोर्ट लिंक: ${back}`, `Hello, I paid ₹${rs} by UPI for the ${NAME} (screenshot attached).\nOrder: ${oid}\nReport link: ${back}`);
+      try { window.open(waL(waMsg), "_blank", "noopener"); } catch (e) { /* */ }
       const st = sb.closest(".st");
-      st.innerHTML = `<div class="jco-s" aria-hidden="true"></div><p style="text-align:center;margin:0"><b>${T("भुगतान की पुष्टि हो रही है…", "Confirming your payment…")}</b><br><span class="sm">${T("यह पेज खुला रखें — पुष्टि होते ही रिपोर्ट अपने-आप खुलेगी।", "Keep this page open — the report opens by itself once confirmed.")}</span></p>`;
-      let n = 0;
-      const fast = () => {
-        if (done || !document.body.contains(ov)) return;
-        check().then(() => {
-          if (done) return;
-          if (n++ < 60) { setTimeout(fast, 4000); return; }
-          st.innerHTML = `<p style="margin:0"><b>${T("पुष्टि में थोड़ी देर हो रही है", "Confirmation is taking a little longer")}</b></p>
-            <p class="sm">${T("चिंता न करें — भुगतान की पुष्टि होते ही आपकी रिपोर्ट इस लिंक पर खुलेगी (इसे सँभाल लें):", "Don't worry — once the payment is confirmed your report opens at this link (save it):")}<br><a href="${back}" style="word-break:break-all">${back}</a></p>
-            <a class="wa" href="${waL(T(`नमस्ते, मैंने ${NAME} के लिए ₹${rs} UPI से भेजे हैं (स्क्रीनशॉट साथ में)। ऑर्डर: ${oid}`, `Hello, I paid ₹${rs} by UPI for the ${NAME} (screenshot attached). Order: ${oid}`))}" target="_blank" rel="noopener">${T("WhatsApp पर स्क्रीनशॉट भेजें", "Send the screenshot on WhatsApp")}</a>`;
-          setTimeout(bg, 8000);
-        });
-      };
-      fast();
+      st.innerHTML = `<p style="margin:0"><b>${T("धन्यवाद! अब WhatsApp पर स्क्रीनशॉट भेजें।", "Thank you! Now send the screenshot on WhatsApp.")}</b></p>
+        <p class="sm">${T("WhatsApp नहीं खुला? नीचे दबाएँ। भुगतान की पुष्टि होते ही आपकी रिपोर्ट इस लिंक पर खुलेगी (इसे सँभाल लें):", "WhatsApp did not open? Tap below. Once the payment is confirmed your report opens at this link (save it):")}<br><a href="${back}" style="word-break:break-all">${back}</a></p>
+        <a class="wa" href="${waL(waMsg)}" target="_blank" rel="noopener">${T("WhatsApp पर स्क्रीनशॉट भेजें", "Send the screenshot on WhatsApp")}</a>`;
+      const slow = () => { if (done || !document.body.contains(ov)) return; check().then(() => { if (!done) setTimeout(slow, 10000); }); };
+      setTimeout(slow, 10000);
     });
   }
 /* Razorpay checkout. After a successful payment the customer goes to the product page with
