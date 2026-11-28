@@ -6,6 +6,20 @@
   "use strict";
   if (window.JTSearch) return;
   var IDX = null, loading = null;
+  // English pages: English labels; results open the English page when there is one, otherwise the
+  // English "this page is in Hindi" note (window.JT_EN is set by jt-site.js)
+  var EN = (document.documentElement.getAttribute("lang") || "") === "en" && /\/en\//.test(location.pathname);
+  var L = EN ? { none: 'No page found — try another word (e.g. "hanuman", "aarti", "panchang")', label: "Search the website", head: "🔍 Search the whole website",
+      ph: "e.g. hanuman chalisa, ekadashi, panchang, kundali…", hint: "Type in English or Hindi. Most pages are in Hindi; pages marked EN open in English.", close: "Close", btn: "Search" }
+    : { none: 'कोई पेज नहीं मिला — दूसरा शब्द लिखें (जैसे "हनुमान", "aarti", "panchang")', label: "वेबसाइट पर खोजें", head: "🔍 पूरी वेबसाइट में खोजें",
+      ph: "जैसे: हनुमान चालीसा, ekadashi, aaj ka panchang, कुंडली…", hint: "", close: "बंद करें", btn: "खोजें" };
+  function enInfo(u) {
+    var J = window.JT_EN; if (!EN || !J) return null;
+    var f = String(u || "").replace(/^\/+/, "").split("#")[0], root = J.root || "/";
+    if (Object.prototype.hasOwnProperty.call(J.map, f)) return { href: root + J.map[f], en: true, t: (J.titles || {})[f] };
+    if (J.hindiOnly.indexOf(f) >= 0) return { href: root + "en/" + f, en: false };
+    return { href: root + "en/hindi-only.html?p=" + encodeURIComponent(f), en: false };
+  }
   function load() {
     if (IDX) return Promise.resolve(IDX);
     if (loading) return loading;
@@ -86,8 +100,8 @@
       load().then(function () {
         if (input.value.trim() !== q) return;
         items = search(q, opts.max || 8); sel = -1;
-        list.innerHTML = items.length ? items.map(function (r, i) { return '<li role="none"><a role="option" id="' + id + i + '" href="' + r.u + '"><span class="jts-c">' + esc(r.c) + "</span><span>" + esc(r.t) + "</span></a></li>"; }).join("")
-          : '<li class="jts-none">कोई पेज नहीं मिला — दूसरा शब्द लिखें (जैसे "हनुमान", "aarti", "panchang")</li>';
+        list.innerHTML = items.length ? items.map(function (r, i) { var e = enInfo(r.u); return '<li role="none"><a role="option" id="' + id + i + '" href="' + (e ? e.href : r.u) + '"><span class="jts-c">' + esc(e ? (e.en ? "EN" : "हिंदी") : r.c) + '</span><span' + (e && !e.en ? ' lang="hi"' : "") + ">" + esc((e && e.t) || r.t) + "</span></a></li>"; }).join("")
+          : '<li class="jts-none">' + esc(L.none) + "</li>";
         list.hidden = false; input.setAttribute("aria-expanded", "true");
       });
     }
@@ -98,7 +112,7 @@
       if (list.hidden) return;
       if (e.key === "ArrowDown") { e.preventDefault(); sel = Math.min(sel + 1, items.length - 1); mark(); }
       else if (e.key === "ArrowUp") { e.preventDefault(); sel = Math.max(sel - 1, 0); mark(); }
-      else if (e.key === "Enter") { var r = items[sel >= 0 ? sel : 0]; if (r) { e.preventDefault(); location.href = r.u; } }
+      else if (e.key === "Enter") { var r = items[sel >= 0 ? sel : 0]; if (r) { e.preventDefault(); var x = enInfo(r.u); location.href = x ? x.href : r.u; } }
       else if (e.key === "Escape") { list.hidden = true; input.setAttribute("aria-expanded", "false"); }
     });
     if (!opts.container) document.addEventListener("click", function (e) { if (!host.contains(e.target)) { list.hidden = true; input.setAttribute("aria-expanded", "false"); } });
@@ -107,9 +121,9 @@
 
   function overlay() {
     addCss();
-    var ov = document.createElement("div"); ov.className = "jts-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "वेबसाइट पर खोजें");
-    ov.innerHTML = '<div class="jts-box"><div class="jts-top"><span>🔍 पूरी वेबसाइट में खोजें</span><button class="jts-x" type="button" aria-label="बंद करें">×</button></div>' +
-      '<input type="search" placeholder="जैसे: हनुमान चालीसा, ekadashi, aaj ka panchang, कुंडली…"><div class="jts-res"></div><p class="jts-hint">हिंदी या English (Hinglish) — दोनों में लिखें। एक अक्षर से ही सुझाव आने लगेंगे।</p></div>';
+    var ov = document.createElement("div"); ov.className = "jts-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", L.label);
+    ov.innerHTML = '<div class="jts-box"><div class="jts-top"><span>' + esc(L.head) + '</span><button class="jts-x" type="button" aria-label="' + esc(L.close) + '">×</button></div>' +
+      '<input type="search" placeholder="' + esc(L.ph) + '"><div class="jts-res"></div><p class="jts-hint">' + esc(L.hint || "हिंदी या English (Hinglish) — दोनों में लिखें। एक अक्षर से ही सुझाव आने लगेंगे।") + '</p></div>';
     document.body.appendChild(ov);
     var inp = ov.querySelector("input"); attach(inp, { container: ov.querySelector(".jts-res"), max: 12 });
     function close() { ov.remove(); document.removeEventListener("keydown", k); }
@@ -125,7 +139,7 @@
     var row = document.querySelector(".jt-header-row") || document.querySelector("header .jt-wrap") || null;
     if (!row || row.querySelector(".jts-btn")) return;
     addCss();
-    var b = document.createElement("button"); b.type = "button"; b.className = "jts-btn"; b.setAttribute("aria-label", "वेबसाइट पर खोजें"); b.title = "खोजें"; b.textContent = "🔍";
+    var b = document.createElement("button"); b.type = "button"; b.className = "jts-btn"; b.setAttribute("aria-label", L.label); b.title = L.btn; b.textContent = "🔍";
     b.onclick = overlay;
     var toggle = row.querySelector(".jt-nav-toggle, .jt-menu-btn, button[aria-controls]");
     if (toggle) row.insertBefore(b, toggle); else row.appendChild(b);

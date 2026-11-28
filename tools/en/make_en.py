@@ -52,8 +52,9 @@ def make(page):
     for hp, ep in EN_PAGES.items():
         s = re.sub(r'href="' + re.escape(hp) + r'([#?"])', lambda m: f'href="{ep}{m.group(1)}', s)
     s = s.replace('href="https://jyotishtark.in/"', 'href="en/"')
-    # no Hindi search on English pages
-    s = re.sub(r'<button type="button" class="jts-bar"[^>]*>.*?</button>', '', s, flags=re.S)
+    # site search: same bar as the Hindi page, English words (jt-search.js switches to English on /en/)
+    s = re.sub(r'(<button type="button" class="jts-bar"[^>]*aria-label=")[^"]*(")', r'\1Search the website — chalisa, aarti, panchang, kundali\2', s)
+    s = s.replace('<span>खोजें — चालीसा, आरती, पंचांग…</span>', '<span>Search — chalisa, aarti, panchang…</span>')
     s = s.replace('</head>', '  <script src="en-runtime.js?v=1" defer></script>\n</head>', 1)
     # the paid report modules have English copies (built by tools/en/gen_en_js.js)
     s = re.sub(r'src="(sampurna-analysis|sampurna-report|sampurna-preview)\.js\?v=\d+"', r'src="\1-en.js?v=1"', s)
