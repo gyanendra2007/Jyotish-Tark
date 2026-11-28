@@ -99,7 +99,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
      Visitors outside India (time zone not IST) are sent to the English page when one exists;
      everyone can switch with the हिं / EN button, and the choice is remembered. Bots are never redirected. */
   var EN = (document.documentElement.getAttribute("lang") || "").toLowerCase() === "en" && /\/en\//.test(location.pathname);
-  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html", "kundali-form.html": "en/kundali-form.html", "guna-milan-calculator.html": "en/guna-milan-calculator.html", "mesh-rashifal-2027.html": "en/mesh-rashifal-2027.html", "vrishabh-rashifal-2027.html": "en/vrishabh-rashifal-2027.html", "mithun-rashifal-2027.html": "en/mithun-rashifal-2027.html", "kark-rashifal-2027.html": "en/kark-rashifal-2027.html", "singh-rashifal-2027.html": "en/singh-rashifal-2027.html", "kanya-rashifal-2027.html": "en/kanya-rashifal-2027.html", "tula-rashifal-2027.html": "en/tula-rashifal-2027.html", "vrishchik-rashifal-2027.html": "en/vrishchik-rashifal-2027.html", "dhanu-rashifal-2027.html": "en/dhanu-rashifal-2027.html", "makar-rashifal-2027.html": "en/makar-rashifal-2027.html", "kumbh-rashifal-2027.html": "en/kumbh-rashifal-2027.html", "meen-rashifal-2027.html": "en/meen-rashifal-2027.html" };
+  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html", "kundali-form.html": "en/kundali-form.html", "guna-milan-calculator.html": "en/guna-milan-calculator.html", "mesh-rashifal-2027.html": "en/mesh-rashifal-2027.html", "vrishabh-rashifal-2027.html": "en/vrishabh-rashifal-2027.html", "mithun-rashifal-2027.html": "en/mithun-rashifal-2027.html", "kark-rashifal-2027.html": "en/kark-rashifal-2027.html", "singh-rashifal-2027.html": "en/singh-rashifal-2027.html", "kanya-rashifal-2027.html": "en/kanya-rashifal-2027.html", "tula-rashifal-2027.html": "en/tula-rashifal-2027.html", "vrishchik-rashifal-2027.html": "en/vrishchik-rashifal-2027.html", "dhanu-rashifal-2027.html": "en/dhanu-rashifal-2027.html", "makar-rashifal-2027.html": "en/makar-rashifal-2027.html", "kumbh-rashifal-2027.html": "en/kumbh-rashifal-2027.html", "meen-rashifal-2027.html": "en/meen-rashifal-2027.html", "rashifal-2027.html": "en/rashifal-2027.html", "weekly-rashifal.html": "en/weekly-rashifal.html", "masik-rashifal-december-2026.html": "en/masik-rashifal-december-2026.html", "rashifal.html": "en/rashifal.html", "mera-2027.html": "en/mera-2027.html" };
   function siteRoot() { return location.pathname.replace(/(\/en)?\/[^\/]*$/, "/"); }
   function langPair() {
     var file = location.pathname.split("/").pop() || "";
@@ -422,6 +422,73 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src=(window.JT_BASE||"")+"jt-checkout.js?v=20";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src=(window.JT_BASE||"")+"jt-checkout.js?v=22";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
 (function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src=(window.JT_BASE||"")+"jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
 (function(){try{if(/\/en\//.test(location.pathname))return;if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src=(window.JT_BASE||"")+"jt-search.js?v=9";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
+
+/* gentle motion on every page: sections and cards rise in as you scroll, numbers count up,
+   a thin reading-progress bar on long pages. Nothing is hidden without JS or with reduced motion. */
+(function () {
+  try {
+    var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    if ((mq && mq.matches) || !("IntersectionObserver" in window)) return;
+    var st = document.createElement("style");
+    st.textContent = ".jt-rv{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);transition-delay:var(--jtd,0s)}" +
+      ".jt-rv.jt-in{opacity:1;transform:none}" +
+      "#jtProg{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#7A1F1F,#B8892B,#E9C27A);z-index:10001;pointer-events:none}" +
+      "@media print{.jt-rv{opacity:1!important;transform:none!important}#jtProg{display:none}}";
+    document.head.appendChild(st);
+    function start() {
+      var vh = window.innerHeight || 800, picked = [], seen = new Set();
+      var SEL = ".jh-st,.jh-card,.jh-r,.jh-pan,.jh-me>*,.jh-trust li,main section,main article>h2,main article>figure,main details,main table,.rashi-card," +
+        "main .grid>*,main [class*='card']:not(.jt-rv),main .rf-panel,main .r7-card,main .sp-sec";
+      var nodes = document.querySelectorAll(SEL);
+      for (var i = 0; i < nodes.length && picked.length < 90; i++) {
+        var el = nodes[i];
+        if (seen.has(el) || el.closest("header,footer,nav,[data-no-motion],.jt-rv,dialog,[role=dialog]")) continue;
+        var r = el.getBoundingClientRect();
+        if (!el.offsetHeight || r.top < vh * 0.9 || r.height > vh * 1.6) continue;
+        var cs = getComputedStyle(el);
+        if (cs.position === "fixed" || cs.position === "sticky" || cs.display === "contents") continue;
+        // skip a section if one of its children will animate instead (avoid double motion)
+        picked.push(el); seen.add(el);
+      }
+      picked = picked.filter(function (el) { return !picked.some(function (o) { return o !== el && o.contains(el) && o.tagName !== "SECTION"; }) && !(el.tagName === "SECTION" && picked.some(function (o) { return o !== el && el.contains(o); })); });
+      var io = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("jt-in"); io.unobserve(e.target); } });
+      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
+      picked.forEach(function (el) {
+        var sib = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
+        el.style.setProperty("--jtd", (Math.min(sib, 6) * 0.07).toFixed(2) + "s");
+        el.classList.add("jt-rv"); io.observe(el);
+      });
+      // safety: anything still hidden after 6 s while in view gets shown
+      setTimeout(function () { picked.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < vh && r.bottom > 0) el.classList.add("jt-in"); }); }, 6000);
+
+      // count-up numbers (stats like "100+"; years are left alone)
+      var nums = document.querySelectorAll(".jh-trust b,[data-count]");
+      var io2 = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) {
+          if (!e.isIntersecting) return; io2.unobserve(e.target);
+          var el = e.target, txt = el.textContent, m = txt.match(/^(\D*)(\d[\d,]*)(\D*)$/); if (!m) return;
+          var end = +m[2].replace(/,/g, ""); if (end >= 1900 && end <= 2100) return;
+          var t0 = performance.now(), dur = 1200;
+          (function step(t) { var k = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - k, 3)));
+            el.textContent = m[1] + v.toLocaleString("en-IN") + m[3]; if (k < 1) requestAnimationFrame(step); else el.textContent = txt; })(t0);
+        });
+      }, { threshold: 0.6 });
+      Array.prototype.forEach.call(nums, function (n) { io2.observe(n); });
+
+      // reading progress on long pages (not the home page)
+      var docH = document.documentElement.scrollHeight;
+      if (docH > vh * 3.5 && !document.querySelector(".jh")) {
+        var bar = document.createElement("div"); bar.id = "jtProg"; bar.setAttribute("aria-hidden", "true"); document.body.appendChild(bar);
+        var tick = false;
+        var upd = function () { tick = false; var max = document.documentElement.scrollHeight - window.innerHeight; bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")"; };
+        window.addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+      }
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(start, 60); });
+    else setTimeout(start, 60);
+  } catch (e) {}
+})();

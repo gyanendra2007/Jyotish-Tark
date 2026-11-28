@@ -8,6 +8,9 @@
    Usage (from the repo root):
      ASTRO_JS=astronomy.min.js node tools/monthly-rashifal.js 2026-12
    Then add the page to sitemap.xml and rashifal.html, review, commit, push.
+   English copy: python3 tools/en/rashifal/build.py masik-rashifal-<month>-<year>.html
+   (translate any sentences it lists into tools/en/rashifal/tpl.json), add it to EN_MAP in
+   jt-site.js and to the sitemap.
    ========================================================================== */
 "use strict";
 const fs = require("fs"), path = require("path"), vm = require("vm");

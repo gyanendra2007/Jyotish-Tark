@@ -52,7 +52,7 @@ def head(slug, hi_slug, title, desc, ld=None):
   <link rel="stylesheet" href="../tailwind.css?v=1">
   <link rel="stylesheet" href="../jt-theme.css?v=8">
   <link rel="stylesheet" href="../rashi.css?v=5">
-  <script src="../jt-site.js?v=27" defer></script>
+  <script src="../jt-site.js?v=28" defer></script>
 </head>
 <body>'''
 
@@ -130,6 +130,7 @@ location.href='kundali-form.html?name='+encodeURIComponent(n)+'&dob='+encodeURIC
 HOME = f'''<main id="main"><style>{JH_CSS}</style>
 <div class="jh">
 <section class="jhB" aria-label="Jyotish Tark">
+<div class="jh-sky" aria-hidden="true"><i style="left:6%;top:14%;animation-delay:0s"></i><i style="left:18%;top:62%;animation-delay:1.1s"></i><i style="left:33%;top:22%;animation-delay:2.2s"></i><i style="left:47%;top:8%;animation-delay:0.6s"></i><i style="left:58%;top:48%;animation-delay:1.7s"></i><i style="left:71%;top:16%;animation-delay:2.8s"></i><i style="left:86%;top:58%;animation-delay:0.3s"></i><i style="left:93%;top:24%;animation-delay:1.4s"></i><i style="left:26%;top:86%;animation-delay:2.5s"></i><i style="left:64%;top:84%;animation-delay:0.9s"></i></div>
   <div class="jh-wrap"><div class="jh-hero-t">
     <span class="jh-k">JYOTISH TARK · LUCKNOW</span>
     <h1 class="jh-h">Vedic astrology, <span>explained with reason</span></h1>

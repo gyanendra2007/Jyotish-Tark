@@ -49,7 +49,7 @@ window.JTCheckout = (function () {
   }
   // a slim strip so a visitor who came through a partner link sees the discount before paying
   // English pages that have their own copy of a product page (the report then comes in English)
-  const EN_PAGE = { sampurna: "en/kundali-form.html" };
+  const EN_PAGE = { sampurna: "en/kundali-form.html", vp: "en/mera-2027.html" };
   const pageFor = (product, en) => (en && EN_PAGE[product]) || PAGE[product] || "";
   const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "mera-2027.html": "vp", "kundali-se-poochho.html": "prashna" };
   function banner() {

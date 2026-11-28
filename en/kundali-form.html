@@ -394,7 +394,7 @@
   </style>
   <link rel="stylesheet" href="tailwind.css?v=1">
   <link rel="stylesheet" href="jt-theme.css?v=8">
-  <script src="jt-site.js?v=27" defer></script>
+  <script src="jt-site.js?v=28" defer></script>
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -413,7 +413,7 @@
       <nav class="jt-nav" aria-label="Main menu">
         <a href="en/kundali-form.html" aria-current="page">Free Kundali</a>
         <a href="en/consultation.html">Consultation</a>
-        <a href="rashifal.html">Horoscope</a>
+        <a href="en/rashifal.html">Horoscope</a>
         <a href="panchang.html">Panchang</a>
         <a href="numerology.html">Numerology</a>
         <a href="kp-astrology.html">KP Astrology</a>
@@ -433,7 +433,7 @@
       <a href="en/">Home</a>
       <a href="en/kundali-form.html" aria-current="page">Free Kundali</a>
         <a href="en/consultation.html">Consultation</a>
-        <a href="rashifal.html">Horoscope</a>
+        <a href="en/rashifal.html">Horoscope</a>
         <a href="panchang.html">Panchang</a>
         <a href="numerology.html">Numerology</a>
         <a href="kp-astrology.html">KP Astrology</a>
@@ -1165,8 +1165,8 @@
         <ul>
           <li><a href="en/kundali-form.html">Free birth chart</a></li>
           <li><a href="en/sampurna-kundali.html">Full Kundali Report · ₹1,101</a></li><li><a href="en/consultation.html">Consultation · first call free</a></li>
-          <li><a href="rashifal.html">Horoscope</a></li>
-          <li><a href="weekly-rashifal.html">Weekly horoscope (Hindi)</a></li><li><a href="masik-rashifal-december-2026.html">Monthly horoscope (Hindi)</a></li><li><a href="gochar-2027.html">Transits 2027 (Hindi)</a></li><li><a href="kundali-se-poochho.html">Ask your kundali (Hindi)</a></li><li><a href="my-report.html">Get my report again</a></li><li><a href="partner.html">Become a partner (Hindi)</a></li><li><a href="mantra-jaap.html">Mantra jaap (Hindi)</a></li><li><a href="aaj-ka-panchang-delhi.html">City panchang (Hindi)</a></li><li><a href="rashi-jodi.html">Sign compatibility (Hindi)</a></li><li><a href="grah-bhav-phal.html">Planets in houses (Hindi)</a></li><li><a href="nakshatra-list.html">27 nakshatras (Hindi)</a></li><li><a href="rashi.html">12 signs (Hindi)</a></li><li><a href="tyohar-2026.html">Festivals 2026 (Hindi)</a></li><li><a href="tyohar-2027.html">Festivals 2027 (Hindi)</a></li><li><a href="vivah-muhurat-2026.html">Marriage muhurat 2026 (Hindi)</a></li><li><a href="vivah-muhurat-2027.html">Marriage muhurat 2027 (Hindi)</a></li><li><a href="griha-pravesh-muhurat-2027.html">Griha pravesh muhurat 2027 (Hindi)</a></li><li><a href="shubh-muhurat-2027.html">Shubh muhurat 2027 (Hindi)</a></li><li><a href="bhakti-sangrah.html">Bhakti collection (Hindi)</a></li>
+          <li><a href="en/rashifal.html">Horoscope</a></li>
+          <li><a href="en/weekly-rashifal.html">Weekly horoscope (Hindi)</a></li><li><a href="en/masik-rashifal-december-2026.html">Monthly horoscope (Hindi)</a></li><li><a href="gochar-2027.html">Transits 2027 (Hindi)</a></li><li><a href="kundali-se-poochho.html">Ask your kundali (Hindi)</a></li><li><a href="my-report.html">Get my report again</a></li><li><a href="partner.html">Become a partner (Hindi)</a></li><li><a href="mantra-jaap.html">Mantra jaap (Hindi)</a></li><li><a href="aaj-ka-panchang-delhi.html">City panchang (Hindi)</a></li><li><a href="rashi-jodi.html">Sign compatibility (Hindi)</a></li><li><a href="grah-bhav-phal.html">Planets in houses (Hindi)</a></li><li><a href="nakshatra-list.html">27 nakshatras (Hindi)</a></li><li><a href="rashi.html">12 signs (Hindi)</a></li><li><a href="tyohar-2026.html">Festivals 2026 (Hindi)</a></li><li><a href="tyohar-2027.html">Festivals 2027 (Hindi)</a></li><li><a href="vivah-muhurat-2026.html">Marriage muhurat 2026 (Hindi)</a></li><li><a href="vivah-muhurat-2027.html">Marriage muhurat 2027 (Hindi)</a></li><li><a href="griha-pravesh-muhurat-2027.html">Griha pravesh muhurat 2027 (Hindi)</a></li><li><a href="shubh-muhurat-2027.html">Shubh muhurat 2027 (Hindi)</a></li><li><a href="bhakti-sangrah.html">Bhakti collection (Hindi)</a></li>
           <li><a href="panchang.html">Panchang &amp; muhurat (Hindi)</a></li>
           <li><a href="numerology.html">Numerology</a></li>
           <li><a href="mobile-number-numerology.html">Mobile number numerology (Hindi)</a></li>
@@ -1217,7 +1217,7 @@
   <script src="free-report.js?v=7"></script>
   <script src="jt-promo.js?v=6"></script>
   <script src="jt-ref.js?v=3"></script>
-  <script src="jt-checkout.js?v=21"></script>
+  <script src="jt-checkout.js?v=22"></script>
   <script src="sampurna-preview-en.js?v=1"></script>
   <script src="sampurna-names.js?v=1"></script>
   <script src="jt-life.js?v=1"></script>
@@ -1767,15 +1767,15 @@
       if (tokenEl) tokenEl.textContent = tokenCode;
 
       const rudraMap = {
-        Saturn:  { name: "सप्तमुखी रुद्राक्ष (7 Mukhi)", price: "₹1,999", id: "prod-7", desc: "शनि महादशा एवं साढ़ेसाती में धैर्य और स्थायित्व हेतु सप्तमुखी रुद्राक्ष उपयोगी माना गया है।" },
-        Rahu:    { name: "आठ मुखी रुद्राक्ष (8 Mukhi)",  price: "₹3,999", id: "prod-8", desc: "राहु महादशा में मानसिक स्पष्टता और एकाग्रता हेतु आठ मुखी रुद्राक्ष धारण किया जाता है।" },
-        Ketu:    { name: "नौ मुखी रुद्राक्ष (9 Mukhi)",   price: "₹4,999", id: "prod-9", desc: "केतु महादशा में आध्यात्मिक बल और आत्मविश्वास हेतु नौ मुखी रुद्राक्ष अनुकूल है।" },
-        Mars:    { name: "तीन मुखी रुद्राक्ष (3 Mukhi)",  price: "₹1,499", id: "prod-3", desc: "मंगल की ऊर्जा के संतुलन और साहस हेतु तीन मुखी रुद्राक्ष उपयोगी है।" },
-        Mercury: { name: "चार मुखी रुद्राक्ष (4 Mukhi)",  price: "₹999",   id: "prod-4", desc: "बुध महादशा, वाणी और बौद्धिक एकाग्रता हेतु चार मुखी रुद्राक्ष अनुकूल रहता है।" },
-        Venus:   { name: "छह मुखी रुद्राक्ष (6 Mukhi)",  price: "₹1,499", id: "prod-6", desc: "शुक्र महादशा, कला और पारिवारिक सामंजस्य हेतु छह मुखी रुद्राक्ष शुभ माना गया है।" },
-        Moon:    { name: "दो मुखी / पंचमुखी रुद्राक्ष",   price: "₹499",   id: "prod-5", desc: "चंद्र महादशा और मानसिक शांति हेतु अभिमंत्रित रुद्राक्ष धारण करना शुभ है।" },
-        Jupiter: { name: "पंचमुखी रुद्राक्ष (5 Mukhi)",   price: "₹499",   id: "prod-5", desc: "गुरु महादशा, सात्विक ज्ञान और स्वास्थ्य संतुलन हेतु पंचमुखी रुद्राक्ष सर्वोत्तम है।" },
-        Sun:     { name: "पंचमुखी / एक मुखी रुद्राक्ष",   price: "₹499",   id: "prod-5", desc: "सूर्य बल, आत्मबल और नेतृत्व क्षमता हेतु अभिमंत्रित रुद्राक्ष धारण करें।" }
+        Saturn:  { name: "सप्तमुखी रुद्राक्ष (7 Mukhi)", price: "₹1,999", id: "prod-7", desc: "शनि महादशा एवं साढ़ेसाती में धैर्य और स्थायित्व हेतु सप्तमुखी रुद्राक्ष उपयोगी माना गया है।", nameEn: "7 Mukhi Rudraksha", descEn: "Traditionally worn in Saturn Mahadasha and Sade Sati for patience and steadiness." },
+        Rahu:    { name: "आठ मुखी रुद्राक्ष (8 Mukhi)",  price: "₹3,999", id: "prod-8", desc: "राहु महादशा में मानसिक स्पष्टता और एकाग्रता हेतु आठ मुखी रुद्राक्ष धारण किया जाता है।", nameEn: "8 Mukhi Rudraksha", descEn: "Traditionally worn in Rahu Mahadasha for clarity of mind and focus." },
+        Ketu:    { name: "नौ मुखी रुद्राक्ष (9 Mukhi)",   price: "₹4,999", id: "prod-9", desc: "केतु महादशा में आध्यात्मिक बल और आत्मविश्वास हेतु नौ मुखी रुद्राक्ष अनुकूल है।", nameEn: "9 Mukhi Rudraksha", descEn: "Traditionally worn in Ketu Mahadasha for spiritual strength and self-confidence." },
+        Mars:    { name: "तीन मुखी रुद्राक्ष (3 Mukhi)",  price: "₹1,499", id: "prod-3", desc: "मंगल की ऊर्जा के संतुलन और साहस हेतु तीन मुखी रुद्राक्ष उपयोगी है।", nameEn: "3 Mukhi Rudraksha", descEn: "Traditionally worn to balance the energy of Mars and for courage." },
+        Mercury: { name: "चार मुखी रुद्राक्ष (4 Mukhi)",  price: "₹999",   id: "prod-4", desc: "बुध महादशा, वाणी और बौद्धिक एकाग्रता हेतु चार मुखी रुद्राक्ष अनुकूल रहता है।", nameEn: "4 Mukhi Rudraksha", descEn: "Traditionally worn in Mercury Mahadasha for speech and mental focus." },
+        Venus:   { name: "छह मुखी रुद्राक्ष (6 Mukhi)",  price: "₹1,499", id: "prod-6", desc: "शुक्र महादशा, कला और पारिवारिक सामंजस्य हेतु छह मुखी रुद्राक्ष शुभ माना गया है।", nameEn: "6 Mukhi Rudraksha", descEn: "Traditionally worn in Venus Mahadasha for art and harmony in the family." },
+        Moon:    { name: "दो मुखी / पंचमुखी रुद्राक्ष",   price: "₹499",   id: "prod-5", desc: "चंद्र महादशा और मानसिक शांति हेतु अभिमंत्रित रुद्राक्ष धारण करना शुभ है।", nameEn: "2 Mukhi / 5 Mukhi Rudraksha", descEn: "Traditionally worn in Moon Mahadasha for peace of mind." },
+        Jupiter: { name: "पंचमुखी रुद्राक्ष (5 Mukhi)",   price: "₹499",   id: "prod-5", desc: "गुरु महादशा, सात्विक ज्ञान और स्वास्थ्य संतुलन हेतु पंचमुखी रुद्राक्ष सर्वोत्तम है।", nameEn: "5 Mukhi Rudraksha", descEn: "Traditionally worn in Jupiter Mahadasha for wisdom and balance." },
+        Sun:     { name: "पंचमुखी / एक मुखी रुद्राक्ष",   price: "₹499",   id: "prod-5", desc: "सूर्य बल, आत्मबल और नेतृत्व क्षमता हेतु अभिमंत्रित रुद्राक्ष धारण करें।", nameEn: "5 Mukhi / 1 Mukhi Rudraksha", descEn: "Traditionally worn for the strength of the Sun, self-confidence and leadership." }
       };
 
       const activeKey = (ctx.dasha && ctx.dasha.md) || "Jupiter";
@@ -1785,10 +1785,11 @@
       const rLink = document.getElementById('rudraRecLink');
       const rBtn  = document.getElementById('rudraRecBtnText');
 
-      if (rHead) rHead.textContent = `आपकी दशा के अनुकूल सात्विक रुद्राक्ष: ${rec.name}`;
-      if (rSub)  rSub.textContent  = rec.desc;
+      const rEN = document.documentElement.lang === "en";
+      if (rHead) rHead.textContent = rEN ? `Rudraksha suited to your dasha: ${rec.nameEn}` : `आपकी दशा के अनुकूल सात्विक रुद्राक्ष: ${rec.name}`;
+      if (rSub)  rSub.textContent  = rEN ? `${rec.descEn} (Store page in Hindi; delivery within India.)` : rec.desc;
       if (rLink) rLink.href        = `rudraksha.html#${rec.id}`;
-      if (rBtn)  rBtn.textContent  = `${rec.name} (${rec.price}) देखें →`;
+      if (rBtn)  rBtn.textContent  = rEN ? `View ${rec.nameEn} (${rec.price}) →` : `${rec.name} (${rec.price}) देखें →`;
     }
 
     function copyYoutubeLiveToken() {
