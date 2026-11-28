@@ -1951,6 +1951,7 @@ ${html}
   window.FreeReport = {
     buildDocument,
     buildHtml,
-    _internal: { buildModel, detectPositiveYogas, detectSensitivePoints, computeTransits }
+    // buildModel(ctx, vd, "en") builds the model's text in English without changing the page's report language
+    _internal: { buildModel: (ctx, vd, lang) => { const prev = LANG; if (lang) LANG = lang === "en" ? "en" : "hi"; try { return buildModel(ctx, vd); } finally { LANG = prev; } }, detectPositiveYogas, detectSensitivePoints, computeTransits }
   };
 })();

@@ -146,7 +146,7 @@ HOME = f'''<main id="main"><style>{JH_CSS}</style>
 <section class="jh-sec"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">OUR SERVICES</span><h2 class="jh-h">For every question you carry</h2><p>Start with a free tool; go deeper with a detailed report or a direct conversation.</p></div><div class="jh-grid">
 {card('kundali-form.html', '../images/ui/card-kundali', 'Free birth chart', 'Lagna, navamsa, planets, dasha and a 12-chapter reading.', 'Free', alt='Birth chart')}
 {card('guna-milan-calculator.html', '../images/ui/card-milan', 'Kundali matching', '36-point guna milan, manglik and nadi dosha — before marriage.', 'Free', alt='Kundali matching')}
-{card('sampurna-kundali.html', '../images/ui/card-career', 'Full Kundali Report', '35+ page PDF (in Hindi): career, money, marriage, dasha timeline and remedies.', '₹1,101', alt='Full kundali report')}
+{card('sampurna-kundali.html', '../images/ui/card-career', 'Full Kundali Report', '35+ page PDF in English: career, money, marriage, dasha timeline and remedies.', '₹1,101', alt='Full kundali report')}
 {card('consultation.html', '../images/ui/gyanendra', 'Talk to the astrologer', 'Audio or video call — the first 5 minutes are free.', 'From ₹301', alt='Astrologer Gyanendra Singh Tomar')}
 {card('../rudraksha.html', '../images/ui/card-rudraksha', 'Genuine rudraksha', 'Nepali beads, with an option of a lab certificate. (Page in Hindi)', 'View store', alt='Rudraksha')}
 {card('../numerology.html', '', 'Numerology', 'Root number, destiny number and name number. (Page in Hindi)', 'Free')}
@@ -261,7 +261,6 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
   <section class="rs-hero fx-hero"><div>
     <p class="rs-kicker">35+ PAGES · 17 CHAPTERS · PDF</p>
     <h1>Full Kundali Report — <span>₹1,101, as a PDF</span></h1>
-    <p class="rs-note" style="margin:0 0 8px">Note: the report PDF is in Hindi for now.</p>
     <p class="rs-lead">Read your birth chart in detail — lagna and navamsa charts, every planet, career, money, partner and marriage, children, dasha dates, varshphal 2027 and remedies. First make your free kundali; a preview of the full report appears below it, with a few lines of every chapter unlocked.</p>
     <div class="rs-row"><a class="rs-btn" href="kundali-form.html">Make my kundali — free</a><a class="rs-btn ghost" href="#contents">See what's inside</a></div>
   </div></section>
@@ -269,7 +268,7 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
     <div class="vm-table-wrap"><table class="vm-table"><thead><tr><th scope="col">#</th><th scope="col">Chapter</th><th scope="col">What you get</th></tr></thead><tbody>
     {''.join(f'<tr><td>{i}</td><td><b>{a}</b></td><td>{b}</td></tr>' for i, (a, b) in enumerate(CH, 1))}
     </tbody></table></div>
-    <p class="rs-note"><b>Language:</b> the Full Kundali Report PDF is currently written in Hindi. Your free kundali reading, and consultations, are available in English. An English version of the full report is being prepared.</p></section>
+    <p class="rs-note"><b>Language:</b> when you order from the English page, the full report PDF is written in English. A Hindi version is available on the Hindi page.</p></section>
   <section class="rs-sec" id="compare"><h2>Free, Full and Hand-written kundali — compared</h2>
     <div class="vm-table-wrap"><table class="vm-table"><thead><tr><th scope="col"></th><th scope="col">Free kundali</th><th scope="col">Full Kundali Report</th><th scope="col">Hand-written kundali</th></tr></thead><tbody>
     <tr><td>Price</td><td>₹0</td><td>₹1,101</td><td>₹2,100</td></tr>

@@ -228,7 +228,7 @@
       card = document.createElement("article");
       card.id = "chapter-sampurna";
       card.className = "no-print";
-      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>${EN_PAGE ? "Your Full Kundali Report (₹1,101) preview is ready" : "आपकी सम्पूर्ण कुंडली (₹1,101) का प्रीव्यू तैयार है"}</b><span>${EN_PAGE ? "35+ pages · 17 chapters · PDF (the full report is in Hindi for now)" : "35+ पेज · 17 अध्याय · भुगतान की पुष्टि होते ही PDF — अलग पेज पर देखें"}</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>${EN_PAGE ? "See preview" : "प्रीव्यू देखें"}</button></div></div>`;
+      card.innerHTML = `<div class="sp" style="border-width:2px"><div class="sp-ok" style="margin:14px;flex-wrap:wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><div style="flex:1;min-width:200px"><b>${EN_PAGE ? "Your Full Kundali Report (₹1,101) preview is ready" : "आपकी सम्पूर्ण कुंडली (₹1,101) का प्रीव्यू तैयार है"}</b><span>${EN_PAGE ? "35+ pages · 17 chapters · PDF in English" : "35+ पेज · 17 अध्याय · भुगतान की पुष्टि होते ही PDF — अलग पेज पर देखें"}</span></div><button type="button" class="sp-btn" style="max-width:260px;margin:0" data-sp-open>${EN_PAGE ? "See preview" : "प्रीव्यू देखें"}</button></div></div>`;
     }
     const dk = document.getElementById("chapter-dakshina");
     const out = document.getElementById("masterDossierOutput");
@@ -260,7 +260,7 @@
       const payHost = host.querySelector("#spPayHost");
       if (window.JTCheckout && window.JTCheckout.enabled()) {
         const o = res.order || {}, pl0 = document.getElementById("birthPlace") || { dataset: {} };
-        window.JTCheckout.pay("sampurna", { name: o.name || "", dob: o.dob || "", time: o.tob || "", place: o.pob || "", lat: pl0.dataset.lat || "", lng: pl0.dataset.lng || "", gender: (document.getElementById("userGender") || {}).value || "", marital: (document.getElementById("spMarital") || {}).value || "single", lang: "hi" }, { title: "सम्पूर्ण कुंडली" });
+        window.JTCheckout.pay("sampurna", { name: o.name || "", dob: o.dob || "", time: o.tob || "", place: o.pob || "", lat: pl0.dataset.lat || "", lng: pl0.dataset.lng || "", gender: (document.getElementById("userGender") || {}).value || "", marital: (document.getElementById("spMarital") || {}).value || "single", lang: EN_PAGE ? "en" : "hi" }, { title: EN_PAGE ? "Full Kundali Report" : "सम्पूर्ण कुंडली", lang: EN_PAGE ? "en" : "hi" });
         return;
       }
       if (!window.JTPay) { payHost.innerHTML = `<p class="sp-lock"><a href="${PAY_LINK}" target="_blank" rel="noopener">₹${PRICE} का ऑनलाइन भुगतान करें (UPI) →</a></p>`; return; }
@@ -268,7 +268,7 @@
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const g = (document.getElementById("userGender") || {}).value || "";
       const u = new URLSearchParams({ jtadmin: "1", o: order.orderId, n: order.name || "", g: g, m: (document.getElementById("spMarital") || {}).value || "", d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "" });
-      order.adminLink = "https://jyotishtark.in/kundali-form.html?" + u.toString();
+      order.adminLink = "https://jyotishtark.in/" + (EN_PAGE ? "en/" : "") + "kundali-form.html?" + u.toString();
       // saved in this browser so the report can be built automatically when Cashfree sends the customer back
       try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: order.orderId, n: order.name || "", g: g, m: u.get("m"), d: order.dob || "", t: order.tob || "", p: order.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ref: RO ? window.JTRef.code() : "", ts: Date.now() })); } catch (e) { /* ignore */ }
       window.JTPay.render(payHost, order);
@@ -285,8 +285,8 @@
       const pl = document.getElementById("birthPlace") || { dataset: {} };
       const oid = (window.JTPay && window.JTPay.newOrderId) ? window.JTPay.newOrderId() : "JT" + Date.now().toString(36).toUpperCase();
       try { localStorage.setItem("jt-sampurna-order", JSON.stringify({ o: oid + (off === 100 ? "-P" : "-H"), n: o.name || "", g: (document.getElementById("userGender") || {}).value || "", m: (document.getElementById("spMarital") || {}).value || "", d: o.dob || "", t: o.tob || "", p: o.pob || "", lat: pl.dataset.lat || "", lng: pl.dataset.lng || "", ts: Date.now(), promo: off })); } catch (e) { /* ignore */ }
-      if (off === 100) { msg.textContent = "कोड लागू — आपकी सम्पूर्ण कुंडली बन रही है…"; setTimeout(() => { location.href = "kundali-form.html?jtpaid=sampurna"; }, 500); return false; }
-    });
+      if (off === 100) { msg.textContent = "कोड लागू — आपकी सम्पूर्ण कुंडली बन रही है…"; setTimeout(() => { location.href = (EN_PAGE ? "en/" : "") + "kundali-form.html?jtpaid=sampurna"; }, 500); return false; }
+    }, EN_PAGE ? "en" : "hi");
     host.querySelector("#spHandBtn").addEventListener("click", (e) => {
       e.preventDefault();
       if (typeof window.switchWorkspaceMode === "function") window.switchWorkspaceMode("manual");

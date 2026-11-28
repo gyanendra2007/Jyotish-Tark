@@ -52,6 +52,8 @@ def make(page):
     # no Hindi search on English pages
     s = re.sub(r'<button type="button" class="jts-bar"[^>]*>.*?</button>', '', s, flags=re.S)
     s = s.replace('</head>', '  <script src="en-runtime.js?v=1" defer></script>\n</head>', 1)
+    # the paid report modules have English copies (built by tools/en/gen_en_js.js)
+    s = re.sub(r'src="(sampurna-analysis|sampurna-report|sampurna-preview)\.js\?v=\d+"', r'src="\1-en.js?v=1"', s)
     s = s.replace('</body>', '<script>(function(){try{var q=new URLSearchParams(location.search);if(!q.get("lang")){var r=document.getElementById("reportLang");if(r)r.value="en";}}catch(e){}})();</script>\n</body>', 1)
     out = os.path.join(ROOT, 'en', page); os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, 'w', encoding='utf-8').write(s)

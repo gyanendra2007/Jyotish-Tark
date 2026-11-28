@@ -8,6 +8,7 @@
   if (q.get("jtpaid") !== "sampurna" || q.has("jtadmin")) return;
   const WA = "918318513814";
   const KEY = "jt-sampurna-order";
+  const EN = document.documentElement.lang === "en", T = (h, e) => (EN ? e : h);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   let order = null;
   try { order = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { order = null; }
@@ -40,25 +41,28 @@
   const waLink = (txt) => "https://wa.me/" + WA + "?text=" + encodeURIComponent(txt);
 
   function noOrder() {
-    overlay(`<h2>भुगतान के लिए धन्यवाद 🙏</h2>
+    overlay(T(`<h2>भुगतान के लिए धन्यवाद 🙏</h2>
       <p>इस फ़ोन/ब्राउज़र में आपका जन्म विवरण नहीं मिला (शायद भुगतान किसी दूसरे फ़ोन या ब्राउज़र से हुआ)। चिंता न करें — WhatsApp पर अपना नाम भेजें, आपकी सम्पूर्ण कुंडली वहीं भेज दी जाएगी।</p>
-      <a class="jtx-btn g" href="${waLink("नमस्ते, मैंने सम्पूर्ण कुंडली (₹1,101) का भुगतान किया है। कृपया मेरी कुंडली भेजें।")}" target="_blank" rel="noopener">WhatsApp पर संदेश भेजें</a>`);
+      <a class="jtx-btn g" href="${waLink("नमस्ते, मैंने सम्पूर्ण कुंडली (₹1,101) का भुगतान किया है। कृपया मेरी कुंडली भेजें।")}" target="_blank" rel="noopener">WhatsApp पर संदेश भेजें</a>`, `<h2>Thank you for your payment 🙏</h2>
+      <p>Your birth details were not found on this phone/browser (perhaps you paid from another phone or browser). Don’t worry — send your name on WhatsApp and your Full Kundali Report will be sent to you there.</p>
+      <a class="jtx-btn g" href="${waLink("Hello, I have paid for the Full Kundali Report (₹1,101, English). Please send my report.")}" target="_blank" rel="noopener">Message on WhatsApp</a>`));
   }
 
   function fail(msg) {
-    overlay(`<h2>कुंडली अपने-आप नहीं बन सकी</h2><p>${esc(msg)}</p><p>आपका भुगतान सुरक्षित है। WhatsApp पर संदेश भेजें — कुंडली वहीं भेज दी जाएगी।</p>
+    overlay(EN ? `<h2>The report could not be made automatically</h2><p>${esc(msg)}</p><p>Your payment is safe. Send us a message on WhatsApp — the report will be sent to you there.</p>
+      <a class="jtx-btn g" href="${waLink(`Hello, I have paid for the Full Kundali Report in English (order ${order.o || ""}, name ${order.n || ""}). It was not made automatically, please send it.`)}" target="_blank" rel="noopener">Message on WhatsApp</a>` : `<h2>कुंडली अपने-आप नहीं बन सकी</h2><p>${esc(msg)}</p><p>आपका भुगतान सुरक्षित है। WhatsApp पर संदेश भेजें — कुंडली वहीं भेज दी जाएगी।</p>
       <a class="jtx-btn g" href="${waLink(`नमस्ते, मैंने सम्पूर्ण कुंडली का भुगतान किया है (ऑर्डर ${order.o || ""}, नाम ${order.n || ""})। कुंडली अपने-आप नहीं बनी, कृपया भेजें।`)}" target="_blank" rel="noopener">WhatsApp पर संदेश भेजें</a>`);
   }
 
   function fill() {
     const set = (id, v) => { const el = document.getElementById(id); if (el && v != null && v !== "") el.value = v; };
     set("userName", order.n); set("userDob", order.d); set("birthTime", order.t); set("userGender", order.g);
-    set("reportLang", "hi");
+    set("reportLang", EN ? "en" : "hi");
     const pl = document.getElementById("birthPlace");
     if (pl && order.p) { pl.value = order.p; if (order.lat) { pl.dataset.lat = order.lat; pl.dataset.lng = order.lng; } }
     const acc = document.getElementById("timeAccuracy"); if (acc) { acc.disabled = false; acc.value = "exact"; }
     if (typeof window.switchWorkspaceMode === "function") window.switchWorkspaceMode("instant");
-    if (typeof window.handleDossierSubmit !== "function") throw new Error("पेज पूरा लोड नहीं हुआ।");
+    if (typeof window.handleDossierSubmit !== "function") throw new Error(T("पेज पूरा लोड नहीं हुआ।", "The page did not load fully."));
     window.handleDossierSubmit(null);
   }
 
@@ -82,7 +86,11 @@
     const ov = document.getElementById("jtxOv"); if (ov) ov.remove();
     const v = document.createElement("div");
     v.className = "jtx-view";
-    v.innerHTML = `<div class="jtx-top"><b>आपकी सम्पूर्ण कुंडली तैयार है 🙏<small>"PDF डाउनलोड करें" दबाएँ, फिर प्रिंट विंडो में "Save as PDF" चुनें।</small></b>
+    v.innerHTML = EN ? `<div class="jtx-top"><b>Your Full Kundali Report is ready 🙏<small>Tap "Download PDF", then choose "Save as PDF" in the print window.</small></b>
+      <button type="button" class="jtx-btn g" id="jtxPdf">Download PDF</button>
+      <a class="jtx-btn l" href="${waLink(`Hello, my Full Kundali Report is ready (order ${order.o || ""}, name ${order.n || ""}). I have a question.`)}" target="_blank" rel="noopener">WhatsApp help</a>
+      <button type="button" class="jtx-btn l" id="jtxClose">Close</button></div>
+      <iframe title="Full Kundali Report"></iframe>` : `<div class="jtx-top"><b>आपकी सम्पूर्ण कुंडली तैयार है 🙏<small>"PDF डाउनलोड करें" दबाएँ, फिर प्रिंट विंडो में "Save as PDF" चुनें।</small></b>
       <button type="button" class="jtx-btn g" id="jtxPdf">PDF डाउनलोड करें</button>
       <a class="jtx-btn l" href="${waLink(`नमस्ते, मेरी सम्पूर्ण कुंडली बन गई है (ऑर्डर ${order.o || ""}, नाम ${order.n || ""})। मुझे एक प्रश्न पूछना है।`)}" target="_blank" rel="noopener">WhatsApp सहायता</a>
       <button type="button" class="jtx-btn l" id="jtxClose">बंद करें</button></div>
@@ -99,7 +107,7 @@
       try { if (window.gtag) window.gtag("event", "sampurna_pdf", { order: order.o || "" }); } catch (e) { /* ignore */ }
     });
     v.querySelector("#jtxClose").addEventListener("click", () => { v.remove(); document.documentElement.classList.remove("jtx-on"); });
-    if (window.JTRef && order.promo !== 100) window.JTRef.after("sampurna");
+    if (window.JTRef && order.promo !== 100) window.JTRef.after("sampurna", EN ? "en" : "hi");
     try {
       if (!order.delivered) {
         order.delivered = Date.now(); localStorage.setItem(KEY, JSON.stringify(order));
@@ -114,16 +122,16 @@
         order = { o: oid, n: so.name, g: so.gender, m: so.status || "single", d: so.dob, t: so.time, p: so.place, lat: String(so.lat), lng: String(so.lng), ts: Date.now(), promo: Number(so.amount) === 0 ? 100 : 0 };
         try { localStorage.setItem(KEY, JSON.stringify(order)); } catch (e) { /* ignore */ }
         window.__spVerified = true; start();
-      }, "hi");
+      }, EN ? "en" : "hi");
       return;
     }
     css();
     if (!order || !order.n || !order.d || !order.t || !order.lat) { noOrder(); return; }
-    overlay(`<div class="jtx-spin" aria-hidden="true"></div><h2>आपकी सम्पूर्ण कुंडली बन रही है…</h2><p>भुगतान के लिए धन्यवाद, ${esc(order.n)} जी। कृपया यह पेज बंद न करें — इसमें कुछ सेकंड लगते हैं।</p>`);
+    overlay(EN ? `<div class="jtx-spin" aria-hidden="true"></div><h2>Your Full Kundali Report is being made…</h2><p>Thank you for your payment, ${esc(order.n)}. Please don’t close this page — it takes a few seconds.</p>` : `<div class="jtx-spin" aria-hidden="true"></div><h2>आपकी सम्पूर्ण कुंडली बन रही है…</h2><p>भुगतान के लिए धन्यवाद, ${esc(order.n)} जी। कृपया यह पेज बंद न करें — इसमें कुछ सेकंड लगते हैं।</p>`);
     document.addEventListener("jt:dossier-ready", () => setTimeout(show, 400));
     try { fill(); } catch (e) { fail(e.message || String(e)); return; }
     setTimeout(() => { if (!shown && window.__jyotishLastCtx) show(); }, 9000);
-    setTimeout(() => { if (!shown) fail("कुंडली बनने में बहुत समय लग रहा है।"); }, 30000);
+    setTimeout(() => { if (!shown) fail(T("कुंडली बनने में बहुत समय लग रहा है।", "The report is taking too long to make.")); }, 30000);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(start, 80));
   else setTimeout(start, 80);

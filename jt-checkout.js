@@ -48,6 +48,9 @@ window.JTCheckout = (function () {
     });
   }
   // a slim strip so a visitor who came through a partner link sees the discount before paying
+  // English pages that have their own copy of a product page (the report then comes in English)
+  const EN_PAGE = { sampurna: "en/kundali-form.html" };
+  const pageFor = (product, en) => (en && EN_PAGE[product]) || PAGE[product] || "";
   const PAGE_PRODUCT = { "kp-astrology.html": "kp", "numerology.html": "nm", "kundali-form.html": "sampurna", "mobile-number-numerology.html": "mobile", "mera-2027.html": "vp", "kundali-se-poochho.html": "prashna" };
   function banner() {
     const pt = partner();
@@ -180,7 +183,7 @@ window.JTCheckout = (function () {
         return;
       }
       ga("begin_checkout", { value: r.amount || 0, currency: r.currency || pr.c, items: [{ item_name: product }] });
-      if (r.free) { location.href = `${PAGE[product]}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`; return; }
+      if (r.free) { location.href = `${pageFor(product, en)}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`; return; }
       if (r.upi) { upiScreen(ov, r, product, en); return; }
       if (r.razorpay) {
         const ok = await openRazorpay(r, product, en, () => { go.disabled = false; go.textContent = T("भुगतान पर जाएँ", "Continue to pay"); });
@@ -200,7 +203,7 @@ window.JTCheckout = (function () {
   function upiScreen(ov, r, product, en) {
     const T = (h, e) => (en ? e : h), oid = r.order_id, amt = Number(r.amount) || 0;
     const rs = amt % 1 ? amt.toFixed(2) : String(amt), paise = amt % 1 ? "." + amt.toFixed(2).split(".")[1] : "";
-    const back = `${SITE_ROOT()}${PAGE[product] || ""}?jtpaid=${product}&order_id=${encodeURIComponent(oid)}`;
+    const back = `${SITE_ROOT()}${pageFor(product, en)}?jtpaid=${product}&order_id=${encodeURIComponent(oid)}`;
     const waL = (t) => `https://wa.me/918318513814?text=${encodeURIComponent(t)}`;
     const NAME = { kp: "KP Report", nm: "Numerology Report", sampurna: "Sampurna Kundali", prashna: "One Question", mobile: "Mobile Number Report", vp: "Varshphal 2027", rud: "Rudraksha" }[product] || product;
     let tzIndia = true; try { tzIndia = /Calcutta|Kolkata/.test(Intl.DateTimeFormat().resolvedOptions().timeZone || ""); } catch (e) { /* */ }
@@ -273,7 +276,7 @@ window.JTCheckout = (function () {
   async function openRazorpay(r, product, en, onClose) {
     let R; try { R = await loadRazorpay(); } catch (e) { return false; }
     if (!R) return false;
-    const back = `${SITE_ROOT()}${PAGE[product] || ""}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`;
+    const back = `${SITE_ROOT()}${pageFor(product, en)}?jtpaid=${product}&order_id=${encodeURIComponent(r.order_id)}`;
     try {
       const rz = new R({
         key: r.key_id, order_id: r.rzp_order_id, amount: Math.round((Number(r.amount) || 0) * 100), currency: r.currency || "INR",
