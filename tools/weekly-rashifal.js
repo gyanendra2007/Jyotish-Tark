@@ -189,7 +189,7 @@ const html = `${HEAD_TOP}<title>${esc(title)}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="tailwind.css?v=1">
     <link rel="stylesheet" href="jt-theme.css?v=5">
-    <script src="jt-site.js?v=26" defer></script>
+    <script src="jt-site.js?v=27" defer></script>
     ${ICONS}
     <style>
     .wr{--mr:#7A1F1F;--mrd:#5A1414;--ln:#E8DCC4;--ink:#2B1810;--bd:#4A3628;--mu:#6B5444;color:var(--ink);font-family:'Mukta',system-ui,sans-serif;font-size:17px;line-height:1.65}

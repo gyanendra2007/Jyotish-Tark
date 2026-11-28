@@ -52,7 +52,7 @@ def head(slug, hi_slug, title, desc, ld=None):
   <link rel="stylesheet" href="../tailwind.css?v=1">
   <link rel="stylesheet" href="../jt-theme.css?v=8">
   <link rel="stylesheet" href="../rashi.css?v=5">
-  <script src="../jt-site.js?v=26" defer></script>
+  <script src="../jt-site.js?v=27" defer></script>
 </head>
 <body>'''
 
@@ -152,8 +152,8 @@ HOME = f'''<main id="main"><style>{JH_CSS}</style>
 {card('../numerology.html', '', 'Numerology', 'Root number, destiny number and name number. (Page in Hindi)', 'Free')}
 </div></div></section>
 
-<section class="jh-sec jh-rashi"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">HOROSCOPE 2027</span><h2 class="jh-h">Choose your moon sign</h2><p>Yearly horoscope for 2027 — career, money, marriage and remedies (in Hindi).</p></div><div class="jh-rgrid">
-{''.join(f'<a class="jh-r" href="../{k}-rashifal-2027.html"><img src="../images/ui/rashi-{k}.webp" alt="" width="240" height="240" loading="lazy"><span>{n}</span></a>' for k, n in RASHI)}
+<section class="jh-sec jh-rashi"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">HOROSCOPE 2027</span><h2 class="jh-h">Choose your moon sign</h2><p>Yearly horoscope for 2027 — career, money, marriage, every month and remedies.</p></div><div class="jh-rgrid">
+{''.join(f'<a class="jh-r" href="{k}-rashifal-2027.html"><img src="../images/ui/rashi-{k}.webp" alt="" width="240" height="240" loading="lazy"><span>{n}</span></a>' for k, n in RASHI)}
 </div></div></section>
 
 <section class="jh-sec" style="padding-top:0"><div class="jh-wrap"><div class="jh-pan" id="jhPan">
