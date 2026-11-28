@@ -1,5 +1,7 @@
 /* Jyotish Tark — shared behaviour: mobile menu, share bar, help bot, offer card. Loaded on every page. */
 // ---- UPI payments (Cashfree closed our account in Nov 2026). Put the UPI ID here — one place for the whole site. ----
+// base folder of the site (pages in /en/ load scripts from the parent folder)
+window.JT_BASE = (function () { try { var c = document.currentScript; return c && c.src ? c.src.replace(/jt-site\.js[^\/]*$/, "") : ""; } catch (e) { return ""; } })();
 window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Singh Tomar" };
 (function () {
   "use strict";
@@ -44,14 +46,14 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
     var el = document.createElement("div");
     el.className = "jt-share no-print jt-share-" + where;
     el.setAttribute("role", "group");
-    el.setAttribute("aria-label", "यह पेज शेयर करें");
-    var html = '<span class="jt-share-label">' + (where === "end" ? "पसंद आया? दूसरों को भी भेजें:" : "शेयर करें:") + "</span>";
-    if (navigator.share) html += '<button type="button" class="jt-sh jt-sh-native" data-act="native">' + svg("share") + "<span>शेयर</span></button>";
+    el.setAttribute("aria-label", EN ? "Share this page" : "यह पेज शेयर करें");
+    var html = '<span class="jt-share-label">' + (EN ? (where === "end" ? "Found it useful? Share it:" : "Share:") : (where === "end" ? "पसंद आया? दूसरों को भी भेजें:" : "शेयर करें:")) + "</span>";
+    if (navigator.share) html += '<button type="button" class="jt-sh jt-sh-native" data-act="native">' + svg("share") + "<span>" + (EN ? "Share" : "शेयर") + "</span></button>";
     html += '<a class="jt-sh jt-sh-wa" href="https://wa.me/?text=' + e(text + "\n" + p.url) + '" target="_blank" rel="noopener" aria-label="WhatsApp पर शेयर करें">' + svg("wa") + "<span>WhatsApp</span></a>";
     html += '<a class="jt-sh" href="https://www.facebook.com/sharer/sharer.php?u=' + e(p.url) + '" target="_blank" rel="noopener" aria-label="Facebook पर शेयर करें">' + svg("fb") + '<span class="jt-sh-t">Facebook</span></a>';
     html += '<a class="jt-sh" href="https://t.me/share/url?url=' + e(p.url) + "&text=" + e(text) + '" target="_blank" rel="noopener" aria-label="Telegram पर शेयर करें">' + svg("tg") + '<span class="jt-sh-t">Telegram</span></a>';
     html += '<a class="jt-sh" href="https://twitter.com/intent/tweet?url=' + e(p.url) + "&text=" + e(text) + '" target="_blank" rel="noopener" aria-label="X (Twitter) पर शेयर करें">' + svg("x") + '<span class="jt-sh-t">X</span></a>';
-    html += '<button type="button" class="jt-sh" data-act="copy" aria-label="लिंक कॉपी करें">' + svg("link") + '<span class="jt-sh-t">लिंक कॉपी</span></button>';
+    html += '<button type="button" class="jt-sh" data-act="copy" aria-label="लिंक कॉपी करें">' + svg("link") + '<span class="jt-sh-t">' + (EN ? "Copy link" : "लिंक कॉपी") + '</span></button>';
     html += '<span class="jt-sh-msg" role="status" aria-live="polite"></span>';
     el.innerHTML = html;
     el.addEventListener("click", function (ev) {
@@ -61,7 +63,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
       if (b.dataset.act === "native") {
         navigator.share({ title: p.title, text: text, url: p.url }).catch(function () {});
       } else if (b.dataset.act === "copy") {
-        var done = function () { msg.textContent = "लिंक कॉपी हो गया ✓"; setTimeout(function () { msg.textContent = ""; }, 2500); };
+        var done = function () { msg.textContent = EN ? "Link copied ✓" : "लिंक कॉपी हो गया ✓"; setTimeout(function () { msg.textContent = ""; }, 2500); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(p.url).then(done, function () { msg.textContent = p.url; });
         else { msg.textContent = p.url; }
       }
@@ -72,7 +74,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
   function share() {
     if (document.body.hasAttribute("data-no-share") || document.querySelector(".jt-share")) return;
     var main = document.querySelector("main") || document.body;
-    var isHome = location.pathname === "/" || /\/index\.html$/.test(location.pathname);
+    var isHome = /\/(en\/)?(index\.html)?$/.test(location.pathname);
     var h1 = main.querySelector("h1");
     if (h1 && !isHome) {
       var anchor = null, sels = [".rs-hero", ".tt-hero", "section", "header"];
@@ -92,13 +94,50 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
 
 
   /* ---------- Help bot (menu based, no data stored; booking goes to WhatsApp) ---------- */
+
+  /* ---------- Language: Hindi pages ⇄ English pages (/en/) ----------
+     Visitors outside India (time zone not IST) are sent to the English page when one exists;
+     everyone can switch with the हिं / EN button, and the choice is remembered. Bots are never redirected. */
+  var EN = (document.documentElement.getAttribute("lang") || "").toLowerCase() === "en" && /\/en\//.test(location.pathname);
+  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html" };
+  function siteRoot() { return location.pathname.replace(/(\/en)?\/[^\/]*$/, "/"); }
+  function langPair() {
+    var file = location.pathname.split("/").pop() || "";
+    if (EN) { var hi = document.querySelector('link[rel="alternate"][hreflang="hi"]'); if (!hi) return null; var u = hi.getAttribute("href"); try { u = new URL(u, location.href).pathname; } catch (e) { /* */ } return { hi: u, en: null }; }
+    return Object.prototype.hasOwnProperty.call(EN_MAP, file) ? { hi: null, en: siteRoot() + EN_MAP[file] } : null;
+  }
+  function langPref(v) { try { if (v) localStorage.setItem("jt_lang", v); return localStorage.getItem("jt_lang") || ""; } catch (e) { return ""; } }
+  function langAuto() {
+    var pair = langPair(); if (!pair) return;
+    if (/bot|crawl|spider|slurp|lighthouse|headless|preview/i.test(navigator.userAgent || "")) return;
+    if (/[?&]lang=/.test(location.search)) return;
+    var pref = langPref(), india = true;
+    try { india = /Calcutta|Kolkata/.test(Intl.DateTimeFormat().resolvedOptions().timeZone || ""); } catch (e) { /* */ }
+    if (!EN && pair.en && (pref === "en" || (!pref && !india))) location.replace(pair.en + location.hash);
+    else if (EN && pair.hi && pref === "hi") location.replace(pair.hi + location.hash);
+  }
+  function langToggle() {
+    var row = document.querySelector(".jt-header-row"); if (!row || document.getElementById("jtLang")) return;
+    var pair = langPair(), a = document.createElement("a");
+    a.id = "jtLang"; a.className = "jt-lang no-print";
+    if (EN) { a.textContent = "हिंदी"; a.href = (pair && pair.hi) || "../index.html"; a.setAttribute("lang", "hi"); a.setAttribute("aria-label", "हिंदी में देखें"); }
+    else { a.textContent = "EN"; a.href = (pair && pair.en) || siteRoot() + "en/"; a.setAttribute("lang", "en"); a.setAttribute("aria-label", "View in English"); }
+    a.addEventListener("click", function () { langPref(EN ? "hi" : "en"); try { if (window.gtag) window.gtag("event", "lang_switch", { to: EN ? "hi" : "en" }); } catch (e) { /* */ } });
+    var st = document.createElement("style");
+    st.textContent = ".jt-lang{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:38px;padding:0 10px;margin-left:auto;margin-right:8px;border:1.5px solid #B8892B;border-radius:10px;color:#7A1F1F;font:700 14px Mukta,system-ui,sans-serif;text-decoration:none;background:#fff;flex:0 0 auto}.jt-lang:hover{background:#FBF1DC}@media(min-width:1101px){.jt-lang{order:5;margin-left:10px;margin-right:0}}";
+    document.head.appendChild(st);
+    var btn = document.getElementById("menuToggle");
+    if (btn && btn.parentNode === row) row.insertBefore(a, btn); else row.appendChild(a);
+  }
+  try { langAuto(); } catch (e) { /* */ }
+
   var WA = "918318513814";
   // ---------- simple UPI box (consultation, handmade kundali, dakshina, any old payment-form link) ----------
   // o: {amount (0 = customer chooses), title, msg (WhatsApp text sent after paying)}
   var UPI_FORMS = { audiocall15: [301, "ऑडियो कॉल · 15 मिनट"], audiocall30: [501, "ऑडियो कॉल · 30 मिनट"], audiocall60: [901, "ऑडियो कॉल · 1 घंटा"], videocall30: [1101, "वीडियो कॉल · 30 मिनट"], videocall60: [2101, "वीडियो कॉल · 1 घंटा"], call15kundali: [1301, "15 मिनट कॉल + सम्पूर्ण कुंडली"], call30kundali: [1501, "30 मिनट कॉल + सम्पूर्ण कुंडली"], remedy: [199, "उपाय (WhatsApp संदेश)"], personalmeeting: [11000, "व्यक्तिगत भेंट"], homevisit: [0, "ज्योतिषी आपके स्थान पर"], handmadekundali: [2100, "हस्तनिर्मित कुंडली"], jyotishtarkdakshina: [0, "गुरु दक्षिणा"], jyotishtarkkp: [299, "KP रिपोर्ट"], jyotishtarknumerology: [299, "अंक ज्योतिष रिपोर्ट"], sampurnakundali: [1101, "सम्पूर्ण कुंडली"], jyotishtarkprashna: [101, "एक प्रश्न"] };
   function loadQR(cb) {
     if (window.JTQR) { cb(); return; }
-    var s = document.createElement("script"); s.src = "jt-qr.js?v=1"; s.onload = cb; s.onerror = cb; document.head.appendChild(s);
+    var s = document.createElement("script"); s.src = (window.JT_BASE || "") + "jt-qr.js?v=1"; s.onload = cb; s.onerror = cb; document.head.appendChild(s);
   }
   function upiBox(o) {
     o = o || {};
@@ -362,17 +401,27 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
     d.className = "no-print";
     d.style.cssText = "max-width:880px;margin:24px auto 0;padding:0 16px;font-family:Mukta,system-ui,sans-serif";
     d.innerHTML = "<div style='display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between;background:#E8F6EC;border:1px solid #9AD3AB;border-radius:12px;padding:14px 16px'>" +
-      "<div style='flex:1 1 260px;min-width:0'><b style='font-size:17px;color:#14532D'>रोज़ का पंचांग, राशिफल और व्रत-त्योहार — WhatsApp पर</b><br><span style='font-size:14.5px;color:#3F5F49'>ज्योतिष तर्क का WhatsApp चैनल फ़ॉलो करें। मुफ़्त, कोई स्पैम नहीं।</span></div>" +
-      "<a href='" + CHANNEL + "' target='_blank' rel='noopener' data-chan style='flex:0 0 auto;display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;background:#1f8f4e;color:#fff;font-weight:800;text-decoration:none'>चैनल फ़ॉलो करें</a></div>";
+      (EN ? "<div style='flex:1 1 260px;min-width:0'><b style='font-size:17px;color:#14532D'>Daily panchang, horoscope and festivals — on WhatsApp</b><br><span style='font-size:14.5px;color:#3F5F49'>Follow the Jyotish Tark WhatsApp channel. Free, no spam (mostly in Hindi).</span></div>" : "<div style='flex:1 1 260px;min-width:0'><b style='font-size:17px;color:#14532D'>रोज़ का पंचांग, राशिफल और व्रत-त्योहार — WhatsApp पर</b><br><span style='font-size:14.5px;color:#3F5F49'>ज्योतिष तर्क का WhatsApp चैनल फ़ॉलो करें। मुफ़्त, कोई स्पैम नहीं।</span></div>") +
+      "<a href='" + CHANNEL + "' target='_blank' rel='noopener' data-chan style='flex:0 0 auto;display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border-radius:10px;background:#1f8f4e;color:#fff;font-weight:800;text-decoration:none'>" + (EN ? "Follow channel" : "चैनल फ़ॉलो करें") + "</a></div>";
     f.parentNode.insertBefore(d, f);
     d.querySelector("[data-chan]").addEventListener("click", function () { try { if (window.gtag) window.gtag("event", "channel_follow_click", { page: location.pathname }); } catch (e) { /* */ } });
   }
-  function init() { menu(); try { share(); } catch (e) {} try { channel(); } catch (e) {} try { helpBot(); offer(); } catch (e) {} }
+  function enHelp() {
+    if (document.getElementById("jtEnHelp")) return;
+    var a = document.createElement("a");
+    a.id = "jtEnHelp"; a.className = "no-print"; a.target = "_blank"; a.rel = "noopener";
+    a.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hello, I found you on jyotishtark.in and would like to ask about a consultation.");
+    a.setAttribute("aria-label", "Chat on WhatsApp");
+    a.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg><span>Help</span>';
+    a.style.cssText = "position:fixed;right:16px;bottom:16px;z-index:9000;display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:0 18px;border-radius:999px;background:#1f8f4e;color:#fff;font:700 16px Mukta,system-ui,sans-serif;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.25)";
+    document.body.appendChild(a);
+  }
+  function init() { menu(); try { langToggle(); } catch (e) {} try { share(); } catch (e) {} try { channel(); } catch (e) {} try { if (EN) enHelp(); else { helpBot(); offer(); } } catch (e) {} }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
 
 /* referral link capture (?ref=) on any page */
-(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src="jt-checkout.js?v=20";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
-(function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src="jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
-(function(){try{if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src="jt-search.js?v=8";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
+(function(){try{if(/[?&]p=[A-Za-z0-9]{3,12}(&|$)/.test(location.search)&&!document.querySelector('script[src^="jt-checkout.js"]')){var c=document.createElement("script");c.src=(window.JT_BASE||"")+"jt-checkout.js?v=20";c.defer=true;document.head.appendChild(c);}}catch(e){}})();
+(function(){try{if(/[?&]ref=JT/i.test(location.search)&&!window.JTRef&&!document.querySelector('script[src^="jt-ref.js"]')){var s=document.createElement("script");s.src=(window.JT_BASE||"")+"jt-ref.js?v=3";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
+(function(){try{if(/\/en\//.test(location.pathname))return;if(!document.querySelector('script[src^="jt-search.js"]')){var s=document.createElement("script");s.src=(window.JT_BASE||"")+"jt-search.js?v=9";s.defer=true;document.head.appendChild(s);}}catch(e){}})();
