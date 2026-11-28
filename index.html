@@ -651,75 +651,186 @@
 
     
 
-    <!-- ======================================================================= -->
-    <!-- ABOVE-THE-FOLD INTERACTIVE KUNDALI LAUNCHER & SPOTLIGHT                 -->
-    <!-- ======================================================================= -->
-    <section class="max-w-7xl mx-auto px-4 pt-8 pb-4">
-        <div class="rounded-3xl p-6 md:p-10 bg-gradient-to-r from-purple-950/90 via-slate-900 to-amber-950/80 border-2 border-amber-400/50 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-72 h-72 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-15 pointer-events-none"></div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                <div class="lg:col-span-7 space-y-4">
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow">
-                        <i class="fas fa-bolt"></i> मुफ़्त वैदिक जन्म कुंडली · हिंदी व English
-                    </div>
-                    <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold text-white leading-tight">
-                        मुफ़्त जन्म कुंडली — <span class="text-amber-300">करियर, विवाह और दशा का विश्लेषण</span> हिंदी में
-                    </h1>
-                    <p class="text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed">
-                        नाम, जन्म तिथि, समय और स्थान डालें — <strong>लग्न, नवांश, ग्रह स्पष्ट, अष्टकवर्ग और महादशा-अंतर्दशा</strong> के साथ स्वभाव, पढ़ाई, करियर, धन और विवाह पर 12 अध्याय का विश्लेषण तुरंत पढ़ें, और मोबाइल PDF मुफ़्त सेव करें। जन्म समय जितना सटीक होगा, विश्लेषण उतना सटीक होगा।
-                    </p>
-                    <div class="flex flex-wrap gap-2.5 pt-1 text-xs font-semibold text-amber-200">
-                        <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15"><i class="fas fa-check-circle text-green-400 mr-1.5"></i>12 अध्याय का विश्लेषण</span>
-                        <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15"><i class="fas fa-ring text-pink-400 mr-1.5"></i>जीवनसाथी के संकेत (नवांश)</span>
-                        <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15"><i class="fas fa-th text-amber-400 mr-1.5"></i>337-बिंदु अष्टकवर्ग</span>
-                        <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15"><i class="fas fa-file-pdf text-red-400 mr-1.5"></i>मोबाइल PDF मुफ़्त</span>
-                    </div>
-                </div>
+<!-- JH:START (tools/home/build_home.py) -->
+<style>/* ===== Jyotish Tark home v2 (Nov 2026) — prefix .jh ===== */
+.jh{--iv:#FBF6EC;--iv2:#F4EADA;--mr:#7A1F1F;--mr2:#4A0F12;--gd:#B8892B;--gd2:#E9C27A;--ink:#2B1810;--mu:#6B5444;--ln:#E5D5B8;
+  font-family:'Mukta',system-ui,sans-serif;color:var(--ink)}
+.jh *{box-sizing:border-box}
+.jh a{text-decoration:none}
+.jh-wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.jh-h{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;color:var(--mr2);line-height:1.2}
+.jh-k{display:inline-block;color:var(--gd);font-weight:700;letter-spacing:.06em;font-size:14px}
+.jh-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 22px;border-radius:14px;font-weight:700;font-size:17px;transition:transform .15s,box-shadow .15s}
+.jh-btn:hover{transform:translateY(-1px)}
+.jh-btn.p{background:var(--mr);color:#fff;box-shadow:0 8px 22px rgba(122,31,31,.28)}
+.jh-btn.s{background:#fff;color:var(--mr);border:1.5px solid var(--mr)}
+.jh-chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.jh-chips li{background:rgba(255,255,255,.82);border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;color:var(--mr2)}
 
-                <!-- Right Interactive Quick-Launch Form Box -->
-                <div class="lg:col-span-5 bg-slate-950/95 p-6 rounded-2xl border-2 border-amber-400/50 space-y-4 shadow-2xl">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400"><i class="fas fa-sparkles mr-1"></i> Instant Kundali Launcher</span>
-                        <span class="text-[11px] bg-green-500/20 text-green-300 px-2.5 py-0.5 rounded-full font-semibold">100% Free • No Login</span>
-                    </div>
-                    <div class="text-xl font-bold text-white hindi">अपनी निःशुल्क कुंडली एवं भविष्यफल अभी पढ़ें</div>
-                    
-                    <form id="homeQuickKundaliForm" onsubmit="launchKundaliFromHome(event)" class="space-y-3 text-left">
-                        <div>
-                            <label for="homeUserName" class="block text-xs font-semibold text-gray-300 mb-1">Your Full Name (आपका पूरा नाम) *</label>
-                            <input type="text" id="homeUserName" class="hero-input" placeholder="e.g., Aditya Pratap Singh" required>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label for="homeUserDob" class="block text-xs font-semibold text-gray-300 mb-1">Date of Birth (जन्मतिथि) *</label>
-                                <input type="date" id="homeUserDob" class="hero-input" required>
-                            </div>
-                            <div>
-                                <label for="homeUserLang" class="block text-xs font-semibold text-gray-300 mb-1">Language (भाषा) *</label>
-                                <select id="homeUserLang" class="hero-input">
-                                    <option value="hi">🇮🇳 हिंदी (Hindi)</option>
-                                    <option value="en">🇬🇧 English</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="primary-button w-full text-base py-3.5 px-6 shadow-xl mt-2">
-                            <i class="fas fa-key mr-2"></i> Check Free 45-Min Kundali Now
-                        </button>
-                    </form>
+/* hero A: full-bleed illustration */
+.jhA{position:relative;overflow:hidden;background:var(--iv)}
+.jhA picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center}
+.jhA:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(251,246,236,.97) 0%,rgba(251,246,236,.9) 38%,rgba(251,246,236,.15) 70%,rgba(251,246,236,0) 100%)}
+.jhA .jh-wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding-top:56px;padding-bottom:56px}
+.jh-hero-t h1{font-size:52px;margin:8px 0 12px}
+.jh-hero-t h1 span{color:var(--mr)}
+.jh-hero-t p.lead{font-size:19px;line-height:1.6;color:#4A3628;margin:0 0 20px;max-width:560px}
+.jh-cta{display:flex;flex-wrap:wrap;gap:10px}
 
-                    <div class="pt-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-                        <a href="kundali-form.html" class="text-purple-300 hover:text-white transition">
-                            <i class="fas fa-sliders-h mr-1"></i> छपी कुंडली से ग्रह स्वयं भरें →
-                        </a>
-                        <a href="kundali-form.html#topKundaliWorkspace" onclick="localStorage.setItem('openManualTab','1')" class="text-amber-300 hover:text-amber-200 underline font-semibold">
-                            Book Hand-Made Kundali (₹2,100) →
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+/* quick form card */
+.jh-form{background:rgba(255,253,247,.96);border:1.5px solid var(--gd2);border-radius:20px;padding:20px;box-shadow:0 18px 44px rgba(74,15,18,.16);backdrop-filter:blur(4px)}
+.jh-form h2{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:24px;color:var(--mr2);margin:0 0 4px}
+.jh-form p.sm{margin:0 0 12px;color:var(--mu);font-size:14px}
+.jh-form label{display:block;font-weight:600;font-size:14px;margin:10px 0 4px;color:#4A3628}
+.jh-form input,.jh-form select{width:100%;min-height:48px;border:1px solid #D9C6A0;border-radius:12px;padding:0 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.jh-form .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.jh-form button{margin-top:14px;width:100%;border:0;cursor:pointer;font-family:inherit}
+.jh-form .alt{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:13.5px}
+.jh-form .alt a{color:var(--mr);font-weight:600}
+
+/* hero B: astrologer first */
+.jhB{position:relative;background:var(--iv) url(images/ui/hero-desktop.webp) center/cover no-repeat}
+.jhB:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(251,246,236,.86),rgba(251,246,236,.94))}
+.jhB .jh-wrap{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;padding-top:48px;padding-bottom:40px}
+.jh-arch{position:relative;justify-self:center;width:min(360px,100%)}
+.jh-arch .fr{border-radius:200px 200px 22px 22px;overflow:hidden;border:6px solid #fff;outline:2px solid var(--gd);box-shadow:0 22px 50px rgba(74,15,18,.25);aspect-ratio:4/5;background:var(--iv2)}
+.jh-arch img{width:100%;height:100%;object-fit:cover;display:block}
+.jh-arch .nm{position:absolute;left:50%;bottom:-18px;transform:translateX(-50%);white-space:nowrap;background:var(--mr);color:#fff;border-radius:14px;padding:8px 16px;text-align:center;box-shadow:0 10px 24px rgba(74,15,18,.3)}
+.jh-arch .nm b{display:block;font-size:16px}.jh-arch .nm small{font-size:12.5px;color:var(--gd2)}
+.jhB-form{position:relative;margin-top:-6px;padding-bottom:20px}
+.jhB-form .jh-form{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1.4fr auto;gap:12px;align-items:end}
+.jhB-form .jh-form h2,.jhB-form .jh-form p.sm,.jhB-form .jh-form .alt{grid-column:1/-1}
+.jhB-form .jh-form label{margin-top:0}
+.jhB-form .jh-form button{margin-top:0;min-width:180px}
+
+/* trust bar */
+.jh-trust{background:var(--mr2);color:#F6E7C8}
+.jh-trust ul{list-style:none;margin:0;padding:14px 16px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 28px;font-weight:600;font-size:15px}
+.jh-trust b{color:#fff;font-size:18px;margin-right:4px}
+
+/* section titles */
+.jh-sec{padding:56px 0}
+.jh-st{text-align:center;margin:0 auto 26px;max-width:720px}
+.jh-st h2{font-size:38px;margin:6px 0 8px}
+.jh-st p{margin:0;color:var(--mu);font-size:17px}
+
+/* service cards */
+.jh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.jh-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--ln);border-radius:20px;overflow:hidden;color:var(--ink);transition:transform .2s,box-shadow .2s}
+.jh-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(74,15,18,.14)}
+.jh-card .im{aspect-ratio:4/3;overflow:hidden;background:var(--iv2)}
+.jh-card .im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.jh-card:hover .im img{transform:scale(1.04)}
+.jh-card .bd{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.jh-card h3{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:24px;color:var(--mr2);margin:0}
+.jh-card p{margin:0;color:var(--mu);font-size:15.5px;line-height:1.55}
+.jh-card .ft{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:center}
+.jh-card .pr{font-weight:800;color:var(--mr);font-size:17px}
+.jh-card .go{color:var(--mr);font-weight:700;font-size:15px}
+.jh-num{position:relative;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#FFF7E4,#F1DFB8)}
+.jh-num span{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(20px,4vw,34px);transform:translate(-50%,-50%);color:var(--mr);position:absolute;opacity:.9}
+
+/* rashi strip */
+.jh-rashi{background:linear-gradient(180deg,var(--iv),#F6ECDA)}
+.jh-rgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.jh-r{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--mr2);font-weight:700;font-size:15px}
+.jh-r img{width:100%;max-width:92px;aspect-ratio:1;border-radius:50%;transition:transform .2s;filter:drop-shadow(0 6px 10px rgba(74,15,18,.18))}
+.jh-r:hover img{transform:translateY(-3px) rotate(-4deg)}
+.jh-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* panchang banner */
+.jh-pan{position:relative;border-radius:24px;overflow:hidden;min-height:280px;display:flex;align-items:center;background:var(--iv)}
+.jh-pan img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.jh-pan .tx{position:relative;margin-left:auto;width:min(480px,100%);padding:28px;background:rgba(255,253,247,.9);border-radius:20px;margin-right:24px}
+.jh-pan h2{font-size:32px;margin:4px 0 8px}
+.jh-pan .today{font-size:17px;line-height:1.7;margin:0 0 14px;color:#4A3628}
+
+/* founder */
+.jh-me{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:center}
+.jh-me .ph{border-radius:24px;overflow:hidden;border:6px solid #fff;outline:2px solid var(--gd);box-shadow:0 20px 44px rgba(74,15,18,.18);aspect-ratio:1}
+.jh-me .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.jh-me h2{font-size:36px;margin:6px 0 10px}
+.jh-me p{font-size:17px;line-height:1.7;color:#4A3628;margin:0 0 12px}
+
+@media (max-width:980px){
+  .jh-grid{grid-template-columns:repeat(2,1fr)}
+  .jh-rgrid{grid-template-columns:repeat(6,1fr)}
+  .jhB-form .jh-form{grid-template-columns:1fr 1fr}
+  .jhB-form .jh-form button{grid-column:1/-1}
+  .jhB-form .jh-form .row{grid-column:2}
+}
+@media (max-width:760px){
+  .jhA picture img{object-position:center bottom}
+  .jhA:after{background:linear-gradient(180deg,rgba(251,246,236,.96) 0%,rgba(251,246,236,.9) 45%,rgba(251,246,236,.35) 100%)}
+  .jhA .jh-wrap,.jhB .jh-wrap{grid-template-columns:1fr;padding-top:28px;padding-bottom:28px}
+  .jh-hero-t h1{font-size:36px}
+  .jh-hero-t p.lead{font-size:17px}
+  .jh-cta .jh-btn{flex:1 1 100%}
+  .jh-st h2{font-size:30px}
+  .jh-sec{padding:40px 0}
+  .jh-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .jh-card h3{font-size:19px}
+  .jh-card p{font-size:14px}
+  .jh-card .bd{padding:12px}
+  .jh-card .pr,.jh-card .go{font-size:14px}
+  .jh-rgrid{grid-template-columns:repeat(4,1fr);gap:12px 8px}
+  .jh-pan{min-height:0;flex-direction:column}
+  .jh-pan img{position:relative;height:180px}
+  .jh-pan .tx{margin:0;border-radius:0;width:100%;padding:20px}
+  .jh-me{grid-template-columns:1fr;gap:20px}
+  .jh-me .ph{max-width:320px;margin:0 auto}
+  .jh-me h2{font-size:30px}
+  .jhB-form .jh-form{grid-template-columns:1fr}
+  .jhB-form .jh-form .row{grid-column:auto}
+  .jh-arch{width:min(280px,80%)}
+}
+</style>
+<div class="jh">
+<section class="jhB" aria-label="ज्योतिष तर्क">
+  <div class="jh-wrap"><div class="jh-hero-t">
+  <span class="jh-k">॥ ज्योतिष तर्क · लखनऊ ॥</span>
+  <h1 class="jh-h">आपकी कुंडली, <span>आपकी भाषा में</span></h1>
+  <p class="lead">वैदिक ज्योतिष को तर्क और सरल हिंदी में समझिए — मुफ़्त जन्म कुंडली, कुंडली मिलान, राशिफल और पंचांग, और ज़रूरत हो तो ज्योतिषी ज्ञानेंद्र सिंह तोमर से सीधी बात।</p>
+  <div class="jh-cta"><a class="jh-btn p" href="kundali-form.html">मुफ़्त कुंडली बनाएं</a><a class="jh-btn s" href="consultation.html">ज्योतिषी से बात करें</a></div>
+  <ul class="jh-chips"><li>2020 से</li><li>100+ संतुष्ट जातक</li><li>हिंदी व English</li><li>40+ मुफ़्त टूल</li></ul>
+</div>
+  <div class="jh-arch"><div class="fr"><picture><source srcset="images/ui/gyanendra-namaste.webp" type="image/webp"><img src="images/ui/gyanendra-namaste.jpg" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="720" height="720" fetchpriority="high"></picture></div>
+  <div class="nm"><b>ज्ञानेंद्र सिंह तोमर</b><small>वैदिक ज्योतिषी, लखनऊ</small></div></div></div>
+</section>
+<div class="jhB-form"><div class="jh-wrap"><form class="jh-form" id="homeQuickKundaliForm" onsubmit="launchKundaliFromHome(event)">
+  <h2>मुफ़्त जन्म कुंडली</h2>
+  <p class="sm">नाम और जन्म तिथि डालें — 12 अध्याय का विश्लेषण तुरंत, मोबाइल PDF के साथ।</p>
+  <div class="f-name"><label for="homeUserName">आपका पूरा नाम</label><input type="text" id="homeUserName" placeholder="जैसे: आदित्य प्रताप सिंह" autocomplete="name" required></div>
+  <div class="row"><div><label for="homeUserDob">जन्म तिथि</label><input type="date" id="homeUserDob" required></div>
+  <div><label for="homeUserLang">भाषा</label><select id="homeUserLang"><option value="hi">हिंदी</option><option value="en">English</option></select></div></div>
+  <button type="submit" class="jh-btn p">कुंडली देखें →</button>
+  <div class="alt"><a href="kundali-form.html">जन्म समय व स्थान के साथ पूरी कुंडली</a><a href="sampurna-kundali.html">सम्पूर्ण कुंडली ₹1,101</a></div>
+</form></div></div>
+<div class="jh-trust"><ul><li><b>2020</b> से सेवा</li><li><b>100+</b> संतुष्ट जातक</li><li><b>550+</b> लेख, स्तोत्र व टूल</li><li>हिंदी व English</li></ul></div>
+<section class="jh-sec"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">हमारी सेवाएं</span><h2 class="jh-h">आपके हर प्रश्न के लिए</h2><p>मुफ़्त टूल से शुरुआत करें, और गहराई चाहिए तो विस्तृत रिपोर्ट या सीधी बात।</p></div><div class="jh-grid"><a class="jh-card" href="kundali-form.html"><div class="im"><picture><source srcset="images/ui/card-kundali.webp" type="image/webp"><img src="images/ui/card-kundali.jpg" alt="जन्म कुंडली" loading="lazy" width="800" height="597"></picture></div><div class="bd"><h3>जन्म कुंडली</h3><p>लग्न, नवांश, ग्रह, दशा और 12 अध्याय का विश्लेषण।</p><div class="ft"><span class="pr">मुफ़्त</span><span class="go">देखें →</span></div></div></a><a class="jh-card" href="kundali-milan.html"><div class="im"><picture><source srcset="images/ui/card-milan.webp" type="image/webp"><img src="images/ui/card-milan.jpg" alt="कुंडली मिलान" loading="lazy" width="800" height="597"></picture></div><div class="bd"><h3>कुंडली मिलान</h3><p>36 गुण, मंगल दोष और नाड़ी दोष — शादी से पहले।</p><div class="ft"><span class="pr">मुफ़्त</span><span class="go">देखें →</span></div></div></a><a class="jh-card" href="sampurna-kundali.html"><div class="im"><picture><source srcset="images/ui/card-career.webp" type="image/webp"><img src="images/ui/card-career.jpg" alt="सम्पूर्ण कुंडली — करियर व भविष्य" loading="lazy" width="800" height="597"></picture></div><div class="bd"><h3>सम्पूर्ण कुंडली</h3><p>35+ पेज की PDF: करियर, धन, विवाह, दशा और उपाय।</p><div class="ft"><span class="pr">₹1,101</span><span class="go">देखें →</span></div></div></a><a class="jh-card" href="consultation.html"><div class="im"><picture><source srcset="images/ui/gyanendra.webp" type="image/webp"><img src="images/ui/gyanendra.jpg" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" loading="lazy" width="800" height="597"></picture></div><div class="bd"><h3>ज्योतिषी से बात</h3><p>ऑडियो या वीडियो कॉल — पहली 5 मिनट मुफ़्त।</p><div class="ft"><span class="pr">₹301 से</span><span class="go">देखें →</span></div></div></a><a class="jh-card" href="rudraksha.html"><div class="im"><picture><source srcset="images/ui/card-rudraksha.webp" type="image/webp"><img src="images/ui/card-rudraksha.jpg" alt="रुद्राक्ष" loading="lazy" width="800" height="597"></picture></div><div class="bd"><h3>असली रुद्राक्ष</h3><p>नेपाली दाना, लैब सर्टिफिकेट के विकल्प के साथ।</p><div class="ft"><span class="pr">स्टोर देखें</span><span class="go">देखें →</span></div></div></a><a class="jh-card" href="numerology.html"><div class="im jh-num" aria-hidden="true"><span style="left:18%;top:22%">१</span><span style="left:44%;top:12%">२</span><span style="left:72%;top:24%">३</span><span style="left:12%;top:52%">४</span><span style="left:44%;top:44%">५</span><span style="left:78%;top:54%">६</span><span style="left:22%;top:78%">७</span><span style="left:50%;top:76%">८</span><span style="left:78%;top:82%">९</span></div><div class="bd"><h3>अंक ज्योतिष</h3><p>मूलांक, भाग्यांक और नाम का अंक — मुफ़्त कैलकुलेटर।</p><div class="ft"><span class="pr">मुफ़्त</span><span class="go">देखें →</span></div></div></a></div></div></section>
+<section class="jh-sec jh-rashi"><div class="jh-wrap"><div class="jh-st"><span class="jh-k">राशिफल</span><h2 class="jh-h">अपनी राशि चुनें</h2><p>2027 का वार्षिक राशिफल — करियर, धन, विवाह और उपाय।</p></div><div class="jh-rgrid"><a class="jh-r" href="mesh-rashifal-2027.html"><img src="images/ui/rashi-mesh.webp" alt="" width="240" height="240" loading="lazy"><span>मेष</span></a><a class="jh-r" href="vrishabh-rashifal-2027.html"><img src="images/ui/rashi-vrishabh.webp" alt="" width="240" height="240" loading="lazy"><span>वृषभ</span></a><a class="jh-r" href="mithun-rashifal-2027.html"><img src="images/ui/rashi-mithun.webp" alt="" width="240" height="240" loading="lazy"><span>मिथुन</span></a><a class="jh-r" href="kark-rashifal-2027.html"><img src="images/ui/rashi-kark.webp" alt="" width="240" height="240" loading="lazy"><span>कर्क</span></a><a class="jh-r" href="singh-rashifal-2027.html"><img src="images/ui/rashi-singh.webp" alt="" width="240" height="240" loading="lazy"><span>सिंह</span></a><a class="jh-r" href="kanya-rashifal-2027.html"><img src="images/ui/rashi-kanya.webp" alt="" width="240" height="240" loading="lazy"><span>कन्या</span></a><a class="jh-r" href="tula-rashifal-2027.html"><img src="images/ui/rashi-tula.webp" alt="" width="240" height="240" loading="lazy"><span>तुला</span></a><a class="jh-r" href="vrishchik-rashifal-2027.html"><img src="images/ui/rashi-vrishchik.webp" alt="" width="240" height="240" loading="lazy"><span>वृश्चिक</span></a><a class="jh-r" href="dhanu-rashifal-2027.html"><img src="images/ui/rashi-dhanu.webp" alt="" width="240" height="240" loading="lazy"><span>धनु</span></a><a class="jh-r" href="makar-rashifal-2027.html"><img src="images/ui/rashi-makar.webp" alt="" width="240" height="240" loading="lazy"><span>मकर</span></a><a class="jh-r" href="kumbh-rashifal-2027.html"><img src="images/ui/rashi-kumbh.webp" alt="" width="240" height="240" loading="lazy"><span>कुंभ</span></a><a class="jh-r" href="meen-rashifal-2027.html"><img src="images/ui/rashi-meen.webp" alt="" width="240" height="240" loading="lazy"><span>मीन</span></a></div><div class="jh-links"><a class="jh-btn s" href="weekly-rashifal.html">साप्ताहिक राशिफल</a><a class="jh-btn s" href="masik-rashifal-december-2026.html">मासिक राशिफल</a><a class="jh-btn s" href="gochar-2027.html">गोचर 2027</a></div></div></section>
+<section class="jh-sec" style="padding-top:0"><div class="jh-wrap"><div class="jh-pan" id="jhPan">
+  <img src="images/ui/panchang-banner.webp" alt="" width="1600" height="679" loading="lazy">
+  <div class="tx"><span class="jh-k">आज का पंचांग · लखनऊ</span><h2 class="jh-h" id="jhPanDate">आज का पंचांग</h2>
+  <p class="today" id="jhPanT">तिथि, नक्षत्र, योग, राहुकाल और शुभ मुहूर्त — सूर्योदय से सटीक।</p>
+  <a class="jh-btn p" href="panchang.html">पूरा पंचांग देखें</a> <a class="jh-btn s" href="shubh-muhurat-2027.html">शुभ मुहूर्त 2027</a></div>
+</div></div>
+<script>(function(){var el=document.getElementById('jhPan');if(!el)return;function load(s,cb){var x=document.createElement('script');x.src=s;x.onload=cb;x.onerror=function(){};document.head.appendChild(x);}
+function fill(){try{var t=JTP.todayIn('Asia/Kolkata'),d=JTP.day(t[0],t[1],t[2]);document.getElementById('jhPanDate').textContent=d.dateHindi;
+document.getElementById('jhPanT').innerHTML='<b>तिथि:</b> '+d.p.tithi.split(',')[0]+'<br><b>नक्षत्र:</b> '+d.p.nakshatra.split(',')[0]+'<br><b>राहुकाल:</b> '+d.p.rahuKaal+'<br><b>सूर्योदय:</b> '+d.p.sunrise+' · <b>सूर्यास्त:</b> '+d.p.sunset+(d.hasFestival?'<br><b>आज:</b> '+d.festivals.join(', '):'');}catch(e){}}
+function go(){if(window.JTP)return fill();load('astronomy.min.js?v=1',function(){load('panchang-engine.js?v=4',fill);});}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();go();}},{rootMargin:'300px'});io.observe(el);}else go();})();</script>
+</section>
+<section class="jh-sec" style="background:#fff"><div class="jh-wrap jh-me">
+  <div class="ph"><picture><source srcset="images/ui/gyanendra.webp" type="image/webp"><img src="images/ui/gyanendra.jpg" alt="ज्योतिषी ज्ञानेंद्र सिंह तोमर" width="600" height="600" loading="lazy"></picture></div>
+  <div><span class="jh-k">संस्थापक</span><h2 class="jh-h">ज्ञानेंद्र सिंह तोमर</h2>
+  <p>लखनऊ के वैदिक ज्योतिषी और MBBS छात्र। विज्ञान की पढ़ाई ने सोचने का तरीका तार्किक बनाया — इसीलिए इस मंच का नाम है <b>“ज्योतिष तर्क”</b>: प्राचीन ज्ञान, तर्क और सटीकता के साथ।</p>
+  <p>पाराशरी, जैमिनी, KP, लाल किताब, अष्टकवर्ग और अंक ज्योतिष का अध्ययन। उद्देश्य डराना नहीं, बल्कि करियर, विवाह और जीवन के प्रश्नों पर साफ़ और ईमानदार मार्गदर्शन देना है।</p>
+  <ul class="jh-chips"><li>2020 से</li><li>100+ संतुष्ट जातक</li><li>20+ करियर मार्गदर्शन</li><li>30+ विवाह मार्गदर्शन</li></ul>
+  <div class="jh-cta" style="margin-top:18px"><a class="jh-btn p" href="consultation.html">परामर्श बुक करें</a><a class="jh-btn s" href="about.html">पूरा परिचय</a></div></div>
+</div></section>
+</div>
+<!-- JH:END -->
 
     <!-- KP astrology spotlight -->
     <section class="max-w-7xl mx-auto px-4 pb-4" aria-labelledby="kpHomeTitle">
@@ -765,553 +876,6 @@
 
     
 
-    <!-- About Founder Section -->
-    <section class="max-w-7xl mx-auto px-4 py-12">
-        <div class="glass-card rounded-3xl overflow-hidden shadow-2xl relative">
-            <!-- Background Accents -->
-            <div class="absolute top-0 right-0 w-96 h-96 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 relative z-10">
-                
-                <!-- Left Side: Founder Photo & Socials -->
-                <div class="lg:col-span-5 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-8 md:p-12 flex flex-col items-center justify-center text-center border-b lg:border-b-0 lg:border-r border-white/10">
-                    <div class="relative mb-8 group">
-                        <div class="absolute inset-0 bg-amber-400 rounded-2xl blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
-                        <div class="w-64 h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-amber-300 relative z-10 transform transition duration-500 group-hover:scale-[1.02] shadow-xl">
-                            <img src="images/big-profile.JPG?v=2" alt="Gyanendra Singh Tomar - Founder Jyotish Tark" width="288" height="288" class="w-full h-full object-cover" fetchpriority="high">
-                        </div>
-                    </div>
-                    
-                    <h2 class="text-3xl font-bold text-white mb-2 tracking-wide">Gyanendra S. Tomar</h2>
-                    <p class="text-amber-300 mb-8 text-sm font-bold tracking-widest uppercase">Founder & Vedic Astrologer</p>
-                    
-                    <!-- Social Media Links -->
-                    <div class="flex space-x-6 text-2xl">
-                        <a href="https://www.facebook.com/jyotishtark" target="_blank" rel="noopener" aria-label="Facebook" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="https://www.instagram.com/jyotishtark/" target="_blank" rel="noopener" aria-label="Instagram" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@jyotishtark" target="_blank" rel="noopener" aria-label="YouTube" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://wa.me/918318513814" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-gray-400 hover:text-amber-400 transition transform hover:-translate-y-1">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Right Side: Founder Story & Expertise -->
-                <div class="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                    
-                    <div class="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 text-amber-300 font-semibold text-sm mb-6 border border-amber-500/30 w-max">
-                        <i class="fas fa-dna mr-2"></i>The Visionary Behind Jyotish Tark
-                    </div>
-                    
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                        Merging Analytical Precision with <br><span class="text-amber-300">Ancient Vedic Wisdom</span>
-                    </h2>
-                    
-                    <div class="text-gray-300 mb-8 space-y-4 text-lg hindi">
-                        <p>
-                            <strong class="text-white font-medium">"ज्योतिष ज्ञान से हर समस्या का समाधान संभव है।"</strong><br>
-                            मेरा नाम ज्ञानेंद्र सिंह तोमर है, और मैं लखनऊ से एक समर्पित वैदिक ज्योतिषी हूँ। मेरी जीवन यात्रा विज्ञान और आध्यात्मिकता का एक अनूठा संगम है। एक MBBS छात्र होने के नाते, मेरा दृष्टिकोण हमेशा तार्किक और विश्लेषणात्मक रहा है। यही वजह है कि मेरे मंच का नाम <strong>"ज्योतिष तर्क" (Jyotish Tark)</strong> है—जहाँ प्राचीन ज्ञान को तर्क और सटीकता के साथ प्रस्तुत किया जाता है।
-                        </p>
-                        <p>
-                            पिछले कई वर्षों में, मैंने वैदिक ज्योतिष के साथ-साथ <strong>लाल किताब (Lal Kitab), अष्टकवर्ग (Ashtakvarga), नवांश (D9), सुदर्शन चक्र, जैमिनी ज्योतिष (Jaimini Astrology) और अंक ज्योतिष (Numerology)</strong> का गहन अध्ययन किया है। मेरा उद्देश्य आपको डराना या अंधविश्वास में धकेलना नहीं है, बल्कि आपकी कुंडली का तार्किक विश्लेषण करके करियर, स्वास्थ्य और विवाह से जुड़े प्रश्नों में स्पष्ट और ईमानदार मार्गदर्शन देना है।
-                        </p>
-                    </div>
-                    
-                    <!-- Expertise Tags -->
-                    <div class="flex flex-wrap gap-3 mb-10">
-                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
-                            <i class="fas fa-om text-amber-400 mr-2"></i>Vedic Astrology
-                        </span>
-                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
-                            <i class="fas fa-book text-amber-400 mr-2"></i>Lal Kitab Remedies
-                        </span>
-                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
-                            <i class="fas fa-calculator text-amber-400 mr-2"></i>Chaldean Numerology
-                        </span>
-                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 flex items-center">
-                            <i class="fas fa-chart-pie text-amber-400 mr-2"></i>Jaimini & 337-Bindu Ashtakvarga
-                        </span>
-                    </div>
-
-                    <!-- Success Stats -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-                        <div class="border-l-2 border-amber-500 pl-4">
-                            <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="100">100</span>+</div>
-                            <div class="text-sm text-gray-400">Happy Clients</div>
-                        </div>
-                        <div class="border-l-2 border-amber-500 pl-4">
-                            <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="20">20</span>+</div>
-                            <div class="text-sm text-gray-400">Career Solutions</div>
-                        </div>
-                        <div class="border-l-2 border-amber-500 pl-4">
-                            <div class="text-3xl font-bold text-white mb-1"><span class="count-up" data-count="30">30</span>+</div>
-                            <div class="text-sm text-gray-400">Marriage Guidance</div>
-                        </div>
-                        <div class="border-l-2 border-amber-500 pl-4">
-                            <div class="text-3xl font-bold text-white mb-1">24–48h</div>
-                            <div class="text-sm text-gray-400">Report Delivery</div>
-                        </div>
-                    </div>
-                    
-                    <!-- CTA Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="kundali-form.html" class="primary-button text-center flex-1 sm:flex-none hindi">
-                            <i class="fas fa-star-and-crescent mr-2"></i>
-                            अपनी कुंडली अभी देखें (Free / Paid)
-                        </a>
-                        <a href="contact.html" class="secondary-button text-center flex-1 sm:flex-none bg-white/5 hover:bg-white/10 border-white/20">
-                            <i class="fas fa-calendar-check mr-2"></i>
-                            Book Consultation
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services & Interactive Tools Section -->
-    <section class="max-w-7xl mx-auto px-4 py-14">
-        <div class="text-center mb-14">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title hindi">
-                हमारी दिव्य सेवाएं एवं फ्री कैलकुलेटर
-            </h2>
-            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                Explore our comprehensive Vedic astrology calculators, daily utilities, and energized remedies explained in clear, simple language.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Service 1: Free 45-Min Dossier + Hand-Made Kundali -->
-            <div class="service-card p-6 rounded-2xl border border-amber-400/30">
-                <div>
-                    <div class="feature-icon">🌌</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Free 45-Min Kundali Dossier & Hand-Made Report</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">
-                        Generate your instant 12-Chapter Life Dossier (Lagna, D9 Navamsa, 337-Bindu Ashtakavarga & Future Partner) or book a hand-made Kundali.
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
-                            Personality, Education, Career & Wealth
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
-                            Future Partner Traits & D9 Marriage Yoga
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-amber-400 mr-3"></i>
-                            All 9 Planets' Aspects & Mahadasha-Antardasha
-                        </li>
-                    </ul>
-                </div>
-                <a href="kundali-form.html" class="block text-center bg-gradient-to-r from-purple-700 to-pink-600 hover:opacity-95 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-lg">
-                    Check Free / Order Kundali →
-                </a>
-            </div>
-
-            <!-- Service 2: Numerology -->
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🔢</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Chaldean Numerology Report</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">
-                        Discover the hidden vibrations in your name and birth date (Mulank & Bhagyank) that govern your career luck, relationships, and destiny.
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            Psychic (Mulank) & Destiny Number analysis
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            Chaldean Name Compound Vibration
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            Lucky numbers, colors & career dates
-                        </li>
-                    </ul>
-                </div>
-                <a href="numerology.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all">
-                    Calculate Numerology Free →
-                </a>
-            </div>
-
-            <!-- Service: KP Astrology -->
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">KP Astrology Report</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm">
-                        Krishnamurti Paddhati chart with Placidus houses, star lords and sub-lords — the method known for event timing.
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i>Free KP chart PDF</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i>₹299: 24-chapter KP Janm Kundali</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i>Life partner, marriage timing, career and dasha forecast</li>
-                    </ul>
-                </div>
-                <a href="kp-astrology.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all">
-                    Get Free KP Chart →
-                </a>
-            </div>
-
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🗓️</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">वर्षफल 2027 — अपनी कुंडली से</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">
-                        2027 में आपकी दशा, गुरु-शनि का गोचर और हर महीने की अच्छी तारीखें — आपकी जन्म कुंडली से।
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">मुफ़्त: 2027 कार्ड — अच्छे और सावधानी वाले महीने</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">₹299: 7 पेज की व्यक्तिगत वर्षफल PDF</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">दशा, साढ़ेसाती, 12 महीने और उपाय</span></li>
-                    </ul>
-                </div>
-                <a href="mera-2027.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">
-                    अपना 2027 देखें →
-                </a>
-            </div>
-
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📿</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">मंत्र जाप और ऑनलाइन पूजा</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">
-                        महामृत्युंजय, गायत्री, हनुमान, शनि और नवग्रह मंत्र — आपकी ओर से 1100 या 5100 जाप, लखनऊ में नियम से।
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">1100 या 5100 मंत्र जाप</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">जाप पूरा होने पर फ़ोटो/वीडियो</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">वीडियो कॉल पर ऑनलाइन पूजा</span></li>
-                    </ul>
-                </div>
-                <a href="mantra-jaap.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">
-                    जाप बुक करें →
-                </a>
-            </div>
-
-            <!-- Service: Mobile number numerology -->
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📱</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">मोबाइल नंबर अंक ज्योतिष</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">
-                        आपका मोबाइल नंबर आपके मूलांक और भाग्यांक से कितना मेल खाता है — ग्रह, स्वभाव और 100 में स्कोर।
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">मुफ़्त जाँच: कुल योग, ग्रह और मेल</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">₹199: कवर पेज वाली 8 अध्याय की PDF रिपोर्ट</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">आसान उपाय — नंबर बदले बिना</span></li>
-                    </ul>
-                </div>
-                <a href="mobile-number-numerology.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">
-                    अपना नंबर जाँचें →
-                </a>
-            </div>
-
-            <!-- Service: Tarot reading -->
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🃏</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">टैरो कार्ड रीडिंग</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">
-                        मन में अपना प्रश्न रखें, 78 कार्ड के डेक से 3 कार्ड चुनें और तुरंत उनका अर्थ पढ़ें — प्रेम, करियर और धन के लिए।
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">मुफ़्त टैरो रीडिंग — हिंदी व English</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">हाँ/ना प्रश्न और समय का संकेत</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">साथी की भावनाएँ जानें</span></li>
-                    </ul>
-                </div>
-                <a href="tarot.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">
-                    टैरो कार्ड चुनें →
-                </a>
-            </div>
-
-            <!-- Service 3: Rudraksha -->
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📿</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">असली अभिमंत्रित रुद्राक्ष</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">
-                        प्रामाणिक नेपाली व वैदिक मंत्रों से अभिमंत्रित रुद्राक्ष (लैब सर्टिफिकेट वैकल्पिक, +₹500) (2 से 9 मुखी एवं गौरी शंकर)। मुफ्त उपहार, धागा और कैश-ऑन-डिलीवरी सुविधा।
-                    </p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">पंचमुखी व सप्तमुखी रुद्राक्ष (₹499 से शुरू)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">राशि व स्वास्थ्य समस्या अनुसार रुद्राक्ष क्विज</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-purple-400 mr-3"></i>
-                            <span class="hindi">पूरे भारत में मुफ्त डिलीवरी व COD</span>
-                        </li>
-                    </ul>
-                </div>
-                <a href="rudraksha.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">
-                    रुद्राक्ष संग्रह देखें →
-                </a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📅</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">आज का पंचांग — आपके शहर का</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">तिथि, नक्षत्र, राहु काल, चौघड़िया और लाइव शुभ मुहूर्त — 100+ शहरों (भारत, नेपाल, विदेश) के स्थानीय समय से।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">लाइव मुहूर्त रडार और काउंटडाउन</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">एकादशी व पारण समय, शहर के अनुसार</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">तारा बल — आपका आज का भाग्य</span></li>
-                    </ul>
-                </div>
-                <a href="panchang.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">आज का पंचांग देखें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🌙</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">राशिफल — आज, साप्ताहिक, 2027</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">मेष से मीन तक सभी 12 राशियों का दैनिक, साप्ताहिक और वार्षिक राशिफल — असली ग्रह-गोचर से।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">आज का राशिफल और उपाय</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">साप्ताहिक राशिफल — शुभ दिन</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">राशिफल 2027 — पूरे साल का फल</span></li>
-                    </ul>
-                </div>
-                <a href="rashifal.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">अपना राशिफल पढ़ें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">💑</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">कुंडली मिलान / गुण मिलान</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">वर-कन्या के जन्म विवरण से अष्टकूट गुण मिलान — 36 में से कितने गुण, नाड़ी और भकूट दोष।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">36 गुण का पूरा मिलान</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">नाड़ी और भकूट दोष की जाँच</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">राशि जोड़ी — हर राशि का मेल</span></li>
-                    </ul>
-                </div>
-                <a href="guna-milan-calculator.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">मुफ़्त गुण मिलान करें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🔥</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">मंगल दोष (मांगलिक) कैलकुलेटर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">लग्न, चंद्र और शुक्र — तीनों से जाँचें कि मंगल दोष है या नहीं, और शास्त्रीय परिहार लागू होते हैं या नहीं।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">लग्न, चंद्र और शुक्र से जाँच</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">परिहार (कैंसिलेशन) की जाँच</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">सरल उपाय</span></li>
-                    </ul>
-                </div>
-                <a href="manglik-dosh-calculator.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">मंगल दोष जाँचें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🪐</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">शनि साढ़ेसाती कैलकुलेटर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">अपनी राशि या जन्म विवरण डालें — साढ़ेसाती या ढैय्या चल रही है या नहीं, और कब तक।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">साढ़ेसाती के तीनों चरण की तारीखें</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">ढैय्या की जाँच</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">शनि के सरल उपाय</span></li>
-                    </ul>
-                </div>
-                <a href="sade-sati-calculator.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">साढ़ेसाती जाँचें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🐍</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">काल सर्प दोष कैलकुलेटर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">जन्म विवरण से जानें कि कुंडली में पूर्ण या आंशिक काल सर्प योग है या नहीं — ईमानदार व्याख्या के साथ।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">पूर्ण / आंशिक योग की जाँच</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">12 प्रकार में से कौन-सा</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">डर नहीं, सही जानकारी</span></li>
-                    </ul>
-                </div>
-                <a href="kaal-sarp-dosh-calculator.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">काल सर्प जाँचें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">👶</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">नाम अक्षर कैलकुलेटर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">बच्चे का नाम किस अक्षर से रखें? जन्म नक्षत्र और चरण से शुभ नाम अक्षर।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">नक्षत्र और चरण से अक्षर</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">राशि और नक्षत्र की जानकारी</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">नाम के सुझाव</span></li>
-                    </ul>
-                </div>
-                <a href="naam-akshar-calculator.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">नाम अक्षर जानें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">⭐</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">नक्षत्र स्वभाव कैलकुलेटर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">आपका जन्म नक्षत्र, चरण, देवता, गण, ताक़त, कमज़ोरी और करियर — जन्म तिथि और समय से।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">जन्म नक्षत्र और चरण</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">स्वभाव, करियर, रिश्ते</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">27 नक्षत्रों की सूची</span></li>
-                    </ul>
-                </div>
-                <a href="nakshatra-personality.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">अपना नक्षत्र जानें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">❓</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">कुंडली से पूछो — एक प्रश्न</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">नौकरी कब लगेगी, शादी कब होगी, विदेश योग — अपनी कुंडली से एक प्रश्न का उत्तर।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">जन्म विवरण से विश्लेषण</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">दशा और गोचर के आधार पर</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">₹101 में एक प्रश्न</span></li>
-                    </ul>
-                </div>
-                <a href="kundali-se-poochho.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">प्रश्न पूछें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📜</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">सम्पूर्ण कुंडली — 35+ पेज</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">लग्न-नवांश कुंडली, ग्रह स्पष्ट, करियर, धन, जीवनसाथी, दशा और उपाय — पूरी हिंदी कुंडली।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">35+ पेज की विस्तृत PDF</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">दशा, गोचर और उपाय</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">₹1,101</span></li>
-                    </ul>
-                </div>
-                <a href="sampurna-kundali.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">सम्पूर्ण कुंडली देखें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🌌</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">जन्म आकाश पोस्टर</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">आपके जन्म के क्षण में 9 ग्रह किस राशि और नक्षत्र में थे — एक सुंदर पोस्टर।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">जन्म के समय का आकाश</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">9 ग्रह, राशि और नक्षत्र</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">डाउनलोड और शेयर करें</span></li>
-                    </ul>
-                </div>
-                <a href="birth-sky-poster.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">अपना पोस्टर बनाएँ →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🔭</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">ग्रह-भाव फल</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">सूर्य से केतु तक 9 ग्रह कुंडली के 12 भावों में क्या फल देते हैं — 108 स्थितियाँ सरल भाषा में।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">9 ग्रह × 12 भाव</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">करियर, विवाह, धन पर असर</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">सरल उपाय</span></li>
-                    </ul>
-                </div>
-                <a href="grah-bhav-phal.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">ग्रह फल पढ़ें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📿</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">भक्ति संग्रह — आरती, चालीसा, स्तोत्र</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">हनुमान चालीसा, शिव चालीसा, ॐ जय जगदीश हरे, गायत्री मंत्र, सुंदरकांड — शुद्ध पाठ, अर्थ सहित।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">आरती, चालीसा, स्तोत्र, मंत्र</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">सरल अर्थ और पाठ विधि</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">कुछ पाठ ऑडियो के साथ</span></li>
-                    </ul>
-                </div>
-                <a href="bhakti-sangrah.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">भक्ति संग्रह खोलें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🪔</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">व्रत कथा — सभी एकादशी व वार व्रत</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">24 एकादशी, सत्यनारायण (पाँचों अध्याय), सोमवार से शनिवार, संतोषी माता, करवा चौथ — पूरी कथा।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">सभी 24 एकादशी की पूरी कथा</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">एकादशी सूची 2026–27, पारण समय</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">वार व्रत और विशेष व्रत कथाएँ</span></li>
-                    </ul>
-                </div>
-                <a href="ekadashi-vrat-katha.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">व्रत कथा पढ़ें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">🎉</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">त्योहार 2027 — मुहूर्त सहित</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">लोहड़ी, मकर संक्रांति, वसंत पंचमी, महाशिवरात्रि, होली — सही तारीख, मुहूर्त, विधि और कथा।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">सटीक तारीख और मुहूर्त</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">पूजा विधि और मंत्र</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">हर त्योहार की पूरी कथा</span></li>
-                    </ul>
-                </div>
-                <a href="tyohar-2027.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">त्योहार कैलेंडर देखें →</a>
-            </div>
-            <div class="service-card p-6 rounded-2xl">
-                <div>
-                    <div class="feature-icon">📞</div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center hindi">ज्योतिषी से परामर्श</h3>
-                    <p class="text-gray-300 mb-4 text-center text-sm hindi">ज्योतिषी ज्ञानेंद्र सिंह तोमर से ऑडियो या वीडियो कॉल पर सीधी बात — पहली 5 मिनट मुफ़्त।</p>
-                    <ul class="space-y-2.5 text-gray-300 text-sm mb-6">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">ऑडियो कॉल ₹301 से</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">वीडियो कॉल ₹1,101 से</span></li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-3"></i><span class="hindi">पहली 5 मिनट मुफ़्त</span></li>
-                    </ul>
-                </div>
-                <a href="consultation.html" class="block text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hindi">परामर्श बुक करें →</a>
-            </div>
-        </div>
-
-        <!-- Secondary Daily Utilities Bar (Links Panchang, Rashifal & Tarot directly from Homepage) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-            <a href="panchang.html" class="glass-card p-4 rounded-2xl flex items-center justify-between hover:border-amber-400/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-lg"><i class="fas fa-calendar-day"></i></div>
-                    <div>
-                        <h4 class="font-bold text-white text-base hindi">आज का पंचांग (Daily Panchang)</h4>
-                        <p class="text-xs text-gray-400">Tithi, Nakshatra, Rahu Kaal & Shubh Muhurat</p>
-                    </div>
-                </div>
-                <i class="fas fa-arrow-right text-gray-400 group-hover:text-amber-300 transition"></i>
-            </a>
-
-            <a href="rashifal.html" class="glass-card p-4 rounded-2xl flex items-center justify-between hover:border-amber-400/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg"><i class="fas fa-sun"></i></div>
-                    <div>
-                        <h4 class="font-bold text-white text-base hindi">दैनिक व मासिक राशिफल (Rashifal)</h4>
-                        <p class="text-xs text-gray-400">All 12 Zodiac Sign Forecasts in Hindi</p>
-                    </div>
-                </div>
-                <i class="fas fa-arrow-right text-gray-400 group-hover:text-amber-300 transition"></i>
-            </a>
-
-            <a href="tarot.html" class="glass-card p-4 rounded-2xl flex items-center justify-between hover:border-amber-400/50 transition group">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-pink-500/20 text-pink-300 flex items-center justify-center text-lg"><i class="fas fa-clover"></i></div>
-                    <div>
-                        <h4 class="font-bold text-white text-base">Interactive Tarot Reading</h4>
-                        <p class="text-xs text-gray-400">Pick Cards for Love, Career & Destiny</p>
-                    </div>
-                </div>
-                <i class="fas fa-arrow-right text-gray-400 group-hover:text-amber-300 transition"></i>
-            </a>
-        </div>
-    </section>
-    
     <!-- Kundali Chart Section -->
     <section class="max-w-6xl mx-auto px-4 py-12">
       <div class="text-center mb-12">
