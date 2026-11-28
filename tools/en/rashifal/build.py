@@ -57,9 +57,12 @@ for p, (dname, marker) in INLINE.items():
     blocks = [m for m in re.finditer(r'<script>(.*?)</script>', s, re.S) if marker in m.group(1)]
     assert len(blocks) == 1, p
     m = blocks[0]
+    # translate the script as it is in the Hindi page (make_en may have rewritten links inside the copy)
+    hsrc = open(os.path.join(ROOT, p), encoding='utf-8').read()
+    hb = [x for x in re.finditer(r'<script>(.*?)</script>', hsrc, re.S) if marker in x.group(1)]
     with tempfile.TemporaryDirectory() as td:
         a, b = os.path.join(td, 'in.js'), os.path.join(td, 'out.js')
-        open(a, 'w', encoding='utf-8').write(m.group(1))
+        open(a, 'w', encoding='utf-8').write(hb[0].group(1))
         subprocess.run(['node', os.path.join(ROOT, 'tools/en/gen_en_js.js'), dname, a, b], check=True, stdout=subprocess.DEVNULL)
         js = open(b, encoding='utf-8').read()
     s = s[:m.start(1)] + js + s[m.end(1):]

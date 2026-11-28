@@ -99,10 +99,19 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
      Visitors outside India (time zone not IST) are sent to the English page when one exists;
      everyone can switch with the हिं / EN button, and the choice is remembered. Bots are never redirected. */
   var EN = (document.documentElement.getAttribute("lang") || "").toLowerCase() === "en" && /\/en\//.test(location.pathname);
-  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html", "kundali-form.html": "en/kundali-form.html", "guna-milan-calculator.html": "en/guna-milan-calculator.html", "mesh-rashifal-2027.html": "en/mesh-rashifal-2027.html", "vrishabh-rashifal-2027.html": "en/vrishabh-rashifal-2027.html", "mithun-rashifal-2027.html": "en/mithun-rashifal-2027.html", "kark-rashifal-2027.html": "en/kark-rashifal-2027.html", "singh-rashifal-2027.html": "en/singh-rashifal-2027.html", "kanya-rashifal-2027.html": "en/kanya-rashifal-2027.html", "tula-rashifal-2027.html": "en/tula-rashifal-2027.html", "vrishchik-rashifal-2027.html": "en/vrishchik-rashifal-2027.html", "dhanu-rashifal-2027.html": "en/dhanu-rashifal-2027.html", "makar-rashifal-2027.html": "en/makar-rashifal-2027.html", "kumbh-rashifal-2027.html": "en/kumbh-rashifal-2027.html", "meen-rashifal-2027.html": "en/meen-rashifal-2027.html", "rashifal-2027.html": "en/rashifal-2027.html", "weekly-rashifal.html": "en/weekly-rashifal.html", "masik-rashifal-december-2026.html": "en/masik-rashifal-december-2026.html", "rashifal.html": "en/rashifal.html", "mera-2027.html": "en/mera-2027.html" };
+  var EN_MAP = { "": "en/", "index.html": "en/", "consultation.html": "en/consultation.html", "sampurna-kundali.html": "en/sampurna-kundali.html", "kundali-form.html": "en/kundali-form.html", "guna-milan-calculator.html": "en/guna-milan-calculator.html", "mesh-rashifal-2027.html": "en/mesh-rashifal-2027.html", "vrishabh-rashifal-2027.html": "en/vrishabh-rashifal-2027.html", "mithun-rashifal-2027.html": "en/mithun-rashifal-2027.html", "kark-rashifal-2027.html": "en/kark-rashifal-2027.html", "singh-rashifal-2027.html": "en/singh-rashifal-2027.html", "kanya-rashifal-2027.html": "en/kanya-rashifal-2027.html", "tula-rashifal-2027.html": "en/tula-rashifal-2027.html", "vrishchik-rashifal-2027.html": "en/vrishchik-rashifal-2027.html", "dhanu-rashifal-2027.html": "en/dhanu-rashifal-2027.html", "makar-rashifal-2027.html": "en/makar-rashifal-2027.html", "kumbh-rashifal-2027.html": "en/kumbh-rashifal-2027.html", "meen-rashifal-2027.html": "en/meen-rashifal-2027.html", "rashifal-2027.html": "en/rashifal-2027.html", "weekly-rashifal.html": "en/weekly-rashifal.html", "masik-rashifal-december-2026.html": "en/masik-rashifal-december-2026.html", "rashifal.html": "en/rashifal.html", "mera-2027.html": "en/mera-2027.html", "about.html": "en/about.html", "contact.html": "en/contact.html", "privacy-policy.html": "en/privacy-policy.html", "terms-of-service.html": "en/terms-of-service.html", "refund.html": "en/refund.html", "cancellation.html": "en/cancellation.html", "shipping-and-delivery.html": "en/shipping-and-delivery.html", "disclaimer.html": "en/disclaimer.html" };
   function siteRoot() { return location.pathname.replace(/(\/en)?\/[^\/]*$/, "/"); }
+  // sections that exist in Hindi only: their English address is a short "in Hindi for now" page
+  var HINDI_ONLY = ["panchang.html", "numerology.html", "kp-astrology.html", "tarot.html", "bhakti-sangrah.html", "rudraksha.html", "blog.html"];
+  function enFor(file) { // English address for a Hindi page
+    if (Object.prototype.hasOwnProperty.call(EN_MAP, file)) return siteRoot() + EN_MAP[file];
+    if (HINDI_ONLY.indexOf(file) >= 0) return siteRoot() + "en/" + file;
+    return siteRoot() + "en/hindi-only.html?p=" + encodeURIComponent(file);
+  }
   function langPair() {
     var file = location.pathname.split("/").pop() || "";
+    if (EN && HINDI_ONLY.indexOf(file) >= 0) return { hi: siteRoot() + file, en: null };
+    if (EN && file === "hindi-only.html") { var q = (new URLSearchParams(location.search).get("p") || "").replace(/^\/+/, ""); return /^[a-z0-9][a-z0-9\-\/]*\.html$/i.test(q) ? { hi: siteRoot() + q, en: null } : null; }
     if (EN) { var hi = document.querySelector('link[rel="alternate"][hreflang="hi"]'); if (!hi) return null; var u = hi.getAttribute("href"); try { u = new URL(u, location.href).pathname; } catch (e) { /* */ } return { hi: u, en: null }; }
     return Object.prototype.hasOwnProperty.call(EN_MAP, file) ? { hi: null, en: siteRoot() + EN_MAP[file] } : null;
   }
@@ -121,7 +130,7 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
     var pair = langPair(), a = document.createElement("a");
     a.id = "jtLang"; a.className = "jt-lang no-print";
     if (EN) { a.textContent = "हिंदी"; a.href = (pair && pair.hi) || "../index.html"; a.setAttribute("lang", "hi"); a.setAttribute("aria-label", "हिंदी में देखें"); }
-    else { a.textContent = "EN"; a.href = (pair && pair.en) || siteRoot() + "en/"; a.setAttribute("lang", "en"); a.setAttribute("aria-label", "View in English"); }
+    else { a.textContent = "EN"; a.href = (pair && pair.en) || enFor(location.pathname.split("/").pop() || "index.html"); a.setAttribute("lang", "en"); a.setAttribute("aria-label", "View in English"); }
     a.addEventListener("click", function () { langPref(EN ? "hi" : "en"); try { if (window.gtag) window.gtag("event", "lang_switch", { to: EN ? "hi" : "en" }); } catch (e) { /* */ } });
     var st = document.createElement("style");
     st.textContent = ".jt-lang{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:38px;padding:0 10px;margin-left:auto;margin-right:8px;border:1.5px solid #B8892B;border-radius:10px;color:#7A1F1F;font:700 14px Mukta,system-ui,sans-serif;text-decoration:none;background:#fff;flex:0 0 auto}.jt-lang:hover{background:#FBF1DC}@media(min-width:1101px){.jt-lang{order:5;margin-left:10px;margin-right:0}}";
@@ -416,7 +425,19 @@ window.JT_UPI = window.JT_UPI || { id: "8318513814@ptsbi", name: "Gyanendra Sing
     a.style.cssText = "position:fixed;right:16px;bottom:16px;z-index:9000;display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:0 18px;border-radius:999px;background:#1f8f4e;color:#fff;font:700 16px Mukta,system-ui,sans-serif;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.25)";
     document.body.appendChild(a);
   }
-  function init() { menu(); try { langToggle(); } catch (e) {} try { share(); } catch (e) {} try { channel(); } catch (e) {} try { if (EN) enHelp(); else { helpBot(); offer(); } } catch (e) {} }
+  // on English pages, a link to a Hindi-only page first shows the English "this page is in Hindi" note
+  function enLinks() {
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]"); if (!a || a.id === "jtLang" || a.hasAttribute("data-hi") || e.defaultPrevented) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+      var u; try { u = new URL(a.href); } catch (x) { return; } // a.href respects <base>
+      if (u.origin !== location.origin || /\/en\//.test(u.pathname)) return;
+      var file = u.pathname.split("/").pop();
+      if (!file || file === "index.html" || !/\.html$/.test(file)) return; // Hindi home and files (PDF, images) open as they are
+      e.preventDefault(); location.href = enFor(file);
+    });
+  }
+  function init() { if (EN) try { enLinks(); } catch (e) {} menu(); try { langToggle(); } catch (e) {} try { share(); } catch (e) {} try { channel(); } catch (e) {} try { if (EN) enHelp(); else { helpBot(); offer(); } } catch (e) {} }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

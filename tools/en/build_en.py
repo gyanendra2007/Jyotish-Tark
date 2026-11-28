@@ -3,7 +3,7 @@
 Run from repo root:  python3 tools/en/build_en.py
 Language switching lives in jt-site.js (EN_MAP); keep that map in sync when adding pages here.
 """
-import os, json, urllib.parse
+import re, os, json, urllib.parse
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'en'); os.makedirs(OUT, exist_ok=True)
 SITE = 'https://jyotishtark.in/'
@@ -14,7 +14,8 @@ def wa(msg): return WA + urllib.parse.quote(msg)
 NAV = [('index.html', 'Home', './'), ('kundali', 'Free Kundali', 'kundali-form.html'), ('sampurna-kundali.html', 'Full Kundali Report', 'sampurna-kundali.html'), ('milan', 'Kundali Matching', 'guna-milan-calculator.html'), ('rashifal', 'Horoscope', 'rashifal.html'),
        ('consultation.html', 'Consultation', 'consultation.html'), ('about', 'About', '../about.html'), ('contact', 'Contact', '../contact.html')]
 
-def head(slug, hi_slug, title, desc, ld=None):
+LINKS_NOINDEX = ''
+def head(slug, hi_slug, title, desc, ld=None, noindex=False):
     url = SITE + 'en/' + ('' if slug == 'index.html' else slug)
     hi = SITE + ('' if hi_slug == 'index.html' else hi_slug)
     ldj = f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>' if ld else ''
@@ -28,12 +29,9 @@ def head(slug, hi_slug, title, desc, ld=None):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-  <link rel="canonical" href="{url}">
-  <link rel="alternate" hreflang="en" href="{url}">
-  <link rel="alternate" hreflang="hi" href="{hi}">
-  <link rel="alternate" hreflang="x-default" href="{hi}">
+  {LINKS_NOINDEX if noindex else f'<link rel="canonical" href="{url}">{chr(10)}  <link rel="alternate" hreflang="en" href="{url}">{chr(10)}  <link rel="alternate" hreflang="hi" href="{hi}">{chr(10)}  <link rel="alternate" hreflang="x-default" href="{hi}">'}
   <meta name="author" content="Gyanendra Singh Tomar - Jyotish Tark">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="robots" content="{'noindex, follow' if noindex else 'index, follow, max-image-preview:large'}">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:type" content="website">
@@ -52,56 +50,34 @@ def head(slug, hi_slug, title, desc, ld=None):
   <link rel="stylesheet" href="../tailwind.css?v=1">
   <link rel="stylesheet" href="../jt-theme.css?v=8">
   <link rel="stylesheet" href="../rashi.css?v=5">
-  <script src="../jt-site.js?v=28" defer></script>
+  <script src="../jt-site.js?v=29" defer></script>
 </head>
 <body>'''
 
-def header(cur):
-    links = ''.join(f'<a href="{h}"' + (' aria-current="page"' if k == cur else '') + f'>{t}</a>' for k, t, h in NAV)
-    return f'''
-  <header class="jt-header no-print">
-    <div class="jt-wrap jt-header-row">
-      <a class="jt-brand" href="./" aria-label="Jyotish Tark — Home">
-        <img src="../logo.png" alt="" width="46" height="46">
-        <span class="jt-brand-text"><span class="jt-brand-hi">Jyotish Tark</span><span class="jt-brand-en">JYOTISH TARK · LUCKNOW</span></span>
-      </a>
-      <nav class="jt-nav" aria-label="Main menu">{links}</nav>
-      <button id="menuToggle" class="jt-menu-btn" type="button" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
-      </button>
-    </div>
-    <nav id="mobileNav" class="jt-mobile-nav hidden" aria-label="Mobile menu">{links}
-      <a class="jt-cta" href="{wa('Hello, I found you on jyotishtark.in.')}" target="_blank" rel="noopener">Chat on WhatsApp</a>
-    </nav>
-  </header>'''
+def _from_en_page(tag):
+    """Header/footer exactly as on the other English pages (made from the Hindi page by make_en.py),
+    with paths changed from <base href="../"> style to plain relative paths from /en/."""
+    src = open(os.path.join(OUT, 'kundali-form.html'), encoding='utf-8').read()
+    h = re.search(r'<' + tag + r'\b.*?</' + tag + '>', src, re.S).group(0)
+    def fix(m):
+        attr, url = m.group(1), m.group(2)
+        if re.match(r'(https?:|mailto:|tel:|#|data:|/)', url): return m.group(0)
+        if url.startswith('en/'): url = url[3:] or './'
+        else: url = '../' + url
+        return f'{attr}="{url}"'
+    return re.sub(r'\b(href|src)="([^"]*)"', fix, h)
 
-FOOTER = f'''
-  <footer class="jt-footer no-print">
-    <div class="jt-footer-cta"><div class="jt-wrap"><div><p class="jt-big">Have a question? Talk to us directly.</p><p class="jt-small">WhatsApp or phone: +91 83185 13814 · In-person meetings by appointment only</p></div>
-      <a href="{wa('Namaste, I would like to book a consultation.')}" target="_blank" rel="noopener">Book a consultation</a></div></div>
-    <div class="jt-wrap jt-footer-grid">
-      <div><p class="jt-foot-brand">Jyotish Tark</p><p>Vedic astrology in plain language, from Lucknow. Founded by astrologer Gyanendra Singh Tomar.</p></div>
-      <div><h2>Services</h2><ul>
-        <li><a href="kundali-form.html">Free birth chart (kundali)</a></li>
-        <li><a href="sampurna-kundali.html">Full Kundali Report · ₹1,101</a></li>
-        <li><a href="consultation.html">Consultation · first call free</a></li>
-        <li><a href="guna-milan-calculator.html">Kundali matching (36 gunas)</a></li>
-        <li><a href="../rudraksha.html">Rudraksha (Hindi)</a></li>
-        <li><a href="../">हिंदी वेबसाइट</a></li></ul></div>
-      <div><h2>Information</h2><ul>
-        <li><a href="../about.html">About us</a></li><li><a href="../disclaimer.html">Disclaimer</a></li>
-        <li><a href="../privacy-policy.html">Privacy Policy</a></li><li><a href="../terms-of-service.html">Terms of Service</a></li>
-        <li><a href="../shipping-and-delivery.html">Shipping &amp; Delivery</a></li><li><a href="../cancellation.html">Cancellation</a> · <a href="../refund.html">Refund</a></li></ul></div>
-      <div><h2>Contact</h2><p><a href="tel:+918318513814">+91 83185 13814</a></p><p><a href="mailto:jyotishtark@gmail.com">jyotishtark@gmail.com</a></p>
-        <p>37, Shamsher Puram Colony, Gauri Bazar, Sarojini Nagar, Lucknow, Uttar Pradesh 226008</p><p>Meetings by appointment only</p></div>
-    </div>
-    <div class="jt-footer-bottom"><div class="jt-wrap"><span>© 2026 Jyotish Tark · All rights reserved</span><span>Astrology is guidance — not a substitute for medical, legal or financial advice.</span></div></div>
-  </footer>
+def header(cur):
+    h = _from_en_page('header').replace(' aria-current="page"', '')
+    target = './' if cur == 'index.html' else cur
+    return '\n  ' + h.replace(f'href="{target}"', f'href="{target}" aria-current="page"')
+
+FOOTER = '\n  ' + _from_en_page('footer') + '''
 </body>
 </html>'''
 
-def page(slug, hi_slug, cur, title, desc, main, ld=None):
-    html = head(slug, hi_slug, title, desc, ld) + header(cur) + '\n' + main + FOOTER
+def page(slug, hi_slug, cur, title, desc, main, ld=None, noindex=False):
+    html = head(slug, hi_slug, title, desc, ld, noindex) + header(cur) + '\n' + main + FOOTER
     open(os.path.join(OUT, slug), 'w', encoding='utf-8').write(html)
     print('wrote en/' + slug)
 
@@ -295,3 +271,70 @@ SAMPURNA = f'''<main id="main" class="rs-page fx-page">
 </main>'''
 page('sampurna-kundali.html', 'sampurna-kundali.html', 'sampurna-kundali.html', 'Full Kundali Report in English — 35+ Page PDF, ₹1,101 | Jyotish Tark',
      'A 35+ page birth chart report in English: lagna and navamsa, planets, career, money, marriage, dasha dates, varshphal 2027 and remedies. ₹1,101.', SAMPURNA)
+
+# ------------------------------------------------------------------ sections that are in Hindi only
+# Each gets a short English page that says what the section has and that it is in Hindi for now.
+# noindex: thin pages, kept out of search results and the sitemap.
+TRY_EN = '''<div class="fx-two" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+      <a class="rs-card" href="kundali-form.html"><b>Free kundali</b><br><span style="color:#6B5444">Birth chart with a 12-chapter reading</span></a>
+      <a class="rs-card" href="rashifal.html"><b>Today’s horoscope</b><br><span style="color:#6B5444">All 12 signs, every day</span></a>
+      <a class="rs-card" href="rashifal-2027.html"><b>Horoscope 2027</b><br><span style="color:#6B5444">Yearly forecast for your sign</span></a>
+      <a class="rs-card" href="guna-milan-calculator.html"><b>Kundali matching</b><br><span style="color:#6B5444">36-guna match, free</span></a>
+      <a class="rs-card" href="consultation.html"><b>Talk to the astrologer</b><br><span style="color:#6B5444">Audio or video call, in English</span></a>
+    </div>'''
+def hindi_only(slug, name, kicker, intro, items, extra=''):
+    lis = ''.join(f'<li>{x}</li>' for x in items)
+    main = f'''<main id="main" class="rs-page fx-page">
+  <nav class="rs-crumb" aria-label="Breadcrumb"><a href="./">Home</a> / <span>{name}</span></nav>
+  <section class="rs-hero fx-hero"><div>
+    <p class="rs-kicker">{kicker}</p>
+    <h1>{name}</h1>
+    <p class="rs-lead">{intro}</p>
+    <div role="note" style="background:#FFF4D6;border:1px solid #E9C27A;border-radius:12px;padding:12px 16px;color:#4A0F12;font-size:16px;line-height:1.5;max-width:640px">ℹ️ This section is available in <strong>Hindi only</strong> for now. We are adding English pages step by step.</div>
+    <div class="rs-row" style="margin-top:14px"><a class="rs-btn" href="../{slug}" lang="hi" data-hi>Open the Hindi page (हिंदी) →</a><a class="rs-btn ghost" href="./">English home</a></div>
+  </div></section>
+  <section class="rs-sec"><h2>What the Hindi page has</h2><ul style="line-height:1.8;padding-left:22px;list-style:disc">{lis}</ul>{extra}</section>
+  <section class="rs-sec"><h2>Available in English</h2>{TRY_EN}</section>
+</main>'''
+    page(slug, slug, slug, f'{name} (in Hindi) | Jyotish Tark', f'{name} — this section of Jyotish Tark is in Hindi for now.', main, noindex=True)
+
+hindi_only('panchang.html', 'Panchang', 'DAILY PANCHANG · LUCKNOW AND 100+ CITIES',
+  'The daily Hindu calendar — tithi, nakshatra, yoga and karana, sunrise and sunset, Rahu kaal and the good muhurats of the day.',
+  ['Today’s tithi, nakshatra, yoga, karana and paksha', 'Sunrise, sunset, moonrise and moonset', 'Rahu kaal, Yamaganda, Gulika and Abhijit muhurat', 'Choghadiya and muhurats for buying a vehicle or gadget', 'Upcoming vrat and festivals', 'Panchang pages for 100+ cities in India and abroad'],
+  '<p style="margin-top:10px">Tip: the <a href="./#jhPan">English home page</a> shows a short summary of today’s panchang for Lucknow.</p>')
+hindi_only('numerology.html', 'Numerology', 'NUMEROLOGY CALCULATORS',
+  'Free numerology calculators that work from your date of birth, your name and your mobile number.',
+  ['Root number (mulank), destiny number (bhagyank) and name number', 'Mobile, vehicle and house number numerology', 'Mulank matching for marriage and partnership', 'Lo Shu grid from your date of birth', 'Mulank 1 to 9 — nature, career and remedies, and the number horoscope for 2027', 'A sample of the detailed numerology report'])
+hindi_only('kp-astrology.html', 'KP Astrology', 'KRISHNAMURTI PADDHATI',
+  'KP (Krishnamurti Paddhati) charts — cusps, star lords and sub-lords — and the KP detailed report.',
+  ['Free KP chart', 'Detailed KP birth chart (KP report, ₹299)', 'What KP is: star lord, sub-lord, dasha and ruling planets', 'KP compared with traditional astrology'],
+  '<p style="margin-top:10px">Want a KP reading in English? <a href="consultation.html">Book a call with the astrologer</a>.</p>')
+hindi_only('tarot.html', 'Tarot', 'TAROT CARD READING',
+  'Ask a question, pick your cards and read what they say — a free online tarot reading.',
+  ['A free reading with all 78 cards', 'Yes / no questions', 'Upright and reversed card meanings', 'How the cards link to the 9 planets, and checking the answer against your kundali'])
+hindi_only('bhakti-sangrah.html', 'Bhakti', 'CHALISA · AARTI · STOTRA · VRAT KATHA',
+  'Devotional texts for daily prayer — they are written in the original Hindi and Sanskrit, the way they are recited.',
+  ['Chalisas', 'Aartis', 'Mantras', 'Stotras and ashtakams', 'Bhajans of the saints', 'Vrat kathas and path'])
+hindi_only('rudraksha.html', 'Rudraksha', 'GENUINE NEPALI RUDRAKSHA',
+  'Genuine Nepali rudraksha beads, with the option of a lab certificate. Delivery within India only.',
+  ['2 to 9 mukhi beads and Gauri Shankar, with prices', 'Rudraksha combos', 'Which rudraksha suits your need or sign (by tradition)', 'Order on WhatsApp — you can write in English'],
+  '<p style="margin-top:10px">To order in English, message us on WhatsApp: <a href="https://wa.me/918318513814?text=Hello%2C%20I%20would%20like%20to%20order%20a%20rudraksha." target="_blank" rel="noopener">+91 83185 13814</a>.</p>')
+hindi_only('blog.html', 'Articles', 'ARTICLES',
+  'Articles on astrology, planets and houses, doshas and remedies, nakshatras, muhurats and festivals.',
+  ['Planets in each house and sign', 'Manglik, Kaal Sarp, Pitra dosha and their real meaning', 'All 27 nakshatras', 'Muhurats for marriage, griha pravesh and vehicles', 'Festival dates and vrat details'])
+
+# generic page for every other Hindi-only page: en/hindi-only.html?p=<page>
+GEN = f'''<main id="main" class="rs-page fx-page">
+  <section class="rs-hero fx-hero"><div>
+    <p class="rs-kicker">JYOTISH TARK</p>
+    <h1>This page is in Hindi</h1>
+    <p class="rs-lead" id="hoT">The page you opened is available <b>in Hindi only</b> for now. We are adding English pages step by step.</p>
+    <div class="rs-row" style="margin-top:14px"><a class="rs-btn" id="hoGo" href="../" lang="hi" data-hi>Open the Hindi page (हिंदी) →</a><a class="rs-btn ghost" href="./">English home</a></div>
+  </div></section>
+  <section class="rs-sec"><h2>Available in English</h2>{TRY_EN}</section>
+</main>
+<script>(function(){{try{{var p=new URLSearchParams(location.search).get("p")||"";p=p.replace(/^\\/+/,"");if(!/^[a-z0-9][a-z0-9\\-\\/]*\\.html$/i.test(p))return;
+var go=document.getElementById("hoGo");go.href="../"+p;
+fetch("../"+p).then(function(r){{return r.ok?r.text():""}}).then(function(t){{var m=t.match(/<title>([^<]*)<\\/title>/i);if(!m)return;var d=document.createElement("textarea");d.innerHTML=m[1];var title=d.value.split("|")[0].trim();
+var e=document.getElementById("hoT");e.textContent="";var b=document.createElement("b");b.lang="hi";b.textContent="“"+title+"”";e.appendChild(document.createTextNode("The page "));e.appendChild(b);e.appendChild(document.createTextNode(" is available in Hindi only for now. We are adding English pages step by step."));}}).catch(function(){{}});}}catch(e){{}}}})();</script>'''
+page('hindi-only.html', 'index.html', '', 'This page is in Hindi | Jyotish Tark', 'This page of Jyotish Tark is in Hindi for now.', GEN, noindex=True)

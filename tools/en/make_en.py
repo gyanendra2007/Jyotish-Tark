@@ -8,6 +8,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 D = os.path.join(ROOT, 'tools/en/dict')
 SITE = 'https://jyotishtark.in/'
 EN_PAGES = {'index.html': 'en/', 'consultation.html': 'en/consultation.html', 'sampurna-kundali.html': 'en/sampurna-kundali.html'}
+# sections that are in Hindi only: their English address is a short page that says so (built by build_en.py)
+HINDI_ONLY = ['panchang.html', 'numerology.html', 'kp-astrology.html', 'tarot.html', 'bhakti-sangrah.html', 'rudraksha.html', 'blog.html']
+for f in HINDI_ONLY: EN_PAGES[f] = 'en/' + f
 for f in os.listdir(D):
     if f.endswith('.json') and f != 'common.json': EN_PAGES[f[:-5] + '.html'] = 'en/' + f[:-5] + '.html'
 
